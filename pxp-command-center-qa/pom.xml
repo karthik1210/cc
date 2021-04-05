@@ -16,13 +16,13 @@
 		<module>pxp-command-center-object-maps</module>
 		<module>pxp-command-center-ui-automation</module>
 	</modules>
-	<!-- <repositories>
+	<repositories>
 		<repository>
 			<id>IHG-nexus</id>
 			<name>IHG-nexus</name>
 			<url>http://maven.qhg.local/nexus/content/groups/qhg-dev/</url>
 		</repository>
-	</repositories> -->
+	</repositories>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ihg.version>21.1.0-SNAPSHOT</ihg.version>
@@ -45,7 +45,7 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-   <build>
+	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -100,35 +100,35 @@
 					</configuration>
 				</plugin>
 				<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>				
-					<filesets>
-						<fileset>
-							<directory>.</directory>
-							<includes>
-								<include>**/*.log</include>
-							</includes>
-						</fileset>
-						<fileset>
-							<directory>./report</directory>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.4.1</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>.</directory>
+								<includes>
+									<include>**/*.log</include>
+								</includes>
+							</fileset>
+							<fileset>
+								<directory>./report</directory>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-site-plugin</artifactId>
-						<version>3.5</version>
-							<configuration>
-					<locales>en,fr</locales>
-				</configuration>
-			</plugin>			 
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-report-plugin</artifactId>
-            <version>2.19.1</version>
-         </plugin>
+					<version>3.5</version>
+					<configuration>
+						<locales>en,fr</locales>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-report-plugin</artifactId>
+					<version>2.19.1</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>

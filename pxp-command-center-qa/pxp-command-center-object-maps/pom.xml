@@ -10,10 +10,10 @@
 	<artifactId>pxp-command-center-object-maps</artifactId>
 	<name>pxp-command-center-object-maps</name>
 	<packaging>jar</packaging>
-	<!-- <properties>
+	 <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ihg.version>21.1.0-SNAPSHOT</ihg.version>
-	</properties> -->
+	</properties> 
 	<dependencies>
 		<dependency>
 			<groupId>com.pxp.cc</groupId>
