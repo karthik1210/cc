@@ -95,38 +95,29 @@ public class CommandCenterHomePage extends CCMainPage {
 
 	public void clickHamburger() {
 		highlightElement(ccHamburgerMenu);
+		wait.until(ExpectedConditions.visibilityOf(ccHamburgerMenu));
 		ccHamburgerMenu.click();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-
-			log("HamburgerMenu expanded after click.....", e.getMessage());
-		}
 	}
 
 	public void clickCCMenuItems() {
 		for (WebElement webElement : menuItem) {
-			try {
-				webElement.click();
-				log(driver.getCurrentUrl());
-				log("Title logger :" + webElement.getText());
-				String getElementText = webElement.findElement(By.className("mat-list-text")).getText();
-				if (getElementText.equals("Organization Tree")) {
-					gotoOrganizationTree();
-					CCUtils.assertEquals(getElementText, ("Organization Tree"));
-				} else if (getElementText.equals("Command Center Users")) {
-					gotoCommandCenterUsers();
-					CCUtils.assertEquals(getElementText, ("Command Center Users"));
-				} else if (getElementText.equals("Reporting")) {
-					gotoReporting();
-					CCUtils.assertEquals(getElementText, ("Reporting"));
-				} else if (getElementText.equals("Developer Tools")) {
-					gotoDeveloperTools();
-					CCUtils.assertEquals(getElementText, ("Developer Tools"));
-				}
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			wait.until(ExpectedConditions.visibilityOf(webElement));
+			webElement.click();
+			log(driver.getCurrentUrl());
+			log("Title logger :" + webElement.getText());
+			String getElementText = webElement.findElement(By.className("mat-list-text")).getText();
+			if (getElementText.equals("Organization Tree")) {
+				gotoOrganizationTree();
+				CCUtils.assertEquals(getElementText, ("Organization Tree"));
+			} else if (getElementText.equals("Command Center Users")) {
+				gotoCommandCenterUsers();
+				CCUtils.assertEquals(getElementText, ("Command Center Users"));
+			} else if (getElementText.equals("Reporting")) {
+				gotoReporting();
+				CCUtils.assertEquals(getElementText, ("Reporting"));
+			} else if (getElementText.equals("Developer Tools")) {
+				gotoDeveloperTools();
+				CCUtils.assertEquals(getElementText, ("Developer Tools"));
 			}
 		}
 	}
@@ -169,12 +160,14 @@ public class CommandCenterHomePage extends CCMainPage {
 
 	public void clickUserIcon() {
 		highlightElement(userIcon);
+		wait.until(ExpectedConditions.visibilityOf(userIcon));
 		javascriptClick(userIcon);
 		log("User icon clicked.....");
 	}
 
 	public void clickLogout() throws InterruptedException {
 		highlightElement(userLogout);
+		wait.until(ExpectedConditions.visibilityOf(userLogout));
 		javascriptClick(userLogout);
 		log("Clicked on logout");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
