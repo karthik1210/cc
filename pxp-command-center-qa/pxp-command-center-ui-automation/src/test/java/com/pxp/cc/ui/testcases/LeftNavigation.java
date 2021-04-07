@@ -24,9 +24,12 @@ public class LeftNavigation extends CommandCenterGenericTest {
 		cchomepage = loginToCCPortal(super.driver, ccuser.getUrl(), ccuser.getNavigationEmail(), ccuser.getPassword());
 		log("Step 3: Click to Hamburger Menu.");
 		cchomepage.clickHamburger();
+		Thread.sleep(1000);
 		log("Step 4: Clicking on all the PXP CC menu Items");
 		cchomepage.clickCCMenuItems();
+		Thread.sleep(1000);
 		cchomepage.clickUserIcon();
+		Thread.sleep(1000);
 		cchomepage.clickLogout();
 	}
 
@@ -40,9 +43,12 @@ public class LeftNavigation extends CommandCenterGenericTest {
 		cchomepage = loginToCCPortal(super.driver, ccuser.getUrl(), ccuser.getAdminEmail(), ccuser.getPasswordAdmin());
 		log("Step 3: Clicking on hamburger menu with Admin login");
 		cchomepage.clickHamburger();
+		Thread.sleep(1000);
 		log("Step 4: Clicking on all PXP CC menu Items with Admin login");
 		cchomepage.clickCCMenuItems();
+		Thread.sleep(1000);
 		cchomepage.clickUserIcon();
+		Thread.sleep(1000);
 		cchomepage.clickLogout();
 	}
 }
