@@ -48,7 +48,7 @@ public class CommandCenterHomePage extends CCMainPage {
 	@FindBy(how = How.XPATH, using = "//button[@class='mat-focus-indicator mat-menu-trigger alert-view-button ng-tns-c128-0 mat-icon-button mat-button-base']//span[@class='mat-button-wrapper']")
 	private WebElement alertsViewButton;
 
-	@FindBy(how = How.XPATH, using = "//div[@class='alert-drawer-main ng-tns-c147-21 ng-trigger ng-trigger-slideInOut']//div[1]//div[1]//div[1]//div[3]//span[2]//label[1]")
+	@FindBy(how = How.XPATH, using = "//div[@class='alert-drawer-main ng-tns-c147-0 ng-trigger ng-trigger-slideInOut']//div[1]//div[1]//div[1]//div[3]//span[2]//label[1]")
 	private WebElement alertsNotifictaionStatus;
 
 

@@ -13,28 +13,29 @@ public class CCUser {
 	public CCUser(Properties property) {
 		properties = property;
 	}
+
 	String url;
 	String username;
 	String password;
 	String invalidUsername;
-	String invalidpassword;
-	String loginattempts;
-	String lockoutusername;
+	String invalidPassword;
+	String loginAttempts;
+	String lockoutUsername;
 	String usernameAdmin;
 	String passwordAdmin;
 	String usernameExternal;
 	String passwordExternal;
 	String usernameInternal;
 	String passwordInternal;
-	String clientnode;
-	String systemnode;
-	String enterprisenode;
-	String practicenode;
-	String locationnode;
+	String clientNode;
+	String systemNode;
+	String enterpriseNode;
+	String practiceNode;
+	String locationNode;
 	String incorrectEmail;
 	String externalUser;
 	String name;
-	String emailID;
+	String emailId;
 	String resetEmail;
 	String clientName;
 	String unregisteredEmail;
@@ -49,62 +50,62 @@ public class CCUser {
 	}
 
 	public void setCCuser() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setUsername(getProperty("email"));
-		setPassword(getProperty("password"));
-		setClientnode(getProperty("searchclient"));
-		setSystemnode(getProperty("searchsystem"));
-		setEnterprisenode(getProperty("searchenterprise"));
-		setPracticenode(getProperty("searchpractice"));
-		setLocationnode(getProperty("searchlocation"));
-		setEmailID(getProperty("emailID"));
-		setResetEmail(getProperty("resetEmail"));
-		setClientName(getProperty("clientName"));
-		setUnregisteredEmail(getProperty("unregisteredEmail"));
-		setExternalUser(getProperty("externalUser"));
-		setInvalidTokenUrl(getProperty("invalidTokenUrl"));
-		setAdminEmail(getProperty("adminEmail"));
-		setNavigationEmail(getProperty("navigationEmail"));
-		setPasswordAdmin(getProperty("passwordadmin"));
+		setUrl(getProperty("base.url"));
+		setUsername(getProperty("user.name"));
+		setPassword(getProperty("user.password"));
+		setClientNode(getProperty("search.client"));
+		setSystemNode(getProperty("search.system"));
+		setEnterpriseNode(getProperty("search.enterprise"));
+		setPracticeNode(getProperty("search.practice"));
+		setLocationNode(getProperty("search.location"));
+		setEmailId(getProperty("reset.password.email"));
+		setResetEmail(getProperty("reset.password.reset.email"));
+		setClientName(getProperty("reset.password.client.name"));
+		setUnregisteredEmail(getProperty("reset.password.unregistered.email"));
+		setExternalUser(getProperty("reset.password.external.user"));
+		setInvalidTokenUrl(getProperty("invalid.token.url"));
+		setAdminEmail(getProperty("reset.password.admin.email"));
+		setNavigationEmail(getProperty("reset.password.navigation.email"));
+		setPasswordAdmin(getProperty("admin.password"));
 	}
 
 	public void setAdminCCWithWrongPassword() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setUsername(getProperty("email"));
-		setInvalidpassword(getProperty("invalidpassword"));
-		setLoginattempts(getProperty("loginattempts"));
+		setUrl(getProperty("base.url"));
+		setUsername(getProperty("user.name"));
+		setInvalidPassword(getProperty("invalid.password"));
+		setLoginAttempts(getProperty("login.attempts"));
 	}
 
 	public void setAdminCCWithWrongUsername() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setInvalidUsername(getProperty("invalidusername"));
-		setPassword(getProperty("password"));
-		setLoginattempts(getProperty("loginattempts"));
+		setUrl(getProperty("base.url"));
+		setInvalidUsername(getProperty("invalid.user.name"));
+		setPassword(getProperty("user.password"));
+		setLoginAttempts(getProperty("login.attempts"));
 	}
 
 	public void setCCAdminUser() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setUsernameAdmin(getProperty("usernameadmin"));
-		setPasswordAdmin(getProperty("passwordadmin"));
+		setUrl(getProperty("base.url"));
+		setUsernameAdmin(getProperty("admin.username"));
+		setPasswordAdmin(getProperty("admin.password"));
 	}
 
 	public void setCCExternalUser() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setUsernameExternal(getProperty("usernameexternal"));
-		setPasswordExternal(getProperty("passwordexternal"));
+		setUrl(getProperty("base.url"));
+		setUsernameExternal(getProperty("external.user.name"));
+		setPasswordExternal(getProperty("external.password"));
 	}
 
 	public void setCCInternalUser() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setUsernameInternal(getProperty("usernameinternal"));
-		setPasswordInternal(getProperty("passwordinternal"));
+		setUrl(getProperty("base.url"));
+		setUsernameInternal(getProperty("internal.user.name"));
+		setPasswordInternal(getProperty("internal.password"));
 	}
 
 	public void setAdminCCWithLockoutUsername() throws Exception {
-		setUrl(getProperty("commandcenterurl"));
-		setLockoutusername(getProperty("lockoutusername"));
-		setInvalidpassword(getProperty("invalidpassword"));
-		setLoginattempts(getProperty("loginattempts"));
+		setUrl(getProperty("base.url"));
+		setLockoutUsername(getProperty("lockout.user.name"));
+		setInvalidPassword(getProperty("invalid.password"));
+		setLoginAttempts(getProperty("login.attempts"));
 	}
 
 }

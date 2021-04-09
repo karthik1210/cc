@@ -11,7 +11,7 @@ import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
 
 public class CCUtils {
-	
+
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(new WaitForWEIsDisplayed(we));
@@ -32,21 +32,17 @@ public class CCUtils {
 	public static void assertTrue(boolean condition, String message) throws RuntimeException {
 		try {
 			Assert.assertTrue(condition);
-			Log4jUtil.log("Expected value: true" + " Actual value: " + condition + " - PASSED","\n"+message);
+			Log4jUtil.log("Expected value: true" + " Actual value: " + condition + " - PASSED", "\n" + message);
 		} catch (Exception e) {
-			Log4jUtil.log("Expected value: true" + " Actual value: " + condition + " - FAILED","\n"+message);
+			Log4jUtil.log("Expected value: true" + " Actual value: " + condition + " - FAILED", "\n" + message);
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static boolean verifyCaseInsensitiveTextPresent(WebDriver driver, String value, int waitTime) throws Exception {
-		Thread.sleep(waitTime);
-		return driver.getPageSource().toLowerCase().contains(value.toLowerCase());
-	}
-	
+
 	public static boolean verifyTextNotPresent(WebDriver driver, String value) {
 		return !driver.getPageSource().contains(value);
 	}
+
 	public static void selectFromDropDown(WebElement webElement, String containsText) {
 		Select select = new Select(webElement);
 		List<WebElement> allOptions = select.getOptions();

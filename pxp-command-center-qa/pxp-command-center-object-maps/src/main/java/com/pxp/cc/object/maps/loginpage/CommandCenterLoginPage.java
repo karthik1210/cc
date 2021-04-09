@@ -19,7 +19,7 @@ public class CommandCenterLoginPage extends CCMainPage {
 	@FindBy(xpath = "//input[@id='pwd']")
 	private WebElement password;
 
-	@FindBy(xpath = "//p[contains(text(),'Invalid username or password')]")
+	@FindBy(xpath = "//p[normalize-space()='Invalid Username or password']")
 	private WebElement errorMsgInvalidUsernameOrPassword;
 
 	@FindBy(xpath = "//button[@type='submit']")
@@ -38,7 +38,7 @@ public class CommandCenterLoginPage extends CCMainPage {
 		super(driver, url);
 	}
 
-	public final String lockoutErrorMsg = "Password attempts exceeded, please contact your Command Center administrator";
+	public final String lockoutErrorMsg = "Password attempts exceeded, please contact your Command Center administrator.";
 
 	public CommandCenterHomePage login(String emailID, String Password) throws InterruptedException {
 		highlightElement(username);
@@ -48,7 +48,6 @@ public class CommandCenterLoginPage extends CCMainPage {
 		highlightElement(password);
 		password.sendKeys(Password.trim());
 		log("Entered password in Password Input field");
-		Thread.sleep(1000);
 		highlightElement(loginButton);
 		loginButton.click();
 		return PageFactory.initElements(super.driver, CommandCenterHomePage.class);
@@ -122,23 +121,13 @@ public class CommandCenterLoginPage extends CCMainPage {
 		return value;
 	}
 
-	public boolean verifyInvalidUsernameError() {
+	public boolean verifyInvalidUsernameOrPasswordError() {
 		if ((errorMsgInvalidUsernameOrPassword.isDisplayed())
 				&& errorMsgInvalidUsernameOrPassword.getCssValue("color").equals("rgba(175, 14, 14, 1)")) {
-			log("error displayed in username field due to 'invalid Username' or 'invalid Password' or BOTH.");
+			log("error displayed due to 'invalid Username' or 'invalid Password' or BOTH.");
 			return true;
 		}
-		log("Username is valid");
 		return false;
 	}
 
-	public boolean verifyInvalidPasswordError() {
-		if ((errorMsgInvalidUsernameOrPassword.isDisplayed())
-				&& errorMsgInvalidUsernameOrPassword.getCssValue("color").equals("rgba(175, 14, 14, 1)")) {
-			log("error displayed in password field due to 'invalid Username' or 'invalid Password' or BOTH.");
-			return true;
-		}
-		log("Password is valid");
-		return false;
-	}
 }
