@@ -1,7 +1,6 @@
 // Copyright 2018-2021 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.ui.testcases;
 
-import org.apache.log4j.BasicConfigurator;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -18,7 +17,6 @@ public class LoginScreen extends CommandCenterGenericTest {
 
 	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void verifyLoginToCCPortal() throws Exception {
-		BasicConfigurator.configure();
 		log("Test to verify login to Command Center Portal");
 		ccuser = new CCUser(property);
 		ccuser.setCCuser();
@@ -36,30 +34,26 @@ public class LoginScreen extends CommandCenterGenericTest {
 
 	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void verifyLoginWithInvalidPwd() throws Exception {
-		BasicConfigurator.configure();
 		log("Test to verify user will get 'Invalid Username' or 'Invalid Password' error msg after login with wrong password.");
 		ccuser = new CCUser(property);
 		ccuser.setAdminCCWithWrongPassword();
 		log("Login to CC portal. url=" + ccuser.getUrl() + " and email=" + ccuser.getUsername()
-				+ " and invalid password=" + ccuser.getInvalidpassword());
+				+ " and invalid password=" + ccuser.getInvalidPassword());
 		log("Launching of Command Center URL and logging in.");
 		commandcenterloginpage = new CommandCenterLoginPage(driver, ccuser.getUrl());
 		log("Entering Username in Username Input field.");
 		commandcenterloginpage.enterUsername(ccuser.getUsername());
 		Thread.sleep(1000);
 		log("Entering wrong password in Password Input field.");
-		commandcenterloginpage.enterPassword(ccuser.getInvalidpassword());
+		commandcenterloginpage.enterPassword(ccuser.getInvalidPassword());
 		commandcenterloginpage.clickShowButton();
 		Thread.sleep(2000);
 		commandcenterloginpage.clickHideButton();
 		log("clicking on Login button.");
 		commandcenterloginpage.clickLogin();
 		Thread.sleep(4000);
-		commandcenterloginpage.verifyInvalidUsernameError();
+		commandcenterloginpage.verifyInvalidUsernameOrPasswordError();
 		Thread.sleep(1000);
-		commandcenterloginpage.verifyInvalidPasswordError();
-		Thread.sleep(1000);
-
 	}
 
 	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -83,9 +77,7 @@ public class LoginScreen extends CommandCenterGenericTest {
 		log("Clicking to Login button.");
 		commandcenterloginpage.clickLogin();
 		Thread.sleep(4000);
-		commandcenterloginpage.verifyInvalidUsernameError();
-		Thread.sleep(1000);
-		commandcenterloginpage.verifyInvalidPasswordError();
+		commandcenterloginpage.verifyInvalidUsernameOrPasswordError();
 		Thread.sleep(1000);
 	}
 
@@ -110,7 +102,7 @@ public class LoginScreen extends CommandCenterGenericTest {
 		log("Click on HIDE button in Password Input Field");
 		commandcenterloginpage.clickHideButton();
 		Thread.sleep(4000);
-		log("Step 8: Verfying the 'TYPE' attribute of Password field");
+		log("Verfying the 'TYPE' attribute of Password field");
 		if ((commandcenterloginpage.verifyPwdTypeAttribute())) {
 			log("Password is displayed");
 		} else
@@ -123,13 +115,13 @@ public class LoginScreen extends CommandCenterGenericTest {
 		log("Test to verify user will be Locked out after 6 login attempts with wrong password.");
 		CCUser ccuser = new CCUser(property);
 		ccuser.setAdminCCWithLockoutUsername();
-		log("Login to CC portal. url=" + ccuser.getUrl() + " and username=" + ccuser.getLockoutusername()
-				+ " and password=" + ccuser.getInvalidpassword());
+		log("Login to CC portal. url=" + ccuser.getUrl() + " and username=" + ccuser.getLockoutUsername()
+				+ " and password=" + ccuser.getInvalidPassword());
 		log("Launching of Command Center URL");
 		CommandCenterLoginPage commandcenterloginpage = new CommandCenterLoginPage(driver, ccuser.getUrl());
 		log("Attempting 6 times login to Command Center Portal");
-		commandcenterloginpage.sixAttemptsLoginViaInvalidPwd(ccuser.getLockoutusername(), ccuser.getInvalidpassword(),
-				ccuser.getLoginattempts());
+		commandcenterloginpage.sixAttemptsLoginViaInvalidPwd(ccuser.getLockoutUsername(), ccuser.getInvalidPassword(),
+				ccuser.getLoginAttempts());
 		Thread.sleep(2000);
 		CCUtils.assertEquals(commandcenterloginpage.getLockOutErrMsg().trim(),
 				commandcenterloginpage.lockoutErrorMsg.trim());
