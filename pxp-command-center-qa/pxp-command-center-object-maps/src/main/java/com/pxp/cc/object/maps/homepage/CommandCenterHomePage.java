@@ -94,7 +94,6 @@ public class CommandCenterHomePage extends CCMainPage {
 	}
 
 	public void clickHamburger() {
-		highlightElement(ccHamburgerMenu);
 		wait.until(ExpectedConditions.visibilityOf(ccHamburgerMenu));
 		ccHamburgerMenu.click();
 	}
@@ -160,14 +159,12 @@ public class CommandCenterHomePage extends CCMainPage {
 
 	public void clickUserIcon() {
 		highlightElement(userIcon);
-		wait.until(ExpectedConditions.visibilityOf(userIcon));
 		javascriptClick(userIcon);
 		log("User icon clicked.....");
 	}
 
 	public void clickLogout() throws InterruptedException {
 		highlightElement(userLogout);
-		wait.until(ExpectedConditions.visibilityOf(userLogout));
 		javascriptClick(userLogout);
 		log("Clicked on logout");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
