@@ -13,7 +13,6 @@ import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.pxp.cc.object.maps.ccmainpage.CCMainPage;
 import com.pxp.cc.object.maps.utilities.CCUtils;
@@ -124,25 +123,26 @@ public class CommandCenterHomePage extends CCMainPage {
 	public void gotoOrganizationTree() {
 		javascriptClick(organizationTree);
 		log("OrganizationTree Tab clicked.....");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(organizationTree));
+		wait.until(ExpectedConditions.visibilityOf(organizationTree));
 	}
 
 	public void gotoCommandCenterUsers() {
 		javascriptClick(commandCenterUsers);
 		log("Command Center Users Tab clicked.....");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(commandCenterUsers));
+		wait.until(ExpectedConditions.visibilityOf(commandCenterUsers));
 	}
 
 	public void gotoReporting() {
 		javascriptClick(reporting);
 		log("reporting Tab clicked.....");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(reporting));
+		wait.until(ExpectedConditions.visibilityOf(reporting));
+
 	}
 
 	public void gotoDeveloperTools() {
 		javascriptClick(developerTools);
 		log("developerTools Tab clicked.....");
-		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(developerTools));
+		wait.until(ExpectedConditions.visibilityOf(developerTools));
 	}
 
 	public void clickSSO() {

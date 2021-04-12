@@ -8,7 +8,7 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.object.maps.homepage.CommandCenterHomePage;
 import com.pxp.cc.object.maps.pojo.CCUser;
 
-public class LeftNavigation extends CommandCenterGenericTest {
+public class LeftNavigationTests extends CommandCenterGenericTest {
 
 	public CCUser ccuser;
 	public CommandCenterHomePage cchomepage;
@@ -37,7 +37,7 @@ public class LeftNavigation extends CommandCenterGenericTest {
 		ccuser = new CCUser(property);
 		ccuser.setCCuser();
 		log("Step 2: Login to Command Center Portal with Admin Credentials");
-		cchomepage = loginToCCPortal(super.driver, ccuser.getUrl(), ccuser.getAdminEmail(), ccuser.getPasswordAdmin());
+		cchomepage = loginToCCPortal(super.driver, ccuser.getUrl(), ccuser.getAdminEmail(), ccuser.getPassword());
 		log("Step 3: Clicking on hamburger menu with Admin login");
 		cchomepage.clickHamburger();
 		log("Step 4: Clicking on all PXP CC menu Items with Admin login");

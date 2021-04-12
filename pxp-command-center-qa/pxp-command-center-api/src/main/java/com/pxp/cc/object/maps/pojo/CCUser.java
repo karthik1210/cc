@@ -64,9 +64,9 @@ public class CCUser {
 		setUnregisteredEmail(getProperty("reset.password.unregistered.email"));
 		setExternalUser(getProperty("reset.password.external.user"));
 		setInvalidTokenUrl(getProperty("invalid.token.url"));
-		setAdminEmail(getProperty("reset.password.admin.email"));
+		setAdminEmail(getProperty("left.navigation.admin.email"));
 		setNavigationEmail(getProperty("left.navigation.email"));
-		setPasswordAdmin(getProperty("left.navigation.admin.email"));
+		setPasswordAdmin(getProperty("admin.password"));
 	}
 
 	public void setAdminCCWithWrongPassword() throws Exception {
