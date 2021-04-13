@@ -6,7 +6,7 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.object.maps.homepage.CommandCenterHomePage;
 import com.pxp.cc.object.maps.pojo.CCUser;
 
-public class TopNavigation extends CommandCenterGenericTest {
+public class TopNavigationTests extends CommandCenterGenericTest {
 
 	public CCUser ccuser;
 	public CommandCenterHomePage cchomepage;
@@ -21,7 +21,6 @@ public class TopNavigation extends CommandCenterGenericTest {
 		cchomepage.verifyTopPanelElements();
 		log("Logout of CC Portal");
 		cchomepage.clickUserIcon();
-		Thread.sleep(2000);
 		cchomepage.clickLogout();
 	}
 
@@ -32,15 +31,12 @@ public class TopNavigation extends CommandCenterGenericTest {
 		log("Login to CC portal. url=" + ccuser.getUrl() + " and email=" + ccuser.getUsernameInternal() + " and password="
 				+ ccuser.getPasswordInternal());
 		cchomepage = loginToCCPortal(this.driver, ccuser.getUrl(), ccuser.getUsernameInternal(), ccuser.getPasswordInternal());
-		Thread.sleep(2000);
 		log("Verifying SSO links for Internal Users");
 		cchomepage.clickSSO();
-		Thread.sleep(2000);
 		cchomepage.getSsoLinks();
 		cchomepage.verifySSOLinksForInternalUsers();
 		log("Logout of CC Portal");
 		cchomepage.clickUserIcon();
-		Thread.sleep(2000);
 		cchomepage.clickLogout();
 	}
 
@@ -54,11 +50,9 @@ public class TopNavigation extends CommandCenterGenericTest {
 		log("Verifying SSO links for Internal Users");
 		cchomepage.clickSSO();
 		cchomepage.getSsoLinks();
-		Thread.sleep(1000);
 		cchomepage.verifySSOLinksForExternalUsers();
 		log("Logout of CC Portal");
 		cchomepage.clickUserIcon();
-		Thread.sleep(2000);
 		cchomepage.clickLogout();
 	}
 
@@ -71,12 +65,9 @@ public class TopNavigation extends CommandCenterGenericTest {
 		Thread.sleep(2000);
 		log("Verifying Alerts content for Internal Users");
 		cchomepage.clickAlerts();
-		Thread.sleep(1000);
 		cchomepage.verifyAlertsContent();
 		log("Logout of CC Portal");
-		Thread.sleep(1000);
 		cchomepage.clickUserIcon();
-		Thread.sleep(2000);
 		cchomepage.clickLogout();
 	}
 }
