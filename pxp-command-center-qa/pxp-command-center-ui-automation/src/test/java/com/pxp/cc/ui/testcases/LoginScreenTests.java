@@ -9,7 +9,7 @@ import com.pxp.cc.object.maps.loginpage.CommandCenterLoginPage;
 import com.pxp.cc.object.maps.pojo.CCUser;
 import com.pxp.cc.object.maps.utilities.CCUtils;
 
-public class LoginScreen extends CommandCenterGenericTest {
+public class LoginScreenTests extends CommandCenterGenericTest {
 
 	public CCUser ccuser;
 	public CommandCenterLoginPage commandcenterloginpage;
@@ -24,11 +24,8 @@ public class LoginScreen extends CommandCenterGenericTest {
 				+ " and password=" + ccuser.getPassword());
 		commandcenterhomepage = loginToCCPortal(this.driver, ccuser.getUrl(), ccuser.getUsername(),
 				ccuser.getPassword());
-		Thread.sleep(3000);
 		log("Landed to Command Center Home Page.");
-		Thread.sleep(1000);
 		commandcenterhomepage.clickUserIcon();
-		Thread.sleep(2000);
 		commandcenterhomepage.clickLogout();
 	}
 
@@ -43,17 +40,13 @@ public class LoginScreen extends CommandCenterGenericTest {
 		commandcenterloginpage = new CommandCenterLoginPage(driver, ccuser.getUrl());
 		log("Entering Username in Username Input field.");
 		commandcenterloginpage.enterUsername(ccuser.getUsername());
-		Thread.sleep(1000);
 		log("Entering wrong password in Password Input field.");
 		commandcenterloginpage.enterPassword(ccuser.getInvalidPassword());
 		commandcenterloginpage.clickShowButton();
-		Thread.sleep(2000);
 		commandcenterloginpage.clickHideButton();
 		log("clicking on Login button.");
 		commandcenterloginpage.clickLogin();
-		Thread.sleep(4000);
 		commandcenterloginpage.verifyInvalidUsernameOrPasswordError();
-		Thread.sleep(1000);
 	}
 
 	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -67,18 +60,13 @@ public class LoginScreen extends CommandCenterGenericTest {
 		CommandCenterLoginPage commandcenterloginpage = new CommandCenterLoginPage(driver, ccuser.getUrl());
 		log("Entering wrong Username in Username Input field.");
 		commandcenterloginpage.enterUsername(ccuser.getInvalidUsername());
-		Thread.sleep(1000);
 		log("Entering Password in Password Input field.");
 		commandcenterloginpage.enterPassword(ccuser.getPassword());
 		commandcenterloginpage.clickShowButton();
-		Thread.sleep(2000);
 		commandcenterloginpage.clickHideButton();
-		Thread.sleep(1000);
 		log("Clicking to Login button.");
 		commandcenterloginpage.clickLogin();
-		Thread.sleep(4000);
 		commandcenterloginpage.verifyInvalidUsernameOrPasswordError();
-		Thread.sleep(1000);
 	}
 
 	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -90,10 +78,8 @@ public class LoginScreen extends CommandCenterGenericTest {
 		CommandCenterLoginPage commandcenterloginpage = new CommandCenterLoginPage(driver, ccuser.getUrl());
 		log("Entering Password in Password Input Field.");
 		commandcenterloginpage.enterPassword(ccuser.getPassword());
-		Thread.sleep(2000);
 		log("Click on SHOW button in Password Input Field");
 		commandcenterloginpage.clickShowButton();
-		Thread.sleep(4000);
 		log("Verfying the 'TYPE' attribute of Password field");
 		if ((commandcenterloginpage.verifyPwdTypeAttribute())) {
 			log("Password is displayed");
@@ -101,13 +87,11 @@ public class LoginScreen extends CommandCenterGenericTest {
 			log("Password is NOT displayed");
 		log("Click on HIDE button in Password Input Field");
 		commandcenterloginpage.clickHideButton();
-		Thread.sleep(4000);
 		log("Verfying the 'TYPE' attribute of Password field");
 		if ((commandcenterloginpage.verifyPwdTypeAttribute())) {
 			log("Password is displayed");
 		} else
 			log("Password is NOT displayed");
-		Thread.sleep(1000);
 	}
 
 	@Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -122,9 +106,7 @@ public class LoginScreen extends CommandCenterGenericTest {
 		log("Attempting 6 times login to Command Center Portal");
 		commandcenterloginpage.sixAttemptsLoginViaInvalidPwd(ccuser.getLockoutUsername(), ccuser.getInvalidPassword(),
 				ccuser.getLoginAttempts());
-		Thread.sleep(2000);
 		CCUtils.assertEquals(commandcenterloginpage.getLockOutErrMsg().trim(),
 				commandcenterloginpage.lockoutErrorMsg.trim());
-		Thread.sleep(1000);
 	}
 }

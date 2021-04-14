@@ -146,25 +146,25 @@ public class CommandCenterHomePage extends CCMainPage {
 	}
 
 	public void clickSSO() {
-		highlightElement(ssoLinks);
+		CCUtils.verifyAndWaitForElement(ssoLinks, driver);
 		javascriptClick(ssoLinks);
 		log("SSOlinks clicked.....");
 	}
 
 	public void clickAlerts() {
-		highlightElement(alerts);
+		CCUtils.verifyAndWaitForElement(alerts, driver);
 		javascriptClick(alerts);
 		log("Alerts clicked.....");
 	}
 
 	public void clickUserIcon() {
-		highlightElement(userIcon);
+		CCUtils.verifyAndWaitForElement(userIcon, driver);
 		javascriptClick(userIcon);
 		log("User icon clicked.....");
 	}
 
 	public void clickLogout() throws InterruptedException {
-		highlightElement(userLogout);
+		CCUtils.verifyAndWaitForElement(userLogout, driver);
 		javascriptClick(userLogout);
 		log("Clicked on logout");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -204,7 +204,7 @@ public class CommandCenterHomePage extends CCMainPage {
 
 	public void verifyAlertsContent() {
 		log("Verifing contents for alert");
-		CCUtils.assertTrue(alertsLabel.isDisplayed(), "Alerts is displayed");
+		CCUtils.assertTrue(alertsLabel.isEnabled(), "Alerts is displayed");
 		CCUtils.assertTrue(alertsClose.isDisplayed(), "Alert close button is displayed");
 		CCUtils.assertTrue(alertsNotifictaionStatus.isDisplayed(), "Alerts notification status is displayed");
 	}

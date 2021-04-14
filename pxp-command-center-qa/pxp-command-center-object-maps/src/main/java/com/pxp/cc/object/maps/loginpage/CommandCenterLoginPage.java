@@ -7,6 +7,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import com.pxp.cc.object.maps.ccmainpage.CCMainPage;
 import com.pxp.cc.object.maps.homepage.CommandCenterHomePage;
+import com.pxp.cc.object.maps.utilities.CCUtils;
 
 public class CommandCenterLoginPage extends CCMainPage {
 
@@ -14,12 +15,12 @@ public class CommandCenterLoginPage extends CCMainPage {
 	private WebElement pxpCommandCenter;
 
 	@FindBy(xpath = "//input[@type='text'][@id='email']")
-	private WebElement username;
+	private WebElement usernameField;
 
 	@FindBy(xpath = "//input[@id='pwd']")
-	private WebElement password;
+	private WebElement passwordField;
 
-	@FindBy(xpath = "//p[normalize-space()='Invalid Username or password']")
+	@FindBy(xpath = "//p[@class='sign']")
 	private WebElement errorMsgInvalidUsernameOrPassword;
 
 	@FindBy(xpath = "//button[@type='submit']")
@@ -40,36 +41,37 @@ public class CommandCenterLoginPage extends CCMainPage {
 
 	public final String lockoutErrorMsg = "Password attempts exceeded, please contact your Command Center administrator.";
 
-	public CommandCenterHomePage login(String emailID, String Password) throws InterruptedException {
-		highlightElement(username);
-		username.sendKeys(emailID.trim());
+	public CommandCenterHomePage login(String emailID, String password) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(usernameField, driver);
+		highlightElement(usernameField);
+		usernameField.sendKeys(emailID.trim());
 		log("Entered email in Email Input field");
-		Thread.sleep(1000);
-		highlightElement(password);
-		password.sendKeys(Password.trim());
+		CCUtils.verifyAndWaitForElement(passwordField, driver);
+		highlightElement(passwordField);
+		passwordField.sendKeys(password.trim());
 		log("Entered password in Password Input field");
+		CCUtils.verifyAndWaitForElement(loginButton, driver);
 		highlightElement(loginButton);
 		loginButton.click();
 		return PageFactory.initElements(super.driver, CommandCenterHomePage.class);
 	}
 
-	public void sixAttemptsLoginViaInvalidPwd(String userName, String InvalidPassword, String loginattempts)
+	public void sixAttemptsLoginViaInvalidPwd(String userName, String invalidPassword, String loginAttempts)
 			throws InterruptedException {
-		highlightElement(username);
-		username.sendKeys(userName.trim());
+		CCUtils.verifyAndWaitForElement(usernameField, driver);
+		highlightElement(usernameField);
+		usernameField.sendKeys(userName.trim());
 		log("Entered email in Username Input field");
-		highlightElement(password);
-		password.sendKeys(InvalidPassword.trim());
+		highlightElement(passwordField);
+		passwordField.sendKeys(invalidPassword.trim());
 		log("Entered invalid password in Password Input field");
-		int attempts = Integer.parseInt(loginattempts);
+		int attempts = Integer.parseInt(loginAttempts);
 		for (int i = 0; i <= attempts; i++) {
+			CCUtils.verifyAndWaitForElement(loginButton, driver);
 			highlightElement(loginButton);
-			Thread.sleep(1000);
 			javascriptClick(loginButton);
-			Thread.sleep(500);
 			log("clicked on login button: " + i);
 		}
-		Thread.sleep(1000);
 	}
 
 	public String getLockOutErrMsg() {
@@ -77,15 +79,15 @@ public class CommandCenterLoginPage extends CCMainPage {
 		return msg;
 	}
 
-	public void enterUsername(String Username) {
-		highlightElement(username);
-		username.sendKeys(Username.trim());
+	public void enterUsername(String username) {
+		highlightElement(usernameField);
+		usernameField.sendKeys(username.trim());
 		log("Entered Username in Username Input field");
 	}
 
-	public void enterPassword(String Password) {
-		highlightElement(password);
-		password.sendKeys(Password.trim());
+	public void enterPassword(String password) {
+		highlightElement(passwordField);
+		passwordField.sendKeys(password.trim());
 		log("Entered password in Password Input field");
 	}
 
@@ -108,7 +110,7 @@ public class CommandCenterLoginPage extends CCMainPage {
 	}
 
 	public boolean verifyPwdTypeAttribute() {
-		if ((password.getAttribute("type")).equals("text")) {
+		if ((passwordField.getAttribute("type")).equals("text")) {
 			log("Password input field || Type attribute value is : 'text' ");
 			return true;
 		}
