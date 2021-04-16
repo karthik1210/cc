@@ -1,13 +1,9 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.object.maps.ccmainpage;
 
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-
 import com.intuit.ifs.csscat.core.pageobject.BasePageObject;
 
 public class CCMainPage extends BasePageObject {

@@ -10,10 +10,10 @@
 	<artifactId>pxp-command-center-api</artifactId>
 	<name>pxp-command-center-api</name>
 	<packaging>jar</packaging>
-	<!-- <properties>
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<ihg.version>21.1.0-SNAPSHOT</ihg.version>
-	</properties> -->
+	</properties> 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
 		<dependency>
