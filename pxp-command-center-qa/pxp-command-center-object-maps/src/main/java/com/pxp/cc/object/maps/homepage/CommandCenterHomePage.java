@@ -6,10 +6,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import com.pxp.cc.object.maps.ccmainpage.CCMainPage;
 import com.pxp.cc.object.maps.utilities.CCUtils;
 
@@ -51,9 +55,30 @@ public class CommandCenterHomePage extends CCMainPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='alert-drawer-main ng-tns-c147-0 ng-trigger ng-trigger-slideInOut']//div[1]//div[1]//div[1]//div[3]//span[2]//label[1]")
 	private WebElement alertsNotifictaionStatus;
 
-
 	@FindBy(how = How.XPATH, using = "//div[@class='cdk-overlay-container']//a")
 	private List<WebElement> ssoLinkList;
+
+	@FindBy(how = How.ID, using = "mat142")
+	private WebElement ccHamburgerMenu;
+
+	@FindBy(how = How.XPATH, using = "//*[@id=\"d101\"]/mat-sidenav-container/mat-sidenav/div/mat-nav-list")
+	private WebElement organizationTree;
+
+	@FindAll({
+			@FindBy(how = How.XPATH, using = "//*[@id=\"d101\"]/mat-sidenav-container/mat-sidenav/div/mat-nav-list/a") })
+	private List<WebElement> menuItem;
+
+	@FindBy(how = How.XPATH, using = "OrganizationTree")
+	private WebElement organizationTreeText;
+
+	@FindBy(how = How.XPATH, using = "//a[@ng-reflect-router-link='/dashboard/users']//div[@class='mat-list-item-content']")
+	private WebElement commandCenterUsers;
+
+	@FindBy(how = How.XPATH, using = "//a[@ng-reflect-router-link='/dashboard/reports']//div[@class='mat-list-item-content']")
+	private WebElement reporting;
+
+	@FindBy(how = How.XPATH, using = "//*[@id='d101']/mat-sidenav-container/mat-sidenav/div/mat-nav-list/a[4]/div/div[2]/p")
+	private WebElement developerTools;
 
 	List<String> actualSsoLinks = new ArrayList<String>();
 
@@ -65,6 +90,59 @@ public class CommandCenterHomePage extends CCMainPage {
 
 	public CommandCenterHomePage(WebDriver driver) {
 		super(driver);
+	}
+
+	public void clickHamburger() {
+		wait.until(ExpectedConditions.visibilityOf(ccHamburgerMenu));
+		ccHamburgerMenu.click();
+	}
+
+	public void clickCCMenuItems() {
+		for (WebElement webElement : menuItem) {
+			wait.until(ExpectedConditions.visibilityOf(webElement));
+			webElement.click();
+			log(driver.getCurrentUrl());
+			log("Title logger :" + webElement.getText());
+			String getElementText = webElement.findElement(By.className("mat-list-text")).getText();
+			if (getElementText.equals("Organization Tree")) {
+				gotoOrganizationTree();
+				CCUtils.assertEquals(getElementText, ("Organization Tree"));
+			} else if (getElementText.equals("Command Center Users")) {
+				gotoCommandCenterUsers();
+				CCUtils.assertEquals(getElementText, ("Command Center Users"));
+			} else if (getElementText.equals("Reporting")) {
+				gotoReporting();
+				CCUtils.assertEquals(getElementText, ("Reporting"));
+			} else if (getElementText.equals("Developer Tools")) {
+				gotoDeveloperTools();
+				CCUtils.assertEquals(getElementText, ("Developer Tools"));
+			}
+		}
+	}
+
+	public void gotoOrganizationTree() {
+		javascriptClick(organizationTree);
+		log("OrganizationTree Tab clicked.....");
+		wait.until(ExpectedConditions.visibilityOf(organizationTree));
+	}
+
+	public void gotoCommandCenterUsers() {
+		javascriptClick(commandCenterUsers);
+		log("Command Center Users Tab clicked.....");
+		wait.until(ExpectedConditions.visibilityOf(commandCenterUsers));
+	}
+
+	public void gotoReporting() {
+		javascriptClick(reporting);
+		log("reporting Tab clicked.....");
+		wait.until(ExpectedConditions.visibilityOf(reporting));
+
+	}
+
+	public void gotoDeveloperTools() {
+		javascriptClick(developerTools);
+		log("developerTools Tab clicked.....");
+		wait.until(ExpectedConditions.visibilityOf(developerTools));
 	}
 
 	public void clickSSO() {
