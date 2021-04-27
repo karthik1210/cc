@@ -182,7 +182,6 @@ public class PasswordResetPage extends CCMainPage {
 		wait.until(ExpectedConditions.visibilityOf(setNewPassword));
 		highlightElement(setNewPassword);
 		setNewPassword.click();
-		Thread.sleep(4000);
 		log("Choose new password page throw error for already used password.");
 	}
 
