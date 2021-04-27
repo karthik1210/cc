@@ -11,8 +11,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.medfusion.common.utils.Mailinator;
 import com.pxp.cc.object.maps.ccmainpage.CCMainPage;
-import com.pxp.cc.object.maps.pojo.CCUser;
-import com.pxp.cc.object.maps.utilities.CCUtils;
 
 public class PasswordResetPage extends CCMainPage {
 
@@ -123,17 +121,10 @@ public class PasswordResetPage extends CCMainPage {
 		log("Entering the Email id");
 		emailMeTheLink.click();
 		log("It will send the link for password reset on entered email Id");
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("r*****@m*****.com", emailSentNotification.getText());
 		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		urlInEmail(resetEmail, autogeneratePwd);
 	}
 
-	private void urlInEmail(String resetEmail, String autogeneratePwd) throws InterruptedException {
+	public void urlInEmail(String resetEmail, String autogeneratePwd) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(resetEmail, "Password reset request", "pwd-change", 1);
 		log("Fetching the reset password url received in email:" + url);
 		driver.navigate().to(url);
@@ -154,28 +145,7 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(setNewPassword);
 		setNewPassword.click();
 		log("Click on set the new password button");
-		wait.until(ExpectedConditions.visibilityOf(newPaswwordCreated));
-		CCUtils.assertEquals(newPaswwordCreated.getText(), "Success! Your password has been reset.");
-		wait.until(ExpectedConditions.visibilityOf(updatePassword));
-		highlightElement(updatePassword);
-		updatePassword.click();
-		log("Click on updated password button");
-		wait.until(ExpectedConditions.visibilityOf(username));
-		username.sendKeys("ruchi.singh@mailinator.com");
-		wait.until(ExpectedConditions.visibilityOf(password));
-		password.sendKeys(autogeneratePwd);
-		highlightElement(showButton);
-		showButton.click();
-		wait.until(ExpectedConditions.visibilityOf(returnToLoginButton));
-		highlightElement(returnToLoginButton);
-		returnToLoginButton.click();
-		log("Navigate to login page");
-		wait.until(ExpectedConditions.visibilityOf(returnToLoginButton));
-		deleteEmail(resetEmail);
-		log("It will delete the already used link of email");
-		driver.navigate().refresh();
-		driver.close();
-		log("It will close the current browser window");
+		wait.until(ExpectedConditions.visibilityOf(setNewPassword));
 
 	}
 
@@ -192,18 +162,10 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("r*****@m*****.com", emailSentNotification.getText());
-		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		Thread.sleep(4000);
-		oldPasswordLinkInEmail(mailinatorOldPassword, autogeneratePwd);
+		wait.until(ExpectedConditions.visibilityOf(returnToLogin));
 	}
 
-	private void oldPasswordLinkInEmail(String mailinatorOldPassword, String autogeneratePwd)
+	public void oldPasswordLinkInEmail(String mailinatorOldPassword, String autogeneratePwd)
 			throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorOldPassword, "Password reset request", "pwd-change", 1);
 		log("Fetching the reset password url received in email:" + url);
@@ -222,13 +184,6 @@ public class PasswordResetPage extends CCMainPage {
 		setNewPassword.click();
 		Thread.sleep(4000);
 		log("Choose new password page throw error for already used password.");
-		wait.until(ExpectedConditions.visibilityOf(alreadyUsedPassword));
-		CCUtils.assertEquals("New password must not match with last 10 old passwords", alreadyUsedPassword.getText());
-		deleteEmail(mailinatorOldPassword);
-		log("It will delete the already used link of email");
-		driver.navigate().refresh();
-		driver.close();
-		log("It will close the current browser window");
 	}
 
 	public void verifyFunctionalityForUnregisteredUser(String email) throws InterruptedException {
@@ -243,7 +198,6 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		emailMeTheLink.click();
 		wait.until(ExpectedConditions.visibilityOf(errorMsgUnregisteredUser));
-		CCUtils.assertEquals(errorMsgUnregisteredUser.getText(), "You do not have access to this system.");
 	}
 
 	public void verifyPasswordResetFunctionalityWithBlankUsername() throws InterruptedException {
@@ -255,7 +209,6 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		emailMeTheLink.click();
 		wait.until(ExpectedConditions.visibilityOf(blankEmail));
-		CCUtils.assertEquals(blankEmail.getText(), "Username is required");
 		log("click on EmailMeTheLink button without email id....");
 	}
 
@@ -272,17 +225,6 @@ public class PasswordResetPage extends CCMainPage {
 		emailMeTheLink.click();
 		log("click on EmailMeTheLink button");
 		wait.until(ExpectedConditions.visibilityOf(resetLogin));
-		wait.until(ExpectedConditions.visibilityOf(errorMsgExternalUser));
-		log("click on EmailMeTheLink button errorMsgExternalUser");
-		CCUtils.assertEquals(errorMsgExternalUser.getText(),
-				"Your credentials are managed through an external system and the Command Center cannot change your password on your behalf.");
-		wait.until(ExpectedConditions.visibilityOf(changePasswordMsgContactAdmin));
-		CCUtils.assertEquals(changePasswordMsgContactAdmin.getText(),
-				"If you would like to change your password, please contact _______________.");
-		log("Navigate to welcome Page.....");
-		highlightElement(resetLogin);
-		resetLogin.click();
-		log("click on return to login");
 	}
 
 	public void verifySetNewPasswordFunctionalityWithSpaceEnteredInPasswordField(String mailinatorSpaceInPassword)
@@ -297,18 +239,10 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("p*****@m*****.com", emailSentNotification.getText());
 		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		Thread.sleep(4000);
-		linkInEmail(mailinatorSpaceInPassword);
 	}
 
-	private void linkInEmail(String mailinatorSpaceInPassword) throws InterruptedException {
+	public void linkInEmail(String mailinatorSpaceInPassword) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorSpaceInPassword, "Password reset request", "pwd-change", 1);
 		log("Fetching the reset password url received in email:" + url);
 		driver.navigate().to(url);
@@ -327,7 +261,6 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(setNewPassword);
 		setNewPassword.click();
 		wait.until(ExpectedConditions.visibilityOf(spaceValidation));
-		CCUtils.assertEquals("Space not allowed in password", spaceValidation.getText());
 		log("Set New Password will throw error message when entered space in password field.");
 	}
 
@@ -343,17 +276,10 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("r*****@m*****.com", emailSentNotification.getText());
 		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		linkUnderEmail(mailinatorRepetitiveSequence);
 	}
 
-	private void linkUnderEmail(String mailinatorRepetitiveSequence) throws InterruptedException {
+	public void linkUnderEmail(String mailinatorRepetitiveSequence) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorRepetitiveSequence, "Password reset request", "pwd-change",
 				1);
 		log("Fetching the reset password url received in email:" + url);
@@ -367,7 +293,6 @@ public class PasswordResetPage extends CCMainPage {
 		confirmPassword.sendKeys("RRR432k@");
 		highlightElement(hideConfirmPass);
 		hideConfirmPass.click();
-		jse.executeScript("window.scrollBy(0,250)");
 		scrollAndWait(0, 250, 3000);
 		log("Set New Password button will be disabled when used repetitive sequence in password field.");
 	}
@@ -383,17 +308,10 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("i*****@m*****.com", emailSentNotification.getText());
 		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		invalidTokenUrlInEmail(mailinatorInvalidToken, tokenURL);
 	}
 
-	private void invalidTokenUrlInEmail(String mailinatorInvalidToken, String tokenURL) throws InterruptedException {
+	public void invalidTokenUrlInEmail(String mailinatorInvalidToken, String tokenURL) throws InterruptedException {
 		log("Fetching the reset password url received in email:" + tokenURL);
 		driver.navigate().to(tokenURL);
 		log("Navigate to Choose a new password Page ");
@@ -404,13 +322,11 @@ public class PasswordResetPage extends CCMainPage {
 		confirmPassword.sendKeys("Ruchi*29");
 		highlightElement(hideConfirmPass);
 		hideConfirmPass.click();
-		jse.executeScript("window.scrollBy(0,250)");
 		scrollAndWait(0, 250, 3000);
 		wait.until(ExpectedConditions.visibilityOf(setNewPassword));
 		highlightElement(setNewPassword);
 		setNewPassword.click();
 		wait.until(ExpectedConditions.visibilityOf(invalidToken));
-		CCUtils.assertEquals("This password reset token is invalid", invalidToken.getText());
 		log("Already used token for password reset.");
 	}
 
@@ -426,18 +342,10 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("c*****@m*****.com", emailSentNotification.getText());
 		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		Thread.sleep(4000);
-		commonPasswordUrlInEmail(mailinatorCommonPassword);
 	}
 
-	private void commonPasswordUrlInEmail(String mailinatorCommonPassword) throws InterruptedException {
+	public void commonPasswordUrlInEmail(String mailinatorCommonPassword) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorCommonPassword, "Password reset request", "pwd-change", 1);
 		log("Fetching the reset password url received in email:" + url);
 		driver.navigate().to(url);
@@ -464,18 +372,10 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(userNotificationMsg));
-		CCUtils.assertEquals("We just sent a verification message to the following address:",
-				userNotificationMsg.getText());
-		wait.until(ExpectedConditions.visibilityOf(emailSentNotification));
-		CCUtils.assertEquals("M*****@m*****.com", emailSentNotification.getText());
 		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-		CCUtils.assertEquals("confirm@nextgen.com.", receivedEmailAddress.getText());
-		Thread.sleep(4000);
-		maximumCharacterValidationlinkInEmail(mailinatorMaximumCharacters);
 	}
 
-	private void maximumCharacterValidationlinkInEmail(String mailinatorMaximumCharacters) throws InterruptedException {
+	public void maximumCharacterValidationlinkInEmail(String mailinatorMaximumCharacters) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorMaximumCharacters, "Password reset request", "pwd-change",
 				1);
 		log("Fetching the reset password url received in email:" + url);
@@ -496,11 +396,10 @@ public class PasswordResetPage extends CCMainPage {
 		setNewPassword.click();
 		log("Choose new password page throw error for maximum characters.");
 		wait.until(ExpectedConditions.visibilityOf(maximumCharacter));
-		CCUtils.assertEquals("Password should have less than 100 characters", maximumCharacter.getText());
 	}
 
 	public void deleteEmail(String mailinatorEmail) {
-		log("Blank EmailID Verification :");
+		log("Delete EmailID Verification :" + mailinatorEmail);
 		driver.navigate().to("https://www.mailinator.com/v4/public/inboxes.jsp?to=" + mailinatorEmail);
 		driver.manage().window().maximize();
 		int rowCount = driver.findElements(By.xpath("//*[@id=\"inbox_pane\"]/div[3]/div/div[4]/div/div/table/tbody/tr"))
@@ -546,90 +445,92 @@ public class PasswordResetPage extends CCMainPage {
 		}
 	}
 
-	public PasswordResetPage clickOnforgotPasswordLink(WebDriver driver, CCUser ccuser, String autogeneratePassword)
-			throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser.getResetEmail());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifyUpdatedPasswordSuccessfullyLoginFunctionality(ccuser.getResetEmail(),
-				autogeneratePassword);
-		return commandcenterforgotpage;
+	public String getUserNotificationMsg() {
+		String msg = userNotificationMsg.getText();
+		return msg;
 	}
 
-	public PasswordResetPage emailAddressValidation(WebDriver driver, CCUser ccuser) throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser.getUnregisteredEmail());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifyFunctionalityForUnregisteredUser(ccuser.getUnregisteredEmail());
-		return commandcenterforgotpage;
+	public String getEmailSentNotificationMsg() {
+		String msg = emailSentNotification.getText();
+		return msg;
 	}
 
-	public PasswordResetPage emailWithoutData(WebDriver driver, CCUser ccuser) throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser);
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifyPasswordResetFunctionalityWithBlankUsername();
-		return commandcenterforgotpage;
+	public String getReceivedEmailAddressMsg() {
+		String msg = receivedEmailAddress.getText();
+		return msg;
 	}
 
-	public PasswordResetPage externalUserLogin(WebDriver driver, CCUser ccuser) throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and external user email=" + ccuser);
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifyPasswordResetValidationForExternalUser(ccuser.getExternalUser());
-		return commandcenterforgotpage;
+	public String getErrorMsgUnregisteredUserMsg() {
+		String msg = errorMsgUnregisteredUser.getText();
+		return msg;
 	}
 
-	public PasswordResetPage resetPasswordSpaceValidations(WebDriver driver, CCUser ccuser)
-			throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser.getMailinatorSpaceInPassword());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifySetNewPasswordFunctionalityWithSpaceEnteredInPasswordField(
-				ccuser.getMailinatorSpaceInPassword());
-		return commandcenterforgotpage;
+	public String getBlankEmailMsg() {
+		String msg = blankEmail.getText();
+		return msg;
 	}
 
-	public PasswordResetPage resetPasswordRepetitiveSequenceValidation(WebDriver driver, CCUser ccuser)
-			throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail="
-				+ ccuser.getMailinatorRepetitiveSequence());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifySetNewPasswordFunctionalityWithRepetitiveSequenceEnteredInPasswordField(
-				ccuser.getMailinatorRepetitiveSequence());
-		return commandcenterforgotpage;
+	public String getErrorMsgExternalUser() {
+		String msg = errorMsgExternalUser.getText();
+		return msg;
 	}
 
-	public PasswordResetPage resetPasswordAlreadyUsedPasswordValidation(WebDriver driver, CCUser ccuser,
-			String autogeneratePassword) throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser.getMailinatorOldPassword());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifySetNewPasswordFunctionalityWithLastTenOldPassword(
-				ccuser.getMailinatorOldPassword(), autogeneratePassword);
-		return commandcenterforgotpage;
+	public String getChangePasswordMsgContactAdminMsg() {
+		String msg = changePasswordMsgContactAdmin.getText();
+		return msg;
 	}
 
-	public PasswordResetPage resetPasswordAlreadyUsedTokenValidation(WebDriver driver, CCUser ccuser)
-			throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser.getMailinatorInvalidToken());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifyPasswordResetForInvalidToken(ccuser.getMailinatorInvalidToken(),
-				ccuser.getInvalidTokenUrl());
-		return commandcenterforgotpage;
+	public String getInvalidTokenMsg() {
+		String msg = invalidToken.getText();
+		return msg;
 	}
 
-	public PasswordResetPage resetPasswordCommonlyUsedValidation(WebDriver driver, CCUser ccuser)
-			throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail=" + ccuser.getMailinatorCommonPassword());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage
-				.verifySetNewPasswordFunctionalityWithCommonPassword(ccuser.getMailinatorCommonPassword());
-		return commandcenterforgotpage;
+	public String getSpaceValidationMsg() {
+		String msg = spaceValidation.getText();
+		return msg;
 	}
 
-	public PasswordResetPage resetPasswordMaximumCharactersValidation(WebDriver driver, CCUser ccuser)
-			throws InterruptedException {
-		log("Click on FORGOT PASSWORD" + ccuser.getUrl() + " and ResetEmail="
-				+ ccuser.getMailinatorMaximumCharacters());
-		PasswordResetPage commandcenterforgotpage = new PasswordResetPage(driver, ccuser.getUrl());
-		commandcenterforgotpage.verifySetNewPasswordFunctionalityWithMaximumOfhunderedCharacters(
-				ccuser.getMailinatorMaximumCharacters());
-		return commandcenterforgotpage;
+	public String getMaximumCharacterMsg() {
+		String msg = maximumCharacter.getText();
+		return msg;
 	}
 
+	public String getNewPaswwordCreatedMsg() {
+		String msg = newPaswwordCreated.getText();
+		return msg;
+	}
+
+	public String getAlreadyUsedPasswordMsg() {
+		String msg = alreadyUsedPassword.getText();
+		return msg;
+	}
+
+	public void callReturnToLogin() {
+		resetLogin.click();
+		log("click on return to login");
+
+	}
+
+	public void callPasswordUpdated(String resetEmail, String autogeneratePwd) {
+		wait.until(ExpectedConditions.visibilityOf(updatePassword));
+		highlightElement(updatePassword);
+		updatePassword.click();
+		log("Click on updated password button");
+		wait.until(ExpectedConditions.visibilityOf(username));
+		username.sendKeys("ruchi.singh@mailinator.com");
+		wait.until(ExpectedConditions.visibilityOf(password));
+		password.sendKeys(autogeneratePwd);
+		highlightElement(showButton);
+		showButton.click();
+		wait.until(ExpectedConditions.visibilityOf(returnToLoginButton));
+		highlightElement(returnToLoginButton);
+		returnToLoginButton.click();
+		log("Navigate to login page");
+		wait.until(ExpectedConditions.visibilityOf(returnToLoginButton));
+		deleteEmail(resetEmail);
+		log("It will delete the already used link of email:" + resetEmail);
+		driver.navigate().refresh();
+		driver.close();
+		log("It will close the current browser window");
+	}
 }
