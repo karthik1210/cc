@@ -1,4 +1,4 @@
-// Copyright 2018-2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.object.maps.pojo;
 
 import java.util.Properties;
@@ -42,6 +42,14 @@ public class CCUser {
 	String invalidTokenUrl;
 	String adminEmail;
 	String navigationEmail;
+	String withUsername;
+	String mailinatorSpaceInPassword;
+	String mailinatorRepetitiveSequence;
+	String mailinatorOldPassword;
+	String mailinatorExpiredLink;
+	String mailinatorInvalidToken;
+	String mailinatorCommonPassword;
+	String mailinatorMaximumCharacters;
 
 	public String getProperty(String prop) throws Exception {
 		if (properties.getProperty(prop) == null)
@@ -58,15 +66,20 @@ public class CCUser {
 		setEnterpriseNode(getProperty("search.enterprise"));
 		setPracticeNode(getProperty("search.practice"));
 		setLocationNode(getProperty("search.location"));
-		setEmailId(getProperty("reset.password.email"));
-		setResetEmail(getProperty("reset.password.reset.email"));
-		setClientName(getProperty("reset.password.client.name"));
-		setUnregisteredEmail(getProperty("reset.password.unregistered.email"));
-		setExternalUser(getProperty("reset.password.external.user"));
-		setInvalidTokenUrl(getProperty("invalid.token.url"));
 		setAdminEmail(getProperty("left.navigation.admin.email"));
 		setNavigationEmail(getProperty("left.navigation.email"));
 		setPasswordAdmin(getProperty("admin.password"));
+		setResetEmail(getProperty("reset.password.resetEmail"));
+		setMailinatorSpaceInPassword(getProperty("reset.password.SpaceInPassword"));
+		setMailinatorRepetitiveSequence(getProperty("reset.password.RepetitiveSequence"));
+		setMailinatorOldPassword(getProperty("reset.password.OldPassword"));
+		setMailinatorExpiredLink(getProperty("reset.password.ExpiredLink"));
+		setMailinatorInvalidToken(getProperty("reset.password.InvalidToken"));
+		setMailinatorCommonPassword(getProperty("reset.password.CommonPassword"));
+		setMailinatorMaximumCharacters(getProperty("reset.password.MaximumCharacters"));
+		setUnregisteredEmail(getProperty("reset.password.unregisteredEmail"));
+		setExternalUser(getProperty("reset.password.externalUser"));
+		setInvalidTokenUrl(getProperty("reset.password.invalidTokenUrl"));
 	}
 
 	public void setAdminCCWithWrongPassword() throws Exception {
