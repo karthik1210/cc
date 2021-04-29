@@ -48,7 +48,7 @@ public class PasswordResetPage extends CCMainPage {
 	private WebElement receivedEmailAddress;
 
 	@FindBy(xpath = "//*[@id=\"resetButton\"]/button")
-	private WebElement resetLogin;
+	private WebElement returnToLoginFromOops;
 
 	@FindBy(xpath = "//*[@id=\"returnButton\"]/button")
 	private WebElement returnToLogin;
@@ -149,22 +149,6 @@ public class PasswordResetPage extends CCMainPage {
 
 	}
 
-	public void clickForgotPasswordAndEnterOldPasswordEmailAddress(String mailinatorOldPassword, String autogeneratePwd)
-			throws InterruptedException {
-		log("Updated password login functionality email id :" + mailinatorOldPassword + " and password :"
-				+ autogeneratePwd);
-		highlightElement(forgotPassword);
-		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
-		highlightElement(usernameField);
-		usernameField.sendKeys(mailinatorOldPassword);
-		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
-		highlightElement(emailMeTheLink);
-		log("Entering the Emailid.....");
-		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(returnToLogin));
-	}
-
 	public void oldPasswordLinkInEmail(String mailinatorOldPassword, String autogeneratePwd)
 			throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorOldPassword, "Password reset request", "pwd-change", 1);
@@ -183,7 +167,9 @@ public class PasswordResetPage extends CCMainPage {
 		highlightElement(setNewPassword);
 		setNewPassword.click();
 		log("Choose new password page throw error for already used password.");
-		wait.until(ExpectedConditions.visibilityOf(alreadyUsedPassword));
+		wait.until(ExpectedConditions.textToBePresentInElement(alreadyUsedPassword,
+				"New password must not match with last 10 old passwords"));
+
 	}
 
 	public void clickForgotPasswordAndEnterUnregisteredUserEmailAddress(String email) throws InterruptedException {
@@ -224,18 +210,17 @@ public class PasswordResetPage extends CCMainPage {
 		log("After entering the Email validating externalUser.....");
 		emailMeTheLink.click();
 		log("click on EmailMeTheLink button");
-		wait.until(ExpectedConditions.visibilityOf(resetLogin));
+		wait.until(ExpectedConditions.visibilityOf(returnToLoginFromOops));
 	}
 
-	public void clickForgotPasswordAndEnterSpaceInPasswordEmailAddress(String mailinatorSpaceInPassword)
-			throws InterruptedException {
-		log("Functionality of Space entered in password field :" + mailinatorSpaceInPassword);
+	public void clickForgotPasswordAndEnterEmailAddress(String email) throws InterruptedException {
+		log("Common Password :" + email);
 		highlightElement(forgotPassword);
 		forgotPassword.click();
 		log("Click on forgot Password link and rendered to password reset page");
 		highlightElement(usernameField);
-		log("click on ForgotPassword link.....");
-		usernameField.sendKeys(mailinatorSpaceInPassword);
+		usernameField.sendKeys(email);
+		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
 		highlightElement(emailMeTheLink);
 		log("Entering the Emailid.....");
 		emailMeTheLink.click();
@@ -264,21 +249,6 @@ public class PasswordResetPage extends CCMainPage {
 		log("Set New Password will throw error message when entered space in password field.");
 	}
 
-	public void clickForgotPasswordAndEnterRepetitiveSequenceEmailAddress(String mailinatorRepetitiveSequence)
-			throws InterruptedException {
-		log("Repetitive sequence entered in password field :" + mailinatorRepetitiveSequence);
-		highlightElement(forgotPassword);
-		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
-		highlightElement(usernameField);
-		log("click on ForgotPassword link.....");
-		usernameField.sendKeys(mailinatorRepetitiveSequence);
-		highlightElement(emailMeTheLink);
-		log("Entering the Emailid.....");
-		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-	}
-
 	public void linkUnderEmail(String mailinatorRepetitiveSequence) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorRepetitiveSequence, "Password reset request", "pwd-change",
 				1);
@@ -295,20 +265,6 @@ public class PasswordResetPage extends CCMainPage {
 		hideConfirmPass.click();
 		scrollAndWait(0, 250, 3000);
 		log("Set New Password button will be disabled when used repetitive sequence in password field.");
-	}
-
-	public void clickForgotPasswordAndEnterInvalidTokenEmailAddress(String mailinatorInvalidToken, String tokenURL)
-			throws InterruptedException {
-		log("Invalid Token :" + mailinatorInvalidToken);
-		highlightElement(forgotPassword);
-		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
-		highlightElement(usernameField);
-		usernameField.sendKeys(mailinatorInvalidToken);
-		highlightElement(emailMeTheLink);
-		log("Entering the Emailid.....");
-		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
 	}
 
 	public void invalidTokenUrlInEmail(String mailinatorInvalidToken, String tokenURL) throws InterruptedException {
@@ -330,21 +286,6 @@ public class PasswordResetPage extends CCMainPage {
 		log("Already used token for password reset.");
 	}
 
-	public void clickForgotPasswordAndEnterCommonPasswordEmailAddress(String mailinatorCommonPassword)
-			throws InterruptedException {
-		log("Common Password :" + mailinatorCommonPassword);
-		highlightElement(forgotPassword);
-		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
-		highlightElement(usernameField);
-		usernameField.sendKeys(mailinatorCommonPassword);
-		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
-		highlightElement(emailMeTheLink);
-		log("Entering the Emailid.....");
-		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
-	}
-
 	public void commonPasswordUrlInEmail(String mailinatorCommonPassword) throws InterruptedException {
 		String url = mailinator.getLinkFromEmail(mailinatorCommonPassword, "Password reset request", "pwd-change", 1);
 		log("Fetching the reset password url received in email:" + url);
@@ -358,21 +299,6 @@ public class PasswordResetPage extends CCMainPage {
 		hideConfirmPass.click();
 		scrollAndWait(0, 250, 3000);
 		log("Set New Password button will be disabled when used commonly password.");
-	}
-
-	public void clickForgotPasswordAndEnterMaximumCharactersEmailAddress(String mailinatorMaximumCharacters)
-			throws InterruptedException {
-		log("Maximum of hundered Characters :" + mailinatorMaximumCharacters);
-		highlightElement(forgotPassword);
-		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
-		highlightElement(usernameField);
-		usernameField.sendKeys(mailinatorMaximumCharacters);
-		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
-		highlightElement(emailMeTheLink);
-		log("Entering the Emailid.....");
-		emailMeTheLink.click();
-		wait.until(ExpectedConditions.visibilityOf(receivedEmailAddress));
 	}
 
 	public void maximumCharacterValidationlinkInEmail(String mailinatorMaximumCharacters) throws InterruptedException {
@@ -506,7 +432,7 @@ public class PasswordResetPage extends CCMainPage {
 	}
 
 	public void callReturnToLogin() {
-		resetLogin.click();
+		returnToLoginFromOops.click();
 		log("click on return to login");
 
 	}
@@ -527,9 +453,6 @@ public class PasswordResetPage extends CCMainPage {
 		returnToLoginButton.click();
 		log("Navigate to login page");
 		wait.until(ExpectedConditions.visibilityOf(returnToLoginButton));
-		deleteEmail(resetEmail);
-		log("Deleting email for user:" + resetEmail);
-		driver.navigate().refresh();
-		driver.close();
 	}
+
 }

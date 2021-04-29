@@ -16,6 +16,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 	SecureRandom random = new SecureRandom();
 	String autogeneratePassword = PasswordResetPage.genPassword(random);
 	public CCUser ccuser;
+	public PasswordResetPage resetPage;
 
 	@BeforeClass
 	public static void setup() {
@@ -29,7 +30,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
 		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail(), autogeneratePassword);
 		logStep("Validating email received");
@@ -41,6 +42,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to reset password page and verifying success message");
 		CCUtils.assertEquals(resetPage.getNewPaswwordCreatedMsg(), "Success! Your password has been reset.");
 		resetPage.callPasswordUpdated(ccuser.getResetEmail(), autogeneratePassword);
+		resetPage.deleteEmail(ccuser.getResetEmail());
+		driver.navigate().refresh();
+		driver.close();
 	}
 
 	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -51,10 +55,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterOldPasswordEmailAddress(ccuser.getMailinatorOldPassword(),
-				autogeneratePassword);
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorOldPassword(), autogeneratePassword);
 		logStep("Validating email received");
 		CCUtils.assertEquals("We just sent a verification message to the following address:",
 				resetPage.getUserNotificationMsg());
@@ -77,9 +80,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterInvalidTokenEmailAddress(ccuser.getMailinatorInvalidToken(),
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorInvalidToken(),
 				ccuser.getInvalidTokenUrl());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
@@ -98,7 +101,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
 		resetPage.verifyPasswordResetFunctionalityWithBlankUsername();
 		logStep("Validating blank email");
@@ -112,7 +115,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
 		resetPage.clickForgotPasswordAndEnterUnregisteredUserEmailAddress(ccuser.getUnregisteredEmail());
 		logStep("Validating email received");
@@ -126,7 +129,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
 		resetPage.clickForgotPasswordAndEnterExternalUserEmailAddress(ccuser.getExternalUser());
 		logStep("Validating email received");
@@ -144,9 +147,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterRepetitiveSequenceEmailAddress(ccuser.getMailinatorRepetitiveSequence());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorRepetitiveSequence());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
@@ -162,9 +165,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterSpaceInPasswordEmailAddress(ccuser.getMailinatorSpaceInPassword());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorSpaceInPassword());
 		logStep("Validating email received");
 		CCUtils.assertEquals("We just sent a verification message to the following address:",
 				resetPage.getUserNotificationMsg());
@@ -182,9 +185,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterCommonPasswordEmailAddress(ccuser.getMailinatorCommonPassword());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorCommonPassword());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
@@ -200,9 +203,9 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		log("Set the Test Data for CC");
 		ccuser.setCCuser();
 		logStep("Navigating to Command Center portal");
-		PasswordResetPage resetPage = new PasswordResetPage(driver, ccuser.getUrl());
+		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterMaximumCharactersEmailAddress(ccuser.getMailinatorMaximumCharacters());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorMaximumCharacters());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
