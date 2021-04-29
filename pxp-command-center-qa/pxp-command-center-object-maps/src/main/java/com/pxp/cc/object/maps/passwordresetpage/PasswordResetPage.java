@@ -109,11 +109,11 @@ public class PasswordResetPage extends CCMainPage {
 
 	public void clickForgotPasswordAndEnterEmailAddress(String resetEmail, String autogeneratePwd)
 			throws InterruptedException {
-		log("Updated password login functionality email id :" + resetEmail + " and auto generated password :"
+		log("Updated password login functionality email :" + resetEmail + " and auto generated password :"
 				+ autogeneratePwd);
 		highlightElement(forgotPassword);
 		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
+		log("Clicked on forgot Password link and rendered to password reset page");
 		highlightElement(usernameField);
 		usernameField.sendKeys(resetEmail);
 		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
@@ -176,7 +176,7 @@ public class PasswordResetPage extends CCMainPage {
 		log("Unregistered user email :" + email);
 		highlightElement(forgotPassword);
 		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
+		log("Clicked on forgot Password link and rendered to password reset page");
 		highlightElement(usernameField);
 		usernameField.sendKeys(email);
 		log("After entering the Email validating the email address.....");
@@ -190,7 +190,7 @@ public class PasswordResetPage extends CCMainPage {
 		log("Blank EmailID Verification :");
 		highlightElement(forgotPassword);
 		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
+		log("Clicked on forgot Password link and rendered to password reset page");
 		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
 		highlightElement(emailMeTheLink);
 		emailMeTheLink.click();
@@ -202,7 +202,7 @@ public class PasswordResetPage extends CCMainPage {
 		log("External User email :" + externalUser);
 		highlightElement(forgotPassword);
 		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
+		log("Clicked on forgot Password link and rendered to password reset page");
 		highlightElement(usernameField);
 		usernameField.sendKeys(externalUser);
 		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));
@@ -217,7 +217,7 @@ public class PasswordResetPage extends CCMainPage {
 		log("Common Password :" + email);
 		highlightElement(forgotPassword);
 		forgotPassword.click();
-		log("Click on forgot Password link and rendered to password reset page");
+		log("Clicked on forgot Password link and rendered to password reset page");
 		highlightElement(usernameField);
 		usernameField.sendKeys(email);
 		wait.until(ExpectedConditions.visibilityOf(emailMeTheLink));

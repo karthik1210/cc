@@ -51,7 +51,6 @@ public class CCUser {
 	String mailinatorCommonPassword;
 	String mailinatorMaximumCharacters;
 
-
 	public String getProperty(String prop) throws Exception {
 		if (properties.getProperty(prop) == null)
 			throw new Exception("Property " + prop + " not found in the property file.");
@@ -67,17 +66,10 @@ public class CCUser {
 		setEnterpriseNode(getProperty("search.enterprise"));
 		setPracticeNode(getProperty("search.practice"));
 		setLocationNode(getProperty("search.location"));
-//		setEmailId(getProperty("reset.password.email"));
-//		setResetEmail(getProperty("reset.password.reset.email"));
-//		setClientName(getProperty("reset.password.client.name"));
-//		setUnregisteredEmail(getProperty("reset.password.unregistered.email"));
-//		setExternalUser(getProperty("reset.password.external.user"));
-//		setInvalidTokenUrl(getProperty("invalid.token.url"));
 		setAdminEmail(getProperty("left.navigation.admin.email"));
 		setNavigationEmail(getProperty("left.navigation.email"));
 		setPasswordAdmin(getProperty("admin.password"));
 		setResetEmail(getProperty("reset.password.resetEmail"));
-//		setWithUsername(getProperty("reset.password.withUsername"));
 		setMailinatorSpaceInPassword(getProperty("reset.password.SpaceInPassword"));
 		setMailinatorRepetitiveSequence(getProperty("reset.password.RepetitiveSequence"));
 		setMailinatorOldPassword(getProperty("reset.password.OldPassword"));
