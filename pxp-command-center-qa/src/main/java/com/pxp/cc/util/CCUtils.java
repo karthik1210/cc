@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.util;
 
 import java.security.SecureRandom;
@@ -53,7 +55,7 @@ public class CCUtils {
 		}
 	}
 
-	public static String genPassword() {
+	public static String generatePassword() {
 
 		while (true) {
 			char[] password = new char[random.nextBoolean() ? 12 : 13];

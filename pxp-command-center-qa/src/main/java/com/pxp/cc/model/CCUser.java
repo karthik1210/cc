@@ -1,4 +1,5 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
@@ -16,27 +17,17 @@ public class CCUser {
 	public String invalidPassword;
 	public String loginAttempts;
 	public String lockoutUsername;
-	public String usernameAdmin;
-	public String passwordAdmin;
 	public String usernameExternal;
 	public String passwordExternal;
 	public String usernameInternal;
 	public String passwordInternal;
-	public String incorrectEmail;
 	public String externalUser;
-	public String name;
-	public String emailId;
 	public String resetEmail;
-	public String clientName;
 	public String unregisteredEmail;
 	public String invalidTokenUrl;
-	public String adminEmail;
-	public String navigationEmail;
-	public String withUsername;
 	public String mailinatorSpaceInPassword;
 	public String mailinatorRepetitiveSequence;
 	public String mailinatorOldPassword;
-	public String mailinatorExpiredLink;
 	public String mailinatorInvalidToken;
 	public String mailinatorCommonPassword;
 	public String mailinatorMaximumCharacters;
@@ -62,26 +53,25 @@ public class CCUser {
 		setUrl(getProperty("base.url"));
 		setUsername(getProperty("user.name"));
 		setPassword(getProperty("user.password"));
-		setPasswordAdmin(getProperty("admin.password"));
-		setResetEmail(getProperty("reset.password.resetEmail"));
-		setMailinatorSpaceInPassword(getProperty("reset.password.SpaceInPassword"));
-		setMailinatorRepetitiveSequence(getProperty("reset.password.RepetitiveSequence"));
-		setMailinatorOldPassword(getProperty("reset.password.OldPassword"));
-		setMailinatorCommonPassword(getProperty("reset.password.CommonPassword"));
-		setMailinatorMaximumCharacters(getProperty("reset.password.MaximumCharacters"));
-		setUnregisteredEmail(getProperty("reset.password.unregisteredEmail"));
-		setExternalUser(getProperty("reset.password.externalUser"));
-		setInvalidTokenUrl(getProperty("reset.password.invalidTokenUrl"));
-	}
-
-	public void setCCExternalUser() throws Exception {
+		setResetEmail(getProperty("reset.password.reset.email"));
+		setMailinatorSpaceInPassword(getProperty("reset.password.space.in.password"));
+		setMailinatorRepetitiveSequence(getProperty("reset.password.repetitive.sequence"));
+		setMailinatorOldPassword(getProperty("reset.password.old.password"));
+		setMailinatorInvalidToken(getProperty("reset.password.invalid.token"));
+		setMailinatorCommonPassword(getProperty("reset.password.common.password"));
+		setMailinatorMaximumCharacters(getProperty("reset.password.maximum.characters"));
+		setUnregisteredEmail(getProperty("reset.password.unregistered.email"));
+		setExternalUser(getProperty("reset.password.external.user"));
+		setInvalidTokenUrl(getProperty("reset.password.invalid.token.url"));
+		setInvalidUsername(getProperty("invalid.user.name"));
+		setLockoutUsername(getProperty("lockout.user.name"));
+		setInvalidPassword(getProperty("invalid.password"));
+		setLoginAttempts(getProperty("login.attempts"));
 		setUsernameExternal(getProperty("external.user.name"));
 		setPasswordExternal(getProperty("external.password"));
-	}
-
-	public void setCCInternalUser() throws Exception {
 		setUsernameInternal(getProperty("internal.user.name"));
 		setPasswordInternal(getProperty("internal.password"));
+
 	}
 
 	public void setNewClient() throws Exception {

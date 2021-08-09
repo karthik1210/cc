@@ -1,9 +1,12 @@
-package com.pxp.cc.object.maps;
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
+package com.pxp.cc.objectmaps;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class CreateClientPage extends CCMainPage {

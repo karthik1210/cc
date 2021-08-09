@@ -1,5 +1,6 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
-package com.pxp.cc.object.maps;
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
+package com.pxp.cc.objectmaps;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

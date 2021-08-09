@@ -1,11 +1,12 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.ui.testcases;
 
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.object.maps.HomePage;
-import com.pxp.cc.object.maps.LoginPage;
+import com.pxp.cc.objectmaps.HomePage;
+import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
 
 public class LoginScreenTests extends CommandCenterGenericTest {

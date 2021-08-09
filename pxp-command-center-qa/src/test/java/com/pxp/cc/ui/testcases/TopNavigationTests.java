@@ -1,10 +1,11 @@
-// Copyright 2018-2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2018-2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.ui.testcases;
 
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.object.maps.HomePage;
+import com.pxp.cc.objectmaps.HomePage;
 
 public class TopNavigationTests extends CommandCenterGenericTest {
 
@@ -23,7 +24,6 @@ public class TopNavigationTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, groups = { "AcceptanceTests" }, retryAnalyzer = RetryAnalyzer.class)
 	public void verifySSOLinksforInternalUsers() throws Exception {
-		ccuser.setCCInternalUser();
 		log("Login to CC portal. url=" + ccuser.getUrl() + " and email=" + ccuser.getUsernameInternal()
 				+ " and password=" + ccuser.getPasswordInternal());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsernameInternal(), ccuser.getPasswordInternal());
@@ -38,7 +38,6 @@ public class TopNavigationTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, groups = { "AcceptanceTests" }, retryAnalyzer = RetryAnalyzer.class)
 	public void verifySSOLinksforExternalUsers() throws Exception {
-		ccuser.setCCExternalUser();
 		log("Login to CC portal. url=" + ccuser.getUrl() + " and email=" + ccuser.getUsernameExternal()
 				+ " and password=" + ccuser.getPasswordExternal());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsernameExternal(), ccuser.getPasswordExternal());

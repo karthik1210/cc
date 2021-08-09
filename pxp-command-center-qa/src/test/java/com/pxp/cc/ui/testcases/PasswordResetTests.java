@@ -8,7 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.object.maps.PasswordResetPage;
+import com.pxp.cc.objectmaps.PasswordResetPage;
 import com.pxp.cc.util.CCUtils;
 
 public class PasswordResetTests extends CommandCenterGenericTest {

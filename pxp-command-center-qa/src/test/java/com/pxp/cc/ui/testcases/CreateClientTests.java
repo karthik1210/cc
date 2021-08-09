@@ -1,10 +1,12 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.ui.testcases;
 
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.object.maps.CreateClientPage;
-import com.pxp.cc.object.maps.HomePage;
+import com.pxp.cc.objectmaps.CreateClientPage;
+import com.pxp.cc.objectmaps.HomePage;
 
 public class CreateClientTests extends CommandCenterGenericTest {
 
