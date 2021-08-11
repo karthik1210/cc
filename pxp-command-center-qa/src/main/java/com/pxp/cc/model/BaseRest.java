@@ -10,7 +10,7 @@ import org.testng.annotations.BeforeSuite;
 
 import com.intuit.ifs.csscat.core.BaseTestNGWebDriver;
 import com.medfusion.common.utils.PropertyFileLoader;
-import com.pxp.cc.constants.Constants;
+import com.pxp.cc.apipath.ApiPath;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -33,7 +33,7 @@ public class BaseRest extends BaseTestNGWebDriver {
 	@BeforeSuite(alwaysRun = true)
 	public void setUpTestData() throws Exception {
 		testData = new PropertyFileLoader();
-		log("Step 1: Set the Test Data for CC ");
+		log("Setting up the Test Data.");
 		ccUser = new CCUser(testData);
 		ccUser.init();
 		BasicConfigurator.configure();
@@ -43,8 +43,8 @@ public class BaseRest extends BaseTestNGWebDriver {
 
 		RestAssured.baseURI = ccUser.getAuthBaseUrl();
 		Response response = given().auth().preemptive()
-				.basic(ccUser.getCommandCenterUser(), ccUser.getCommandCenterPassword()).when()
-				.post(Constants.POST_SIGNIN).then().log().all().extract().response();
+				.basic(ccUser.getUsername(), ccUser.getPassword()).when()
+				.post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
 
 		String token = response.jsonPath().get("token").toString();
 		return token;
@@ -53,8 +53,8 @@ public class BaseRest extends BaseTestNGWebDriver {
 
 	public void setupServiceRequestSpecBuilder() throws IOException {
 		RestAssured.baseURI = ccUser.getServiceBaseUrl();
-		requestSpec = new RequestSpecBuilder().setContentType(Constants.CONTENT_TYPE)
-				.addHeader(Constants.AUTHORIZATION, Constants.BEARER_TYPE + getTokenValue())
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
+				.addHeader(ApiPath.AUTHORIZATION, ApiPath.BEARER_TYPE + getTokenValue())
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
 

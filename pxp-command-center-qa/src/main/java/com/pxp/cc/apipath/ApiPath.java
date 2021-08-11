@@ -1,7 +1,7 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
-package com.pxp.cc.constants;
+package com.pxp.cc.apipath;
 
-public class Constants {
+public class ApiPath {
 	
 	public static final String BEARER_TYPE = "Bearer ";
 	public static final String AUTHORIZATION = "Authorization";

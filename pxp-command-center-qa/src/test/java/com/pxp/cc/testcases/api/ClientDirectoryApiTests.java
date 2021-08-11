@@ -67,8 +67,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 				if (valueperdata.contains(getSearchClientDetails[0])) {
 					log("searched value :" + getSearchClientDetails[0] + "present within response body's value"
 							+ valueperdata);
-					boolean update = true;
-					CCUtils.assertTrue(update,
+					CCUtils.assertTrue(true,
 							"Found data " + valueperdata + " is present in expexted data" + getSearchClientDetails[0]);
 				}
 			}
@@ -112,14 +111,14 @@ public class ClientDirectoryApiTests extends BaseRest {
 	public void testSearchClientOutputWithFilter(Object[] clientdatawithfilter) throws IOException {
 		try {
 			System.out.println("Type :" + clientdatawithfilter[3]);
-			Response searchClientDirResult = clientDirectory.getClientFromClientDirectoryWithFilter(
+			Response searchClientDirResultWithFilter = clientDirectory.getClientFromClientDirectoryWithFilter(
 					clientdatawithfilter[0].toString(), clientdatawithfilter[1].toString(),
 					clientdatawithfilter[2].toString(), clientdatawithfilter[3]);
-			log("Validating Response Time : " + searchClientDirResult.toString());
-			CCUtils.responseTimeValidation(searchClientDirResult);
+			log("Validating Response Time : " + searchClientDirResultWithFilter.toString());
+			CCUtils.responseTimeValidation(searchClientDirResultWithFilter);
 			log("Validating Response Code");
-			CCUtils.assertEquals(searchClientDirResult.getStatusCode(), 200);
-			jsonPath = new JsonPath(searchClientDirResult.asString());
+			CCUtils.assertEquals(searchClientDirResultWithFilter.getStatusCode(), 200);
+			jsonPath = new JsonPath(searchClientDirResultWithFilter.asString());
 			log("Print data[] in response body : " + jsonPath.get("data"));
 			int data = jsonPath.getInt("data.size()");
 			log("Get the size of data[] in response body : " + data);
@@ -179,7 +178,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 			int data = jsonPath.getInt("data.size()");
 			log("Get the size of data[] in response body : " + data);
 			if (data == 0) {
-				log("Data array is empty. So expected searched data : " + clientdatanonexisting[0].toString()
+				log("Client Data array in Response body is empty,so expected searched data : " + clientdatanonexisting[0].toString()
 						+ " does not found in response body.");
 			}
 
