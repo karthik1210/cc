@@ -1,5 +1,5 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
-package com.pxp.cc.ui.testcases;
+package com.pxp.cc.testcases.ui;
 
 import java.security.SecureRandom;
 

@@ -1,20 +1,20 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
 
-package com.pxp.cc.ui.testcases;
+package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.objectmaps.HomePage;
+import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
 
 public class LoginScreenTests extends CommandCenterGenericTest {
 
 	public LoginPage commandcenterloginpage;
-	public HomePage commandcenterhomepage;
+	public ClientDirectoryPage commandcenterhomepage;
 
-	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class,description = "Test to verify login to Command Center Portal")
 	public void verifyLoginToCCPortal() throws Exception {
 		log("Test to verify login to Command Center Portal");
 		log("Login to Command Center portal via url = " + ccuser.getUrl() + " and email =" + ccuser.getUsername()

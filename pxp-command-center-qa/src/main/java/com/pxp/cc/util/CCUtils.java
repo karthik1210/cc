@@ -13,6 +13,10 @@ import org.testng.Assert;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
 
+import io.restassured.response.Response;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CCUtils {
 
 	private static final String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&@?<>~!%#";
@@ -45,6 +49,16 @@ public class CCUtils {
 		}
 	}
 
+	public static void assertNotNull(Object object, String message) throws RuntimeException {
+		try {
+			Assert.assertNotNull(object, message);
+			log.info("Object Value is : {} - PASSED,", object);
+		} catch (Exception e) {
+			log.error("FAILED {}", message);
+			throw new RuntimeException(e);
+		}
+	}
+	
 	public static void selectFromDropDown(WebElement webElement, String containsText) {
 		Select select = new Select(webElement);
 		List<WebElement> allOptions = select.getOptions();
@@ -54,6 +68,11 @@ public class CCUtils {
 			}
 		}
 	}
+	
+	public static void responseTimeValidation(Response response) {
+		long time = response.time();
+		log.info("Response Time in ms- " + time);
+    } 
 
 	public static String generatePassword() {
 

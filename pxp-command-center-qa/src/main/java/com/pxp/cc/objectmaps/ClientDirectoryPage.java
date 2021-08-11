@@ -13,7 +13,7 @@ import org.openqa.selenium.support.How;
 import org.testng.Assert;
 import com.pxp.cc.util.CCUtils;
 
-public class HomePage extends CCMainPage {
+public class ClientDirectoryPage extends CCMainPage {
 
 	@FindBy(how = How.XPATH, using = "//button[@class='mat-focus-indicator mat-menu-trigger mat-mini-fab mat-button-base mat-accent']//span[@class='mat-button-wrapper']")
 	private WebElement userFullName;
@@ -47,7 +47,7 @@ public class HomePage extends CCMainPage {
 	public final List<String> expectedExternalSsoLinks = Arrays.asList("Appointments Dashboard", "Form Builder (Forms)",
 			"Pay Reports", "Practice Portal", "PSS Admin");
 
-	public HomePage(WebDriver driver) {
+	public ClientDirectoryPage(WebDriver driver) {
 		super(driver);
 	}
 
