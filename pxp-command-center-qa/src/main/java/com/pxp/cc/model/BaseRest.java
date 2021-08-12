@@ -28,7 +28,6 @@ public class BaseRest extends BaseTestNGWebDriver {
 	public JsonPath jsonPath;
 	public CCUser ccUser;
 	private PropertyFileLoader testData;
-	
 
 	@BeforeSuite(alwaysRun = true)
 	public void setUpTestData() throws Exception {
@@ -42,8 +41,7 @@ public class BaseRest extends BaseTestNGWebDriver {
 	public String getTokenValue() throws IOException {
 
 		RestAssured.baseURI = ccUser.getAuthBaseUrl();
-		Response response = given().auth().preemptive()
-				.basic(ccUser.getUsername(), ccUser.getPassword()).when()
+		Response response = given().auth().preemptive().basic(ccUser.getUsername(), ccUser.getPassword()).when()
 				.post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
 
 		String token = response.jsonPath().get("token").toString();
