@@ -38,7 +38,7 @@ public class LoginPage extends CCMainPage {
 
 	public final String lockoutErrorMsg = "Password attempts exceeded, please contact your Command Center administrator.";
 
-	public HomePage login(String emailID, String password) throws InterruptedException {
+	public ClientDirectoryPage login(String emailID, String password) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(usernameField, driver);
 		highlightElement(usernameField);
 		usernameField.sendKeys(emailID.trim());
@@ -50,7 +50,7 @@ public class LoginPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(loginButton, driver);
 		highlightElement(loginButton);
 		loginButton.click();
-		return PageFactory.initElements(super.driver, HomePage.class);
+		return PageFactory.initElements(super.driver, ClientDirectoryPage.class);
 	}
 
 	public void sixAttemptsLoginViaInvalidPwd(String userName, String invalidPassword, String loginAttempts)

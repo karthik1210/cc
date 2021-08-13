@@ -1,15 +1,15 @@
 // Copyright 2018-2021 NXGN Management, LLC. All Rights Reserved. 
 
-package com.pxp.cc.ui.testcases;
+package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.objectmaps.HomePage;
+import com.pxp.cc.objectmaps.ClientDirectoryPage;
 
 public class TopNavigationTests extends CommandCenterGenericTest {
 
-	public HomePage cchomepage;
+	public ClientDirectoryPage cchomepage;
 
 	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
 	public void verifyTopPanel() throws Exception {

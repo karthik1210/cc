@@ -4,6 +4,8 @@ package com.pxp.cc.util;
 
 import java.security.SecureRandom;
 import java.util.List;
+
+import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -12,6 +14,9 @@ import org.testng.Assert;
 
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
+
+import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 
 public class CCUtils {
 
@@ -45,6 +50,16 @@ public class CCUtils {
 		}
 	}
 
+	public static void assertNotNull(Object object, String message) throws RuntimeException {
+		try {
+			Assert.assertNotNull(object, message);
+			Log4jUtil.log("Object Value is : {} - PASSED," + object.toString());
+		} catch (Exception e) {
+			Log4jUtil.log("FAILED {}", message);
+			throw new RuntimeException(e);
+		}
+	}
+
 	public static void selectFromDropDown(WebElement webElement, String containsText) {
 		Select select = new Select(webElement);
 		List<WebElement> allOptions = select.getOptions();
@@ -53,6 +68,14 @@ public class CCUtils {
 				select.selectByVisibleText(option.getText());
 			}
 		}
+	}
+
+	public static void responseTimeValidation(Response response) {
+		long time = response.time();
+		Log4jUtil.log("Response time " + time);
+		ValidatableResponse valRes = response.then();
+		valRes.time(Matchers.lessThan(5000L));
+		Log4jUtil.log("Response Time in ms- " + time);
 	}
 
 	public static String generatePassword() {
