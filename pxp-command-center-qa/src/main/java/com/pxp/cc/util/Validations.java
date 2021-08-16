@@ -62,15 +62,18 @@ public class Validations {
 		jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Active can not be null, Name can not be blank, Sap number can not be blank, Type can not be blank";
 		List<String> actualValue = new ArrayList<String>();
-		Arrays.asList(actual.split(",")).forEach(a -> actualValue.add(a.trim()));
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
 		Collections.sort(actualValue);
 		String expected = jsonpath.get("message").toString();
 		List<String> expectedValue = new ArrayList<String>();
-		Arrays.asList(expected.split(",")).forEach(a -> expectedValue.add(a.trim()));
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
 		Collections.sort(expectedValue);
 		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyErrorMessageInResponseForClientNameField(Response response) throws IOException {
