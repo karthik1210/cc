@@ -63,10 +63,11 @@ public class CreateClientApiTests extends BaseRest {
 		validation.verifyNullErrorMessageResponseBody(createClientApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and sap number field and validate error message")
-	public void testErrorResponseForClientNameAndSapNumberField() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and validate error message")
+	public void testErrorResponseForClientNameField() throws IOException {
+		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				ccUser.getClientName(), ccUser.getClientSapNumber(), ccUser.getTestClient(), ccUser.getClientType(),
+				ccUser.getClientName(), clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -74,6 +75,10 @@ public class CreateClientApiTests extends BaseRest {
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
 		logStep("Validating Response Body");
 		validation.verifyErrorMessageInResponseForClientNameField(createClientApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in sap number field and validate error message")
+	public void testErrorResponseForSapNumberField() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, ccUser.getClientSapNumber(), ccUser.getTestClient(), ccUser.getClientType(),
@@ -103,22 +108,17 @@ public class CreateClientApiTests extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing time zone id and validate error message")
 	public void testErrorResponseForTimezoneField() throws IOException {
-		try {
-			String clientTimezoneId = ccUser.getTimezoneId().concat(CCUtils.generateRandomString());
-			String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-			String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-			createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-					clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), clientTimezoneId);
-			logStep("Validating Response Time");
-			CCUtils.responseTimeValidation(createClientApiResponse);
-			logStep("Validating Response Code");
-			CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-			logStep("Validating Response Body");
-			validation.verifyErrorMessageInResponseForClientTimezoneIdField(createClientApiResponse, clientTimezoneId);
-		} catch (Exception e) {
-			log("Error : {}", e.getMessage());
-		}
-
+		String clientTimezoneId = ccUser.getTimezoneId().concat(CCUtils.generateRandomString());
+		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), clientTimezoneId);
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
+		logStep("Validating Response Body");
+		validation.verifyErrorMessageInResponseForClientTimezoneIdField(createClientApiResponse, clientTimezoneId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 50 characters in sap id field and validate error message")
