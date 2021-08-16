@@ -3,7 +3,6 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
-
 import lombok.Data;
 
 @Data
@@ -79,6 +78,17 @@ public class CCUser {
 	public String nonexistingsystem;
 	public String nonexistingenterprise;
 	public String nonexistingpractice;
+	private String active;
+	private String clientId;
+	private String clientName;
+	private String clientSapNumber;
+	private String testClient;
+	private String displayName;
+	private String timezoneId;
+	private String clientType;
+	private Integer practiceCount;
+	private String invalidClientName;
+	private String invalidClientSapNumber;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -152,6 +162,9 @@ public class CCUser {
 		setNonexistingsystem(getProperty("api.nonexisting.full.system.name"));
 		setNonexistingenterprise(getProperty("api.nonexisting.full.enterprise.name"));
 		setNonexistingpractice(getProperty("api.nonexisting.full.practice.name"));
+		setPracticeCount(Integer.parseInt(getProperty("api.client.practiceCount")));
+		setCreateClientApiTestData();
+		setInvalidTestDataForClientNameAndSap();
 	}
 
 	public void setNewClient() throws Exception {
@@ -171,4 +184,19 @@ public class CCUser {
 		setClientTimezone(getProperty("new.client.timezone"));
 	}
 
+	public void setCreateClientApiTestData() throws Exception {
+		setActive(getProperty("api.client.active"));
+		setClientId(getProperty("api.client.id"));
+		setClientName(getProperty("api.client.name"));
+		setClientSapNumber(getProperty("api.client.sapNumber"));
+		setTestClient(getProperty("api.client.testClient"));
+		setClientType(getProperty("api.client.type"));
+		setDisplayName(getProperty("api.client.displayName"));
+		setTimezoneId(getProperty("api.client.timezoneId"));
+	}
+
+	public void setInvalidTestDataForClientNameAndSap() throws Exception {
+		setInvalidClientName(getProperty("api.invalid.client.name"));
+		setInvalidClientSapNumber(getProperty("api.invalid.client.sapNumber"));
+	}
 }
