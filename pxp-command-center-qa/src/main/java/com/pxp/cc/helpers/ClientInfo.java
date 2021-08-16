@@ -13,12 +13,19 @@ import io.restassured.response.Response;
 public class ClientInfo extends BaseRest {
 
 	public Response getClientDetails(String clientId) {
-
 		String url = ApiPath.GET_CLIENT + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	private static Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
+	public Response createNewClientUpdateClient(String active, String clientId, String clientName, String sapNumber,
+			String testClient, String type, String timezoneId) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
+				sapNumber, testClient, type, timezoneId);
+		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.POST_CLIENT).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
 			String clientSapNumber, String testClient, String type, String timezoneId) {
 		Map<String, Object> createClientMap = new HashMap<String, Object>();
 		createClientMap.put("active", active);
@@ -29,16 +36,6 @@ public class ClientInfo extends BaseRest {
 		createClientMap.put("type", type);
 		createClientMap.put("timezoneId", timezoneId);
 		return createClientMap;
-	}
-
-	public Response createNewClientUpdateClient(String active, String clientId, String clientName, String sapNumber,
-			String testClient, String type, String timezoneId) throws IOException {
-
-		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
-				sapNumber, testClient, type, timezoneId);
-
-		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.POST_CLIENT).then().extract()
-				.response();
 	}
 
 }

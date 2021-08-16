@@ -22,7 +22,6 @@ public class CreateClientApiTests extends BaseRest {
 
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
-
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
@@ -59,7 +58,7 @@ public class CreateClientApiTests extends BaseRest {
 
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber, and type) and validate error message.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message")
 	public void testErrorMessagesForMandatoryFields() throws IOException {
 		try {
 			createClientApiResponse = clientInfo.createNewClientUpdateClient(null, ccUser.getClientId(), null, null,
@@ -75,7 +74,7 @@ public class CreateClientApiTests extends BaseRest {
 		}
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and sap number field and validate error message.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and sap number field and validate error message")
 	public void testErrorResponseForClientNameAndSapNumberField() throws IOException {
 		try {
 			createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
@@ -103,7 +102,7 @@ public class CreateClientApiTests extends BaseRest {
 
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client type and validate error message.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client type and validate error message")
 	public void testErrorResponseForTypeField() throws IOException {
 		try {
 			String clientType = ccUser.getClientType().concat(CCUtils.generateRandomString());
@@ -123,7 +122,7 @@ public class CreateClientApiTests extends BaseRest {
 
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing time zone id and validate error message.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing time zone id and validate error message")
 	public void testErrorResponseForTimezoneField() throws IOException {
 		try {
 			String clientTimezoneId = ccUser.getTimezoneId().concat(CCUtils.generateRandomString());
@@ -162,7 +161,7 @@ public class CreateClientApiTests extends BaseRest {
 
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in client name field and validate error message.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in client name field and validate error message")
 	public void testMaximumCharacterErrorResponseForClientNameField() throws IOException {
 		try {
 			String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
