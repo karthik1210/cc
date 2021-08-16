@@ -4,17 +4,14 @@ package com.pxp.cc.util;
 
 import java.security.SecureRandom;
 import java.util.List;
-
 import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
-
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
@@ -74,16 +71,16 @@ public class CCUtils {
 		long time = response.time();
 		Log4jUtil.log("Response time " + time);
 		ValidatableResponse valRes = response.then();
-		valRes.time(Matchers.lessThan(5000L));
+		valRes.time(Matchers.lessThan(6000L));
 		Log4jUtil.log("Response Time in ms- " + time);
 	}
 
-	public static String generatePassword() {
+	public static String generateRandomString() {
 
 		while (true) {
-			char[] password = new char[random.nextBoolean() ? 12 : 13];
+			char[] newValue = new char[random.nextBoolean() ? 12 : 13];
 			boolean hasUpper = false, hasLower = false, hasDigit = false, hasSpecial = false;
-			for (int i = 0; i < password.length; i++) {
+			for (int i = 0; i < newValue.length; i++) {
 				char ch = symbols.charAt(random.nextInt(symbols.length()));
 				if (Character.isUpperCase(ch))
 					hasUpper = true;
@@ -93,10 +90,10 @@ public class CCUtils {
 					hasDigit = true;
 				else
 					hasSpecial = true;
-				password[i] = ch;
+				newValue[i] = ch;
 			}
 			if (hasUpper && hasLower && hasDigit && hasSpecial) {
-				return new String(password);
+				return new String(newValue);
 			}
 		}
 	}
