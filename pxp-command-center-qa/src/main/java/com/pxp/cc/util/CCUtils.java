@@ -56,16 +56,6 @@ public class CCUtils {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static void assertNull(Object object, String message) throws RuntimeException {
-		try {
-			Assert.assertNull(object, message);
-			Log4jUtil.log("Object Value is : {} - PASSED," + object.toString());
-		} catch (Exception e) {
-			Log4jUtil.log("FAILED {}", message);
-			throw new RuntimeException(e);
-		}
-	}
 
 	public static void selectFromDropDown(WebElement webElement, String containsText) {
 		Select select = new Select(webElement);
