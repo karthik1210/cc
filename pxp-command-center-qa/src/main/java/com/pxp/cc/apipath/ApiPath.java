@@ -14,5 +14,8 @@ public class ApiPath {
 	public static final String POST_CLIENT = SERVICE_CC + V1_CLIENTS;
 	public static final String GET_CLIENT_TYPE = SERVICE_CC + V1_CLIENTS + "/types";
 	public static final String GET_CLIENT_DIRECTORY = SERVICE_CC + V1_CLIENTS + "/directory";
+	public static final String POST_SYSTEM_PRACTICE="/service/cc/v1/client-orgs";
+	public static final String GET_ORG_DETAILS="/service/cc/v1/orgs/";
+	public static final String POST_ENTERPRISE_PRACTICE="/service/cc/v1/orgs";
 
 }
