@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
@@ -5,6 +7,7 @@ import java.util.List;
 
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
@@ -54,14 +57,13 @@ public class AddNewOrgApiTest extends BaseRest {
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
 				systemSapNumber, ccUser.getSystemeActiveApi(), ccUser.getSystemTestClientApi(),
-				ccUser.getSystemTimezoneIdApi(), ccUser.getSystemTimezoneDisplayNameApi(),
-			 false);
+				ccUser.getSystemTimezoneIdApi(), ccUser.getSystemTimezoneDisplayNameApi(), false);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter NULL value in mandatory field and validate error message")
 	public void testErrorMessagesForSystemMandatoryFields() throws IOException {
 		createSystemApiResponse = orgInfo.createSystem(null, ccUser.getSystemDisplayNameApi(), null, null,
-				(Integer) null, null, ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+				ccUser.getParentIdApi(), null, ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
 
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
@@ -106,7 +108,7 @@ public class AddNewOrgApiTest extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter NULL value in mandatory field and validate error message")
 	public void testErrorMessagesForEnterpriseMandatoryFields() throws IOException {
 		createEnterpriseApiResponse = orgInfo.createEnterprise(null, ccUser.getEnterpriseDisplayNameApi(), null, null,
-				(Integer) null, null, ccUser.getEnterpriseSapNumberApi(), ccUser.getEnterpriseTimezoneIdApi());
+				ccUser.getParentIdApi(), null, ccUser.getEnterpriseSapNumberApi(), ccUser.getEnterpriseTimezoneIdApi());
 
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
@@ -144,14 +146,13 @@ public class AddNewOrgApiTest extends BaseRest {
 		validation.verifySearchPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId, practiceName,
 				ccUser.getPracticeOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getPracticeDisplayNameApi(),
 				practiceSapNumber, ccUser.getPracticeActiveApi(), ccUser.getPracticeTestClientApi(),
-				ccUser.getPracticeTimezoneIdApi(), ccUser.getPracticeTimezoneDisplayNameApi(),
-				 false);
+				ccUser.getPracticeTimezoneIdApi(), ccUser.getPracticeTimezoneDisplayNameApi(), false);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter NULL value in mandatory field and validate error message")
 	public void testErrorMessagesForPracticeMandatoryFields() throws IOException {
 		createPracticeApiResponse = orgInfo.createPractice(null, ccUser.getPracticeDisplayNameApi(), null, null,
-				(Integer) null, null, ccUser.getPracticeSapNumberApi(), ccUser.getPracticeTimezoneIdApi());
+				ccUser.getParentIdApi(), null, ccUser.getPracticeSapNumberApi(), ccUser.getPracticeTimezoneIdApi());
 
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createPracticeApiResponse);

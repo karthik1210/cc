@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -119,7 +120,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyCreateSystemResponseBody(Response response, String systemName) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -129,11 +130,11 @@ public class Validations {
 
 	}
 
-	public void verifySearchSystemResponseBody(Response response, String orgId, String systemName,
-			String orgType, String clientType, String displayName, String sapNumber, String systemeActive, String systemTestClient,
+	public void verifySearchSystemResponseBody(Response response, String orgId, String systemName, String orgType,
+			String clientType, String displayName, String sapNumber, String systemeActive, String systemTestClient,
 			String timezoneId, String orgTimezoneDisplayNameApi, Boolean isPurchased) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertNotNull(jsonpath, "Response is null");	
+		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), systemName);
 		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
@@ -145,12 +146,12 @@ public class Validations {
 		Map<String, String> timezone = response.jsonPath().getMap("timezone");
 		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
 		CCUtils.assertEquals(timezone.get("displayName").toString(), orgTimezoneDisplayNameApi);
-		CCUtils.assertTrue(jsonpath.get("practiceCount")==null, "practice count is not null");
+		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
 	}
 
 	public void verifyOrgNullErrorMessageResponseBody(Response response) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Active can not be null, Org type can not be blank, Parent id can not be null, Parent type can not be blank";
+		String actual = "Active can not be null, Org type can not be blank, Parent type can not be blank";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -240,46 +241,52 @@ public class Validations {
 		Map<String, String> timezone = response.jsonPath().getMap("timezone");
 		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
 		CCUtils.assertEquals(timezone.get("displayName").toString(), orgTimezoneDisplayNameApi);
-		CCUtils.assertTrue(jsonpath.get("practiceCount")==null, "practice count is not null");
+		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
 	}
 
-	public void verifyErrorMessageInResponseForSystemOrgTypeField(Response response, String systemOrgType) throws IOException {
+	public void verifyErrorMessageInResponseForSystemOrgTypeField(Response response, String systemOrgType)
+			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid org type=" + systemOrgType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForEnterpriseOrgTypeField(Response response, String enterpriseOrgType) throws IOException {
+
+	public void verifyErrorMessageInResponseForEnterpriseOrgTypeField(Response response, String enterpriseOrgType)
+			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid org type=" + enterpriseOrgType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForPracticeOrgTypeField(Response response, String practiceOrgType) throws IOException {
+
+	public void verifyErrorMessageInResponseForPracticeOrgTypeField(Response response, String practiceOrgType)
+			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid org type=" + practiceOrgType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForSystemParentIdField(Response response, int orgSystemParentId) throws IOException {
-	jsonpath = new JsonPath(response.getBody().asString());
-	CCUtils.assertEquals(jsonpath.get("message").toString(), "Parentid=" + orgSystemParentId + " doesn't exist");
-	CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-	
-	public void verifyErrorMessageInResponseForEnterpriseParentIdField(Response response, int orgEnterpriseParentId) throws IOException {
+
+	public void verifyErrorMessageInResponseForSystemParentIdField(Response response, int orgSystemParentId)
+			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Parentid=" + orgEnterpriseParentId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Parentid=" + orgSystemParentId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-		}
-	
-	public void verifyErrorMessageInResponseForPracticeParentIdField(Response response, int orgPracticeParentId) throws IOException {
+	}
+
+	public void verifyErrorMessageInResponseForEnterpriseParentIdField(Response response, int orgEnterpriseParentId)
+			throws IOException {
+		jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Parentid=" + orgEnterpriseParentId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForPracticeParentIdField(Response response, int orgPracticeParentId)
+			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Parentid=" + orgPracticeParentId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-		}
+	}
 
-	
 	public void verifyErrorMessageInResponseForParentTypeFieldSystem(Response response, String orgSystemParentType)
 			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
@@ -287,15 +294,15 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
-	public void verifyErrorMessageInResponseForParentTypeFieldEnterprise(Response response, String orgEnterpriseParentType)
-			throws IOException {
+
+	public void verifyErrorMessageInResponseForParentTypeFieldEnterprise(Response response,
+			String orgEnterpriseParentType) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid parent type=" + orgEnterpriseParentType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyErrorMessageInResponseForParentTypeFieldPractice(Response response, String orgPracticeParentType)
 			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
@@ -303,34 +310,36 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
-	public void verifyErrorMessageInResponseForSystemTimezoneIdField(Response response, String systemTimezoneId )
+
+	public void verifyErrorMessageInResponseForSystemTimezoneIdField(Response response, String systemTimezoneId)
 			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone id=" + systemTimezoneId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
-	public void verifyErrorMessageInResponseForEnterpriseTimezoneIdField(Response response, String enterpriseTimezoneId )
+
+	public void verifyErrorMessageInResponseForEnterpriseTimezoneIdField(Response response, String enterpriseTimezoneId)
 			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone id=" + enterpriseTimezoneId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Timezone id=" + enterpriseTimezoneId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
-	public void verifyErrorMessageInResponseForPracticeTimezoneIdField(Response response, String practiceTimezoneId )
+
+	public void verifyErrorMessageInResponseForPracticeTimezoneIdField(Response response, String practiceTimezoneId)
 			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone id=" + practiceTimezoneId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Timezone id=" + practiceTimezoneId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyMaximumCharacterErrorMessageInResponseForSystemField(Response response) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
+		String actual = "Active can not be null, Display name size maximum 100 character, Name size maximum 100 character, Sap number size maximum 50 character";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -348,7 +357,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForEnterprise(Response response) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
@@ -369,7 +378,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForPractice(Response response) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
@@ -390,6 +399,5 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-
 
 }

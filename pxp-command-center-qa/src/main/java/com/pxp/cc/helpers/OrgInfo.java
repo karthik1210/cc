@@ -1,9 +1,13 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.helpers;
+
+import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import static io.restassured.RestAssured.given;
+
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 
@@ -16,38 +20,37 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.GET_ORG_DETAILS + orgId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response createSystem(String active, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
 
-		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType,
-				parentId, parentType, sapNumber, timezoneId);
+		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId);
 
 		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_PRACTICE).then()
 				.extract().response();
 	}
-	
+
 	public Response createEnterprise(String active, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
 
 		Map<String, Object> createNewEnterprisePayload = postCreateEnterprise(active, displayName, name, orgType,
 				parentId, parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE).then()
-				.extract().response();
+		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+				.then().extract().response();
 	}
 
 	public Response createPractice(String active, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
 
-		Map<String, Object> createNewPracticePayload = postCreatePractice(active, displayName, name, orgType,
-				parentId, parentType, sapNumber, timezoneId);
+		Map<String, Object> createNewPracticePayload = postCreatePractice(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE).then()
-				.extract().response();
+		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+				.then().extract().response();
 	}
 
-	
 	public static Map<String, Object> postCreateSystem(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId) {
 		Map<String, Object> systemMap = new HashMap<String, Object>();
@@ -75,9 +78,9 @@ public class OrgInfo extends BaseRest {
 		enterpriseMap.put("timezoneId", timezoneId);
 		return enterpriseMap;
 	}
-	
-	public static Map<String, Object> postCreatePractice(String active, String displayName, String name,
-			String orgType, int parentId, String parentType, String sapNumber, String timezoneId) {
+
+	public static Map<String, Object> postCreatePractice(String active, String displayName, String name, String orgType,
+			int parentId, String parentType, String sapNumber, String timezoneId) {
 		Map<String, Object> practiceMap = new HashMap<String, Object>();
 		practiceMap.put("active", active);
 		practiceMap.put("displayName", displayName);

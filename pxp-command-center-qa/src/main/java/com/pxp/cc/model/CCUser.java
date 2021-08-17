@@ -89,7 +89,7 @@ public class CCUser {
 	private String clientType;
 	private Integer practiceCount;
 	private String invalidClientName;
-	private String invalidClientSapNumber;	
+	private String invalidClientSapNumber;
 	private String systemClientType;
 	private String activeApi;
 	private String clientNameApi;
@@ -133,7 +133,6 @@ public class CCUser {
 	private String solutionsDisplayName;
 	private String timezone;
 	private String orgTimezoneSelectOption;
-
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
