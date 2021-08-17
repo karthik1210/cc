@@ -25,6 +25,11 @@ public class ClientInfo extends BaseRest {
 				.response();
 	}
 
+	public Response getSapNumber(String clientSapNumber) throws IOException {
+		String url = ApiPath.GET_CLIENTSAPNUMBER + clientSapNumber;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	private Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
 			String clientSapNumber, String testClient, String type, String timezoneId) {
 		Map<String, Object> createClientMap = new HashMap<String, Object>();

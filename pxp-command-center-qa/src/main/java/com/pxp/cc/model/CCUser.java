@@ -3,7 +3,6 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
-
 import lombok.Data;
 
 @Data
@@ -133,6 +132,7 @@ public class CCUser {
 	private String solutionsDisplayName;
 	private String timezone;
 	private String orgTimezoneSelectOption;
+	private String existingClientSapNumber;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -210,37 +210,37 @@ public class CCUser {
 		setCreateClientApiTestData();
 		setInvalidTestDataForClientNameAndSap();
 		setClientTypeApi(getProperty("api.client.type"));
-		setSystemOrgTypeApi(getProperty("api.system.orgType"));
+		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
 		setSystemeActiveApi(getProperty("api.system.active"));
-		setParentIdApi(Integer.parseInt(getProperty("api.ParentId")));
-		setParentTypeApi(getProperty("api.parentType"));
-		setSystemDisplayNameApi(getProperty("api.system.displayName"));
-		setSystemTimezoneIdApi(getProperty("api.systemTimezoneId"));
-		setSystemTimezoneDisplayNameApi(getProperty("api.systemTimezoneDisplayName"));
-		setSystemSapNumberApi(getProperty("api.system.sapNumber"));
-		setOrgSystemNameApi(getProperty("api.orgSystemName"));
-		setSystemTestClientApi(getProperty("api.system.TestClient"));
+		setParentIdApi(Integer.parseInt(getProperty("api.Parentid")));
+		setParentTypeApi(getProperty("api.parenttype"));
+		setSystemDisplayNameApi(getProperty("api.system.displayname"));
+		setSystemTimezoneIdApi(getProperty("api.systemtimezoneid"));
+		setSystemTimezoneDisplayNameApi(getProperty("api.systemtimezonedisplayname"));
+		setSystemSapNumberApi(getProperty("api.system.sapnumber"));
+		setOrgSystemNameApi(getProperty("api.orgsystemname"));
+		setSystemTestClientApi(getProperty("api.system.testclient"));
 		setEnterpriseActiveApi(getProperty("api.enterprise.active"));
 		setEnterpriseNameApi(getProperty("api.enterprise.name"));
-		setEnterpriseOrgTypeApi(getProperty("api.enterprise.orgType"));
-		setEnterpriseParentIdApi(Integer.parseInt(getProperty("api.enterprise.parentId")));
-		setEnterpriseParentTypeApi(getProperty("api.enterprise.parentType"));
-		setEnterpriseDisplayNameApi(getProperty("api.enterprise.displayName"));
-		setEnterpriseTestClientApi(getProperty("api.enterprise.testClient"));
-		setEnterprisePracticeCountApi(Integer.parseInt(getProperty("api.enterprise.practiceCount")));
-		setEnterpriseTimezoneIdApi(getProperty("api.enterprise.timezoneId"));
-		setEnterpriseTimezoneDisplayNameApi(getProperty("api.enterprise.timezoneDisplayName"));
-		setEnterpriseSapNumberApi(getProperty("api.enterprise.sapNumber"));
+		setEnterpriseOrgTypeApi(getProperty("api.enterprise.orgtype"));
+		setEnterpriseParentIdApi(Integer.parseInt(getProperty("api.enterprise.parentid")));
+		setEnterpriseParentTypeApi(getProperty("api.enterprise.parenttype"));
+		setEnterpriseDisplayNameApi(getProperty("api.enterprise.displayname"));
+		setEnterpriseTestClientApi(getProperty("api.enterprise.testclient"));
+		setEnterprisePracticeCountApi(Integer.parseInt(getProperty("api.enterprise.practicecount")));
+		setEnterpriseTimezoneIdApi(getProperty("api.enterprise.timezoneid"));
+		setEnterpriseTimezoneDisplayNameApi(getProperty("api.enterprise.timezonedisplayname"));
+		setEnterpriseSapNumberApi(getProperty("api.enterprise.sapnumber"));
 		setPracticeActiveApi(getProperty("api.practice.active"));
 		setPracticeNameApi(getProperty("api.practice.name"));
-		setPracticeOrgTypeApi(getProperty("api.practice.orgType"));
-		setPracticeParentIdApi(Integer.parseInt(getProperty("api.practice.parentId")));
-		setPracticeParentTypeApi(getProperty("api.practice.parentType"));
-		setPracticeDisplayNameApi(getProperty("api.practice.displayName"));
-		setPracticeTestClientApi(getProperty("api.practice.testClient"));
-		setPracticeTimezoneIdApi(getProperty("api.practice.timezoneId"));
-		setPracticeTimezoneDisplayNameApi(getProperty("api.practice.timezoneDisplayName"));
-		setPracticeSapNumberApi(getProperty("api.practice.sapNumber"));
+		setPracticeOrgTypeApi(getProperty("api.practice.orgtype"));
+		setPracticeParentIdApi(Integer.parseInt(getProperty("api.practice.parentid")));
+		setPracticeParentTypeApi(getProperty("api.practice.parenttype"));
+		setPracticeDisplayNameApi(getProperty("api.practice.displayname"));
+		setPracticeTestClientApi(getProperty("api.practice.testclient"));
+		setPracticeTimezoneIdApi(getProperty("api.practice.timezoneid"));
+		setPracticeTimezoneDisplayNameApi(getProperty("api.practice.timezonedisplayname"));
+		setPracticeSapNumberApi(getProperty("api.practice.sapnumber"));
 	}
 
 	public void setNewClient() throws Exception {

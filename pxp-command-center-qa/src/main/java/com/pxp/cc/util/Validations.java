@@ -384,7 +384,11 @@ public class Validations {
 
 		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
+	}
+	
+	public void verifyResponseBodyForSapNumberField(Response response) throws IOException {
+		CCUtils.assertEquals(response.getBody().asString(), "true");
+	
 	}
 
 }
