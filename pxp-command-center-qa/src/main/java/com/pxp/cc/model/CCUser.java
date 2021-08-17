@@ -3,7 +3,6 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
-
 import lombok.Data;
 
 @Data
@@ -90,6 +89,7 @@ public class CCUser {
 	private Integer practiceCount;
 	private String invalidClientName;
 	private String invalidClientSapNumber;
+	private String existingClientSapNumber;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -166,6 +166,7 @@ public class CCUser {
 		setPracticeCount(Integer.parseInt(getProperty("api.client.practice.count")));
 		setCreateClientApiTestData();
 		setInvalidTestDataForClientNameAndSap();
+		setExistingClientSapNumber(getProperty("api.existing.client.sapnumber"));
 	}
 
 	public void setNewClient() throws Exception {

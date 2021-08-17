@@ -120,4 +120,9 @@ public class Validations {
 
 	}
 
+	public void verifyResponseBodyForSapNumberField(Response response) throws IOException {
+		CCUtils.assertEquals(response.getBody().asString(), "true");
+
+	}
+
 }
