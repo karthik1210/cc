@@ -102,7 +102,7 @@ public class AddNewOrgApiTest extends BaseRest {
 				ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getEnterpriseDisplayNameApi(),
 				enterpriseSapNumber, ccUser.getEnterpriseActiveApi(), ccUser.getEnterpriseTestClientApi(),
 				ccUser.getEnterpriseTimezoneIdApi(), ccUser.getEnterpriseTimezoneDisplayNameApi(),
-				ccUser.getEnterprisePracticeCountApi(), false, solutionList);
+				ccUser.getEnterprisePracticeCountApi(), false);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter NULL value in mandatory field and validate error message")

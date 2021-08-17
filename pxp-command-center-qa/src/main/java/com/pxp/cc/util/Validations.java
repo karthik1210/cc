@@ -181,8 +181,8 @@ public class Validations {
 
 	public void verifySearchEnterpriseResponseBody(Response response, String enterpriseId, String enterpriseName,
 			String orgType, String clientType, String displayName, String sapNumber, String active, String testClient,
-			String timezoneId, String enterpriseTimezoneDisplayNameApi, Integer practiceCountValue, Boolean isPurchased,
-			List<Integer> purchasedSolutionList) throws IOException {
+			String timezoneId, String enterpriseTimezoneDisplayNameApi, Integer practiceCountValue, Boolean isPurchased)
+			throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), enterpriseId);
@@ -200,19 +200,6 @@ public class Validations {
 		CCUtils.assertEquals(practiceCount, practiceCountValue);
 		List<String> solutionsList = new ArrayList<String>();
 		solutionsList = response.jsonPath().getList("solutions");
-		if (practiceCount == 0) {
-			CCUtils.assertTrue(solutionsList.isEmpty(), "Solutions list is empty");
-		} else {
-			if (isPurchased.booleanValue()) {
-				if (!purchasedSolutionList.isEmpty()) {
-					CCUtils.assertTrue(!solutionsList.isEmpty(), "Solutions list is not empty");
-				}
-
-			} else {
-				CCUtils.assertTrue(solutionsList.isEmpty(), "Solutions list is empty");
-			}
-
-		}
 
 	}
 
