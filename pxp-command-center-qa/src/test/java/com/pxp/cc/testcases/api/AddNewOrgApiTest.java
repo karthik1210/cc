@@ -34,7 +34,7 @@ public class AddNewOrgApiTest extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new system and fetch newly created system details using system id")
 	public void testAddNewSystemNode() throws IOException {
-		String systemName = ccUser.getOrgSystemNameApi().concat(CCUtils.generateRandomString());
+		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
 		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
 
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
@@ -171,7 +171,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		String practiceTimezoneId = ccUser.getPracticeTimezoneIdApi().concat(CCUtils.generateRandomString());
 
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getOrgSystemNameApi(), ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(),
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(),
 				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), systemTimezoneId);
 
 		logStep("Validating Response Time");
@@ -216,7 +216,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		String practiceOrgType = ccUser.getPracticeOrgTypeApi().concat(CCUtils.generateRandomString());
 
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getOrgSystemNameApi(), systemOrgType, ccUser.getParentIdApi(), ccUser.getParentTypeApi(),
+				ccUser.getSystemNameApi(), systemOrgType, ccUser.getParentIdApi(), ccUser.getParentTypeApi(),
 				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
 
 		logStep("Validating Response Time");
@@ -258,8 +258,8 @@ public class AddNewOrgApiTest extends BaseRest {
 		Integer enterpriseOrgParentId = 56464674;
 		Integer practiceOrgParentId = 876876786;
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getOrgSystemNameApi(), ccUser.getSystemOrgTypeApi(), systemOrgParentId,
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), systemOrgParentId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
 
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
@@ -301,8 +301,8 @@ public class AddNewOrgApiTest extends BaseRest {
 		String practiceOrgParentType = ccUser.getPracticeParentTypeApi().concat(CCUtils.generateRandomString());
 
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getOrgSystemNameApi(), ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(),
-				systemOrgParentType, ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), systemOrgParentType,
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
 
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createSystemApiResponse);

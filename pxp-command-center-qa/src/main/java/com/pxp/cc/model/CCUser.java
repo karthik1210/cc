@@ -3,6 +3,7 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
+
 import lombok.Data;
 
 @Data
@@ -96,7 +97,7 @@ public class CCUser {
 	private String systemTestClientApi;
 	private String displayNameApi;
 	private String SystemDisplayNameApi;
-	private String orgSystemNameApi;
+	private String systemNameApi;
 	private String systemeActiveApi;
 	private String timezoneIdApi;
 	private String systemTimezoneIdApi;
@@ -215,10 +216,10 @@ public class CCUser {
 		setParentIdApi(Integer.parseInt(getProperty("api.Parentid")));
 		setParentTypeApi(getProperty("api.parenttype"));
 		setSystemDisplayNameApi(getProperty("api.system.displayname"));
-		setSystemTimezoneIdApi(getProperty("api.systemtimezoneid"));
-		setSystemTimezoneDisplayNameApi(getProperty("api.systemtimezonedisplayname"));
+		setSystemTimezoneIdApi(getProperty("api.system.timezoneid"));
+		setSystemTimezoneDisplayNameApi(getProperty("api.system.timezonedisplayname"));
 		setSystemSapNumberApi(getProperty("api.system.sapnumber"));
-		setOrgSystemNameApi(getProperty("api.orgsystemname"));
+		setSystemNameApi(getProperty("api.system.name"));
 		setSystemTestClientApi(getProperty("api.system.testclient"));
 		setEnterpriseActiveApi(getProperty("api.enterprise.active"));
 		setEnterpriseNameApi(getProperty("api.enterprise.name"));
