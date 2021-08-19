@@ -79,6 +79,11 @@ public class CCUser {
 	public String nonexistingsystem;
 	public String nonexistingenterprise;
 	public String nonexistingpractice;
+	public String searchClientInClientDirectory;
+	public String searchSystemInClientDirectory;
+	public String searchPracticeInClientDirectory;
+	public String searchEnterpriseInClientDirectory;
+	public String searchSapIdInClientDirectory;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -152,6 +157,11 @@ public class CCUser {
 		setNonexistingsystem(getProperty("api.nonexisting.full.system.name"));
 		setNonexistingenterprise(getProperty("api.nonexisting.full.enterprise.name"));
 		setNonexistingpractice(getProperty("api.nonexisting.full.practice.name"));
+		setSearchClientInClientDirectory(getProperty("search.client.in.client.directory"));
+		setSearchSystemInClientDirectory(getProperty("search.system.in.client.directory"));
+		setSearchEnterpriseInClientDirectory(getProperty("search.enterprise.in.client.directory"));
+		setSearchPracticeInClientDirectory(getProperty("search.practice.in.client.directory"));
+		setSearchSapIdInClientDirectory(getProperty("search.sap.id.in.client.directory"));
 	}
 
 	public void setNewClient() throws Exception {

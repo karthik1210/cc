@@ -26,6 +26,11 @@ public class CCUtils {
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(new WaitForWEIsDisplayed(we));
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void assertEquals(Object actual, Object expected) throws RuntimeException {
