@@ -84,6 +84,61 @@ public class CCUser {
 	public String searchPracticeInClientDirectory;
 	public String searchEnterpriseInClientDirectory;
 	public String searchSapIdInClientDirectory;
+	private String active;
+	private String clientId;
+	private String clientName;
+	private String clientSapNumber;
+	private String testClient;
+	private String displayName;
+	private String timezoneId;
+	private String clientType;
+	private Integer practiceCount;
+	private String invalidClientName;
+	private String invalidClientSapNumber;
+	private String systemClientType;
+	private String activeApi;
+	private String clientNameApi;
+	private String clientSapNumberApi;
+	private String systemTestClientApi;
+	private String displayNameApi;
+	private String SystemDisplayNameApi;
+	private String systemNameApi;
+	private String systemeActiveApi;
+	private String timezoneIdApi;
+	private String systemTimezoneIdApi;
+	private String systemTimezoneDisplayNameApi;
+	private String systemSapNumberApi;
+	private String clientTypeApi;
+	private String clientCreatedByApi;
+	private String systemOrgTypeApi;
+	private Integer parentIdApi;
+	private String parentTypeApi;
+	private String enterpriseActiveApi;
+	private String enterpriseNameApi;
+	private String enterpriseOrgTypeApi;
+	private Integer enterpriseParentIdApi;
+	private String enterpriseParentTypeApi;
+	private String enterpriseDisplayNameApi;
+	private String enterpriseTestClientApi;
+	private Integer enterprisePracticeCountApi;
+	private String enterpriseTimezoneIdApi;
+	private String enterpriseTimezoneDisplayNameApi;
+	private String enterpriseSapNumberApi;
+	private String practiceActiveApi;
+	private String practiceNameApi;
+	private String practiceOrgTypeApi;
+	private Integer practiceParentIdApi;
+	private String practiceParentTypeApi;
+	private String practiceDisplayNameApi;
+	private String practiceTestClientApi;
+	private String practiceTimezoneIdApi;
+	private String practiceTimezoneDisplayNameApi;
+	private String practiceSapNumberApi;
+	private String sapId;
+	private String solutionsDisplayName;
+	private String timezone;
+	private String orgTimezoneSelectOption;
+	private String existingClientSapNumber;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -162,6 +217,41 @@ public class CCUser {
 		setSearchEnterpriseInClientDirectory(getProperty("search.enterprise.in.client.directory"));
 		setSearchPracticeInClientDirectory(getProperty("search.practice.in.client.directory"));
 		setSearchSapIdInClientDirectory(getProperty("search.sap.id.in.client.directory"));
+		setPracticeCount(Integer.parseInt(getProperty("api.client.practice.count")));
+		setCreateClientApiTestData();
+		setInvalidTestDataForClientNameAndSap();
+		setClientTypeApi(getProperty("api.client.type"));
+		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
+		setSystemeActiveApi(getProperty("api.system.active"));
+		setParentIdApi(Integer.parseInt(getProperty("api.Parentid")));
+		setParentTypeApi(getProperty("api.parenttype"));
+		setSystemDisplayNameApi(getProperty("api.system.displayname"));
+		setSystemTimezoneIdApi(getProperty("api.system.timezoneid"));
+		setSystemTimezoneDisplayNameApi(getProperty("api.system.timezonedisplayname"));
+		setSystemSapNumberApi(getProperty("api.system.sapnumber"));
+		setSystemNameApi(getProperty("api.system.name"));
+		setSystemTestClientApi(getProperty("api.system.testclient"));
+		setEnterpriseActiveApi(getProperty("api.enterprise.active"));
+		setEnterpriseNameApi(getProperty("api.enterprise.name"));
+		setEnterpriseOrgTypeApi(getProperty("api.enterprise.orgtype"));
+		setEnterpriseParentIdApi(Integer.parseInt(getProperty("api.enterprise.parentid")));
+		setEnterpriseParentTypeApi(getProperty("api.enterprise.parenttype"));
+		setEnterpriseDisplayNameApi(getProperty("api.enterprise.displayname"));
+		setEnterpriseTestClientApi(getProperty("api.enterprise.testclient"));
+		setEnterprisePracticeCountApi(Integer.parseInt(getProperty("api.enterprise.practicecount")));
+		setEnterpriseTimezoneIdApi(getProperty("api.enterprise.timezoneid"));
+		setEnterpriseTimezoneDisplayNameApi(getProperty("api.enterprise.timezonedisplayname"));
+		setEnterpriseSapNumberApi(getProperty("api.enterprise.sapnumber"));
+		setPracticeActiveApi(getProperty("api.practice.active"));
+		setPracticeNameApi(getProperty("api.practice.name"));
+		setPracticeOrgTypeApi(getProperty("api.practice.orgtype"));
+		setPracticeParentIdApi(Integer.parseInt(getProperty("api.practice.parentid")));
+		setPracticeParentTypeApi(getProperty("api.practice.parenttype"));
+		setPracticeDisplayNameApi(getProperty("api.practice.displayname"));
+		setPracticeTestClientApi(getProperty("api.practice.testclient"));
+		setPracticeTimezoneIdApi(getProperty("api.practice.timezoneid"));
+		setPracticeTimezoneDisplayNameApi(getProperty("api.practice.timezonedisplayname"));
+		setPracticeSapNumberApi(getProperty("api.practice.sapnumber"));
 	}
 
 	public void setNewClient() throws Exception {
@@ -181,4 +271,19 @@ public class CCUser {
 		setClientTimezone(getProperty("new.client.timezone"));
 	}
 
+	public void setCreateClientApiTestData() throws Exception {
+		setActive(getProperty("api.client.active"));
+		setClientId(getProperty("api.client.id"));
+		setClientName(getProperty("api.client.name"));
+		setClientSapNumber(getProperty("api.client.sapnumber"));
+		setTestClient(getProperty("api.client.testclient"));
+		setClientType(getProperty("api.client.type"));
+		setDisplayName(getProperty("api.client.displayname"));
+		setTimezoneId(getProperty("api.client.timezoneid"));
+	}
+
+	public void setInvalidTestDataForClientNameAndSap() throws Exception {
+		setInvalidClientName(getProperty("api.invalid.client.name"));
+		setInvalidClientSapNumber(getProperty("api.invalid.client.sapnumber"));
+	}
 }

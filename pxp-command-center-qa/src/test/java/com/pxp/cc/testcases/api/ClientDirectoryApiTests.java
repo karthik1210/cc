@@ -1,19 +1,17 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientDirectory;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
