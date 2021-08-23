@@ -220,6 +220,7 @@ public class CCUser {
 		setPracticeCount(Integer.parseInt(getProperty("api.client.practice.count")));
 		setCreateClientApiTestData();
 		setInvalidTestDataForClientNameAndSap();
+		setExistingClientSapNumber(getProperty("api.existing.client.sapnumber"));
 		setClientTypeApi(getProperty("api.client.type"));
 		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
 		setSystemeActiveApi(getProperty("api.system.active"));
