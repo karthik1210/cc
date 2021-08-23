@@ -8,11 +8,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.pojos.ClientTypes;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Validations {
 	JsonPath jsonpath;
+	JSONArray jsonArray;
+	JSONObject jsonObject;
 
 	public void verifyCreateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
@@ -397,4 +403,37 @@ public class Validations {
 
 	}
 
+	public void verifyGetClientTypesApiResponseBody(Response response) throws IOException {
+		List<ClientTypes> actualClientTypeList = new ArrayList<ClientTypes>();
+		actualClientTypeList.add(new ClientTypes(1, "Direct Client", true));
+		actualClientTypeList.add(new ClientTypes(101, "Dedicated IT", true));
+		actualClientTypeList.add(new ClientTypes(102, "GBS", true));
+		actualClientTypeList.add(new ClientTypes(103, "Health Prime International", true));
+		actualClientTypeList.add(new ClientTypes(104, "Itelagen", true));
+		actualClientTypeList.add(new ClientTypes(105, "KM Strategic", true));
+		actualClientTypeList.add(new ClientTypes(106, "MdCentric", true));
+		actualClientTypeList.add(new ClientTypes(107, "Medicalistics", true));
+		actualClientTypeList.add(new ClientTypes(108, "MTS/MMIC", true));
+		actualClientTypeList.add(new ClientTypes(109, "Newport Medical Group", true));
+		actualClientTypeList.add(new ClientTypes(110, "New Stork Healthdata Management", true));
+		actualClientTypeList.add(new ClientTypes(111, "OSIS", true));
+		actualClientTypeList.add(new ClientTypes(112, "SharedMed", true));
+		actualClientTypeList.add(new ClientTypes(113, "TSI", true));
+		actualClientTypeList.add(new ClientTypes(114, "Virmedice", true));
+
+		jsonArray = new JSONArray(response.getBody().asString());
+		if (actualClientTypeList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						actualClientTypeList.contains(new ClientTypes(jsonObject.getInt("id"),
+								jsonObject.get("name").toString(), jsonObject.getBoolean("active"))),
+						"Client type " + jsonObject.get("name").toString() + " doesn't exist");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("Client types list is empty");
+		} else {
+			Log4jUtil.log("Size of actual client types list and expected client types list is not same");
+		}
+	}
 }

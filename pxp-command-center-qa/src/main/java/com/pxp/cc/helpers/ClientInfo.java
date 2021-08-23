@@ -35,6 +35,11 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).when().patch(url).then().extract().response();
 	}
 
+	public Response getClientTypes() throws IOException {
+		String url = ApiPath.GET_CLIENT_TYPES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	private Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
 			String clientSapNumber, String testClient, String type, String timezoneId) {
 		Map<String, Object> createClientMap = new HashMap<String, Object>();
