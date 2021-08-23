@@ -3,7 +3,6 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
-
 import lombok.Data;
 
 @Data
@@ -139,6 +138,7 @@ public class CCUser {
 	private String timezone;
 	private String orgTimezoneSelectOption;
 	private String existingClientSapNumber;
+	private String nonExistingClientId;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -220,6 +220,7 @@ public class CCUser {
 		setPracticeCount(Integer.parseInt(getProperty("api.client.practice.count")));
 		setCreateClientApiTestData();
 		setInvalidTestDataForClientNameAndSap();
+		setExistingClientSapNumber(getProperty("api.existing.client.sapnumber"));
 		setClientTypeApi(getProperty("api.client.type"));
 		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
 		setSystemeActiveApi(getProperty("api.system.active"));
@@ -252,6 +253,7 @@ public class CCUser {
 		setPracticeTimezoneIdApi(getProperty("api.practice.timezoneid"));
 		setPracticeTimezoneDisplayNameApi(getProperty("api.practice.timezonedisplayname"));
 		setPracticeSapNumberApi(getProperty("api.practice.sapnumber"));
+		setNonExistingClientId(getProperty("api.nonexisting.client.id"));
 	}
 
 	public void setNewClient() throws Exception {
