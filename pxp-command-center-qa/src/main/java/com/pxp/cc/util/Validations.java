@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -385,10 +384,17 @@ public class Validations {
 		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyResponseBodyForSapNumberField(Response response) throws IOException {
 		CCUtils.assertEquals(response.getBody().asString(), "true");
-	
+
+	}
+
+	public void verifyErrorMessageForClientIdField(Response response) throws IOException {
+		jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
 	}
 
 }

@@ -230,4 +230,17 @@ public class UpdateClientStatusApiTests extends BaseRest {
 				ccUser.getSystemSapNumberApi(), "false", ccUser.getSystemTestClientApi(),
 				ccUser.getSystemTimezoneIdApi(), ccUser.getSystemTimezoneDisplayNameApi(), false);
 	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client id and verify error message is displayed for client id field")
+	public void testErrorMessageForInvalidClientId() throws IOException {
+		logStep("Enter non existing client id");
+		updateClientStatusApiResponse = clientInfo.patchClientStatus(ccUser.getNonExistingClientId(), "true");
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(updateClientStatusApiResponse);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(updateClientStatusApiResponse.getStatusCode(), 400);
+		logStep("Validating Response Body");
+		validation.verifyErrorMessageForClientIdField(updateClientStatusApiResponse);
+		
+	}
 }
