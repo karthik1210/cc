@@ -44,7 +44,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in add new system popup and verify add new system functionality")
 	public void testAddNewSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -70,7 +70,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Parent Entity dropdown is read only field in add new system pop up")
 	public void testParentEntityDropdownAtAddNewSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -87,7 +87,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify sap id, timezone and status values are inherited from selected parent in add new system popup")
 	public void testInheritanceFunctionalityAtAddNewSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -107,7 +107,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive system below active client")
 	public void testAddNewInactiveSystemBelowActiveClient() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -136,7 +136,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify box text displayed for textbox fields on add new system popup")
 	public void testBoxTextValueForTextboxFieldAtAddNewSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -155,7 +155,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active system below inactive client and status of newly added node is by default inactive")
 	public void testAddNewActiveSystemBelowInactiveClient() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getInactiveClientName());
@@ -183,7 +183,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality in add new system popup")
 	public void testCancelButtonAndCrossIconAtSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -205,7 +205,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify no items found message displayed for parent entity field on add new enterprise popup")
 	public void testNoItemsFoundAtAddNewEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -224,7 +224,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new enterprise popup")
 	public void testAddNewEnterprisePopup() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -245,7 +245,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify box text displayed for textbox fields on add new enterprise popup")
 	public void testBoxTextValueForTextboxFieldAtAddNewEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -297,7 +297,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel button and cross button functionality in add new enterprise pop up")
 	public void testCancelButtonAndCrossIconAtEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -319,7 +319,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify sap id, timezone and status value fetch from selected parent (system) in add new enterprise popup")
 	public void testInheritanceFunctionalityAtAddNewEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -352,7 +352,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new enterprise functionality")
 	public void testAddNewEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -379,7 +379,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active enterprise below inactive system and status of newly added node is by default inactive")
 	public void testAddNewActiveEnterpriseBelowInactiveSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -407,7 +407,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive enterprise node below active system. ")
 	public void testAddNewInactiveEnterpriseBelowActiveSystem() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -436,7 +436,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify no items found message displayed for parent entity field on add new practice popup")
 	public void testNoItemsFoundAtAddNewPractice() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -455,7 +455,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new practice popup")
 	public void testAddNewPracticePopup() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -510,7 +510,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel button and cross button functionality in add new practice pop up")
 	public void testCancelButtonAndCrossIconAtPractice() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -532,7 +532,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify sap id, timezone and status value fetch from selected parent (enterprise) in add new practice popup")
 	public void testInheritanceFunctionalityAtAddNewNgePractice() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -567,7 +567,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify sap id, timezone and status value fetch from selected parent (client) in add new practice popup")
 	public void testInheritanceFunctionalityAtAddNewAgnosticPractice() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -590,7 +590,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice(without solutions) functionality")
 	public void testAddNewAgnosticPracticeWithoutSolutions() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -601,15 +601,15 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		log("Add new agnostic practice node below client node");
+		logStep("Add new agnostic practice node below client node");
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(parentName);
 		addOrgNodePage.createNewOrgNode(ccuser.getPracticeName(), ccuser.getPracticeSapId(),
 				ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getPracticeName(),
 				ccuser.getPracticeSapId(), ccuser.getPracticeSolutionDisplayName(), ccuser.getPracticeTimezone());
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
@@ -618,7 +618,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice(with solutions) functionality")
 	public void testAddNewAgnosticPracticeWithSolutions() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -629,16 +629,16 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		log("Add new agnostic practice node below client node");
+		logStep("Add new agnostic practice node below client node");
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(parentName);
 		addOrgNodePage.createNewOrgNode(ccuser.getPracticeName(), ccuser.getPracticeSapId(),
 				ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getPracticeName(),
 				ccuser.getPracticeSapId(), ccuser.getPracticeSolutionDisplayName(), ccuser.getPracticeTimezone());
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
@@ -647,7 +647,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new nge practice(without solutions) functionality")
 	public void testAddNewNgePracticeWithoutSolutions() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -657,15 +657,15 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		log("Add new nge practice node below enterprise node");
+		logStep("Add new nge practice node below enterprise node");
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
 		addOrgNodePage.createNewOrgNode(ccuser.getPracticeName(), ccuser.getPracticeSapId(),
 				ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getPracticeName(),
 				ccuser.getPracticeSapId(), ccuser.getPracticeSolutionDisplayName(), ccuser.getPracticeTimezone());
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
@@ -674,7 +674,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new nge practice(with solutions) functionality")
 	public void testAddNewNgePracticeWithSolutions() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -684,16 +684,16 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		log("Add new nge practice node below enterprise node");
+		logStep("Add new nge practice node below enterprise node");
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
 		addOrgNodePage.createNewOrgNode(ccuser.getPracticeName(), ccuser.getPracticeSapId(),
 				ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getPracticeName(),
 				ccuser.getPracticeSapId(), ccuser.getPracticeSolutionDisplayName(), ccuser.getPracticeTimezone());
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
@@ -702,7 +702,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify box text displayed on add new practice popup")
 	public void testBoxTextValueForTextboxFieldAtAddNewPractice() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -722,7 +722,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active agnostic practice node below inactive client")
 	public void testAddNewActiveAgnosticPracticeBelowInactiveClient() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getInactiveClientName());
@@ -740,9 +740,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 				ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
 		addOrgNodePage.selectActiveRadiobutton();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getPracticeName(),
 				ccuser.getPracticeSapId(), ccuser.getPracticeSolutionDisplayName(), ccuser.getPracticeTimezone());
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
@@ -751,7 +751,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive agnostic practice node below active client")
 	public void testAddNewInactiveAgnosticPracticeBelowActiveClient() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -769,9 +769,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 				ccuser.getInactivePracticeTimezone(), ccuser.getInactivePracticeSolutionDisplayName());
 		addOrgNodePage.selectInactiveRadiobutton();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getInactivePracticeName(),
 				ccuser.getInactivePracticeSapId(), ccuser.getInactivePracticeSolutionDisplayName(),
 				ccuser.getInactivePracticeTimezone());
@@ -781,7 +781,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active nge practice node below inactive enterprise")
 	public void testAddNewActiveNgePracticeBelowInactieEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -798,9 +798,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 				ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
 		addOrgNodePage.selectActiveRadiobutton();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getPracticeName(),
 				ccuser.getPracticeSapId(), ccuser.getPracticeSolutionDisplayName(), ccuser.getPracticeTimezone());
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
@@ -809,7 +809,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive nge practice node below active enterprise")
 	public void testAddNewInactiveNgePracticeBelowActieEnterprise() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -826,9 +826,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 				ccuser.getInactivePracticeTimezone(), ccuser.getInactivePracticeSolutionDisplayName());
 		addOrgNodePage.selectInactiveRadiobutton();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		log("Verify general settings page title");
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		log("Verify newly added practice node details in general settings page");
+		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(ccuser.getInactivePracticeName(),
 				ccuser.getInactivePracticeSapId(), ccuser.getInactivePracticeSolutionDisplayName(),
 				ccuser.getInactivePracticeTimezone());
@@ -838,7 +838,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter space in sap id field in add new system popup and verify hyphen sysmbol is displayed for blank sap id field in general sttings page")
 	public void testSapIdIsBlankAtAddSystemPopup() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -861,7 +861,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter space in sap id field in add new enterprise popup and verify hyphen sysmbol is displayed for blank sap id field in general sttings page")
 	public void testSapIdIsBlankAtAddEnterprisePopup() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -886,7 +886,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter space in sap id field in add new practice popup and verify hyphen sysmbol is displayed for blank sap id field in general sttings page")
 	public void testSapIdIsBlankAtAddPracticePopup() throws Exception {
-		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchNode(ccuser.getActiveClientName());
@@ -897,7 +897,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		log("Add new agnostic practice node below client node");
+		logStep("Add new agnostic practice node below client node");
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(parentName);
 		String practiceName = ccuser.getPracticeName().concat(CCUtils.generateRandomString());
