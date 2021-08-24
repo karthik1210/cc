@@ -70,10 +70,10 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> nodeNameInGeneralSetting;
-	
+
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
-	
+
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
 
@@ -270,12 +270,21 @@ public class ClientDirectoryPage extends CCMainPage {
 		}
 		return nodeUnderClientInGeneralSetting;
 	}
-	
+
 	public GeneralSettingsPage selectSearchedClientNameInClientTable() {
 		CCUtils.verifyAndWaitForElement(clientTableRow, driver);
-		log("Select client name in client directory table");
 		clientTableRow.click();
+		log("Clicked on client name in client directory table");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
-	
+
+	public void searchAndSelectClientNameInClientTable(String searchText) {
+		log("Enter search text in search textbox");
+		searchNode(searchText);
+		log("Click on search button");
+		clickSearchButton();
+		log("Click on client name in client directory table");
+		selectSearchedClientNameInClientTable();
+	}
+
 }
