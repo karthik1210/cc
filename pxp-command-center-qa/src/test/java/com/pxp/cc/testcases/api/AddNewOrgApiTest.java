@@ -45,7 +45,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
+		validation.verifySystemResponseBody(createSystemApiResponse, systemName);
 		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
 		logStep("Validating Response Time");
@@ -89,7 +89,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateSystemResponseBody(createEnterpriseApiResponse, enterpriseName);
+		validation.verifyEnterpriseResponseBody(createEnterpriseApiResponse, enterpriseName);
 		String orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
 		logStep("Validating Response Time");
@@ -134,7 +134,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
+		validation.verifyPracticeResponseBody(createPracticeApiResponse, practiceName);
 		String orgId = createPracticeApiResponse.jsonPath().get("id").toString();
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
 		logStep("Validating Response Time");

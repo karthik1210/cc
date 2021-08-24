@@ -121,7 +121,7 @@ public class Validations {
 
 	}
 
-	public void verifyCreateSystemResponseBody(Response response, String systemName) throws IOException {
+	public void verifySystemResponseBody(Response response, String systemName) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertNotNull(jsonpath.get("id"), "System id was not in the response");
@@ -148,6 +148,20 @@ public class Validations {
 		CCUtils.assertEquals(timezone.get("displayName").toString(), orgTimezoneDisplayNameApi);
 		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
 	}
+	
+	public void verifySearchUpdatedSystemResponseBody(Response response, String orgId,
+			String displayName, String sapNumber, String systemeActive,
+			String timezoneId) throws IOException {
+		jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), systemeActive);
+		Map<String, String> timezone = response.jsonPath().getMap("timezone");
+		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
+	}
 
 	public void verifyOrgNullErrorMessageResponseBody(Response response) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
@@ -170,7 +184,7 @@ public class Validations {
 
 	}
 
-	public void verifyCreateEnterpriseResponseBody(Response response, String enterprise) throws IOException {
+	public void verifyEnterpriseResponseBody(Response response, String enterprise) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertNotNull(jsonpath.get("id"), "Enterprise id was not in the response");
@@ -202,8 +216,21 @@ public class Validations {
 		solutionsList = response.jsonPath().getList("solutions");
 
 	}
+	
+	public void verifySearchUpdatedEnterpriseResponseBody(Response response, String orgId,
+			String displayName, String sapNumber, String enterpriseActive,
+			String timezoneId) throws IOException {
+		jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), enterpriseActive);
+		Map<String, String> timezone = response.jsonPath().getMap("timezone");
+		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+	}
 
-	public void verifyCreatePracticeResponseBody(Response response, String practice) throws IOException {
+	public void verifyPracticeResponseBody(Response response, String practice) throws IOException {
 		jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertNotNull(jsonpath.get("id"), "Practice id was not in the response");
@@ -229,6 +256,19 @@ public class Validations {
 		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
 		CCUtils.assertEquals(timezone.get("displayName").toString(), orgTimezoneDisplayNameApi);
 		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
+	}
+	
+	public void verifySearchUpdatedPracticeResponseBody(Response response, String orgId,
+			String displayName, String sapNumber, String active,
+			String timezoneId) throws IOException {
+		jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
+		Map<String, String> timezone = response.jsonPath().getMap("timezone");
+		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
 	}
 
 	public void verifyErrorMessageInResponseForSystemOrgTypeField(Response response, String systemOrgType)
@@ -391,4 +431,12 @@ public class Validations {
 	
 	}
 
+	public void verifyInactiveClientErrorResponsWhileAddingActivePractice(Response response) throws IOException {
+		jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "System cannot be Activated as Client is Inactive";
+		String expected = jsonpath.get("message").toString();
+		CCUtils.assertEquals(actual, expected);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
 }
