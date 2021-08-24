@@ -11,10 +11,10 @@ import com.pxp.cc.util.CCUtils;
 
 public class LoginPage extends CCMainPage {
 
-	@FindBy(xpath = "//input[@type='text'][@id='email']")
+	@FindBy(id = "loginUsernameInput")
 	private WebElement usernameField;
 
-	@FindBy(xpath = "//input[@id='pwd']")
+	@FindBy(id = "loginPwdInput")
 	private WebElement passwordField;
 
 	@FindBy(xpath = "//p[@class='sign']")

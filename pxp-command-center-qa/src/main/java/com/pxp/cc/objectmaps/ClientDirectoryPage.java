@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import com.pxp.cc.util.CCUtils;
 
@@ -41,6 +41,39 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(how = How.XPATH, using = "//div[@class='cdk-overlay-container']//a")
 	private List<WebElement> ssoLinkList;
 
+	@FindBy(id = "directorySearchInput")
+	private WebElement textboxSearchClientDirectory;
+
+	@FindBy(id = "directoryToggleIcon")
+	private WebElement buttonSearchClientDirectory;
+
+	@FindBy(xpath = "//input[@type='text']")
+	private WebElement dropdownClientFilter;
+
+	@FindBy(id = "directoryClearButton")
+	private WebElement buttonClearClientFilter;
+
+	@FindBy(id = "directoryApplyButton")
+	private WebElement buttonApplyClientFilter;
+
+	@FindBy(xpath = "//div[@class='tableborder']")
+	private List<WebElement> tableSearchResult;
+
+	@FindBy(xpath = "//td[@id='name-row']")
+	private List<WebElement> tableClientNameInSearchResult;
+
+	@FindBy(xpath = "//td[@id='no-result']")
+	private WebElement noResultFoundInClientDirectory;
+
+	@FindBy(xpath = "//td[@type='directoryTypeRow']")
+	private List<WebElement> tableClientTypeInSearchResult;
+
+	@FindBy(id = "treeNodeName")
+	private List<WebElement> nodeNameInGeneralSetting;
+	
+	@FindBy(id = "name-row")
+	private WebElement clientTableRow;
+	
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
 
@@ -110,36 +143,6 @@ public class ClientDirectoryPage extends CCMainPage {
 		String weBGColor = we.getCssValue("background-color");
 		log("Colour for " + uiName + " is " + weColor + " & background color is " + weBGColor);
 	}
-
-	@FindBy(id = "directorySearchInput")
-	private WebElement textboxSearchClientDirectory;
-
-	@FindBy(id = "directoryToggleIcon")
-	private WebElement buttonSearchClientDirectory;
-
-	@FindBy(xpath = "//input[@type='text']")
-	private WebElement dropdownClientFilter;
-
-	@FindBy(id = "directoryClearButton")
-	private WebElement buttonClearClientFilter;
-
-	@FindBy(id = "directoryApplyButton")
-	private WebElement buttonApplyClientFilter;
-
-	@FindBy(xpath = "//div[@class='tableborder']")
-	private List<WebElement> tableSearchResult;
-
-	@FindBy(xpath = "//td[@id='name-row']")
-	private List<WebElement> tableClientNameInSearchResult;
-
-	@FindBy(xpath = "//td[@id='no-result']")
-	private WebElement noResultFoundInClientDirectory;
-
-	@FindBy(xpath = "//td[@type='directoryTypeRow']")
-	private List<WebElement> tableClientTypeInSearchResult;
-
-	@FindBy(id = "treeNodeName")
-	private List<WebElement> nodeNameInGeneralSetting;
 
 	public void searchNode(String searchNodeName) {
 		CCUtils.verifyAndWaitForElement(textboxSearchClientDirectory, driver);
@@ -267,5 +270,12 @@ public class ClientDirectoryPage extends CCMainPage {
 		}
 		return nodeUnderClientInGeneralSetting;
 	}
-
+	
+	public GeneralSettingsPage selectSearchedClientNameInClientTable() {
+		CCUtils.verifyAndWaitForElement(clientTableRow, driver);
+		log("Select client name in client directory table");
+		clientTableRow.click();
+		return PageFactory.initElements(driver, GeneralSettingsPage.class);
+	}
+	
 }

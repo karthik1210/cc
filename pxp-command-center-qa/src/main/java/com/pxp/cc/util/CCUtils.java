@@ -24,7 +24,7 @@ public class CCUtils {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(new WaitForWEIsDisplayed(we));
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
