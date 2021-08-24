@@ -3,7 +3,6 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
-
 import lombok.Data;
 
 @Data
@@ -140,9 +139,10 @@ public class CCUser {
 	private String timezone;
 	private String orgTimezoneSelectOption;
 	private String existingClientSapNumber;
+	private String nonExistingClientId;
 	private Integer systemOrgId;
 	private Integer enterpriseOrgId;
-	private Integer practiceOrgId;
+	private Integer practiceOrgId;	
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -225,6 +225,7 @@ public class CCUser {
 		setCreateClientApiTestData();
 		setInvalidTestDataForClientNameAndSap();
 		setOrgActive(getProperty("api.client.org.active"));
+		setExistingClientSapNumber(getProperty("api.existing.client.sapnumber"));
 		setClientTypeApi(getProperty("api.client.type"));
 		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
 		setSystemeActiveApi(getProperty("api.system.active"));
@@ -257,6 +258,7 @@ public class CCUser {
 		setPracticeTimezoneIdApi(getProperty("api.practice.timezoneid"));
 		setPracticeTimezoneDisplayNameApi(getProperty("api.practice.timezonedisplayname"));
 		setPracticeSapNumberApi(getProperty("api.practice.sapnumber"));
+		setNonExistingClientId(getProperty("api.nonexisting.client.id"));
 		setSystemOrgId(Integer.parseInt(getProperty("api.system.org.id")));
 		setEnterpriseOrgId(Integer.parseInt(getProperty("api.enterprise.org.id")));
 		setPracticeOrgId(Integer.parseInt(getProperty("api.practice.org.id")));
