@@ -520,4 +520,8 @@ public class Validations {
 			Log4jUtil.log("Size of actual client types list and expected client types list is not same");
 		}
 	}
+
+	public void verifyResponseBodyForClientNameField(Response response) throws IOException {
+		CCUtils.assertEquals(response.getBody().asString(), "true");
+	}
 }
