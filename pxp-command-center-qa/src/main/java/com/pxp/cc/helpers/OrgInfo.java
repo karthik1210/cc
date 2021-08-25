@@ -31,6 +31,16 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 	
+	public Response createAgnosticPractice(String active, String displayName, String name, String orgType, int parentId,
+			String parentType, String sapNumber, String timezoneId) throws IOException {
+
+		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_PRACTICE).then()
+				.extract().response();
+	}
+	
 	public Response updateSystem(String active, String displayName, int orgId,
 			 String sapNumber, String timezoneId) throws IOException {
 

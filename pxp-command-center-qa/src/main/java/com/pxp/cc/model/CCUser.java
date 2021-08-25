@@ -3,6 +3,7 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
+
 import lombok.Data;
 
 @Data
@@ -142,7 +143,7 @@ public class CCUser {
 	private String nonExistingClientId;
 	private Integer systemOrgId;
 	private Integer enterpriseOrgId;
-	private Integer practiceOrgId;	
+	private Integer practiceOrgId;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;

@@ -8,10 +8,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientTypes;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -122,7 +125,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyCreateSystemResponseBody(Response response, String systemName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -150,10 +153,9 @@ public class Validations {
 		CCUtils.assertEquals(timezone.get("displayName").toString(), orgTimezoneDisplayNameApi);
 		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
 	}
-	
-	public void verifySearchUpdatedSystemResponseBody(Response response, String orgId,
-			String displayName, String sapNumber, String systemeActive,
-			String timezoneId) throws IOException {
+
+	public void verifySearchUpdatedSystemResponseBody(Response response, String orgId, String displayName,
+			String sapNumber, String systemeActive, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -218,10 +220,9 @@ public class Validations {
 		solutionsList = response.jsonPath().getList("solutions");
 
 	}
-	
-	public void verifySearchUpdatedEnterpriseResponseBody(Response response, String orgId,
-			String displayName, String sapNumber, String enterpriseActive,
-			String timezoneId) throws IOException {
+
+	public void verifySearchUpdatedEnterpriseResponseBody(Response response, String orgId, String displayName,
+			String sapNumber, String enterpriseActive, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -231,7 +232,7 @@ public class Validations {
 		Map<String, String> timezone = response.jsonPath().getMap("timezone");
 		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
 	}
-	
+
 	public void verifyCreatePracticeResponseBody(Response response, String practice) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -259,10 +260,9 @@ public class Validations {
 		CCUtils.assertEquals(timezone.get("displayName").toString(), orgTimezoneDisplayNameApi);
 		CCUtils.assertTrue(jsonpath.get("practiceCount") == null, "practice count is not null");
 	}
-	
-	public void verifySearchUpdatedPracticeResponseBody(Response response, String orgId,
-			String displayName, String sapNumber, String active,
-			String timezoneId) throws IOException {
+
+	public void verifySearchUpdatedPracticeResponseBody(Response response, String orgId, String displayName,
+			String sapNumber, String active, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -433,19 +433,57 @@ public class Validations {
 
 	}
 
-	public void verifyInactiveClientErrorResponsWhileAddingActivePractice(Response response) throws IOException {
-	JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "System cannot be Activated as Client is Inactive";
-		String expected = jsonpath.get("message").toString();
-		CCUtils.assertEquals(actual, expected);
+	public void verifyInactiveClientErrorResponsforSystem(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "System cannot be Activated as Client is Inactive");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
+	public void verifyInactiveClientErrorResponsForPractice(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as Client is Inactive");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyInactiveSystemErrorResponForEnterprise(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Enterprise cannot be Activated as System is Inactive");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyInactivePracticeErrorResponsWhileUpdataingActivePractice(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Practice cannot be Activated as Enterprise is Inactive");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
 	public void verifyErrorMessageForClientIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
+	}
+
+	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForOrgNode(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Sap number size maximum 50 character, Display name size maximum 100 character";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyGetClientTypesApiResponseBody(Response response) throws IOException {
