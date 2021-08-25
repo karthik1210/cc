@@ -89,7 +89,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateSystemResponseBody(createEnterpriseApiResponse, enterpriseName);
+		validation.verifyCreateEnterpriseResponseBody(createEnterpriseApiResponse, enterpriseName);
 		String orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
 		logStep("Validating Response Time");

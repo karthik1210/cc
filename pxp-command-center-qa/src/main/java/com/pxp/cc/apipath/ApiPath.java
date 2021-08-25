@@ -12,11 +12,14 @@ public class ApiPath {
 	public static final String V1_CLIENTS = "/v1/clients";
 	public static final String GET_CLIENT = SERVICE_CC + V1_CLIENTS + "/";
 	public static final String POST_CLIENT = SERVICE_CC + V1_CLIENTS;
-	public static final String GET_CLIENT_TYPE = SERVICE_CC + V1_CLIENTS + "/types";
+	public static final String GET_CLIENT_TYPES = SERVICE_CC + V1_CLIENTS + "/types";
 	public static final String GET_CLIENT_DIRECTORY = SERVICE_CC + V1_CLIENTS + "/directory";
 	public static final String POST_SYSTEM_PRACTICE = "/service/cc/v1/client-orgs";
 	public static final String GET_ORG_DETAILS = "/service/cc/v1/orgs/";
 	public static final String POST_ENTERPRISE_PRACTICE = "/service/cc/v1/orgs";
 	public static final String GET_CLIENTSAPNUMBER = SERVICE_CC + V1_CLIENTS + "/sapnumber/";
 	public static final String GET_PARENT_DROPDOWN = "/TYPES​​/";
+	public static final String PUT_ORG_CONTROLLER = "/service/cc/v1/orgs";
+	public static final String GET_CLIENT_STATUS = "/status/";
+	public static final String GET_CLIENTNAME = SERVICE_CC + V1_CLIENTS + "/name/";
 }

@@ -85,6 +85,7 @@ public class CCUser {
 	public String searchEnterpriseInClientDirectory;
 	public String searchSapIdInClientDirectory;
 	private String active;
+	private String orgActive;
 	private String clientId;
 	private String clientName;
 	private String clientSapNumber;
@@ -139,6 +140,39 @@ public class CCUser {
 	private String timezone;
 	private String orgTimezoneSelectOption;
 	private String existingClientSapNumber;
+	private String nonExistingClientId;
+	private Integer systemOrgId;
+	private Integer enterpriseOrgId;
+	private Integer practiceOrgId;
+	private String invalidSap;
+	private String invalidOrgName;
+	private String invalidSolutionDisplayName;
+	private String systemName;
+	private String systemSolutionDisplayName;
+	private String systemSapId;
+	private String systemTimezone;
+	private String enterpriseName;
+	private String enterpriseSolutionDisplayName;
+	private String enterpriseSapId;
+	private String enterpriseTimezone;
+	private String practiceName;
+	private String practiceSolutionDisplayName;
+	private String practiceSapId;
+	private String practiceTimezone;
+	private String inactiveSystemName;
+	private String inactiveSystemSolutionDisplayName;
+	private String inactiveSystemSapId;
+	private String inactiveSystemTimezone;
+	private String inactiveEnterpriseName;
+	private String inactiveEnterpriseSolutionDisplayName;
+	private String inactiveEnterpriseSapId;
+	private String inactiveEnterpriseTimezone;
+	private String inactivePracticeName;
+	private String inactivePracticeSolutionDisplayName;
+	private String inactivePracticeSapId;
+	private String inactivePracticeTimezone;
+	private String activeClientName;
+	private String inactiveClientName;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -220,6 +254,8 @@ public class CCUser {
 		setPracticeCount(Integer.parseInt(getProperty("api.client.practice.count")));
 		setCreateClientApiTestData();
 		setInvalidTestDataForClientNameAndSap();
+		setOrgActive(getProperty("api.client.org.active"));
+		setExistingClientSapNumber(getProperty("api.existing.client.sapnumber"));
 		setClientTypeApi(getProperty("api.client.type"));
 		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
 		setSystemeActiveApi(getProperty("api.system.active"));
@@ -252,6 +288,19 @@ public class CCUser {
 		setPracticeTimezoneIdApi(getProperty("api.practice.timezoneid"));
 		setPracticeTimezoneDisplayNameApi(getProperty("api.practice.timezonedisplayname"));
 		setPracticeSapNumberApi(getProperty("api.practice.sapnumber"));
+		setNonExistingClientId(getProperty("api.nonexisting.client.id"));
+		setSystemOrgId(Integer.parseInt(getProperty("api.system.org.id")));
+		setEnterpriseOrgId(Integer.parseInt(getProperty("api.enterprise.org.id")));
+		setPracticeOrgId(Integer.parseInt(getProperty("api.practice.org.id")));
+		setInvalidOrgData();
+		setSystemNodeTestData();
+		setEnterpriseNodeTestData();
+		setPracticeNodeTestData();
+		setInactiveSystemNodeTestData();
+		setInactiveEnterpriseNodeTestData();
+		setInactivePracticeNodeTestData();
+		setActiveClientName(getProperty("new.active.client.name"));
+		setInactiveClientName(getProperty("new.inactive.client.name"));
 	}
 
 	public void setNewClient() throws Exception {
@@ -285,5 +334,53 @@ public class CCUser {
 	public void setInvalidTestDataForClientNameAndSap() throws Exception {
 		setInvalidClientName(getProperty("api.invalid.client.name"));
 		setInvalidClientSapNumber(getProperty("api.invalid.client.sapnumber"));
+	}
+
+	public void setInvalidOrgData() throws Exception {
+		setInvalidOrgName(getProperty("invalid.name"));
+		setInvalidSolutionDisplayName(getProperty("invalid.solutionDisplayName"));
+		setInvalidSap(getProperty("invalid.sap"));
+	}
+
+	public void setSystemNodeTestData() throws Exception {
+		setSystemName(getProperty("new.system.name"));
+		setSystemSolutionDisplayName(getProperty("new.system.solutiondisplayname"));
+		setSystemSapId(getProperty("new.system.sapid"));
+		setSystemTimezone(getProperty("new.system.timezone"));
+	}
+
+	public void setEnterpriseNodeTestData() throws Exception {
+		setEnterpriseName(getProperty("new.enterprise.name"));
+		setEnterpriseSolutionDisplayName(getProperty("new.enterprise.solutiondisplayname"));
+		setEnterpriseSapId(getProperty("new.enterprise.sapid"));
+		setEnterpriseTimezone(getProperty("new.enterprise.timezone"));
+	}
+
+	public void setPracticeNodeTestData() throws Exception {
+		setPracticeName(getProperty("new.practice.name"));
+		setPracticeSolutionDisplayName(getProperty("new.practice.solutiondisplayname"));
+		setPracticeSapId(getProperty("new.practice.sapid"));
+		setPracticeTimezone(getProperty("new.practice.timezone"));
+	}
+
+	public void setInactiveSystemNodeTestData() throws Exception {
+		setInactiveSystemName(getProperty("new.inactive.system.name"));
+		setInactiveSystemSolutionDisplayName(getProperty("new.inactive.system.solutiondisplayname"));
+		setInactiveSystemSapId(getProperty("new.inactive.system.sapid"));
+		setInactiveSystemTimezone(getProperty("new.inactive.system.timezone"));
+	}
+
+	public void setInactiveEnterpriseNodeTestData() throws Exception {
+		setInactiveEnterpriseName(getProperty("new.inactive.enterprise.name"));
+		setInactiveEnterpriseSolutionDisplayName(getProperty("new.inactive.enterprise.solutiondisplayname"));
+		setInactiveEnterpriseSapId(getProperty("new.inactive.enterprise.sapid"));
+		setInactiveEnterpriseTimezone(getProperty("new.inactive.enterprise.timezone"));
+	}
+
+	public void setInactivePracticeNodeTestData() throws Exception {
+		setInactivePracticeName(getProperty("new.inactive.practice.name"));
+		setInactivePracticeSolutionDisplayName(getProperty("new.inactive.practice.solutiondisplayname"));
+		setInactivePracticeSapId(getProperty("new.inactive.practice.sapid"));
+		setInactivePracticeTimezone(getProperty("new.inactive.practice.timezone"));
 	}
 }
