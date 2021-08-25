@@ -26,4 +26,9 @@ public class ClientDirectory extends BaseRest {
 				.response();
 	}
 
+	public Response selectClientAsFavorite(String clientId) {
+		int clientID = Integer.parseInt(clientId);
+		String url = ApiPath.ADD_FAVORITES(clientID);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

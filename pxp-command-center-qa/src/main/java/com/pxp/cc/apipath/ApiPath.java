@@ -13,5 +13,11 @@ public class ApiPath {
 	public static final String POST_CLIENT = SERVICE_CC + V1_CLIENTS;
 	public static final String GET_CLIENT_TYPE = SERVICE_CC + V1_CLIENTS + "/types";
 	public static final String GET_CLIENT_DIRECTORY = SERVICE_CC + V1_CLIENTS + "/directory";
+	public static final String ADD_FAVORITES(int clientId) {
+		return SERVICE_CC+V1_CLIENTS+"/client/"+clientId+"/favorites";
+	}
+	public static final String DELETE_FAVORITE(int clientId) {
+		return SERVICE_CC+V1_CLIENTS+"/client/"+clientId+"/favorite";
+	}
 
 }

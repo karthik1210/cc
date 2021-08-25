@@ -83,10 +83,10 @@ public class ClientDirectoryApiTests extends BaseRest {
 	@DataProvider(name = "clientdatawithfilter")
 	public Object[] searchClientDetailsWithFilter() {
 		ArrayList<String> filterType = new ArrayList<String>();
-		filterType.add(ccUser.getClientonetype());
-		filterType.add(ccUser.getClienteleventype());
-		filterType.add(ccUser.getClienttwotype());
-		filterType.add(ccUser.getClienteighttype());
+		filterType.add(ccUser.getClientOneType());
+		filterType.add(ccUser.getClientElevenType());
+		filterType.add(ccUser.getClientTwoType());
+		filterType.add(ccUser.getClientEightType());
 		Object[][] obj = new Object[][] {
 				{ ccUser.getQueryFullClientName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
 						filterType },
@@ -186,6 +186,19 @@ public class ClientDirectoryApiTests extends BaseRest {
 			}
 
 		} catch (Exception e) {
+			log("Error : {}", e.getMessage());
+		}
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Select Client as Favorite in Client Directory")
+	public void testSelectClientAsFavorite() {
+		try {
+			Response selectFavClient = clientDirectory.selectClientAsFavorite(ccUser.selectClientAsFav);
+			log("Validating Response Time");
+			CCUtils.responseTimeValidation(selectFavClient);
+			CCUtils.assertEquals(selectFavClient.getStatusCode(), 200);
+		}
+		catch (Exception e) {
 			log("Error : {}", e.getMessage());
 		}
 	}

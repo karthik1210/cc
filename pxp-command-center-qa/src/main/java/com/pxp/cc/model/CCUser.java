@@ -59,26 +59,28 @@ public class CCUser {
 	public String pageSizeFour;
 	public String pageSizeFive;
 	public String type;
-	public String clientonetype;
-	public String clienttwotype;
-	public String clientthreetype;
-	public String clientfourtype;
-	public String clientfivetype;
-	public String clientsixtype;
-	public String clientseventype;
-	public String clienteighttype;
-	public String clientninetype;
-	public String clienttentype;
-	public String clienteleventype;
-	public String clienttwelvetype;
-	public String clientthirteentype;
-	public String clientforteentype;
-	public String clientfifteentype;
+	public String clientOneType;
+	public String clientTwoType;
+	public String clientThreeType;
+	public String clientFourType;
+	public String clientFiveType;
+	public String clientSixType;
+	public String clientSevenType;
+	public String clientEightType;
+	public String clientNineType;
+	public String clientTenType;
+	public String clientElevenType;
+	public String clientTwelveType;
+	public String clientThirteenType;
+	public String clientForteenType;
+	public String clientFifteenType;
 	public String nonexistingclient;
 	public String nonexistingccid;
 	public String nonexistingsystem;
 	public String nonexistingenterprise;
 	public String nonexistingpractice;
+	public String selectClientAsFav;
+
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -132,26 +134,27 @@ public class CCUser {
 		setPageSizeThree(getProperty("api.pageSize3"));
 		setPageSizeFour(getProperty("api.pageSize4"));
 		setPageSizeFive(getProperty("api.pageSize5"));
-		setClientonetype(getProperty("api.client.one.type"));
-		setClienttwotype(getProperty("api.client.two.type"));
-		setClientthreetype(getProperty("api.client.three.type"));
-		setClientfourtype(getProperty("api.client.four.type"));
-		setClientfivetype(getProperty("api.client.five.type"));
-		setClientsixtype(getProperty("api.client.six.type"));
-		setClientseventype(getProperty("api.client.seven.type"));
-		setClienteighttype(getProperty("api.client.eight.type"));
-		setClientninetype(getProperty("api.client.nine.type"));
-		setClienttentype(getProperty("api.client.ten.type"));
-		setClienteleventype(getProperty("api.client.eleven.type"));
-		setClienttwelvetype(getProperty("api.client.twelve.type"));
-		setClientthirteentype(getProperty("api.client.thirteen.type"));
-		setClientforteentype(getProperty("api.client.forteen.type"));
-		setClientfifteentype(getProperty("api.client.fifteen.type"));
+		setClientOneType(getProperty("api.client.one.type"));
+		setClientTwoType(getProperty("api.client.two.type"));
+		setClientThreeType(getProperty("api.client.three.type"));
+		setClientFourType(getProperty("api.client.four.type"));
+		setClientFiveType(getProperty("api.client.five.type"));
+		setClientSixType(getProperty("api.client.six.type"));
+		setClientSevenType(getProperty("api.client.seven.type"));
+		setClientEightType(getProperty("api.client.eight.type"));
+		setClientNineType(getProperty("api.client.nine.type"));
+		setClientTenType(getProperty("api.client.ten.type"));
+		setClientElevenType(getProperty("api.client.eleven.type"));
+		setClientTwelveType(getProperty("api.client.twelve.type"));
+		setClientThirteenType(getProperty("api.client.thirteen.type"));
+		setClientForteenType(getProperty("api.client.forteen.type"));
+		setClientFifteenType(getProperty("api.client.fifteen.type"));
 		setNonexistingclient(getProperty("api.nonexisting.full.client.name"));
 		setNonexistingccid(getProperty("api.nonexisting.full.command.center.id"));
 		setNonexistingsystem(getProperty("api.nonexisting.full.system.name"));
 		setNonexistingenterprise(getProperty("api.nonexisting.full.enterprise.name"));
 		setNonexistingpractice(getProperty("api.nonexisting.full.practice.name"));
+		setSelectClientAsFav(getProperty("api.fav.clientid"));
 	}
 
 	public void setNewClient() throws Exception {
