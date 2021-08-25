@@ -54,7 +54,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	public void testClientTypeFilters() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Apply Client Type Filter");
+		logStep("Apply Client Type Filter in Client Directory");
 		clientDirectoryPage.selectClientTypeDropDown();
 		clientDirectoryPage.selectClientType(ccuser.getClientThreeType());
 		clientDirectoryPage.applyClientTypeFilter();
