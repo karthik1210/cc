@@ -30,15 +30,43 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_PRACTICE).then()
 				.extract().response();
 	}
+	
+	public Response createAgnosticPractice(String active, String displayName, String name, String orgType, int parentId,
+			String parentType, String sapNumber, String timezoneId) throws IOException {
 
-	public Response createEnterprise(String active, String displayName, String name, String orgType, int parentId,
+		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_PRACTICE).then()
+				.extract().response();
+	}
+	
+	public Response updateSystem(String active, String displayName, int orgId,
+			 String sapNumber, String timezoneId) throws IOException {
+
+		Map<String, Object> updateSystemPayload = putUpdateSystem(active, displayName, orgId,sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(updateSystemPayload).when().put(ApiPath.PUT_ORG_CONTROLLER).then()
+				.extract().response();
+	}
+
+	public Response createEnterprise(String active, String displayName, String name, String orgType, int orgId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
 
 		Map<String, Object> createNewEnterprisePayload = postCreateEnterprise(active, displayName, name, orgType,
-				parentId, parentType, sapNumber, timezoneId);
+				orgId, parentType, sapNumber, timezoneId);
 
 		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
 				.then().extract().response();
+	}
+	
+	public Response updateEnterprise(String active, String displayName, int orgId,
+			 String sapNumber, String timezoneId) throws IOException {
+
+		Map<String, Object> updateEnterprisePayload = putUpdateEnterprise(active, displayName, orgId,sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(updateEnterprisePayload).when().put(ApiPath.PUT_ORG_CONTROLLER).then()
+				.extract().response();
 	}
 
 	public Response createPractice(String active, String displayName, String name, String orgType, int parentId,
@@ -50,6 +78,15 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
 				.then().extract().response();
 	}
+	
+	public Response updatePractice(String active, String displayName, int orgId,
+			 String sapNumber, String timezoneId) throws IOException {
+
+		Map<String, Object> updatePracticePayload = putUpdatePractice(active, displayName, orgId,sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(updatePracticePayload).when().put(ApiPath.PUT_ORG_CONTROLLER).then()
+				.extract().response();
+	}
 
 	public static Map<String, Object> postCreateSystem(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId) {
@@ -60,6 +97,17 @@ public class OrgInfo extends BaseRest {
 		systemMap.put("orgType", orgType);
 		systemMap.put("parentId", parentId);
 		systemMap.put("parentType", parentType);
+		systemMap.put("sapNumber", sapNumber);
+		systemMap.put("timezoneId", timezoneId);
+		return systemMap;
+	}
+	
+	public static Map<String, Object> putUpdateSystem(String active, String displayName,
+			int orgId, String sapNumber, String timezoneId) {
+		Map<String, Object> systemMap = new HashMap<String, Object>();
+		systemMap.put("active", active);
+		systemMap.put("displayName", displayName);
+		systemMap.put("id", orgId);
 		systemMap.put("sapNumber", sapNumber);
 		systemMap.put("timezoneId", timezoneId);
 		return systemMap;
@@ -78,6 +126,17 @@ public class OrgInfo extends BaseRest {
 		enterpriseMap.put("timezoneId", timezoneId);
 		return enterpriseMap;
 	}
+	
+	public static Map<String, Object> putUpdateEnterprise(String active, String displayName,
+			int orgId, String sapNumber, String timezoneId) {
+		Map<String, Object> systemMap = new HashMap<String, Object>();
+		systemMap.put("active", active);
+		systemMap.put("displayName", displayName);
+		systemMap.put("id", orgId);
+		systemMap.put("sapNumber", sapNumber);
+		systemMap.put("timezoneId", timezoneId);
+		return systemMap;
+	}
 
 	public static Map<String, Object> postCreatePractice(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId) {
@@ -91,6 +150,17 @@ public class OrgInfo extends BaseRest {
 		practiceMap.put("sapNumber", sapNumber);
 		practiceMap.put("timezoneId", timezoneId);
 		return practiceMap;
+	}
+	
+	public static Map<String, Object> putUpdatePractice(String active, String displayName,
+			int orgId, String sapNumber, String timezoneId) {
+		Map<String, Object> systemMap = new HashMap<String, Object>();
+		systemMap.put("active", active);
+		systemMap.put("displayName", displayName);
+		systemMap.put("id", orgId);
+		systemMap.put("sapNumber", sapNumber);
+		systemMap.put("timezoneId", timezoneId);
+		return systemMap;
 	}
 
 }

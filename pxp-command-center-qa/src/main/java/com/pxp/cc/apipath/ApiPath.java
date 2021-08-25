@@ -18,5 +18,6 @@ public class ApiPath {
 	public static final String GET_ORG_DETAILS = "/service/cc/v1/orgs/";
 	public static final String POST_ENTERPRISE_PRACTICE = "/service/cc/v1/orgs";
 	public static final String GET_CLIENTSAPNUMBER = SERVICE_CC + V1_CLIENTS + "/sapnumber/";
+	public static final String PUT_ORG_CONTROLLER = "/service/cc/v1/orgs";
 	public static final String GET_CLIENT_STATUS = "/status/";
 }
