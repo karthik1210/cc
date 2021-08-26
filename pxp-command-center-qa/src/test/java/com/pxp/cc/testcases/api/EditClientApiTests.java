@@ -17,7 +17,6 @@ public class EditClientApiTests extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
-	String clientName, clientSapNumber;
 	Response createClientApiResponse, fetchClientDetailsApiResponse, updateClientApiResponse;
 	List<Integer> solutionList = null;
 
