@@ -57,5 +57,10 @@ public class ClientInfo extends BaseRest {
 		createClientMap.put("timezoneId", timezoneId);
 		return createClientMap;
 	}
+	
+	public Response getParentDropdown(String clientId, String orgType) throws IOException {
+		String url = ApiPath.GET_CLIENT + clientId + "/types/" + orgType + "/parents";
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 }
