@@ -38,7 +38,7 @@ public class CreateClientApiTests extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Validating Response Time");

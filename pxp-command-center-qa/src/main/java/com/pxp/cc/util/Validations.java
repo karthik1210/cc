@@ -8,19 +8,17 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientTypes;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Validations {
 
-	public void verifyCreateClientResponseBody(Response response, String clientNameValue) throws IOException {
+	public void verifyCreateAndUpdateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertNotNull(jsonpath.get("id"), "Client id is not in the response");
@@ -40,9 +38,13 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
-		Map<String, String> timezone = response.jsonPath().getMap("timezone");
-		CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
-		CCUtils.assertEquals(timezone.get("displayName").toString(), timezoneDisplayName);
+		if (Objects.isNull(jsonpath.get("timezone"))) {
+			Log4jUtil.log("timezone is null");
+		} else {
+			Map<String, String> timezone = response.jsonPath().getMap("timezone");
+			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+			CCUtils.assertEquals(timezone.get("displayName").toString(), timezoneDisplayName);
+		}
 		int practiceCount = jsonpath.get("practiceCount");
 		CCUtils.assertEquals(practiceCount, practiceCountValue);
 		List<String> solutionsList = new ArrayList<String>();

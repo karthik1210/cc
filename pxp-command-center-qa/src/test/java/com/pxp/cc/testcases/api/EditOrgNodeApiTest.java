@@ -124,7 +124,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new inactive practice below inactive client.");
@@ -162,7 +162,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new inactive system below active client.");
@@ -210,7 +210,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -270,7 +270,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new inactive system below inactive client.");
@@ -306,7 +306,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -341,7 +341,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -387,7 +387,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -444,7 +444,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -478,7 +478,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -521,7 +521,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -576,7 +576,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below inactive client.");
@@ -608,7 +608,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -645,7 +645,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
@@ -693,7 +693,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active system below active client.");
