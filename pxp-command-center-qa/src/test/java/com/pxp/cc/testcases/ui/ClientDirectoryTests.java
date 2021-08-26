@@ -27,7 +27,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	public void testToCheckNoResultsFound() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		clientDirectoryPage.searchNode(ccuser.getNonexistingclient());
+		clientDirectoryPage.searchNode(ccuser.getNonExistingClientId());
 		clientDirectoryPage.clickSearchButton();
 		logStep("Verifying no result found scenario");
 		boolean result = clientDirectoryPage.testToCheckNoResultsFound();

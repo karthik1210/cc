@@ -5,77 +5,75 @@ package com.pxp.cc.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientDirectory;
+import com.pxp.cc.helpers.GeneralSettingsClientDropdown;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.ClientDirectoryValidations;
+import com.pxp.cc.util.ClientTopNavDropdownValidations;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class ClientDirectoryApiTests extends BaseRest {
 
 	private ClientDirectory clientDirectory;
+	private GeneralSettingsClientDropdown generalSettingsDropdown;
+	private ClientTopNavDropdownValidations clientTopNavDropdownValidations = new ClientTopNavDropdownValidations();
+	private ClientDirectoryValidations clientDirectoryValidations;
 	JsonPath jsonPath;
+	List<String> list = null;
 
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientDirectory = new ClientDirectory();
+		generalSettingsDropdown = new GeneralSettingsClientDropdown();
+		clientTopNavDropdownValidations = new ClientTopNavDropdownValidations();
+		clientDirectoryValidations = new ClientDirectoryValidations();
 	}
 
 	@DataProvider(name = "clientdatawithoutfilter")
 	public Object[] searchClientDetailsWithoutFilter() {
 		Object[][] obj = new Object[][] {
-				{ ccUser.getQueryFullClientName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryPartialClientName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryFullCommandCenterId().trim(), ccUser.getPage().trim(),
-						ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryPartialCommandCenterId().trim(), ccUser.getPage().trim(),
-						ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryFullSystemName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryPartialSystemName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryFullEnterpriseName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryPartialEnterpriseName().trim(), ccUser.getPage().trim(),
-						ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryFullPracticeName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getQueryPartialPracticeName().trim(), ccUser.getPage().trim(),
-						ccUser.getPageSizeOne().trim() } };
+				{ testData.getProperty("api.query.full.client.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.partial.client.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.full.command.center.id").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.partial.command.center.id").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.full.system.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.partial.system.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.full.enterprise.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.partial.enterprise.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.full.practice.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.query.partial.practice.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() } };
 		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithoutfilter", description = "search client nodes in client directory by keeping Items per page as 10 and current page as 1-10")
 	public void testSearchClientOutputWithoutFilter(String[] getSearchClientDetails) throws IOException {
-		try {
-			Response searchClientDirResult = clientDirectory.getClientFromClientDirectoryWithoutFilter(
-					getSearchClientDetails[0], getSearchClientDetails[1], getSearchClientDetails[2]);
-			log("Validating Response Time");
-			CCUtils.responseTimeValidation(searchClientDirResult);
-			log("Validating Response Code");
-			CCUtils.assertEquals(searchClientDirResult.getStatusCode(), 200);
-			jsonPath = new JsonPath(searchClientDirResult.asString());
-			log("Display list of clients in response body : " + jsonPath.get("data"));
-			int clientPerData = jsonPath.getInt("data.size()");
-			log("Get the size of clients in response body : " + clientPerData);
-			log("Page Number : " + jsonPath.getInt("pageNo"));
-			log("Items(Clients) per Page : " + jsonPath.getInt("pageSize"));
-			log("Comparing Searched Items names/ids with client data received in Response body.");
-			for (int dataArrayIteration = 0; dataArrayIteration < jsonPath
-					.getInt("data.size()"); dataArrayIteration++) {
-				String clientIteratePerData = jsonPath.get("data[" + dataArrayIteration + "].name");
-				log("Print Value : " + clientIteratePerData);
-				if (clientIteratePerData.contains(getSearchClientDetails[0])) {
-					log("searched value :" + getSearchClientDetails[0] + "present within response body's value"
-							+ clientIteratePerData);
-					CCUtils.assertTrue(true, "Found data " + clientIteratePerData + " is present in expected data"
-							+ getSearchClientDetails[0]);
-				}
-			}
-		} catch (Exception e) {
-			log("Error : {}", e.getMessage());
-		}
+		Response searchClientDirResult = clientDirectory.getClientFromClientDirectoryWithoutFilter(
+				getSearchClientDetails[0], getSearchClientDetails[1], getSearchClientDetails[2]);
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(searchClientDirResult);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(searchClientDirResult.getStatusCode(), 200);
+		clientDirectoryValidations.verifyClientOutputWithoutFilter(searchClientDirResult, getSearchClientDetails[0]);
 	}
 
 	@DataProvider(name = "clientdatawithfilter")
@@ -86,118 +84,149 @@ public class ClientDirectoryApiTests extends BaseRest {
 		filterType.add(ccUser.getClientTwoType());
 		filterType.add(ccUser.getClientEightType());
 		Object[][] obj = new Object[][] {
-				{ ccUser.getQueryFullClientName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
+				{ testData.getProperty("api.query.full.client.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ testData.getProperty("api.query.partial.client.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ testData.getProperty("api.query.full.command.center.id").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
 						filterType },
-				{ ccUser.getQueryPartialClientName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
+				{ testData.getProperty("api.query.partial.command.center.id"), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ testData.getProperty("api.query.full.system.name"), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ testData.getProperty("api.query.partial.system.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ testData.getProperty("api.query.full.enterprise.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
 						filterType },
-				{ ccUser.getQueryFullCommandCenterId().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
+				{ testData.getProperty("api.query.partial.enterprise.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
 						filterType },
-				{ ccUser.getQueryPartialCommandCenterId().trim(), ccUser.getPage().trim(),
-						ccUser.getPageSizeOne().trim(), filterType },
-				{ ccUser.getQueryFullSystemName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
-						filterType },
-				{ ccUser.getQueryPartialSystemName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
-						filterType },
-				{ ccUser.getQueryFullEnterpriseName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
-						filterType },
-				{ ccUser.getQueryPartialEnterpriseName().trim(), ccUser.getPage().trim(),
-						ccUser.getPageSizeOne().trim(), filterType },
-				{ ccUser.getQueryFullPracticeName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
-						filterType },
-				{ ccUser.getQueryPartialPracticeName().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim(),
+				{ testData.getProperty("api.query.full.practice.name").trim(), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ testData.getProperty("api.query.partial.practice.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
 						filterType } };
 		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithfilter", description = "search client nodes by applying multiselect Client Type Filter in client directory by keeping Items per page as 10 and current page as 1-10")
 	public void testSearchClientOutputWithFilter(Object[] clientDataWithFilter) throws IOException {
-		try {
-			System.out.println("Type :" + clientDataWithFilter[3]);
-			Response searchClientDirResultWithFilter = clientDirectory.getClientFromClientDirectoryWithFilter(
-					clientDataWithFilter[0].toString(), clientDataWithFilter[1].toString(),
-					clientDataWithFilter[2].toString(), clientDataWithFilter[3]);
-			log("Validating Response Time : " + searchClientDirResultWithFilter.toString());
-			CCUtils.responseTimeValidation(searchClientDirResultWithFilter);
-			log("Validating Response Code");
-			CCUtils.assertEquals(searchClientDirResultWithFilter.getStatusCode(), 200);
-			jsonPath = new JsonPath(searchClientDirResultWithFilter.asString());
-			log("Print data[] in response body : " + jsonPath.get("data"));
-			int clientdataSize = jsonPath.getInt("data.size()");
-			List<String> filterType = (List<String>) clientDataWithFilter[3];
-			log("Comparing Searched Items names/ids with client data received in Response body.");
-			for (int dataArrayIteration = 0; dataArrayIteration < clientdataSize; dataArrayIteration++) {
-				String clientIteratePerData = jsonPath.get("data[" + dataArrayIteration + "].name");
-				if (clientIteratePerData.contains(clientDataWithFilter[0].toString())) {
-					log("Searched value :" + clientDataWithFilter[0] + " is present within response body's value : "
-							+ clientIteratePerData);
-					CCUtils.assertTrue(true, "Found data " + clientIteratePerData + " is present in expected data : "
-							+ clientDataWithFilter[0].toString());
-				}
-			}
-			log("Comparing Searched Items applied  Multifilter Type with client type data received in Response body.");
-			for (int dataArrayIteration = 0; dataArrayIteration < clientdataSize; dataArrayIteration++) {
-				String clientTypePerData = jsonPath.get("data[" + dataArrayIteration + "].type");
-				for (int multiFilterIteration = 0; multiFilterIteration < filterType.size(); multiFilterIteration++) {
-					if (clientTypePerData.contains(filterType.get(multiFilterIteration))) {
-						CCUtils.assertTrue(true,
-								"Found data : " + clientTypePerData + " is matches with expected data : "
-										+ filterType.get(multiFilterIteration).toString());
-					} else {
-						log("Found data : " + clientTypePerData + " does not matches with expected data : "
-								+ filterType.get(multiFilterIteration).toString());
-					}
-				}
-			}
-		} catch (Exception e) {
-			log("Error : {}", e.getMessage());
-		}
+		System.out.println("Type :" + clientDataWithFilter[3]);
+		Response searchClientDirResultWithFilter = clientDirectory.getClientFromClientDirectoryWithFilter(
+				clientDataWithFilter[0].toString(), clientDataWithFilter[1].toString(),
+				clientDataWithFilter[2].toString(), clientDataWithFilter[3]);
+		logStep("Validating Response Time : " + searchClientDirResultWithFilter.toString());
+		CCUtils.responseTimeValidation(searchClientDirResultWithFilter);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(searchClientDirResultWithFilter.getStatusCode(), 200);
+		clientDirectoryValidations.verifyClientOutputWithFilter(searchClientDirResultWithFilter,
+				clientDataWithFilter[0], clientDataWithFilter[3]);
 	}
 
 	@DataProvider(name = "clientdatanonexisting")
 	public Object[] searchClientDetails() {
 		Object[][] obj = new Object[][] {
-				{ ccUser.getNonexistingclient().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getNonexistingccid().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getNonexistingsystem().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getNonexistingenterprise().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() },
-				{ ccUser.getNonexistingpractice().trim(), ccUser.getPage().trim(), ccUser.getPageSizeOne().trim() } };
+				{ testData.getProperty("api.nonexisting.full.client.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.nonexisting.full.command.center.id").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.nonexisting.full.system.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.nonexisting.full.enterprise.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ testData.getProperty("api.nonexisting.full.practice.name").trim(),
+						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() } };
 		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatanonexisting", description = "search non existing client/client nodes in client directory by keeping Items per page as 10 and current page as 1-10")
 	public void testSearchNonExistingClient(Object[] clientDataNonExisting) {
-		try {
-			Response nonexistingClient = clientDirectory.getClientFromClientDirectoryWithoutFilter(
-					clientDataNonExisting[0].toString(), clientDataNonExisting[1].toString(),
-					clientDataNonExisting[2].toString());
-			log("Validating Response Time");
-			CCUtils.responseTimeValidation(nonexistingClient);
-			log("Validating Response Code");
-			CCUtils.assertEquals(nonexistingClient.getStatusCode(), 200);
-			jsonPath = new JsonPath(nonexistingClient.asString());
-			log("Print data[] in response body : " + jsonPath.get("data"));
-			int clientDataSize = jsonPath.getInt("data.size()");
-			log("Get the size of data[] in response body : " + clientDataSize);
-			if (clientDataSize == 0) {
-				log("Client Data array in Response body is empty,so expected searched data : "
-						+ clientDataNonExisting[0].toString() + " does not found in response body.");
-			}
+		Response nonexistingClient = clientDirectory.getClientFromClientDirectoryWithoutFilter(
+				clientDataNonExisting[0].toString(), clientDataNonExisting[1].toString(),
+				clientDataNonExisting[2].toString());
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(nonexistingClient);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(nonexistingClient.getStatusCode(), 200);
+		jsonPath = new JsonPath(nonexistingClient.asString());
+		logStep("Print data[] in response body : " + jsonPath.get("data"));
+		int clientDataSize = jsonPath.getInt("data.size()");
+		logStep("Get the size of data[] in response body : " + clientDataSize);
+		if (clientDataSize == 0) {
+			logStep("Client Data array in Response body is empty,so expected searched data : "
+					+ clientDataNonExisting[0].toString() + " does not found in response body.");
+		}
+	}
 
-		} catch (Exception e) {
-			log("Error : {}", e.getMessage());
-		}
-	}
-	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Select Client as Favorite in Client Directory")
-	public void testSelectClientAsFavorite() {
-		try {
-			Response selectFavClient = clientDirectory.selectClientAsFavorite(ccUser.selectClientAsFav);
-			log("Validating Response Time");
-			CCUtils.responseTimeValidation(selectFavClient);
-			CCUtils.assertEquals(selectFavClient.getStatusCode(), 200);
-		}
-		catch (Exception e) {
-			log("Error : {}", e.getMessage());
-		}
+	public void testSelectClientAsFavorite() throws IOException {
+		Response selectFavClient = clientDirectory
+				.selectClientAsFavorite(testData.getProperty("favoriting.client.one"));
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(selectFavClient);
+		CCUtils.assertEquals(selectFavClient.getStatusCode(), 200);
 	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Deselect Favorite Client as not favorite in Client Directory")
+	public void testDeleteFavoritesClient() throws IOException {
+		clientDirectory.selectClientAsFavorite(testData.getProperty("favoriting.client.one"));
+		Response deselectFavClient = clientDirectory
+				.deleteFavoritesClient(testData.getProperty("favoriting.client.one"));
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(deselectFavClient);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(deselectFavClient.getStatusCode(), 200);
+	}
+
+	public List<String> listOfFavoritingClients() throws Exception {
+		list = new ArrayList<String>();
+		list.add(testData.getProperty("favoriting.client.one"));
+		list.add(testData.getProperty("favoriting.client.two"));
+		list.add(testData.getProperty("favoriting.client.three"));
+		list.add(testData.getProperty("favoriting.client.four"));
+		list.add(testData.getProperty("favoriting.client.five"));
+		list.add(testData.getProperty("favoriting.client.six"));
+		return list;
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we make more than five clients as favorite.")
+	public void testMoreThanFiveFavoritedClientsError() throws Exception {
+		Response getFavoriteClientsDetails = generalSettingsDropdown
+				.getClientFavRecentVisitsDropdown(testData.getProperty("favoriting.client.one"));
+		clientTopNavDropdownValidations.verifyExistingFavClientsGetDeleted(getFavoriteClientsDetails);
+		list = listOfFavoritingClients();
+		for (String noOfFavoritingClients : list) {
+			Response favoritingMoreThanFiveClients = clientDirectory.selectClientAsFavorite(noOfFavoritingClients);
+			logStep("Validating Response Time : " + favoritingMoreThanFiveClients.toString());
+			CCUtils.responseTimeValidation(favoritingMoreThanFiveClients);
+			logStep("Validating Response Code");
+			clientDirectoryValidations.verifySixthClientCantBeFavorited(favoritingMoreThanFiveClients,
+					noOfFavoritingClients);
+		}
+
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we make non-existing Client as favorite.")
+	public void testClientIdNotFoundErrorWhileFavoritingClient() {
+		Response selectFavClient = clientDirectory
+				.selectClientAsFavorite(testData.getProperty("api.nonexisting.full.command.center.id"));
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(selectFavClient);
+		CCUtils.assertEquals(selectFavClient.getStatusCode(), 400);
+		clientDirectoryValidations.verifyClientIdNotFoundErrorMsgWhileFavoritingClient(selectFavClient,
+				testData.getProperty("api.nonexisting.full.command.center.id"));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we unfavorite non-existing client.")
+	public void testClientIdNotFoundErrorWhileUnFavoritingClient() {
+		Response deselectFavClient = clientDirectory
+				.deleteFavoritesClient(testData.getProperty("api.nonexisting.full.command.center.id"));
+		logStep("Validating Response Time");
+		CCUtils.responseTimeValidation(deselectFavClient);
+		CCUtils.assertEquals(deselectFavClient.getStatusCode(), 400);
+		clientDirectoryValidations.verifyClientIdNotFoundErrorMsgWhileUnFavoritingClient(deselectFavClient);
+	}
+
 }

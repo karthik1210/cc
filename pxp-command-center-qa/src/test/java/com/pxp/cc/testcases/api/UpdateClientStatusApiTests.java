@@ -4,14 +4,17 @@ package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
 import java.util.List;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
+
 import io.restassured.response.Response;
 
 public class UpdateClientStatusApiTests extends BaseRest {
@@ -230,7 +233,7 @@ public class UpdateClientStatusApiTests extends BaseRest {
 				ccUser.getSystemSapNumberApi(), "false", ccUser.getSystemTestClientApi(),
 				ccUser.getSystemTimezoneIdApi(), ccUser.getSystemTimezoneDisplayNameApi(), false);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client id and verify error message is displayed for client id field")
 	public void testErrorMessageForInvalidClientId() throws IOException {
 		logStep("Enter non existing client id");
@@ -241,6 +244,6 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		CCUtils.assertEquals(updateClientStatusApiResponse.getStatusCode(), 400);
 		logStep("Validating Response Body");
 		validation.verifyErrorMessageForClientIdField(updateClientStatusApiResponse);
-		
+
 	}
 }

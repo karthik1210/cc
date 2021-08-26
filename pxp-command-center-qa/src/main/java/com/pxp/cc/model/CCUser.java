@@ -3,6 +3,7 @@
 package com.pxp.cc.model;
 
 import com.medfusion.common.utils.PropertyFileLoader;
+
 import lombok.Data;
 
 @Data
@@ -41,22 +42,6 @@ public class CCUser {
 	public String serviceBaseUrl;
 	public String commandCenterUser;
 	public String commandCenterPassword;
-	public String queryFullClientName;
-	public String queryPartialClientName;
-	public String queryFullCommandCenterId;
-	public String queryPartialCommandCenterId;
-	public String queryFullSystemName;
-	public String queryPartialSystemName;
-	public String queryFullEnterpriseName;
-	public String queryPartialEnterpriseName;
-	public String queryFullPracticeName;
-	public String queryPartialPracticeName;
-	public String page;
-	public String pageSizeOne;
-	public String pageSizeTwo;
-	public String pageSizeThree;
-	public String pageSizeFour;
-	public String pageSizeFive;
 	public String type;
 	public String clientOneType;
 	public String clientTwoType;
@@ -73,12 +58,6 @@ public class CCUser {
 	public String clientThirteenType;
 	public String clientForteenType;
 	public String clientFifteenType;
-	public String nonexistingclient;
-	public String nonexistingccid;
-	public String nonexistingsystem;
-	public String nonexistingenterprise;
-	public String nonexistingpractice;
-	public String selectClientAsFav;
 	public String searchClientInClientDirectory;
 	public String searchSystemInClientDirectory;
 	public String searchPracticeInClientDirectory;
@@ -206,22 +185,6 @@ public class CCUser {
 		setServiceBaseUrl(getProperty("service.baseurl"));
 		setCommandCenterUser(getProperty("commandcenter.user"));
 		setCommandCenterPassword(getProperty("commandcenter.password"));
-		setQueryFullClientName(getProperty("api.query.full.client.name"));
-		setQueryPartialClientName(getProperty("api.query.partial.client.name"));
-		setQueryFullCommandCenterId(getProperty("api.query.full.command.center.id"));
-		setQueryPartialCommandCenterId(getProperty("api.query.partial.command.center.id"));
-		setQueryFullSystemName(getProperty("api.query.full.system.name"));
-		setQueryPartialSystemName(getProperty("api.query.partial.system.name"));
-		setQueryFullEnterpriseName(getProperty("api.query.full.enterprise.name"));
-		setQueryPartialEnterpriseName(getProperty("api.query.partial.enterprise.name"));
-		setQueryFullPracticeName(getProperty("api.query.full.practice.name"));
-		setQueryPartialPracticeName(getProperty("api.query.partial.practice.name"));
-		setPage(getProperty("api.page"));
-		setPageSizeOne(getProperty("api.pageSize1"));
-		setPageSizeTwo(getProperty("api.pageSize2"));
-		setPageSizeThree(getProperty("api.pageSize3"));
-		setPageSizeFour(getProperty("api.pageSize4"));
-		setPageSizeFive(getProperty("api.pageSize5"));
 		setClientOneType(getProperty("api.client.one.type"));
 		setClientTwoType(getProperty("api.client.two.type"));
 		setClientThreeType(getProperty("api.client.three.type"));
@@ -237,12 +200,7 @@ public class CCUser {
 		setClientThirteenType(getProperty("api.client.thirteen.type"));
 		setClientForteenType(getProperty("api.client.forteen.type"));
 		setClientFifteenType(getProperty("api.client.fifteen.type"));
-		setNonexistingclient(getProperty("api.nonexisting.full.client.name"));
-		setNonexistingccid(getProperty("api.nonexisting.full.command.center.id"));
-		setNonexistingsystem(getProperty("api.nonexisting.full.system.name"));
-		setNonexistingenterprise(getProperty("api.nonexisting.full.enterprise.name"));
-		setNonexistingpractice(getProperty("api.nonexisting.full.practice.name"));
-		setSelectClientAsFav(getProperty("api.fav.clientid"));
+		setNonExistingClientId(getProperty("api.nonexisting.full.client.name"));
 		setSearchClientInClientDirectory(getProperty("search.client.in.client.directory"));
 		setSearchSystemInClientDirectory(getProperty("search.system.in.client.directory"));
 		setSearchEnterpriseInClientDirectory(getProperty("search.enterprise.in.client.directory"));
@@ -376,4 +334,5 @@ public class CCUser {
 		setInactivePracticeSapId(getProperty("new.inactive.practice.sapid"));
 		setInactivePracticeTimezone(getProperty("new.inactive.practice.timezone"));
 	}
+
 }
