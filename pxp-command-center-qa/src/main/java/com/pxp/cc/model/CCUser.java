@@ -173,6 +173,8 @@ public class CCUser {
 	private String inactivePracticeTimezone;
 	private String activeClientName;
 	private String inactiveClientName;
+	private String orgClientId;
+	private Integer orgInvalidId;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -301,6 +303,8 @@ public class CCUser {
 		setInactivePracticeNodeTestData();
 		setActiveClientName(getProperty("new.active.client.name"));
 		setInactiveClientName(getProperty("new.inactive.client.name"));
+		setOrgClientId(getProperty("api.org.client.id"));
+		setOrgInvalidId(Integer.parseInt(getProperty("api.org.invalid.id")));
 	}
 
 	public void setNewClient() throws Exception {

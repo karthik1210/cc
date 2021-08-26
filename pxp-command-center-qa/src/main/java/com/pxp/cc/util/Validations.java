@@ -134,6 +134,28 @@ public class Validations {
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), systemName);
 
 	}
+	
+	public void verifyGetOrgIdResponseBody(Response response, int orgId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "System id was not in the response");
+		CCUtils.assertEquals(response.jsonPath().get("orgId"), orgId);
+
+	}
+	
+	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=4014");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
+	
+	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=401455678");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
 
 	public void verifySearchSystemResponseBody(Response response, String orgId, String systemName, String orgType,
 			String clientType, String displayName, String sapNumber, String systemeActive, String systemTestClient,

@@ -49,6 +49,11 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(updateSystemPayload).when().put(ApiPath.PUT_ORG_CONTROLLER).then()
 				.extract().response();
 	}
+	
+	public Response getOrgId(int orgId) throws IOException {
+		String url = ApiPath.GET_ORGID + orgId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 	public Response createEnterprise(String active, String displayName, String name, String orgType, int orgId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
