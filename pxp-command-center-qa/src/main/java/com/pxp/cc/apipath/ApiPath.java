@@ -18,17 +18,18 @@ public class ApiPath {
 	public static final String GET_ORG_DETAILS = "/service/cc/v1/orgs/";
 	public static final String POST_ENTERPRISE_PRACTICE = "/service/cc/v1/orgs";
 	public static final String GET_CLIENTSAPNUMBER = SERVICE_CC + V1_CLIENTS + "/sapnumber/";
+	public static final String GET_PARENT_DROPDOWN = "/TYPES​​/";
+	public static final String PUT_ORG_CONTROLLER = "/service/cc/v1/orgs";
 	public static final String GET_CLIENT_STATUS = "/status/";
-
 	public static final String ADD_FAVORITES(int clientId) {
 		return SERVICE_CC + V1_CLIENTS + "/client/" + clientId + "/favorites";
 	}
-
 	public static final String DELETE_FAVORITE(int clientId) {
 		return SERVICE_CC + V1_CLIENTS + "/client/" + clientId + "/favorite";
 	}
-
 	public static final String MENU_CLIENTS(int clientId) {
 		return GET_CLIENT + clientId + "/menu";
 	}
+	public static final String GET_CLIENTNAME = SERVICE_CC + V1_CLIENTS + "/name/";
+	public static final String GET_ORGID = "/service/cc/v1/orgs/";
 }

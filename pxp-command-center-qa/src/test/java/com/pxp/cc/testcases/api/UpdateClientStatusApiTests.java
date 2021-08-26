@@ -47,7 +47,7 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Fetch newly created client details using client id");
@@ -93,7 +93,7 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Fetch newly created client details using client id");
