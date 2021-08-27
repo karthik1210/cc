@@ -1,6 +1,7 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.objectmaps;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,29 +11,29 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.pxp.cc.util.CCUtils;
 
 public class EditOrgNodePage extends CCMainPage {
-	
+
 	public EditOrgNodePage(WebDriver driver) {
 		super(driver);
 	}
-	
+
 	@FindBy(id = "treeExpandBtn")
 	private WebElement clientCarretIcon;
-	
+
 	@FindBy(xpath = "//mat-icon[contains(text(),'keyboard_arrow_up')]")
 	private WebElement systemCarretIcon;
-	
+
 	@FindBy(xpath = "//mat-icon[contains(text(),'keyboard_arrow_up')]")
 	private WebElement enterpriseCarretIcon;
 
 	@FindBy(xpath = "//mat-tree-node[@aria-level='2']")
 	private WebElement clickSystemNode;
-	
+
 	@FindBy(xpath = "//mat-tree-node[@aria-level='3']")
 	private WebElement clickEnterpriseNode;
-	
+
 	@FindBy(xpath = "//mat-tree-node[@aria-level='4']")
 	private WebElement clickPracticeNode;
-	
+
 	@FindBy(id = "orgEditBtn")
 	private WebElement editOrgButton;
 
@@ -65,44 +66,36 @@ public class EditOrgNodePage extends CCMainPage {
 
 	@FindBy(id = "OrgSapError")
 	private WebElement errorMessageSapIdMaxLength;
-	
+
 	@FindBy(xpath = "//*[@id=\"cdk-overlay-0\"]/snack-bar-container/app-snack-icon/div/span")
 	private WebElement errorMessageInactiveOrgNode;
 
 	@FindBy(id = "orgSolutionError")
 	private WebElement errorMessageSolutionDisplayNameMaxLength;
 
-//	@FindBy(id = "headerLogoutLink")
-//	private WebElement userLogout;
-
 	public void clickOnClientCarretIcon() {
-		wait.until(ExpectedConditions.visibilityOf(clientCarretIcon));
+		CCUtils.verifyAndWaitForElement(clientCarretIcon, driver);
 		clientCarretIcon.click();
 	}
-	
+
 	public void clickOnSystemCarretIcon() {
 		wait.until(ExpectedConditions.visibilityOf(systemCarretIcon));
+		CCUtils.verifyAndWaitForElement(systemCarretIcon, driver);
 		systemCarretIcon.click();
 	}
 
-	public void clickOnSystemNode() {
-		CCUtils.verifyAndWaitForElement(clickSystemNode, driver);
-		log("Clicked on system node");
-		clickSystemNode.click();
-	}
-	
 	public void clickOnEnterpriseCarretIcon() {
-		wait.until(ExpectedConditions.visibilityOf(enterpriseCarretIcon));
+		CCUtils.verifyAndWaitForElement(enterpriseCarretIcon, driver);
 		enterpriseCarretIcon.click();
 	}
-	
+
 	public void clickOnEnterpriseNode() {
-		wait.until(ExpectedConditions.visibilityOf(clickEnterpriseNode));
+		CCUtils.verifyAndWaitForElement(clickEnterpriseNode, driver);
 		clickEnterpriseNode.click();
 	}
-	
+
 	public void clickOnPracticeNode() {
-		wait.until(ExpectedConditions.visibilityOf(clickPracticeNode));
+		CCUtils.verifyAndWaitForElement(clickPracticeNode, driver);
 		clickPracticeNode.click();
 	}
 
@@ -111,13 +104,6 @@ public class EditOrgNodePage extends CCMainPage {
 		log("Clicked on edit button");
 		editOrgButton.click();
 	}
-
-//	public void clickLogout() throws InterruptedException {
-//		CCUtils.verifyAndWaitForElement(userLogout, driver);
-//		javascriptClick(userLogout);
-//		log("Clicked on logout");
-//		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-//	}
 
 	public void clickActiveRadioButtonOfOrgNode() {
 		CCUtils.verifyAndWaitForElement(orgActiveRadioButton, driver);
@@ -145,53 +131,28 @@ public class EditOrgNodePage extends CCMainPage {
 		orgSaveBtn.click();
 	}
 
-	public void navigateToGeneralSettingsPage() throws InterruptedException {
-		WebElement searchBox = driver.findElement(By.id("directorySearchInput"));
-		CCUtils.verifyAndWaitForElement(searchBox, driver);
-		searchBox.click();
-		Thread.sleep(5000);
-		searchBox.sendKeys("CLIENTRUCHI");
-		WebElement searchButton = driver.findElement(By.id("directoryToggleIcon"));
-		CCUtils.verifyAndWaitForElement(searchButton, driver);
-		Thread.sleep(2000);
-		searchButton.click();
-		Thread.sleep(5000);
-		WebElement row = driver.findElement(By.xpath("//td[@id='name-row']"));
-		CCUtils.verifyAndWaitForElement(row, driver);
-		Thread.sleep(5000);
-		row.click();
-
-	}
-
 	public void editOrgOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
 			throws InterruptedException {
-
 		textBoxOrgEditSapId.clear();
 		textBoxOrgEditSapId.sendKeys(sapId);
 		textBoxSolutionDisplayName.clear();
 		textBoxSolutionDisplayName.sendKeys(solutionsDisplayName);
 		scrollAndWait(0, 500, 200);
 		dropDownTimezone.click();
-//		textBoxTimezone.sendKeys(timezone);
-//		CCUtils.verifyAndWaitForElement(timezone, driver);
 		textBoxTimezone.sendKeys(timezone);
 		textBoxTimezone.sendKeys(Keys.ENTER);
-
 	}
 
 	public void overrideEditOrgOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
 			throws InterruptedException {
-
 		textBoxOrgEditSapId.sendKeys(sapId);
 		textBoxSolutionDisplayName.sendKeys(solutionsDisplayName);
 		dropDownTimezone.click();
 		textBoxTimezone.sendKeys(timezone);
 		textBoxTimezone.sendKeys(Keys.ENTER);
-
 	}
 
 	public void nullEditOnGeneralSettingPage(String orgTimezoneSelectOption) throws InterruptedException {
-
 		textBoxOrgEditSapId.clear();
 		textBoxOrgEditSapId.sendKeys(" ");
 		textBoxSolutionDisplayName.clear();
@@ -202,7 +163,6 @@ public class EditOrgNodePage extends CCMainPage {
 	}
 
 	public void maximumLengthEditOrgOnGeneralSettingPage(String timezone) throws InterruptedException {
-
 		textBoxOrgEditSapId.clear();
 		textBoxOrgEditSapId.sendKeys("VC848684425643610242937645@$$q$&(**&*^bcgdBN77BJGS2");
 		textBoxSolutionDisplayName.clear();
@@ -211,32 +171,6 @@ public class EditOrgNodePage extends CCMainPage {
 		dropDownTimezone.click();
 		textBoxTimezone.sendKeys(timezone);
 		textBoxTimezone.sendKeys(Keys.ENTER);
-
-	}
-
-
-	public void selectTimezoneList() {
-
-//		Select dropdown = new Select(dropDownTimezone);
-//		List<WebElement> options = new ArrayList<String>();
-//		dropdown.selectByValue("a46856b54dac-1");
-//		dropdown.selectByValue("a46856b54dac-2");
-//		dropdown.selectByValue("a46856b54dac-3");
-//		dropdown.selectByValue("a46856b54dac-4");
-//		dropdown.selectByValue("a46856b54dac-5");
-//		dropdown.selectByValue("a46856b54dac-6");
-//		dropdown.selectByValue("a46856b54dac-7");
-//		dropdown.selectByValue("a46856b54dac-8");
-//		dropdown.selectByValue("a46856b54dac-9");
-//		dropdown.selectByValue("a46856b54dac-10");
-//		dropdown.selectByValue("a46856b54dac-11");
-//		dropdown.selectByValue("a46856b54dac-12");
-//		dropdown.selectByValue("a46856b54dac-13");
-//		dropdown.selectByValue("a46856b54dac-14");
-//		dropdown.selectByValue("a46856b54dac-10");
-//		dropdown.selectByValue("a46856b54dac-10");
-//		dropdown.selectByValue("a46856b54dac-10");
-
 	}
 
 	public String sapIdMaxLengthValidationMessageOnEditOrg() {
@@ -248,11 +182,10 @@ public class EditOrgNodePage extends CCMainPage {
 		String errorSolutionDisplayNameLength = errorMessageSolutionDisplayNameMaxLength.getText();
 		return errorSolutionDisplayNameLength;
 	}
-	
+
 	public String errorMessageOnEditOrgForInactiveClient() {
 		String InactiveClient = errorMessageInactiveOrgNode.getText();
 		return InactiveClient;
 	}
-	
 
 }
