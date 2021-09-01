@@ -44,6 +44,12 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.GET_CLIENTNAME + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getOrgHierarchyWithClientNode(String clientId, Boolean forClientValue) throws IOException {
+		String url = ApiPath.GET_ORG_HIERARCHY + clientId;
+		return given().spec(requestSpec).queryParam("excludeClientData", forClientValue).when().get(url).then()
+				.extract().response();
+	}
 
 	private Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
 			String clientSapNumber, String testClient, String type, String timezoneId) {
