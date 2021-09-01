@@ -15,7 +15,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class FetchClientDetails extends BaseRest {
+public class FetchClientDetailsTests extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
@@ -35,11 +35,9 @@ public class FetchClientDetails extends BaseRest {
 	public void testErrorMessageForClientIdField() throws IOException {
 		logStep("Enter non existing client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(ccUser.getNonExistingClientId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorResponseBodyForClientIdField(fetchClientDetailsApiResponse,
 				ccUser.getNonExistingClientId());
 	}
@@ -51,20 +49,17 @@ public class FetchClientDetails extends BaseRest {
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
+
 		logStep("Fetch newly created client details using client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
 				ccUser.getTimezoneId(), ccUser.getDisplayName(), ccUser.getPracticeCount(), false, solutionList);
@@ -77,12 +72,6 @@ public class FetchClientDetails extends BaseRest {
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -95,20 +84,12 @@ public class FetchClientDetails extends BaseRest {
 				ccUser.getPracticeDisplayNameApi(), practiceName, ccUser.getPracticeOrgTypeApi(),
 				Integer.parseInt(clientId), ccUser.getParentTypeApi(), practiceSapNumber,
 				ccUser.getPracticeTimezoneIdApi(), solutionList);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
 
 		logStep("Verify client details represent active solutions");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
 				ccUser.getTimezoneId(), ccUser.getDisplayName(), 1, true, solutionList);
@@ -121,12 +102,6 @@ public class FetchClientDetails extends BaseRest {
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -136,20 +111,12 @@ public class FetchClientDetails extends BaseRest {
 				ccUser.getPracticeDisplayNameApi(), practiceName, ccUser.getPracticeOrgTypeApi(),
 				Integer.parseInt(clientId), ccUser.getParentTypeApi(), practiceSapNumber,
 				ccUser.getPracticeTimezoneIdApi(), solutionList);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
 
-		logStep("Verify client details not represent soutions available for purchase");
+		logStep("Verify client details not represent solutions available for purchase");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
 				ccUser.getTimezoneId(), ccUser.getDisplayName(), 1, false, solutionList);
