@@ -306,7 +306,7 @@ public class CCUser {
 		setInactiveClientName(getProperty("new.inactive.client.name"));
 		setOrgClientId(getProperty("api.org.client.id"));
 		setOrgInvalidId(Integer.parseInt(getProperty("api.org.invalid.id")));
-		setNonExistingOrgId(getProperty("api.nonexisting.OrgId"));
+		setNonExistingOrgId(getProperty("api.nonexisting.orgid"));
 	}
 
 	public void setNewClient() throws Exception {

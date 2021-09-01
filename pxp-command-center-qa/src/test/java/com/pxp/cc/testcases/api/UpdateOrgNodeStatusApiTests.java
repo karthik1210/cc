@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -21,7 +20,6 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 	private Validations validation;
 	private OrgInfo orgInfo;
-	private ClientInfo clientInfo;
 	Response createSystemApiResponse, fetchSystemDetailsApiResponse, updateSystemStatusApiResponse,
 			createEnterpriseApiResponse, updateEnterpriseStatusApiResponse, fetchEnterpriseDetailsApiResponse,
 			createPracticeApiResponse, fetchPracticeDetailsApiResponse, updatePracticeStatusApiResponse,
@@ -31,7 +29,6 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
 		orgInfo = new OrgInfo();
 	}
@@ -45,22 +42,16 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
 				systemName, ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), ccUser.getParentTypeApi(),
 				systemSapNumber, ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
 		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-		logStep("Fetch newly created system details using system id");
 
 		logStep("Fetch newly created system details using system id");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
@@ -69,18 +60,12 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 		logStep("Update system status from active to inactive");
 		updateSystemStatusApiResponse = orgInfo.patchOrgStatus(orgId, "false");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updateSystemStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify system Status is changed from active to inactive");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
@@ -97,22 +82,16 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 		createSystemApiResponse = orgInfo.createSystem("false", ccUser.getSystemDisplayNameApi(), systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), ccUser.getParentTypeApi(), systemSapNumber,
 				ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
 		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-		logStep("Fetch newly created system details using system id");
 
 		logStep("Fetch newly created system details using system id");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
@@ -121,18 +100,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 		logStep("Update system status from active to inactive");
 		updateSystemStatusApiResponse = orgInfo.patchOrgStatus(orgId, "true");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updateSystemStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify system Status is changed from active to inactive");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
@@ -149,28 +123,21 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
 				systemName, ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), ccUser.getParentTypeApi(),
 				systemSapNumber, ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
 		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
 
 		logStep("Update system status from active to inactive");
 		updateSystemStatusApiResponse = orgInfo.patchOrgStatus(orgId, "false");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updateSystemStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify system Status is changed from active to inactive");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
@@ -183,20 +150,15 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
 
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
 		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
 
 		logStep("Verify after updating system node status from active to inactive, subsequent child node also become inactive");
 
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId,
 				ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(),
@@ -210,19 +172,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				Integer.parseInt(orgId), ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
 
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
 
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchUpdatedPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId,
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeSapNumberApi(), "false",
@@ -238,28 +194,21 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 		createSystemApiResponse = orgInfo.createSystem("false", ccUser.getSystemDisplayNameApi(), systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), ccUser.getParentTypeApi(), systemSapNumber,
 				ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
 		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
 
 		logStep("Update system status from active to inactive");
 		updateSystemStatusApiResponse = orgInfo.patchOrgStatus(orgId, "true");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updateSystemStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify system Status is changed from inactive to active");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemName,
 				ccUser.getSystemOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getSystemDisplayNameApi(),
@@ -272,20 +221,15 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
 
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
 		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
 
 		logStep("Verify after updating system node status from active to inactive, subsequent child node also become inactive");
 
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId,
 				ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(),
@@ -298,19 +242,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(), Integer.parseInt(orgId),
 				ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(), ccUser.getPracticeTimezoneIdApi());
 
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
 
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchUpdatedPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId,
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeSapNumberApi(), "false",
@@ -326,21 +264,16 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				ccUser.getEnterpriseParentIdApi(), ccUser.getEnterpriseParentTypeApi(), enterpriseSapNumber,
 				ccUser.getEnterpriseTimezoneIdApi());
 
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateEnterpriseResponseBody(createEnterpriseApiResponse, enterpriseName);
 		String orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
 
 		logStep("Fetch newly created enterprise details using enterprise id");
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId, enterpriseName,
 				ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getEnterpriseDisplayNameApi(),
@@ -350,18 +283,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 		logStep("Update enterprise status from active to inactive");
 		updateEnterpriseStatusApiResponse = orgInfo.patchOrgStatus(orgId, "false");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updateEnterpriseStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateEnterpriseStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify enterprise Status is changed from active to inactive");
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId, enterpriseName,
 				ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getEnterpriseDisplayNameApi(),
@@ -378,21 +306,16 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				ccUser.getPracticeParentIdApi(), ccUser.getPracticeParentTypeApi(), practiceSapNumber,
 				ccUser.getPracticeTimezoneIdApi());
 
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
 		String orgId = createPracticeApiResponse.jsonPath().get("id").toString();
 
 		logStep("Fetch newly created practice details using practice id");
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId, practiceName,
 				ccUser.getPracticeOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getPracticeDisplayNameApi(),
@@ -401,18 +324,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 		logStep("Update practice status from active to inactive");
 		updatePracticeStatusApiResponse = orgInfo.patchOrgStatus(orgId, "false");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updatePracticeStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify practice Status is changed from active to inactive");
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId, practiceName,
 				ccUser.getPracticeOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getPracticeDisplayNameApi(),
@@ -430,21 +348,16 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				enterpriseName, ccUser.getEnterpriseOrgTypeApi(), ccUser.getEnterpriseParentIdApi(),
 				ccUser.getEnterpriseParentTypeApi(), enterpriseSapNumber, ccUser.getEnterpriseTimezoneIdApi());
 
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateEnterpriseResponseBody(createEnterpriseApiResponse, enterpriseName);
 		String orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
 
 		logStep("Fetch newly created enterprise details using enterprise id");
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId, enterpriseName,
 				ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getEnterpriseDisplayNameApi(),
@@ -453,18 +366,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 		logStep("Update enterprise status from Inactive to Active");
 		updateEnterpriseStatusApiResponse = orgInfo.patchOrgStatus(orgId, "true");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updateEnterpriseStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateEnterpriseStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify enterprise Status is changed from active to inactive");
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId, enterpriseName,
 				ccUser.getEnterpriseOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getEnterpriseDisplayNameApi(),
@@ -482,21 +390,16 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 				ccUser.getPracticeOrgTypeApi(), ccUser.getPracticeParentIdApi(), ccUser.getPracticeParentTypeApi(),
 				practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
 
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
 		String orgId = createPracticeApiResponse.jsonPath().get("id").toString();
 
 		logStep("Fetch newly created practice details using practice id");
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId, practiceName,
 				ccUser.getPracticeOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getPracticeDisplayNameApi(),
@@ -505,18 +408,13 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 
 		logStep("Update practice status from active to inactive");
 		updatePracticeStatusApiResponse = orgInfo.patchOrgStatus(orgId, "true");
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(updatePracticeStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeStatusApiResponse.getStatusCode(), 200);
 
 		logStep("Verify practice Status is changed from active to inactive");
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 
 		validation.verifySearchPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId, practiceName,
 				ccUser.getPracticeOrgTypeApi(), ccUser.getClientTypeApi(), ccUser.getPracticeDisplayNameApi(),
@@ -528,11 +426,9 @@ public class UpdateOrgNodeStatusApiTests extends BaseRest {
 	public void testErrorMessageForInvalidOrgId() throws IOException {
 		logStep("Enter non existing client id");
 		updateSystemStatusApiResponse = orgInfo.patchOrgStatus(ccUser.getNonExistingOrgId(), "true");
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSystemStatusApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemStatusApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorMessageForOrgIdField(updateSystemStatusApiResponse);
 	}
 }
