@@ -555,11 +555,4 @@ public class Validations {
 	public void verifyResponseBodyForClientNameField(Response response) throws IOException {
 		CCUtils.assertEquals(response.getBody().asString(), "true");
 	}
-	
-	public void verifyErrorMessageIfClientIdIsNull(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"null\"");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
-	}
 }
