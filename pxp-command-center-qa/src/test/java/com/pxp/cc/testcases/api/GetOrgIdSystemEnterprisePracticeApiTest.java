@@ -5,7 +5,6 @@ package com.pxp.cc.testcases.api;
 import java.io.IOException;
 
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -18,12 +17,13 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
-	
+
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validation;
-	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse, getOrgIdApiResponse;
-	
+	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
+			getOrgIdApiResponse;
+
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
@@ -31,7 +31,7 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 		orgInfo = new OrgInfo();
 		validation = new Validations();
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter system id in orgId field and validate response body")
 	public void testFetchingSystemOrgId() throws IOException {
 		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
@@ -39,20 +39,16 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
 				systemName, ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), ccUser.getParentTypeApi(),
 				systemSapNumber, ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
 		int orgId = createSystemApiResponse.jsonPath().get("id");
 		logStep("Fetching System Id Response body");
 		getOrgIdApiResponse = orgInfo.getOrgId(orgId);
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(getOrgIdApiResponse);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(getOrgIdApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");		
 		validation.verifyGetOrgIdResponseBody(getOrgIdApiResponse, orgId);
 	}
 
@@ -65,23 +61,18 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 				ccUser.getEnterpriseParentIdApi(), ccUser.getEnterpriseParentTypeApi(), enterpriseSapNumber,
 				ccUser.getEnterpriseTimezoneIdApi());
 
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateEnterpriseResponseBody(createEnterpriseApiResponse, enterpriseName);
 		int orgId = createEnterpriseApiResponse.jsonPath().get("id");
 		logStep("Fetching Enterprise Id Response body");
 		getOrgIdApiResponse = orgInfo.getOrgId(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(getOrgIdApiResponse);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(getOrgIdApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");		
 		validation.verifyGetOrgIdResponseBody(getOrgIdApiResponse, orgId);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practice id in orgId field and validate response body")
 	public void testFetchingPracticeOrgId() throws IOException {
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -91,54 +82,42 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 				ccUser.getPracticeParentIdApi(), ccUser.getPracticeParentTypeApi(), practiceSapNumber,
 				ccUser.getPracticeTimezoneIdApi());
 
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
 		int orgId = createPracticeApiResponse.jsonPath().get("id");
 		logStep("Fetching Practice Id Response body");
 		getOrgIdApiResponse = orgInfo.getOrgId(orgId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(getOrgIdApiResponse);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(getOrgIdApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");		
 		validation.verifyGetOrgIdResponseBody(getOrgIdApiResponse, orgId);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter client id in orgId field and validate response body")
 	public void testFetchingErrorResponseForClientId() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getOrgClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		int clientId = createClientApiResponse.jsonPath().get("id");
 		logStep("Fetching Client Id Response");
 		getOrgIdApiResponse = orgInfo.getOrgId(clientId);
-		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(getOrgIdApiResponse);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(getOrgIdApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");		
 		validation.verifyErrorMessageInResponseForClientIdInOrgIdField(getOrgIdApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid org id in orgId field and validate response body")
 	public void testFetchingErrorResponseForInvalidOrgId() throws IOException {
 		getOrgIdApiResponse = orgInfo.getOrgId(ccUser.getOrgInvalidId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrgIdApiResponse);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(getOrgIdApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");		
 		validation.verifyErrorMessageInResponseForInvalidInOrgId(getOrgIdApiResponse);
 	}
 
