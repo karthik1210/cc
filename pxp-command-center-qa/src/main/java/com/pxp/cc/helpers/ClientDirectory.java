@@ -5,6 +5,7 @@ import static io.restassured.RestAssured.given;
 
 import java.util.List;
 
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 
@@ -32,11 +33,13 @@ public class ClientDirectory extends BaseRest {
 
 	public Response selectClientAsFavorite(String clientId) {
 		int clientID = Integer.parseInt(clientId);
+		Log4jUtil.log("Favoriting client Id : " + clientID);
 		return given().spec(requestSpec).when().post(ApiPath.ADD_FAVORITES(clientID)).then().extract().response();
 	}
 
 	public Response deleteFavoritesClient(String clientId) {
 		int clientID = Integer.parseInt(clientId);
+		Log4jUtil.log("DE Favoriting client Id : " + clientID);
 		return given().spec(requestSpec).when().delete(ApiPath.DELETE_FAVORITE(clientID)).then().extract().response();
 	}
 

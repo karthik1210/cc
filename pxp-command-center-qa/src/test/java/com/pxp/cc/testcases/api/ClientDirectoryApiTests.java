@@ -65,7 +65,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 		return obj;
 	}
 
-	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithoutfilter", description = "search client nodes in client directory by keeping Items per page as 10 and current page as 1-10")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithoutfilter", description = "search client nodes in client directory by keeping Items per page as 10 and current page as 1-10")
 	public void testSearchClientOutputWithoutFilter(String[] getSearchClientDetails) throws IOException {
 		Response searchClientDirResult = clientDirectory.getClientFromClientDirectoryWithoutFilter(
 				getSearchClientDetails[0], getSearchClientDetails[1], getSearchClientDetails[2]);
@@ -111,7 +111,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 		return obj;
 	}
 
-	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithfilter", description = "search client nodes by applying multiselect Client Type Filter in client directory by keeping Items per page as 10 and current page as 1-10")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithfilter", description = "search client nodes by applying multiselect Client Type Filter in client directory by keeping Items per page as 10 and current page as 1-10")
 	public void testSearchClientOutputWithFilter(Object[] clientDataWithFilter) throws IOException {
 		System.out.println("Type :" + clientDataWithFilter[3]);
 		Response searchClientDirResultWithFilter = clientDirectory.getClientFromClientDirectoryWithFilter(
@@ -141,7 +141,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 		return obj;
 	}
 
-	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatanonexisting", description = "search non existing client/client nodes in client directory by keeping Items per page as 10 and current page as 1-10")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatanonexisting", description = "search non existing client/client nodes in client directory by keeping Items per page as 10 and current page as 1-10")
 	public void testSearchNonExistingClient(Object[] clientDataNonExisting) {
 		Response nonexistingClient = clientDirectory.getClientFromClientDirectoryWithoutFilter(
 				clientDataNonExisting[0].toString(), clientDataNonExisting[1].toString(),
@@ -160,8 +160,11 @@ public class ClientDirectoryApiTests extends BaseRest {
 		}
 	}
 
-	@Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Select Client as Favorite in Client Directory")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Select Client as Favorite in Client Directory")
 	public void testSelectClientAsFavorite() throws IOException {
+		Response checkHowManyFavClients = generalSettingsDropdown
+				.getClientFavRecentVisitsDropdown(testData.getProperty("favoriting.client.one"));
+		clientDirectoryValidations.verifyExistingFavClientsNotMoreThanFive(checkHowManyFavClients);
 		Response selectFavClient = clientDirectory
 				.selectClientAsFavorite(testData.getProperty("favoriting.client.one"));
 		logStep("Validating Response Time");
@@ -169,15 +172,31 @@ public class ClientDirectoryApiTests extends BaseRest {
 		CCUtils.assertEquals(selectFavClient.getStatusCode(), 200);
 	}
 
-	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Deselect Favorite Client as not favorite in Client Directory")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Deselect Favorite Client as not favorite in Client Directory")
 	public void testDeleteFavoritesClient() throws IOException {
-		clientDirectory.selectClientAsFavorite(testData.getProperty("favoriting.client.one"));
-		Response deselectFavClient = clientDirectory
-				.deleteFavoritesClient(testData.getProperty("favoriting.client.one"));
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(deselectFavClient);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(deselectFavClient.getStatusCode(), 200);
+		Response checkNumberOfFavClients = generalSettingsDropdown
+				.getClientFavRecentVisitsDropdown(testData.getProperty("favoriting.client.one"));
+		String clientId = clientDirectoryValidations.verifyHowManyExistingFavClients(checkNumberOfFavClients);
+		logStep("Client Id which is getting de-favorited : " + clientId);
+		if (clientId == null) {
+			Response verfiyClientFavorited = clientDirectory
+					.selectClientAsFavorite(testData.getProperty("favoriting.client.one"));
+			logStep("Validating Response Code");
+			CCUtils.assertEquals(verfiyClientFavorited.getStatusCode(), 200);
+			Response deselectFavClient = clientDirectory
+					.deleteFavoritesClient(testData.getProperty("favoriting.client.one"));
+			logStep("Validating Response Time");
+			CCUtils.responseTimeValidation(deselectFavClient);
+			logStep("Validating Response Code");
+			CCUtils.assertEquals(deselectFavClient.getStatusCode(), 200);
+		} else {
+			Response deselectFavClient = clientDirectory.deleteFavoritesClient(clientId);
+			logStep("Validating Response Time");
+			CCUtils.responseTimeValidation(deselectFavClient);
+			logStep("Validating Response Code");
+			CCUtils.assertEquals(deselectFavClient.getStatusCode(), 200);
+		}
+
 	}
 
 	public List<String> listOfFavoritingClients() throws Exception {
@@ -191,7 +210,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 		return list;
 	}
 
-	@Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we make more than five clients as favorite.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we make more than five clients as favorite.")
 	public void testMoreThanFiveFavoritedClientsError() throws Exception {
 		Response getFavoriteClientsDetails = generalSettingsDropdown
 				.getClientFavRecentVisitsDropdown(testData.getProperty("favoriting.client.one"));
@@ -208,7 +227,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 
 	}
 
-	@Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we make non-existing Client as favorite.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we make non-existing Client as favorite.")
 	public void testClientIdNotFoundErrorWhileFavoritingClient() {
 		Response selectFavClient = clientDirectory
 				.selectClientAsFavorite(testData.getProperty("api.nonexisting.full.command.center.id"));
@@ -219,7 +238,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 				testData.getProperty("api.nonexisting.full.command.center.id"));
 	}
 
-	@Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we unfavorite non-existing client.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating 400 response code if we unfavorite non-existing client.")
 	public void testClientIdNotFoundErrorWhileUnFavoritingClient() {
 		Response deselectFavClient = clientDirectory
 				.deleteFavoritesClient(testData.getProperty("api.nonexisting.full.command.center.id"));
