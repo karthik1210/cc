@@ -2,11 +2,13 @@
 
 package com.pxp.cc.objectmaps;
 
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import com.pxp.cc.util.CCUtils;
 
 public class GeneralSettingsPage extends CCMainPage {
@@ -71,8 +73,29 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='mat-tree-node-click bordernode']/div/mat-icon | //div[@class='mat-tree-node-click treenodespace']/div/mat-icon | //div[@class='mat-tree-node-click practicenodespace']/div/mat-icon")
 	private WebElement selectedOrgNodeStatusIcon;
 
+	@FindBy(xpath = "//mat-tree-node[@aria-level='2']")
+	private WebElement clickSystemNode;
+
 	public String clientNameValue;
 	public String flagTest = "flagTest";
+
+	@FindBy(id = "detailEditLabel")
+	private WebElement editClientButton;
+
+	@FindBy(id = "detailSapInput")
+	private WebElement textBoxClientEditSapId;
+
+	@FindBy(id = "timezoneSelect")
+	private WebElement dropDownTimezoneClient;
+
+	@FindBy(xpath = "//div[@aria-expanded='true']//input[@type='text']")
+	private WebElement clientTextBoxTimezone;
+
+	@FindBy(id = "detailInactiveRadio")
+	private WebElement ClientInactiveRadioButton;
+
+	@FindBy(id = "detailSaveBtn")
+	private WebElement clientSaveBtn;
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
@@ -235,6 +258,40 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(labelOrgName.getText().trim(), orgNodeName);
 		log("Verifying org sap id value is blank");
 		CCUtils.assertEquals(labelOrgSapValue.getText().trim(), "-");
+	}
+
+	public void clickOnSystemNode() {
+		CCUtils.verifyAndWaitForElement(clickSystemNode, driver);
+		log("Clicked on system node");
+		clickSystemNode.click();
+	}
+
+	public void clickEditButtonOfClient() {
+		CCUtils.verifyAndWaitForElement(editClientButton, driver);
+		log("Clicked on edit button");
+		editClientButton.click();
+	}
+
+	public void editClientNodeOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
+			throws InterruptedException {
+
+		textBoxClientEditSapId.sendKeys(sapId);
+		dropDownTimezoneClient.click();
+		clientTextBoxTimezone.sendKeys(timezone);
+		clientTextBoxTimezone.sendKeys(Keys.ENTER);
+	}
+
+	public void clickInactiveRadioButtonOfClient() {
+		CCUtils.verifyAndWaitForElement(ClientInactiveRadioButton, driver);
+		log("Clicked on Inactive radio button");
+		ClientInactiveRadioButton.click();
+	}
+
+	public void clickSaveButtonClient() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(clientSaveBtn, driver);
+		log("Clicked on save button");
+		scrollAndWait(0, 500, 200);
+		clientSaveBtn.click();
 	}
 
 }
