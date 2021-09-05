@@ -6,9 +6,11 @@ import static io.restassured.RestAssured.given;
 import java.io.IOException;
 
 import org.apache.log4j.BasicConfigurator;
+import org.testng.ITestResult;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import com.intuit.ifs.csscat.core.BaseTestNGWebDriver;
+import com.intuit.ifs.csscat.core.BaseTestNG;
 import com.medfusion.common.utils.PropertyFileLoader;
 import com.pxp.cc.apipath.ApiPath;
 
@@ -21,7 +23,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
-public class BaseRest extends BaseTestNGWebDriver {
+public class BaseRest extends BaseTestNG {
 
 	public static RequestSpecification requestSpec;
 	public static ResponseSpecification responseSpec;
@@ -36,6 +38,11 @@ public class BaseRest extends BaseTestNGWebDriver {
 		ccUser = new CCUser(testData);
 		ccUser.init();
 		BasicConfigurator.configure();
+	}
+	
+	@BeforeMethod(enabled = true)
+	public void getMethodName(ITestResult result) throws IOException {
+	log("Method Name-- " + result.getMethod().getMethodName());
 	}
 
 	public String getTokenValue() throws IOException {

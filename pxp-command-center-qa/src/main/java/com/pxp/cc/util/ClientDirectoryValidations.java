@@ -10,9 +10,8 @@ import io.restassured.response.Response;
 public class ClientDirectoryValidations {
 
 	JsonPath jsonPath;
-	
-	public void verifyClientOutputWithoutFilter(Response response, String getSearchClientDetails)
-	{
+
+	public void verifyClientOutputWithoutFilter(Response response, String getSearchClientDetails) {
 		jsonPath = new JsonPath(response.asString());
 		Log4jUtil.log("Display list of clients in response body : " + jsonPath.get("data"));
 		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
@@ -25,14 +24,13 @@ public class ClientDirectoryValidations {
 			if (clientIteratePerData.contains(getSearchClientDetails)) {
 				Log4jUtil.log("searched value :" + getSearchClientDetails + "present within response body's value"
 						+ clientIteratePerData);
-				CCUtils.assertTrue(true, "Found data " + clientIteratePerData + " is present in expected data"
-						+ getSearchClientDetails);
+				CCUtils.assertTrue(true,
+						"Found data " + clientIteratePerData + " is present in expected data" + getSearchClientDetails);
 			}
 		}
 	}
 
-	public void verifyClientOutputWithFilter(Response response , Object searchedClientData, Object appliedWithFilter)
-	{
+	public void verifyClientOutputWithFilter(Response response, Object searchedClientData, Object appliedWithFilter) {
 		jsonPath = new JsonPath(response.asString());
 		Log4jUtil.log("Print data[] in response body : " + jsonPath.get("data"));
 		int clientdataSize = jsonPath.getInt("data.size()");
@@ -47,7 +45,8 @@ public class ClientDirectoryValidations {
 						+ searchedClientData.toString());
 			}
 		}
-		Log4jUtil.log("Comparing Searched Items applied  Multifilter Type with client type data received in Response body.");
+		Log4jUtil.log(
+				"Comparing Searched Items applied  Multifilter Type with client type data received in Response body.");
 		for (int dataArrayIteration = 0; dataArrayIteration < clientdataSize; dataArrayIteration++) {
 			String clientTypePerData = jsonPath.get("data[" + dataArrayIteration + "].type");
 			for (int multiFilterIteration = 0; multiFilterIteration < filterType.size(); multiFilterIteration++) {
@@ -61,7 +60,7 @@ public class ClientDirectoryValidations {
 			}
 		}
 	}
-	
+
 	public void verifySixthClientCantBeFavorited(Response response, String clientId) {
 		jsonPath = new JsonPath(response.getBody().asString());
 		if (response.getStatusCode() == 400) {
@@ -81,6 +80,10 @@ public class ClientDirectoryValidations {
 	public void verifyClientIdNotFoundErrorMsgWhileUnFavoritingClient(Response response) {
 		jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("message").toString(), "Client Id not found");
+	}
+
+	public String fetchViewedClientName(Response response) {
+		return response.jsonPath().get("name");
 	}
 
 }
