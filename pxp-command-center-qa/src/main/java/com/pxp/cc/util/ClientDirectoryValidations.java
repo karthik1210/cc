@@ -1,8 +1,10 @@
 package com.pxp.cc.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.helpers.ClientDirectory;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -10,6 +12,7 @@ import io.restassured.response.Response;
 public class ClientDirectoryValidations {
 
 	JsonPath jsonPath;
+	private ClientDirectory clientDirectory = new ClientDirectory();
 
 	public void verifyClientOutputWithoutFilter(Response response, String getSearchClientDetails) {
 		jsonPath = new JsonPath(response.asString());
@@ -86,4 +89,41 @@ public class ClientDirectoryValidations {
 		return response.jsonPath().get("name");
 	}
 
+	public List<Object> gettingListOfFavClients(Response response) {
+		List<Object> responseFavData = null;
+		responseFavData = new ArrayList<Object>();
+		responseFavData.addAll(response.jsonPath().getList("favoriteClients.id"));
+		return responseFavData;
+	}
+
+	public void verifyExistingFavClientsNotMoreThanFive(Response response) {
+		List<Object> responseMenuFavData = gettingListOfFavClients(response);
+		if (responseMenuFavData.size() == 5) {
+			Log4jUtil.log("There are five Favorite Clients.");
+			Log4jUtil.log("Deleting all five Fav clients to handle 'Can't favorite more than 5 clients error.");
+			for (Object ClientId : responseMenuFavData) {
+				String s = ClientId.toString();
+				Response respons = clientDirectory.deleteFavoritesClient(s);
+				CCUtils.assertEquals(respons.getStatusCode(), 200);
+			}
+		} else {
+			Log4jUtil.log("There are less than five Favorite Clients.");
+		}
+	}
+
+	public String verifyHowManyExistingFavClients(Response response) {
+		List<Object> responseMenuFavData = gettingListOfFavClients(response);
+		String clientID = null;
+		if (responseMenuFavData.size() >= 1) {
+			Log4jUtil.log("There are more than 1 Favorite Clients.");
+			for (Object ClientId : responseMenuFavData) {
+				clientID = ClientId.toString();
+				break;
+			}
+			return clientID;
+		} else if (responseMenuFavData.isEmpty()) {
+			Log4jUtil.log("There is zero Favorite Clients.");
+		}
+		return clientID;
+	}
 }
