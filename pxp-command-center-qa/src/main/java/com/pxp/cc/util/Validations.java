@@ -515,6 +515,13 @@ public class Validations {
 
 	}
 
+	public void verifyErrorMessageForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for org id: 8978");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
+
 	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForOrgNode(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Sap number size maximum 50 character, Display name size maximum 100 character";

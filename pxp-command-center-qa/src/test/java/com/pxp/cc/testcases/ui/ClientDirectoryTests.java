@@ -3,6 +3,7 @@ package com.pxp.cc.testcases.ui;
 import java.util.List;
 
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 
@@ -27,7 +28,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	public void testToCheckNoResultsFound() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		clientDirectoryPage.searchNode(ccuser.getNonexistingclient());
+		clientDirectoryPage.searchNode(ccuser.getNonExistingClientId());
 		clientDirectoryPage.clickSearchButton();
 		logStep("Verifying no result found scenario");
 		boolean result = clientDirectoryPage.testToCheckNoResultsFound();
@@ -54,12 +55,12 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	public void testClientTypeFilters() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Apply Client Type Filter");
+		logStep("Apply Client Type Filter in Client Directory.");
 		clientDirectoryPage.selectClientTypeDropDown();
-		clientDirectoryPage.selectClientType(ccuser.getClientthreetype());
+		clientDirectoryPage.selectClientType(ccuser.getClientThreeType());
 		clientDirectoryPage.applyClientTypeFilter();
 		logStep("Verify client type filter");
-		clientDirectoryPage.verfiySearchResultForClientType(ccuser.getClientthreetype());
+		clientDirectoryPage.verfiySearchResultForClientType(ccuser.getClientThreeType());
 	}
 
 	@Test(enabled = true, groups = { "AcceptanceTests",
