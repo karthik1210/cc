@@ -23,5 +23,6 @@ public class ApiPath {
 	public static final String GET_CLIENT_STATUS = "/status/";
 	public static final String GET_CLIENTNAME = SERVICE_CC + V1_CLIENTS + "/name/";
 	public static final String GET_ORGID = "/service/cc/v1/orgs/";
-	public static final String GET_ORG_HIERARCHY = "/service/cc/v1/org/fetchhierarchy/";
+	public static final String GET_ORG_HIERARCHY = "/service/cc/v1/org-hierarchy/";
+	public static final String PATCH_ORG_STATUS = "/status/";
 }

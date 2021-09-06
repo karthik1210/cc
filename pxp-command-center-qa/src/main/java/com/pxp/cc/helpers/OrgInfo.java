@@ -92,6 +92,11 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(updatePracticePayload).when().put(ApiPath.PUT_ORG_CONTROLLER).then()
 				.extract().response();
 	}
+	
+	public Response patchOrgStatus(String orgId, String orgStatus) throws IOException {
+		String url = ApiPath.GET_ORG_DETAILS + orgId + ApiPath.PATCH_ORG_STATUS + orgStatus;
+		return given().spec(requestSpec).when().patch(url).then().extract().response();
+	}
 
 	public static Map<String, Object> postCreateSystem(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId) {

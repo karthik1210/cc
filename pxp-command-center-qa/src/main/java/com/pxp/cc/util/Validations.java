@@ -489,6 +489,13 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
+	
+	public void verifyErrorMessageForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for org id: 8978");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
 
 	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForOrgNode(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
