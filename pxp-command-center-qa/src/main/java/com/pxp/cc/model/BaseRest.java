@@ -27,7 +27,7 @@ public class BaseRest extends BaseTestNGWebDriver {
 	public static ResponseSpecification responseSpec;
 	public JsonPath jsonPath;
 	public CCUser ccUser;
-	private PropertyFileLoader testData;
+	public PropertyFileLoader testData;
 
 	@BeforeSuite(alwaysRun = true)
 	public void setUpTestData() throws Exception {
