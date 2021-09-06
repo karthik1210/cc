@@ -9,10 +9,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientTypes;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -136,7 +139,7 @@ public class Validations {
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), systemName);
 
 	}
-	
+
 	public void verifyGetOrgIdResponseBody(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -144,14 +147,14 @@ public class Validations {
 		CCUtils.assertEquals(response.jsonPath().get("orgId"), orgId);
 
 	}
-	
+
 	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=4014");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=401455678");

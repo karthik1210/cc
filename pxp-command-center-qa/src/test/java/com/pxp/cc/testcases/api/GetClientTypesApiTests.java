@@ -3,13 +3,16 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
+
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
+
 import io.restassured.response.Response;
 
 public class GetClientTypesApiTests extends BaseRest {
