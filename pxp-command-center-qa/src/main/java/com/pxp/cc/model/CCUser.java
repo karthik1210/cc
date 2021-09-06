@@ -154,6 +154,7 @@ public class CCUser {
 	private String inactiveClientName;
 	private String orgClientId;
 	private Integer orgInvalidId;
+	private String nonExistingOrgId;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -264,6 +265,7 @@ public class CCUser {
 		setInactiveClientName(getProperty("new.inactive.client.name"));
 		setOrgClientId(getProperty("api.org.client.id"));
 		setOrgInvalidId(Integer.parseInt(getProperty("api.org.invalid.id")));
+		setNonExistingOrgId(getProperty("api.nonexisting.orgid"));
 	}
 
 	public void setNewClient() throws Exception {
