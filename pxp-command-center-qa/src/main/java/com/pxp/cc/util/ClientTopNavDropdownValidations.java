@@ -29,4 +29,35 @@ public class ClientTopNavDropdownValidations {
 		}
 	}
 
+	public void verifyClickedClientPresentInDropdownHeaderRecentVisitsSection(Response response, String clientName) {
+		List<Object> responseFavData = null;
+		responseFavData = new ArrayList<Object>();
+		String getResponseBodyClientName = response.jsonPath().get("selectedClient.name");
+		Log4jUtil.log("display the name of client in response body : " + getResponseBodyClientName);
+		Log4jUtil.log("Validating viewed client name with response body Selected client name.");
+		CCUtils.assertEquals(getResponseBodyClientName, clientName);
+		responseFavData.addAll(response.jsonPath().getList("recentlyVisitedClients.name"));
+		Log4jUtil.log("Validating viewed client name with response body recently visited first client name.");
+		for (Object ClientName : responseFavData) {
+			String recentVisitsFirstClientName = ClientName.toString();
+			CCUtils.assertEquals(recentVisitsFirstClientName, clientName);
+			break;
+		}
+	}
+
+	public void verifyOnlyFiveRecentVisitsClients(Response response, List<String> listOfVisitedClients) {
+		List<Object> responseRecentVisitsData = null;
+		List<String> listOfProvidedClientsName = new ArrayList<String>();
+		responseRecentVisitsData = new ArrayList<Object>();
+		responseRecentVisitsData.addAll(response.jsonPath().getList("recentlyVisitedClients.name"));
+		for (int i = listOfVisitedClients.size() - 1; i > 0; i--) {
+			listOfProvidedClientsName.add(listOfVisitedClients.get(i).toString());
+		}
+		if (listOfProvidedClientsName.equals(responseRecentVisitsData) == true) {
+			System.out.println("values are equal");
+			CCUtils.assertEquals(listOfProvidedClientsName, responseRecentVisitsData);
+		}
+
+	}
+
 }
