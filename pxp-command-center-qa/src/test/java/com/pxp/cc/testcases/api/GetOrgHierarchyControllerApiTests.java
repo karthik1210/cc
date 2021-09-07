@@ -53,7 +53,6 @@ public class GetOrgHierarchyControllerApiTests extends BaseRest {
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
 				Integer.parseInt(orgId), ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
-		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
 
 		logStep("Verify response when client data exclude option is selected 'false' from fetch org hierarchy controller.");
 		getOrgHierarchyControllerApiResponse = clientInfo.getOrgHierarchyWithClientNode(clientId, false);
