@@ -586,4 +586,29 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Clientid=" + clientId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+
+	public void verifyErrorMessageForInvalidCombinationOfSourceAndTargetType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source and target not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForMovingOrgNodeToInactiveClient(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Client selected is inactive. Activate client and try again.");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForMovingOrgNodeToInactiveTarget(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit cannot be moved to an inactive Target");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForAlreadyExistSource(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source already exist in target");
+	}
+
 }

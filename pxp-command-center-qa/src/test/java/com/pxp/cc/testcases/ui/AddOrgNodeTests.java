@@ -618,7 +618,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active agnostic practice node below inactive client")
 	public void testAddNewActiveAgnosticPracticeBelowInactiveClient() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(ccuser.getActiveClientName());
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(ccuser.getInactiveClientName());
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		String parentName = generalSettingsPage.getClientName();
 		logStep("Click on practice option in new dropdown");
