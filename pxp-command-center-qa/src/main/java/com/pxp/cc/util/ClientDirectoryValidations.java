@@ -85,6 +85,10 @@ public class ClientDirectoryValidations {
 		CCUtils.assertEquals(jsonPath.get("message").toString(), "Client Id not found");
 	}
 
+	public String fetchViewedClientName(Response response) {
+		return response.jsonPath().get("name");
+	}
+
 	public List<Object> gettingListOfFavClients(Response response) {
 		List<Object> responseFavData = null;
 		responseFavData = new ArrayList<Object>();
