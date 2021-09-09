@@ -6,16 +6,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientTypes;
-
+import com.pxp.cc.pojos.Solutions;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -50,23 +49,46 @@ public class Validations {
 		}
 		int practiceCount = jsonpath.get("practiceCount");
 		CCUtils.assertEquals(practiceCount, practiceCountValue);
-		List<String> solutionsList = new ArrayList<String>();
+		List<Integer> solutionsList = new ArrayList<Integer>();
 		solutionsList = response.jsonPath().getList("solutions");
 		if (practiceCount == 0) {
 			CCUtils.assertTrue(solutionsList.isEmpty(), "Solutions list is not empty");
-
 		} else {
 			if (isPurchased.booleanValue()) {
 				if (!purchasedSolutionList.isEmpty()) {
 					CCUtils.assertTrue(!solutionsList.isEmpty(), "Solutions list is empty");
-				}
+					List<Solutions> actualSolutionList = new ArrayList<Solutions>();
+					Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+					for (Integer productId : purchasedSolutionList) {
+						if (productMap.containsKey(productId)) {
+							productMap.put(productId, productMap.get(productId) + 1);
+						} else {
+							productMap.put(productId, 1);
+						}
+					}
 
+					for (Map.Entry<Integer, Integer> entry : productMap.entrySet()) {
+						actualSolutionList.add(new Solutions(entry.getValue(), entry.getKey()));
+					}
+					JSONArray jsonArray = new JSONArray(response.jsonPath().getList("solutions"));
+					JSONObject jsonObject;
+					if (actualSolutionList.size() == jsonArray.length()) {
+						for (int i = 0; i < jsonArray.length(); i++) {
+							jsonObject = jsonArray.getJSONObject(i);
+							CCUtils.assertTrue(actualSolutionList.contains(
+									new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("productId"))),
+									"Purchased Solution is not present");
+						}
+					} else if (jsonArray.length() == 0) {
+						Log4jUtil.log("solution list is empty");
+					} else {
+						Log4jUtil.log("Size of actual solution list and expected solution list is not same");
+					}
+				}
 			} else {
 				CCUtils.assertTrue(solutionsList.isEmpty(), "Solutions list is not empty");
 			}
-
 		}
-
 	}
 
 	public void verifyNullErrorMessageResponseBody(Response response) throws IOException {
@@ -492,7 +514,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
 	public void verifyErrorMessageForOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for org id: 8978");
@@ -558,4 +580,40 @@ public class Validations {
 	public void verifyResponseBodyForClientNameField(Response response) throws IOException {
 		CCUtils.assertEquals(response.getBody().asString(), "true");
 	}
+	
+	public void verifyErrorMessageIfClientIdIsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"null\"");
+	}
+	public void verifyErrorResponseBodyForClientIdField(Response response, String clientId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Clientid=" + clientId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForInvalidCombinationOfSourceAndTargetType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source and target not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForMovingOrgNodeToInactiveClient(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Client selected is inactive. Activate client and try again.");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForMovingOrgNodeToInactiveTarget(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit cannot be moved to an inactive Target");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForAlreadyExistSource(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source already exist in target");
+	}
+
 }

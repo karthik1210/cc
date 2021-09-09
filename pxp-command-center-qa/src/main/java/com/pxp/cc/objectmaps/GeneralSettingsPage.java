@@ -8,21 +8,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import com.pxp.cc.util.CCUtils;
 
 public class GeneralSettingsPage extends CCMainPage {
 
-	@FindBy(id = "detailInfo")
+	@FindBy(className = "info")
 	private WebElement clientName;
 
-	@FindBy(id = "detailSapValue")
+	@FindBy(xpath = "(//span[@class='value'])[2]")
 	private WebElement labelClientSapValue;
 
-	@FindBy(id = "detailTimezoneInput")
+	@FindBy(xpath = "(//span[@class='value'])[4]")
 	private WebElement labelClientTimezoneValue;
 
-	@FindBy(xpath = "//span[@class='link value ng-star-inserted']")
+	@FindBy(xpath = "//span[@class='link value']")
 	private WebElement labelClientStatusValue;
 
 	@FindBy(id = "detailEditLabel")
@@ -55,13 +54,13 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@id='orgSapValue'] | //span[@id='orgSapNull']")
 	private WebElement labelOrgSapValue;
 
-	@FindBy(id = "orgSolutionNull")
+	@FindBy(id = "orgSolutionValue")
 	private WebElement labelOrgSolutionDisplayNameValue;
 
 	@FindBy(id = "orgTimezoneValue")
 	private WebElement labelOrgTimezoneValue;
 
-	@FindBy(xpath = "//span[@class='link inputvalue ng-star-inserted']")
+	@FindBy(xpath = "//span[@class='link inputvalue']")
 	private WebElement labelOrgStatusValue;
 
 	@FindBy(id = "orgTitle")
