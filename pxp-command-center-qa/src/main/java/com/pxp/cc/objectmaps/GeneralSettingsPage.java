@@ -96,6 +96,8 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "detailSaveBtn")
 	private WebElement clientSaveBtn;
+	
+	
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
