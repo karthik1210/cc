@@ -313,7 +313,6 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void enterSearchText(String nodeName) {
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
-		textboxSearchInGeneralSetting.sendKeys(Keys.ENTER);
 		log("Entered text in search :" + nodeName);
 	}
 

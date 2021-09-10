@@ -83,9 +83,11 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Searching a node under client in general setting page");
-		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
+		generalSettingsPage.enterSearchText(ccuser.searchNodeInGeneralSetting);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		generalSettingsPage.keyboardEnter();
 		List<String> nodesInClient = clientDirectoryPage.getClientNodeinGeneralSetting();
-		if (nodesInClient.contains(ccuser.searchInvalidNodeInGeneralSetting)) {
+		if (nodesInClient.contains(ccuser.searchNodeInGeneralSetting)) {
 			log("Node present in client's general setting page");
 		} else {
 			log("Test Case failed, node not present under client");
@@ -103,7 +105,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Searching inavlid node under client in general setting page, to check client details are highlighted");
-		generalSettingsPage.enterSearchText("SYS#00312");
+		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
 		String actualTitle = generalSettingsPage.returnGeneralSettingTitle();
 		if (actualTitle.equals(ccuser.searchClientInClientDirectory)) {
 			log("Test Case pass");
