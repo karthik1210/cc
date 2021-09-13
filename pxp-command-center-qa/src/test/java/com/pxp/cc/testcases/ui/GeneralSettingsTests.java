@@ -48,7 +48,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		logStep("Searching for nodes with single character name in General setting seacrh");
 		generalSettingsPage.enterSearchText(ccuser.searchSymbolInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
-		generalSettingsPage.keyboardEnter();
+		CCUtils.pressEnterKey();
 		String actualTitle = generalSettingsPage.returnGeneralSettingTitle();
 		if (actualTitle.contains(ccuser.searchSymbolInGeneralSetting)) {
 			log("Test Case pass");
@@ -61,7 +61,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		logStep("Searching for nodes with number in General setting search");
 		generalSettingsPage.enterSearchText(ccuser.searchNumberInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
-		generalSettingsPage.keyboardEnter();
+		CCUtils.pressEnterKey();
 		String actualTitleForNumSearch = generalSettingsPage.returnGeneralSettingTitle();
 		if (actualTitleForNumSearch.contains(ccuser.searchNumberInGeneralSetting)) {
 			log("Test Case pass, Numbers searched in general setting is succesfull");
@@ -85,7 +85,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		logStep("Searching a node under client in general setting page");
 		generalSettingsPage.enterSearchText(ccuser.searchNodeInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
-		generalSettingsPage.keyboardEnter();
+		CCUtils.pressEnterKey();
 		List<String> nodesInClient = clientDirectoryPage.getClientNodeinGeneralSetting();
 		if (nodesInClient.contains(ccuser.searchNodeInGeneralSetting)) {
 			log("Node present in client's general setting page");
@@ -106,6 +106,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Searching inavlid node under client in general setting page, to check client details are highlighted");
 		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
+		CCUtils.pressEnterKey();
 		String actualTitle = generalSettingsPage.returnGeneralSettingTitle();
 		if (actualTitle.equals(ccuser.searchClientInClientDirectory)) {
 			log("Test Case pass");

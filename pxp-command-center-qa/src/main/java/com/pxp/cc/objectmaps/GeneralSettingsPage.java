@@ -316,15 +316,9 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Entered text in search :" + nodeName);
 	}
 
-	public void keyboardEnter() {
-		textboxSearchInGeneralSetting.sendKeys(Keys.ENTER);
-		log("Keyboard Action: ENTER KEY");
-	}
-
 	public void clearSearchText() {
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.clear();
-		textboxSearchInGeneralSetting.sendKeys(Keys.ENTER);
 		log("text in search is cleared");
 	}
 
