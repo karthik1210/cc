@@ -39,4 +39,5 @@ public class ApiPath {
 	public static final String GET_ORG_HIERARCHY = "/service/cc/v1/org-hierarchy/";
 	public static final String PATCH_ORG_STATUS = "/status/";
 	public static final String POST_MOVE_ORG_NODE = "/service/cc/v1/business-units";
+	public static final String GET_TIMEZONES = "/service/cc/v1/timezones";
 }
