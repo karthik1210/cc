@@ -147,19 +147,16 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String getClientSapId() {
 		CCUtils.verifyAndWaitForElement(labelClientSapValue, driver);
 		return labelClientSapValue.getText().trim();
-
 	}
 
 	public String getClientTimezone() {
 		CCUtils.verifyAndWaitForElement(labelClientTimezoneValue, driver);
 		return labelClientTimezoneValue.getText().trim();
-
 	}
 
 	public String getClientStatus() {
 		CCUtils.verifyAndWaitForElement(labelClientStatusValue, driver);
 		return labelClientStatusValue.getText().trim();
-
 	}
 
 	public void clickOnClientInfoPageEditButton() {
@@ -176,25 +173,21 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String getOrgName() {
 		CCUtils.verifyAndWaitForElement(labelOrgName, driver);
 		return labelOrgName.getText().trim();
-
 	}
 
 	public String getOrgSapId() {
 		CCUtils.verifyAndWaitForElement(labelOrgSapValue, driver);
 		return labelOrgSapValue.getText().trim();
-
 	}
 
 	public String getOrgTimezone() {
 		CCUtils.verifyAndWaitForElement(labelOrgTimezoneValue, driver);
 		return labelOrgTimezoneValue.getText().trim();
-
 	}
 
 	public String getOrgStatus() {
 		CCUtils.verifyAndWaitForElement(labelOrgStatusValue, driver);
 		return labelOrgStatusValue.getText().trim();
-
 	}
 
 	public void verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(Boolean isParentInactive) {
@@ -206,7 +199,6 @@ public class GeneralSettingsPage extends CCMainPage {
 		} else {
 			log("Newly added org node status is active");
 		}
-
 	}
 
 	public void verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(String orgNodeName, String sapId,
@@ -250,7 +242,6 @@ public class GeneralSettingsPage extends CCMainPage {
 			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "inactive");
 			log("Newly added org node status is inactive");
 		}
-
 	}
 
 	public void verifyHyphenSymbolIsDisplayedForSapIdField(String orgNodeName) {
@@ -275,11 +266,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void editClientNodeOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
 			throws InterruptedException {
-
 		textBoxClientEditSapId.sendKeys(sapId);
 		dropDownTimezoneClient.click();
 		clientTextBoxTimezone.sendKeys(timezone);
-		clientTextBoxTimezone.sendKeys(Keys.ENTER);
+		CCUtils.pressEnterKey();
 	}
 
 	public void clickInactiveRadioButtonOfClient() {
