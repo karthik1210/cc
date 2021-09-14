@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.List;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -98,6 +99,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver, this);
 	}
 
 	public void clickOnNewButton() {
@@ -145,19 +147,16 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String getClientSapId() {
 		CCUtils.verifyAndWaitForElement(labelClientSapValue, driver);
 		return labelClientSapValue.getText().trim();
-
 	}
 
 	public String getClientTimezone() {
 		CCUtils.verifyAndWaitForElement(labelClientTimezoneValue, driver);
 		return labelClientTimezoneValue.getText().trim();
-
 	}
 
 	public String getClientStatus() {
 		CCUtils.verifyAndWaitForElement(labelClientStatusValue, driver);
 		return labelClientStatusValue.getText().trim();
-
 	}
 
 	public void clickOnClientInfoPageEditButton() {
@@ -174,25 +173,21 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String getOrgName() {
 		CCUtils.verifyAndWaitForElement(labelOrgName, driver);
 		return labelOrgName.getText().trim();
-
 	}
 
 	public String getOrgSapId() {
 		CCUtils.verifyAndWaitForElement(labelOrgSapValue, driver);
 		return labelOrgSapValue.getText().trim();
-
 	}
 
 	public String getOrgTimezone() {
 		CCUtils.verifyAndWaitForElement(labelOrgTimezoneValue, driver);
 		return labelOrgTimezoneValue.getText().trim();
-
 	}
 
 	public String getOrgStatus() {
 		CCUtils.verifyAndWaitForElement(labelOrgStatusValue, driver);
 		return labelOrgStatusValue.getText().trim();
-
 	}
 
 	public void verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(Boolean isParentInactive) {
@@ -204,7 +199,6 @@ public class GeneralSettingsPage extends CCMainPage {
 		} else {
 			log("Newly added org node status is active");
 		}
-
 	}
 
 	public void verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(String orgNodeName, String sapId,
@@ -248,7 +242,6 @@ public class GeneralSettingsPage extends CCMainPage {
 			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "inactive");
 			log("Newly added org node status is inactive");
 		}
-
 	}
 
 	public void verifyHyphenSymbolIsDisplayedForSapIdField(String orgNodeName) {
@@ -273,11 +266,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void editClientNodeOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
 			throws InterruptedException {
-
 		textBoxClientEditSapId.sendKeys(sapId);
 		dropDownTimezoneClient.click();
 		clientTextBoxTimezone.sendKeys(timezone);
-		clientTextBoxTimezone.sendKeys(Keys.ENTER);
+		CCUtils.pressEnterKey();
 	}
 
 	public void clickInactiveRadioButtonOfClient() {
@@ -293,4 +285,75 @@ public class GeneralSettingsPage extends CCMainPage {
 		clientSaveBtn.click();
 	}
 
+	@FindBy(id = "searchInput")
+	private WebElement textboxSearchInGeneralSetting;
+
+	@FindBy(xpath = "//span[@class='mat-option-text']")
+	private WebElement selectFirstInAutoSuggestion;
+
+	@FindBy(className = "info")
+	private WebElement labelNodeNameRightPanel;
+
+	@FindBy(className = "mat-option-text")
+	private List<WebElement> listOfSuggestions;
+
+	@FindBy(id = "treeActiveIcon")
+	private List<WebElement> nodeStatusInGeneralSetting;
+
+	public void enterSearchText(String nodeName) {
+		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
+		textboxSearchInGeneralSetting.sendKeys(nodeName);
+		log("Entered text in search :" + nodeName);
+	}
+
+	public void clearSearchText() {
+		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
+		textboxSearchInGeneralSetting.clear();
+		log("text in search is cleared");
+	}
+
+	public String defaultTextInSearch() {
+		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
+		log("Default text in search :" + textboxSearchInGeneralSetting.getAttribute("placeholder"));
+		return textboxSearchInGeneralSetting.getAttribute("placeholder");
+	}
+
+	public String returnGeneralSettingTitle() {
+		CCUtils.verifyAndWaitForElement(labelNodeNameRightPanel, driver);
+		log("Node title on right panel is : " + labelNodeNameRightPanel.getText());
+		return labelNodeNameRightPanel.getText();
+	}
+
+	public void verifyStatusIcon() {
+		CCUtils.verifyAndWaitForElement(nodeStatusInGeneralSetting.get(0), driver);
+		CCUtils.assertTrue(nodeStatusInGeneralSetting.get(0).isDisplayed(), "Status is displayed");
+	}
+
+	public void clickFirstInAutoSuggestion() {
+		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
+		if (selectFirstInAutoSuggestion.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			selectFirstInAutoSuggestion.click();
+
+		} else {
+			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present in client");
+		}
+	}
+
+	public void verifyAutoSuggestionList(String searchedNode) {
+		CCUtils.verifyAndWaitForElement(listOfSuggestions.get(0), driver);
+		for (int count = 0; count <= listOfSuggestions.size(); count++) {
+			if (count == listOfSuggestions.size()) {
+				break;
+			} else {
+				log("option " + (count + 1) + " in autosuggestion is '" + listOfSuggestions.get(count).getText()
+						+ "' , and Searched text is " + searchedNode);
+
+				CCUtils.assertTrue(listOfSuggestions.get(count).getText().contains(searchedNode),
+						"partial search present in list");
+				continue;
+			}
+		}
+	}
 }
