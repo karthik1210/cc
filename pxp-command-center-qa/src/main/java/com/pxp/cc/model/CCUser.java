@@ -155,6 +155,10 @@ public class CCUser {
 	private String orgClientId;
 	private Integer orgInvalidId;
 	private String nonExistingOrgId;
+	public String searchSymbolInGeneralSetting;
+	public String searchNumberInGeneralSetting;
+	public String searchNodeInGeneralSetting;
+	public String searchInvalidNodeInGeneralSetting;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -266,6 +270,10 @@ public class CCUser {
 		setOrgClientId(getProperty("api.org.client.id"));
 		setOrgInvalidId(Integer.parseInt(getProperty("api.org.invalid.id")));
 		setNonExistingOrgId(getProperty("api.nonexisting.orgid"));
+		setSearchSymbolInGeneralSetting(getProperty("general.setting.search.sybmol"));
+		setSearchNumberInGeneralSetting(getProperty("general.setting.search.number"));
+		setSearchNodeInGeneralSetting(getProperty("general.setting.search.node"));
+		setSearchInvalidNodeInGeneralSetting(getProperty("general.setting.search.inavlid.node"));
 	}
 
 	public void setNewClient() throws Exception {

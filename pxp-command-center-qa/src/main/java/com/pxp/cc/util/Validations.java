@@ -15,6 +15,8 @@ import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
+import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -580,12 +582,13 @@ public class Validations {
 	public void verifyResponseBodyForClientNameField(Response response) throws IOException {
 		CCUtils.assertEquals(response.getBody().asString(), "true");
 	}
-	
+
 	public void verifyErrorMessageIfClientIdIsNull(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
 				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"null\"");
 	}
+
 	public void verifyErrorResponseBodyForClientIdField(Response response, String clientId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Clientid=" + clientId + " doesn't exist");
@@ -616,4 +619,59 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source already exist in target");
 	}
 
+	public void verifyGetTimezonApiResponseBody(Response response) throws IOException {
+		List<Timezone> actualTimezoneList = new ArrayList<Timezone>();
+		final List<String> expectedTimezoneDisplayName = Arrays.asList("Eastern Standard Time",
+				"Atlantic Standard Time", "Central Standard Time", "Mountain Standard Time", "Pacific Standard Time",
+				"Alaska Standard Time", "Hawaii Standard Time", "Hong Kong Standard Time", "Indiana Standard Time",
+				"Arizona Standard Time", "Midway Island, Samoa", "International Date Line West", "Nuku'alofa",
+				"Tijuana, Baja California", "Chihuahua, La Paz, Mazatlan", "Central America",
+				"Guadalajara, Mexico City, Monterrey", "Saskatchewan", "Bagota, Lima, Quito, Rio Branco", "Caracas",
+				"La Paz", "Manaus", "Santiago", "Newfoundland", "Buenos Aires, Georgetown", "Greenland", "Montevideo",
+				"Azores", "Cape Verde Is.", "Casablanca,Monrovia,Reykjavik", "Greenwich Mean Time",
+				"Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Belgrade, Bratislava, Budapest, Ljubljana, Prague",
+				"Brussels, Copenhagen, Madrid, Paris", "Sarajevo, Skopje, Warsaw, Zagreb", "West Central Africa",
+				"Amman", "Athens, Bucharest, Istanbul", "Beirut", "Cairo", "Harare, Pretoria",
+				"Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Jerusalem", "Minsk", "Mid-Atlantic", "Baghdad",
+				"Kuwait, Riyadh", "Moscow, St. Petersburg, Volgograd", "Nairobi", "Tehran", "Abu Dhabi, Muscat", "Baku",
+				"Yerevan", "Kabul", "Ekaterinburg", "Islamabad, Karachi, Tashkent",
+				"Chennai, Kolkata, Mumbai, New Delhi", "Kathmandu", "Almaty, Novosibirsk", "Astana, Dhaka",
+				"Yangon (Rangoon)", "Bangkok, Hanoi, Jakarta", "Krasnoyarsk", "Irkutsk, Ulaan Bataar",
+				"Kuala Lumpur, Singapore", "Perth", "Taipei", "Osaka, Sapporo, Tokyo", "Seoul", "Yakutsk", "Adelaide",
+				"Darwin", "Brisbane", "Canberra, Melbourne, Sydney", "Guam, Port Moresby", "Hobart", "Vladivostok",
+				"Magadan, Solomon Is., New Caledonia", "Auckland, Wellington");
+
+		final List<String> expectedTimezoneId = Arrays.asList("US/Eastern", "Canada/Atlantic", "US/Central",
+				"US/Mountain", "US/Pacific", "US/Alaska", "US/Hawaii", "Asia/Hong_Kong", "US/East-Indiana",
+				"US/Arizona", "US/Samoa", "Etc/GMT-12", "Pacific/Tongatapu", "America/Tijuana", "America/Mazatlan",
+				"Mexico/General", "Mexico/General", "Canada/Saskatchewan", "America/Lima", "America/Caracas",
+				"America/La_Paz", "America/Manaus", "America/Santiago", "Canada/Newfoundland", "America/Buenos_Aires",
+				"America/Godthab", "America/Montevideo", "Atlantic/Azores", "Atlantic/Cape_Verde", "Africa/Casablanca",
+				"Europe/Dublin", "Europe/Amsterdam", "Europe/Belgrade", "Europe/Brussels", "Europe/Sarajevo",
+				"Africa/Lagos", "Asia/Amman", "Europe/Athens", "Asia/Beirut", "Africa/Cairo", "Africa/Harare",
+				"Europe/Helsinki", "Asia/Jerusalem", "Europe/Minsk", "Atlantic/South_Georgia", "Asia/Baghdad",
+				"Asia/Kuwait", "Europe/Moscow", "Africa/Nairobi", "Asia/Tehran", "Asia/Muscat", "Asia/Baku",
+				"Asia/Yerevan", "Asia/Kabul", "Asia/Yekaterinburg", "Asia/Karachi", "Asia/Calcutta", "Asia/Katmandu",
+				"Asia/Almaty", "Asia/Dhaka", "Asia/Rangoon", "Asia/Bangkok", "Asia/Krasnoyarsk", "Asia/Irkutsk",
+				"Asia/Singapore", "Australia/Perth", "Asia/Taipei", "Asia/Tokyo", "Asia/Seoul", "Asia/Yakutsk",
+				"Australia/Adelaide", "Australia/Darwin", "Australia/Brisbane", "Australia/Sydney", "Pacific/Guam",
+				"Australia/Hobart", "Asia/Vladivostok", "Asia/Magadan", "Pacific/Auckland");
+
+		for (int i = 0; i < expectedTimezoneDisplayName.size(); i++) {
+			actualTimezoneList.add(new Timezone(expectedTimezoneId.get(i), expectedTimezoneDisplayName.get(i)));
+		}
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (actualTimezoneList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertEquals(actualTimezoneList.get(i),
+						new Timezone(jsonObject.get("id").toString(), jsonObject.get("displayName").toString()));
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("timezone list is empty");
+		} else {
+			Log4jUtil.log("Size of actual timezone list and expected timezone list is not same");
+		}
+	}
 }
