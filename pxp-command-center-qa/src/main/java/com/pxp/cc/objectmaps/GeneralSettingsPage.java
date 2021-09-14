@@ -2,6 +2,9 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -95,8 +98,39 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "detailSaveBtn")
 	private WebElement clientSaveBtn;
-	
-	
+
+	@FindBy(xpath = "//div[@class='ng-input']//following::span[1]")
+	private WebElement expandClientDropdown;
+
+	@FindBy(xpath = "//span[@class='ng-value-label ng-star-inserted']")
+	private WebElement clientDropdownHeader;
+
+	@FindBy(xpath = "//div[@class='ng-option ng-option-child ng-star-inserted' or @role='option' or @class='ng-option ng-option-selected ng-option-child ng-star-inserted']")
+	private WebElement listofClientsInClientDropdown;
+
+	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'RECENTLY VISITED')]")
+	private WebElement recentlyVisitedTitleInClientDropdown;
+
+	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'FAVORITES')]")
+	private WebElement favoritesTitleInClientDropdown;
+
+	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'RECENTLY VISITED')]//following::div[@role='option']")
+	private List<WebElement> recentlyVisitedClients;
+
+	@FindBy(xpath = "//p[contains(text(),'RECENTLY VISITED')]//following::p[1]")
+	private WebElement recentlyVisitedFirstClient;
+
+	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'RECENTLY VISITED')]//following::div[@role='option'][2]")
+	private WebElement recentlyVisitedSecondClient;
+
+	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'FAVORITES')]//following::div[@role='option'][1]")
+	private WebElement favoriteFirstClient;
+
+	@FindBy(id = "headerBookIcon")
+	private WebElement backToClientDirectory;
+
+	@FindBy(xpath = "//div[@class='info']")
+	private WebElement clientGeneralSettings;
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
@@ -295,4 +329,70 @@ public class GeneralSettingsPage extends CCMainPage {
 		clientSaveBtn.click();
 	}
 
+	public String getClientDropdownHeader() {
+		CCUtils.verifyAndWaitForElement(clientDropdownHeader, driver);
+		return clientDropdownHeader.getText().trim();
+	}
+
+	public void clickClientDropdownGenSettings() {
+		CCUtils.verifyAndWaitForElement(expandClientDropdown, driver);
+		highlightElement(expandClientDropdown);
+		expandClientDropdown.click();
+		log("clicked to Client Dropdown and expand the dropdown.");
+	}
+
+	public String getFirstClientDropdownRecentlyVisits() {
+		CCUtils.verifyAndWaitForElement(recentlyVisitedFirstClient, driver);
+		return recentlyVisitedFirstClient.getText().trim();
+	}
+
+	public List<String> getListOfRecentVisitsInClientDropdown() {
+		List<String> recentVisitsLists = new ArrayList<String>();
+		for (int i = 0; i < recentlyVisitedClients.size(); i++) {
+			recentVisitsLists.add(recentlyVisitedClients.get(i).getText());
+		}
+		return recentVisitsLists;
+	}
+
+	public String clickAnyRecentVisitsInClientDropdown() {
+		CCUtils.verifyAndWaitForElement(recentlyVisitedSecondClient, driver);
+		highlightElement(recentlyVisitedSecondClient);
+		String recentVisitClient = recentlyVisitedSecondClient.getText().trim();
+		recentlyVisitedSecondClient.click();
+		return recentVisitClient;
+	}
+
+	public String clickAnyFavClientInClientDropdown() {
+		CCUtils.verifyAndWaitForElement(favoriteFirstClient, driver);
+		highlightElement(favoriteFirstClient);
+		String favoritesSecondClient = favoriteFirstClient.getText().trim();
+		favoriteFirstClient.click();
+		return favoritesSecondClient;
+	}
+
+	public ClientDirectoryPage clickClientDirectoryIcon() {
+		CCUtils.verifyAndWaitForElement(backToClientDirectory, driver);
+		backToClientDirectory.click();
+		return PageFactory.initElements(driver, ClientDirectoryPage.class);
+	}
+
+	public String getGeneralSettingsRightSectionClientName() {
+		CCUtils.verifyAndWaitForElement(clientGeneralSettings, driver);
+		highlightElement(clientGeneralSettings);
+		return clientGeneralSettings.getText();
+	}
+
+	public boolean checkVisiblityOfFavTitle() {
+		try {
+			if(favoritesTitleInClientDropdown.isDisplayed()) {
+				log("Favorites Section is displayed in Client Dropdown.");
+				return false;
+			}
+		} catch (RuntimeException ee) {
+			if (ee.toString().contains("NoSuchElementException")) {
+				log("Expected Exception : " + ee.toString() + " as Favorites is not present");
+			}
+		}
+		return true;
+	}
 }
