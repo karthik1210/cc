@@ -1,11 +1,15 @@
 package com.pxp.cc.testcases.ui;
 
+import java.awt.AWTException;
 import java.util.List;
 
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
+import com.pxp.cc.util.CCUtils;
+
+import junit.framework.Assert;
 
 public class ClientDirectoryTests extends CommandCenterGenericTest {
 
@@ -87,6 +91,27 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 				continue;
 			}
 		}
+	}
+	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Error messages are displayed on add new system popup")
+	public void testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable() throws InterruptedException, RuntimeException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		logStep("Now comparing the default Items per Page .Ideally it should be 10.");
+		CCUtils.assertEquals(clientDirectoryPage.getDefaultItemsPerPage(), "10");
+		CCUtils.assertEquals(clientDirectoryPage.getDefaultPagination(), "1 – 10");
+		String noOfClients = clientDirectoryPage.getTotalNoOfClients();
+		logStep("Get the Total No of Clients : "+noOfClients);
+		clientDirectoryPage.clickUserIcon();
+		clientDirectoryPage.clickLogout();
+		
+	}
+	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Error messages are displayed on add new system popup")
+	public void testItemsPerPageDropdownChangesEffectClientWebTableRows() throws InterruptedException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		
 	}
 
 }

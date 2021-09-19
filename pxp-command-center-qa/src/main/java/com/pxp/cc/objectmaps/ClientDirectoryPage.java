@@ -2,11 +2,13 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -74,6 +76,21 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
 
+	@FindBy(xpath = "//span[@class='ng-tns-c112-6 ng-star-inserted']")
+	private WebElement defaultItemsPerPage;
+
+	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
+	private WebElement displayPagination;
+
+	@FindBy(xpath = "//div[@class='mat-select-arrow ng-tns-c112-20']")
+	private WebElement itemsPerPageClick;
+
+	@FindBy(xpath = "//span[@class='mat-option-text']")
+	private List<WebElement> listOfItemsPerPage;
+
+	@FindBy(xpath = "//tbody[@role='rowgroup']//tr[@role='row']")
+	private List<WebElement> listOfRowsClientTable;
+
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
 
@@ -96,7 +113,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	public void clickUserIcon() {
 		CCUtils.verifyAndWaitForElement(userIcon, driver);
 		javascriptClick(userIcon);
-		log("User icon clicked.....");
+		log("User icon clicked.");
 	}
 
 	public void clickLogout() throws InterruptedException {
@@ -285,6 +302,35 @@ public class ClientDirectoryPage extends CCMainPage {
 		clickSearchButton();
 		log("Click on client name in client directory table");
 		selectSearchedClientNameInClientTable();
+	}
+
+	public String getDefaultItemsPerPage() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
+		highlightElement(defaultItemsPerPage);
+		return defaultItemsPerPage.getText().toString();
+	}
+
+	public String getDefaultPagination() {
+		String s1 = displayPagination.getText().toString();
+		String[] words=s1.split("of",0);
+		String data = null;
+		for(String w :words){  
+			data = w.trim();
+		log("Print the value of default Pagination : "+w.trim());  
+		break;
+		}  
+		return data.trim();
+	}
+
+	public String getTotalNoOfClients() {
+		String s1 = displayPagination.getText().toString();
+		String[] words=s1.split("of",0);
+		String data = null;
+		for(String w :words){  
+			data = w.trim();
+		log("Print the value of default Pagination : "+w.trim());  
+		}  
+		return data.trim();
 	}
 
 }
