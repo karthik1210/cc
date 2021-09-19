@@ -82,7 +82,7 @@ public class CCUtils {
 		long time = response.time();
 		Log4jUtil.log("Response time " + time);
 		ValidatableResponse valRes = response.then();
-		valRes.time(Matchers.lessThan(11000L));
+		valRes.time(Matchers.lessThan(21000L));
 		Log4jUtil.log("Response Time in ms- " + time);
 	}
 

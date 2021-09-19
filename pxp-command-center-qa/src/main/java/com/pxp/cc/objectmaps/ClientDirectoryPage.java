@@ -75,6 +75,12 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
+	
+	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='directoryGradeIcon']")
+	private List<WebElement> listOfFavClients;
+	
+	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
+	private List<WebElement> listOfNonFavClients;
 
 	@FindBy(xpath = "//span[@class='ng-tns-c112-6 ng-star-inserted']")
 	private WebElement defaultItemsPerPage;
@@ -290,11 +296,40 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public GeneralSettingsPage selectSearchedClientNameInClientTable() {
 		CCUtils.verifyAndWaitForElement(clientTableRow, driver);
+		highlightElement(clientTableRow);
 		clientTableRow.click();
 		log("Clicked on client name in client directory table");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
+	
+	public void deselectFavClientInClientDirectory() {
+		for(int i = listOfFavClients.size() - 1; i >=0 ; i--) {
+			CCUtils.verifyAndWaitForElement(listOfFavClients.get(i), driver);
+			highlightElement(listOfFavClients.get(i));
+			listOfFavClients.get(i).click();
+		}
+		log("Un-Favorited all cliens in client directory table");
+	}
+	
+	public void selectFavClientInClientDirectory() {
+		for(int i = listOfFavClients.size(); i<=4 ; i++) {
+			CCUtils.verifyAndWaitForElement(listOfNonFavClients.get(i), driver);
+			highlightElement(listOfNonFavClients.get(i));
+			listOfNonFavClients.get(i).click();
+		}
+		log("Favorited all cliens in client directory table");
+	}
 
+	public int getSizeOfListOfFavClients()
+	{
+		return listOfFavClients.size();
+	}
+	
+	public int getSizeOfListOfNonFavClients()
+	{
+		return listOfNonFavClients.size();
+	}
+	
 	public void searchAndSelectClientNameInClientTable(String searchText) {
 		log("Enter search text in search textbox");
 		searchNode(searchText);

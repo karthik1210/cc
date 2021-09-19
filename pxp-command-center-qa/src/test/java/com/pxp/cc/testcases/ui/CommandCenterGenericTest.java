@@ -13,7 +13,7 @@ import com.pxp.cc.objectmaps.LoginPage;
 
 public class CommandCenterGenericTest extends BaseTestNGWebDriver {
 
-	private PropertyFileLoader testData;
+	protected PropertyFileLoader testData;
 	protected CCUser ccuser;
 
 	@BeforeClass(alwaysRun = true)
@@ -25,8 +25,8 @@ public class CommandCenterGenericTest extends BaseTestNGWebDriver {
 	}
 
 	public ClientDirectoryPage login(String url, String username, String password) throws InterruptedException {
-		LoginPage commandcenterloginpage = new LoginPage(driver, url);
-		ClientDirectoryPage commandcenterhomepage = commandcenterloginpage.login(username, password);
-		return commandcenterhomepage;
+		LoginPage loginPage = new LoginPage(driver, url);
+		ClientDirectoryPage clientDirectoryPage = loginPage.login(username, password);
+		return clientDirectoryPage;
 	}
 }
