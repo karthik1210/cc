@@ -686,4 +686,34 @@ public class Validations {
 			Log4jUtil.log("Size of actual timezone list and expected timezone list is not same");
 		}
 	}
+	
+	public void verifyInvalidOrgTypeEnterpriseErrorResponsBelowClient(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid org type=ENTERPRISE");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageForInvalidParentId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Parentid=401455678 doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageForNullValuesAgnosticPractice(Response response) throws IOException {
+        JsonPath jsonpath = new JsonPath(response.getBody().asString());
+        String actual = "Org type can not be blank, Parent type can not be blank";
+        List<String> actualValue = new ArrayList<String>();
+        for (String val : Arrays.asList(actual.split(","))) {
+            actualValue.add(val.trim());
+        }
+        Collections.sort(actualValue);
+        String expected = jsonpath.get("message").toString();
+        List<String> expectedValue = new ArrayList<String>();
+        for (String val : Arrays.asList(expected.split(","))) {
+            expectedValue.add(val.trim());
+        }
+        Collections.sort(expectedValue);
+        CCUtils.assertEquals(actualValue, expectedValue);
+        CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+    }
 }

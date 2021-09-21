@@ -108,6 +108,17 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_SYSTEM_PRACTICE)
 				.then().extract().response();
 	}
+	
+	public Response createEnterpriseNodeForAgnostic(String active, String displayName, String name, String orgType, int orgId,
+			String parentType, String sapNumber, String timezoneId)
+			throws IOException {
+
+		Map<String, Object> createNewEnterprisePayload = postCreateEnterprise(active, displayName, name, orgType, orgId,
+				parentType, sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_SYSTEM_PRACTICE)
+				.then().extract().response();
+	}
 
 	public static Map<String, Object> postCreateSystem(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId) {
