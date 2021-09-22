@@ -2,13 +2,11 @@
 
 package com.pxp.cc.objectmaps;
 
-import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,10 +73,10 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
-	
+
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='directoryGradeIcon']")
 	private List<WebElement> listOfFavClients;
-	
+
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
 	private List<WebElement> listOfNonFavClients;
 
@@ -301,18 +299,18 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Clicked on client name in client directory table");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
-	
+
 	public void deselectFavClientInClientDirectory() {
-		for(int i = listOfFavClients.size() - 1; i >=0 ; i--) {
+		for (int i = listOfFavClients.size() - 1; i >= 0; i--) {
 			CCUtils.verifyAndWaitForElement(listOfFavClients.get(i), driver);
 			highlightElement(listOfFavClients.get(i));
 			listOfFavClients.get(i).click();
 		}
 		log("Un-Favorited all cliens in client directory table");
 	}
-	
+
 	public void selectFavClientInClientDirectory() {
-		for(int i = listOfFavClients.size(); i<=4 ; i++) {
+		for (int i = listOfFavClients.size(); i <= 4; i++) {
 			CCUtils.verifyAndWaitForElement(listOfNonFavClients.get(i), driver);
 			highlightElement(listOfNonFavClients.get(i));
 			listOfNonFavClients.get(i).click();
@@ -320,16 +318,14 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Favorited all cliens in client directory table");
 	}
 
-	public int getSizeOfListOfFavClients()
-	{
+	public int getSizeOfListOfFavClients() {
 		return listOfFavClients.size();
 	}
-	
-	public int getSizeOfListOfNonFavClients()
-	{
+
+	public int getSizeOfListOfNonFavClients() {
 		return listOfNonFavClients.size();
 	}
-	
+
 	public void searchAndSelectClientNameInClientTable(String searchText) {
 		log("Enter search text in search textbox");
 		searchNode(searchText);
@@ -347,24 +343,24 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public String getDefaultPagination() {
 		String s1 = displayPagination.getText().toString();
-		String[] words=s1.split("of",0);
+		String[] words = s1.split("of", 0);
 		String data = null;
-		for(String w :words){  
+		for (String w : words) {
 			data = w.trim();
-		log("Print the value of default Pagination : "+w.trim());  
-		break;
-		}  
+			log("Print the value of default Pagination : " + w.trim());
+			break;
+		}
 		return data.trim();
 	}
 
 	public String getTotalNoOfClients() {
 		String s1 = displayPagination.getText().toString();
-		String[] words=s1.split("of",0);
+		String[] words = s1.split("of", 0);
 		String data = null;
-		for(String w :words){  
+		for (String w : words) {
 			data = w.trim();
-		log("Print the value of default Pagination : "+w.trim());  
-		}  
+			log("Print the value of default Pagination : " + w.trim());
+		}
 		return data.trim();
 	}
 
