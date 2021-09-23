@@ -99,7 +99,7 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='text-danger ng-star-inserted']//div[@class='ng-star-inserted']")
 	private WebElement errorNameRequired;
 
-	@FindBy(xpath = "//div[text()=' SAP ID must maximum 50 characters ']")
+	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])[3]")
 	private WebElement errorInvalidSap;
 
 	@FindBy(xpath = "//div[contains(text(),'Parent Entity is required')]")
@@ -235,7 +235,7 @@ public class AddOrgNodePage extends CCMainPage {
 		textboxSapId.sendKeys(sapId);
 		log("Entered text in sap id field is " + sapId);
 		CCUtils.verifyAndWaitForElement(errorInvalidSap, driver);
-		CCUtils.assertEquals(errorInvalidSap.getText().trim(), "SAP ID must maximum 50 characters");
+		CCUtils.assertEquals(errorInvalidSap.getText().trim(), "SAP ID cannot contain more than 50 characters");
 		log("Error Message displayed for sap id field is " + errorInvalidSap.getText().trim());
 	}
 
