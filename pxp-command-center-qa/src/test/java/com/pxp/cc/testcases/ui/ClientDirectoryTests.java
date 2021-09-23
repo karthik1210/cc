@@ -93,25 +93,253 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		}
 	}
 	
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Error messages are displayed on add new system popup")
-	public void testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable() throws InterruptedException, RuntimeException, AWTException {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Display of default pagination i.e., 10 items per page.")
+	public void testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable()
+			throws InterruptedException, RuntimeException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Now comparing the default Items per Page .Ideally it should be 10.");
+		CCUtils.scrollPageToEnd();
 		CCUtils.assertEquals(clientDirectoryPage.getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(clientDirectoryPage.getDefaultPagination(), "1 – 10");
 		String noOfClients = clientDirectoryPage.getTotalNoOfClients();
-		logStep("Get the Total No of Clients : "+noOfClients);
+		logStep("Get the Total No of Clients : " + noOfClients);
+		int getNoOfRowsPagination = Integer.parseInt(clientDirectoryPage.getNoOfRowsPagination());
+		logStep("value of no of rows effected in Pagination : " + getNoOfRowsPagination);
+		CCUtils.assertEquals(clientDirectoryPage.isFirstPageButtonDisabled(), false);
+		CCUtils.assertEquals(clientDirectoryPage.isPreviousPageButtonDisabled(), false);
+		CCUtils.assertEquals(clientDirectoryPage.isNextPageButtonDisabled(), true);
+		CCUtils.assertEquals(clientDirectoryPage.isLastPageButtonDisabled(), true);
 		clientDirectoryPage.clickUserIcon();
 		clientDirectoryPage.clickLogout();
-		
-	}
-	
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Error messages are displayed on add new system popup")
-	public void testItemsPerPageDropdownChangesEffectClientWebTableRows() throws InterruptedException {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		
+
 	}
 
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+	public void testItemsPerPageDropdownChangesEffectClientWebTableRows() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		int noOfClients = Integer.valueOf(clientDirectoryPage.getTotalNoOfClients());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		logStep("Get the Total No of Clients : " + noOfClients);
+		clientDirectoryPage.getListOfItemsPerPagee();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+	public void testAllPaginationButtonsClickable() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
+		CCUtils.assertEquals(clientDirectoryPage.getDefaultItemsPerPage(), "10");
+		CCUtils.assertEquals(clientDirectoryPage.getDefaultPagination(), "1 – 10");
+		String noOfClients = clientDirectoryPage.getTotalNoOfClients();
+		logStep("Get the Total No of Clients : " + noOfClients);
+		clientDirectoryPage.clickNextPageButton();
+		clientDirectoryPage.clickNextPageButton();
+		clientDirectoryPage.clickNextPageButton();
+		clientDirectoryPage.clickPreviousPageButton();
+		clientDirectoryPage.clickLastPageButton();
+		clientDirectoryPage.clickFirstPageButton();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
+	public void testNextPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		String defaultItemsPerPage = clientDirectoryPage.getDefaultItemsPerPage();
+		CCUtils.assertEquals(defaultItemsPerPage, "10");
+		clientDirectoryPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 20.")
+	public void testNextPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPageTwenty = clientDirectoryPage.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPageTwenty, "20");
+		clientDirectoryPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwenty));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 50.")
+	public void testNextPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPageFifty = clientDirectoryPage.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPageFifty, "50");
+		clientDirectoryPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
+	public void testNextPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPageHundred = clientDirectoryPage.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPageHundred, "100");
+		clientDirectoryPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 200.")
+	public void testNextPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPageTwoHundred = clientDirectoryPage.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
+		clientDirectoryPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
+	public void testLastPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		String defaultItemsPerPage = clientDirectoryPage.getDefaultItemsPerPage();
+		CCUtils.assertEquals(defaultItemsPerPage, "10");
+		log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
+		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 20.")
+	public void testLastPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "20");
+		log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
+		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 50.")
+	public void testLastPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "50");
+		log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
+		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
+	public void testLastPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "100");
+		log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
+		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 200.")
+	public void testLastPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "200");
+		log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
+		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 10.")
+	public void testPreviousPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		String defaultItemsPerPage = clientDirectoryPage.getDefaultItemsPerPage();
+		CCUtils.assertEquals(defaultItemsPerPage, "10");
+		clientDirectoryPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 20.")
+	public void testPreviousPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "20");
+		clientDirectoryPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 50.")
+	public void testPreviousPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "50");
+		clientDirectoryPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 100.")
+	public void testPreviousPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "100");
+		clientDirectoryPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 200.")
+	public void testPreviousPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "200");
+		clientDirectoryPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 10.")
+	public void testFirstPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		String defaultItemsPerPage = clientDirectoryPage.getDefaultItemsPerPage();
+		CCUtils.assertEquals(defaultItemsPerPage, "10");
+		clientDirectoryPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 20.")
+	public void testFirstPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "20");
+		clientDirectoryPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 50.")
+	public void testFirstPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "50");
+		clientDirectoryPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 100.")
+	public void testFirstPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "100");
+		clientDirectoryPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 200.")
+	public void testFirstPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPage.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage, "200");
+		clientDirectoryPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
 }

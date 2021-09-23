@@ -30,9 +30,21 @@ public class CCUtils {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
 		wait.until(new WaitForWEIsDisplayed(we));
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void verifyAndWaitForListOfElement(List<WebElement> web, WebDriver driver) {
+		for (int i = 0; i < web.size(); i++) {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(new WaitForWEIsDisplayed(web.get(i)));
+			try {
+				Thread.sleep(2300);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -121,4 +133,9 @@ public class CCUtils {
 		Log4jUtil.log("Keyboard Action : Enter key ");
 	}
 
+	public static void scrollPageToEnd() throws AWTException {
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+		robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+	}
 }
