@@ -33,6 +33,7 @@ public class CCUser {
 	public String mailinatorMaximumCharacters;
 	public String newClientName;
 	public String newClientSap;
+	public String newClientType;
 	public String clientTimezone;
 	public String duplicateClientName;
 	public String duplicateClientSap;
@@ -274,12 +275,16 @@ public class CCUser {
 		setSearchNumberInGeneralSetting(getProperty("general.setting.search.number"));
 		setSearchNodeInGeneralSetting(getProperty("general.setting.search.node"));
 		setSearchInvalidNodeInGeneralSetting(getProperty("general.setting.search.inavlid.node"));
+		setNewClient();
+		setDuplicateClientClient();
+		setTestClient();
 	}
 
 	public void setNewClient() throws Exception {
 		setNewClientName(getProperty("new.client.name"));
 		setNewClientSap(getProperty("new.client.sap"));
 		setClientTimezone(getProperty("new.client.timezone"));
+		setNewClientType(getProperty("new.client.type"));
 	}
 
 	public void setDuplicateClientClient() throws Exception {

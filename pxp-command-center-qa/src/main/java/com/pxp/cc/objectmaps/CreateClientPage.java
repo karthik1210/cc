@@ -2,11 +2,11 @@
 
 package com.pxp.cc.objectmaps;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 
 public class CreateClientPage extends CCMainPage {
@@ -14,7 +14,6 @@ public class CreateClientPage extends CCMainPage {
 	public CreateClientPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
-
 	}
 
 	@FindBy(xpath = "//span[contains(text(),'+ NEW')]")
@@ -23,10 +22,10 @@ public class CreateClientPage extends CCMainPage {
 	@FindBy(xpath = "//button[normalize-space()='Create Client']")
 	private WebElement buttonCreateClient;
 
-	@FindBy(id = "CC-y0uN")
+	@FindBy(xpath = "//span[@id='clientCancelBtn']")
 	private WebElement buttonCancelClient;
 
-	@FindBy(xpath = "//button[normalize-space()='Create']")
+	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement buttonConfirm;
 
 	@FindBy(xpath = "//input[@name='name']")
@@ -35,25 +34,28 @@ public class CreateClientPage extends CCMainPage {
 	@FindBy(xpath = "//input[@name='sapNumber']")
 	private WebElement textboxSapId;
 
-	@FindBy(xpath = "//ng-select[@id='CC-vly8']")
+	@FindBy(id = "clientTypeSelect")
 	private WebElement dropdownClientType;
 
-	@FindBy(xpath = "//div[@role='option']//span[@ng-reflect-ng-item-label='Direct Client'][normalize-space()='Direct Client']")
+	@FindBy(xpath = "//div[@role='option']//span[contains(text(),'Direct Client')]")
 	private WebElement selectDirectClient;
 
-	@FindBy(id = "CC-w6xf")
+	@FindBy(xpath = "//div[@role='option']//span[contains(text(),'Pacific Standard Time')]")
+	private WebElement selectESTTimezone;
+
+	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//span[@class='ng-arrow-wrapper']")
 	private WebElement dropdownTimezone;
 
 	@FindBy(xpath = "//input[@value='true']")
 	private WebElement radioBtnActive;
 
-	@FindBy(xpath = "//input[@value='false']]")
+	@FindBy(id = "timezoneSelect")
 	private WebElement radioBtnInactive;
 
-	@FindBy(xpath = "//input[@name='test']")
+	@FindBy(xpath = "//input[@value='test']")
 	private WebElement checkboxTest;
 
-	@FindBy(id = "CC-tcwj")
+	@FindBy(id = "clientCheckName")
 	private WebElement errorUniqueClientName;
 
 	@FindBy(xpath = "//mat-dialog-container[@role='dialog']")
@@ -62,12 +64,12 @@ public class CreateClientPage extends CCMainPage {
 	@FindBy(xpath = "//div[normalize-space()='SAP ID already in use']")
 	private WebElement errorUniqueSap;
 
-	@FindBy(xpath = "//div[@class='cdk-overlay-container']")
+	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
 
 	public void clickCreateClient() {
 		CCUtils.verifyAndWaitForElement(buttonNew, driver);
-		log(" New button clicked");
+		log("New button clicked");
 		buttonNew.click();
 		CCUtils.verifyAndWaitForElement(buttonCreateClient, driver);
 		buttonCreateClient.click();
@@ -75,7 +77,6 @@ public class CreateClientPage extends CCMainPage {
 	}
 
 	public String verifyClientPopupText() {
-
 		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
 		CCUtils.verifyAndWaitForElement(textboxSapId, driver);
 		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
@@ -89,18 +90,46 @@ public class CreateClientPage extends CCMainPage {
 		return popuptext;
 	}
 
-	public void createNewClient(String newClientName, String newSAPID, String newTimezone) throws InterruptedException {
+	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+
+	private String xpathRequiredNewClientTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+
+	private WebElement prepareDynamicXpathForClientType(String xpathValue, String substitutionValue) {
+
+		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
+	}
+
+	public void selectClientType(String clientTypeName) {
+		WebElement clientType = prepareDynamicXpathForClientType(xpathRequiredClientType, clientTypeName);
+		clientType.click();
+		log("Clicked on : " + clientTypeName);
+	}
+
+
+	public void selectTimeZone(String newTimezone) {
+		WebElement newClientTimezone = prepareDynamicXpathForClientType(xpathRequiredNewClientTimezone, newTimezone);
+		newClientTimezone.click();
+		log("Clicked on : " + newTimezone);
+	}
+
+	public void createNewClient(String newClientName, String newSAPID, String clientType, String newTimezone)
+			throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
 		textboxClientName.sendKeys(newClientName);
 		log("Entered text in client name field : " + newClientName);
 		textboxSapId.sendKeys(newSAPID);
 		log("Entered text in SAP ID field : " + newSAPID);
-		selectDirectClient.click();
-		CCUtils.selectFromDropDown(dropdownTimezone, newTimezone);
+		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
+		dropdownClientType.click();
+		selectClientType(clientType);
+		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
+		dropdownTimezone.click();
+		selectTimeZone(newTimezone);
 	}
 
 	public String clickConfirmPopup() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonConfirm, driver);
-		buttonConfirm.click();
+		javascriptClick(buttonConfirm);
 		log("Clicked on Create button in popup");
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		String actualMessage = toasterMessage.getText();
@@ -115,6 +144,7 @@ public class CreateClientPage extends CCMainPage {
 
 	public void selectTestClient() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(checkboxTest, driver);
+		Thread.sleep(3000);
 		checkboxTest.click();
 		log("Clicked on Test checkbox");
 	}
@@ -135,11 +165,6 @@ public class CreateClientPage extends CCMainPage {
 		CCUtils.assertEquals(errorUniqueSap.getText(), "SAP ID already in use");
 		log("Error Message displayed for duplicate client name is :" + errorUniqueSap.getText());
 		textboxSapId.clear();
-
 	}
 
-	public void selectTestCheckbox() {
-		CCUtils.verifyAndWaitForElement(checkboxTest, driver);
-		checkboxTest.click();
-	}
 }
