@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.CreateClientPage;
+import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 
 public class CreateClientTests extends CommandCenterGenericTest {
@@ -14,24 +15,25 @@ public class CreateClientTests extends CommandCenterGenericTest {
 	public CreateClientPage createClientPage;
 
 	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
-	public void verifyClientPopup() throws Exception {
+	public void testNewClientCreation() throws Exception {
 		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		createClientPage = new CreateClientPage(driver);
 		createClientPage.clickCreateClient();
-		createClientPage.createNewClient(ccuser.getNewClientName(), ccuser.getNewClientSap(),
+		createClientPage.createNewClient(ccuser.getNewClientName(), ccuser.getNewClientSap(), ccuser.getNewClientType(),
 				ccuser.getClientTimezone());
 		String actualMessage = createClientPage.clickConfirmPopup();
 		if (actualMessage.contains("Success")) {
-			log("Client created sucessfully, toaster message is " + actualMessage);
+			log("Client created sucessfully, toaster message is : " + actualMessage);
+			CCUtils.assertTrue(true, "Test Pass");
 		} else {
-			log("Client not created, error toaster message is " + actualMessage);
+			log("Client not created, error toaster message is : " + actualMessage);
+			CCUtils.assertTrue(false, "Test Failed");
 		}
-
 	}
 
 	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
-	public void verifyUniqueClientNameAndSap() throws Exception {
+	public void testUniqueClientNameAndSap() throws Exception {
 
 		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -41,21 +43,23 @@ public class CreateClientTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
-	public void createInactiveTestClient() throws Exception {
+	public void testCreateInactiveTestClient() throws Exception {
 		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		createClientPage = new CreateClientPage(driver);
 		createClientPage.clickCreateClient();
 		createClientPage.createNewClient(ccuser.getNewTestClientName(), ccuser.getNewTestClientSap(),
-				ccuser.getClientTimezone());
+				ccuser.getNewClientType(), ccuser.getClientTimezone());
 		createClientPage.selectInactiveRadiobutton();
-		createClientPage.selectTestCheckbox();
+		createClientPage.selectTestClient();
 		createClientPage.clickConfirmPopup();
 		String actualMessage = createClientPage.clickConfirmPopup();
 		if (actualMessage.contains("Success")) {
-			log("Client created sucessfully, toaster message is " + actualMessage);
+			log("Client created sucessfully, toaster message is : " + actualMessage);
+			CCUtils.assertTrue(true, "Test Pass");
 		} else {
-			log("Client not created, error toaster message is " + actualMessage);
+			log("Client not created, error toaster message is : " + actualMessage);
+			CCUtils.assertTrue(false, "Test Failed");
 		}
 	}
 
