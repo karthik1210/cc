@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -73,12 +74,51 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
-	
+
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='directoryGradeIcon']")
 	private List<WebElement> listOfFavClients;
-	
+
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
 	private List<WebElement> listOfNonFavClients;
+
+	@FindBy(xpath = "//span[@class='ng-tns-c112-6 ng-star-inserted']")
+	private WebElement defaultItemsPerPage;
+
+	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
+	private WebElement displayPagination;
+
+	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
+	private WebElement itemsPerPageDropdown;
+
+	@FindBy(xpath = "//span[@class='mat-option-text']")
+	private List<WebElement> listOfItemsPerPage;
+
+	@FindBy(xpath = "//tbody[@role='rowgroup']//tr[@role='row']")
+	private List<WebElement> listOfRowsClientTable;
+
+	@FindBy(xpath = "//button[@aria-label='Next page']")
+	private WebElement buttonNextPage;
+
+	@FindBy(xpath = "//button[@aria-label='Last page']")
+	private WebElement buttonLastPage;
+
+	@FindBy(xpath = "//button[@aria-label='Previous page']")
+	private WebElement buttonPreviousPage;
+
+	@FindBy(xpath = "//button[@aria-label='First page']")
+	private WebElement buttonFirstPage;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'20')]")
+	private WebElement itemsPerPageTwenty;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'50')]")
+	private WebElement itemsPerPageFifty;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'100')]")
+	private WebElement itemsPerPageHundred;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
+	private WebElement itemsPerPageTwoHundred;
 
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
@@ -102,7 +142,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	public void clickUserIcon() {
 		CCUtils.verifyAndWaitForElement(userIcon, driver);
 		javascriptClick(userIcon);
-		log("User icon clicked.....");
+		log("User icon clicked.");
 	}
 
 	public void clickLogout() throws InterruptedException {
@@ -284,18 +324,18 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Clicked on client name in client directory table");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
-	
+
 	public void deselectFavClientInClientDirectory() {
-		for(int i = listOfFavClients.size() - 1; i >=0 ; i--) {
+		for (int i = listOfFavClients.size() - 1; i >= 0; i--) {
 			CCUtils.verifyAndWaitForElement(listOfFavClients.get(i), driver);
 			highlightElement(listOfFavClients.get(i));
 			listOfFavClients.get(i).click();
 		}
 		log("Un-Favorited all cliens in client directory table");
 	}
-	
+
 	public void selectFavClientInClientDirectory() {
-		for(int i = listOfFavClients.size(); i<=4 ; i++) {
+		for (int i = listOfFavClients.size(); i <= 4; i++) {
 			CCUtils.verifyAndWaitForElement(listOfNonFavClients.get(i), driver);
 			highlightElement(listOfNonFavClients.get(i));
 			listOfNonFavClients.get(i).click();
@@ -303,16 +343,14 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Favorited all cliens in client directory table");
 	}
 
-	public int getSizeOfListOfFavClients()
-	{
+	public int getSizeOfListOfFavClients() {
 		return listOfFavClients.size();
 	}
-	
-	public int getSizeOfListOfNonFavClients()
-	{
+
+	public int getSizeOfListOfNonFavClients() {
 		return listOfNonFavClients.size();
 	}
-	
+
 	public void searchAndSelectClientNameInClientTable(String searchText) {
 		log("Enter search text in search textbox");
 		searchNode(searchText);
@@ -322,4 +360,301 @@ public class ClientDirectoryPage extends CCMainPage {
 		selectSearchedClientNameInClientTable();
 	}
 
+	public String getDefaultItemsPerPage() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
+		highlightElement(defaultItemsPerPage);
+		return defaultItemsPerPage.getText().toString();
+	}
+
+	public String getDefaultPagination() {
+		String s1 = displayPagination.getText().toString();
+		String[] words = s1.split("of", 0);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+			log("Print the value of default Pagination : " + w.trim());
+			break;
+		}
+		return data.trim();
+	}
+
+	public String getTotalNoOfClients() {
+		String s1 = displayPagination.getText().toString();
+		String[] words = s1.split("of", 0);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+			log("Print the value of default Pagination : " + w.trim());
+		}
+		return data.trim();
+	}
+
+	public String splitingPagination() {
+		CCUtils.verifyAndWaitForElement(displayPagination, driver);
+		String s1 = displayPagination.getText().toString();
+		String[] words = s1.split("\\s", 3);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+		}
+		log("Print the value of default Pagination : " + data.trim());
+		return data.trim();
+	}
+	
+	public String getNoOfRowsPagination() {
+		String data = splitingPagination();
+		String noOfRowsPagination = data.substring(0, 2).trim();
+		return noOfRowsPagination.trim();
+	}
+
+	public String getLHSPagination() throws AWTException {
+		String data = getDefaultPagination();
+		String noOfRowsPagination = data.substring(0, 2);
+		return noOfRowsPagination.trim();
+	}
+
+	public String getRHSPagination() throws AWTException {
+		String data = getDefaultPagination();
+		String[] words = data.split("–", 0);
+		for (String w : words) {
+			data = w.trim();
+		}
+		log("Print the value of default Pagination : " + data.trim());
+		return data.trim();
+	}
+	
+	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
+		highlightElement(itemsPerPageDropdown);
+		javascriptClick(itemsPerPageDropdown);
+	}
+
+	public List<Integer> getListOfItemsPerPage() {
+		List<Integer> itemsPerPage = new ArrayList<Integer>();
+		for (WebElement item : listOfItemsPerPage) {
+			log("Print the value of items per page : " + item.getText().toString());
+			CCUtils.verifyAndWaitForElement(item, driver);
+			itemsPerPage.add(Integer.parseInt(item.getText().toString()));
+		}
+		return itemsPerPage;
+	}
+
+	public void getListOfItemsPerPagee() throws InterruptedException, AWTException {
+		int getTotalNoOfClients = Integer.valueOf(getTotalNoOfClients());
+		log("Total number of clients is : " + getTotalNoOfClients);
+		clickItemsPerPageDropdown();
+		for (int i = 0; i < listOfItemsPerPage.size(); i++) {
+			CCUtils.scrollPageToEnd();
+			CCUtils.verifyAndWaitForElement(listOfItemsPerPage.get(i), driver);
+			log("Print the value of items per page : " + listOfItemsPerPage.get(i).getText().toString());
+			javascriptClick(listOfItemsPerPage.get(i));
+			int itemData = Integer.parseInt(listOfItemsPerPage.get(i).getText().toString());
+			if (itemData >= getTotalNoOfClients) {
+				logStep("since no. of clients : " + getTotalNoOfClients + " is less than items per page : " + itemData
+						+ " Rows effected in Client Web Table is equal to number of Clients.");
+				logStep("Comparing No of Rows effected which is : " + getNoOfRowsInClientTable()
+						+ " in Client Table with No of clients : " + getTotalNoOfClients);
+				CCUtils.assertEquals(getNoOfRowsInClientTable(), getTotalNoOfClients);
+				logStep("Comparing No of Rows Pagination value which is : " + itemData
+						+ " in Client Table with No of clients : " + getTotalNoOfClients);
+				CCUtils.assertEquals(Integer.parseInt(getNoOfRowsPagination()), getTotalNoOfClients);
+				clickItemsPerPageDropdown();
+			} else {
+				logStep("since no. of clients : " + getTotalNoOfClients + " is more than items per page : " + itemData
+						+ " Rows effected in Client Web Table is equal to Items Per Page value : " + itemData);
+				logStep("Comparing No of Rows effected which is : " + getNoOfRowsInClientTable()
+						+ " in Client Table with Items Per Page Value : " + itemData);
+				CCUtils.assertEquals(getNoOfRowsInClientTable(), itemData);
+				logStep("Comparing No of Rows Pagination value which is : " + Integer.parseInt(getNoOfRowsPagination())
+						+ " in Client Table with Items Per Page value : " + itemData);
+				CCUtils.assertEquals(Integer.parseInt(getNoOfRowsPagination()), itemData);
+				clickItemsPerPageDropdown();
+			}
+		}
+	}
+
+	public int getNoOfRowsInClientTable() throws AWTException {
+		CCUtils.scrollPageToEnd();
+		for (int i = 0; i < listOfRowsClientTable.size(); i++) {
+			CCUtils.verifyAndWaitForElement(listOfRowsClientTable.get(i), driver);
+		}
+		return listOfRowsClientTable.size();
+	}
+
+	public void clickNextPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
+		log("click to Next Page button");
+		buttonNextPage.click();
+	}
+
+	public boolean isNextPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
+		log("Verifying the visiblity of Next Page Button.");
+		boolean buttonStatus = buttonNextPage.isEnabled();
+		log("Print the value of Next Page Button visibility status : " + buttonStatus);
+		return buttonStatus;
+	}
+
+	public void clickLastPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonLastPage, driver);
+		log("click to Last Page button");
+		buttonLastPage.click();
+	}
+
+	public boolean isLastPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonLastPage, driver);
+		log("Verifying the visiblity of Last Page Button.");
+		boolean buttonStatus = buttonLastPage.isEnabled();
+		log("Print the value of Last Page Button visibility status : " + buttonStatus);
+		return buttonStatus;
+	}
+
+	public void clickPreviousPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonPreviousPage, driver);
+		log("click to Previous Page button");
+		buttonPreviousPage.click();
+	}
+
+	public boolean isPreviousPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonPreviousPage, driver);
+		log("Verifying the visiblity of Previous Page Button.");
+		boolean buttonStatus = buttonPreviousPage.isEnabled();
+		log("Print the value of Previous Page Button visibility status : " + buttonStatus);
+		return buttonStatus;
+	}
+
+	public void clickFirstPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
+		log("click to First Page button");
+		buttonFirstPage.click();
+	}
+
+	public boolean isFirstPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
+		log("Verifying the visiblity of First Page Button.");
+		boolean buttonStatus = buttonFirstPage.isEnabled();
+		log("Print the value of First Page Button visibility status : " + buttonStatus);
+		return buttonStatus;
+	}
+
+	public String clickTwentyItemsPerPage() {
+		String currentItemPerPage = null;
+		CCUtils.verifyAndWaitForElement(itemsPerPageTwenty, driver);
+		highlightElement(itemsPerPageTwenty);
+		currentItemPerPage = itemsPerPageTwenty.getText().toString();
+		itemsPerPageTwenty.click();
+		return currentItemPerPage;
+	}
+
+	public String clickFiftyItemsPerPage() {
+		String currentItemPerPage = null;
+		CCUtils.verifyAndWaitForElement(itemsPerPageFifty, driver);
+		highlightElement(itemsPerPageFifty);
+		currentItemPerPage = itemsPerPageFifty.getText().toString();
+		itemsPerPageFifty.click();
+		return currentItemPerPage;
+	}
+
+	public String clickHundredItemsPerPage() {
+		String currentItemPerPage = null;
+		CCUtils.verifyAndWaitForElement(itemsPerPageHundred, driver);
+		highlightElement(itemsPerPageHundred);
+		currentItemPerPage = itemsPerPageHundred.getText().toString();
+		itemsPerPageHundred.click();
+		return currentItemPerPage;
+	}
+
+	public String clickTwoHundredItemsPerPage() {
+		String currentItemPerPage = null;
+		CCUtils.verifyAndWaitForElement(itemsPerPageTwoHundred, driver);
+		highlightElement(itemsPerPageTwoHundred);
+		currentItemPerPage = itemsPerPageTwoHundred.getText().toString();
+		itemsPerPageTwoHundred.click();
+		return currentItemPerPage;
+	}
+
+	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
+			throws NumberFormatException, AWTException {
+		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		if (noOfClients >= itemsPerPageValue) {
+			clickLastPageButton();
+			log("verifying RHS Pagination value : " + Integer.parseInt(getRHSPagination())
+					+ "should be equal to Number of Clients : " + noOfClients);
+			CCUtils.assertEquals(Integer.parseInt(getRHSPagination()), noOfClients);
+			log("verifying after clicking to Last Page Button, Last Page and Next Page button should get disabled.");
+			CCUtils.assertTrue((isLastPageButtonDisabled() == false), "Last Page Button should get disabled");
+			CCUtils.assertTrue(isNextPageButtonDisabled() == false, "Next Page Button should get disabled");
+		} else {
+			log("Veriyfing all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			CCUtils.assertTrue((isLastPageButtonDisabled() == false), "Last Page Button should get disabled");
+			CCUtils.assertTrue(isNextPageButtonDisabled() == false, "Next Page Button should get disabled");
+			CCUtils.assertTrue(isFirstPageButtonDisabled() == false, "First Page Button should get disabled");
+			CCUtils.assertTrue(isPreviousPageButtonDisabled() == false, "Previous Page Button should get disabled");
+		}
+	}
+
+	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
+			throws NumberFormatException, AWTException {
+		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		log("Total number of clients is : " + noOfClients);
+		if (noOfClients >= itemsPerPageValue) {
+			int LHSPaginationValue = 1;
+			while (isNextPageButtonDisabled()) {
+				clickNextPageButton();
+				LHSPaginationValue += itemsPerPageValue;
+				log("Verifying the actual LHS Pagination which is : " + getLHSPagination() + " with expected value : "
+						+ LHSPaginationValue);
+				CCUtils.assertEquals(Integer.parseInt(getLHSPagination()), LHSPaginationValue);
+			}
+		} else {
+			log("Verifying all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
+			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
+			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
+			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
+		}
+	}
+
+	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
+			throws NumberFormatException, AWTException {
+		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		log("Total number of clients is : " + noOfClients);
+		if (noOfClients >= itemsPerPageValue) {
+			checkNextPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
+			int LHSPaginationValue = Integer.parseInt(getLHSPagination());
+			while (isPreviousPageButtonDisabled()) {
+				clickPreviousPageButton();
+				LHSPaginationValue -= itemsPerPageValue;
+				log("Verifying the actual LHS Pagination which is : " + Integer.parseInt(getLHSPagination())
+						+ " with expected value : " + LHSPaginationValue);
+				CCUtils.assertEquals(Integer.parseInt(getLHSPagination()), LHSPaginationValue);
+			}
+		} else {
+			log("Verifying all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
+			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
+			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
+			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
+		}
+	}
+
+	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
+			throws NumberFormatException, AWTException {
+		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		log("Total number of clients is : " + noOfClients);
+		checkLastPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
+		if (isFirstPageButtonDisabled() == true) {
+			clickFirstPageButton();
+			String expectedPagination = "1 – " + itemsPerPageValue;
+			CCUtils.assertEquals(getDefaultPagination(), expectedPagination);
+			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
+		} else {
+			log("Verifying all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
+			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
+			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
+			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
+		}
+	}
 }
