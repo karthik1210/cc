@@ -87,7 +87,7 @@ public class ClientDropdownGeneralSettings extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualRecentVisitsLists, reverselistofClients);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify by clicking Client in Recent Visit Section Client Dropdown Header it's geenral settings page got displayed.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify by clicking Client in Recent Visit Section Client Dropdown Header it's general settings page got displayed.")
 	public void testClickedClientInClientDropdownRecentVisitsItsGeneralSettingsPageShouldDisplay()
 			throws InterruptedException {
 		logStep("Searching for client : " + ccuser.searchClientInClientDirectory);
@@ -105,7 +105,7 @@ public class ClientDropdownGeneralSettings extends CommandCenterGenericTest {
 				"Clicked client in dropdown general settings page is displayed.");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify by clicking Client in Fav section in Client Dropdown Header it's geenral settings page got displayed.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify by clicking Client in Fav section in Client Dropdown Header it's general settings page got displayed.")
 	public void testClickedClientInClientDropdownFavoritesItsGeneralSettingsPageShouldDisplay()
 			throws InterruptedException {
 		int getFavClients = clientDirectoryPage.getSizeOfListOfFavClients();
