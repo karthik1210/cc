@@ -115,7 +115,7 @@ public class AddNewInternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
 
-	@FindBy(xpath = "//div[text()='UserName name already in use']")
+	@FindBy(xpath = "//div[text()='Username already in use']")
 	private WebElement errorUniqueUsername;
 
 	@FindBy(xpath = "//div[text()='Email already in use']")
@@ -424,7 +424,7 @@ public class AddNewInternalUsersPage extends CCMainPage {
 		textboxUsername.sendKeys(existingUsername);
 		log("Entered text in username field is " + existingUsername);
 		CCUtils.verifyAndWaitForElement(errorUniqueUsername, driver);
-		CCUtils.assertEquals(errorUniqueUsername.getText().trim(), "UserName name already in use");
+		CCUtils.assertEquals(errorUniqueUsername.getText().trim(), "Username already in use");
 		log("Error message displayed for username field is " + errorUniqueUsername.getText().trim());
 
 		log("Enter already existing email in email textbox field and verify error message");
