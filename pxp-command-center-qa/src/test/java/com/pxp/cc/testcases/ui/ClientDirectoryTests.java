@@ -2,14 +2,10 @@ package com.pxp.cc.testcases.ui;
 
 import java.awt.AWTException;
 import java.util.List;
-
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.util.CCUtils;
-
-import junit.framework.Assert;
 
 public class ClientDirectoryTests extends CommandCenterGenericTest {
 
@@ -92,7 +88,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 			}
 		}
 	}
-	
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Display of default pagination i.e., 10 items per page.")
 	public void testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable()
 			throws InterruptedException, RuntimeException, AWTException {

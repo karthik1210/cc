@@ -7,17 +7,14 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.security.SecureRandom;
 import java.util.List;
-
 import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
-
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
@@ -25,6 +22,10 @@ public class CCUtils {
 
 	private static final String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&@?<>~!%#";
 	private static final SecureRandom random = new SecureRandom();
+	private static String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
+			+ "abcdefghijklmnopqrstuvxyz";
+	private static String alphaNumericStringIncludingSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
+			+ "abcdefghijklmnopqrstuvxyz" + ".,!@#$%&*_-";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -35,7 +36,7 @@ public class CCUtils {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void verifyAndWaitForListOfElement(List<WebElement> web, WebDriver driver) {
 		for (int i = 0; i < web.size(); i++) {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -131,6 +132,45 @@ public class CCUtils {
 		robot.keyPress(KeyEvent.VK_ENTER);
 		robot.keyRelease(KeyEvent.VK_ENTER);
 		Log4jUtil.log("Keyboard Action : Enter key ");
+	}
+
+	public static String generateAlphaNumericString(int n) {
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0; i < n; i++) {
+			int index = (int) (alphaNumericString.length() * Math.random());
+			sb.append(alphaNumericString.charAt(index));
+		}
+		return sb.toString();
+	}
+
+	public static Long generateMobileNumber() {
+		return (long) (Math.random() * 1000000 + 3333000000L);
+	}
+
+	public static String generateNewEmail(int n) {
+		String email = generateAlphaNumericString(n).concat("@nextgen.com");
+		String[] emailList = email.split("@");
+		int domainNameSize = emailList[1].length();
+		if (n <= 100 && n > domainNameSize) {
+			int size = email.length();
+			if (size <= n) {
+				return email;
+			} else {
+				int difference = size - n;
+				return email.replaceAll(email.substring(0, difference), "").trim();
+			}
+		} else {
+			return email;
+		}
+	}
+
+	public static String generateAlphaNumericStringIncludingSpecialChar(int n) {
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0; i < n; i++) {
+			int index = (int) (alphaNumericStringIncludingSpecialCharacters.length() * Math.random());
+			sb.append(alphaNumericStringIncludingSpecialCharacters.charAt(index));
+		}
+		return sb.toString();
 	}
 
 	public static void scrollPageToEnd() throws AWTException {

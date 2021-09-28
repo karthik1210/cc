@@ -81,6 +81,9 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
 	private List<WebElement> listOfNonFavClients;
 
+	@FindBy(id = "cmdMenuIcon")
+	private WebElement iconCommandCenterUsers;
+
 	@FindBy(xpath = "//span[@class='ng-tns-c112-6 ng-star-inserted']")
 	private WebElement defaultItemsPerPage;
 
@@ -360,6 +363,13 @@ public class ClientDirectoryPage extends CCMainPage {
 		selectSearchedClientNameInClientTable();
 	}
 
+	public CommandCenterUsersPage clickOnCommandCenterUsersIcon() {
+		CCUtils.verifyAndWaitForElement(iconCommandCenterUsers, driver);
+		iconCommandCenterUsers.click();
+		log("Clicked on command center users icon in left navigation panel");
+		return PageFactory.initElements(driver, CommandCenterUsersPage.class);
+	}
+
 	public String getDefaultItemsPerPage() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
 		highlightElement(defaultItemsPerPage);
@@ -400,7 +410,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Print the value of default Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public String getNoOfRowsPagination() {
 		String data = splitingPagination();
 		String noOfRowsPagination = data.substring(0, 2).trim();
@@ -422,7 +432,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Print the value of default Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);

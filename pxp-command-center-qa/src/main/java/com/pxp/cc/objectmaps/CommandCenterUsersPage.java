@@ -1,0 +1,50 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
+package com.pxp.cc.objectmaps;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import com.pxp.cc.util.CCUtils;
+
+public class CommandCenterUsersPage extends CCMainPage {
+
+	@FindBy(xpath = "//mat-icon[@class='mat-icon notranslate pageTopIcon material-icons mat-icon-no-color']")
+	private WebElement iconCommandCenterUsers;
+
+	@FindBy(xpath = "//span[contains(text(),' Command Center Users ')]")
+	private WebElement labelPageTitle;
+
+	@FindBy(xpath = "//div[@tabindex='0']")
+	private WebElement tabInternalUsers;
+
+	@FindBy(xpath = "//div[@tabindex='0']/div")
+	private WebElement tabTitleInternalUsers;
+
+	public CommandCenterUsersPage(WebDriver driver) {
+		super(driver);
+	}
+
+	public void verifyUserRedirectedToCommandCenterPage() {
+		CCUtils.verifyAndWaitForElement(iconCommandCenterUsers, driver);
+		log("Verifying command center users icon is displayed on screen");
+		CCUtils.assertTrue(iconCommandCenterUsers.isDisplayed(),
+				"Command center users icon is not displayed on screen.");
+		log("Verifying command center users page title");
+		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
+		if (labelPageTitle.isDisplayed())
+			CCUtils.assertEquals(labelPageTitle.getText().trim(), "Command Center Users");
+		else
+			log("Command center users page title is not displayed on screen");
+	}
+
+	public void verifyInternalUsersTabByDefaultSelected() {
+		log("Verifying internal users tab is by default selected in command center user page");
+		CCUtils.verifyAndWaitForElement(tabTitleInternalUsers, driver);
+		if (tabInternalUsers.isDisplayed() == true && tabTitleInternalUsers.getText().trim().equals("INTERNAL USERS"))
+			CCUtils.assertEquals(tabInternalUsers.getAttribute("aria-selected"), "true");
+		else
+			log("Internal users tab is not displayed on command center users page");
+	}
+
+}
