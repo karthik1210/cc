@@ -35,7 +35,7 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUsersPage.clickEditInInternalUser();
 		logStep("Clicked on user to edit");
-		internalUsersPage.verifyEditPassword();
+		internalUsersPage.verifyPasswordUneditable();
 		logStep("Verifying fields are editable");
 		internalUsersPage.enterFirstName(CCUtils.generateAlphaNumericString(18));
 		internalUsersPage.enterLastName(CCUtils.generateAlphaNumericString(18));
@@ -56,7 +56,7 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUsersPage.clickEditInInternalUser();
 		logStep("Clicked on user to edit");
-		internalUsersPage.verifyEditPassword();
+		internalUsersPage.verifyPasswordUneditable();
 		logStep("modifying editable fields detail");
 		internalUsersPage.enterFirstName(CCUtils.generateAlphaNumericString(18));
 		internalUsersPage.enterLastName(CCUtils.generateAlphaNumericString(18));
@@ -78,18 +78,47 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUsersPage.clickEditInInternalUser();
 		logStep("Clicked on user to edit");
-		internalUsersPage.verifyEditPassword();
+		internalUsersPage.verifyPasswordUneditable();
 		logStep("modifying editable fields detail");
 		internalUsersPage.enterFirstName(CCUtils.generateAlphaNumericString(101));
-		internalUsersPage.getFirstNameError();
+		String actualFirstNameError = internalUsersPage.getFirstNameError();
+		if (actualFirstNameError.equalsIgnoreCase("Maximum Characters reached")) {
+			log("First name error is : " + actualFirstNameError);
+		} else {
+			log("First name error is : " + actualFirstNameError);
+			CCUtils.assertTrue(false, "Test Failed");
+		}
 		internalUsersPage.enterLastName(CCUtils.generateAlphaNumericString(101));
-		internalUsersPage.getLastNameError();
+		String actualLastNameError = internalUsersPage.getLastNameError();
+		if (actualLastNameError.equalsIgnoreCase("Maximum Characters reached")) {
+			log("Last name error is : " + actualLastNameError);
+		} else {
+			log("Last name error is : " + actualLastNameError);
+			CCUtils.assertTrue(false, "Test Failed");
+		}
 		internalUsersPage.enterEmail(CCUtils.generateNewEmail(101));
-		internalUsersPage.getEmailError();
+		String actualEmailError = internalUsersPage.getEmailError();
+		if (actualEmailError.equalsIgnoreCase("Maximum Characters reached")) {
+			log("Email name error is : " + actualEmailError);
+		} else {
+			log("Email error is : " + actualEmailError);
+			CCUtils.assertTrue(false, "Test Failed");
+		}
 		internalUsersPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(120));
-		internalUsersPage.getUserNameError();
-		internalUsersPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
-		internalUsersPage.getMobileNumberError();
-
+		String actualUserNameError = internalUsersPage.getUserNameError();
+		if (actualUserNameError.equalsIgnoreCase("Maximum Characters reached")) {
+			log("Username error is : " + actualUserNameError);
+		} else {
+			log("Username error is : " + actualUserNameError);
+			CCUtils.assertTrue(false, "Test Failed");
+		}
+		internalUsersPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()) + "23");
+		String actualMobileError = internalUsersPage.getMobileNumberError();
+		if (actualMobileError.equalsIgnoreCase("Maximum Characters reached")) {
+			log("Mobile number error is : " + actualMobileError);
+		} else {
+			log("Mobile number error is : " + actualMobileError);
+			CCUtils.assertTrue(false, "Test Failed");
+		}
 	}
 }

@@ -143,7 +143,7 @@ public class InternalUsersPage extends CCMainPage {
 		log("Entered input for mobile number : " + input);
 	}
 
-	public void verifyEditPassword() {
+	public void verifyPasswordUneditable() {
 		CCUtils.verifyAndWaitForElement(labelPassword, driver);
 		labelPassword.getAttribute("readonly").equals(true);
 		log("Password is not editable");
