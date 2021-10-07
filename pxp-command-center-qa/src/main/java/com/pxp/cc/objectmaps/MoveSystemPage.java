@@ -55,9 +55,6 @@ public class MoveSystemPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
-	@FindBy(id = "snackCloseBtn")
-	private WebElement buttonCloseToasterMessage;
-
 	public MoveSystemPage(WebDriver driver) {
 		super(driver);
 	}
