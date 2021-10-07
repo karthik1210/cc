@@ -749,7 +749,7 @@ public class Validations {
 		if (actualClientOrgList.size() == jsonArray.length()) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
-				System.out.println("json client id " + jsonObject.getInt("id"));
+				Log4jUtil.log("json client id " + jsonObject.getInt("id"));
 				CCUtils.assertTrue(
 						actualClientOrgList
 								.contains(new ClientOrg(jsonObject.getInt("id"), jsonObject.get("name").toString())),
