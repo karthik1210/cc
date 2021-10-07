@@ -160,6 +160,7 @@ public class CCUser {
 	public String searchNumberInGeneralSetting;
 	public String searchNodeInGeneralSetting;
 	public String searchInvalidNodeInGeneralSetting;
+	private Integer nonExistClientId;
 
 	public CCUser(PropertyFileLoader property) {
 		properties = property;
@@ -278,6 +279,7 @@ public class CCUser {
 		setNewClient();
 		setDuplicateClientClient();
 		setTestClient();
+		setNonExistClientId(Integer.parseInt(getProperty("api.nonexist.client.name")));
 	}
 
 	public void setNewClient() throws Exception {
