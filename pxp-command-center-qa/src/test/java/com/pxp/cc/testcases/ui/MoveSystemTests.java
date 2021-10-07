@@ -63,7 +63,7 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		moveSystemPage.moveSystemNodeToClientWithDoNotInherit(testData.getProperty("inactive.target.client.name"));
 		generalSettingsPage.verifyErrorMessageInactiveTargetClient();
 		generalSettingsPage.closeToasterMessage();
-		logStep("Move inactive system node to inactive client with do not inhetit and verify error message");
+		logStep("Move inactive system node to inactive client with inhetit and verify error message");
 		generalSettingsPage.clearSearchText();
 		generalSettingsPage.searchNode(testData.getProperty("source.inactive.system.node.name"));
 		generalSettingsPage.clickOnMoveSystem();
@@ -111,7 +111,7 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySuccessToasterMessage(systemName, testData.getProperty("active.target.client.name"));
 		logStep("Verify that sap id, timezone and status attribute values ​​are not taken from the target client node during the transition");
 		String clientType = generalSettingsPage.getClientType();
-		generalSettingsPage.verifySystemNodeData(systemName, testData.getProperty("new.system.sapid"),
+		generalSettingsPage.verifySystemNodeFieldData(systemName, testData.getProperty("new.system.sapid"),
 				testData.getProperty("new.system.timezone"), clientType, false);
 	}
 
@@ -146,11 +146,11 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySuccessToasterMessage(systemName, testData.getProperty("active.target.client.name"));
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
-		generalSettingsPage.verifySystemNodeData(systemName, testData.getProperty("new.system.sapid"),
+		generalSettingsPage.verifySystemNodeFieldData(systemName, testData.getProperty("new.system.sapid"),
 				testData.getProperty("new.system.timezone"), clientType, true);
-		generalSettingsPage.verifyEnterpriseNodeData(enterpriseName, testData.getProperty("new.enterprise.sapid"),
+		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, testData.getProperty("new.enterprise.sapid"),
 				testData.getProperty("new.enterprise.timezone"), clientType, false);
-		generalSettingsPage.verifyPracticeNodeData(practiceName, testData.getProperty("new.practice.sapid"),
+		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, testData.getProperty("new.practice.sapid"),
 				testData.getProperty("new.practice.timezone"), clientType, false);
 	}
 
@@ -176,7 +176,7 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		String clientType = generalSettingsPage.getClientType();
 		boolean clientStatus = generalSettingsPage.returnClientNodeStatusValue();
 		logStep("verify system node inherits sap id, timezone, client type and status from target client node");
-		generalSettingsPage.verifySystemNodeData(systemName, clientSapId, clientTimezone, clientType, clientStatus);
+		generalSettingsPage.verifySystemNodeFieldData(systemName, clientSapId, clientTimezone, clientType, clientStatus);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active system node to active client with inherit and verify that the system and its child nodes inherits sap id, timezone, client type and status from target client node")
@@ -213,10 +213,10 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		String clientType = generalSettingsPage.getClientType();
 		boolean clientStatus = generalSettingsPage.returnClientNodeStatusValue();
 		logStep("verify system node and its child node inherits sap id, timezone, client type and status from target client node");
-		generalSettingsPage.verifySystemNodeData(systemName, clientSapId, clientTimezone, clientType, clientStatus);
-		generalSettingsPage.verifyEnterpriseNodeData(enterpriseName, clientSapId, clientTimezone, clientType,
+		generalSettingsPage.verifySystemNodeFieldData(systemName, clientSapId, clientTimezone, clientType, clientStatus);
+		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, clientSapId, clientTimezone, clientType,
 				clientStatus);
-		generalSettingsPage.verifyPracticeNodeData(practiceName, clientSapId, clientTimezone, clientType, clientStatus);
+		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, clientSapId, clientTimezone, clientType, clientStatus);
 	}
 
 }

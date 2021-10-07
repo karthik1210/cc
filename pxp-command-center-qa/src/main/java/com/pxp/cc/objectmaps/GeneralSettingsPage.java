@@ -508,53 +508,53 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
 	}
 
-	public void verifySystemNodeData(String systemNameValue, String systemSapId, String systemTimezone,
-			String systemType, Boolean isNodeStatusActive) {
+	public void verifySystemNodeFieldData(String systemNameValue, String systemSapId, String systemTimezone,
+			String ClientType, Boolean isNodeStatusActive) {
 		searchNode(systemNameValue);
 		CCUtils.assertEquals(getOrgSapId(), systemSapId);
 		CCUtils.assertEquals(getOrgTimezone(), systemTimezone);
-		CCUtils.assertEquals(getOrgClientType(), systemType);
-		log("Verifying org node status for newly added org node in general settings page");
+		CCUtils.assertEquals(getOrgClientType(), ClientType);
+		log("Verifying system node status in general settings page");
 		if (isNodeStatusActive == true) {
 			CCUtils.assertEquals(getOrgStatus(), "active");
-			log("Org node status is active");
+			log("System node status is active");
 		} else {
 			CCUtils.assertEquals(getOrgStatus(), "inactive");
-			log("Org node status is inactive");
+			log("System node status is inactive");
 		}
 	}
 
-	public void verifyEnterpriseNodeData(String enterpriseNameValue, String enterpriseSapId, String enterpriseTimezone,
-			String enterpriseType, Boolean isNodeStatusActive) {
+	public void verifyEnterpriseNodeFieldData(String enterpriseNameValue, String enterpriseSapId, String enterpriseTimezone,
+			String ClientType, Boolean isNodeStatusActive) {
 		clearSearchText();
 		searchNode(enterpriseNameValue);
 		CCUtils.assertEquals(getOrgSapId(), enterpriseSapId);
 		CCUtils.assertEquals(getOrgTimezone(), enterpriseTimezone);
-		CCUtils.assertEquals(getOrgClientType(), enterpriseType);
-		log("Verifying org node status for newly added org node in general settings page");
+		CCUtils.assertEquals(getOrgClientType(), ClientType);
+		log("Verifying enterprise node status in general settings page");
 		if (isNodeStatusActive == true) {
 			CCUtils.assertEquals(getOrgStatus(), "active");
-			log("Org node status is active");
+			log("Enterprise node status is active");
 		} else {
 			CCUtils.assertEquals(getOrgStatus(), "inactive");
-			log("Org node status is inactive");
+			log("Enterprise node status is inactive");
 		}
 	}
 
-	public void verifyPracticeNodeData(String practiceNameValue, String practiceSapId, String practiceTimezone,
-			String practiceType, Boolean isNodeStatusActive) {
+	public void verifyPracticeNodeFieldData(String practiceNameValue, String practiceSapId, String practiceTimezone,
+			String ClientType, Boolean isNodeStatusActive) {
 		clearSearchText();
 		searchNode(practiceNameValue);
 		CCUtils.assertEquals(getOrgSapId(), practiceSapId);
 		CCUtils.assertEquals(getOrgTimezone(), practiceTimezone);
-		CCUtils.assertEquals(getOrgClientType(), practiceType);
-		log("Verifying org node status in general settings page");
+		CCUtils.assertEquals(getOrgClientType(), ClientType);
+		log("Verifying practice node status in general settings page");
 		if (isNodeStatusActive == true) {
 			CCUtils.assertEquals(getOrgStatus(), "active");
-			log("Org node status is active");
+			log("Practice node status is active");
 		} else {
 			CCUtils.assertEquals(getOrgStatus(), "inactive");
-			log("Org node status is inactive");
+			log("Practice node status is inactive");
 		}
 	}
 
