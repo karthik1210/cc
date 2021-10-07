@@ -208,7 +208,7 @@ public class AddOrgNodePage extends CCMainPage {
 	public GeneralSettingsPage clickOnCrossIcon() {
 		CCUtils.verifyAndWaitForElement(crossIcon, driver);
 		log("Clicked on X icon");
-		buttonCancelInAddNewNode.click();
+		crossIcon.click();
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
@@ -456,5 +456,27 @@ public class AddOrgNodePage extends CCMainPage {
 
 	public void verifySolutionValues() throws InterruptedException {
 		CCUtils.assertEquals(actualSolutionValues, expectedSolutionValues);
+	}
+
+	public void addNewSystemNode(String orgName, String sapId, String timezone, String solutionDisplayName,
+			Boolean isActive) {
+		createNewOrgNode(orgName, sapId, timezone, solutionDisplayName);
+		if (isActive == true)
+			selectActiveRadiobutton();
+		else
+			selectInactiveRadiobutton();
+		clickOnSaveAndAddButton();
+	}
+
+	public void addNewNode(String parentEntityName, Boolean isActive, String orgName, String sapId, String timezone,
+			String solutionDisplayName) {
+		clickOnParentEntityNameDropdown();
+		searchTextForParentEntityName(parentEntityName);
+		createNewOrgNode(orgName, sapId, timezone, solutionDisplayName);
+		if (isActive == true)
+			selectActiveRadiobutton();
+		else
+			selectInactiveRadiobutton();
+		clickOnSaveAndAddButton();
 	}
 }
