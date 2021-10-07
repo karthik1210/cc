@@ -42,6 +42,11 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.GET_CLIENT_TYPES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getClientOrgId(int clientId) throws IOException {
+		String url = ApiPath.GET_CLIENT_ORG_ID + clientId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 	public Response getClientName(String clientName) throws IOException {
 		String url = ApiPath.GET_CLIENTNAME + clientName;
