@@ -49,9 +49,6 @@ public class MoveSystemPage extends CCMainPage {
 	@FindBy(xpath = "//span[text()=' clear ']")
 	private WebElement buttonClear;
 
-	@FindBy(id = "snackIconBtn")
-	private WebElement iconError;
-
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
