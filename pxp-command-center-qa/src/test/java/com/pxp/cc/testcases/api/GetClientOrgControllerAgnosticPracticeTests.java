@@ -51,7 +51,6 @@ public class GetClientOrgControllerAgnosticPracticeTests extends BaseRest {
 				ccUser.getPracticeDisplayNameApi(), practiceName, ccUser.getPracticeOrgTypeApi(), clientId,
 				ccUser.getParentTypeApi(), practiceSapNumber, ccUser.getPracticeTimezoneIdApi(), solutionList);
 
-		clientId = createClientApiResponse.jsonPath().get("id");
 		logStep("Fetching client-org-practice details");
 		fetchClientOrgPracticeDetailsApiResponse = clientInfo.getClientOrgId(clientId);
 		logStep("Validating response information");
@@ -98,7 +97,6 @@ public class GetClientOrgControllerAgnosticPracticeTests extends BaseRest {
 			actualClientOrgList = validation.validateAddMultiplePractice(createPracticeApiResponse, actualClientOrg);
 
 		}
-		clientId = createClientApiResponse.jsonPath().get("id");
 		logStep("Fetching client-org-practice details");
 		fetchClientOrgPracticeDetailsApiResponse = clientInfo.getClientOrgId(clientId);
 		logStep("Validating response information");
