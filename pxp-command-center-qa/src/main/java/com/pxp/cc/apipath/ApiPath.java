@@ -40,9 +40,6 @@ public class ApiPath {
 	public static final String PATCH_ORG_STATUS = "/status/";
 	public static final String POST_MOVE_ORG_NODE = "/service/cc/v1/business-units";
 	public static final String GET_TIMEZONES = "/service/cc/v1/timezones";
-<<<<<<< HEAD
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
-=======
 	public static final String GET_CLIENT_ORG_ID = "/service/cc/v1/client-orgs/";
->>>>>>> 5d396a731ce0e4bd636716e38cd9ab0c50f8704d
 }

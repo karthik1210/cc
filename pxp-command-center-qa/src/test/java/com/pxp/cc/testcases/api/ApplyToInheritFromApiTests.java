@@ -100,7 +100,7 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		Response getOrdIdInfo = orgInfo.getOrgId(Integer.parseInt(PracticeTwoId));
 		logStep("Print response of Target Practice Org" + getOrdIdInfo);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate Apply to functionality from Prac1 to multiple Practices i.e., Prac2 & Prac3")
 	public void testApplyToSolutionsOfCurrentPracticeToAnotherPractices() throws IOException {
 		String clientId = createClient();
@@ -132,7 +132,7 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		logStep("Print response of Target Practice 2 Org" + getOrdId_Info);
 		applyToInheritFromValidations.validateResponseOfGetOrg(getOrdId_Info);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate Inherit From  practices functionality from Prac1 & Prac3 to Prac2.")
 	public void testInheritFromSolutionsOfCurrentPracticeToAnotherPractices() throws IOException {
 		String clientId = createClient();
@@ -192,18 +192,18 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		sourcePrac.add(Integer.parseInt(PracticeOneId));
 		List<Integer> targetPrac = new ArrayList<Integer>();
 		targetPrac.add(Integer.parseInt(PracticeOneId));
-		log("Now will Apply solutions of Practice Id : "+ PracticeOneId+" to Practice Id : " + PracticeOneId);
+		log("Now will Apply solutions of Practice Id : " + PracticeOneId + " to Practice Id : " + PracticeOneId);
 		Response applySolutions = applytoInheritFrom.applyInheritSolutions(sourcePrac, targetPrac);
 		logStep("Print the Response : " + applySolutions);
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(applySolutions.getStatusCode(), 400);
 		applyToInheritFromValidations.validateSourcePracIdTargetPracIdSameErrorMsg(applySolutions);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating while Applying solutions both Source Practice Id and Target Practice Id are same throws error.")
 	public void testErrorApplySolutionsWhereSourceIdIsNull() throws IOException {
 		String clientId = createClient();
-		List<Integer> pracOneSolutionList = Arrays.asList(1101,1102);
+		List<Integer> pracOneSolutionList = Arrays.asList(1101, 1102);
 		String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
 		logStep("Print the Id of created 1st Practice within client :" + clientId + " and Practice Id is "
 				+ PracticeOneId);
@@ -216,11 +216,11 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		CCUtils.assertEquals(applySolutions.getStatusCode(), 400);
 		applyToInheritFromValidations.validateSourcePracIdNullSameErrorMsg(applySolutions);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating while Applying solutions both Source Practice Id and Target Practice Id are same throws error.")
 	public void testErrorApplySolutionsWhereTargetIdIsNull() throws IOException {
 		String clientId = createClient();
-		List<Integer> pracOneSolutionList = Arrays.asList(1101,1102);
+		List<Integer> pracOneSolutionList = Arrays.asList(1101, 1102);
 		String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
 		logStep("Print the Id of created 1st Practice within client :" + clientId + " and Practice Id is "
 				+ PracticeOneId);
@@ -233,24 +233,25 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		CCUtils.assertEquals(applySolutions.getStatusCode(), 400);
 		applyToInheritFromValidations.validateTargetPracIdNullSameErrorMsg(applySolutions);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating while Applying solutions both Source Practice Id and Target Practice Id are same throws error.")
 	public void testErrorApplyInheritSolutionsWhereTargetIdIsNonExisting() throws IOException {
-			String clientId = createClient();
-			List<Integer> pracOneSolutionList = Arrays.asList(1101, 1102);
-			String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
-			String nonExistingPractice = "8080";
-			logStep("Print the Id of created 1st Practice within client :" + clientId + " and Practice Id is "
-					+ PracticeOneId);
-			List<Integer> sourcePrac = new ArrayList<Integer>();
-			sourcePrac.add(Integer.parseInt(PracticeOneId));
-			List<Integer> targetPrac = new ArrayList<Integer>();
-			targetPrac.add(Integer.parseInt(nonExistingPractice));
-			log("Now will Apply solutions of Existing Practice Id : " + PracticeOneId+ "to Non-Existing Practice Id : 8080");
-			Response applySolutions = applytoInheritFrom.applyInheritSolutions(sourcePrac, targetPrac);
-			logStep("Print the Response : " + applySolutions);
-			logStep("Validating Response Code");
-			CCUtils.assertEquals(applySolutions.getStatusCode(), 400);
-			applyToInheritFromValidations.validateNonExistingTargetPractice(applySolutions, nonExistingPractice);
-		}
+		String clientId = createClient();
+		List<Integer> pracOneSolutionList = Arrays.asList(1101, 1102);
+		String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
+		String nonExistingPractice = "8080";
+		logStep("Print the Id of created 1st Practice within client :" + clientId + " and Practice Id is "
+				+ PracticeOneId);
+		List<Integer> sourcePrac = new ArrayList<Integer>();
+		sourcePrac.add(Integer.parseInt(PracticeOneId));
+		List<Integer> targetPrac = new ArrayList<Integer>();
+		targetPrac.add(Integer.parseInt(nonExistingPractice));
+		log("Now will Apply solutions of Existing Practice Id : " + PracticeOneId
+				+ "to Non-Existing Practice Id : 8080");
+		Response applySolutions = applytoInheritFrom.applyInheritSolutions(sourcePrac, targetPrac);
+		logStep("Print the Response : " + applySolutions);
+		logStep("Validating Response Code");
+		CCUtils.assertEquals(applySolutions.getStatusCode(), 400);
+		applyToInheritFromValidations.validateNonExistingTargetPractice(applySolutions, nonExistingPractice);
+	}
 }
