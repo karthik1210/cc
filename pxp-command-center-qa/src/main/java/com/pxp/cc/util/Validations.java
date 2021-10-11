@@ -10,9 +10,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
@@ -686,34 +689,78 @@ public class Validations {
 			Log4jUtil.log("Size of actual timezone list and expected timezone list is not same");
 		}
 	}
-	
+
 	public void verifyInvalidOrgTypeEnterpriseErrorResponsBelowClient(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid org type=ENTERPRISE");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageForInvalidParentId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Parentid=401455678 doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageForNullValuesAgnosticPractice(Response response) throws IOException {
-        JsonPath jsonpath = new JsonPath(response.getBody().asString());
-        String actual = "Org type can not be blank, Parent type can not be blank";
-        List<String> actualValue = new ArrayList<String>();
-        for (String val : Arrays.asList(actual.split(","))) {
-            actualValue.add(val.trim());
-        }
-        Collections.sort(actualValue);
-        String expected = jsonpath.get("message").toString();
-        List<String> expectedValue = new ArrayList<String>();
-        for (String val : Arrays.asList(expected.split(","))) {
-            expectedValue.add(val.trim());
-        }
-        Collections.sort(expectedValue);
-        CCUtils.assertEquals(actualValue, expectedValue);
-        CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-    }
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Org type can not be blank, Parent type can not be blank";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetClientOrgIdResponseBody(Response response, Response createPracticeApiResponse)
+			throws IOException {
+		JsonPath jsonpathPractice = new JsonPath(createPracticeApiResponse.getBody().asString());
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonpathPractice.get("name").toString(), jsonObject.get("name"));
+			CCUtils.assertEquals(jsonpathPractice.getInt("id"), jsonObject.getInt("id"));
+		}
+	}
+
+	public List<ClientOrg> validateAddMultiplePractice(Response createPracticeApiResponse,
+			List<ClientOrg> actualClientOrgList) {
+
+		JsonPath jsonpathPractice = new JsonPath(createPracticeApiResponse.getBody().asString());
+		int practiceId = jsonpathPractice.get("id");
+		String practiceName = jsonpathPractice.get("name");
+		actualClientOrgList.add(new ClientOrg(practiceId, practiceName));
+		return actualClientOrgList;
+	}
+
+	public void verifyMultipleGetClientOrgIdResponseBody(Response response, List<ClientOrg> actualClientOrgList)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (actualClientOrgList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				Log4jUtil.log("json client id " + jsonObject.getInt("id"));
+				CCUtils.assertTrue(
+						actualClientOrgList
+								.contains(new ClientOrg(jsonObject.getInt("id"), jsonObject.get("name").toString())),
+						jsonObject.getInt("id") + jsonObject.get("name").toString());
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("Response is null");
+		} else {
+			Log4jUtil.log("Size of actual response list and expected response list is not same");
+		}
+
+	}
+
 }

@@ -4,9 +4,6 @@ package com.pxp.cc.objectmaps;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.List;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -132,7 +129,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='info']")
 	private WebElement clientGeneralSettings;
-	
+
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
 
@@ -148,6 +145,23 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "treeActiveIcon")
 	private List<WebElement> nodeStatusInGeneralSetting;
 
+	@FindBy(xpath = "(//span[@class='value'])[3]")
+	private WebElement labelClientTypeValue;
+
+	@FindBy(id = "orgTypeValue")
+	private WebElement labelOrgClientTypeValue;
+
+	@FindBy(xpath = "//div[text()=' MOVE SYSTEM ']")
+	private WebElement buttonMoveSystem;
+
+	@FindBy(xpath = "//div[@class='flex']/span")
+	private WebElement toasterMessage;
+
+	@FindBy(xpath = "//div[@class='flex']/span//following::a")
+	private WebElement linkClientName;
+
+	@FindBy(id = "snackCloseBtn")
+	private WebElement buttonCloseToaster;
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
@@ -392,7 +406,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public boolean checkVisiblityOfFavTitle() {
 		try {
-			if(favoritesTitleInClientDropdown.isDisplayed()) {
+			if (favoritesTitleInClientDropdown.isDisplayed()) {
 				log("Favorites Section is displayed in Client Dropdown.");
 				return false;
 			}
@@ -403,7 +417,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		}
 		return true;
 	}
-	
+
 	public void enterSearchText(String nodeName) {
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
@@ -459,5 +473,107 @@ public class GeneralSettingsPage extends CCMainPage {
 				continue;
 			}
 		}
+	}
+
+	public String getClientType() {
+		CCUtils.verifyAndWaitForElement(labelClientTypeValue, driver);
+		return labelClientTypeValue.getText().trim();
+	}
+
+	public String getOrgClientType() {
+		CCUtils.verifyAndWaitForElement(labelOrgClientTypeValue, driver);
+		return labelOrgClientTypeValue.getText().trim();
+	}
+
+	public MoveSystemPage clickOnMoveSystem() {
+		CCUtils.verifyAndWaitForElement(buttonMoveSystem, driver);
+		log("Clicked on move system button");
+		buttonMoveSystem.click();
+		return PageFactory.initElements(driver, MoveSystemPage.class);
+	}
+
+	public void verifyErrorMessageInactiveTargetClient() {
+		log("Verifying toaster message for inactive target client");
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		CCUtils.assertEquals(toasterMessage.getText(), "Client selected is inactive. Activate client and try again.");
+	}
+
+	public void verifySuccessToasterMessage(String systemName, String clientNameValue) {
+		log("Verifying success toaster message");
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		CCUtils.assertEquals(toasterMessage.getText(),
+				"SUCCESS " + systemName + " has been successfully moved to client " + clientNameValue);
+		linkClientName.click();
+		CCUtils.verifyAndWaitForElement(clientName, driver);
+		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
+	}
+
+	public void verifySystemNodeFieldData(String systemNameValue, String systemSapId, String systemTimezone,
+			String ClientType, Boolean isNodeStatusActive) {
+		searchNode(systemNameValue);
+		CCUtils.assertEquals(getOrgSapId(), systemSapId);
+		CCUtils.assertEquals(getOrgTimezone(), systemTimezone);
+		CCUtils.assertEquals(getOrgClientType(), ClientType);
+		log("Verifying system node status in general settings page");
+		if (isNodeStatusActive == true) {
+			CCUtils.assertEquals(getOrgStatus(), "active");
+			log("System node status is active");
+		} else {
+			CCUtils.assertEquals(getOrgStatus(), "inactive");
+			log("System node status is inactive");
+		}
+	}
+
+	public void verifyEnterpriseNodeFieldData(String enterpriseNameValue, String enterpriseSapId, String enterpriseTimezone,
+			String ClientType, Boolean isNodeStatusActive) {
+		clearSearchText();
+		searchNode(enterpriseNameValue);
+		CCUtils.assertEquals(getOrgSapId(), enterpriseSapId);
+		CCUtils.assertEquals(getOrgTimezone(), enterpriseTimezone);
+		CCUtils.assertEquals(getOrgClientType(), ClientType);
+		log("Verifying enterprise node status in general settings page");
+		if (isNodeStatusActive == true) {
+			CCUtils.assertEquals(getOrgStatus(), "active");
+			log("Enterprise node status is active");
+		} else {
+			CCUtils.assertEquals(getOrgStatus(), "inactive");
+			log("Enterprise node status is inactive");
+		}
+	}
+
+	public void verifyPracticeNodeFieldData(String practiceNameValue, String practiceSapId, String practiceTimezone,
+			String ClientType, Boolean isNodeStatusActive) {
+		clearSearchText();
+		searchNode(practiceNameValue);
+		CCUtils.assertEquals(getOrgSapId(), practiceSapId);
+		CCUtils.assertEquals(getOrgTimezone(), practiceTimezone);
+		CCUtils.assertEquals(getOrgClientType(), ClientType);
+		log("Verifying practice node status in general settings page");
+		if (isNodeStatusActive == true) {
+			CCUtils.assertEquals(getOrgStatus(), "active");
+			log("Practice node status is active");
+		} else {
+			CCUtils.assertEquals(getOrgStatus(), "inactive");
+			log("Practice node status is inactive");
+		}
+	}
+
+	public void searchNode(String nodeName) {
+		enterSearchText(nodeName);
+		clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+	}
+
+	public Boolean returnClientNodeStatusValue() {
+		if (getClientStatus().equals("active"))
+			return true;
+		else
+			return false;
+	}
+
+	public void closeToasterMessage() {
+		CCUtils.verifyAndWaitForElement(buttonCloseToaster, driver);
+		log("Clicked on cross icon");
+		buttonCloseToaster.click();
 	}
 }
