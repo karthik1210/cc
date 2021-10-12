@@ -7,14 +7,17 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.security.SecureRandom;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
+
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
