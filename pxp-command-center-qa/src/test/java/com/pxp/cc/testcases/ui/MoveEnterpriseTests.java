@@ -12,7 +12,7 @@ import com.pxp.cc.objectmaps.MoveEnterprisePage;
 import com.pxp.cc.objectmaps.MoveSystemPage;
 import com.pxp.cc.util.CCUtils;
 
-public class MoveEnterpriseTests  extends CommandCenterGenericTest {
+public class MoveEnterpriseTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public AddOrgNodePage addOrgNodePage;
 	public GeneralSettingsPage generalSettingsPage;
@@ -24,7 +24,8 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
+		clientDirectoryPage
+				.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Search enterprise node");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.source.enterprise.name"));
@@ -37,11 +38,12 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client name in client search textbox and verify error message")
 	public void testErrorMessageForNonExistingClientEnterprisePopup() throws Exception {
-		
+
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
+		clientDirectoryPage
+				.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Search enterprise node");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.source.enterprise.name"));
@@ -57,7 +59,8 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
+		clientDirectoryPage
+				.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Search enterprise node");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.source.enterprise.name"));
@@ -70,15 +73,13 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
 		String actualToastermessage = moveEnterprisePage.getToasterMessage();
-		if (actualToastermessage.equalsIgnoreCase(
-				"Business unit cannot be moved to an inactive Target")) {
+		if (actualToastermessage.equalsIgnoreCase("Business unit cannot be moved to an inactive Target")) {
 			log("Enterprise moved successfully ");
 			CCUtils.assertTrue(true, "Test Pass");
 		} else {
 			log("Enterprise move failed ");
 			CCUtils.assertTrue(false, "Test Failed");
-		}		
-	
+		}
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel & cross button in move enterprise popup")
@@ -86,7 +87,8 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
+		clientDirectoryPage
+				.searchAndSelectClientNameInClientTable(testData.getProperty("move.enterprise.source.client.name"));
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Search enterprise node");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.source.enterprise.name"));
@@ -97,7 +99,6 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		moveSystemPage.clickOnCrossIcon();
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 	}
-
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active system node to active client with do not inherit")
 	public void testMoveActiveEnterpriseToActiveSystemWithDoNotInherit() throws Exception {
@@ -123,7 +124,7 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		addOrgNodePage.addNewNode(enterpriseName, false, practiceName, testData.getProperty("new.practice.sapid"),
 				testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
-		generalSettingsPage.searchNode(enterpriseName);	
+		generalSettingsPage.searchNode(enterpriseName);
 		logStep("Move active enterprise node to active system node with system setting inherit");
 		moveEnterprisePage = new MoveEnterprisePage(driver);
 		moveEnterprisePage.clickMoveEnterprise();
@@ -142,23 +143,18 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 			log("Enterprise move failed ");
 			CCUtils.assertTrue(false, "Test Failed");
 		}
-		
 		moveEnterprisePage.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
-		
+
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.target.system.name.active"));
-		
+
 		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, testData.getProperty("new.enterprise.sapid"),
 				testData.getProperty("new.enterprise.timezone"), clientType, false);
 		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, testData.getProperty("new.practice.sapid"),
 				testData.getProperty("new.practice.timezone"), clientType, false);
-		
-				
-	
 	}
-
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active enterprise node to active system with inherit and verify that the enterprise and its child nodes inherits sap id, timezone, client type and status from target node")
 	public void testMoveActiveEnterpriseToActiveSystemWithInherit() throws Exception {
@@ -185,7 +181,7 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 				testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
 		logStep("Search system node");
-		generalSettingsPage.searchNode(enterpriseName);	
+		generalSettingsPage.searchNode(enterpriseName);
 		logStep("Move active enterprise node to active system node with system setting inherit");
 		moveEnterprisePage = new MoveEnterprisePage(driver);
 		moveEnterprisePage.clickMoveEnterprise();
@@ -204,18 +200,18 @@ public class MoveEnterpriseTests  extends CommandCenterGenericTest {
 		} else {
 			log("Enterprise move failed ");
 			CCUtils.assertTrue(false, "Test Failed");
-		}	
+		}
 		moveEnterprisePage.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
-		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.target.system.name.active"));	
+		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.target.system.name.active"));
 		String targetSystemSapId = generalSettingsPage.getOrgSapId();
 		String targetSystemTimezone = generalSettingsPage.getOrgTimezone();
 		String targetSystemClientType = generalSettingsPage.getOrgClientType();
 		boolean targetSystemClientStatus = generalSettingsPage.returnOrgStatus();
 		logStep("verify enterprise node and its child node inherits sap id, timezone, client type and status from target system node");
-		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, targetSystemSapId, targetSystemTimezone,targetSystemClientType,
-				targetSystemClientStatus);
-		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, targetSystemSapId, targetSystemTimezone,targetSystemClientType,
-				targetSystemClientStatus);
+		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, targetSystemSapId, targetSystemTimezone,
+				targetSystemClientType, targetSystemClientStatus);
+		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, targetSystemSapId, targetSystemTimezone,
+				targetSystemClientType, targetSystemClientStatus);
 	}
 }

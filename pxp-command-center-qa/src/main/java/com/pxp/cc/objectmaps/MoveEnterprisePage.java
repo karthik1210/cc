@@ -15,17 +15,16 @@ public class MoveEnterprisePage extends CCMainPage {
 	public MoveEnterprisePage(WebDriver driver) {
 		super(driver);
 	}
-	
-	
+
 	@FindBy(xpath = "//span[@id='orgTitle']")
 	private WebElement nodeName;
-	
+
 	@FindBy(xpath = "//div[@class='movebutton ng-star-inserted']")
 	private WebElement buttonMoveEnt;
 
-	@FindBy(id = "moveClientInput")	
+	@FindBy(id = "moveClientInput")
 	private WebElement inputClientName;
-	
+
 	@FindBy(css = "ng-select[id='moveOrgSelect'] input[type='text']")
 	private WebElement dropdownSystem;
 
@@ -40,10 +39,10 @@ public class MoveEnterprisePage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@role='option']")
 	private WebElement selectSystemFromAutoSuggestion;
-	
+
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
-	
+
 	@FindBy(xpath = "//h4[text()='Move Enterprise']")
 	private WebElement labelTitleMoveEnterprise;
 
@@ -85,26 +84,25 @@ public class MoveEnterprisePage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-	
+
 	@FindBy(xpath = "//div[@class='flex']/span//following::a")
 	private WebElement toasterMessageClientLink;
 
 	public String getNodeName() {
 		CCUtils.verifyAndWaitForElement(nodeName, driver);
 		return nodeName.getText();
-		
 	}
-	
+
 	public void verifyMoveEnterpriseNameIsPresent(String systemName) {
 		log("Verifying enterprise name is displayed in popup");
 		CCUtils.verifyAndWaitForElement(labelTopTitle, driver);
 		CCUtils.assertEquals(labelTopTitle.getText().trim(), "Move " + systemName + " to a different System");
 	}
-	
+
 	public MoveSystemPage moveSystemPage;
-	
-	public void verifyEnterprisePopup(String nodeName ) {
-		verifyMoveEnterprisePageTitle() ;
+
+	public void verifyEnterprisePopup(String nodeName) {
+		verifyMoveEnterprisePageTitle();
 		verifyMoveEnterpriseNameIsPresent(nodeName);
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.verifyClientTexboxDefaultValueAndClientLabel();
@@ -115,7 +113,7 @@ public class MoveEnterprisePage extends CCMainPage {
 		moveSystemPage.verifyConfirmButtonIsDisplayed();
 		moveSystemPage.verifyCrossIconIsDisplayed();
 	}
-	
+
 	public void verifyMoveEnterprisePageTitle() {
 		log("Verifying move enterprise title is displayed or not");
 		CCUtils.verifyAndWaitForElement(labelTitleMoveEnterprise, driver);
@@ -124,70 +122,63 @@ public class MoveEnterprisePage extends CCMainPage {
 		else
 			log(" Move enterprise title is not in popup");
 	}
-	
-	
-	
+
 	public void clickMoveEnterprise() {
 		CCUtils.verifyAndWaitForElement(buttonMoveEnt, driver);
 		log("Move Enterprise button clicked");
 		buttonMoveEnt.click();
 	}
-	
+
 	public void enterClientName(String input) {
 		CCUtils.verifyAndWaitForElement(inputClientName, driver);
 		inputClientName.sendKeys(input);
-		log("Entered Client is : "+ input);
+		log("Entered Client is : " + input);
 		try {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void enterSystemName(String input) {
 		CCUtils.verifyAndWaitForElement(dropdownSystem, driver);
 		dropdownSystem.sendKeys(input);
-		log("Entered system is : "+ input);
+		log("Entered system is : " + input);
 	}
-	
-	
 
 	public void selectClientFromAutoSugesstion() {
-		CCUtils.verifyAndWaitForElement(selectClientFromAutoSuggestion, driver);	
-		log("Clicked on " +selectClientFromAutoSuggestion.getText() +" from autosuggestion");
+		CCUtils.verifyAndWaitForElement(selectClientFromAutoSuggestion, driver);
+		log("Clicked on " + selectClientFromAutoSuggestion.getText() + " from autosuggestion");
 		selectClientFromAutoSuggestion.click();
 	}
-	
+
 	public void selectSystemFromAutoSugesstion() {
-		CCUtils.verifyAndWaitForElement(selectSystemFromAutoSuggestion, driver);	
-		log("Clicked on " +selectSystemFromAutoSuggestion.getText() +" from autosuggestion");
+		CCUtils.verifyAndWaitForElement(selectSystemFromAutoSuggestion, driver);
+		log("Clicked on " + selectSystemFromAutoSuggestion.getText() + " from autosuggestion");
 		selectSystemFromAutoSuggestion.click();
-		
 	}
-	
+
 	public void clickInheritRadioButton() {
-		CCUtils.verifyAndWaitForElement(radioButtonInherit, driver);		
+		CCUtils.verifyAndWaitForElement(radioButtonInherit, driver);
 		javascriptClick(radioButtonInherit);
 		log("Inherit radiobutton is clicked");
 	}
-	
+
 	public void clickConfirmInMoveEnterprise() {
-		CCUtils.verifyAndWaitForElement(buttonMoveEntConfirm, driver);		
+		CCUtils.verifyAndWaitForElement(buttonMoveEntConfirm, driver);
 		buttonMoveEntConfirm.click();
 		log("Confirm button in Move Enterprise popup is clicked");
 	}
-	
+
 	public String getToasterMessage() {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);		
-		String message =toasterMessage.getText();
-		log("Toaster message is : "+message );
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		String message = toasterMessage.getText();
+		log("Toaster message is : " + message);
 		return message;
 	}
-	
+
 	public void clickToasterlink() {
 		toasterMessageClientLink.click();
 		log("clicked on client in toaster message");
-		
 	}
 }
