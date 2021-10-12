@@ -89,7 +89,7 @@ public class MovePracticeAgnosticNoInheritTests extends CommandCenterGenericTest
 		moveAgnosticPracticePage.verifyNoClientsFoundErrorMessage("abcdef@0101");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active/inactive practice node to inactive target client and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active practice node to inactive target client and verify error message")
 	public void testErrorMessageForInactiveTargetClient() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("search.client.name"));
