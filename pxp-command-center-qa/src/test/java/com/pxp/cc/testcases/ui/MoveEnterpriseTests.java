@@ -17,7 +17,7 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 	public AddOrgNodePage addOrgNodePage;
 	public GeneralSettingsPage generalSettingsPage;
 	public MoveSystemPage moveSystemPage;
-	MoveEnterprisePage moveEnterprisePage;
+	public MoveEnterprisePage moveEnterprisePage;
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify move enterprise popup")
 	public void testMoveEnterprisePopup() throws Exception {
@@ -68,7 +68,7 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.clickMoveEnterprise();
 		moveEnterprisePage.enterClientName((testData.getProperty("inactive.target.client.name")));
 		moveEnterprisePage.selectClientFromAutoSugesstion();
-		moveSystemPage = new MoveSystemPage(driver);
+
 		moveEnterprisePage.enterSystemName(testData.getProperty("move.enterprise.target.source.name.inactive"));
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
@@ -100,7 +100,7 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active system node to active client with do not inherit")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active enterprise node to active system with do not inherit")
 	public void testMoveActiveEnterpriseToActiveSystemWithDoNotInherit() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -128,28 +128,22 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		logStep("Move active enterprise node to active system node with system setting inherit");
 		moveEnterprisePage = new MoveEnterprisePage(driver);
 		moveEnterprisePage.clickMoveEnterprise();
-		moveSystemPage = new MoveSystemPage(driver);
 		moveEnterprisePage.enterClientName((testData.getProperty("active.target.client.name")));
 		moveEnterprisePage.selectClientFromAutoSugesstion();
-		moveSystemPage = new MoveSystemPage(driver);
 		moveEnterprisePage.enterSystemName(testData.getProperty("move.enterprise.target.system.name.active"));
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
 		String actualToastermessage = moveEnterprisePage.getToasterMessage();
 		if (actualToastermessage.contains("SUCCESS")) {
 			log("Enterprise moved successfully ");
-			CCUtils.assertTrue(true, "Test Pass");
 		} else {
 			log("Enterprise move failed ");
-			CCUtils.assertTrue(false, "Test Failed");
 		}
 		moveEnterprisePage.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
-
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.target.system.name.active"));
-
 		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, testData.getProperty("new.enterprise.sapid"),
 				testData.getProperty("new.enterprise.timezone"), clientType, false);
 		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, testData.getProperty("new.practice.sapid"),
@@ -185,10 +179,8 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		logStep("Move active enterprise node to active system node with system setting inherit");
 		moveEnterprisePage = new MoveEnterprisePage(driver);
 		moveEnterprisePage.clickMoveEnterprise();
-		moveSystemPage = new MoveSystemPage(driver);
 		moveEnterprisePage.enterClientName((testData.getProperty("active.target.client.name")));
 		moveEnterprisePage.selectClientFromAutoSugesstion();
-		moveSystemPage = new MoveSystemPage(driver);
 		moveEnterprisePage.enterSystemName(testData.getProperty("move.enterprise.target.system.name.active"));
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickInheritRadioButton();
@@ -196,10 +188,8 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		String actualToastermessage = moveEnterprisePage.getToasterMessage();
 		if (actualToastermessage.contains("SUCCESS")) {
 			log("Enterprise moved successfully ");
-			CCUtils.assertTrue(true, "Test Pass");
 		} else {
 			log("Enterprise move failed ");
-			CCUtils.assertTrue(false, "Test Failed");
 		}
 		moveEnterprisePage.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
