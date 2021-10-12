@@ -576,4 +576,17 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Clicked on cross icon");
 		buttonCloseToaster.click();
 	}
+	
+	public void verifyPracticeSuccessToasterMessage(String practiceName, String clientNameValue) {
+		log("Verifying success toaster message");
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		CCUtils.assertEquals(toasterMessage.getText(),
+				"SUCCESS " + practiceName + " has been successfully moved to client " + clientNameValue);
+		linkClientName.click();
+		CCUtils.verifyAndWaitForElement(clientName, driver);
+		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
+	}
+
+	
+	
 }
