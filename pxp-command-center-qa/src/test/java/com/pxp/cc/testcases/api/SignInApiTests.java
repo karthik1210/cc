@@ -9,7 +9,6 @@ import org.apache.log4j.BasicConfigurator;
 import org.testng.ITestResult;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.BaseTestNG;
@@ -91,16 +90,16 @@ public class SignInApiTests extends BaseTestNG {
 		CCUtils.assertEquals(response.getStatusCode(), 400);
 		signInValidations.getErrorInvalidPassword(response);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating Simple Sign In Functionality with invalid username and password.")
 	public void testErrorPasswordAttemptsExceeded() throws IOException {
 		Response response = null;
-		for(int i = 0; i<7;i++) {
-		RestAssured.baseURI = testData.getProperty("auth.baseurl");
-		response = given().auth().preemptive()
-				.basic(testData.getProperty("commandcenter.user.six.attempts").trim(),
-						testData.getProperty("commandcenter.password.six.attempts").trim())
-				.when().post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
+		for (int i = 0; i < 7; i++) {
+			RestAssured.baseURI = testData.getProperty("auth.baseurl");
+			response = given().auth().preemptive()
+					.basic(testData.getProperty("commandcenter.user.six.attempts").trim(),
+							testData.getProperty("commandcenter.password.six.attempts").trim())
+					.when().post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
 			logStep("Validating Response Time");
 			CCUtils.responseTimeValidation(response);
 			logStep("Validating Response Code");
