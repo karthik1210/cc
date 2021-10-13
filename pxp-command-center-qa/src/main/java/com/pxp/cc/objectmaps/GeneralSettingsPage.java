@@ -56,9 +56,6 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@id='orgSapValue'] | //span[@id='orgSapNull']")
 	private WebElement labelOrgSapValue;
-	
-//	@FindBy(xpath = "//span[@id='orgSapValue']")
-//	private WebElement labelOrgSapValue;
 
 	@FindBy(id = "orgSolutionValue")
 	private WebElement labelOrgSolutionDisplayNameValue;
@@ -140,9 +137,6 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-	
-//	@FindBy(xpath = "//input[@id='searchInput']")
-//	private WebElement selectFirstInAutoSuggestion;
 
 	@FindBy(className = "info")
 	private WebElement labelNodeNameRightPanel;
