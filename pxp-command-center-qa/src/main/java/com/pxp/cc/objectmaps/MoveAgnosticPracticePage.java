@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 
 public class MoveAgnosticPracticePage extends CCMainPage {
@@ -280,5 +279,4 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		buttonCancel.click();
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
-
 }
