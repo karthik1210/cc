@@ -66,9 +66,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	@FindBy(xpath = "//span[text()='Cancel']")
 	private WebElement buttonCancel;
 	
-//	@FindBy(xpath = "//span[contains(text(),'Confirm')]")
-//	private WebElement buttonConfirm;
-	
 	@FindBy(xpath = "//span[text()='Confirm']")
 	private WebElement buttonConfirm;
 
