@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.objectmaps;
 
 import org.openqa.selenium.WebDriver;
@@ -61,13 +63,13 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	@FindBy(id = "moveSubmitBtn")
 	private WebElement moveConfirmButton;
 
-//	@FindBy(id = "snackIconBtn")
-//	private WebElement successPopup;
-
 	@FindBy(xpath = "//span[text()='Cancel']")
 	private WebElement buttonCancel;
-
-	@FindBy(xpath = "//button[text()=' Confirm ']")
+	
+//	@FindBy(xpath = "//span[contains(text(),'Confirm')]")
+//	private WebElement buttonConfirm;
+	
+	@FindBy(xpath = "//span[text()='Confirm']")
 	private WebElement buttonConfirm;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
@@ -214,12 +216,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(moveConfirmButton, driver);
 		moveConfirmButton.click();
 	}
-
-//	public String successMessageForMoveClient() {
-//		CCUtils.verifyAndWaitForElement(successPopup, driver);
-//		String SuccessMessage = successPopup.getText();
-//		return SuccessMessage;
-//	}
 
 	public void enterSearchTextClientTextbox(String searchText) {
 		CCUtils.verifyAndWaitForElement(textboxClient, driver);

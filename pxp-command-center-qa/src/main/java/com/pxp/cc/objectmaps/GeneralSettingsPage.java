@@ -4,11 +4,13 @@ package com.pxp.cc.objectmaps;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import com.pxp.cc.util.CCUtils;
 
 public class GeneralSettingsPage extends CCMainPage {
@@ -54,6 +56,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@id='orgSapValue'] | //span[@id='orgSapNull']")
 	private WebElement labelOrgSapValue;
+	
+//	@FindBy(xpath = "//span[@id='orgSapValue']")
+//	private WebElement labelOrgSapValue;
 
 	@FindBy(id = "orgSolutionValue")
 	private WebElement labelOrgSolutionDisplayNameValue;
@@ -135,6 +140,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
+	
+//	@FindBy(xpath = "//input[@id='searchInput']")
+//	private WebElement selectFirstInAutoSuggestion;
 
 	@FindBy(className = "info")
 	private WebElement labelNodeNameRightPanel;
@@ -498,11 +506,11 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(toasterMessage.getText(), "Client selected is inactive. Activate client and try again.");
 	}
 
-	public void verifySuccessToasterMessage(String systemName, String clientNameValue) {
+	public void verifySuccessToasterMessage(String orgName, String clientNameValue) {
 		log("Verifying success toaster message");
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		CCUtils.assertEquals(toasterMessage.getText(),
-				"SUCCESS " + systemName + " has been successfully moved to client " + clientNameValue);
+				"SUCCESS " + orgName + " has been successfully moved to client " + clientNameValue);
 		linkClientName.click();
 		CCUtils.verifyAndWaitForElement(clientName, driver);
 		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
@@ -524,8 +532,8 @@ public class GeneralSettingsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyEnterpriseNodeFieldData(String enterpriseNameValue, String enterpriseSapId, String enterpriseTimezone,
-			String ClientType, Boolean isNodeStatusActive) {
+	public void verifyEnterpriseNodeFieldData(String enterpriseNameValue, String enterpriseSapId,
+			String enterpriseTimezone, String ClientType, Boolean isNodeStatusActive) {
 		clearSearchText();
 		searchNode(enterpriseNameValue);
 		CCUtils.assertEquals(getOrgSapId(), enterpriseSapId);
@@ -576,17 +584,5 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Clicked on cross icon");
 		buttonCloseToaster.click();
 	}
-	
-	public void verifyPracticeSuccessToasterMessage(String practiceName, String clientNameValue) {
-		log("Verifying success toaster message");
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(),
-				"SUCCESS " + practiceName + " has been successfully moved to client " + clientNameValue);
-		linkClientName.click();
-		CCUtils.verifyAndWaitForElement(clientName, driver);
-		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
-	}
 
-	
-	
 }
