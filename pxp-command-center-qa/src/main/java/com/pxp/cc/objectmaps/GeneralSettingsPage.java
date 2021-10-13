@@ -19,7 +19,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "(//span[@class='value'])[2]")
 	private WebElement labelClientSapValue;
 
-	@FindBy(css = "#orgTimezoneValue")
+	@FindBy(xpath = "(//span[@class='value'])[4]")
 	private WebElement labelClientTimezoneValue;
 
 	@FindBy(xpath = "//span[@class='link value']")

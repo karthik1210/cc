@@ -76,9 +76,6 @@ public class MoveEnterprisePage extends CCMainPage {
 	@FindBy(xpath = "//span[text()='Cancel']")
 	private WebElement buttonCancel;
 
-	@FindBy(xpath = "//button[text()=' Confirm ']")
-	private WebElement buttonConfirm;
-
 	@FindBy(xpath = "//span[text()=' clear ']")
 	private WebElement buttonClear;
 

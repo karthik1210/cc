@@ -74,10 +74,10 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
 		String actualToastermessage = moveEnterprisePage.getToasterMessage();
 		if (actualToastermessage.equalsIgnoreCase("Business unit cannot be moved to an inactive Target")) {
-			log("Enterprise moved successfully ");
+			log("Enterprise cannot be moved to inactive system");
 			CCUtils.assertTrue(true, "Test Pass");
 		} else {
-			log("Enterprise move failed ");
+			log("check target system node status");
 			CCUtils.assertTrue(false, "Test Failed");
 		}
 	}
@@ -100,8 +100,8 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active enterprise node to active system with do not inherit")
-	public void testMoveActiveEnterpriseToActiveSystemWithDoNotInherit() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move inactive enterprise node to active system with do not inherit")
+	public void testMoveInactiveEnterpriseToActiveSystemWithDoNotInherit() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Enter client name in search text box and click on client name in client table");
@@ -166,12 +166,12 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 				true);
 		generalSettingsPage.clickOnAddEnterprise();
 		String enterpriseName = testData.getProperty("new.enterprise.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewNode(systemName, false, enterpriseName, testData.getProperty("new.enterprise.sapid"),
+		addOrgNodePage.addNewNode(systemName, true, enterpriseName, testData.getProperty("new.enterprise.sapid"),
 				testData.getProperty("new.enterprise.timezone"),
 				testData.getProperty("new.enterprise.solutiondisplayname"));
 		generalSettingsPage.clickOnAddPractice();
 		String practiceName = testData.getProperty("new.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewNode(enterpriseName, false, practiceName, testData.getProperty("new.practice.sapid"),
+		addOrgNodePage.addNewNode(enterpriseName, true, practiceName, testData.getProperty("new.practice.sapid"),
 				testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
 		logStep("Search system node");
