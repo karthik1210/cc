@@ -133,7 +133,6 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.enterSystemName(testData.getProperty("move.enterprise.target.system.name.active"));
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
-		moveEnterprisePage.getToasterMessage();
 		moveEnterprisePage.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
 		String clientType = generalSettingsPage.getClientType();
@@ -180,7 +179,6 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickInheritRadioButton();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
-		moveEnterprisePage.getToasterMessage();
 		moveEnterprisePage.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.target.system.name.active"));
