@@ -46,9 +46,11 @@ public class BaseRest extends BaseTestNG {
 	}
 
 	public String getTokenValue() throws IOException {
+
 		RestAssured.baseURI = ccUser.getAuthBaseUrl();
 		Response response = given().auth().preemptive().basic(ccUser.getCommandCenterUser(), ccUser.getCommandCenterPassword()).when()
 				.post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
+
 		String token = response.jsonPath().get("token").toString();
 		return token;
 
