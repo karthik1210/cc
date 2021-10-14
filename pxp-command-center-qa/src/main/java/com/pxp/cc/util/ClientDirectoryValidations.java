@@ -1,4 +1,5 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.util;
 
 import java.util.ArrayList;

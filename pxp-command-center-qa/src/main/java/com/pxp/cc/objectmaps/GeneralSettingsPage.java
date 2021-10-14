@@ -24,7 +24,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='link value']")
 	private WebElement labelClientStatusValue;
-
+	
+	@FindBy(id = "orgActiveLabel")
+	private WebElement labelNodeStatusValue;
+	
 	@FindBy(id = "detailEditLabel")
 	private WebElement buttonClientInfoEdit;
 
@@ -451,7 +454,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
 		if (selectFirstInAutoSuggestion.isDisplayed()) {
 			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
-			selectFirstInAutoSuggestion.click();
+			javascriptClick(selectFirstInAutoSuggestion);
 
 		} else {
 			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
@@ -566,6 +569,13 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public Boolean returnClientNodeStatusValue() {
 		if (getClientStatus().equals("active"))
+			return true;
+		else
+			return false;
+	}
+	
+	public Boolean returnOrgStatus() {
+		if (getOrgStatus().equals("active"))
 			return true;
 		else
 			return false;
