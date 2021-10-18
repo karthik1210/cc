@@ -1,3 +1,4 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.testcases.ui;
 
 import java.awt.AWTException;
