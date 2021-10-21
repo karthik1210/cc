@@ -43,19 +43,18 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 
 	public String createClient() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		logStep("Let's create a client of name : " + clientName);
+		logStep("Create a client with name: " + clientName);
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
+		logStep("Validating Response Code & body ");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		logStep("Fetching Client Id from Response");
+		log("Fetching Client Id from Response");
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-		logStep("Client :" + clientName + " is created of client Id : " + clientId);
+		log("Client :" + clientName + " is created of client Id : " + clientId);
 		return clientId;
 	}
 
@@ -75,7 +74,7 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
 		String practiceId = createPracticeApiResponse.jsonPath().get("id").toString();
-		logStep("Created Practice Id is : " + practiceId);
+		log("Created Practice Id is : " + practiceId);
 		return practiceId;
 	}
 
@@ -95,7 +94,7 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		List<Integer> targetPrac = new ArrayList<Integer>();
 		targetPrac.add(Integer.parseInt(PracticeTwoId));
 		Response applySolutions = applytoInheritFrom.applyInheritSolutions(sourcePrac, targetPrac);
-		logStep("Print the Response : " + applySolutions);
+		log("Print the Response : " + applySolutions);
 		logStep("Validating Response Code");
 		CCUtils.assertEquals(applySolutions.getStatusCode(), 200);
 		Response getOrdIdInfo = orgInfo.getOrgId(Integer.parseInt(PracticeTwoId));
@@ -107,15 +106,15 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		String clientId = createClient();
 		List<Integer> pracOneSolutionList = Arrays.asList(1101, 1102);
 		String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
-		logStep("Print the Id of created 1st Practice within client :" + clientId + " and Practice Id is "
+		log("Print the Id of created 1st Practice within client :" + clientId + " and Practice Id is "
 				+ PracticeOneId);
 		List<Integer> pracTwoSolutionList = Arrays.asList(1103, 1104);
 		String PracticeTwoId = createPracticeWitinClient(clientId, pracTwoSolutionList);
-		logStep("Print the Id of created 2st Practice within client :" + clientId + " and Practice Id is "
+		log("Print the Id of created 2st Practice within client :" + clientId + " and Practice Id is "
 				+ PracticeTwoId);
 		List<Integer> pracThreeSolutionList = Arrays.asList(1105, 1401);
 		String PracticeThreeId = createPracticeWitinClient(clientId, pracThreeSolutionList);
-		logStep("Print the Id of created 2st Practice within client :" + clientId + " and Practice Id is "
+		log("Print the Id of created 2st Practice within client :" + clientId + " and Practice Id is "
 				+ PracticeThreeId);
 		List<Integer> sourcePrac = new ArrayList<Integer>();
 		sourcePrac.add(Integer.parseInt(PracticeOneId));
@@ -123,15 +122,15 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		targetPrac.add(Integer.parseInt(PracticeTwoId));
 		targetPrac.add(Integer.parseInt(PracticeThreeId));
 		Response applySolutions = applytoInheritFrom.applyInheritSolutions(sourcePrac, targetPrac);
-		logStep("Print the Response : " + applySolutions);
-		logStep("Validating Response Code");
+		log("Print the Response : " + applySolutions);
+		logStep("Validating Response Code and checking target practice");
 		CCUtils.assertEquals(applySolutions.getStatusCode(), 200);
 		Response getOrdIdInfo = orgInfo.getOrgId(Integer.parseInt(PracticeTwoId));
-		applyToInheritFromValidations.validateResponseOfGetOrg(getOrdIdInfo);
-		logStep("Print response of Target Practice 1 Org : " + getOrdIdInfo);
+		applyToInheritFromValidations.fetchResponseOfGetOrg(getOrdIdInfo);
+		log("Print response of Target Practice 1 Org : " + getOrdIdInfo);
 		Response getOrdId_Info = orgInfo.getOrgId(Integer.parseInt(PracticeThreeId));
-		logStep("Print response of Target Practice 2 Org" + getOrdId_Info);
-		applyToInheritFromValidations.validateResponseOfGetOrg(getOrdId_Info);
+		log("Print response of Target Practice 2 Org" + getOrdId_Info);
+		applyToInheritFromValidations.fetchResponseOfGetOrg(getOrdId_Info);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate Inherit From  practices functionality from Prac1 & Prac3 to Prac2.")

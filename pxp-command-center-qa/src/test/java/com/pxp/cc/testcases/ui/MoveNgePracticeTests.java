@@ -37,7 +37,7 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.clickMoveButtonOfPractice();
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
 		logStep("Verify move practice popup");
-		movePracticeNGEPage.verifyMovePracticePopup(testData.getProperty("source.practice.node.name"));
+		movePracticeNGEPage.verifyMovePracticePopupForEnterprise(testData.getProperty("source.practice.node.name"));
 	}
 
 	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active practice node to active enterprise with do not inherit for NGE client")

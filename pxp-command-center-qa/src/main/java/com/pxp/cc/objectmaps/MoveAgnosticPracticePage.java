@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.objectmaps;
 
 import org.openqa.selenium.WebDriver;
@@ -101,18 +103,17 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	}
 
 	public void verifyMovePracticePageTitle() {
-		log("Verifying move practice title is displayed or not");
 		CCUtils.verifyAndWaitForElement(labelTitleMovePractice, driver);
 		if (labelTitleMovePractice.isDisplayed() == true)
 			CCUtils.assertEquals(labelTitleMovePractice.getText().trim(), "Move Practice");
 		else
-			log("Move practice title is nod displayed on move practice popup");
+			log("Move practice title is not displayed on move practice popup");
 	}
 
 	public void verifyMovePracticeNameIsPresent(String practiceName) {
 		log("Verifying move practice name is displayed on move practice popup");
 		CCUtils.verifyAndWaitForElement(labelTopTitle, driver);
-		CCUtils.assertEquals(labelTopTitle.getText().trim(), "Move " + practiceName + " to a different Enterprise");
+		CCUtils.assertEquals(labelTopTitle.getText().trim(), "Move " + practiceName + " to a different Client");
 	}
 
 	public void verifyClientTexboxDefaultValueAndClientLabel() {
@@ -194,7 +195,7 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public void clickMoveButtonOfPractice() {
 		CCUtils.verifyAndWaitForElement(movePracticeButton, driver);
-		log("Clicked on edit button");
+		log("Clicked on Move Practice button");
 		movePracticeButton.click();
 	}
 
@@ -205,14 +206,13 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public void clickOnNewClientOption() {
 		CCUtils.verifyAndWaitForElement(clickNewClient, driver);
-		log("Clicked on edit button");
 		clickNewClient.click();
+		log("Clicked on New Client button");
 	}
 
 	public void clickOnSearchClientfield(String clientName) {
 		CCUtils.verifyAndWaitForElement(clickSearchClientField, driver);
 		log("Click on search button");
-		clickSearchClientField.click();
 		clickSearchClientField.sendKeys(clientName);
 	}
 
@@ -336,7 +336,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public void clickToasterlink() {
 		toasterMessageClientLink.click();
-		log("clicked on client in toaster message");
 	}
 
 	public void verifyNoEnterpriseFoundErrorMessage(String searchText) {
@@ -345,6 +344,23 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		log("Entered searched text is " + searchText.trim());
 		CCUtils.verifyAndWaitForElement(noOptionFound, driver);
 		CCUtils.assertEquals(noOptionFound.getText(), "No items found");
-		log("No Enterprise found for the entered text");
+	}
+	
+	public void verifyMovePracticePopupForEnterprise(String practiceName) {
+		verifyMovePracticePageTitle();
+		verifyNGEPracticeName(practiceName);
+		verifyClientTexboxDefaultValueAndClientLabel();
+		verifyTextIsNotPresentInClientNameTextbox();
+		verifyInheritAndDoNotInheritRadioButtonsAndLabels();
+		verifyDoNotInheritRadioButtonByDefaultSelected();
+		verifyCancelButtonIsDisplayed();
+		verifyConfirmButtonIsDisplayed();
+		verifyCrossIconIsDisplayed();
+	}
+	
+	public void verifyNGEPracticeName(String practiceName) {
+		log("Verifying move practice name is displayed on move practice popup");
+		CCUtils.verifyAndWaitForElement(labelTopTitle, driver);
+		CCUtils.assertEquals(labelTopTitle.getText().trim(), "Move " + practiceName + " to a different Enterprise");
 	}
 }

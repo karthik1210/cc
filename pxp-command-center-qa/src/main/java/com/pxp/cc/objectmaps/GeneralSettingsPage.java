@@ -588,7 +588,6 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 	
 	public void verifyErrorMessageInactiveTargetEnterprise() {
-		log("Verifying toaster message for inactive target client");
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		CCUtils.assertEquals(toasterMessage.getText(), "Business unit cannot be moved to an inactive Target");
 	}
