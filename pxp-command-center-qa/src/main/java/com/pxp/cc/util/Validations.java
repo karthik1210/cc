@@ -3,6 +3,7 @@
 package com.pxp.cc.util;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,16 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -761,6 +759,40 @@ public class Validations {
 			Log4jUtil.log("Size of actual response list and expected response list is not same");
 		}
 
+	}
+
+	public void verifyAuditLogResponseBodyForNewlyCreatedOrgNode(Response response, int orgId, String context)
+			throws IOException {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		LocalDate date = LocalDate.now();
+		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
+		JSONObject jsonObject;
+		if (jsonArray.length() > 0) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("resourceId").equals(orgId)) {
+					CCUtils.assertEquals(jsonObject.get("context"), context);
+					CCUtils.assertEquals(jsonObject.get("activityType"), context + "-CREATED-SUCCEEDED");
+					CCUtils.assertEquals(jsonObject.get("resourceId"), orgId);
+				}
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("Response is null");
+		}
+	}
+
+	public void verifyAuditLogResponseBodyForUpdatedOrgNode(JSONObject jsonObject, int orgId, String context,
+			String field, String oldValue, String newValue) throws IOException {
+		if (jsonObject.get("resourceId").equals(orgId)) {
+			CCUtils.assertEquals(jsonObject.get("context"), context);
+			CCUtils.assertEquals(jsonObject.get("activityType"), context + "-EDITED-SUCCEEDED");
+			CCUtils.assertEquals(jsonObject.get("resourceId"), orgId);
+			JSONObject targetData = jsonObject.getJSONObject("targetData");
+			CCUtils.assertEquals(targetData.getString("field"), field);
+			CCUtils.assertEquals(targetData.getString("oldValue"), oldValue);
+			CCUtils.assertEquals(targetData.getString("newValue"), newValue);
+
+		}
 	}
 
 }
