@@ -39,16 +39,17 @@ public class BaseRest extends BaseTestNG {
 		ccUser.init();
 		BasicConfigurator.configure();
 	}
-	
+
 	@BeforeMethod(enabled = true)
 	public void getMethodName(ITestResult result) throws IOException {
-	log("Method Name-- " + result.getMethod().getMethodName());
+		log("Method Name-- " + result.getMethod().getMethodName());
 	}
 
 	public String getTokenValue() throws IOException {
 
 		RestAssured.baseURI = ccUser.getAuthBaseUrl();
-		Response response = given().auth().preemptive().basic(ccUser.getCommandCenterUser(), ccUser.getCommandCenterPassword()).when()
+		Response response = given().auth().preemptive()
+				.basic(ccUser.getCommandCenterUser(), ccUser.getCommandCenterPassword()).when()
 				.post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
 
 		String token = response.jsonPath().get("token").toString();
