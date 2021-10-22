@@ -150,8 +150,10 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(radioButtonDoNotInherit, driver);
 		log("Verifying do not inherit button is by default selected");
 		if (radioButtonDoNotInherit.isDisplayed() == true && radioButtonDoNotInherit.isSelected() == true) {
+			CCUtils.assertTrue(true, "default button is do not inherit radiobutton");
 			log("Do not inherit button is displayed on add new internal user page and selected");
 		} else {
+			CCUtils.assertTrue(false, "default button is not do not inherit radiobutton");
 			log("Do not inherit button is not displayed on add new internal user page and selected");
 		}
 	}
@@ -195,7 +197,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public void clickMoveButtonOfPractice() {
 		CCUtils.verifyAndWaitForElement(movePracticeButton, driver);
-		log("Clicked on Move Practice button");
 		movePracticeButton.click();
 	}
 
@@ -216,7 +217,7 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		clickSearchClientField.sendKeys(clientName);
 	}
 
-	public void searchAndSelectClientNameInClientfield(String clientName) {
+	public void searchAndSelectClientNameInClientfield() {
 		CCUtils.verifyAndWaitForElement(selectClientNameFromSearchField, driver);
 		log("Enter search text in search textbox");
 		selectClientNameFromSearchField.click();
@@ -247,8 +248,8 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public GeneralSettingsPage clickOnConfirmButton() {
 		CCUtils.verifyAndWaitForElement(buttonConfirm, driver);
-		log("Clicked on confirm button");
 		buttonConfirm.click();
+		log("Clicked on confirm button");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
@@ -277,20 +278,19 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	public void selectInheritRadiobutton() {
 		CCUtils.verifyAndWaitForElement(radioButtonInherit, driver);
 		javascriptClick(radioButtonInherit);
-		log("Clicked on inherit radiobutton in popup");
 	}
 
 	public GeneralSettingsPage clickOnCrossIcon() {
 		CCUtils.verifyAndWaitForElement(buttonClear, driver);
-		log("Clicked on X icon");
 		javascriptClick(buttonClear);
+		log("Clicked on X icon");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
 	public GeneralSettingsPage clickOnCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		log("Clicked on cancel button");
 		buttonCancel.click();
+		log("Clicked on cancel button");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
@@ -304,12 +304,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(dropdownEnterprise, driver);
 		dropdownEnterprise.sendKeys(input);
 		log("Entered system is : " + input);
-	}
-
-	public void selectClientFromAutoSugesstion() {
-		CCUtils.verifyAndWaitForElement(selectEnterpriseFromAutoSuggestion, driver);
-		selectEnterpriseFromAutoSuggestion.click();
-		log("Clicked on enterprise from autosuggestion");
 	}
 
 	public void selecEnterpriseFromAutoSugesstion() {
@@ -359,7 +353,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	}
 	
 	public void verifyNGEPracticeName(String practiceName) {
-		log("Verifying move practice name is displayed on move practice popup");
 		CCUtils.verifyAndWaitForElement(labelTopTitle, driver);
 		CCUtils.assertEquals(labelTopTitle.getText().trim(), "Move " + practiceName + " to a different Enterprise");
 	}
