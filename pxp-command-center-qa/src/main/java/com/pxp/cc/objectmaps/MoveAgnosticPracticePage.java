@@ -148,11 +148,8 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public void verifyDoNotInheritRadioButtonByDefaultSelected() {
 		CCUtils.verifyAndWaitForElement(radioButtonDoNotInherit, driver);
-		log("Verifying do not inherit button is by default selected");
-		if (radioButtonDoNotInherit.isDisplayed() == true && radioButtonDoNotInherit.isSelected() == true) {
-			CCUtils.assertTrue(true, "default button is do not inherit radiobutton");
-			log("Do not inherit button is displayed on add new internal user page and selected");
-		}
+		CCUtils.assertTrue(radioButtonDoNotInherit.isSelected() == true,
+				"default button is do not inherit radiobutton");
 	}
 
 	public void verifyCancelButtonIsDisplayed() {
@@ -209,7 +206,7 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	}
 
 	public void clickOnSearchClientfield(String clientName) {
-		CCUtils.verifyAndWaitForElement(clickSearchClientField, driver);		
+		CCUtils.verifyAndWaitForElement(clickSearchClientField, driver);
 		clickSearchClientField.sendKeys(clientName);
 		log("Click on search button");
 	}
@@ -336,7 +333,7 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(noOptionFound, driver);
 		CCUtils.assertEquals(noOptionFound.getText(), "No items found");
 	}
-	
+
 	public void verifyMovePracticePopupForEnterprise(String practiceName) {
 		verifyMovePracticePageTitle();
 		verifyNGEPracticeName(practiceName);
@@ -348,7 +345,7 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		verifyConfirmButtonIsDisplayed();
 		verifyCrossIconIsDisplayed();
 	}
-	
+
 	public void verifyNGEPracticeName(String practiceName) {
 		CCUtils.verifyAndWaitForElement(labelTopTitle, driver);
 		CCUtils.assertEquals(labelTopTitle.getText().trim(), "Move " + practiceName + " to a different Enterprise");
