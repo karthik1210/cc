@@ -18,11 +18,4 @@ public class PasswordPage extends BaseRest {
 		return given().spec(requestSpec).body(userName).when().post(url).then().extract().response();
 	}
 
-	public String urlInEmail(String resetMailinatorEmail, String autogeneratePwd) throws InterruptedException {
-		String url = mailinator.getLinkFromEmail(resetMailinatorEmail, "Password reset request",
-				"pwd-change?key", 1);
-		log("Fetching the reset password url received in email:" + url);
-		return url;
-	}
-
 }
