@@ -19,7 +19,7 @@ public class PasswordPage extends BaseRest {
 	}
 
 	public String urlInEmail(String resetMailinatorEmail, String autogeneratePwd) throws InterruptedException {
-		String url = mailinator.getLinkFromEmailWithToken(resetMailinatorEmail, "Password reset request",
+		String url = mailinator.getLinkFromEmail(resetMailinatorEmail, "Password reset request",
 				"pwd-change?key", 1);
 		log("Fetching the reset password url received in email:" + url);
 		return url;
