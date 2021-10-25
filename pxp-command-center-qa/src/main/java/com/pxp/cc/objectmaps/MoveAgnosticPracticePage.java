@@ -152,9 +152,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		if (radioButtonDoNotInherit.isDisplayed() == true && radioButtonDoNotInherit.isSelected() == true) {
 			CCUtils.assertTrue(true, "default button is do not inherit radiobutton");
 			log("Do not inherit button is displayed on add new internal user page and selected");
-		} else {
-			CCUtils.assertTrue(false, "default button is not do not inherit radiobutton");
-			log("Do not inherit button is not displayed on add new internal user page and selected");
 		}
 	}
 
@@ -212,15 +209,15 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	}
 
 	public void clickOnSearchClientfield(String clientName) {
-		CCUtils.verifyAndWaitForElement(clickSearchClientField, driver);
-		log("Click on search button");
+		CCUtils.verifyAndWaitForElement(clickSearchClientField, driver);		
 		clickSearchClientField.sendKeys(clientName);
+		log("Click on search button");
 	}
 
 	public void searchAndSelectClientNameInClientfield() {
 		CCUtils.verifyAndWaitForElement(selectClientNameFromSearchField, driver);
-		log("Enter search text in search textbox");
 		selectClientNameFromSearchField.click();
+		log("Enter search text in search textbox");
 	}
 
 	public void clickOnMoveConfirmButton() {
