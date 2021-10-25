@@ -65,7 +65,7 @@ public class BaseRest extends BaseTestNG {
 	}
 	
 	public void setupServiceRequestSpecBuilderWithoutAuthorization() throws IOException {
-		RestAssured.baseURI = testData.getProperty("cc.baseurl");
+		RestAssured.baseURI = testData.getProperty("base.url");
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
