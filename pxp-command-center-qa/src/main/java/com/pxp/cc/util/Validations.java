@@ -816,6 +816,11 @@ public class Validations {
 	public void verifyMessageInResponseWhenUserIsExternal(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Cannot send email to External user");
+	}
+	
+	public void verifySuccessMessageInResponseWhenUserIsRegistered(Response response, String Username) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username "+ Username);
 	}	
 
 }

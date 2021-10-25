@@ -27,10 +27,11 @@ public class ForgotPasswordTests extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test to verify user received password reset link when entered registered username for forgot password")
 	public void testForgotPasswordFunctionalityWithRegisteredUser() throws IOException {
-		forgotPasswordApiResponse = passwordPage.forgotPassword("qausernew");
+		forgotPasswordApiResponse = passwordPage.forgotPassword(testData.getProperty("password.username"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(forgotPasswordApiResponse);
 		CCUtils.assertEquals(forgotPasswordApiResponse.getStatusCode(), 200);
+		validation.verifySuccessMessageInResponseWhenUserIsRegistered(forgotPasswordApiResponse, testData.getProperty("password.username"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test to verify forgot Password Functionality Without Entering Username")
