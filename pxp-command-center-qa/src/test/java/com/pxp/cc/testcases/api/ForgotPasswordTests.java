@@ -20,7 +20,7 @@ public class ForgotPasswordTests extends BaseRest {
 
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecBuilderForPassword();
+		setupServiceRequestSpecBuilderWithoutAuthorization();
 		passwordPage = new PasswordPage();
 		validation = new Validations();
 	}

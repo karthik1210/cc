@@ -64,8 +64,8 @@ public class BaseRest extends BaseTestNG {
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
 	
-	public void setupServiceRequestSpecBuilderForPassword() throws IOException {
-		RestAssured.baseURI = testData.getProperty("password.baseurl");
+	public void setupServiceRequestSpecBuilderWithoutAuthorization() throws IOException {
+		RestAssured.baseURI = testData.getProperty("cc.baseurl");
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
