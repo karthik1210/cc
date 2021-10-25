@@ -816,13 +816,6 @@ public class Validations {
 	public void verifyMessageInResponseWhenUserIsExternal(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Cannot send email to External user");
-	}
-	
-	public void verifyErrorMessageInResponseForInvalidToken(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "This password reset token is invalid");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-	
+	}	
 
 }

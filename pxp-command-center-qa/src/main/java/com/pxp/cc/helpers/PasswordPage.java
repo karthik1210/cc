@@ -12,7 +12,7 @@ public class PasswordPage extends BaseRest {
 
 	public Mailinator mailinator = new Mailinator();
 
-	public Response password(String userName) {
+	public Response forgotPassword(String userName) {
 
 		String url = ApiPath.POST_FORGOT_PASSWORD;
 		return given().spec(requestSpec).body(userName).when().post(url).then().extract().response();
