@@ -794,5 +794,35 @@ public class Validations {
 
 		}
 	}
+	
+	public void verifyErrorMessageInResponseWhenUsernameFieldBlank(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Required request body is missing: public com.medfusion.pxp.cc.api.PasswordResetResponse com.medfusion.pxp.cc.rest.PasswordResetController.forgetPassword(java.lang.String)");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageInResponseWhenUsernameFieldIsInvalid(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid request for forgot password");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageInResponseWhenUsernameIsUnregistered(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "You do not have access to this system.");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyMessageInResponseWhenUserIsExternal(Response response) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Cannot send email to External user");
+	}
+	
+	public void verifyErrorMessageInResponseForInvalidToken(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "This password reset token is invalid");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
 
 }
