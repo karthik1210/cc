@@ -40,7 +40,7 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.verifyMovePracticePopupForEnterprise(testData.getProperty("source.practice.node.name"));
 	}
 
-	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active practice node to active enterprise with do not inherit for NGE client")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active practice node to active enterprise with do not inherit for NGE client")
 	public void testMoveActivePracticeToActiveEnterpriseWithDoNotInherit() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("search.client.name"));
@@ -95,39 +95,39 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		logStep("Click on move practice button");
 		movePracticeNGEPage.clickMoveButtonOfPractice();
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
-		logStep("Move active practice node to inactive client with do not inhetit and verify error message");
+		logStep("Move inactive practice node to inactive client with do not inhetit and verify error message");
 		movePracticeNGEPage.movePracticeNodeToEnterpriseWithDoNotInherit(
-				testData.getProperty("inactive.target.nge.client.name"), testData.getProperty("search.nge.enterprsie"));
+				testData.getProperty("inactive.target.nge.client.name"), testData.getProperty("search.inactive.nge.enterprsie"));
 		generalSettingsPage.verifyErrorMessageInactiveTargetEnterprise();
 	}
 
-	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "test for moving active practice node to active NGE client with inherit")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "test for moving active practice to active Enterprise with inherit")
 	public void testMoveActivePracticeToActiveClientWithInherit() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("search.client.name"));
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("search.nge.client"));
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		String parentName = generalSettingsPage.getClientName();
 		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new active agnostic practice node below client node");
+		logStep("Add new active practice in Nge client");
 		String practiceName = testData.getProperty("new.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewNode(parentName, true, practiceName, testData.getProperty("practice.sapid"),
+		addOrgNodePage.addNewNode(testData.getProperty("search.nge.enterprsie")
+				, true, practiceName, testData.getProperty("practice.sapid"),
 				testData.getProperty("practice.timezone"), testData.getProperty("practice.solutiondisplayname"));
-		logStep("Move active practice node to active client with inherit");
+		logStep("Move active practice node to active enterprise with inherit");
 		movePracticeNGEPage = new MoveAgnosticPracticePage(driver);
 		movePracticeNGEPage.clickMoveButtonOfPractice();
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
-		movePracticeNGEPage.movePracticeNodeToEnterpriseWithInherit(testData.getProperty("search.nge.client"),
+		movePracticeNGEPage.movePracticeNodeToEnterpriseWithInherit(testData.getProperty("move.enterprise.target.client.name.active"),
 				testData.getProperty("search.nge.enterprsie"));
 		movePracticeNGEPage.clickToasterlink();
-		generalSettingsPage.searchNode(practiceName);
-		String targetSystemSapId = generalSettingsPage.getOrgSapId();
-		String targetSystemTimezone = generalSettingsPage.getOrgTimezone();
-		String targetSystemClientType = generalSettingsPage.getOrgClientType();
-		boolean targetSystemClientStatus = generalSettingsPage.returnOrgStatus();
+		generalSettingsPage.searchNode(testData.getProperty("search.nge.enterprsie"));
+		String targetEnterpriseSapId = generalSettingsPage.getOrgSapId();
+		String targetEnterpriseTimezone = generalSettingsPage.getOrgTimezone();
+		String targetEnterpriseClientType = generalSettingsPage.getOrgClientType();
+		boolean targetEnterpriseStatus = generalSettingsPage.returnOrgStatus();
 		logStep("verify practice node inherits sap id, timezone, client type and status from target client node");
-		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, targetSystemSapId, targetSystemTimezone,
-				targetSystemClientType, targetSystemClientStatus);
+		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, targetEnterpriseSapId, targetEnterpriseTimezone,
+				targetEnterpriseClientType, targetEnterpriseStatus);
 	}
 }
