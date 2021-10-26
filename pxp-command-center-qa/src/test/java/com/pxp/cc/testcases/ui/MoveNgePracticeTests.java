@@ -84,7 +84,7 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.verifyNoEnterpriseFoundErrorMessage("Koa9920*");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move inactive practice to inactive NGE client and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active practice to inactive NGE client and verify error message")
 	public void testErrorMessageForInactiveTargetClient() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("search.client.name"));
@@ -95,7 +95,7 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		logStep("Click on move practice button");
 		movePracticeNGEPage.clickMoveButtonOfPractice();
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
-		logStep("Move inactive practice node to inactive client with do not inhetit and verify error message");
+		logStep("Move active practice node to inactive client with do not inhetit and verify error message");
 		movePracticeNGEPage.movePracticeNodeToEnterpriseWithDoNotInherit(
 				testData.getProperty("inactive.target.nge.client.name"), testData.getProperty("search.inactive.nge.enterprsie"));
 		generalSettingsPage.verifyErrorMessageInactiveTargetEnterprise();

@@ -149,7 +149,7 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	public void verifyDoNotInheritRadioButtonByDefaultSelected() {
 		CCUtils.verifyAndWaitForElement(radioButtonDoNotInherit, driver);
 		CCUtils.assertTrue(radioButtonDoNotInherit.isSelected() == true,
-				"default button is do not inherit radiobutton");
+				"default button is not on do not inherit");
 	}
 
 	public void verifyCancelButtonIsDisplayed() {
