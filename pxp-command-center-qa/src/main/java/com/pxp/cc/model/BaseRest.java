@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+	// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.model;
 
 import static io.restassured.RestAssured.given;
@@ -61,6 +61,12 @@ public class BaseRest extends BaseTestNG {
 		RestAssured.baseURI = ccUser.getServiceBaseUrl();
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addHeader(ApiPath.AUTHORIZATION, ApiPath.BEARER_TYPE + getTokenValue())
+				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
+	}
+	
+	public void setupServiceRequestSpecBuilderWithoutAuthorization() throws IOException {
+		RestAssured.baseURI = testData.getProperty("base.url");
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
 
