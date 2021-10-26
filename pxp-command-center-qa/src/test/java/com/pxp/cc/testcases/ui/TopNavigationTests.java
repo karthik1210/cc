@@ -11,7 +11,7 @@ public class TopNavigationTests extends CommandCenterGenericTest {
 
 	public ClientDirectoryPage cchomepage;
 
-	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
+	@Test(enabled = true, groups = { "UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
 	public void verifyTopPanel() throws Exception {
 		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -22,7 +22,7 @@ public class TopNavigationTests extends CommandCenterGenericTest {
 		cchomepage.clickLogout();
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests" }, retryAnalyzer = RetryAnalyzer.class)
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void verifySSOLinksforInternalUsers() throws Exception {
 		log("Login to CC portal. url=" + ccuser.getUrl() + " and email=" + ccuser.getUsernameInternal()
 				+ " and password=" + ccuser.getPasswordInternal());
@@ -36,7 +36,7 @@ public class TopNavigationTests extends CommandCenterGenericTest {
 		cchomepage.clickLogout();
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests" }, retryAnalyzer = RetryAnalyzer.class)
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void verifySSOLinksforExternalUsers() throws Exception {
 		log("Login to CC portal. url=" + ccuser.getUrl() + " and email=" + ccuser.getUsernameExternal()
 				+ " and password=" + ccuser.getPasswordExternal());
@@ -50,5 +50,4 @@ public class TopNavigationTests extends CommandCenterGenericTest {
 		cchomepage.clickUserIcon();
 		cchomepage.clickLogout();
 	}
-
 }

@@ -14,7 +14,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage cchomepage;
 	public CreateClientPage createClientPage;
 
-	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void testNewClientCreation() throws Exception {
 		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -42,7 +42,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		createClientPage.verifyClientNameAndSapUnique(ccuser.getDuplicateClientName(), ccuser.getDuplicateClientSap());
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests", "SmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
+	@Test(enabled = true, groups = { "UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class)
 	public void testCreateInactiveTestClient() throws Exception {
 		log("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

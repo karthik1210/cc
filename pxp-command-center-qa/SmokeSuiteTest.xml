@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="SmokeSuiteTestUI">
+	<listeners>
+		<listener
+			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener
+			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
+	<test name="SmokeUITest">
+		<groups>
+			<run>
+				<include name="UISmokeTest" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.pxp.cc.testcases.ui.PasswordResetTests" />
+			<class name="com.pxp.cc.testcases.ui.ClientDirectoryTests" />
+			<class name="com.pxp.cc.testcases.ui.TopNavigationTests" />
+			<class name="com.pxp.cc.testcases.ui.CreateClientTests" />
+			<class
+				name="com.pxp.cc.testcases.ui.ClientDropdownGeneralSettings" />
+			<class name="com.pxp.cc.testcases.ui.GeneralSettingsTests" />
+			<class name="com.pxp.cc.testcases.ui.AddOrgNodeTests" />
+			<class name="com.pxp.cc.testcases.ui.EditOrgNodeTest" />
+			<class name="com.pxp.cc.testcases.ui.MoveSystemTests" />
+			<class name="com.pxp.cc.testcases.ui.MoveEnterpriseTests" />
+			<class name="com.pxp.cc.testcases.ui.MoveNgePracticeTests" />
+			<class name="com.pxp.cc.testcases.ui.MoveAgnosticPracticeTests" />
+			<class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
+			<class name="com.pxp.cc.testcases.ui.DeactivateUserTests" />
+			<class name="com.pxp.cc.testcases.ui.EditInternalUserTests" />
+
+		</classes>
+	</test>
+</suite>

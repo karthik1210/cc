@@ -45,7 +45,8 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.verifyErrorMessageForSapIdField(ccuser.getInvalidSap());
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in add new system popup and verify add new system functionality")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in add new system popup and verify add new system functionality")
 	public void testAddNewSystem() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(ccuser.getActiveClientName());

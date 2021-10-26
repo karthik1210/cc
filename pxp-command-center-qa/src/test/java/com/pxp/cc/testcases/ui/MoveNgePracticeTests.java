@@ -25,7 +25,8 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify move practice popup under NGE client")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify move practice popup under NGE client")
 	public void testMoveNGEPracticePopup() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("search.client.name"));
@@ -97,7 +98,8 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
 		logStep("Move active practice node to inactive client with do not inhetit and verify error message");
 		movePracticeNGEPage.movePracticeNodeToEnterpriseWithDoNotInherit(
-				testData.getProperty("inactive.target.nge.client.name"), testData.getProperty("search.inactive.nge.enterprsie"));
+				testData.getProperty("inactive.target.nge.client.name"),
+				testData.getProperty("search.inactive.nge.enterprsie"));
 		generalSettingsPage.verifyErrorMessageInactiveTargetEnterprise();
 	}
 
@@ -111,14 +113,15 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		addOrgNodePage = new AddOrgNodePage(driver);
 		logStep("Add new active practice in Nge client");
 		String practiceName = testData.getProperty("new.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewNode(testData.getProperty("search.nge.enterprsie")
-				, true, practiceName, testData.getProperty("practice.sapid"),
-				testData.getProperty("practice.timezone"), testData.getProperty("practice.solutiondisplayname"));
+		addOrgNodePage.addNewNode(testData.getProperty("search.nge.enterprsie"), true, practiceName,
+				testData.getProperty("practice.sapid"), testData.getProperty("practice.timezone"),
+				testData.getProperty("practice.solutiondisplayname"));
 		logStep("Move active practice node to active enterprise with inherit");
 		movePracticeNGEPage = new MoveAgnosticPracticePage(driver);
 		movePracticeNGEPage.clickMoveButtonOfPractice();
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
-		movePracticeNGEPage.movePracticeNodeToEnterpriseWithInherit(testData.getProperty("move.enterprise.target.client.name.active"),
+		movePracticeNGEPage.movePracticeNodeToEnterpriseWithInherit(
+				testData.getProperty("move.enterprise.target.client.name.active"),
 				testData.getProperty("search.nge.enterprsie"));
 		movePracticeNGEPage.clickToasterlink();
 		generalSettingsPage.searchNode(testData.getProperty("search.nge.enterprsie"));

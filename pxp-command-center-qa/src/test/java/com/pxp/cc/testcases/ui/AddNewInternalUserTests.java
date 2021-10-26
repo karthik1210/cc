@@ -41,7 +41,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new internal user popup")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new internal user popup")
 	public void testAddNewInternalUserPopup() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
 		clientDirectoryPage.clickOnCommandCenterUsersIcon();

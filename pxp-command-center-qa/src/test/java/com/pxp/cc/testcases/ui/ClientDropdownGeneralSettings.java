@@ -57,7 +57,8 @@ public class ClientDropdownGeneralSettings extends CommandCenterGenericTest {
 		return listOfSixViewedClients;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify only five latest viewed Client name visible in Client Dropdown Recently Visited Section")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify only five latest viewed Client name visible in Client Dropdown Recently Visited Section")
 	public void testOnlyFiveClientsShouldPresentInClientDropdownRecentlyVisitedSection() throws InterruptedException {
 		List<String> listofClients = viewSixClients();
 		log("print value : " + listofClients.size());
@@ -105,7 +106,8 @@ public class ClientDropdownGeneralSettings extends CommandCenterGenericTest {
 				"Clicked client in dropdown general settings page is displayed.");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify by clicking Client in Fav section in Client Dropdown Header it's general settings page got displayed.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify by clicking Client in Fav section in Client Dropdown Header it's general settings page got displayed.")
 	public void testClickedClientInClientDropdownFavoritesItsGeneralSettingsPageShouldDisplay()
 			throws InterruptedException {
 		int getFavClients = clientDirectoryPage.getSizeOfListOfFavClients();
