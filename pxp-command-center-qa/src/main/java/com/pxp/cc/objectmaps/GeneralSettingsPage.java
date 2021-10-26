@@ -586,4 +586,9 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Clicked on cross icon");
 		buttonCloseToaster.click();
 	}
+	
+	public void verifyErrorMessageInactiveTargetEnterprise() {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		CCUtils.assertEquals(toasterMessage.getText(), "Business unit cannot be moved to an inactive Target");
+	}
 }
