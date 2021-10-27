@@ -823,7 +823,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username "+ Username);
 	}	
 	
-	public void verifySuccessMessageInResponseForvalidToken(Response response) throws IOException {
+	public void verifySuccessMessageInResponseForValidToken(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Password reset successfully. You can now login with new credentials");		
 	}

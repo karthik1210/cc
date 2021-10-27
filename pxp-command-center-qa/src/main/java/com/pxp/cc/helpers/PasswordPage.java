@@ -40,5 +40,13 @@ public class PasswordPage extends BaseRest {
 		log("Fetching the reset password url received in email:" + url);
 		return url;
 	}
+	
+	public String getTokenValueFromEmailLink(String url)
+	{
+	String[] list = url.split("=");
+	String token = list[1];
+	String[] splitToken = token.split(" ");
+	return splitToken[0];
+	}
 
 }

@@ -28,22 +28,19 @@ public class ResetPasswordTests extends BaseRest {
 	public void testSuccessfullyPasswordResetFunctionalityWithRegisteredUser()
 			throws Exception {
 		forgotPasswordApiResponse = passwordPage.forgotPassword(testData.getProperty("reset.password.email.mailinator"));
+		logStep("Verify user click on forgot password and entered registred username to get the password reset link");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(forgotPasswordApiResponse);
 		CCUtils.assertEquals(forgotPasswordApiResponse.getStatusCode(), 200);
 		validation.verifySuccessMessageInResponseWhenUserIsRegistered(forgotPasswordApiResponse, testData.getProperty("reset.password.email.mailinator"));
 		String url = passwordPage.urlInEmail(testData.getProperty("reset.password.email.mailinator"),
 				testData.getProperty("reset.password.email.mailinator").concat(CCUtils.generateRandomString()));
-		String[] list = url.split("=");
-		String token = list[1];
-		String[] splitToken = token.split(" ");
-		String finalToken = splitToken[0];
-		logStep("print the token "+ finalToken);
 		resetPasswordApiResponse = passwordPage.resetPasswordFunctionality(
-				testData.getProperty("reset.password.set").concat(CCUtils.generateRandomString()), finalToken);
-		validation.verifySuccessMessageInResponseForvalidToken(resetPasswordApiResponse);
+				testData.getProperty("reset.password.set").concat(CCUtils.generateRandomString()), passwordPage.getTokenValueFromEmailLink(url));
+		logStep("Validating email received for reset password and verifying success message");
+		validation.verifySuccessMessageInResponseForValidToken(resetPasswordApiResponse);
 	}
-
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test to verify Password reset Functionality with invalid token")
 	public void testPasswordResetFunctionalityWithInvalidToken() throws IOException {
 		resetPasswordApiResponse = passwordPage.resetPasswordFunctionality(
