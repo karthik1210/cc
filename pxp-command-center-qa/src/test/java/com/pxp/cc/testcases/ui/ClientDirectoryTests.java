@@ -1,4 +1,5 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.testcases.ui;
 
 import java.awt.AWTException;
@@ -12,8 +13,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 
 	ClientDirectoryPage clientDirectoryPage;
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
 	public void testClientNameSearch() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -24,8 +25,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.verfiySearchResult(ccuser.searchClientInClientDirectory);
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check No results found is displayed if client name not present")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check No results found is displayed if client name not present")
 	public void testToCheckNoResultsFound() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -41,8 +41,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		}
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check Default text of Search bar & functionality of Search Button")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check Default text of Search bar & functionality of Search Button")
 	public void testDefaultTextInSearchBar() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -51,8 +50,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check results after ClientType filter is applied")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check results after ClientType filter is applied")
 	public void testClientTypeFilters() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -64,8 +63,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.verfiySearchResultForClientType(ccuser.getClientThreeType());
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check nodes can be searched in Client Directory screen")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check nodes can be searched in Client Directory screen")
 	public void testClientNodeSearch() throws Exception {
 
 		logStep("Login to Command Center");
@@ -112,7 +110,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
 	public void testItemsPerPageDropdownChangesEffectClientWebTableRows() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -122,7 +121,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.getListOfItemsPerPagee();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
 	public void testAllPaginationButtonsClickable() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -139,7 +139,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickFirstPageButton();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
 	public void testNextPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -168,7 +169,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
 	public void testNextPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -198,7 +200,9 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 20.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 20.")
+
 	public void testLastPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -281,7 +285,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 200.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 200.")
 	public void testPreviousPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -330,7 +335,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 200.")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 200.")
 	public void testFirstPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

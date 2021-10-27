@@ -14,7 +14,7 @@ public class LoginScreenTests extends CommandCenterGenericTest {
 	public LoginPage commandcenterloginpage;
 	public ClientDirectoryPage commandcenterhomepage;
 
-	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class,description = "Test to verify login to Command Center Portal")
+	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify login to Command Center Portal")
 	public void verifyLoginToCCPortal() throws Exception {
 		log("Test to verify login to Command Center Portal");
 		log("Login to Command Center portal via url = " + ccuser.getUrl() + " and email =" + ccuser.getUsername()
