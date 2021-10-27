@@ -8,7 +8,7 @@
 		<listener
 			class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
-	<test name="Test">
+	<test name="API Regression Test">
 		<classes>
 			<class name="com.pxp.cc.testcases.api.AddNewOrgApiTest" />
 			<class
@@ -17,24 +17,30 @@
 			<class
 				name="com.pxp.cc.testcases.api.ClientDropdownGeneralSettingApiTests" />
 			<class name="com.pxp.cc.testcases.api.EditClientApiTests" />
-			<class
-				name="com.pxp.cc.testcases.api.EditOrgNodeApiTest" />
+			<class name="com.pxp.cc.testcases.api.EditOrgNodeApiTest" />
 			<class name="com.pxp.cc.testcases.api.FetchClientDetailsTests" />
 			<class name="com.pxp.cc.testcases.api.ForgotPasswordTests" />
 			<class name="com.pxp.cc.testcases.api.GetClientNameApiTests" />
-			<class name="com.pxp.cc.testcases.api.GetClientOrgControllerAgnosticPracticeTests" />
+			<class
+				name="com.pxp.cc.testcases.api.GetClientOrgControllerAgnosticPracticeTests" />
 			<class name="com.pxp.cc.testcases.api.GetClientOrgParentTests" />
 			<class name="com.pxp.cc.testcases.api.GetClientTypesApiTests" />
-			<class name="com.pxp.cc.testcases.api.GetOrgHierarchyControllerApiTests" />
-			<class name="com.pxp.cc.testcases.api.GetOrgIdSystemEnterprisePracticeApiTest" />
+			<class
+				name="com.pxp.cc.testcases.api.GetOrgHierarchyControllerApiTests" />
+			<class
+				name="com.pxp.cc.testcases.api.GetOrgIdSystemEnterprisePracticeApiTest" />
 			<class name="com.pxp.cc.testcases.api.GetSapNumberApiTests" />
 			<class name="com.pxp.cc.testcases.api.GetTimezoneTests" />
-			<class name="com.pxp.cc.testcases.api.MoveOrgNodeWithDoNotInheritTests" />
-			<class name="com.pxp.cc.testcases.api.MoveOrgNodeWithInheritTests" />
+			<class
+				name="com.pxp.cc.testcases.api.MoveOrgNodeWithDoNotInheritTests" />
+			<class
+				name="com.pxp.cc.testcases.api.MoveOrgNodeWithInheritTests" />
 			<class name="com.pxp.cc.testcases.api.OrgNodeAuditLogTests" />
 			<class name="com.pxp.cc.testcases.api.SignInApiTests" />
-			<class name="com.pxp.cc.testcases.api.UpdateClientStatusApiTests" />
-			<class name="com.pxp.cc.testcases.api.UpdateOrgNodeStatusApiTests" />
+			<class
+				name="com.pxp.cc.testcases.api.UpdateClientStatusApiTests" />
+			<class
+				name="com.pxp.cc.testcases.api.UpdateOrgNodeStatusApiTests" />
 
 		</classes>
 	</test>
