@@ -23,7 +23,6 @@ public class PasswordPage extends BaseRest {
 	
 	public Response resetPasswordFunctionality(String password, String token) throws IOException {
 		Map<String, Object> resetPasswordPayload = postResetPassword(password, token);
-		System.out.println("print the token at page "+ token);
 		String url = ApiPath.POST_RESET_PASSWORD;
 		return given().spec(requestSpec).body(resetPasswordPayload).when().post(url).then().extract()
 				.response();
@@ -37,7 +36,7 @@ public class PasswordPage extends BaseRest {
 	}
 	
 	public String urlInEmail(String resetMailinatorEmail, String autogeneratePwd) throws InterruptedException {
-		String url = mailinator.getLinkFromEmailWithToken(resetMailinatorEmail, "Password reset request", "pwd-change?key", 1);
+		String url = mailinator.getLinkFromEmailWithText(resetMailinatorEmail, "Password reset request", "pwd-change?key", 1);
 		log("Fetching the reset password url received in email:" + url);
 		return url;
 	}
