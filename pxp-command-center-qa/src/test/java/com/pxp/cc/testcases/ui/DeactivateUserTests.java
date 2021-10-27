@@ -10,12 +10,12 @@ import com.pxp.cc.objectmaps.DeactivateUserPage;
 import com.pxp.cc.util.CCUtils;
 
 public class DeactivateUserTests extends CommandCenterGenericTest {
-	
+
 	ClientDirectoryPage cchomepage;
 	DeactivateUserPage deactivateUserPage;
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check deactive popup")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check deactive popup")
 	public void testDeactivePopUp() throws Exception {
 		logStep("Login to Command Center");
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -25,19 +25,17 @@ public class DeactivateUserTests extends CommandCenterGenericTest {
 		logStep("Verifying deactivate internal user popup");
 		deactivateUserPage.selectUser();
 		deactivateUserPage.clickDeactivate();
-		String actualPopupMessage=deactivateUserPage.verifyPopUpMessage();
-		if(actualPopupMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
+		String actualPopupMessage = deactivateUserPage.verifyPopUpMessage();
+		if (actualPopupMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
 			log("Popup message is displayed");
 			CCUtils.assertTrue(true, "Test Pass");
+		} else {
+			log("popup message is incorrect : " + actualPopupMessage);
+			CCUtils.assertTrue(false, "Test Failed");
 		}
-		 else {
-				log("popup message is incorrect : " + actualPopupMessage);
-				CCUtils.assertTrue(false, "Test Failed");
-			}
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check user status changed to deactivate")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check user status changed to deactivate")
 	public void testInternalUserIsDeactive() throws Exception {
 		logStep("Login to Command Center");
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -49,18 +47,16 @@ public class DeactivateUserTests extends CommandCenterGenericTest {
 		deactivateUserPage.clickDeactivate();
 		deactivateUserPage.clickDeactivateButton();
 		String actualToasterMessage = deactivateUserPage.getToasterMessage();
-		if(actualToasterMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
+		if (actualToasterMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
 			log("Popup message is displayed");
 			CCUtils.assertTrue(true, "Test Pass");
+		} else {
+			log("popup message is incorrect : " + actualToasterMessage);
+			CCUtils.assertTrue(false, "Test Failed");
 		}
-		 else {
-				log("popup message is incorrect : " + actualToasterMessage);
-				CCUtils.assertTrue(false, "Test Failed");
-			}
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check status changed to deactivate for multiple user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check status changed to deactivate for multiple user")
 	public void testBulkUser() throws Exception {
 		logStep("Login to Command Center");
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -73,14 +69,13 @@ public class DeactivateUserTests extends CommandCenterGenericTest {
 		deactivateUserPage.clickDeactivate();
 		deactivateUserPage.clickDeactivateButton();
 		String actualToasterMessage = deactivateUserPage.getToasterMessage();
-		if(actualToasterMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
+		if (actualToasterMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
 			log("Popup message is displayed");
 			CCUtils.assertTrue(true, "Test Pass");
+		} else {
+			log("popup message is incorrect : " + actualToasterMessage);
+			CCUtils.assertTrue(false, "Test Failed");
 		}
-		 else {
-				log("popup message is incorrect : " + actualToasterMessage);
-				CCUtils.assertTrue(false, "Test Failed");
-			}
 	}
 
 }

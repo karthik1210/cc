@@ -15,8 +15,8 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 	ClientDirectoryPage clientDirectoryPage;
 	GeneralSettingsPage generalSettingsPage;
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test verify default text, searchicon & search node functionality")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test verify default text, searchicon & search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -35,8 +35,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyAutoSuggestionList(ccuser.searchNodeInGeneralSetting);
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to select & verify Auto Suggestion list for symbol & numbers search in node name")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select & verify Auto Suggestion list for symbol & numbers search in node name")
 	public void testAutoSuggestionForSingleCharcaterSearch() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -72,8 +71,8 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		}
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node in Client's General setting page")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node in Client's General setting page")
 	public void testNodeSearch() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -94,8 +93,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 		}
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General setting page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General setting page")
 	public void testNoResultFound() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

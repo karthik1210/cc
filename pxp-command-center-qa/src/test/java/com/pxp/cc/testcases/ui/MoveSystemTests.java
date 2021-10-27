@@ -23,7 +23,8 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify move system popup")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify move system popup")
 	public void testMoveSystemPopup() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("client.name"));
@@ -176,7 +177,8 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		String clientType = generalSettingsPage.getClientType();
 		boolean clientStatus = generalSettingsPage.returnClientNodeStatusValue();
 		logStep("verify system node inherits sap id, timezone, client type and status from target client node");
-		generalSettingsPage.verifySystemNodeFieldData(systemName, clientSapId, clientTimezone, clientType, clientStatus);
+		generalSettingsPage.verifySystemNodeFieldData(systemName, clientSapId, clientTimezone, clientType,
+				clientStatus);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Move active system node to active client with inherit and verify that the system and its child nodes inherits sap id, timezone, client type and status from target client node")
@@ -213,10 +215,12 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		String clientType = generalSettingsPage.getClientType();
 		boolean clientStatus = generalSettingsPage.returnClientNodeStatusValue();
 		logStep("verify system node and its child node inherits sap id, timezone, client type and status from target client node");
-		generalSettingsPage.verifySystemNodeFieldData(systemName, clientSapId, clientTimezone, clientType, clientStatus);
+		generalSettingsPage.verifySystemNodeFieldData(systemName, clientSapId, clientTimezone, clientType,
+				clientStatus);
 		generalSettingsPage.verifyEnterpriseNodeFieldData(enterpriseName, clientSapId, clientTimezone, clientType,
 				clientStatus);
-		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, clientSapId, clientTimezone, clientType, clientStatus);
+		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, clientSapId, clientTimezone, clientType,
+				clientStatus);
 	}
 
 }

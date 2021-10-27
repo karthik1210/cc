@@ -19,7 +19,8 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 	public MoveSystemPage moveSystemPage;
 	public MoveEnterprisePage moveEnterprisePage;
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify move enterprise popup")
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify move enterprise popup")
 	public void testMoveEnterprisePopup() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

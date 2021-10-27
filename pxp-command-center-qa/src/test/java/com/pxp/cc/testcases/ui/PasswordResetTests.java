@@ -21,7 +21,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		BasicConfigurator.configure();
 	}
 
-	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 0, groups = { "UISmokeTest" }, enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void testSuccessfullyPasswordResetFunctionality() throws Exception {
 		log("Test to verify new password created successfully :" + autogeneratePassword);
 		log("Set the Test Data for CC");
