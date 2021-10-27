@@ -822,5 +822,28 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username "+ Username);
 	}	
+	
+	public void verifySuccessMessageInResponseForValidToken(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Password reset successfully. You can now login with new credentials");		
+	}
+	
+	public void verifyErrorMessageInResponseWhenSpaceInPassword(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Space not allowed in password");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageInResponseWhenEnteredInvalidPassword(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageInResponseForInvalidToken(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "This password reset token is invalid");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 }
