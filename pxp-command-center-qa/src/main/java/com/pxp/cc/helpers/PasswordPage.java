@@ -20,33 +20,32 @@ public class PasswordPage extends BaseRest {
 		String url = ApiPath.POST_FORGOT_PASSWORD;
 		return given().spec(requestSpec).body(userName).when().post(url).then().extract().response();
 	}
-	
+
 	public Response resetPasswordFunctionality(String password, String token) throws IOException {
 		Map<String, Object> resetPasswordPayload = postResetPassword(password, token);
 		String url = ApiPath.POST_RESET_PASSWORD;
-		return given().spec(requestSpec).body(resetPasswordPayload).when().post(url).then().extract()
-				.response();
+		return given().spec(requestSpec).body(resetPasswordPayload).when().post(url).then().extract().response();
 	}
-	
+
 	public static Map<String, Object> postResetPassword(String password, String token) {
 		Map<String, Object> resetPasswordMap = new HashMap<String, Object>();
 		resetPasswordMap.put("password", password);
 		resetPasswordMap.put("token", token);
 		return resetPasswordMap;
 	}
-	
+
 	public String urlInEmail(String resetMailinatorEmail, String autogeneratePwd) throws InterruptedException {
-		String url = mailinator.getLinkFromEmailWithText(resetMailinatorEmail, "Password reset request", "pwd-change?key", 1);
+		String url = mailinator.getLinkFromEmailWithText(resetMailinatorEmail, "Password reset request",
+				"pwd-change?key", 1);
 		log("Fetching the reset password url received in email:" + url);
 		return url;
 	}
-	
-	public static String getTokenValueFromEmailLink(String url)
-	{
-	String[] list = url.split("=");
-	String token = list[1];
-	String[] splitToken = token.split(" ");
-	return splitToken[0];
+
+	public static String getTokenValueFromEmailLink(String url) {
+		String[] list = url.split("=");
+		String token = list[1];
+		String[] splitToken = token.split(" ");
+		return splitToken[0];
 	}
 
 }
