@@ -28,7 +28,7 @@ public class PasswordPage extends BaseRest {
 				.response();
 	}
 	
-	private Map<String, Object> postResetPassword(String password, String token) {
+	public static Map<String, Object> postResetPassword(String password, String token) {
 		Map<String, Object> resetPasswordMap = new HashMap<String, Object>();
 		resetPasswordMap.put("password", password);
 		resetPasswordMap.put("token", token);
@@ -41,7 +41,7 @@ public class PasswordPage extends BaseRest {
 		return url;
 	}
 	
-	public String getTokenValueFromEmailLink(String url)
+	public static String getTokenValueFromEmailLink(String url)
 	{
 	String[] list = url.split("=");
 	String token = list[1];

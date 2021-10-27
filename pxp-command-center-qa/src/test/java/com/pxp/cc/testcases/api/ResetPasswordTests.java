@@ -36,7 +36,7 @@ public class ResetPasswordTests extends BaseRest {
 		String url = passwordPage.urlInEmail(testData.getProperty("reset.password.email.mailinator"),
 				testData.getProperty("reset.password.email.mailinator").concat(CCUtils.generateRandomString()));
 		resetPasswordApiResponse = passwordPage.resetPasswordFunctionality(
-				testData.getProperty("reset.password.set").concat(CCUtils.generateRandomString()), passwordPage.getTokenValueFromEmailLink(url));
+				testData.getProperty("reset.password.set").concat(CCUtils.generateRandomString()), PasswordPage.getTokenValueFromEmailLink(url));
 		logStep("Validating email received for reset password and verifying success message");
 		validation.verifySuccessMessageInResponseForValidToken(resetPasswordApiResponse);
 	}
