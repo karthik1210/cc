@@ -22,6 +22,7 @@ public class ApiPath {
 	public static final String PUT_ORG_CONTROLLER = "/service/cc/v1/orgs";
 	public static final String GET_CLIENT_STATUS = "/status/";
 	public static final String POST_FORGOT_PASSWORD = "/service/cc/v1/user/forgot-password";
+	public static final String POST_RESET_PASSWORD = "/service/cc/v1/user/reset-password";
 
 	public static final String ADD_FAVORITES(int clientId) {
 		return SERVICE_CC + V1_CLIENTS + "/client/" + clientId + "/favorites";
