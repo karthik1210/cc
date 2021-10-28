@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.UpdateProductStatus;
+
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -84,6 +86,16 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response updatePractice(String active, String displayName, int orgId, String sapNumber, String timezoneId)
+			throws IOException {
+
+		Map<String, Object> updatePracticePayload = putUpdatePractice(active, displayName, orgId, sapNumber,
+				timezoneId);
+
+		return given().spec(requestSpec).body(updatePracticePayload).when().put(ApiPath.PUT_ORG_CONTROLLER).then()
+				.extract().response();
+	}
+	
+	public Response updatePracticeWithSolutions(String active, String displayName, int orgId, String sapNumber, String timezoneId)
 			throws IOException {
 
 		Map<String, Object> updatePracticePayload = putUpdatePractice(active, displayName, orgId, sapNumber,
@@ -194,6 +206,27 @@ public class OrgInfo extends BaseRest {
 		systemMap.put("timezoneId", timezoneId);
 		return systemMap;
 	}
+	
+	public static Map<String, Object> putUpdatePracticeWithSolutions(String active, String displayName, int orgId, String sapNumber,
+			List<UpdateProductStatus> solutionList, String timezoneId) {
+		Map<String, Object> practiceMap = new HashMap<String, Object>();
+		practiceMap.put("active", active);
+		practiceMap.put("displayName", displayName);
+		practiceMap.put("id", orgId);
+		practiceMap.put("sapNumber", sapNumber);
+		practiceMap.put("solutionStatusList",solutionList);
+		practiceMap.put("timezoneId", timezoneId);
+		return practiceMap;
+	}
+	
+	 public Map<String, Object> solutionDetails(String prodID, String status,String statusDate, String statusNotes){
+		 Map<String, Object> solutionMap = new HashMap<String, Object>();
+		 solutionMap.put("productId", prodID);
+		 solutionMap.put("status", status);
+		 solutionMap.put("statusDate", statusDate);
+		 solutionMap.put("statusNotes" , statusNotes);
+		 return solutionMap;
+	    }
 
 	public static Map<String, Object> postCreatePracticeNode(String active, String displayName, String name,
 			String orgType, int parentId, String parentType, String sapNumber, String timezoneId,
