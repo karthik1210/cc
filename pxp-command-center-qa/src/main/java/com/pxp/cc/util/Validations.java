@@ -16,6 +16,7 @@ import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
+import com.pxp.cc.pojos.Products;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import io.restassured.path.json.JsonPath;
@@ -794,56 +795,82 @@ public class Validations {
 
 		}
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenUsernameFieldBlank(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Required request body is missing: public com.medfusion.pxp.cc.api.PasswordResetResponse com.medfusion.pxp.cc.rest.PasswordResetController.forgetPassword(java.lang.String)");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Required request body is missing: public com.medfusion.pxp.cc.api.PasswordResetResponse com.medfusion.pxp.cc.rest.PasswordResetController.forgetPassword(java.lang.String)");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenUsernameFieldIsInvalid(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid request for forgot password");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenUsernameIsUnregistered(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "You do not have access to this system.");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyMessageInResponseWhenUserIsExternal(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Cannot send email to External user");
 	}
-	
+
 	public void verifySuccessMessageInResponseWhenUserIsRegistered(Response response, String Username) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username "+ Username);
-	}	
-	
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username " + Username);
+	}
+
 	public void verifySuccessMessageInResponseForValidToken(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Password reset successfully. You can now login with new credentials");		
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Password reset successfully. You can now login with new credentials");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenSpaceInPassword(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Space not allowed in password");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenEnteredInvalidPassword(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseForInvalidToken(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "This password reset token is invalid");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyGetProductsApiResponseBody(Response response) throws IOException {
+		List<Products> actualProductList = new ArrayList<Products>();
+		actualProductList.add(new Products(1103, "Forms"));
+		actualProductList.add(new Products(1105, "Pay"));
+		actualProductList.add(new Products(1401, "Virtual Visits"));
+		actualProductList.add(new Products(1402, "Chat"));
+		actualProductList.add(new Products(1102, "Engage"));
+		actualProductList.add(new Products(1101, "Portal"));
+		actualProductList.add(new Products(1104, "PSS"));
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (actualProductList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertEquals(actualProductList.get(i),
+						new Products(jsonObject.getInt("productId"), jsonObject.getString("name")));
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("Product list is empty");
+		} else {
+			Log4jUtil.log("Size of actual Product list and expected Product list is not same");
+		}
+	}
 }
