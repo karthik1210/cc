@@ -14,7 +14,7 @@ public class Product extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getInvalidProduct() throws IOException {
+	public Response invalidMethodForFetchProductList() throws IOException {
 		String url = ApiPath.GET_PRODUCTS;
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}

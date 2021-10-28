@@ -23,8 +23,8 @@ public class GetProductListTests extends BaseRest {
 		product = new Product();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check productid & name ")
-	public void testProductValues() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check list of product")
+	public void testProductList() throws IOException {
 		Response res = product.getProducts();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(res);
@@ -33,8 +33,8 @@ public class GetProductListTests extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instaead of get ")
-	public void testErrorMessageForInvalidProduct() throws IOException {
-		Response res = product.getInvalidProduct();
+	public void testInvalidMethodCallForFetchProduct() throws IOException {
+		Response res = product.invalidMethodForFetchProductList();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(res);
 		CCUtils.assertEquals(res.getStatusCode(), 405);

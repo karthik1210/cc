@@ -16,7 +16,6 @@ import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
-import com.pxp.cc.pojos.Products;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import io.restassured.path.json.JsonPath;
@@ -851,21 +850,22 @@ public class Validations {
 	}
 
 	public void verifyGetProductsApiResponseBody(Response response) throws IOException {
-		List<Products> actualProductList = new ArrayList<Products>();
-		actualProductList.add(new Products(1103, "Forms"));
-		actualProductList.add(new Products(1105, "Pay"));
-		actualProductList.add(new Products(1401, "Virtual Visits"));
-		actualProductList.add(new Products(1402, "Chat"));
-		actualProductList.add(new Products(1102, "Engage"));
-		actualProductList.add(new Products(1101, "Portal"));
-		actualProductList.add(new Products(1104, "PSS"));
+		List<String> actualProductList = new ArrayList<String>();
+		actualProductList.add("Forms");
+		actualProductList.add("Pay");
+		actualProductList.add("Virtual Visits");
+		actualProductList.add("Portal");
+		actualProductList.add("PSS");
+		actualProductList.add("Chat");
+		actualProductList.add("Engage");
+
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
 		if (actualProductList.size() == jsonArray.length()) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertEquals(actualProductList.get(i),
-						new Products(jsonObject.getInt("productId"), jsonObject.getString("name")));
+				CCUtils.assertTrue(actualProductList.contains(jsonObject.getString("name")),
+						"Product " + jsonObject.get("name").toString() + " doesn't exist");
 			}
 		} else if (jsonArray.length() == 0) {
 			Log4jUtil.log("Product list is empty");
