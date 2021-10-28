@@ -794,56 +794,83 @@ public class Validations {
 
 		}
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenUsernameFieldBlank(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Required request body is missing: public com.medfusion.pxp.cc.api.PasswordResetResponse com.medfusion.pxp.cc.rest.PasswordResetController.forgetPassword(java.lang.String)");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Required request body is missing: public com.medfusion.pxp.cc.api.PasswordResetResponse com.medfusion.pxp.cc.rest.PasswordResetController.forgetPassword(java.lang.String)");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenUsernameFieldIsInvalid(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid request for forgot password");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenUsernameIsUnregistered(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "You do not have access to this system.");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyMessageInResponseWhenUserIsExternal(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Cannot send email to External user");
 	}
-	
+
 	public void verifySuccessMessageInResponseWhenUserIsRegistered(Response response, String Username) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username "+ Username);
-	}	
-	
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Reset key updated for username " + Username);
+	}
+
 	public void verifySuccessMessageInResponseForValidToken(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Password reset successfully. You can now login with new credentials");		
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Password reset successfully. You can now login with new credentials");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenSpaceInPassword(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Space not allowed in password");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseWhenEnteredInvalidPassword(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseForInvalidToken(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "This password reset token is invalid");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyGetProductsApiResponseBody(Response response) throws IOException {
+		List<String> actualProductList = new ArrayList<String>();
+		actualProductList.add("Forms");
+		actualProductList.add("Pay");
+		actualProductList.add("Virtual Visits");
+		actualProductList.add("Portal");
+		actualProductList.add("PSS");
+		actualProductList.add("Chat");
+		actualProductList.add("Engage");
+
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (actualProductList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(actualProductList.contains(jsonObject.getString("name")),
+						"Product " + jsonObject.get("name").toString() + " doesn't exist");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("Product list is empty");
+		} else {
+			Log4jUtil.log("Size of actual Product list and expected Product list is not same");
+		}
+	}
 }
