@@ -73,7 +73,7 @@ public class UpdateOrgProductStatusApiTests extends BaseRest{
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update product status of practices within client.")
-	public void testUpdateProductStatusOfPractices() throws IOException {
+	public void testUpdateExistingProductStatusOfPractices() throws IOException {
 		logStep("Creating a client.");
 		String clientId = createClient();
 		List<Integer> pracOneSolutionList = Arrays.asList(1101, 1102);
@@ -84,11 +84,15 @@ public class UpdateOrgProductStatusApiTests extends BaseRest{
 		logStep("Print response of Target Practice Org" + getOrdIdInfo);
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrdIdInfo);
 		String activeValue = updateOrgProductStatusValidations.fetchActiveKeyValueFromResponseBody(getOrdIdInfo);
+		log("Print active value : "+activeValue); 
 		String sapNumber = updateOrgProductStatusValidations.fetchSapNumberKeyValueFromResponseBody(getOrdIdInfo);
+		log("Print sapNumber value : "+sapNumber); 
 		String orgId = updateOrgProductStatusValidations.fetchOrgIdKeyValueFromResponseBody(getOrdIdInfo);
+		log("Print orgId value : "+orgId);
 		String timezoneId = updateOrgProductStatusValidations.fetchTimezoneIdKeyValueFromResponseBody(getOrdIdInfo);
+		log("Print timezone value : "+timezoneId);
 		String displayName = updateOrgProductStatusValidations.fetchDisplayNameKeyValueFromResponseBody(getOrdIdInfo);
-		
-		
+		log("Print Display name value : "+displayName);
+		updateOrgProductStatusValidations.fetchSolutionsListInGetOrgResponseBody(getOrdIdInfo);
 	}
 }

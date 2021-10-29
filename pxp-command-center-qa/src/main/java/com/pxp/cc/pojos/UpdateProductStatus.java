@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class UpdateProductStatus {
-private String productId;
-private String status;
-private String statusDate;
-private String statusNotes;
+	private String productId;
+	private String status;
+	private String statusDate;
+	private String statusNotes;
 
 }
