@@ -1,17 +1,23 @@
 package com.pxp.cc.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.pojos.UpdateProductStatus;
 
 import io.restassured.response.Response;
 
 public class UpdateOrgProductStatusValidations {
 
-	public ArrayList<HashMap<String, Object>> solutionList ;
-	
+	public ArrayList<HashMap<String, Object>> solutionList;
+
 	public void validatePracticeOrgTypeInResponseBody(Response response) {
 		CCUtils.assertEquals(response.jsonPath().get("orgType"), "PRACTICE");
 	}
@@ -47,13 +53,74 @@ public class UpdateOrgProductStatusValidations {
 		return response.jsonPath().get("timezone.id").toString();
 	}
 
-	public void fetchSolutionsListInGetOrgResponseBody(Response response) {
+	public ArrayList<HashMap<String, Object>> fetchSolutionsListInGetOrgResponseBody(Response response) {
 		solutionList = new ArrayList<HashMap<String, Object>>();
-		solutionList =  response.jsonPath().get("solutions");
-		Log4jUtil.log("Print the value of solution List present within Get Org Response Body : "+solutionList);
-		for(HashMap<String, Object> solutionDetails : solutionList) {
-			System.out.println(solutionDetails);
+		solutionList = response.jsonPath().get("solutions");
+		ArrayList<HashMap<String, Object>> storeValue = new ArrayList<HashMap<String, Object>>();
+		Log4jUtil.log("Print the value of solution List present within Get Org Response Body : " + solutionList);
+		for (HashMap<String, Object> solutionDetails : solutionList) {
+			Iterator<Entry<String, Object>> it = solutionDetails.entrySet().iterator();
+			while (it.hasNext()) {
+				Entry<String, Object> entry = it.next();
+				Log4jUtil.log("Key = " + entry.getKey() + " and Value = " + entry.getValue());
+				if (entry.getKey().equals("status") && (entry.getValue() != null)
+						&& (entry.getValue().equals("Newly purchased"))) {
+					storeValue.add(solutionDetails);
+				}
+			}
 		}
-		//HashMap<String, Object> map = new HashMap<String, Object>();
+		Log4jUtil.log("Print the value of solution List with status not equal to null : " + storeValue);
+		return storeValue;
 	}
+
+	public void validateSolutionsListInGetOrgResponseBody(Response response, String status) {
+		solutionList = new ArrayList<HashMap<String, Object>>();
+		solutionList = response.jsonPath().get("solutions");
+		for (HashMap<String, Object> solutionDetails : solutionList) {
+			Iterator<Entry<String, Object>> it = solutionDetails.entrySet().iterator();
+			while (it.hasNext()) {
+				Entry<String, Object> entry = it.next();
+				if (entry.getKey().equals("status") && (entry.getValue() != null)) {
+					CCUtils.assertEquals(entry.getValue(), status);
+				}
+			}
+		}
+	}
+
+	public List<String> fetchProductsfromGetOrgId(ArrayList<HashMap<String, Object>> solutionDetails) {
+		List<String> keyValueStore = new ArrayList<String>();
+		for (HashMap<String, Object> solutionDetail : solutionDetails) {
+			Iterator<Entry<String, Object>> itr = solutionDetail.entrySet().iterator();
+			while (itr.hasNext()) {
+				Entry<String, Object> entrySolution = itr.next();
+				if (entrySolution.getKey().equals("productId")) {
+					keyValueStore.add(entrySolution.getValue().toString());
+				}
+			}
+		}
+		Log4jUtil.log("Print List " + keyValueStore);
+		return keyValueStore;
+	}
+
+	public List<UpdateProductStatus> fetchUpdatedSolutionsList(List<String> productIdList, String status) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		List<UpdateProductStatus> listofUpdatedProducts = new ArrayList<UpdateProductStatus>();
+		System.out.println(formatter.format(date));
+		for (int i = 0; i < productIdList.size(); i++) {
+			listofUpdatedProducts
+					.add(new UpdateProductStatus(productIdList.get(i), status, formatter.format(date), null));
+		}
+		return listofUpdatedProducts;
+	}
+
+	public void validateOrgIdZeroErrorMessage(Response response) {
+		CCUtils.assertEquals(response.jsonPath().get("message"), "Org not found for org id=" + 0);
+	}
+
+	public void validateTimeZoneIdDoesnotExistErrorMessage(Response response, String nonExistingTimezone) {
+		CCUtils.assertEquals(response.jsonPath().get("message"),
+				"Timezone id=" + nonExistingTimezone + " doesn't exist");
+	}
+
 }
