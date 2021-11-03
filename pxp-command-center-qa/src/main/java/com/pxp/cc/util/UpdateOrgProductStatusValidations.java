@@ -9,10 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.UpdateProductStatus;
-
 import io.restassured.response.Response;
 
 public class UpdateOrgProductStatusValidations {
@@ -54,7 +52,7 @@ public class UpdateOrgProductStatusValidations {
 		return response.jsonPath().get("timezone.id").toString();
 	}
 
-	public ArrayList<HashMap<String, Object>> fetchSolutionsListInGetOrgResponseBody(Response response) {
+	public List<UpdateProductStatus> fetchSolutionsListInGetOrgResponseBody(Response response, String status) {
 		solutionList = new ArrayList<HashMap<String, Object>>();
 		solutionList = response.jsonPath().get("solutions");
 		ArrayList<HashMap<String, Object>> storeValue = new ArrayList<HashMap<String, Object>>();
@@ -64,14 +62,15 @@ public class UpdateOrgProductStatusValidations {
 			while (it.hasNext()) {
 				Entry<String, Object> entry = it.next();
 				Log4jUtil.log("Key = " + entry.getKey() + " and Value = " + entry.getValue());
-				if (entry.getKey().equals("status") && (entry.getValue() != null)
-						&& (entry.getValue().equals("Newly purchased"))) {
+				if (entry.getKey().equals("status") && (entry.getValue() != null)) {
 					storeValue.add(solutionDetails);
 				}
 			}
 		}
 		Log4jUtil.log("Print the value of solution List with status not equal to null : " + storeValue);
-		return storeValue;
+		List<String> listOfProductId = fetchProductsfromGetOrgId(storeValue);
+		List<UpdateProductStatus> listOfUpdatedProducts = fetchUpdatedSolutionsList(listOfProductId,status);
+		return listOfUpdatedProducts;
 	}
 
 	public void validateSolutionsListInGetOrgResponseBody(Response response, String status) {
