@@ -1,0 +1,227 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
+package com.pxp.cc.testcases.ui;
+
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddAndUpdateProductSolutionsPage;
+import com.pxp.cc.objectmaps.AddOrgNodePage;
+import com.pxp.cc.objectmaps.ClientDirectoryPage;
+import com.pxp.cc.objectmaps.GeneralSettingsPage;
+import com.pxp.cc.util.CCUtils;
+
+public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest {
+	public ClientDirectoryPage clientDirectoryPage;
+	public GeneralSettingsPage generalSettingsPage;
+	public AddOrgNodePage addOrgNodePage;
+	public AddAndUpdateProductSolutionsPage addAndUpdateProductSolutionsPage;
+
+	@BeforeMethod()
+	public void loginToCommandCenterPortal() throws Exception {
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the newly purchased solutions")
+	public void testAddNewAgnosticPracticeToTerminateNewlyPurchasedSolutions() throws Exception {
+		logStep("Enter client name in search text box and click on client name in client table");
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		String parentName = generalSettingsPage.getClientName();
+		logStep("Click on practice option in new dropdown");
+		generalSettingsPage.clickOnAddPractice();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Add new agnostic practice node below client node");
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(parentName);
+		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
+				testData.getProperty("new.practice.timezone"),
+				testData.getProperty("new.practice.solutiondisplayname"));
+		addOrgNodePage.addSolutions();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify general settings page title");
+		generalSettingsPage.searchNode(practiceName);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		String availableForTerminatedSolution = addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		String availableForActivateSolution = addAndUpdateProductSolutionsPage.verifyTerminatedSolutionsIsAvailableForPurchase();
+		CCUtils.assertEquals(availableForTerminatedSolution, availableForActivateSolution);
+	}
+	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate already terminated solutions")
+	public void testAgnosticPracticeToActivateAlreadyTerminatedSolutions() throws Exception {
+		logStep("Enter client name in search text box and click on client name in client table");
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		String parentName = generalSettingsPage.getClientName();
+		logStep("Click on practice option in new dropdown");
+		generalSettingsPage.clickOnAddPractice();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Add new agnostic practice node below client node");
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(parentName);
+		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
+				testData.getProperty("new.practice.timezone"),
+				testData.getProperty("new.practice.solutiondisplayname"));
+		addOrgNodePage.addSolutions();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify general settings page title");
+		generalSettingsPage.searchNode(practiceName);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		String availableForTerminatedSolution = addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		String availableForActivateSolution = addAndUpdateProductSolutionsPage.verifyTerminatedSolutionsIsAvailableForPurchase();
+		String availableForPurchaseSolution = addAndUpdateProductSolutionsPage.selectActivateCheckboxForSingleProducts();
+		CCUtils.assertEquals(availableForTerminatedSolution, availableForActivateSolution);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		String availableToActivateSolution = addAndUpdateProductSolutionsPage
+				.verifyActivatedSolutionsIsAvailableForTerminate();
+		CCUtils.assertEquals(availableForPurchaseSolution, availableToActivateSolution);
+	}
+
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to terminate the all newly purchased solutions")
+	public void testAddNewNgePracticeToTerminateAllNewlyPurchasedSolutions() throws Exception {
+		logStep("Enter client name in search text box and click on client name in client table");
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.clickOnAddSystem();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		String systemName = ccuser.getSystemName().concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(systemName, ccuser.getSystemSapId(), ccuser.getSystemTimezone(),
+				ccuser.getSystemSolutionDisplayName());
+		addOrgNodePage.selectActiveRadiobutton();
+		addOrgNodePage.clickOnSaveAndAddButton();
+
+		generalSettingsPage.clickOnAddEnterprise();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Enter details in add new enterprise pop up");
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(ccuser.getSystemName());
+		addOrgNodePage.createNewOrgNode(ccuser.getEnterpriseName(), ccuser.getEnterpriseSapId(),
+				ccuser.getEnterpriseTimezone(), ccuser.getEnterpriseSolutionDisplayName());
+		addOrgNodePage.clickOnSaveAndAddButton();
+
+		generalSettingsPage.clickOnAddPractice();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
+		logStep("Add new nge practice node below enterprise node");
+		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
+				testData.getProperty("new.practice.timezone"),
+				testData.getProperty("new.practice.solutiondisplayname"));
+		addOrgNodePage.addSolutions();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		generalSettingsPage.searchNode(practiceName);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+	}
+	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to activate all terminated solutions")
+	public void testAddNewNgePracticeToActivateAllTerminatedSolutions() throws Exception {
+		logStep("Enter client name in search text box and click on client name in client table");
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.clickOnAddSystem();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		String systemName = ccuser.getSystemName().concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(systemName, ccuser.getSystemSapId(), ccuser.getSystemTimezone(),
+				ccuser.getSystemSolutionDisplayName());
+		addOrgNodePage.selectActiveRadiobutton();
+		addOrgNodePage.clickOnSaveAndAddButton();
+
+		generalSettingsPage.clickOnAddEnterprise();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Enter details in add new enterprise pop up");
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(ccuser.getSystemName());
+		addOrgNodePage.createNewOrgNode(ccuser.getEnterpriseName(), ccuser.getEnterpriseSapId(),
+				ccuser.getEnterpriseTimezone(), ccuser.getEnterpriseSolutionDisplayName());
+		addOrgNodePage.clickOnSaveAndAddButton();
+
+		generalSettingsPage.clickOnAddPractice();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
+		logStep("Add new nge practice node below enterprise node");
+		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
+				testData.getProperty("new.practice.timezone"),
+				testData.getProperty("new.practice.solutiondisplayname"));
+		addOrgNodePage.addSolutions();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		generalSettingsPage.searchNode(practiceName);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+	}
+	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the all purchased solutions")
+	public void testAgnosticPracticeToTerminateAllTheSolutions() throws Exception {
+		logStep("Enter client name in search text box and click on client name in client table");
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		String parentName = generalSettingsPage.getClientName();
+		logStep("Click on practice option in new dropdown");
+		generalSettingsPage.clickOnAddPractice();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Add new agnostic practice node below client node");
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(parentName);
+		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
+				testData.getProperty("new.practice.timezone"),
+				testData.getProperty("new.practice.solutiondisplayname"));
+		addOrgNodePage.addSolutions();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		generalSettingsPage.searchNode(practiceName);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate all the terminated solutions")
+	public void testAgnosticPracticeToActivateAllTheTerminatedSolutions() throws Exception {
+		logStep("Enter client name in search text box and click on client name in client table");
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		String parentName = generalSettingsPage.getClientName();
+		logStep("Click on practice option in new dropdown");
+		generalSettingsPage.clickOnAddPractice();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Add new agnostic practice node below client node");
+		addOrgNodePage.clickOnParentEntityNameDropdown();
+		addOrgNodePage.searchTextForParentEntityName(parentName);
+		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
+		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
+				testData.getProperty("new.practice.timezone"),
+				testData.getProperty("new.practice.solutiondisplayname"));
+		addOrgNodePage.addSolutions();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		generalSettingsPage.searchNode(practiceName);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
+		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
+		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+	}
+
+}
