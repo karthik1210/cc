@@ -54,6 +54,8 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),' Solutions Available for Purchase ')]//following::span[@class='form']")
 	private List<WebElement> listOfSolutionsAvailableAfterTerminate;
+	
+	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public void clickOnOrgPageEditButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonOrgEdit, driver);
@@ -116,26 +118,23 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 	}
 
 	public void selectAllTerminateCheckboxOfProducts() throws InterruptedException {
-		for (int i = 0; i < allTerminateCheckboxSolutions.size(); i++) {
+		for (int i = 0; i < allTerminateCheckboxSolutions.size(); i++)
+		{
 			scrollAndWait(0, 250, 8000);
 			allTerminateCheckboxSolutions.get(i).click();
 		}
-
-		List<String> actualSolutionValues = new ArrayList<String>();
-		for (int i = 0; i < terminateCheckboxSolutionsName.size(); i++) {
-			actualSolutionValues.add(terminateCheckboxSolutionsName.get(i).getText());
-		}
-
+		
+	}
+	
+	public void getSolutionsNameForAvailableToPurchase() throws InterruptedException {
 		for (int i = 0; i < listOfSolutionsAvailableAfterTerminate.size(); i++) {
-			listOfSolutionsAvailableAfterTerminate.get(i).getText();
-			log("Solution available for user are :" + actualSolutionValues);
-		}
-
-		List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "Pay", "Portal", "PSS",
-				"Virtual Visits");
-
+			actualSolutionValues.add(listOfSolutionsAvailableAfterTerminate.get(i).getText());
+			}		
+		List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "Pay", "Portal", "PSS", "Virtual Visits");
+		
 		CCUtils.assertEquals(actualSolutionValues, expectedSolutionValues);
 	}
+	
 
 	public void selectAllActivateCheckboxOfProducts() throws InterruptedException {
 		for (int i = 0; i < allActivatedCheckboxSolutions.size(); i++) {

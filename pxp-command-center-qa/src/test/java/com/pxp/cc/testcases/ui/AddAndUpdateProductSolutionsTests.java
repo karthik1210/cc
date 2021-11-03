@@ -126,6 +126,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
 	}
 	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to activate all terminated solutions")
@@ -169,6 +170,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
 	}
 	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the all purchased solutions")
@@ -194,6 +196,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate all the terminated solutions")
@@ -219,6 +222,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
