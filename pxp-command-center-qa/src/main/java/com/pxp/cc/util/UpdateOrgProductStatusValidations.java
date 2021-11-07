@@ -1,9 +1,8 @@
 // Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.util;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -52,7 +51,8 @@ public class UpdateOrgProductStatusValidations {
 		return response.jsonPath().get("timezone.id").toString();
 	}
 
-	public List<UpdateProductStatus> fetchSolutionsListInGetOrgResponseBody(Response response, String status) {
+	public List<UpdateProductStatus> fetchAndUpdateSolutionsListInGetOrgResponseBody(Response response, String status,
+			String statusDate, String statusNotes) {
 		solutionList = new ArrayList<HashMap<String, Object>>();
 		solutionList = response.jsonPath().get("solutions");
 		ArrayList<HashMap<String, Object>> storeValue = new ArrayList<HashMap<String, Object>>();
@@ -69,7 +69,8 @@ public class UpdateOrgProductStatusValidations {
 		}
 		Log4jUtil.log("Print the value of solution List with status not equal to null : " + storeValue);
 		List<String> listOfProductId = fetchProductsfromGetOrgId(storeValue);
-		List<UpdateProductStatus> listOfUpdatedProducts = fetchUpdatedSolutionsList(listOfProductId,status);
+		List<UpdateProductStatus> listOfUpdatedProducts = fetchUpdatedSolutionsList(listOfProductId, status, statusDate,
+				statusNotes);
 		return listOfUpdatedProducts;
 	}
 
@@ -102,14 +103,21 @@ public class UpdateOrgProductStatusValidations {
 		return keyValueStore;
 	}
 
-	public List<UpdateProductStatus> fetchUpdatedSolutionsList(List<String> productIdList, String status) {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-		Date date = new Date();
+	public List<UpdateProductStatus> fetchUpdatedSolutionsList(List<String> productIdList, String status,
+			String stausDate, String statusNotes) {
 		List<UpdateProductStatus> listofUpdatedProducts = new ArrayList<UpdateProductStatus>();
-		System.out.println(formatter.format(date));
-		for (int i = 0; i < productIdList.size(); i++) {
-			listofUpdatedProducts
-					.add(new UpdateProductStatus(productIdList.get(i), status, formatter.format(date), null));
+		if (stausDate == null) {
+			for (int i = 0; i < productIdList.size(); i++) {
+				listofUpdatedProducts.add(new UpdateProductStatus(productIdList.get(i), status, stausDate, null));
+			}
+		} else if (stausDate == "") {
+			for (int i = 0; i < productIdList.size(); i++) {
+				listofUpdatedProducts.add(new UpdateProductStatus(productIdList.get(i), status, stausDate, null));
+			}
+		} else {
+			for (int i = 0; i < productIdList.size(); i++) {
+				listofUpdatedProducts.add(new UpdateProductStatus(productIdList.get(i), status, stausDate, null));
+			}
 		}
 		return listofUpdatedProducts;
 	}
@@ -121,6 +129,15 @@ public class UpdateOrgProductStatusValidations {
 	public void validateTimeZoneIdDoesnotExistErrorMessage(Response response, String nonExistingTimezone) {
 		CCUtils.assertEquals(response.jsonPath().get("message"),
 				"Timezone id=" + nonExistingTimezone + " doesn't exist");
+	}
+
+	public void validateInvalidDateAndFormatErrorMessage(Response response, String invalidDateFormat) {
+		CCUtils.assertEquals(response.jsonPath().get("message"),
+				"Invalid date=" + invalidDateFormat + " and format=MM/dd/yyyy");
+	}
+
+	public void validateDateAndFormatNotFoundErrorMessage(Response response) {
+		CCUtils.assertEquals(response.jsonPath().get("message"), "Date and format not found");
 	}
 
 }

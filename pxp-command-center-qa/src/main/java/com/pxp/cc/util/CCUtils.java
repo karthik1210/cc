@@ -6,6 +6,8 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
@@ -177,5 +179,12 @@ public class CCUtils {
 		Robot robot = new Robot();
 		robot.keyPress(KeyEvent.VK_PAGE_DOWN);
 		robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+	}
+
+	public static String dateformatter() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		Log4jUtil.log(formatter.format(date));
+		return formatter.format(date);
 	}
 }

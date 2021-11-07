@@ -16,6 +16,7 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.UpdateOrgProductStatusValidations;
+
 import io.restassured.response.Response;
 
 public class UpdateOrgProductStatusApiTests extends BaseRest {
@@ -25,6 +26,9 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 	Response createClientApiResponse;
 	private UpdateOrgProductStatusValidations updateOrgProductStatusValidations;
 	List<Integer> solutionList = null;
+	public String clientId = null;
+	public String practiceId = null;
+	List<Integer> pracSolutionList = Arrays.asList(1101, 1102, 1103);
 
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
@@ -32,6 +36,9 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		updateOrgProductStatusValidations = new UpdateOrgProductStatusValidations();
+		logStep("creating Agnostic practice node within client");
+		clientId = createClient();
+		practiceId = createPracticeWitinClient(clientId, pracSolutionList);
 	}
 
 	public String createClient() throws IOException {
@@ -67,17 +74,13 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Update product status of practice within client.")
 	public void testUpdateExistingProductStatusOfPractices(String getTypesOfProductStatus) throws IOException {
-		logStep("created Agnostic practice node within client");
-		String clientId = createClient();
-		List<Integer> pracSolutionList = Arrays.asList(1101, 1102);
-		String practiceId = createPracticeWitinClient(clientId, pracSolutionList);
-		
 		Response getOrgIdInfo = orgInfo.getOrgId(Integer.parseInt(practiceId));
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
 		List<UpdateProductStatus> listOfUpdatedSolutions = updateOrgProductStatusValidations
-				.fetchSolutionsListInGetOrgResponseBody(getOrgIdInfo, getTypesOfProductStatus);
+				.fetchAndUpdateSolutionsListInGetOrgResponseBody(getOrgIdInfo, getTypesOfProductStatus,
+						CCUtils.dateformatter(), null);
 		logStep("Updating status of Products within Practices");
-		
+
 		Response updateProductStatusResponse = orgInfo.updatePracticeWithSolutions(
 				updateOrgProductStatusValidations.fetchActiveKeyValueFromResponseBody(getOrgIdInfo),
 				updateOrgProductStatusValidations.fetchDisplayNameKeyValueFromResponseBody(getOrgIdInfo),
@@ -88,6 +91,7 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.assertEquals(updateProductStatusResponse.getStatusCode(), 200);
 		CCUtils.responseTimeValidation(updateProductStatusResponse);
+
 		Response getOrgIdInfoAfterUpdate = orgInfo.getOrgId(Integer.parseInt(practiceId));
 		updateOrgProductStatusValidations.validateSolutionsListInGetOrgResponseBody(getOrgIdInfoAfterUpdate,
 				getTypesOfProductStatus);
@@ -95,15 +99,11 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Org Id can not be zero error message.")
 	public void testErrorOrgIdOfPracticeIsZero(String getTypesOfProductStatus) throws IOException {
-		logStep("created Agnostic practice node within client");
-		String clientId = createClient();
-		List<Integer> pracOneSolutionList = Arrays.asList(1103, 1104);
-		String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
-
-		Response getOrgIdInfo = orgInfo.getOrgId(Integer.parseInt(PracticeOneId));
+		Response getOrgIdInfo = orgInfo.getOrgId(Integer.parseInt(practiceId));
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
 		List<UpdateProductStatus> listOfUpdatedSolutions = updateOrgProductStatusValidations
-				.fetchSolutionsListInGetOrgResponseBody(getOrgIdInfo, getTypesOfProductStatus);
+				.fetchAndUpdateSolutionsListInGetOrgResponseBody(getOrgIdInfo, getTypesOfProductStatus,
+						CCUtils.dateformatter(), null);
 		logStep("Updating status of Products within Practices");
 
 		Response updateProductStatusResponse = orgInfo.updatePracticeWithSolutions(
@@ -119,17 +119,19 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 		updateOrgProductStatusValidations.validateOrgIdZeroErrorMessage(updateProductStatusResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Test Timezone Id does not exist error message")
-	public void testErrorTimezoneIdNotExisting(String getTypesOfProductStatus) throws IOException {
-		logStep("created Agnostic practice node within client");
-		String clientId = createClient();
-		List<Integer> pracOneSolutionList = Arrays.asList(1103, 1104);
-		String PracticeOneId = createPracticeWitinClient(clientId, pracOneSolutionList);
+	@DataProvider(name = "typesofinvaliddateformats")
+	public Object[] typesOfInvalidDateFormats() {
+		Object[] obj = new Object[] { "", "Non-existing", "22-sep-2021", "Dec-44-2022", "Jan-9-23" };
+		return obj;
+	}
 
-		Response getOrgIdInfo = orgInfo.getOrgId(Integer.parseInt(PracticeOneId));
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofinvaliddateformats", description = "Test Invalid date= and format=MM/dd/yyyy error message when updating status for go live and statusDate string valu not in date format.")
+	public void testErrorInvalidDateAndFormat(String typesOfInvalidDateFormat) throws IOException {
+		Response getOrgIdInfo = orgInfo.getOrgId(Integer.parseInt(practiceId));
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
 		List<UpdateProductStatus> listOfUpdatedSolutions = updateOrgProductStatusValidations
-				.fetchSolutionsListInGetOrgResponseBody(getOrgIdInfo, getTypesOfProductStatus);
+				.fetchAndUpdateSolutionsListInGetOrgResponseBody(getOrgIdInfo, "Go-live", typesOfInvalidDateFormat,
+						null);
 		logStep("Updating status of Products within Practices");
 
 		Response updateProductStatusResponse = orgInfo.updatePracticeWithSolutions(
@@ -137,12 +139,35 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 				updateOrgProductStatusValidations.fetchDisplayNameKeyValueFromResponseBody(getOrgIdInfo),
 				Integer.parseInt(updateOrgProductStatusValidations.fetchOrgIdKeyValueFromResponseBody(getOrgIdInfo)),
 				updateOrgProductStatusValidations.fetchSapNumberKeyValueFromResponseBody(getOrgIdInfo),
-				listOfUpdatedSolutions, "Non-Existing");
+				listOfUpdatedSolutions,
+				updateOrgProductStatusValidations.fetchTimezoneIdKeyValueFromResponseBody(getOrgIdInfo));
 		logStep("Validating response information");
 		CCUtils.assertEquals(updateProductStatusResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(updateProductStatusResponse);
-		logStep("Validating Error Message for TimezoneId doesnot exist in response body");
-		updateOrgProductStatusValidations.validateTimeZoneIdDoesnotExistErrorMessage(updateProductStatusResponse,
-				"Non-Existing");
+		logStep("Validating Error Message for Invalid date="+typesOfInvalidDateFormat+" and format=MM/dd/yyyy in response body");
+		updateOrgProductStatusValidations.validateInvalidDateAndFormatErrorMessage(updateProductStatusResponse,
+				typesOfInvalidDateFormat);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test Date and format not found error message when updating status for go live and statusDate is null.")
+	public void testErrorDateAndFormatNotFound() throws IOException {
+		Response getOrgIdInfo = orgInfo.getOrgId(Integer.parseInt(practiceId));
+		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
+		List<UpdateProductStatus> listOfUpdatedSolutions = updateOrgProductStatusValidations
+				.fetchAndUpdateSolutionsListInGetOrgResponseBody(getOrgIdInfo, "Go-live", null, null);
+		logStep("Updating status of Products within Practices");
+
+		Response updateProductStatusResponse = orgInfo.updatePracticeWithSolutions(
+				updateOrgProductStatusValidations.fetchActiveKeyValueFromResponseBody(getOrgIdInfo),
+				updateOrgProductStatusValidations.fetchDisplayNameKeyValueFromResponseBody(getOrgIdInfo),
+				Integer.parseInt(updateOrgProductStatusValidations.fetchOrgIdKeyValueFromResponseBody(getOrgIdInfo)),
+				updateOrgProductStatusValidations.fetchSapNumberKeyValueFromResponseBody(getOrgIdInfo),
+				listOfUpdatedSolutions,
+				updateOrgProductStatusValidations.fetchTimezoneIdKeyValueFromResponseBody(getOrgIdInfo));
+		logStep("Validating response information");
+		CCUtils.assertEquals(updateProductStatusResponse.getStatusCode(), 400);
+		CCUtils.responseTimeValidation(updateProductStatusResponse);
+		logStep("Validating Error Message for Date and format not found in response body");
+		updateOrgProductStatusValidations.validateDateAndFormatNotFoundErrorMessage(updateProductStatusResponse);
 	}
 }
