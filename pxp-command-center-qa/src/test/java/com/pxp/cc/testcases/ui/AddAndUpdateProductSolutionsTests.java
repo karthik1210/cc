@@ -21,67 +21,50 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the newly purchased solutions")
-	public void testAddNewAgnosticPracticeToTerminateNewlyPurchasedSolutions() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
 		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
 		generalSettingsPage = new GeneralSettingsPage(driver);
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the newly purchased solutions")
+	public void testTerminatedSolutionAvailableForPurchase() throws Exception {
 		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
 		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.timezone"),
+		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
+				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		logStep("Verify general settings page title");
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String availableToTerminateSolution = addAndUpdateProductSolutionsPage
-				.selectTerminateCheckboxForSingleProduct();
+		String actualSolutionName = addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		String availableForActivateSolution = addAndUpdateProductSolutionsPage
+		String expectedSolutionName = addAndUpdateProductSolutionsPage
 				.verifyTerminatedSolutionsIsAvailableForPurchase();
-		CCUtils.assertEquals(availableToTerminateSolution, availableForActivateSolution);
+		CCUtils.assertEquals(actualSolutionName, expectedSolutionName);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate already terminated solutions")
 	public void testAgnosticPracticeToActivateAlreadyTerminatedSolutions() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
 		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.timezone"),
+		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
+				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		logStep("Verify general settings page title");
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String availableToTerminateSolution = addAndUpdateProductSolutionsPage
-				.selectActivateCheckboxForSingleProducts();
+		String actualSolutionName = addAndUpdateProductSolutionsPage.selectActivateCheckboxForSingleProduct();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		String availableToActivateSolution = addAndUpdateProductSolutionsPage
+		String expectedSolutionName = addAndUpdateProductSolutionsPage
 				.verifyActivatedSolutionsIsAvailableForTerminate();
-		CCUtils.assertEquals(availableToTerminateSolution, availableToActivateSolution);
+		CCUtils.assertEquals(actualSolutionName, expectedSolutionName);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to terminate the all newly purchased solutions")
@@ -126,9 +109,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to activate all terminated solutions")
 	public void testAddNewNgePracticeToActivateAllTerminatedSolutions() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
+
 		generalSettingsPage.clickOnAddSystem();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		String systemName = ccuser.getSystemName().concat(CCUtils.generateRandomString());

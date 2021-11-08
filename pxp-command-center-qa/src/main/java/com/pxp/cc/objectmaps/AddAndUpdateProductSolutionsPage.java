@@ -5,6 +5,8 @@ package com.pxp.cc.objectmaps;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.xalan.xsltc.compiler.sym;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -37,6 +39,9 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),' Solutions Available for Purchase ')]//following::div[@class='row purchase-list']")
 	private WebElement verifyTerminatedSolutionsName;
 
+	@FindBy(xpath = "//div[@class='row purchase-list']")
+	private List<WebElement> listOfTerminatedSolutions;
+
 	@FindBy(xpath = "//mat-checkbox[@name='checkboxPurchase']")
 	private List<WebElement> checkboxListOfAllTerminateSolutions;
 
@@ -57,13 +62,13 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 	public String selectTerminateCheckboxForSingleProduct() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(checkboxTerminateSolutions, driver);
 		scrollAndWait(0, 250, 8000);
-		log("Print the solutions : " + checkboxTerminateSolutions);
 		String currentSolutionsName = LabelSolutionsNameOfActiveImlementation.getText();
 		log("singleListOfSolutionRow : " + currentSolutionsName);
 		checkboxTerminateSolutions.click();
 		String[] list = currentSolutionsName.split(" ");
 		String solutionName = list[1];
-		log("get the solutions name :" + solutionName);
+		String solutionStatus = list[2];
+		log("get the solutions name :" + solutionName + ", " + solutionStatus);
 		return solutionName;
 	}
 
@@ -71,10 +76,13 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(verifyTerminatedSolutionsName, driver);
 		scrollAndWait(0, 250, 8000);
 		String terminateSolutionsName = verifyTerminatedSolutionsName.getText();
-		log("singleListOfSolutionRow Terminated :" + terminateSolutionsName);
+		System.out.println("Name = "+terminateSolutionsName);
 		String[] listTerminated = terminateSolutionsName.split(" ");
 		String solutionNameTerminated = listTerminated[1];
-		log(" get the solutions Terminated name :" + solutionNameTerminated);
+		String[] listStatus = terminateSolutionsName.split("\n");
+		String[] s = listStatus[1].split(" ");
+		System.out.println(s[1]);
+		CCUtils.assertEquals(s, "Terminated("+CCUtils.dateformatter+")");
 		return solutionNameTerminated;
 	}
 
@@ -84,16 +92,15 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		buttonOrgSave.click();
 	}
 
-	public String selectActivateCheckboxForSingleProducts() throws InterruptedException {
+	public String selectActivateCheckboxForSingleProduct() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(checkboxActivateTerminatedSolutions, driver);
 		scrollAndWait(0, 250, 8000);
 		log("Print the Activate solutions : " + checkboxActivateTerminatedSolutions);
 		String currentSolutionsName = verifyTerminatedSolutionsName.getText();
-		log("single Solution Row Activate: " + currentSolutionsName);
 		checkboxActivateTerminatedSolutions.click();
 		String[] list = currentSolutionsName.split(" ");
 		String solutionName = list[1];
-		log("get the solutions name Activated :" + solutionName);
+
 		return solutionName;
 	}
 
@@ -101,10 +108,8 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(LabelSolutionsNameOfActiveImlementation, driver);
 		scrollAndWait(0, 250, 8000);
 		String activateSolutionsName = LabelSolutionsNameOfActiveImlementation.getText();
-		log("singleListOfSolutionRow Available :" + activateSolutionsName);
 		String[] listActivate = activateSolutionsName.split(" ");
 		String solutionNameActivated = listActivate[1];
-		log(" get the solutions Available name :" + solutionNameActivated);
 		return solutionNameActivated;
 	}
 
