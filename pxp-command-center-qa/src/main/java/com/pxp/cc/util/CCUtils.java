@@ -182,7 +182,7 @@ public class CCUtils {
 	}
 
 	public static String dateformatter() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = new Date();
 		Log4jUtil.log(formatter.format(date));
 		return formatter.format(date);
