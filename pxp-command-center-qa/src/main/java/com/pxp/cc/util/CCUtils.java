@@ -6,6 +6,8 @@ import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.hamcrest.Matchers;
@@ -191,5 +193,12 @@ public class CCUtils {
 				return "letter";
 		}
 		return "numberletter";
+	}
+	
+	public static String dateformatter() {
+		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+		Date date = new Date();
+		Log4jUtil.log(formatter.format(date));
+		return formatter.format(date);
 	}
 }
