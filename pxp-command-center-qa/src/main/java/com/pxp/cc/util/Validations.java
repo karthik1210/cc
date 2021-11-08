@@ -11,13 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -872,5 +875,47 @@ public class Validations {
 		} else {
 			Log4jUtil.log("Size of actual Product list and expected Product list is not same");
 		}
+	}
+
+	public void verifyGetSearchedAutosuggestionsClientResponses(Response response, String searchedData) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		Log4jUtil.log("Checking search data " + searchedData
+				+ " whether it is 'numberic','letter' or both 'numeric+letter'.");
+		if (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")
+				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter")) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("id").toString().contains(searchedData)
+						|| jsonObject.get("name").toString().contains(searchedData)) {
+					Log4jUtil.log(searchedData
+							+ " is checked whether it is numberic or letter and contains same data within id and name of client");
+					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
+				}
+			}
+		} else if (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter")) {
+			Log4jUtil.log("Checking search data " + searchedData + " is 'letter' or not.");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("name").toString().contains(searchedData)) {
+					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
+				}
+			}
+		} else {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("name").toString().contains(searchedData)) {
+					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
+					Log4jUtil.log("Search Data : " + searchedData
+							+ " contains special characters or alphanumeric characters.");
+				}
+			}
+		}
+	}
+
+	public void validateAutosuggestionsClientMaxThreeCharactersErrorMessage(Response response) {
+		if ((response.jsonPath().get("message").toString()
+				.contains("Client search data size should be minimum of 3 characters")))
+			CCUtils.assertTrue(true, "Verification max 3 characters needed error");
 	}
 }
