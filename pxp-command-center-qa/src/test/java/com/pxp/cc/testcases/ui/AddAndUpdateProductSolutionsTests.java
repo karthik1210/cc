@@ -45,13 +45,14 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String availableForTerminatedSolution = addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
+		String availableToTerminateSolution = addAndUpdateProductSolutionsPage
+				.selectTerminateCheckboxForSingleProduct();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String availableForActivateSolution = addAndUpdateProductSolutionsPage.verifyTerminatedSolutionsIsAvailableForPurchase();
-		CCUtils.assertEquals(availableForTerminatedSolution, availableForActivateSolution);
+		String availableForActivateSolution = addAndUpdateProductSolutionsPage
+				.verifyTerminatedSolutionsIsAvailableForPurchase();
+		CCUtils.assertEquals(availableToTerminateSolution, availableForActivateSolution);
 	}
-	
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate already terminated solutions")
 	public void testAgnosticPracticeToActivateAlreadyTerminatedSolutions() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
@@ -74,19 +75,16 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String availableForTerminatedSolution = addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
+		addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String availableForActivateSolution = addAndUpdateProductSolutionsPage.verifyTerminatedSolutionsIsAvailableForPurchase();
-		String availableForPurchaseSolution = addAndUpdateProductSolutionsPage.selectActivateCheckboxForSingleProducts();
-		CCUtils.assertEquals(availableForTerminatedSolution, availableForActivateSolution);
+		String availableToTerminateSolution = addAndUpdateProductSolutionsPage
+				.selectActivateCheckboxForSingleProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		String availableToActivateSolution = addAndUpdateProductSolutionsPage
 				.verifyActivatedSolutionsIsAvailableForTerminate();
-		CCUtils.assertEquals(availableForPurchaseSolution, availableToActivateSolution);
+		CCUtils.assertEquals(availableToTerminateSolution, availableToActivateSolution);
 	}
-
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to terminate the all newly purchased solutions")
 	public void testAddNewNgePracticeToTerminateAllNewlyPurchasedSolutions() throws Exception {
@@ -126,9 +124,9 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
+		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 	}
-	
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to activate all terminated solutions")
 	public void testAddNewNgePracticeToActivateAllTerminatedSolutions() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
@@ -167,12 +165,13 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
+		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.verifyActiveSolutionsNames();
 	}
-	
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the all purchased solutions")
 	public void testAgnosticPracticeToTerminateAllTheSolutions() throws Exception {
 		logStep("Enter client name in search text box and click on client name in client table");
@@ -196,7 +195,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
+		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate all the terminated solutions")
@@ -222,10 +221,11 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.getSolutionsNameForAvailableToPurchase();
+		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
 		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
+		addAndUpdateProductSolutionsPage.verifyActiveSolutionsNames();
 	}
 
 }
