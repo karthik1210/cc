@@ -42,7 +42,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
-		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		String availableToTerminateSolution = addAndUpdateProductSolutionsPage
@@ -72,7 +71,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
-		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
@@ -119,7 +117,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 				testData.getProperty("new.practice.solutiondisplayname"));
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
@@ -160,7 +157,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 				testData.getProperty("new.practice.solutiondisplayname"));
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
@@ -190,7 +186,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 				testData.getProperty("new.practice.solutiondisplayname"));
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
@@ -216,7 +211,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 				testData.getProperty("new.practice.solutiondisplayname"));
 		addOrgNodePage.addSolutions();
 		addOrgNodePage.clickOnSaveAndAddButton();
-		generalSettingsPage.searchNode(practiceName);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
