@@ -131,13 +131,13 @@ public class UpdateOrgProductStatusValidations {
 				"Timezone id=" + nonExistingTimezone + " doesn't exist");
 	}
 
-	public void validateInvalidDateAndFormatErrorMessage(Response response, String invalidDateFormat) {
+	public void validateInvalidDateAndFormatErrorMessage(Response response) {
 		CCUtils.assertEquals(response.jsonPath().get("message"),
-				"Invalid date=" + invalidDateFormat + " and format=MM/dd/yyyy");
+				"Invalid date format must be=MM/dd/yyyy");
 	}
 
 	public void validateDateAndFormatNotFoundErrorMessage(Response response) {
-		CCUtils.assertEquals(response.jsonPath().get("message"), "Date and format not found");
+		CCUtils.assertEquals(response.jsonPath().get("message"), "Input parameters can not be null or empty");
 	}
 
 }

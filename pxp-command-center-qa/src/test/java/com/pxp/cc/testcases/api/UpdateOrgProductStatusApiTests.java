@@ -71,7 +71,7 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 		return obj;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Update product status of practice within client.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Update product status of practice within client and validate whether updated or not")
 	public void testUpdateExistingProductStatusOfPractices(String getTypesOfProductStatus) throws IOException {
 		Response getOrgIdInfo = orgInfo.getOrgId(practiceId);
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
@@ -90,11 +90,12 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 		CCUtils.assertEquals(updateProductStatusResponse.getStatusCode(), 200);
 		CCUtils.responseTimeValidation(updateProductStatusResponse);
 		Response getOrgIdInfoAfterUpdate = orgInfo.getOrgId(practiceId);
+		logStep("Validating pdated product status is reflected within practice by fetching Get Org response body");
 		updateOrgProductStatusValidations.validateSolutionsListInGetOrgResponseBody(getOrgIdInfoAfterUpdate,
 				getTypesOfProductStatus);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Org Id can not be zero error message.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofstatus", description = "Validate Org Id can not be zero error message.")
 	public void testErrorOrgIdOfPracticeIsZero(String getTypesOfProductStatus) throws IOException {
 		Response getOrgIdInfo = orgInfo.getOrgId(practiceId);
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
@@ -117,11 +118,11 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 
 	@DataProvider(name = "typesofinvaliddateformats")
 	public Object[] typesOfInvalidDateFormats() {
-		Object[] obj = new Object[] { "", "Non-existing", "22-sep-2021", "Dec-44-2022", "Jan-9-23" };
+		Object[] obj = new Object[] { "Non-existing", "22-sep-2021", "Dec-44-2022", "Jan-9-23" };
 		return obj;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofinvaliddateformats", description = "Test Invalid date= and format=MM/dd/yyyy error message when updating status for go live and statusDate string valu not in date format.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofinvaliddateformats", description = "Test Invalid date and format=MM/dd/yyyy error message when updating status for go live and statusDate string value not in date format.")
 	public void testErrorInvalidDateAndFormat(String typesOfInvalidDateFormat) throws IOException {
 		Response getOrgIdInfo = orgInfo.getOrgId(practiceId);
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
@@ -141,11 +142,10 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 		CCUtils.responseTimeValidation(updateProductStatusResponse);
 		logStep("Validating Error Message for Invalid date=" + typesOfInvalidDateFormat
 				+ " and format=MM/dd/yyyy in response body");
-		updateOrgProductStatusValidations.validateInvalidDateAndFormatErrorMessage(updateProductStatusResponse,
-				typesOfInvalidDateFormat);
+		updateOrgProductStatusValidations.validateInvalidDateAndFormatErrorMessage(updateProductStatusResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test Date and format not found error message when updating status for go live and statusDate is null.")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test Input parameters can not be null or empty error message when updating status for Go-live and statusDate is null or blank data.")
 	public void testErrorDateAndFormatNotFound() throws IOException {
 		Response getOrgIdInfo = orgInfo.getOrgId(practiceId);
 		updateOrgProductStatusValidations.validatePracticeOrgTypeInResponseBody(getOrgIdInfo);
