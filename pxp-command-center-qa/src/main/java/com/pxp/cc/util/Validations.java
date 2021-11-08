@@ -873,4 +873,19 @@ public class Validations {
 			Log4jUtil.log("Size of actual Product list and expected Product list is not same");
 		}
 	}
+
+	public void verifyAuditLogResponseBodyForMoveOrgNode(JSONObject jsonObject, int orgId, String context, String field,
+			String oldValue, String newValue) throws IOException {
+		if (jsonObject.get("resourceId").equals(orgId)) {
+			CCUtils.assertEquals(jsonObject.get("context"), context);
+			CCUtils.assertEquals(jsonObject.get("activityType"), context + "-MOVED-SUCCEEDED");
+			CCUtils.assertEquals(jsonObject.get("resourceId"), orgId);
+			JSONObject targetData = jsonObject.getJSONObject("targetData");
+			CCUtils.assertEquals(targetData.getString("field"), field);
+			CCUtils.assertEquals(targetData.getString("oldValue"), oldValue);
+			CCUtils.assertEquals(targetData.getString("newValue"), newValue);
+		} else {
+			Log4jUtil.log("Incorrect resource id");
+		}
+	}
 }
