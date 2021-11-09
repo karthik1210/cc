@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
@@ -48,7 +50,7 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 
 	@DataProvider(name = "minthreecharacterdata")
 	public Object[] minThreeCharacterData() {
-		Object[] obj = new Object[] { "cl", "01", "a", "7" };
+		Object[] obj = new Object[] { "cl", "01", "a", "7", "   " };
 		return obj;
 	}
 
@@ -58,12 +60,13 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.assertEquals(getSearchedClientDetailsApiResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(getSearchedClientDetailsApiResponse);
-		validation.validateAutosuggestionsClientMaxThreeCharactersErrorMessage(getSearchedClientDetailsApiResponse);
+		validation.validateAutosuggestionsClientMaxThreeCharactersErrorMessage(getSearchedClientDetailsApiResponse,
+				minThreeCharacterData);
 	}
 
 	@DataProvider(name = "nonexistingclientdata")
 	public Object[] nonExistingClientData() {
-		Object[] obj = new Object[] { "on1", "0101", "898" };
+		Object[] obj = new Object[] { "on1!", "01@1", "8*8" };
 		return obj;
 	}
 

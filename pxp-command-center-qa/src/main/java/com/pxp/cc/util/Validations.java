@@ -913,9 +913,16 @@ public class Validations {
 		}
 	}
 
-	public void validateAutosuggestionsClientMaxThreeCharactersErrorMessage(Response response) {
+	public void validateAutosuggestionsClientMaxThreeCharactersErrorMessage(Response response, String searchData) {
 		if ((response.jsonPath().get("message").toString()
-				.contains("Client search data size should be minimum of 3 characters")))
+				.contains("Client search data size should be minimum of 3 characters"))) {
+			Log4jUtil.log("search data :" + searchData
+					+ " is either letter or numeric value so validating with max 3 characters needed error message.");
 			CCUtils.assertTrue(true, "Verification max 3 characters needed error");
+		} else if ((response.jsonPath().get("message").toString().contains("Input search data is invalid"))) {
+			Log4jUtil.log("search data :" + searchData
+					+ " is either null or blank space value so validating with Input search data is invalid error message.");
+			CCUtils.assertTrue(true, "Verification Input search data is invalid");
+		}
 	}
 }
