@@ -880,34 +880,30 @@ public class Validations {
 	public void verifyGetSearchedAutosuggestionsClientResponses(Response response, String searchedData) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
-		Log4jUtil.log("Checking search data " + searchedData
-				+ " whether it is 'numberic','letter' or both 'numeric+letter'.");
-		if (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")
-				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter")) {
+		if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric")))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))) {
+			Log4jUtil.log("Checking search data " + searchedData + " is 'letter','alphanumeric' or number.");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("name").toString().contains(searchedData)) {
+					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
+				}
+			}
+		} else if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")
+				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter"))) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
 				if (jsonObject.get("id").toString().contains(searchedData)
 						|| jsonObject.get("name").toString().contains(searchedData)) {
 					Log4jUtil.log(searchedData
-							+ " is checked whether it is numberic or letter and contains same data within id and name of client");
+							+ " is checked whether it is numberic or letter or both within id and name of client");
 					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
-				}
-			}
-		} else if (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter")) {
-			Log4jUtil.log("Checking search data " + searchedData + " is 'letter' or not.");
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				if (jsonObject.get("name").toString().contains(searchedData)) {
-					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
-				}
-			}
-		} else {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				if (jsonObject.get("name").toString().contains(searchedData)) {
-					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
-					Log4jUtil.log("Search Data : " + searchedData
-							+ " contains special characters or alphanumeric characters.");
 				}
 			}
 		}

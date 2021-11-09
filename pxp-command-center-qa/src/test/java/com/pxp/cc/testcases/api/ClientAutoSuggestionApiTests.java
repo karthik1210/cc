@@ -22,7 +22,6 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 	private ClientInfo clientData;
 	private Validations validation;
 	Response getSearchedClientDetailsApiResponse;
-	List<Integer> solutionList = null;
 
 	@BeforeTest()
 	public void setBaseUri() throws Exception {
@@ -33,19 +32,18 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 
 	@DataProvider(name = "typesofsearchdata")
 	public Object[] typesOfSearchData() {
-		Object[] obj = new Object[] { "Client", "4051", "client1" };
+		Object[] obj = new Object[] { "Client", "4051", "client1","Client@12" };
 		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "typesofsearchdata", description = "will filter client data according to searched input provided in query parameter.")
-	public void testgetSearchSuggestedClientsList(String typesOfSearchData) throws IOException {
+	public void testGetSearchSuggestedClientsList(String typesOfSearchData) throws IOException {
 		getSearchedClientDetailsApiResponse = clientData.getAutoSuggestionClient(typesOfSearchData);
 		logStep("Validating response information");
 		CCUtils.assertEquals(getSearchedClientDetailsApiResponse.getStatusCode(), 200);
 		CCUtils.responseTimeValidation(getSearchedClientDetailsApiResponse);
 		validation.verifyGetSearchedAutosuggestionsClientResponses(getSearchedClientDetailsApiResponse,
 				typesOfSearchData);
-
 	}
 
 	@DataProvider(name = "minthreecharacterdata")

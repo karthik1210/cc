@@ -31,6 +31,7 @@ public class CCUtils {
 			+ "abcdefghijklmnopqrstuvxyz";
 	private static String alphaNumericStringIncludingSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
 			+ "abcdefghijklmnopqrstuvxyz" + ".,!@#$%&*_-";
+	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -186,13 +187,17 @@ public class CCUtils {
 
 	public static String verifyCharacterIsNumberOrDigit(String data) {
 		for (int i = 0; i < data.length(); i++) {
-			Boolean flag = Character.isDigit(data.charAt(i));
-			if (flag)
+			if (Character.isDigit(data.charAt(i))) {
 				return "number";
-			else
+			}else if(Character.isLetter(data.charAt(i))){
 				return "letter";
+			}else if(Character.isLetter(data.charAt(i)) && Character.isDigit(data.charAt(i))) {
+				return "numberletter";
+			}else if(specialCharactersString.contains(Character.toString(data.charAt(i)))) {
+				return "alphanumeric";
+			}	
 		}
-		return "numberletter";
+		return "InvalidData";
 	}
 	
 	public static String dateformatter() {
