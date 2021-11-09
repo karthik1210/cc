@@ -63,7 +63,6 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(checkboxTerminateSolutions, driver);
 		scrollAndWait(0, 250, 8000);
 		String currentSolutionsName = LabelSolutionsNameOfActiveImlementation.getText();
-		log("singleListOfSolutionRow : " + currentSolutionsName);
 		checkboxTerminateSolutions.click();
 		String[] list = currentSolutionsName.split(" ");
 		String solutionName = list[1];
@@ -99,7 +98,6 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		checkboxActivateTerminatedSolutions.click();
 		String[] list = currentSolutionsName.split(" ");
 		String solutionName = list[1];
-
 		return solutionName;
 	}
 
