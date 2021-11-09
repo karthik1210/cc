@@ -3,11 +3,8 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -18,7 +15,6 @@ import com.pxp.cc.helpers.TransferBusinessUnits;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class MoveOrgNodeAuditLogTests extends BaseRest {
@@ -32,13 +28,6 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 	List<String> orgTypes = null;
 	List<Integer> solutionList = null;
 
-	private static final String TIMEZONE = "TimeZone";
-	private static final String CLIENT_TYPE = "ClientType";
-	private static final String SAP_ID = "Sap-Number";
-	private static final String STATUS = "Status";
-	private static final String FIELD = "field";
-	private static final String RESOURCE_ID = "resourceId";
-	private static final String TARGETDATA = "targetData";
 	private static final String ORG_TYPE_SYSTEM = "SYSTEM";
 	private static final String ORG_TYPE_ENTERPRISE = "ENTERPRISE";
 	private static final String ORG_TYPE_PRACTICE = "ORG";
@@ -51,36 +40,6 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		validation = new Validations();
 		transferBusinessUnits = new TransferBusinessUnits();
 		auditLog = new AuditLog();
-	}
-
-	public void validateAuditLogForMoveOrgNodeWithDoNotInherit(Response auditLogApiResponse, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
-			throws IOException {
-		JsonPath jsonPath = new JsonPath(auditLogApiResponse.getBody().asString());
-		LocalDate date = LocalDate.now();
-		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-			JSONObject targetData = jsonObject.getJSONObject(TARGETDATA);
-			if (jsonObject.get(RESOURCE_ID).equals(orgId)) {
-				if (targetData.getString(FIELD).equals(orgNodeName)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, orgNodeName,
-							oldParentName, newParentName);
-				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE,
-							oldClientType, newClientType);
-				}
-			}
-		}
-	}
-
-	public void verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(Response auditLogApiResponse, int orgId,
-			String context, String orgNodeName, String oldParentName, String newParentName, String oldClientType,
-			String newClientType) throws IOException {
-		CCUtils.responseTimeValidation(auditLogApiResponse);
-		CCUtils.assertEquals(auditLogApiResponse.getStatusCode(), 200);
-		validateAuditLogForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, orgId, context, orgNodeName, oldParentName,
-				newParentName, oldClientType, newClientType);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Move active system node from one client to another client with do not inherit and verify audit log for system node")
@@ -100,8 +59,8 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				targeClientName, targeClientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
-				testData.getProperty("new.timezone"));
+				targeClientName, targeClientSapNumber, ccUser.getTestClient(),
+				testData.getProperty("api.client.five.type"), testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
 
 		logStep("Move system node from one client to another client with do not inherit");
@@ -114,8 +73,8 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourceSystemId, ORG_TYPE_SYSTEM,
-				ccUser.getSystemNameApi(), clientName, targeClientName, ccUser.getClientType(),
+		validation.verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourceSystemId,
+				ORG_TYPE_SYSTEM, ccUser.getSystemNameApi(), clientName, targeClientName, ccUser.getClientType(),
 				testData.getProperty("api.client.five.type"));
 	}
 
@@ -151,9 +110,9 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourcePracticeId, ORG_TYPE_PRACTICE,
-				ccUser.getPracticeNameApi(), clientName, targeClientName, testData.getProperty("api.client.five.type"),
-				ccUser.getClientType());
+		validation.verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourcePracticeId,
+				ORG_TYPE_PRACTICE, ccUser.getPracticeNameApi(), clientName, targeClientName,
+				testData.getProperty("api.client.five.type"), ccUser.getClientType());
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Move inactive enterprise node from one system to another system of same client with do not inherit and verify audit log for enterprise node")
@@ -192,7 +151,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourceEnterpriseId,
+		validation.verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourceEnterpriseId,
 				ORG_TYPE_ENTERPRISE, ccUser.getEnterpriseNameApi(), ccUser.getSystemNameApi(), targetSystemName,
 				testData.getProperty("api.client.five.type"), testData.getProperty("api.client.five.type"));
 	}
@@ -238,51 +197,9 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourcePracticeId, ORG_TYPE_PRACTICE,
-				ccUser.getPracticeNameApi(), ccUser.getEnterpriseNameApi(), targetEnterpriseName,
+		validation.verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(auditLogApiResponse, sourcePracticeId,
+				ORG_TYPE_PRACTICE, ccUser.getPracticeNameApi(), ccUser.getEnterpriseNameApi(), targetEnterpriseName,
 				testData.getProperty("api.client.five.type"), testData.getProperty("api.client.five.type"));
-	}
-
-	public void validateAuditLogForMoveOrgNodeWithInherit(Response auditLogApiResponse, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
-			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
-			String newClientType) throws IOException {
-		JsonPath jsonPath = new JsonPath(auditLogApiResponse.getBody().asString());
-		LocalDate date = LocalDate.now();
-		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-			JSONObject targetData = jsonObject.getJSONObject(TARGETDATA);
-			if (jsonObject.get(RESOURCE_ID).equals(orgId)) {
-				if (targetData.getString(FIELD).equals(orgNodeName)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, orgNodeName,
-							oldParentName, newParentName);
-				} else if (targetData.getString(FIELD).equals(TIMEZONE)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, TIMEZONE,
-							oldTimezone, newTimezone);
-				} else if (targetData.getString(FIELD).equals(SAP_ID)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, SAP_ID, oldSapId,
-							newSapId);
-				} else if (targetData.getString(FIELD).equals(STATUS)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, STATUS, oldStatus,
-							newStatus);
-				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
-					validation.verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE,
-							oldClientType, newClientType);
-				}
-			}
-		}
-	}
-
-	public void verifyAuditLogResponseForMoveOrgNodeWithInherit(Response auditLogApiResponse, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
-			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
-			String newClientType) throws IOException {
-		CCUtils.responseTimeValidation(auditLogApiResponse);
-		CCUtils.assertEquals(auditLogApiResponse.getStatusCode(), 200);
-		validateAuditLogForMoveOrgNodeWithInherit(auditLogApiResponse, orgId, context, orgNodeName, oldParentName,
-				newParentName, oldTimezone, newTimezone, oldSapId, newSapId, oldStatus, newStatus, oldClientType,
-				newClientType);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Move active system node from one client to another client with inherit and verify audit log for system node")
@@ -302,8 +219,8 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				targeClientName, targeClientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
-				testData.getProperty("new.timezone"));
+				targeClientName, targeClientSapNumber, ccUser.getTestClient(),
+				testData.getProperty("api.client.five.type"), testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
 
 		logStep("Move system node from one client to another client with inherit");
@@ -316,7 +233,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourceSystemId, ORG_TYPE_SYSTEM,
+		validation.verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourceSystemId, ORG_TYPE_SYSTEM,
 				ccUser.getSystemNameApi(), clientName, targeClientName, ccUser.getSystemTimezoneIdApi(),
 				testData.getProperty("new.timezone"), ccUser.getSystemSapNumberApi(), targeClientSapNumber,
 				ccUser.getSystemeActiveApi(), ccUser.getActive(), ccUser.getClientType(),
@@ -340,8 +257,8 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				targeClientName, targeClientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
-				testData.getProperty("new.timezone"));
+				targeClientName, targeClientSapNumber, ccUser.getTestClient(),
+				testData.getProperty("api.client.five.type"), testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
 
 		logStep("Move inactive agnostic practice node from one client to another client with inherit");
@@ -354,10 +271,11 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourcePracticeId, ORG_TYPE_PRACTICE,
-				ccUser.getPracticeNameApi(), clientName, targeClientName, ccUser.getPracticeTimezoneIdApi(),
-				testData.getProperty("new.timezone"), ccUser.getPracticeSapNumberApi(), targeClientSapNumber, "false",
-				ccUser.getActive(), ccUser.getClientType(), testData.getProperty("api.client.five.type"));
+		validation.verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourcePracticeId,
+				ORG_TYPE_PRACTICE, ccUser.getPracticeNameApi(), clientName, targeClientName,
+				ccUser.getPracticeTimezoneIdApi(), testData.getProperty("new.timezone"),
+				ccUser.getPracticeSapNumberApi(), targeClientSapNumber, "false", ccUser.getActive(),
+				ccUser.getClientType(), testData.getProperty("api.client.five.type"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Move inactive practice node from one enterprise to another enterprise of same client with inherit and verify audit log for practice node")
@@ -401,8 +319,8 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourcePracticeId, ORG_TYPE_PRACTICE,
-				ccUser.getPracticeNameApi(), ccUser.getEnterpriseNameApi(), targetEnterpriseName,
+		validation.verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourcePracticeId,
+				ORG_TYPE_PRACTICE, ccUser.getPracticeNameApi(), ccUser.getEnterpriseNameApi(), targetEnterpriseName,
 				ccUser.getPracticeTimezoneIdApi(), testData.getProperty("new.timezone"), "", targetEnterpriseSapNumber,
 				"false", ccUser.getEnterpriseActiveApi(), testData.getProperty("api.client.five.type"),
 				testData.getProperty("api.client.five.type"));
@@ -444,8 +362,8 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 20);
 
 		logStep("Validating response information");
-		verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourceEnterpriseId, ORG_TYPE_ENTERPRISE,
-				ccUser.getEnterpriseNameApi(), ccUser.getSystemNameApi(), targetSystemName,
+		validation.verifyAuditLogResponseForMoveOrgNodeWithInherit(auditLogApiResponse, sourceEnterpriseId,
+				ORG_TYPE_ENTERPRISE, ccUser.getEnterpriseNameApi(), ccUser.getSystemNameApi(), targetSystemName,
 				ccUser.getEnterpriseTimezoneIdApi(), testData.getProperty("new.timezone"),
 				ccUser.getEnterpriseSapNumberApi(), targetSystemSapNumber, "false", ccUser.getSystemeActiveApi(),
 				testData.getProperty("api.client.five.type"), testData.getProperty("api.client.five.type"));

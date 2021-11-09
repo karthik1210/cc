@@ -22,6 +22,13 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Validations {
+	private static final String TIMEZONE = "TimeZone";
+	private static final String CLIENT_TYPE = "ClientType";
+	private static final String SAP_ID = "Sap-Number";
+	private static final String STATUS = "Status";
+	private static final String FIELD = "field";
+	private static final String RESOURCE_ID = "resourceId";
+	private static final String TARGETDATA = "targetData";
 
 	public void verifyCreateAndUpdateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -888,4 +895,74 @@ public class Validations {
 			Log4jUtil.log("Incorrect resource id");
 		}
 	}
+
+	public void validateAuditLogForMoveOrgNodeWithDoNotInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
+			throws IOException {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		LocalDate date = LocalDate.now();
+		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject targetData = jsonObject.getJSONObject(TARGETDATA);
+			if (jsonObject.get(RESOURCE_ID).equals(orgId)) {
+				if (targetData.getString(FIELD).equals(orgNodeName)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, orgNodeName, oldParentName,
+							newParentName);
+				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE, oldClientType,
+							newClientType);
+				}
+			}
+		}
+	}
+
+	public void validateAuditLogForMoveOrgNodeWithInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
+			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
+			String newClientType) throws IOException {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		LocalDate date = LocalDate.now();
+		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject targetData = jsonObject.getJSONObject(TARGETDATA);
+			if (jsonObject.get(RESOURCE_ID).equals(orgId)) {
+				if (targetData.getString(FIELD).equals(orgNodeName)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, orgNodeName, oldParentName,
+							newParentName);
+				} else if (targetData.getString(FIELD).equals(TIMEZONE)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, TIMEZONE, oldTimezone,
+							newTimezone);
+				} else if (targetData.getString(FIELD).equals(SAP_ID)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, SAP_ID, oldSapId, newSapId);
+				} else if (targetData.getString(FIELD).equals(STATUS)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, STATUS, oldStatus, newStatus);
+				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE, oldClientType,
+							newClientType);
+				}
+			}
+		}
+	}
+
+	public void verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(Response response, int orgId,
+			String context, String orgNodeName, String oldParentName, String newParentName, String oldClientType,
+			String newClientType) throws IOException {
+		CCUtils.responseTimeValidation(response);
+		CCUtils.assertEquals(response.getStatusCode(), 200);
+		validateAuditLogForMoveOrgNodeWithDoNotInherit(response, orgId, context, orgNodeName, oldParentName,
+				newParentName, oldClientType, newClientType);
+	}
+
+	public void verifyAuditLogResponseForMoveOrgNodeWithInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
+			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
+			String newClientType) throws IOException {
+		CCUtils.responseTimeValidation(response);
+		CCUtils.assertEquals(response.getStatusCode(), 200);
+		validateAuditLogForMoveOrgNodeWithInherit(response, orgId, context, orgNodeName, oldParentName, newParentName,
+				oldTimezone, newTimezone, oldSapId, newSapId, oldStatus, newStatus, oldClientType, newClientType);
+	}
+
 }
