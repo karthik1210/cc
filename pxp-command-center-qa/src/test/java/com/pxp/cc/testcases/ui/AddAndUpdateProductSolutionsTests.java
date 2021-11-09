@@ -69,9 +69,6 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to terminate the all newly purchased solutions")
 	public void testAddNewNgePracticeToTerminateAllNewlyPurchasedSolutions() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.clickOnAddSystem();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		String systemName = ccuser.getSystemName().concat(CCUtils.generateRandomString());
