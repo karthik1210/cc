@@ -151,22 +151,14 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the all purchased solutions")
 	public void testAgnosticPracticeToTerminateAllTheSolutions() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
 		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.timezone"),
+		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
+				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
@@ -176,22 +168,14 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate all the terminated solutions")
 	public void testAgnosticPracticeToActivateAllTheTerminatedSolutions() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
 		generalSettingsPage.clickOnAddPractice();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
 		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.timezone"),
+		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
+				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
 				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
 		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();

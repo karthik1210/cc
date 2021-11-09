@@ -76,13 +76,12 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(verifyTerminatedSolutionsName, driver);
 		scrollAndWait(0, 250, 8000);
 		String terminateSolutionsName = verifyTerminatedSolutionsName.getText();
-		System.out.println("Name = "+terminateSolutionsName);
 		String[] listTerminated = terminateSolutionsName.split(" ");
 		String solutionNameTerminated = listTerminated[1];
 		String[] listStatus = terminateSolutionsName.split("\n");
-		String[] s = listStatus[1].split(" ");
-		System.out.println(s[1]);
-		CCUtils.assertEquals(s, "Terminated("+CCUtils.dateformatter+")");
+		String[] solutionStatus = listStatus[1].split(" ");
+		String date= "Terminated("+CCUtils.dateformatter()+")";
+		CCUtils.assertEquals(solutionStatus[1],date);
 		return solutionNameTerminated;
 	}
 
