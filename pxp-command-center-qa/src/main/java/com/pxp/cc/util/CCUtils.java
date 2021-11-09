@@ -9,14 +9,17 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
+
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
@@ -28,6 +31,7 @@ public class CCUtils {
 			+ "abcdefghijklmnopqrstuvxyz";
 	private static String alphaNumericStringIncludingSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
 			+ "abcdefghijklmnopqrstuvxyz" + ".,!@#$%&*_-";
+	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -181,6 +185,21 @@ public class CCUtils {
 		robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
 	}
 
+	public static String verifyCharacterIsNumberOrDigit(String data) {
+		for (int i = 0; i < data.length(); i++) {
+			if (Character.isDigit(data.charAt(i))) {
+				return "number";
+			}else if(Character.isLetter(data.charAt(i))){
+				return "letter";
+			}else if(Character.isLetter(data.charAt(i)) && Character.isDigit(data.charAt(i))) {
+				return "numberletter";
+			}else if(specialCharactersString.contains(Character.toString(data.charAt(i)))) {
+				return "alphanumeric";
+			}	
+		}
+		return "InvalidData";
+	}
+	
 	public static String dateformatter() {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = new Date();

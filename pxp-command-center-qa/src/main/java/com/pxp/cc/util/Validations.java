@@ -11,13 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -871,6 +874,51 @@ public class Validations {
 			Log4jUtil.log("Product list is empty");
 		} else {
 			Log4jUtil.log("Size of actual Product list and expected Product list is not same");
+		}
+	}
+
+	public void verifyGetSearchedAutosuggestionsClientResponses(Response response, String searchedData) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric")))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))) {
+			Log4jUtil.log("Checking search data " + searchedData + " is 'letter','alphanumeric' or number.");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("name").toString().contains(searchedData)) {
+					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
+				}
+			}
+		} else if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")
+				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter"))) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("id").toString().contains(searchedData)
+						|| jsonObject.get("name").toString().contains(searchedData)) {
+					Log4jUtil.log(searchedData
+							+ " is checked whether it is numberic or letter or both within id and name of client");
+					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
+				}
+			}
+		}
+	}
+
+	public void validateAutosuggestionsClientMaxThreeCharactersErrorMessage(Response response, String searchData) {
+		if ((response.jsonPath().get("message").toString()
+				.contains("Client search data size should be minimum of 3 characters"))) {
+			Log4jUtil.log("search data :" + searchData
+					+ " is either letter or numeric value so validating with max 3 characters needed error message.");
+			CCUtils.assertTrue(true, "Verification max 3 characters needed error");
+		} else if ((response.jsonPath().get("message").toString().contains("Input search data is invalid"))) {
+			Log4jUtil.log("search data :" + searchData
+					+ " is either null or blank space value so validating with Input search data is invalid error message.");
+			CCUtils.assertTrue(true, "Verification Input search data is invalid");
 		}
 	}
 }

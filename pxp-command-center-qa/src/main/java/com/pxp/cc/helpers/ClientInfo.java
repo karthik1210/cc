@@ -42,7 +42,7 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.GET_CLIENT_TYPES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getClientOrgId(int clientId) throws IOException {
 		String url = ApiPath.GET_CLIENT_ORG_ID + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -52,10 +52,11 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.GET_CLIENTNAME + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getOrgHierarchyWithClientNode(String clientId, Boolean forClientValue) throws IOException {
 		String url = ApiPath.GET_ORG_HIERARCHY + clientId;
-		return given().spec(requestSpec).queryParam("excludeClientData", forClientValue).when().get(url).then().extract().response();
+		return given().spec(requestSpec).queryParam("excludeClientData", forClientValue).when().get(url).then()
+				.extract().response();
 	}
 
 	private Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
@@ -70,10 +71,16 @@ public class ClientInfo extends BaseRest {
 		createClientMap.put("timezoneId", timezoneId);
 		return createClientMap;
 	}
-	
+
 	public Response getParentDropdown(String clientId, String orgType) throws IOException {
 		String url = ApiPath.GET_CLIENT + clientId + "/types/" + orgType + "/parents";
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getAutoSuggestionClient(String serachClient) {
+		String url = ApiPath.GET_AUTOSUGGESTION_CLIENT;
+		return given().spec(requestSpec).queryParam("searchClient", serachClient).when().get(url).then().extract()
+				.response();
 	}
 
 }
