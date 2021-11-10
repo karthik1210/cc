@@ -944,6 +944,10 @@ public class Validations {
 				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
 					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE, oldClientType,
 							newClientType);
+				}
+			}
+		}
+	}
 
 	public void verifyGetSearchedAutosuggestionsClientResponses(Response response, String searchedData) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
@@ -977,10 +981,9 @@ public class Validations {
 		}
 	}
 
-
-	public void verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(Response response, int orgId,
-			String context, String orgNodeName, String oldParentName, String newParentName, String oldClientType,
-			String newClientType) throws IOException {
+	public void verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
+			throws IOException {
 		CCUtils.responseTimeValidation(response);
 		CCUtils.assertEquals(response.getStatusCode(), 200);
 		validateAuditLogForMoveOrgNodeWithDoNotInherit(response, orgId, context, orgNodeName, oldParentName,
@@ -996,7 +999,6 @@ public class Validations {
 		validateAuditLogForMoveOrgNodeWithInherit(response, orgId, context, orgNodeName, oldParentName, newParentName,
 				oldTimezone, newTimezone, oldSapId, newSapId, oldStatus, newStatus, oldClientType, newClientType);
 	}
-
 
 	public void validateAutosuggestionsClientMaxThreeCharactersErrorMessage(Response response, String searchData) {
 		if ((response.jsonPath().get("message").toString()
