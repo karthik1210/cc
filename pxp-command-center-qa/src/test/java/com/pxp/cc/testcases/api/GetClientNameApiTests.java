@@ -32,7 +32,7 @@ public class GetClientNameApiTests extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientName", description = "Enter already existing client name and verify error message for client name field")
-	public void testErrorMessageForAlreadyExistingClienName(String clientName) throws IOException {
+	public void testErrorMessageForAlreadyExistingClientName(String clientName) throws IOException {
 		getClientNameApiResponse = clientInfo.getClientName(clientName);
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);

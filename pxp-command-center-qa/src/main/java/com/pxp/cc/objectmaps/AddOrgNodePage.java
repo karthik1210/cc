@@ -479,4 +479,17 @@ public class AddOrgNodePage extends CCMainPage {
 			selectInactiveRadiobutton();
 		clickOnSaveAndAddButton();
 	}
+	
+	public void addNewPracticeNodeWithSolutions(String parentEntityName, Boolean isActive, String orgName, String sapId, String timezone,
+			String solutionDisplayName) throws InterruptedException {
+		clickOnParentEntityNameDropdown();
+		searchTextForParentEntityName(parentEntityName);
+		createNewOrgNode(orgName, sapId, timezone, solutionDisplayName);
+		if (isActive == true)
+			selectActiveRadiobutton();
+		else
+			selectInactiveRadiobutton();
+		addSolutions();
+		clickOnSaveAndAddButton();
+	}
 }

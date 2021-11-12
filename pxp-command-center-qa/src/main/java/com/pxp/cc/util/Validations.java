@@ -11,17 +11,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class Validations {
+	private static final String TIMEZONE = "TimeZone";
+	private static final String CLIENT_TYPE = "ClientType";
+	private static final String SAP_ID = "Sap-Number";
+	private static final String STATUS = "Status";
+	private static final String FIELD = "field";
+	private static final String RESOURCE_ID = "resourceId";
+	private static final String TARGETDATA = "targetData";
 
 	public void verifyCreateAndUpdateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -871,6 +881,135 @@ public class Validations {
 			Log4jUtil.log("Product list is empty");
 		} else {
 			Log4jUtil.log("Size of actual Product list and expected Product list is not same");
+		}
+	}
+
+	public void verifyAuditLogResponseBodyForMoveOrgNode(JSONObject jsonObject, int orgId, String context, String field,
+			String oldValue, String newValue) throws IOException {
+		if (jsonObject.get("resourceId").equals(orgId)) {
+			CCUtils.assertEquals(jsonObject.get("context"), context);
+			CCUtils.assertEquals(jsonObject.get("activityType"), context + "-MOVED-SUCCEEDED");
+			CCUtils.assertEquals(jsonObject.get("resourceId"), orgId);
+			JSONObject targetData = jsonObject.getJSONObject("targetData");
+			CCUtils.assertEquals(targetData.getString("field"), field);
+			CCUtils.assertEquals(targetData.getString("oldValue"), oldValue);
+			CCUtils.assertEquals(targetData.getString("newValue"), newValue);
+		} else {
+			Log4jUtil.log("Incorrect resource id");
+		}
+	}
+
+	public void validateAuditLogForMoveOrgNodeWithDoNotInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
+			throws IOException {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		LocalDate date = LocalDate.now();
+		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject targetData = jsonObject.getJSONObject(TARGETDATA);
+			if (jsonObject.get(RESOURCE_ID).equals(orgId)) {
+				if (targetData.getString(FIELD).equals(orgNodeName)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, orgNodeName, oldParentName,
+							newParentName);
+				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE, oldClientType,
+							newClientType);
+				}
+			}
+		}
+	}
+
+	public void validateAuditLogForMoveOrgNodeWithInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
+			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
+			String newClientType) throws IOException {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		LocalDate date = LocalDate.now();
+		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject targetData = jsonObject.getJSONObject(TARGETDATA);
+			if (jsonObject.get(RESOURCE_ID).equals(orgId)) {
+				if (targetData.getString(FIELD).equals(orgNodeName)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, orgNodeName, oldParentName,
+							newParentName);
+				} else if (targetData.getString(FIELD).equals(TIMEZONE)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, TIMEZONE, oldTimezone,
+							newTimezone);
+				} else if (targetData.getString(FIELD).equals(SAP_ID)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, SAP_ID, oldSapId, newSapId);
+				} else if (targetData.getString(FIELD).equals(STATUS)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, STATUS, oldStatus, newStatus);
+				} else if (targetData.getString(FIELD).equals(CLIENT_TYPE)) {
+					verifyAuditLogResponseBodyForMoveOrgNode(jsonObject, orgId, context, CLIENT_TYPE, oldClientType,
+							newClientType);
+				}
+			}
+		}
+	}
+
+	public void verifyGetSearchedAutosuggestionsClientResponses(Response response, String searchedData) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric")))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))
+				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
+						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))) {
+			Log4jUtil.log("Checking search data " + searchedData + " is 'letter','alphanumeric' or number.");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("name").toString().contains(searchedData)) {
+					CCUtils.assertTrue(true, "Validation for searched data present within name of client");
+				}
+			}
+		} else if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")
+				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter"))) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.get("id").toString().contains(searchedData)
+						|| jsonObject.get("name").toString().contains(searchedData)) {
+					Log4jUtil.log(searchedData
+							+ " is checked whether it is numberic or letter or both within id and name of client");
+					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
+				}
+			}
+		}
+	}
+
+	public void verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
+			throws IOException {
+		CCUtils.responseTimeValidation(response);
+		CCUtils.assertEquals(response.getStatusCode(), 200);
+		validateAuditLogForMoveOrgNodeWithDoNotInherit(response, orgId, context, orgNodeName, oldParentName,
+				newParentName, oldClientType, newClientType);
+	}
+
+	public void verifyAuditLogResponseForMoveOrgNodeWithInherit(Response response, int orgId, String context,
+			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
+			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
+			String newClientType) throws IOException {
+		CCUtils.responseTimeValidation(response);
+		CCUtils.assertEquals(response.getStatusCode(), 200);
+		validateAuditLogForMoveOrgNodeWithInherit(response, orgId, context, orgNodeName, oldParentName, newParentName,
+				oldTimezone, newTimezone, oldSapId, newSapId, oldStatus, newStatus, oldClientType, newClientType);
+	}
+
+	public void validateAutosuggestionsClientMaxThreeCharactersErrorMessage(Response response, String searchData) {
+		if ((response.jsonPath().get("message").toString()
+				.contains("Client search data size should be minimum of 3 characters"))) {
+			Log4jUtil.log("search data :" + searchData
+					+ " is either letter or numeric value so validating with max 3 characters needed error message.");
+			CCUtils.assertTrue(true, "Verification max 3 characters needed error");
+		} else if ((response.jsonPath().get("message").toString().contains("Input search data is invalid"))) {
+			Log4jUtil.log("search data :" + searchData
+					+ " is either null or blank space value so validating with Input search data is invalid error message.");
+			CCUtils.assertTrue(true, "Verification Input search data is invalid");
 		}
 	}
 }
