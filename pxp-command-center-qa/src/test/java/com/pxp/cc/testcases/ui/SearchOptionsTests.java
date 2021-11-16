@@ -45,16 +45,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search options internal user popup")
 	public void testSearchOptionsInternalUserPopup() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Verify search internal user popup");
 		searchOptionsPage.verifySearchInternalUserPopup();
 	}
@@ -62,16 +60,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message is displayed for search option page")
 	public void testErrorMessageWhenAllFieldsOfSearchOptionsIsBlank() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Verify required error message is displayed for mandatory fields");
 		searchOptionsPage.verifyErrorMessageOnSearchOptionsPage();
 	}
@@ -79,16 +75,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, last name,username email and mobile field and verify error message")
 	public void testMaximumCharactersErrorMessageForInputFields() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Verify maximum character reached error message for firstname, last name,username email and mobile field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
@@ -98,16 +92,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
 	public void testErrorMessageForInvalidData(String[] getTestData) throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Enter invalid data in first name, last name, email, username and mobile number field and verify error message");
 		searchOptionsPage.verifyFieldErrorMessageWithInvalidData(getTestData[0], getTestData[1], getTestData[2],
 				getTestData[3], getTestData[4]);
@@ -116,16 +108,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button on search option page")
 	public void testClearButtonFunctionalityOnSearchPage() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
 				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
@@ -139,16 +129,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button after getting the search result")
 	public void testClearButtonFunctionalityWhenSearchResultDisplayed() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
 				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
@@ -164,16 +152,13 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are fielded & clear All button selected after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(
 				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
@@ -186,16 +171,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
 	public void testSearchOptionsWithSingleChecboxOfStatus() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
-		internalUsersPage.clickOnSearchOptionPage();
-		searchOptionsPage = new SearchOptionsPage(driver);
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		searchOptionsPage.selectSingleCheckboxOfEnrollmentStatus();
 		searchOptionsPage.selectSingleCheckboxOfUserStatus();
 		searchOptionsPage.clickOnSearchButton();
