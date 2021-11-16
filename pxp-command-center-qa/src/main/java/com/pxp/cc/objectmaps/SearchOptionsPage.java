@@ -276,6 +276,19 @@ public class SearchOptionsPage extends CCMainPage {
 			log("clear button is not displayed on search internal user page");
 		}
 	}
+	
+	public void verifyClearAllButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(butonClearAll, driver);
+		log("Verifying clear all button is displayed on search internal user page");
+		if (butonClearAll.isDisplayed() == true) {
+			log("Verifying clear all button is enabled");
+			CCUtils.assertTrue(butonClearAll.isEnabled(), "clear all button is disabled");
+			log("Verifying clear all button text");
+			CCUtils.assertEquals(butonClearAll.getText().trim(), "CLEAR ALL");
+		} else {
+			log("clear all button is not displayed on search internal user page");
+		}
+	}
 
 	public void clickOnClearButton() throws InterruptedException {
 		log("Verifying clear button is displayed on search internal user page");

@@ -122,8 +122,14 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("valid.user.email"),
 				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.mobile.number"));
+		searchOptionsPage.verifyClearButtonIsDisplayed();
 		searchOptionsPage.clickOnClearButton();
 		logStep("Verify after clicking on cancel button user redirected to internal users page");
+		searchOptionsPage.verifyFirstNameLabelTextAndTextboxDefaultValue();
+		searchOptionsPage.verifyLastNameLabelTextAndTextboxDefaultValue();
+		searchOptionsPage.verifyEmailLabelTextAndTextboxDefaultValue();
+		searchOptionsPage.verifyUsernameLabelTextAndTextboxDefaultValue();
+		searchOptionsPage.verifyMobileNumberLabelTextAndTextboxDefaultValue();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button after getting the search result")
@@ -147,6 +153,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.clickOnSearchButton();
 		searchOptionsPage.verifySearchFilterCrossIcon();
 		internalUsersPage.verifyInternalUsersPageTitle();
+		searchOptionsPage.verifyClearAllButtonIsDisplayed();	
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are fielded & clear All button selected after search result")
@@ -166,6 +173,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.mobile.number"));
 		internalUsersPage.verifyInternalUsersPageTitle();
+		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
@@ -183,6 +191,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.selectSingleCheckboxOfUserStatus();
 		searchOptionsPage.clickOnSearchButton();
 		internalUsersPage.verifyInternalUsersPageTitle();
+		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}
 
 }
