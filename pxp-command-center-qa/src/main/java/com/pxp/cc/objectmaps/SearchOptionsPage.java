@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
