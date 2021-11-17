@@ -72,7 +72,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.verifyErrorMessageOnSearchOptionsPage();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, last name,username email and mobile field and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, last name,username, email and mobile field and verify error message")
 	public void testMaximumCharactersErrorMessageForInputFields() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
 		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
@@ -83,7 +83,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		internalUsersPage = new InternalUsersPage(driver);
 		logStep("Click on search button");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
-		logStep("Verify maximum character reached error message for firstname, last name,username email and mobile field");
+		logStep("Verify maximum character reached error message for firstname, last name,username, email and mobile field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
 				CCUtils.generateNewEmail(101), CCUtils.generateMobileNumber());
@@ -152,7 +152,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.verifyClearAllButtonIsDisplayed();	
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are fielded & clear All button selected after search result")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
 		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
