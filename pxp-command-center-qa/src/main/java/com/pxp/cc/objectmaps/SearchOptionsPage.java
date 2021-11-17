@@ -534,5 +534,24 @@ public class SearchOptionsPage extends CCMainPage {
 		log("User Status & Enrollment status checkbox is " + checkboxEnrollmentStatusSingle.getText().trim());
 		checkboxEnrollmentStatusSingle.click();
 	}
+	
+	public void verifyTextboxIsEmptyWhenClickOnClearButton() {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		String firstName = textboxFirstName.getText().trim();
+		String lastName = textboxLastName.getText().trim();
+		String userName = textboxUsername.getText().trim();
+		String emailName = textboxEmail.getText().trim();
+		String mobileNumber = textboxMobileNumber.getText().trim();
+			CCUtils.assertTrue(firstName.length() == 0, "Text is not present in first field");
+			log("Verifying text is not present in firstname field");
+			CCUtils.assertTrue(lastName.length() == 0, "Text is not present in last field");
+			log("Verifying text is not present in lastname field");
+			CCUtils.assertTrue(userName.length() == 0, "Text is not present in username field");
+			log("Verifying text is not present in username field");
+			CCUtils.assertTrue(emailName.length() == 0, "Text is not present in email field");
+			log("Verifying text is not present in email field");
+			CCUtils.assertTrue(mobileNumber.length() == 0, "Text is not present in mobilenumber field");
+			log("Verifying text is not present in mobilenumber field");
+	}
 
 }

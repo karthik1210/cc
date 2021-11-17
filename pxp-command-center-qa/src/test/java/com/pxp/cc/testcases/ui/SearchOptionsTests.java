@@ -125,11 +125,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.verifyClearButtonIsDisplayed();
 		searchOptionsPage.clickOnClearButton();
 		logStep("Verify after clicking on cancel button user redirected to internal users page");
-		searchOptionsPage.verifyFirstNameLabelTextAndTextboxDefaultValue();
-		searchOptionsPage.verifyLastNameLabelTextAndTextboxDefaultValue();
-		searchOptionsPage.verifyEmailLabelTextAndTextboxDefaultValue();
-		searchOptionsPage.verifyUsernameLabelTextAndTextboxDefaultValue();
-		searchOptionsPage.verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		searchOptionsPage.verifyTextboxIsEmptyWhenClickOnClearButton();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button after getting the search result")
