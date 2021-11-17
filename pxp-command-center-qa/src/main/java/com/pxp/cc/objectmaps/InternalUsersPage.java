@@ -71,6 +71,9 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'SEARCH OPTIONS')]")
 	private WebElement buttonSearch;
 
+	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
+	private WebElement buttonSendEnrollment;
+
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -205,4 +208,12 @@ public class InternalUsersPage extends CCMainPage {
 		log("Clicked on search button in command center users page");
 		return PageFactory.initElements(driver, SearchOptionsPage.class);
 	}
+
+	public SendBulkEnrollmentPage clickOnSenEnrollmentButton() {
+		CCUtils.verifyAndWaitForElement(buttonSendEnrollment, driver);
+		log("Click on send enrollment button");
+		buttonSendEnrollment.click();
+		return PageFactory.initElements(driver, SendBulkEnrollmentPage.class);
+	}
+
 }

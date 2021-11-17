@@ -125,7 +125,14 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),'Please enter valid mobile number')]")
 	private WebElement errorValidMobileNumber;
 
+	@FindBy(xpath = "//div[text()=' Enrollment Status ']//following::input[@type='checkbox']")
+	private List<WebElement> enrollmentStatusCheckboxList;
+
+	@FindBy(xpath = "//div[text()=' Enrollment Status ']//following::span[@class='mat-checkbox-label']")
+	private List<WebElement> listEnrollmentStatusLabel;
+
 	List<String> actualUserStatusValues = new ArrayList<String>();
+	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
 
 	public final List<String> expectedUserStatusValues = Arrays.asList("Active", "Inactive", "Locked out",
 			"No roles assigned");
@@ -133,6 +140,9 @@ public class SearchOptionsPage extends CCMainPage {
 	List<String> actualEnrollmentStatusValues = new ArrayList<String>();
 
 	public final List<String> expectedEnrollmentStatusValues = Arrays.asList("Confirmed", "Delivered", "Pending",
+			"Email Issue", "Expired", "Not Sent");
+
+	public final List<String> expectedListOfEnrollmentStatusValues = Arrays.asList("Delivered", "Pending",
 			"Email Issue", "Expired", "Not Sent");
 
 	public void verifySearchInternalUserPopup() throws InterruptedException, AWTException {
@@ -266,13 +276,13 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void verifyClearButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonClear, driver);
-			CCUtils.assertEquals(buttonClear.getText().trim(), "CLEAR");
-		}
-	
+		CCUtils.assertEquals(buttonClear.getText().trim(), "CLEAR");
+	}
+
 	public void verifyClearAllButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(butonClearAll, driver);
-			CCUtils.assertEquals(butonClearAll.getText().trim(), "CLEAR ALL");
-		}
+		CCUtils.assertEquals(butonClearAll.getText().trim(), "CLEAR ALL");
+	}
 
 	public void clickOnClearButton() throws InterruptedException {
 		log("Verifying clear button is displayed on search internal user page");
@@ -314,7 +324,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void clickOnSearchButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
 		scrollAndWait(0, 500, 200);
-		buttonSearch.click();
+		javascriptClick(buttonSearch);
 	}
 
 	public void clickOnClearAllSearchData() throws InterruptedException {
@@ -517,7 +527,7 @@ public class SearchOptionsPage extends CCMainPage {
 		log("User Status & Enrollment status checkbox is " + checkboxEnrollmentStatusSingle.getText().trim());
 		checkboxEnrollmentStatusSingle.click();
 	}
-	
+
 	public void verifyTextboxIsEmptyWhenClickOnClearButton() {
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
 		String firstName = textboxFirstName.getText().trim();
@@ -525,16 +535,140 @@ public class SearchOptionsPage extends CCMainPage {
 		String userName = textboxUsername.getText().trim();
 		String emailName = textboxEmail.getText().trim();
 		String mobileNumber = textboxMobileNumber.getText().trim();
-			CCUtils.assertTrue(firstName.length() == 0, "Text is not present in first field");
-			log("Verifying text is not present in firstname field");
-			CCUtils.assertTrue(lastName.length() == 0, "Text is not present in last field");
-			log("Verifying text is not present in lastname field");
-			CCUtils.assertTrue(userName.length() == 0, "Text is not present in username field");
-			log("Verifying text is not present in username field");
-			CCUtils.assertTrue(emailName.length() == 0, "Text is not present in email field");
-			log("Verifying text is not present in email field");
-			CCUtils.assertTrue(mobileNumber.length() == 0, "Text is not present in mobilenumber field");
-			log("Verifying text is not present in mobilenumber field");
+		CCUtils.assertTrue(firstName.length() == 0, "Text is not present in first field");
+		log("Verifying text is not present in firstname field");
+		CCUtils.assertTrue(lastName.length() == 0, "Text is not present in last field");
+		log("Verifying text is not present in lastname field");
+		CCUtils.assertTrue(userName.length() == 0, "Text is not present in username field");
+		log("Verifying text is not present in username field");
+		CCUtils.assertTrue(emailName.length() == 0, "Text is not present in email field");
+		log("Verifying text is not present in email field");
+		CCUtils.assertTrue(mobileNumber.length() == 0, "Text is not present in mobilenumber field");
+		log("Verifying text is not present in mobilenumber field");
 	}
 
+	public void verifyEnrollmentSearchOptionsPopup() throws InterruptedException {
+		log("Verifying search internal user pop-up");
+		verifyFirstNameLabelTextAndTextboxDefaultValue();
+		verifyLastNameLabelTextAndTextboxDefaultValue();
+		verifyUsernameLabelTextAndTextboxDefaultValue();
+		verifyEmailLabelTextAndTextboxDefaultValue();
+		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions();
+		verifyClearButtonIsDisplayed();
+		verifySearchButtonIsDisplayed();
+	}
+
+	public void verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(labelEnrollmentStatus, driver);
+		if (labelEnrollmentStatus.isDisplayed()) {
+			log("Verifying enrollment status label text");
+			CCUtils.assertEquals(labelEnrollmentStatus.getText().trim(), "Enrollment Status");
+			log("User enrollment status label text is " + labelEnrollmentStatus.getText().trim());
+			log("Verifying User enrollment status labels are displayed on search options page");
+			verifyEnrollmentStatusValuesAtEnrollmentSearchOptions();
+			log("Verifying enrollment status checkboxes are not selected");
+			verifyStatusCheckboxesAreNotByDefaultSelectedOnEnrollmentSearchOptionsPage();
+		} else {
+			log("Enrollment status label is not displayed on search internal user page");
+		}
+	}
+
+	public void getLabelEnrollmentStatusValues() throws InterruptedException {
+		for (int i = 0; i < listEnrollmentStatusLabel.size(); i++) {
+			actualListOfEnrollmentStatusValues.add(listEnrollmentStatusLabel.get(i).getText());
+		}
+		log("Enrollment status available for internal user are :" + actualEnrollmentStatusValues);
+	}
+
+	public void verifyEnrollmentStatusValuesAtEnrollmentSearchOptions() throws InterruptedException {
+		getLabelEnrollmentStatusValues();
+		CCUtils.assertEquals(actualListOfEnrollmentStatusValues, expectedListOfEnrollmentStatusValues);
+	}
+
+	public void verifyStatusCheckboxesAreNotByDefaultSelectedOnEnrollmentSearchOptionsPage()
+			throws InterruptedException {
+		for (int i = 0; i < enrollmentStatusCheckboxList.size(); i++) {
+			CCUtils.assertTrue(!enrollmentStatusCheckboxList.get(i).isSelected(),
+					"Enrollment checkboxes are already selected");
+		}
+	}
+
+	public void selectEnrollmentStatusOnTheEnrollmentSearchPage(List<String> enrollmentStatusList) {
+		for (int i = 0; i < enrollmentStatusList.size(); i++) {
+			if (enrollmentStatusList.get(i).equals("Delivered")) {
+				javascriptClick(enrollmentStatusCheckboxList.get(0));
+			} else if (enrollmentStatusList.get(i).equals("Pending")) {
+				javascriptClick(enrollmentStatusCheckboxList.get(1));
+			} else if (enrollmentStatusList.get(i).equals("Email Issue")) {
+				javascriptClick(enrollmentStatusCheckboxList.get(2));
+			} else if (enrollmentStatusList.get(i).equals("Expired")) {
+				javascriptClick(enrollmentStatusCheckboxList.get(3));
+			} else if (enrollmentStatusList.get(i).equals("Not Sent")) {
+				javascriptClick(enrollmentStatusCheckboxList.get(4));
+			}
+		}
+	}
+
+	public void enterSearchTextInSearchFields(String firstName, String lastName, String email, String username,
+			String mobileNumber) {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(firstName);
+		log("Entered text in first name field is " + firstName);
+
+		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
+		textboxLastName.sendKeys(lastName);
+		log("Entered text in last name field is " + lastName);
+
+		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
+		textboxEmail.sendKeys(email);
+		log("Entered text in email field is " + email);
+
+		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
+		textboxUsername.clear();
+		textboxUsername.sendKeys(username);
+		log("Entered text in username field is " + username);
+
+		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
+		textboxMobileNumber.sendKeys(mobileNumber);
+		log("Entered text in email field is " + mobileNumber);
+	}
+
+	public void selectUserStatus(List<String> userStatusList) {
+		for (int i = 0; i < userStatusList.size(); i++) {
+			if (userStatusList.get(i).equals("Active")) {
+				javascriptClick(checkboxUserStatus.get(0));
+			} else if (userStatusList.get(i).equals("Inactive")) {
+				javascriptClick(checkboxUserStatus.get(1));
+			} else if (userStatusList.get(i).equals("Locked out")) {
+				javascriptClick(checkboxUserStatus.get(2));
+			} else if (userStatusList.get(i).equals("No roles assigned")) {
+				javascriptClick(checkboxUserStatus.get(3));
+			}
+		}
+	}
+
+	public void selectEnrollmentStatusValues(List<String> enrollmentStatusList) {
+		for (int i = 0; i < enrollmentStatusList.size(); i++) {
+			if (enrollmentStatusList.get(i).equals("Confirmed")) {
+				javascriptClick(checkboxEnrollmentStatus.get(0));
+			} else if (enrollmentStatusList.get(i).equals("Delivered")) {
+				javascriptClick(checkboxEnrollmentStatus.get(1));
+			} else if (enrollmentStatusList.get(i).equals("Pending")) {
+				javascriptClick(checkboxEnrollmentStatus.get(2));
+			} else if (enrollmentStatusList.get(i).equals("Email Issue")) {
+				javascriptClick(checkboxEnrollmentStatus.get(3));
+			} else if (enrollmentStatusList.get(i).equals("Expired")) {
+				javascriptClick(checkboxEnrollmentStatus.get(4));
+			} else if (enrollmentStatusList.get(i).equals("Not Sent")) {
+				javascriptClick(checkboxEnrollmentStatus.get(5));
+			}
+		}
+	}
+
+	public void searchUser(String firstName, String lastName, String email, String username, String mobileNumber,
+			List<String> enrollmentStatusList) {
+		enterSearchTextInSearchFields(firstName, lastName, email, username, mobileNumber);
+		selectEnrollmentStatusOnTheEnrollmentSearchPage(enrollmentStatusList);
+	}
 }
