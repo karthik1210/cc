@@ -385,7 +385,6 @@ public class SearchOptionsPage extends CCMainPage {
 		scrollAndWait(0, 500, 200);
 		CCUtils.verifyAndWaitForElement(buttonHideSearchOptions, driver);
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
-		;
 		log("Error message displayed for empty search field " + errorSearchOptionsPage.getText().trim());
 		buttonHideSearchOptions.click();
 		log("search button closed " + buttonHideSearchOptions);
