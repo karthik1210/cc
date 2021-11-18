@@ -3,7 +3,6 @@
 package com.pxp.cc.objectmaps;
 
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -68,6 +67,12 @@ public class InternalUsersPage extends CCMainPage {
 
 	@FindBy(id = "errmobile")
 	private WebElement errorMobileNumber;
+
+	@FindBy(xpath = "//span[contains(text(),'SEARCH OPTIONS')]")
+	private WebElement buttonSearch;
+
+	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
+	private WebElement buttonSendEnrollment;
 
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
@@ -196,4 +201,19 @@ public class InternalUsersPage extends CCMainPage {
 		log("Error in Mobile number field is : " + errorMobileNumber.getText());
 		return errorMobileNumber.getText();
 	}
+
+	public SearchOptionsPage clickOnSearchOptionPage() {
+		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
+		buttonSearch.click();
+		log("Clicked on search button in command center users page");
+		return PageFactory.initElements(driver, SearchOptionsPage.class);
+	}
+
+	public SendBulkEnrollmentPage clickOnSendEnrollmentButton() {
+		CCUtils.verifyAndWaitForElement(buttonSendEnrollment, driver);
+		log("Click on send enrollment button");
+		buttonSendEnrollment.click();
+		return PageFactory.initElements(driver, SendBulkEnrollmentPage.class);
+	}
+
 }
