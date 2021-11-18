@@ -14,9 +14,6 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	@FindBy(className = "cc-page-title")
 	private WebElement labelPageTitle;
 
-	@FindBy(xpath = "//mat-icon[@class='mat-icon notranslate pageTopIcon material-icons mat-icon-no-color']")
-	private WebElement icon;
-
 	@FindBy(id = "applyCancel")
 	private WebElement buttonCancel;
 
@@ -98,7 +95,6 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 
 	public void verifySuccessToaster() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		log("Verifying success toaster message.");
 		if (toasterMessage.isDisplayed() == true)
 			CCUtils.assertEquals(toasterMessage.getText().trim(), "Enrollment sent to users successfully");
 		else

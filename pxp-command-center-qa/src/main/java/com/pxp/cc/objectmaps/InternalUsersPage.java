@@ -209,7 +209,7 @@ public class InternalUsersPage extends CCMainPage {
 		return PageFactory.initElements(driver, SearchOptionsPage.class);
 	}
 
-	public SendBulkEnrollmentPage clickOnSenEnrollmentButton() {
+	public SendBulkEnrollmentPage clickOnSendEnrollmentButton() {
 		CCUtils.verifyAndWaitForElement(buttonSendEnrollment, driver);
 		log("Click on send enrollment button");
 		buttonSendEnrollment.click();

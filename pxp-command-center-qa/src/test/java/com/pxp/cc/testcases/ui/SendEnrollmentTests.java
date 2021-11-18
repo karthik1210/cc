@@ -35,7 +35,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		commandCenterUsersPage = new CommandCenterUsersPage(driver);
@@ -62,7 +62,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify send bulk enrollment functionality")
 	public void testSendBulkEnrollment() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		sendBulkEnrollmentPage.verifySendBulkEnrollmentPageTitle();
 		logStep("Select users from enrollment user list and click on send enrollment button");
 		sendBulkEnrollmentPage.selectUsers(4);
@@ -77,7 +77,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify send enrollment button functionality")
 	public void testFunctionalityOfSendEnrollmentButton() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		logStep("Verify send enrollment button is disabled when user is not selected");
 		sendBulkEnrollmentPage.verifySendEnrollmentButtonIsDisabled();
 		logStep("Select a user and verify send enrollment button got enabled");
@@ -87,13 +87,13 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify only active users are displayed in send bulk enrollment list")
 	public void testActiveUsersAreDisplayedInEnrollmentList() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		sendBulkEnrollmentPage.VerifyOnlyActiveUsersDisplayedInSendBulkEnrollmentList();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user select all checkboxes using indeterminate checkbox and deselect all checkboxes again clicking on indeterminate checkbox")
 	public void testFunctionalityOfInderminateCheckbox() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		sendBulkEnrollmentPage.verifySendBulkEnrollmentPageTitle();
 		logStep("Verify user select all checkboxes using indeterminate checkbox");
 		sendBulkEnrollmentPage.clickOnIndeterminateCheckbox();
@@ -105,7 +105,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user deselect all checkboxes using cancel button on send bulk enrollment page")
 	public void testUserDeselectAllCheckboxesUsingCancelButton() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		sendBulkEnrollmentPage.verifySendBulkEnrollmentPageTitle();
 		logStep("Select all checkboxes and Verify user deselect all selected checkboxes using cancel button");
 		sendBulkEnrollmentPage.clickOnIndeterminateCheckbox();
@@ -115,7 +115,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enrollment search options popup")
 	public void testSearchOptionPopup() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		logStep("Click on search options button and verify search options pop up");
 		searchOptionsPage = sendBulkEnrollmentPage.clickOnSearchOptionsButton();
 		searchOptionsPage.verifyEnrollmentSearchOptionsPopup();
@@ -132,6 +132,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
+		logStep("Verify send enrollment button is not displayed in kebab menu for inactive user");
 		internalUserDetailsPage.verifySendEnrollmentButtonIsNotDisplayed();
 	}
 
@@ -140,12 +141,13 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select no roles assigned user");
 		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.norolesassigned"));
+		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
+		logStep("Verify send enrollment button is not displayed in kebab menu for no roles assigned user");
 		internalUserDetailsPage.verifySendEnrollmentButtonIsNotDisplayed();
 	}
 
@@ -160,6 +162,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
+		logStep("Verify send enrollment button is not displayed in kebab menu for locked user");
 		internalUserDetailsPage.verifySendEnrollmentButtonIsNotDisplayed();
 	}
 
@@ -188,7 +191,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify that an error message is displayed on the screen if the user is searching using the default value")
 	public void testErrorMessageForEmptyFields() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		searchOptionsPage = sendBulkEnrollmentPage.clickOnSearchOptionsButton();
 		logStep("Verify error message if user click on search button without entering data in first name, last name,user name, email and mobile number field");
 		searchOptionsPage.verifyErrorMessageOnSearchOptionsPage();
@@ -196,7 +199,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, lastname,email,username and mobile number field and verify error message")
 	public void testMaximumCharacterErrorMessage() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		searchOptionsPage = sendBulkEnrollmentPage.clickOnSearchOptionsButton();
 		logStep("Verify maximum character error message for first name, last name, email,username and mobile number search fields");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
@@ -206,7 +209,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, dataProvider = "invalidTestData", retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in firstname, lastname,email,username and mobile number field and verify error message")
 	public void testErrorMessageForInvalidData(String[] getTestData) throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		searchOptionsPage = sendBulkEnrollmentPage.clickOnSearchOptionsButton();
 		logStep("Enter invalid data in firstname, lastname,email,username and mobile number field and verify error message");
 		searchOptionsPage.verifyFieldErrorMessageWithInvalidData(getTestData[0], getTestData[1], getTestData[2],
@@ -215,7 +218,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify that all selected search options are displayed on the screen, and that all search options are cleared after clicking the Clear All button")
 	public void testSelectedSearchOptionsAreDisplayedOnScreenOrNot() throws Exception {
-		sendBulkEnrollmentPage = internalUsersPage.clickOnSenEnrollmentButton();
+		sendBulkEnrollmentPage = internalUsersPage.clickOnSendEnrollmentButton();
 		searchOptionsPage = sendBulkEnrollmentPage.clickOnSearchOptionsButton();
 		logStep("Search user using first name, last name, user name, email, mobile number and enrollment status");
 		List<String> enrollmentStatusList = new ArrayList<String>();
@@ -254,8 +257,8 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		sendEnrollmentConfirmationPage = internalUserDetailsPage.clickOnSendEnrollmentEmailButton();
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForSingleUser(userName);
-		logStep("Click on yes send button and verify success toaster message");
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
+		logStep("verify success toaster message");
 		internalUserDetailsPage.verifySuccessToaster();
 		logStep("Verify user able to set new password using password reset link found in the email");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
