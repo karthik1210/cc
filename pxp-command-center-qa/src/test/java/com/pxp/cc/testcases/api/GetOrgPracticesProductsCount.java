@@ -24,15 +24,8 @@ public class GetOrgPracticesProductsCount extends BaseRest {
 	Response createClientApiResponse, createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
 			createAgnosticPracticeApiResponse;
 	List<Integer> solutionList = null;
-	public int clientId = 0;
-	public int systemOneId = 0;
-	public int entpriseOneId = 0;
-	public int entpriseTwoId = 0;
-	public int practiceOneId = 0;
-	public int practiceTwoId = 0;
-	public int practiceThreeId = 0;
-	public int inactivePracticeFourId = 0;
-	public int agnosticPracticeId = 0;
+	public int clientId, systemOneId, entpriseOneId, entpriseTwoId, practiceOneId, practiceTwoId, practiceThreeId,
+			inactivePracticeFourId, agnosticPracticeId = 0;
 	List<Integer> pracSolutionList = Arrays.asList(1101);
 	List<Integer> practiceOneSolutionList = Arrays.asList(1102);
 	List<Integer> practiceTwoSolutionList = Arrays.asList(1103, 1102);
@@ -49,13 +42,13 @@ public class GetOrgPracticesProductsCount extends BaseRest {
 		updateOrgProductStatusValidations = new UpdateOrgProductStatusValidations();
 		systemOneId = createSystemwithinClient(clientId);
 		entpriseOneId = createEnterprisewithinSystem(systemOneId);
-		practiceOneId = createPracticeWitinEnterprise(entpriseOneId, practiceOneSolutionList, "true");
-		practiceTwoId = createPracticeWitinEnterprise(entpriseOneId, practiceTwoSolutionList, "true");
+		practiceOneId = createPracticeWithinEnterprise(entpriseOneId, practiceOneSolutionList, "true");
+		practiceTwoId = createPracticeWithinEnterprise(entpriseOneId, practiceTwoSolutionList, "true");
 		log("In enterpriseOne with Id " + entpriseOneId + " two practices added with prac one id : " + practiceOneId
 				+ " and prac two id :" + practiceTwoId);
 		entpriseTwoId = createEnterprisewithinSystem(systemOneId);
-		practiceThreeId = createPracticeWitinEnterprise(entpriseTwoId, practiceThreeSolutionList, "true");
-		inactivePracticeFourId = createPracticeWitinEnterprise(entpriseTwoId, practiceFourSolutionList, "false");
+		practiceThreeId = createPracticeWithinEnterprise(entpriseTwoId, practiceThreeSolutionList, "true");
+		inactivePracticeFourId = createPracticeWithinEnterprise(entpriseTwoId, practiceFourSolutionList, "false");
 		log("In enterpriseTwo with Id " + entpriseTwoId + " two practices added with prac one id : " + practiceThreeId
 				+ " and inactive prac two id :" + inactivePracticeFourId);
 		agnosticPracticeId = createAgnosticPracticeWitinClient(clientId, pracSolutionList);
@@ -70,19 +63,17 @@ public class GetOrgPracticesProductsCount extends BaseRest {
 		return createClientApiResponse.jsonPath().getInt("id");
 	}
 
-	public int createSystemwithinClient(int clientID) throws IOException {
-		int clientId = clientID;
+	public int createSystemwithinClient(int parentId) throws IOException {
 		logStep("Create a new active system below active client of id : " + clientId);
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(),
 				ccUser.getSystemDisplayNameApi().concat(CCUtils.generateRandomString()),
 				ccUser.getSystemNameApi().concat(CCUtils.generateRandomString()), ccUser.getSystemOrgTypeApi(),
-				clientId, ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+				parentId, ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
 		return createSystemApiResponse.jsonPath().getInt("id");
 	}
 
-	public int createEnterprisewithinSystem(int systemID) throws IOException {
-		int systemId = systemID;
+	public int createEnterprisewithinSystem(int systemId) throws IOException {
 		logStep("Create a new active enterprise below active system with id : " + systemId);
 		String enterpriseName = ccUser.getEnterpriseNameApi().concat(CCUtils.generateRandomString());
 		String enterpriseSapNumber = ccUser.getEnterpriseSapNumberApi().concat(CCUtils.generateRandomString());
@@ -92,7 +83,7 @@ public class GetOrgPracticesProductsCount extends BaseRest {
 		return createEnterpriseApiResponse.jsonPath().getInt("id");
 	}
 
-	public int createPracticeWitinEnterprise(int enterpriseId, List<Integer> solutionsList, String isActive)
+	public int createPracticeWithinEnterprise(int enterpriseId, List<Integer> solutionsList, String isActive)
 			throws IOException {
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
