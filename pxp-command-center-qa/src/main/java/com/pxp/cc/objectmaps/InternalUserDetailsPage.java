@@ -59,9 +59,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
 	private WebElement kebabDeactiveUserOption;
 
-	@FindBy(xpath = "//mat-icon[contains(text(),' cancel')]")
-	private WebElement inactiveUserStatus;
-
 	@FindBy(xpath = "//button[contains(text(),'Activate User')]")
 	private WebElement kebabActiveUserOption;
 
@@ -143,13 +140,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 		return labelLastLoginDateEnrollmentStatusUserStatusAdminView;
 	}
 
-	public void verifyKebabMenuButtonForAdminView() {
-		CCUtils.verifyAndWaitForElement(buttonKebabMenuAdminView, driver);
-		log("Clicked on kebab menu button: " + buttonKebabMenuAdminView.getText());
-		CCUtils.assertEquals(buttonKebabMenuAdminView.isDisplayed(), true);
-		javascriptClick(buttonKebabMenuAdminView);
-	}
-
 	public void verifyKebabMenuOptionsForAdminView() {
 		for (int i = 0; i < buttonKebabMenuOptionsAdminView.size(); i++)
 			log("Veify kebab menu options: " + buttonKebabMenuOptionsAdminView.get(i).getText());
@@ -157,63 +147,41 @@ public class InternalUserDetailsPage extends CCMainPage {
 	}
 
 	public void verifyActivateOptionDisplayedToAdminUser() {
-		if (activeUserStatus.isDisplayed()) {
-			CCUtils.assertEquals(activeUserStatus.isDisplayed(), true);
-			buttonKebabMenuAdminView.click();
-			log("Verify kebab menu option: " + kebabDeactiveUserOption.getText().trim(), "Deactivate User");
-		} else {
-			if (inactiveUserStatus.isDisplayed()) {
-				CCUtils.assertEquals(inactiveUserStatus.isDisplayed(), true);
-				buttonKebabMenuAdminView.click();
-				log("Clicked on kebab menu button: " + kebabActiveUserOption.getText().trim(), "Activate User");
-			}
+		if (labelUserStatusValue.getText().trim().equals("Active")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of Deactivate user");
+			CCUtils.assertEquals(kebabDeactiveUserOption.getText().trim(), "Deactivate User");
+		} else if (labelUserStatusValue.getText().trim().equals("Inactive")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of activate user");
+			CCUtils.assertEquals(kebabActiveUserOption.getText().trim(), "Activate User");
 		}
 	}
 
 	public void verifyLockedOptionDisplayedToAdminUser() {
-		if (labelUserStatusLocked.isDisplayed()) {
-			CCUtils.assertEquals(labelUserStatusLocked.isDisplayed(), true);
-			buttonKebabMenuAdminView.click();
-			log("Verify kebab menu option: " + kebabDeactiveUserOption.getText().trim(), "Unlock User");
-		} else {
-			if (labelUserStatusUnlock.isDisplayed()) {
-				CCUtils.assertEquals(labelUserStatusUnlock.isDisplayed(), true);
-				buttonKebabMenuAdminView.click();
-				log("Clicked on kebab menu button: " + labelUserStatusLocked.getText().trim(), "Lock User");
-			}
+		if (labelUserStatusValue.getText().trim().equals("Lock")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of Unlock User");
+			CCUtils.assertEquals(labelUserStatusUnlock.getText().trim(), "Unlock User");
+		} else if (labelUserStatusValue.getText().trim().equals("Unlock")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of lock User");
+			CCUtils.assertEquals(labelUserStatusLocked.getText().trim(), "Lock User");
 		}
 	}
 
 	public void verifySendEnrollmentOptionDisplayedToAdminUser() {
-		if (activeUserStatus.isDisplayed()) {
-			CCUtils.assertEquals(activeUserStatus.isDisplayed(), true);
-			buttonKebabMenuAdminView.click();
-			log("Verifying send enrollment email button is displayed in kebab menu");
-			CCUtils.assertEquals(buttonSendEnrollmentEmail.isDisplayed(), true);
-			log("Clicked on kebab menu button: " + buttonSendEnrollmentEmail.getText().trim(), "Send Enrollment Email");
-		} else {
-			if (inactiveUserStatus.isDisplayed()) {
-				CCUtils.assertEquals(inactiveUserStatus.isDisplayed(), true);
-				buttonKebabMenuAdminView.click();
-				log("Verifying send enrollment email button is not displayed in kebab menu");
-				CCUtils.assertEquals(buttonSendEnrollmentEmail.isDisplayed(), false);
-			}
+		if (labelUserStatusValue.getText().trim().equals("Active")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of Send Enrollment Email");
+			CCUtils.assertEquals(buttonSendEnrollmentEmail.getText().trim(), "Send Enrollment Email");
+		} else if (labelUserStatusValue.getText().trim().equals("Inactive")
+				|| labelUserStatusValue.getText().trim().equals("No roles assigned")
+				|| labelUserStatusValue.getText().trim().equals("Locked")) {
+			clickOnKebabMenuButton();
+			log("Verifying send enrollment email button is not displayed in kebab menu");
+			CCUtils.assertEquals(buttonSendEnrollmentEmail.isDisplayed(), false);
 		}
-	}
 
-	public void verifyKebabMenuOptionsDisplayed() {
-		if (labelUserStatusValue.isDisplayed() && labelUserStatus.getText() == "Active"
-				&& labelUserStatus.getText() == "Inactive" && labelUserStatus.getText() == "Locked"
-				&& labelUserStatus.getText() == "No role assigned") {
-			log("Verify active user status on Internal User Details screen: " + labelUserStatusValue.getText());
-			buttonKebabMenuAdminView.click();
-		} else {
-			log("Kebab menu options not displayed on internal user details page");
-		}
-		verifyKebabMenuOptionsForAdminView();
-		verifyActivateOptionDisplayedToAdminUser();
-		verifyLockedOptionDisplayedToAdminUser();
-		verifySendEnrollmentOptionDisplayedToAdminUser();
 	}
-
 }
