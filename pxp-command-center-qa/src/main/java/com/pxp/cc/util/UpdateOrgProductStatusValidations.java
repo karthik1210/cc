@@ -8,8 +8,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.UpdateProductStatus;
+
 import io.restassured.response.Response;
 
 public class UpdateOrgProductStatusValidations {
@@ -18,6 +24,22 @@ public class UpdateOrgProductStatusValidations {
 
 	public void validatePracticeOrgTypeInResponseBody(Response response) {
 		CCUtils.assertEquals(response.jsonPath().get("orgType"), "PRACTICE");
+	}
+
+	public void validateEnterpriseOrgTypeInResponseBody(Response response) {
+		CCUtils.assertEquals(response.jsonPath().get("orgType"), "ENTERPRISE");
+	}
+
+	public void validateSystemOrgTypeInResponseBody(Response response) {
+		CCUtils.assertEquals(response.jsonPath().get("orgType"), "SYSTEM");
+	}
+
+	public void validateClientOrgTypeInResponseBody(Response response) {
+		CCUtils.assertEquals(response.jsonPath().get("orgType"), "CLIENT");
+	}
+
+	public void validatePracticeCount(Response response, int noOfPractices) {
+		CCUtils.assertEquals(response.jsonPath().getInt("practiceCount"), noOfPractices);
 	}
 
 	public Map<String, Object> fetchKeyValuesFromResponseBodyOfGetOrg(Response response) {
@@ -88,6 +110,39 @@ public class UpdateOrgProductStatusValidations {
 		}
 	}
 
+	public void validateProductActiveCountInGetOrgResponseBody(Response response, List<Integer> purchasedSolutionList) {
+		List<Integer> solutionsList = new ArrayList<Integer>();
+		solutionsList = response.jsonPath().getList("solutions");
+		List<Solutions> actualSolutionList = new ArrayList<Solutions>();
+		Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+		for (Integer productId : purchasedSolutionList) {
+			if (productMap.containsKey(productId)) {
+				productMap.put(productId, productMap.get(productId) + 1);
+			} else {
+				productMap.put(productId, 1);
+			}
+		}
+
+		for (Map.Entry<Integer, Integer> entry : productMap.entrySet()) {
+			actualSolutionList.add(new Solutions(entry.getValue(), entry.getKey()));
+		}
+		JSONArray jsonArray = new JSONArray(response.jsonPath().getList("solutions"));
+		JSONObject jsonObject;
+		if (actualSolutionList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						actualSolutionList.contains(
+								new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("productId"))),
+						"Purchased Solution is not present");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("solution list is empty");
+		} else {
+			Log4jUtil.log("Size of actual solution list and expected solution list is not same");
+		}
+	}
+
 	public List<String> fetchProductsfromGetOrgId(ArrayList<HashMap<String, Object>> solutionDetails) {
 		List<String> keyValueStore = new ArrayList<String>();
 		for (HashMap<String, Object> solutionDetail : solutionDetails) {
@@ -132,8 +187,7 @@ public class UpdateOrgProductStatusValidations {
 	}
 
 	public void validateInvalidDateAndFormatErrorMessage(Response response) {
-		CCUtils.assertEquals(response.jsonPath().get("message"),
-				"Invalid date format must be=MM/dd/yyyy");
+		CCUtils.assertEquals(response.jsonPath().get("message"), "Invalid date format must be=MM/dd/yyyy");
 	}
 
 	public void validateDateAndFormatNotFoundErrorMessage(Response response) {
