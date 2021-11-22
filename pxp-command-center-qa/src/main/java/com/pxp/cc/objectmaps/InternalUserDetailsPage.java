@@ -146,7 +146,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 		CCUtils.assertEquals(buttonKebabMenuOptionsAdminView.isEmpty(), false);
 	}
 
-	public void verifyActivateOptionDisplayedToAdminUser() {
+	public void verifyActivateOrDeactivateOptionDisplayedToAdminUser() {
 		if (labelUserStatusValue.getText().trim().equals("Active")) {
 			clickOnKebabMenuButton();
 			log("Verify kebab menu display option of Deactivate user");
@@ -158,7 +158,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyLockedOptionDisplayedToAdminUser() {
+	public void verifyLockOrUnlockOptionDisplayedToAdminUser() {
 		if (labelUserStatusValue.getText().trim().equals("Lock")) {
 			clickOnKebabMenuButton();
 			log("Verify kebab menu display option of Unlock User");
@@ -170,7 +170,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void verifySendEnrollmentOptionDisplayedToAdminUser() {
+	public void verifySendEnrollmentOptionInKebabMenuToAdminUser() {
 		if (labelUserStatusValue.getText().trim().equals("Active")) {
 			clickOnKebabMenuButton();
 			log("Verify kebab menu display option of Send Enrollment Email");

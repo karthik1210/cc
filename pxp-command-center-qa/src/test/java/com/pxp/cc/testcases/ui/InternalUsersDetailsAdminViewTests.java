@@ -49,7 +49,7 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 		internalUserDetailsPage.verifyKebabMenuOptionsForAdminView();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for different user status kebab menu options displayed to admin user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for inactive user status kebab menu options displayed to admin user")
 	public void testKebabMenuOptionsDisplayedToAdminUserForInactiveStatus() throws Exception {
 		logStep("Verify admin view for inactive user on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
@@ -61,11 +61,11 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 		logStep("Click any one of the user name from table");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
-		internalUserDetailsPage.verifyActivateOptionDisplayedToAdminUser();
-		internalUserDetailsPage.verifySendEnrollmentOptionDisplayedToAdminUser();
+		internalUserDetailsPage.verifyActivateOrDeactivateOptionDisplayedToAdminUser();
+		internalUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToAdminUser();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for different user status kebab menu options displayed to admin user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for active user status kebab menu options displayed to admin user")
 	public void testKebabMenuOptionsDisplayedToAdminUserForActiveStatus() throws Exception {
 		logStep("Verify admin view for active user on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
@@ -77,11 +77,12 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 		logStep("Click any one of the user name from table");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
-		internalUserDetailsPage.verifyActivateOptionDisplayedToAdminUser();
-		internalUserDetailsPage.verifySendEnrollmentOptionDisplayedToAdminUser();
+		logStep("Verify deactivate user & send enrollment email options are displayed in kebab menu");
+		internalUserDetailsPage.verifyActivateOrDeactivateOptionDisplayedToAdminUser();
+		internalUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToAdminUser();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for different user status kebab menu options displayed to admin user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for locked out user status kebab menu options displayed to admin user")
 	public void testKebabMenuOptionsDisplayedToAdminUserForLockedStatus() throws Exception {
 		logStep("Verify admin view for locked user on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
@@ -93,11 +94,12 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 		logStep("Click any one of the user name from table");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
-		internalUserDetailsPage.verifyLockedOptionDisplayedToAdminUser();
-		internalUserDetailsPage.verifySendEnrollmentOptionDisplayedToAdminUser();
+		logStep("Verify unlock user option is displayed & send enrollment email options should not displayed in kebab menu");
+		internalUserDetailsPage.verifyLockOrUnlockOptionDisplayedToAdminUser();
+		internalUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToAdminUser();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for different user status kebab menu options displayed to admin user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for no roles assiged user status kebab menu options displayed to admin user")
 	public void testKebabMenuOptionsDisplayedToAdminUserForNoRolesAssignedStatus() throws Exception {
 		logStep("Verify admin view for no roles assigned user on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
@@ -109,7 +111,8 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 		logStep("Click any one of the user name from table");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
-		internalUserDetailsPage.verifySendEnrollmentOptionDisplayedToAdminUser();
+		logStep("Verify send enrollment email options should not displayed in kebab menu");
+		internalUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToAdminUser();
 	}
 
 }
