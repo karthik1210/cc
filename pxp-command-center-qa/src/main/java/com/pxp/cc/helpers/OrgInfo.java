@@ -83,6 +83,14 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
 				.then().extract().response();
 	}
+	
+	public Response createPracticeWithSolutions(String active, String displayName, String name, String orgType, int parentId,
+			String parentType, String sapNumber, String timezoneId,List<Integer> productList) throws IOException {
+		Map<String, Object> createNewPracticePayload = postCreatePracticeNode(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId, productList);
+		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+				.then().extract().response();
+	}
 
 	public Response updatePractice(String active, String displayName, int orgId, String sapNumber, String timezoneId)
 			throws IOException {
