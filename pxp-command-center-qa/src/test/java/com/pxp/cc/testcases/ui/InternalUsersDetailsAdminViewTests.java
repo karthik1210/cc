@@ -61,6 +61,7 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 		logStep("Click any one of the user name from table");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
+		logStep("Verify activate user option should display & send enrollment email option shouldn't displayed in kebab menu");
 		internalUserDetailsPage.verifyActivateOrDeactivateOptionDisplayedToAdminUser();
 		internalUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToAdminUser();
 	}
