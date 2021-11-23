@@ -74,6 +74,9 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
 	private WebElement buttonSendEnrollment;
 
+	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']")
+	private List<WebElement> tableRowsData;
+
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -214,6 +217,13 @@ public class InternalUsersPage extends CCMainPage {
 		log("Click on send enrollment button");
 		buttonSendEnrollment.click();
 		return PageFactory.initElements(driver, SendBulkEnrollmentPage.class);
+	}
+
+	public InternalUserDetailsPage clickOneOfTheUserNameFromTable() {
+		for (int i = 0; i < tableRowsData.size(); i++)
+			tableRowsData.get(i).click();
+		log("Clicked on any of the user name in internal users page");
+		return PageFactory.initElements(driver, InternalUserDetailsPage.class);
 	}
 
 }
