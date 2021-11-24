@@ -624,9 +624,6 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "detailInactiveRadio")
 	private WebElement radiobuttonInactive;
 	
-	@FindBy(css = "body > app-root:nth-child(1) > app-header:nth-child(2) > div:nth-child(1) > mat-sidenav-container:nth-child(3) > mat-sidenav-content:nth-child(5) > div:nth-child(1) > div:nth-child(1) > app-general-settings:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > app-client-detail:nth-child(1) > div:nth-child(1) > form:nth-child(1) > div:nth-child(5) > div:nth-child(8) > div:nth-child(1) > mat-radio-group:nth-child(1) > div:nth-child(1) > div:nth-child(3) > span:nth-child(2)\r\n")
-	private WebElement textCaution;
-	
 	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
 	private WebElement buttonCancel;
 	

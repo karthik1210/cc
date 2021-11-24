@@ -2,6 +2,7 @@
 
 package com.pxp.cc.testcases.ui;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -14,23 +15,24 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	ClientDirectoryPage clientDirectoryPage;
 	GeneralSettingsPage generalSettingsPage;
 	CreateClientPage createClientPage;
+	
+	@BeforeMethod()
+	public void loginToCommandCenterPortal() throws Exception {
+		logStep("Login to Command Center");
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage = new ClientDirectoryPage(driver);
+		generalSettingsPage = new GeneralSettingsPage(driver);
+	}
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify Edit button is present for client node and cancel button functionality")
 	public void testCanelFunctionality() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		logStep("Navigating To General Setting page");
-		generalSettingsPage = new GeneralSettingsPage(driver);
-
 		String expText = generalSettingsPage.getEditButtonText();
-		logStep("Verifying Edit button is displayed ");
 		CCUtils.assertEquals(expText, "EDIT");
-
 		generalSettingsPage.clickEditButtonOfClient();
 		logStep("change details in client name & sap id");
 		String newClientName = CCUtils.generateAlphaNumericStringIncludingSpecialChar(10);
@@ -50,22 +52,17 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify maximum character limit for client name & sap id")
 	public void testMaximumCharcterError() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Searching a client in client directory");
+		
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
-		logStep("Navigating To General Setting page");
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verifying Edit button is displayed ");
-
 		generalSettingsPage.clickEditButtonOfClient();
 		logStep("Verifying maximum charcter error for client name ");
 		generalSettingsPage.enterNewClientName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
 		String actualNameError = generalSettingsPage.getErrorMessage();
-		generalSettingsPage.clearClientNameField();
 		CCUtils.assertEquals(actualNameError, "Maximum characters reached");
+		generalSettingsPage.clearClientNameField();
 		generalSettingsPage.enterNewClientName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(100));
 		logStep("Verifying error message is not displayed when input is of 100 charcters  for client name");
 		generalSettingsPage.verifyNoErrorPresent();
@@ -82,14 +79,11 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify unique value accepted for client name & sap id")
 	public void tesUniqueNameAndSapError() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Searching a client in client directory");
+
 		clientDirectoryPage.searchNode(ccuser.duplicateClientName);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		logStep("Navigating To General Setting page");
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		String duplicateClientName = generalSettingsPage.getDuplicateClientName();
 		String duplicateClientSap = generalSettingsPage.getDuplicateSap();
 		generalSettingsPage.clickClientDirectory();
@@ -118,19 +112,15 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify client name & sap id are mandatory values")
 	public void testClientNameAndSapAreMandatory() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Searching a client in client directory");
+		
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		logStep("Navigating To General Setting page");
-		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verifying Edit button is displayed ");
 		generalSettingsPage.clickEditButtonOfClient();
 		logStep("Verifying client name is mandatory");
 		generalSettingsPage.clearClientNameField();
-
 		String actualNameError = generalSettingsPage.getErrorMessage();
 		CCUtils.assertEquals(actualNameError, "Client Name is required");
 		generalSettingsPage.enterNewClientName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -142,7 +132,6 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualSapError, "SAP ID is required");
 		generalSettingsPage.enterNewClientSap(CCUtils.generateAlphaNumericStringIncludingSpecialChar(11));
 		logStep("Verifying error message is not displayed when input is provided for SAP id ");
-
 		generalSettingsPage.verifyNoErrorPresent();
 	}
 
@@ -163,7 +152,6 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		String previousTimeZone = generalSettingsPage.getClientTimezone();
 		String previousClientType = generalSettingsPage.getClientType();
 		logStep("Details for Client are as: " + ccuser.searchClientInClientDirectory);
-		log("Client Name: " + previousClientName);
 		log("Client SAP ID: " + previousClientSap);
 		log("Client Type: " + previousClientType);
 		log("Client TimeZone: " + previousTimeZone);
@@ -214,4 +202,28 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickActiveRadioButtonOfClient();
 		generalSettingsPage.clickSave();
 	}
+
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify cltimezone is not mandatory while editing & saving client detail")
+	public void testTimeZoneIsNotMandatory() throws Exception {
+		
+		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
+		clientDirectoryPage.clickSearchButton();
+		clientDirectoryPage.clickSearchResult();
+		logStep("Navigating To General Setting page");
+		logStep("Change timezone value to Select");
+		String previousTimeZone = generalSettingsPage.getClientTimezone();	
+		logStep("Timezone for client ' " + ccuser.searchClientInClientDirectory + " ' is :"+previousTimeZone);
+		generalSettingsPage.clickEditButtonOfClient();
+		createClientPage = new CreateClientPage(driver);
+		generalSettingsPage.clickTimeZoneDropdown();
+		createClientPage.selectTimeZone("Select");
+		logStep("Save timezone changed made");
+		generalSettingsPage.clickSave();
+		logStep("Changing client timezone to old values");
+		generalSettingsPage.clickEditButtonOfClient();
+		generalSettingsPage.clickTimeZoneDropdown();
+		createClientPage.selectTimeZone(previousTimeZone);
+		generalSettingsPage.clickSave();
+	}	
 }
