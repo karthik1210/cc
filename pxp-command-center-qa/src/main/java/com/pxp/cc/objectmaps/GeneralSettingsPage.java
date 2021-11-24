@@ -4,6 +4,8 @@ package com.pxp.cc.objectmaps;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -345,6 +347,12 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(ClientInactiveRadioButton, driver);
 		log("Clicked on Inactive radio button");
 		ClientInactiveRadioButton.click();
+	}
+	
+	public void clickActiveRadioButtonOfClient() {
+		CCUtils.verifyAndWaitForElement(radiobuttonActive, driver);
+		radiobuttonActive.click();
+		log("Clicked on Active radio button");
 	}
 
 	public void clickSaveButtonClient() throws InterruptedException {
@@ -692,12 +700,14 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 	
 	public void clearClientNameField() {
-		textboxClientName.clear();
+		textboxClientName.sendKeys(Keys.CONTROL,"a");
+		textboxClientName.sendKeys(Keys.BACK_SPACE);
 		log("deleted input in Client name field");
 	}
 	
-	public void clearSapField() {
-		textboxSapId.clear();
+	public void clearSapField() {	
+		textboxSapId.sendKeys(Keys.CONTROL,"a");
+		textboxSapId.sendKeys(Keys.BACK_SPACE);
 		log("deleted input in Sap id field");
 	}
 	

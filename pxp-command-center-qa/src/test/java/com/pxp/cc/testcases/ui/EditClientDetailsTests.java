@@ -100,6 +100,7 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		logStep("Verifying duplicate error message is displayed error for client name ");
 		generalSettingsPage.clearClientNameField();
 		generalSettingsPage.enterNewClientName(duplicateClientName.trim());
+		CCUtils.pressEnterKey();
 		String actualNameError = generalSettingsPage.getErrorMessage();
 		CCUtils.assertEquals(actualNameError, "Client name already in use");
 		generalSettingsPage.enterNewClientName("new");
@@ -126,10 +127,10 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		logStep("Navigating To General Setting page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verifying Edit button is displayed ");
-
 		generalSettingsPage.clickEditButtonOfClient();
 		logStep("Verifying client name is mandatory");
 		generalSettingsPage.clearClientNameField();
+
 		String actualNameError = generalSettingsPage.getErrorMessage();
 		CCUtils.assertEquals(actualNameError, "Client Name is required");
 		generalSettingsPage.enterNewClientName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -156,30 +157,61 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchResult();
 		logStep("Navigating To General Setting page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Verifying Edit button is displayed ");
+		String previousClientName = generalSettingsPage.getDuplicateClientName();
+		String previousClientSap = generalSettingsPage.getDuplicateSap();
+		String previousStatus = generalSettingsPage.getClientStatus();
+		String previousTimeZone = generalSettingsPage.getClientTimezone();
+		String previousClientType = generalSettingsPage.getClientType();
+		logStep("Details for Client are as: " + ccuser.searchClientInClientDirectory);
+		log("Client Name: " + previousClientName);
+		log("Client SAP ID: " + previousClientSap);
+		log("Client Type: " + previousClientType);
+		log("Client TimeZone: " + previousTimeZone);
+		log("Client Status: " + previousStatus);
+		logStep("Change above details of client ");
 		generalSettingsPage.clickEditButtonOfClient();
-		logStep("Verifying client name is mandatory");
+
+		String newClientName = CCUtils.generateAlphaNumericStringIncludingSpecialChar(10);
+		String newClientSap = CCUtils.generateAlphaNumericStringIncludingSpecialChar(12);
+		String newTimeZone = ccuser.getClientTimezone();
+		String newClientType = ccuser.getClientElevenType();
+
 		generalSettingsPage.clearClientNameField();
-		String actualNameError = generalSettingsPage.getErrorMessage();
-		CCUtils.assertEquals(actualNameError, "Client Name is required");
-		generalSettingsPage.enterNewClientName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		logStep("Verifying error message is not displayed when input is provided for client name");
-		generalSettingsPage.verifyNoErrorPresent();
-		logStep("Verifying maximum charcter error for SAP Id ");
+		generalSettingsPage.enterNewClientName(newClientName.trim());
 		generalSettingsPage.clearSapField();
-		String actualSapError = generalSettingsPage.getErrorMessage();
-		CCUtils.assertEquals(actualSapError, "SAP ID is required");
-		generalSettingsPage.enterNewClientSap(CCUtils.generateAlphaNumericStringIncludingSpecialChar(11));
-		logStep("Verifying error message is not displayed when input is provided for SAP id ");
-
-		logStep("Edit client details");
-		generalSettingsPage.clickEditButtonOfClient();
-		createClientPage = new CreateClientPage(driver);
+		generalSettingsPage.enterNewClientSap(newClientSap);
 		generalSettingsPage.clickClientType();
-		createClientPage.selectClientType("OSIS");
+		createClientPage = new CreateClientPage(driver);
+		createClientPage.selectClientType(newClientType);
 		generalSettingsPage.clickTimeZoneDropdown();
-		createClientPage.selectTimeZone("Mountain Standard Time");
+		createClientPage.selectTimeZone(newTimeZone);
+		generalSettingsPage.clickInactiveRadioButtonOfClient();
+		generalSettingsPage.clickSave();
 
+		String savedClientName = generalSettingsPage.getDuplicateClientName();
+		String savedClientSap = generalSettingsPage.getDuplicateSap();
+		String savedStatus = generalSettingsPage.getClientStatus();
+		String savedsTimeZone = generalSettingsPage.getClientTimezone();
+		String savedClientType = generalSettingsPage.getClientType();
+
+		logStep("Verify details of client are changed after save is sucessfull");
+		CCUtils.assertEquals(savedClientName, newClientName);
+		CCUtils.assertEquals(savedClientSap, newClientSap);
+		CCUtils.assertEquals(savedClientType, newClientType);
+		CCUtils.assertEquals(savedsTimeZone, newTimeZone);
+		CCUtils.assertEquals(savedStatus, "inactive");
+
+		logStep("Changing client details to old values");
+		generalSettingsPage.clickEditButtonOfClient();
+		generalSettingsPage.clearClientNameField();
+		generalSettingsPage.enterNewClientName(previousClientName.trim());
+		generalSettingsPage.clearSapField();
+		generalSettingsPage.enterNewClientSap(previousClientSap.trim());
+		generalSettingsPage.clickClientType();
+		createClientPage.selectClientType(previousClientType);
+		generalSettingsPage.clickTimeZoneDropdown();
+		createClientPage.selectTimeZone(previousTimeZone);
+		generalSettingsPage.clickActiveRadioButtonOfClient();
 		generalSettingsPage.clickSave();
 	}
 }
