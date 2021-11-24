@@ -101,6 +101,7 @@ public class CreateClientPage extends CCMainPage {
 
 	public void selectClientType(String clientTypeName) {
 		WebElement clientType = prepareDynamicXpathForClientType(xpathRequiredClientType, clientTypeName);
+		CCUtils.verifyAndWaitForElement(clientType, driver);
 		clientType.click();
 		log("Clicked on : " + clientTypeName);
 	}

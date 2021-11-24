@@ -24,10 +24,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='link value']")
 	private WebElement labelClientStatusValue;
-	
+
 	@FindBy(id = "orgActiveLabel")
 	private WebElement labelNodeStatusValue;
-	
+
 	@FindBy(id = "detailEditLabel")
 	private WebElement buttonClientInfoEdit;
 
@@ -329,8 +329,8 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void clickEditButtonOfClient() {
 		CCUtils.verifyAndWaitForElement(editClientButton, driver);
-		log("Clicked on edit button");
 		editClientButton.click();
+		log("Clicked on edit button");
 	}
 
 	public void editClientNodeOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
@@ -527,8 +527,8 @@ public class GeneralSettingsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyEnterpriseNodeFieldData(String enterpriseNameValue, String enterpriseSapId, String enterpriseTimezone,
-			String ClientType, Boolean isNodeStatusActive) {
+	public void verifyEnterpriseNodeFieldData(String enterpriseNameValue, String enterpriseSapId,
+			String enterpriseTimezone, String ClientType, Boolean isNodeStatusActive) {
 		clearSearchText();
 		searchNode(enterpriseNameValue);
 		CCUtils.assertEquals(getOrgSapId(), enterpriseSapId);
@@ -573,7 +573,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		else
 			return false;
 	}
-	
+
 	public Boolean returnOrgStatus() {
 		if (getOrgStatus().equals("active"))
 			return true;
@@ -586,9 +586,129 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Clicked on cross icon");
 		buttonCloseToaster.click();
 	}
-	
+
 	public void verifyErrorMessageInactiveTargetEnterprise() {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		CCUtils.assertEquals(toasterMessage.getText(), "Business unit cannot be moved to an inactive Target");
+	}
+
+	@FindBy(xpath = "(//span[@class='value'])[2]")
+	private WebElement duplicateSapId;
+
+	@FindBy(xpath = "(//span[@class='info ng-star-inserted'])[1]")
+	private WebElement duplicateClientName;
+
+	@FindBy(id = "detailNameInput")
+	private WebElement textboxClientName;
+
+	@FindBy(id = "detailSapInput")
+	private WebElement textboxSapId;
+
+	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//div[@class='ng-select-container ng-has-value']")
+	private WebElement dropdownClientType;
+
+	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//div[@class='ng-select-container ng-has-value']")
+	private WebElement dropdownTimezone;
+	
+	@FindBy(id = "detailActiveRadio")
+	private WebElement radiobuttonActive;
+	
+	@FindBy(id = "detailInactiveRadio")
+	private WebElement radiobuttonInactive;
+	
+	@FindBy(css = "body > app-root:nth-child(1) > app-header:nth-child(2) > div:nth-child(1) > mat-sidenav-container:nth-child(3) > mat-sidenav-content:nth-child(5) > div:nth-child(1) > div:nth-child(1) > app-general-settings:nth-child(2) > div:nth-child(1) > div:nth-child(2) > div:nth-child(2) > div:nth-child(1) > div:nth-child(1) > app-client-detail:nth-child(1) > div:nth-child(1) > form:nth-child(1) > div:nth-child(5) > div:nth-child(8) > div:nth-child(1) > mat-radio-group:nth-child(1) > div:nth-child(1) > div:nth-child(3) > span:nth-child(2)\r\n")
+	private WebElement textCaution;
+	
+	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
+	private WebElement buttonCancel;
+	
+	@FindBy(xpath = "//span[normalize-space()='SAVE']")
+	private WebElement buttonSave;
+	
+	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
+	private WebElement labelSolutionsActive;
+	
+	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
+	private WebElement textboxError;	
+	
+	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
+	private WebElement clientTab;
+	
+	public void clickClientDirectory() {
+		CCUtils.verifyAndWaitForElement(clientTab, driver);
+		clientTab.click();
+		log("clicked on client directory tab:");
+	}
+	
+	public String getDuplicateSap() {
+		CCUtils.verifyAndWaitForElement(duplicateSapId, driver);
+		String clientSap=duplicateSapId.getText();
+		return clientSap;
+	}
+
+	public String getDuplicateClientName() {
+		CCUtils.verifyAndWaitForElement(duplicateClientName, driver);
+		String clientName=duplicateClientName.getText();
+		return clientName;
+	}
+
+	public void enterNewClientName(String newClientName) {
+		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
+		textboxClientName.sendKeys(newClientName);
+		log("Entered text in Client name field is :" + newClientName);
+	}
+
+	public void enterNewClientSap(String newSapId) {
+		CCUtils.verifyAndWaitForElement(textboxSapId, driver);
+		textboxSapId.sendKeys(newSapId);
+		log("Entered text in Client name field is :" + newSapId);
+	}
+	public String getEditButtonText() {
+		CCUtils.verifyAndWaitForElement(editClientButton, driver);
+		return editClientButton.getText();
+	}
+	
+	public void clickClientType() {
+		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
+		dropdownClientType.click();
+		log("clicked on Client type dropdown in Edit Client screen");
+	}
+
+	public void clickTimeZoneDropdown() {
+		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
+		dropdownTimezone.click();
+		log("clicked on Timezone dropdown in Edit Client screen");
+	}
+	public void clickCancel() {
+		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
+		buttonCancel.click();
+		log("clicked on Cancel button in Edit Client screen");
+	}
+	
+	public void clickSave() {
+		CCUtils.verifyAndWaitForElement(buttonSave, driver);
+		buttonSave.click();
+		log("clicked on Save button in Edit Client screen");
+	}
+	
+	public void clearClientNameField() {
+		textboxClientName.clear();
+		log("deleted input in Client name field");
+	}
+	
+	public void clearSapField() {
+		textboxSapId.clear();
+		log("deleted input in Sap id field");
+	}
+	
+	public String getErrorMessage() {
+		CCUtils.verifyAndWaitForElement(textboxError, driver);
+		String errorMessage=textboxError.getText();
+		return errorMessage;
+	}
+	
+	public void verifyNoErrorPresent() {
+		CCUtils.assertTrue( textboxError.isDisplayed(), "error message displayed");
+		log("error message not displayed");
 	}
 }
