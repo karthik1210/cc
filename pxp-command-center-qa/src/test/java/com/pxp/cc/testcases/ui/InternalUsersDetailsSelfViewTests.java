@@ -34,7 +34,7 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		internalUsersPage = new InternalUsersPage(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view all the lables on internal user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view all the labels on internal user details page")
 	public void testInternalUsersDetailsSelfViewLabels() throws Exception {
 		logStep("Click any one of the user name from table");
 		internalUsersPage.selectUser();
@@ -52,14 +52,14 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		internalUserDetailsPage.verifyInternalUserLastLoginDateEnrollmentAndUserStatusInSelfViewMode();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify after clicking on back arrow user redirected to internal user tab.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "verify user redirected to internal users page after clicking on back arrow on internal user details page")
 	public void testInternalUsersDetailsBackArrowFunctionality() throws Exception {
 		logStep("Click any one of the user name from table");
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
-		logStep("Verify self view internal user labels");
-		internalUserDetailsPage.verifyInternalUserSelfViewLabels();
+		logStep("Verify after clicking on back arrow button user redirected to internal users page");
 		internalUserDetailsPage.clickBackArrowOnInternalUserDetailsPage();
+		internalUsersPage.verifyInternalUsersPageTitle();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options is displayed with self user login on internal user details page")
@@ -80,8 +80,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();		
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify deactivate user & send enrollment email options are not enable in kebab menu");
@@ -97,8 +97,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.inactive"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify activate user option should display & send enrollment email option shouldn't displayed in kebab menu");
@@ -114,8 +114,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.lockedout"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify unlock user option is displayed & send enrollment email options should not displayed in kebab menu");
@@ -131,8 +131,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify send enrollment email options should not displayed in kebab menu");
@@ -147,46 +147,16 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
-		internalUserDetailsPage.verifykEditDemographicDetailsInInternalUserDetailsPage();
 		logStep("Verifying demographic fields are editable to self user");
-		internalUserDetailsPage.clickEditInInternalUser();
+		internalUserDetailsPage.verifykEditDemographicDetailsInInternalUserDetailsPage();
 		logStep("Clicked on edit button on internal user details page");
-		internalUserDetailsPage.enterFirstName(CCUtils.generateAlphaNumericString(18));
-		internalUserDetailsPage.enterLastName(CCUtils.generateAlphaNumericString(18));
-		internalUserDetailsPage.enterEmail(CCUtils.generateNewEmail(11));
-		internalUserDetailsPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
-		internalUserDetailsPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
-		internalUserDetailsPage.clickCancel();
+		internalUserDetailsPage.clickEditInInternalUser();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify fields are editable & success message is displayed ")
-	public void testEditDemographicDetailsForInternalUserSuccessfully() throws Exception {
-		logStep("Verify self view for no roles assigned user on internal user page");
-		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.selectUserStatus(userStatusList);
-		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
-		logStep("Click any one of the user name from table");
-		internalUserDetailsPage = new InternalUserDetailsPage(driver);
-		internalUserDetailsPage.verifykEditDemographicDetailsInInternalUserDetailsPage();
-		logStep("Verifying demographic fields are editable to self user");
-		internalUserDetailsPage.clickEditInInternalUser();
-		logStep("Clicked on edit button on internal user details page");
-		internalUserDetailsPage.enterFirstName(CCUtils.generateAlphaNumericString(18));
-		internalUserDetailsPage.enterLastName(CCUtils.generateAlphaNumericString(18));
-		internalUserDetailsPage.enterEmail(CCUtils.generateNewEmail(11));
-		internalUserDetailsPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
-		internalUserDetailsPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
-		internalUserDetailsPage.clickCancel();
-		internalUserDetailsPage.verifySuccessToaster();
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fields are editable")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fields are uneditable")
 	public void testEditButtonEnabledToSelfUserForUserRole() throws Exception {
 		logStep("Verify self view for no roles assigned user on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
@@ -194,11 +164,11 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
-		internalUserDetailsPage.verifyUserRoleNonEditableInInternalUserDetailsPage();
 		logStep("Verifying demographic fields are non editable to self user");
+		internalUserDetailsPage.verifyUserRoleNonEditableInInternalUserDetailsPage();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view locked status on hover on internal user details page")
@@ -209,8 +179,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.lockedout"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyHoverOverMessageOnLockedUserStatus();
 	}
@@ -223,8 +193,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyHoverOverMessageOnActiveUserStatus();
 	}
@@ -237,8 +207,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.inactive"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyHoverOverMessageOnInactiveUserStatus();
 	}
@@ -251,8 +221,8 @@ public class InternalUsersDetailsSelfViewTests extends CommandCenterGenericTest 
 		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
-		internalUsersPage.selectUser();
 		logStep("Click any one of the user name from table");
+		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyHoverOverMessageOnNoRoleAssignedUserStatus();
 	}

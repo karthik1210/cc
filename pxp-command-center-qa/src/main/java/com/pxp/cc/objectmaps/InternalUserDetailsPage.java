@@ -242,55 +242,46 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	}
 
-	public String verifyInternalUserNameTitleInSelfViewMode() {
+	public void verifyInternalUserNameTitleInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelNameTitleSelfView, driver);
 		log("Verify Internal User Full name on Internal User Details screen: " + labelNameTitleSelfView.getText());
 		CCUtils.assertEquals(labelNameTitleSelfView.isDisplayed(), true);
-		return labelNameTitleSelfView.getText();
 	}
 
-	public String verifyInternalUserSubtitleInSelfViewMode() {
+	public void verifyInternalUserSubtitleInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelSubtitleNameSelfView, driver);
 		log("Internal User sub tiltle on Internal User Details screen: " + labelSubtitleNameSelfView.getText());
 		CCUtils.assertEquals(labelSubtitleNameSelfView.isDisplayed(), true);
-		return labelSubtitleNameSelfView.getText();
 	}
 
-	public String verifyInternalUserNameIntialsInViewMode() {
+	public void verifyInternalUserNameIntialsInViewMode() {
 		CCUtils.verifyAndWaitForElement(labelIntialNameSelfView, driver);
 		log("Internal User intials name on Internal User Details screen: " + labelIntialNameSelfView.getText());
 		CCUtils.assertEquals(labelIntialNameSelfView.isDisplayed(), true);
-		return labelIntialNameSelfView.getText();
 	}
 
-	public String verifyInternalUserLastLoginInSelfViewMode() {
+	public void verifyInternalUserLastLoginInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelLastLoginSelfView, driver);
 		log("Internal User sub tiltle on Internal User Details screen: " + labelLastLoginSelfView.getText());
 		CCUtils.assertEquals(labelLastLoginSelfView.isDisplayed(), true);
-		return labelLastLoginSelfView.getText();
 	}
 
-	public String verifyInternalUserEnrollmentStatusInSelfViewMode() {
+	public void verifyInternalUserEnrollmentStatusInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelEnrollmentStatusSelfView, driver);
 		log("Internal User sub tiltle on Internal User Details screen: " + labelEnrollmentStatusSelfView.getText());
 		CCUtils.assertEquals(labelEnrollmentStatusSelfView.isDisplayed(), true);
-		return labelEnrollmentStatusSelfView.getText();
 	}
 
-	public String verifyInternalUserUserStatusInSelfViewMode() {
+	public void verifyInternalUserUserStatusInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelUserStatusSelfView, driver);
 		log("Internal User sub tiltle on Internal User Details screen: " + labelUserStatusSelfView.getText());
 		CCUtils.assertEquals(labelUserStatusSelfView.isDisplayed(), true);
-		return labelUserStatusSelfView.getText();
 	}
 
-	public List<WebElement> verifyInternalUserLastLoginDateEnrollmentAndUserStatusInSelfViewMode() {
+	public void verifyInternalUserLastLoginDateEnrollmentAndUserStatusInSelfViewMode() {
 		for (int i = 0; i < labelLastLoginDateEnrollmentStatusUserStatusSelfView.size(); i++) {
-			log("Admin User details on Internal User Details screen: "
-					+ labelLastLoginDateEnrollmentStatusUserStatusSelfView.get(i).getText());
 			CCUtils.assertEquals(labelLastLoginDateEnrollmentStatusUserStatusSelfView.isEmpty(), false);
 		}
-		return labelLastLoginDateEnrollmentStatusUserStatusSelfView;
 	}
 
 	public void verifyInternalUserSelfViewLabels() {
@@ -433,9 +424,8 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	public void verifyHoverOverMessageOnInactiveUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverInactiveUserStatus, driver);
-		String date = "Name(" + CCUtils.dateformatter() + ")";
-		CCUtils.assertEquals(labelHoverInactiveUserStatus, date);
-		labelHoverInactiveUserStatus.getAttribute("ng-reflect-message");
+		labelHoverInactiveUserStatus.getAttribute("ng-reflect-message").toString();
+		CCUtils.assertEquals(labelHoverInactiveUserStatus.getText(), labelNameTitleSelfView.getText().concat(labelLastLoginSelfView.getText()) );
 	}
 
 	public void verifyHoverOverMessageOnActiveUserStatus() {
@@ -448,5 +438,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void verifyHoverOverMessageOnNoRoleAssignedUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
 		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getText(), "No roles assigned");
 	}
 }
