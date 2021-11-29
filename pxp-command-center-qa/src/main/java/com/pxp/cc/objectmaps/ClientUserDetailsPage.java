@@ -28,9 +28,6 @@ public class ClientUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-card-title[@id='userName']")
 	private WebElement labelUsernameValue;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
 	}
@@ -82,8 +79,4 @@ public class ClientUserDetailsPage extends CCMainPage {
 		}
 	}
 
-	public String getToasterMessage() {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		return toasterMessage.getText().trim();
-	}
 }

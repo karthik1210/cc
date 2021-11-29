@@ -17,6 +17,7 @@ import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.objectmaps.SendBulkEnrollmentPage;
 import com.pxp.cc.objectmaps.SendEnrollmentConfirmationPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
@@ -179,8 +180,8 @@ public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCen
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForSingleUser(userName);
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("verify success toaster message");
-		String actualToasterMessage = clientUserDetailsPage.getToasterMessage();
-		CCUtils.assertEquals(actualToasterMessage, "Enrollment sent to users successfully");
+		CommonMethods commanMethods = new CommonMethods(driver);
+		commanMethods.verifySuccessToaster("Enrollment sent to users successfully");
 		logStep("Verify user able to set new password using password reset link found in the email");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		resetPage.urlInEmail(ccuser.getResetEmail(), autogeneratePassword);
