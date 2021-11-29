@@ -82,13 +82,8 @@ public class ClientUserDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void verifySuccessToaster() {
+	public String getToasterMessage() {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		log("Verifying success toaster message.");
-		if (toasterMessage.isDisplayed() == true)
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "Enrollment sent to users successfully");
-		else
-			log("Success toaster is not displayed");
+		return toasterMessage.getText().trim();
 	}
-
 }

@@ -179,7 +179,8 @@ public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCen
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForSingleUser(userName);
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("verify success toaster message");
-		clientUserDetailsPage.verifySuccessToaster();
+		String actualToasterMessage = clientUserDetailsPage.getToasterMessage();
+		CCUtils.assertEquals(actualToasterMessage, "Enrollment sent to users successfully");
 		logStep("Verify user able to set new password using password reset link found in the email");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		resetPage.urlInEmail(ccuser.getResetEmail(), autogeneratePassword);
