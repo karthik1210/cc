@@ -32,6 +32,7 @@ public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCen
 	public PasswordResetPage resetPage;
 	SecureRandom random = new SecureRandom();
 	String autogeneratePassword = PasswordResetPage.genPassword(random);
+	public CommonMethods commonMethods;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -180,7 +181,7 @@ public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCen
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForSingleUser(userName);
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("verify success toaster message");
-		CommonMethods commonMethods = new CommonMethods(driver);
+		commonMethods = new CommonMethods(driver);
 		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
 		logStep("Verify user able to set new password using password reset link found in the email");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());

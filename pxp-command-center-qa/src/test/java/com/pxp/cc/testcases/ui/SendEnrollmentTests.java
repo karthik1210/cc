@@ -18,6 +18,7 @@ import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.objectmaps.SendBulkEnrollmentPage;
 import com.pxp.cc.objectmaps.SendEnrollmentConfirmationPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class SendEnrollmentTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
@@ -32,6 +33,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 	public PasswordResetPage resetPage;
 	SecureRandom random = new SecureRandom();
 	String autogeneratePassword = PasswordResetPage.genPassword(random);
+	public CommonMethods commonMethods;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -72,7 +74,8 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForBulkEnrollment(4);
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("Verify success toaster");
-		sendBulkEnrollmentPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify send enrollment button functionality")
@@ -186,7 +189,8 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForSingleUser(userName);
 		logStep("Click on yes send button and verify success toaster message");
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
-		internalUserDetailsPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify that an error message is displayed on the screen if the user is searching using the default value")
@@ -259,7 +263,8 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		sendEnrollmentConfirmationPage.verifyConfirmationTextForSingleUser(userName);
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("verify success toaster message");
-		internalUserDetailsPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
 		logStep("Verify user able to set new password using password reset link found in the email");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		resetPage.urlInEmail(ccuser.getResetEmail(), autogeneratePassword);
