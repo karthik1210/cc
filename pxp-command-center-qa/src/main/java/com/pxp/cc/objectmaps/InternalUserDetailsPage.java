@@ -11,9 +11,6 @@ import com.pxp.cc.util.CCUtils;
 
 public class InternalUserDetailsPage extends CCMainPage {
 
-	@FindBy(xpath = "//div[@class='arrowDiv']")
-	private WebElement labelPageTitle;
-
 	@FindBy(id = "kebabMenu")
 	private WebElement buttonKebabMenu;
 
@@ -44,17 +41,8 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='flex py-3 px-4']")
 	private List<WebElement> labelLastLoginDateEnrollmentStatusUserStatusAdminView;
 
-	@FindBy(xpath = "//mat-icon[contains(text(),'more_horiz')]")
-	private WebElement buttonKebabMenuAdminView;
-
 	@FindBy(xpath = "//button[@role='menuitem']")
 	private List<WebElement> buttonKebabMenuOptionsAdminView;
-
-	@FindBy(xpath = "//span[@class='locked-label']")
-	private WebElement labelUserStatus;
-
-	@FindBy(xpath = "//td[@role='gridcell']/span/mat-icon")
-	private WebElement activeUserStatus;
 
 	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
 	private WebElement kebabDeactiveUserOption;
@@ -67,6 +55,75 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='unlock']")
 	private WebElement labelUserStatusUnlock;
+
+	@FindBy(xpath = "//mat-card-title[@class='mat-card-title pt-1 text-oneline']")
+	private WebElement labelNameTitleSelfView;
+
+	@FindBy(xpath = "//mat-card-subtitle[@class='mat-card-subtitle text-oneline mb-0 ng-star-inserted']")
+	private WebElement labelSubtitleNameSelfView;
+
+	@FindBy(xpath = "//div[@class='mat-card-avatar mat-fab mat-button-base mat-accent shadow-none mr-3']")
+	private WebElement labelIntialNameSelfView;
+
+	@FindBy(xpath = "//div[@class='flex py-3 px-4']")
+	private List<WebElement> labelLastLoginDateEnrollmentStatusUserStatusSelfView;
+
+	@FindBy(xpath = "//button[@role='menuitem']")
+	private List<WebElement> buttonKebabMenuOptionsSelfView;
+
+	@FindBy(xpath = "//span[contains(text(),'Last Login')]")
+	private WebElement labelLastLoginSelfView;
+
+	@FindBy(xpath = "//span[contains(text(),'Enrollment Status')]")
+	private WebElement labelEnrollmentStatusSelfView;
+
+	@FindBy(xpath = "//span[contains(text(),'User Status')]")
+	private WebElement labelUserStatusSelfView;
+
+	@FindBy(id = "editUser")
+	private WebElement buttonEditInternalUser;
+
+	@FindBy(xpath = "//h2[contains(text(),'User Roles')]//following::div[contains(text(),'EDIT')]")
+	private WebElement buttonEditInternalUserRole;
+
+	@FindBy(xpath = "//h2[contains(text(),'User Roles')]//preceding::div[contains(text(),'EDIT')]")
+	private WebElement buttonEditInternalUserDemographicDetails;
+
+	@FindBy(id = "addFirstNameInput")
+	private WebElement textboxFirstName;
+
+	@FindBy(id = "addLastNameInput")
+	private WebElement textboxLasttName;
+
+	@FindBy(id = "addEmailInput")
+	private WebElement textboxEmail;
+
+	@FindBy(id = "addUserNameInput")
+	private WebElement textboxUserName;
+
+	@FindBy(id = "mobileInput")
+	private WebElement textboxMobileNumber;
+
+	@FindBy(xpath = "//span[contains(text(),'Password')]")
+	private WebElement labelPassword;
+
+	@FindBy(xpath = "//span[contains(text(),'CANCEL')]")
+	private WebElement buttonCancel;
+
+	@FindBy(xpath = "//button[contains(text(),'SAVE')]")
+	private WebElement buttonSave;
+
+	@FindBy(xpath = "//mat-icon[contains(text(),'arrow_back')]")
+	private WebElement buttonBackArrow;
+
+	@FindBy(xpath = "//mat-icon[@ng-reflect-message='User exceeded login attempts']")
+	private WebElement labelHoverLockedUserStatus;
+
+	@FindBy(xpath = "//mat-icon[@ng-reflect-ng-class='inactive']")
+	private WebElement labelHoverInactiveUserStatus;
+
+	@FindBy(xpath = "//mat-icon[@ng-reflect-ng-class='active'][contains(text(),' check_circle')]")
+	private WebElement labelHoverActiveUserStatus;
 
 	public InternalUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -183,5 +240,204 @@ public class InternalUserDetailsPage extends CCMainPage {
 			CCUtils.assertEquals(buttonSendEnrollmentEmail.isDisplayed(), false);
 		}
 
+	}
+
+	public void verifyInternalUserNameTitleInSelfViewMode() {
+		CCUtils.verifyAndWaitForElement(labelNameTitleSelfView, driver);
+		log("Verify Internal User Full name on Internal User Details screen: " + labelNameTitleSelfView.getText());
+		CCUtils.assertEquals(labelNameTitleSelfView.isDisplayed(), true);
+	}
+
+	public void verifyInternalUserSubtitleInSelfViewMode() {
+		CCUtils.verifyAndWaitForElement(labelSubtitleNameSelfView, driver);
+		log("Internal User sub tiltle on Internal User Details screen: " + labelSubtitleNameSelfView.getText());
+		CCUtils.assertEquals(labelSubtitleNameSelfView.isDisplayed(), true);
+	}
+
+	public void verifyInternalUserNameIntialsInViewMode() {
+		CCUtils.verifyAndWaitForElement(labelIntialNameSelfView, driver);
+		log("Internal User intials name on Internal User Details screen: " + labelIntialNameSelfView.getText());
+		CCUtils.assertEquals(labelIntialNameSelfView.isDisplayed(), true);
+	}
+
+	public void verifyInternalUserLastLoginInSelfViewMode() {
+		CCUtils.verifyAndWaitForElement(labelLastLoginSelfView, driver);
+		log("Internal User sub tiltle on Internal User Details screen: " + labelLastLoginSelfView.getText());
+		CCUtils.assertEquals(labelLastLoginSelfView.isDisplayed(), true);
+	}
+
+	public void verifyInternalUserEnrollmentStatusInSelfViewMode() {
+		CCUtils.verifyAndWaitForElement(labelEnrollmentStatusSelfView, driver);
+		log("Internal User sub tiltle on Internal User Details screen: " + labelEnrollmentStatusSelfView.getText());
+		CCUtils.assertEquals(labelEnrollmentStatusSelfView.isDisplayed(), true);
+	}
+
+	public void verifyInternalUserUserStatusInSelfViewMode() {
+		CCUtils.verifyAndWaitForElement(labelUserStatusSelfView, driver);
+		log("Internal User sub tiltle on Internal User Details screen: " + labelUserStatusSelfView.getText());
+		CCUtils.assertEquals(labelUserStatusSelfView.isDisplayed(), true);
+	}
+
+	public void verifyInternalUserLastLoginDateEnrollmentAndUserStatusInSelfViewMode() {
+		for (int i = 0; i < labelLastLoginDateEnrollmentStatusUserStatusSelfView.size(); i++) {
+			CCUtils.assertEquals(labelLastLoginDateEnrollmentStatusUserStatusSelfView.isEmpty(), false);
+		}
+	}
+
+	public void verifyInternalUserSelfViewLabels() {
+		CCUtils.verifyAndWaitForElement(labelNameTitleSelfView, driver);
+		log("Verifying self view internal user labels on internal user page");
+		verifyInternalUserNameTitleInSelfViewMode();
+		verifyInternalUserSubtitleInSelfViewMode();
+		verifyInternalUserNameIntialsInViewMode();
+		verifyInternalUserLastLoginInSelfViewMode();
+		verifyInternalUserEnrollmentStatusInSelfViewMode();
+		verifyInternalUserUserStatusInSelfViewMode();
+	}
+
+	public void verifyInternalUserKebabMenuOptionsDisplayedForSelfView() {
+		for (int i = 0; i < buttonKebabMenuOptionsSelfView.size(); i++)
+			log("Veify kebab menu options: " + buttonKebabMenuOptionsSelfView.get(i).getText());
+		CCUtils.assertEquals(buttonKebabMenuOptionsSelfView.isEmpty(), false);
+	}
+
+	public void verifyActivateOrDeactivateOptionDisabledToSelfUser() {
+		if (labelUserStatusValue.getText().trim().equals("Active")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of Deactivate user");
+			CCUtils.assertEquals(kebabDeactiveUserOption.getText().trim(), "Deactivate User");
+		} else if (labelUserStatusValue.getText().trim().equals("Inactive")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of activate user");
+			CCUtils.assertEquals(kebabActiveUserOption.getText().trim(), "Activate User");
+		}
+	}
+
+	public void verifySendEnrollmentOptionInKebabMenuToSelfUser() {
+		if (labelUserStatusValue.getText().trim().equals("Active")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of Send Enrollment Email");
+			CCUtils.assertEquals(buttonSendEnrollmentEmail.getText().trim(), "Send Enrollment Email");
+		} else if (labelUserStatusValue.getText().trim().equals("Inactive")
+				|| labelUserStatusValue.getText().trim().equals("No roles assigned")
+				|| labelUserStatusValue.getText().trim().equals("Locked")) {
+			clickOnKebabMenuButton();
+			log("Verifying send enrollment email button is not displayed in kebab menu");
+			CCUtils.assertEquals(buttonSendEnrollmentEmail.isDisplayed(), false);
+		}
+	}
+
+	public void verifyLockAndUnlockOptionDisplayedToSelfUser() {
+		if (labelUserStatusValue.getText().trim().equals("Lock")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of Unlock User");
+			CCUtils.assertEquals(labelUserStatusUnlock.getText().trim(), "Unlock User");
+		} else if (labelUserStatusValue.getText().trim().equals("Unlock")) {
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of lock User");
+			CCUtils.assertEquals(labelUserStatusLocked.getText().trim(), "Lock User");
+		}
+	}
+
+	public void clickEditInInternalUser() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(buttonEditInternalUser, driver);
+		javascriptClick(buttonEditInternalUser);
+		log("Clicked on Edit button");
+	}
+
+	public void verifyUserRoleNonEditableInInternalUserDetailsPage() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(buttonEditInternalUserRole, driver);
+		buttonEditInternalUserRole.getAttribute("readonly").equals(true);
+		log("User role is not editable");
+	}
+
+	public void verifykEditDemographicDetailsInInternalUserDetailsPage() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(buttonEditInternalUserDemographicDetails, driver);
+		javascriptClick(buttonEditInternalUserDemographicDetails);
+		log("Clicked on Edit button");
+	}
+
+	public void enterFirstName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.clear();
+		textboxFirstName.sendKeys(input);
+		log("Entered input for Firstname : " + input);
+	}
+
+	public void enterLastName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxLasttName, driver);
+		textboxLasttName.clear();
+		textboxLasttName.sendKeys(input);
+		log("Entered input for Last name : " + input);
+	}
+
+	public void enterUserName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxUserName, driver);
+		textboxUserName.clear();
+		textboxUserName.sendKeys(input);
+		log("Entered input for username : " + input);
+	}
+
+	public void enterEmail(String input) {
+		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
+		textboxEmail.clear();
+		textboxEmail.sendKeys(input);
+		log("Entered input for email : " + input);
+	}
+
+	public void enterMobileNumber(String input) {
+		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
+		textboxMobileNumber.clear();
+		textboxMobileNumber.sendKeys(input);
+		log("Entered input for mobile number : " + input);
+	}
+
+	public void verifyPasswordUneditable() {
+		CCUtils.verifyAndWaitForElement(labelPassword, driver);
+		labelPassword.getAttribute("readonly").equals(true);
+		log("Password is not editable");
+	}
+
+	public void clickCancel() {
+		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
+		buttonCancel.click();
+		log("Clicked on Cancel");
+	}
+
+	public void clickSave() {
+		CCUtils.verifyAndWaitForElement(buttonSave, driver);
+		buttonSave.click();
+		log("Clicked on Save");
+	}
+
+	public void clickBackArrowOnInternalUserDetailsPage() {
+		CCUtils.verifyAndWaitForElement(buttonBackArrow, driver);
+		buttonBackArrow.click();
+		log("Click back button on internal user details page");
+	}
+
+	public void verifyHoverOverMessageOnLockedUserStatus() {
+		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
+		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getText(), "User exceeded login attempts");
+	}
+
+	public void verifyHoverOverMessageOnInactiveUserStatus() {
+		CCUtils.verifyAndWaitForElement(labelHoverInactiveUserStatus, driver);
+		labelHoverInactiveUserStatus.getAttribute("ng-reflect-message").toString();
+		CCUtils.assertEquals(labelHoverInactiveUserStatus.getText(), labelNameTitleSelfView.getText().concat(labelLastLoginSelfView.getText()) );
+	}
+
+	public void verifyHoverOverMessageOnActiveUserStatus() {
+		CCUtils.verifyAndWaitForElement(labelHoverActiveUserStatus, driver);
+		labelHoverActiveUserStatus.getAttribute("ng-reflect-message");
+		String date = CCUtils.dateformatter();
+		CCUtils.assertEquals(labelHoverActiveUserStatus.getText(), date);
+	}
+
+	public void verifyHoverOverMessageOnNoRoleAssignedUserStatus() {
+		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
+		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getText(), "No roles assigned");
 	}
 }
