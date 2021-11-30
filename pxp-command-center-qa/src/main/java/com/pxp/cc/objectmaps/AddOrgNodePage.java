@@ -256,19 +256,6 @@ public class AddOrgNodePage extends CCMainPage {
 		clickOnSaveAndAddButton();
 	}
 
-	public void verifyErrorMessage(String labelText, String actualToasterMessage) {
-		if (labelText.trim().equals("System Name *")) {
-			CCUtils.assertEquals(actualToasterMessage, "System name cannot be empty");
-			log("Error Message displayed for system name field is " + actualToasterMessage);
-		} else if (labelText.trim().equals("Enterprise Name *")) {
-			CCUtils.assertEquals(actualToasterMessage, "Enterprise name cannot be empty");
-			log("Error Message displayed for enterprise name field is " + actualToasterMessage);
-		} else {
-			CCUtils.assertEquals(actualToasterMessage, "Practice name cannot be empty");
-			log("Error Message displayed for practice name field is " + actualToasterMessage);
-		}
-	}
-
 	public void verifyParentEntityNameIsRequiredField() {
 		CCUtils.verifyAndWaitForElement(errorParentNameRequired, driver);
 		CCUtils.assertEquals(errorParentNameRequired.getText().trim(), "Parent Entity is required");

@@ -37,7 +37,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.verifyOrgNameIsRequiredField(systemNameLabelText);
 		addOrgNodePage.enterSpaceInRequiredField();
 		commonMethods = new CommonMethods(driver);
-		addOrgNodePage.verifyErrorMessage(systemNameLabelText, commonMethods.getToasterMessage());
+		commonMethods.verifyToasterMessage("System name cannot be empty");
 		commonMethods.closeToasterMessage();
 		logStep("Click on add new system button");
 		generalSettingsPage.clickOnAddSystem();
@@ -248,8 +248,8 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(ccuser.getSystemName());
 		addOrgNodePage.enterSpaceInRequiredField();
-		commonMethods= new CommonMethods(driver);
-		addOrgNodePage.verifyErrorMessage(enterpriseNameLabelText,commonMethods.getToasterMessage());
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Enterprise name cannot be empty");
 		commonMethods.closeToasterMessage();
 		logStep("Click on add new enterprise button");
 		generalSettingsPage.clickOnAddEnterprise();
@@ -432,7 +432,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
 		addOrgNodePage.enterSpaceInRequiredField();
 		commonMethods = new CommonMethods(driver);
-		addOrgNodePage.verifyErrorMessage(practiceNameLabelText,commonMethods.getToasterMessage());
+		commonMethods.verifyToasterMessage("Practice name cannot be empty");
 		commonMethods.closeToasterMessage();
 		logStep("Click on add new enterprise button");
 		generalSettingsPage.clickOnAddPractice();
