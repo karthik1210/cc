@@ -10,6 +10,7 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.objectmaps.MoveAgnosticPracticePage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 
@@ -17,6 +18,7 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 	public GeneralSettingsPage generalSettingsPage;
 	public MoveAgnosticPracticePage moveAgnosticPracticePage;
 	public AddOrgNodePage addOrgNodePage;
+	public CommonMethods commonMethods;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -60,7 +62,11 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 		moveAgnosticPracticePage.clickMoveButtonOfPractice();
 		moveAgnosticPracticePage.clickOnNewClientOption();
 		moveAgnosticPracticePage.movePracticeNodeToClientWithDoNotInherit(testData.getProperty("practice.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(practiceName, testData.getProperty("practice.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + practiceName + " has been successfully moved to client "
+				+ testData.getProperty("practice.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("practice.client.name"));
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
 		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, testData.getProperty("practice.sapid"),
@@ -96,8 +102,9 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 		logStep("Move active practice node to inactive client with do not inhetit and verify error message");
 		moveAgnosticPracticePage
 				.movePracticeNodeToClientWithDoNotInherit(testData.getProperty("inactive.target.client.name"));
-		generalSettingsPage.verifyErrorMessageInactiveTargetClient();
-		generalSettingsPage.closeToasterMessage();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Client selected is inactive. Activate client and try again.");
+		commonMethods.closeToasterMessage();
 		logStep("Move inactive practice node to inactive client with inhetit and verify error message");
 		generalSettingsPage.clearSearchText();
 		generalSettingsPage.searchNode(testData.getProperty("source.inactive.practice.node.name"));
@@ -105,8 +112,8 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 		moveAgnosticPracticePage.clickOnNewClientOption();
 		moveAgnosticPracticePage
 				.movePracticeNodeToClientWithInherit(testData.getProperty("inactive.target.client.name"));
-		generalSettingsPage.verifyErrorMessageInactiveTargetClient();
-		generalSettingsPage.closeToasterMessage();
+		commonMethods.verifyToasterMessage("Client selected is inactive. Activate client and try again.");
+		commonMethods.closeToasterMessage();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel & cross button in move practice popup")
@@ -150,8 +157,11 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 		moveAgnosticPracticePage.clickOnNewClientOption();
 		moveAgnosticPracticePage
 				.movePracticeNodeToClientWithDoNotInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(practiceName,
-				testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + practiceName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		logStep("Verify that sap id, timezone and status attribute values ​​are not taken from the target client node during the transition");
 		String clientType = generalSettingsPage.getClientType();
 		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, testData.getProperty("inactive.practice.sapid"),
@@ -177,8 +187,11 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 		moveAgnosticPracticePage.clickMoveButtonOfPractice();
 		moveAgnosticPracticePage.clickOnNewClientOption();
 		moveAgnosticPracticePage.movePracticeNodeToClientWithInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(practiceName,
-				testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + practiceName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		String clientSapId = generalSettingsPage.getClientSapId();
 		String clientTimezone = generalSettingsPage.getClientTimezone();
 		String clientType = generalSettingsPage.getClientType();
@@ -206,8 +219,11 @@ public class MoveAgnosticPracticeTests extends CommandCenterGenericTest {
 		moveAgnosticPracticePage.clickMoveButtonOfPractice();
 		moveAgnosticPracticePage.clickOnNewClientOption();
 		moveAgnosticPracticePage.movePracticeNodeToClientWithInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(practiceName,
-				testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + practiceName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		String clientSapId = generalSettingsPage.getClientSapId();
 		String clientTimezone = generalSettingsPage.getClientTimezone();
 		String clientType = generalSettingsPage.getClientType();

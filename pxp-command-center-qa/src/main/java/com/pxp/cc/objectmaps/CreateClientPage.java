@@ -49,7 +49,7 @@ public class CreateClientPage extends CCMainPage {
 	@FindBy(xpath = "//input[@value='true']")
 	private WebElement radioBtnActive;
 
-	@FindBy(id = "timezoneSelect")
+	@FindBy(id = "clientInactiveInput")
 	private WebElement radioBtnInactive;
 
 	@FindBy(xpath = "//input[@value='test']")
@@ -63,9 +63,6 @@ public class CreateClientPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[normalize-space()='SAP ID already in use']")
 	private WebElement errorUniqueSap;
-
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
 
 	public void clickCreateClient() {
 		CCUtils.verifyAndWaitForElement(buttonNew, driver);
@@ -106,7 +103,6 @@ public class CreateClientPage extends CCMainPage {
 		log("Clicked on : " + clientTypeName);
 	}
 
-
 	public void selectTimeZone(String newTimezone) {
 		WebElement newClientTimezone = prepareDynamicXpathForClientType(xpathRequiredNewClientTimezone, newTimezone);
 		newClientTimezone.click();
@@ -128,19 +124,14 @@ public class CreateClientPage extends CCMainPage {
 		selectTimeZone(newTimezone);
 	}
 
-	public String clickConfirmPopup() throws InterruptedException {
+	public void clickConfirmPopup() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonConfirm, driver);
 		javascriptClick(buttonConfirm);
-		log("Clicked on Create button in popup");
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		String actualMessage = toasterMessage.getText();
-		return actualMessage;
 	}
 
 	public void selectInactiveRadiobutton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(radioBtnInactive, driver);
 		radioBtnInactive.click();
-		log("Clicked on Inactive radiobutton in popup");
 	}
 
 	public void selectTestClient() throws InterruptedException {

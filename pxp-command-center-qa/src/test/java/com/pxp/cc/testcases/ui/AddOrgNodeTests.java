@@ -9,11 +9,13 @@ import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class AddOrgNodeTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public AddOrgNodePage addOrgNodePage;
 	public GeneralSettingsPage generalSettingsPage;
+	public CommonMethods commonMethods;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -34,7 +36,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.clickOnSaveAndAddButton();
 		addOrgNodePage.verifyOrgNameIsRequiredField(systemNameLabelText);
 		addOrgNodePage.enterSpaceInRequiredField();
-		addOrgNodePage.verifyToasterMessage(systemNameLabelText);
+		commonMethods = new CommonMethods(driver);
+		addOrgNodePage.verifyErrorMessage(systemNameLabelText, commonMethods.getToasterMessage());
+		commonMethods.closeToasterMessage();
 		logStep("Click on add new system button");
 		generalSettingsPage.clickOnAddSystem();
 		logStep("Enter more than 100 characters in system name field and verify error message for system name field");
@@ -244,7 +248,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(ccuser.getSystemName());
 		addOrgNodePage.enterSpaceInRequiredField();
-		addOrgNodePage.verifyToasterMessage(enterpriseNameLabelText);
+		commonMethods= new CommonMethods(driver);
+		addOrgNodePage.verifyErrorMessage(enterpriseNameLabelText,commonMethods.getToasterMessage());
+		commonMethods.closeToasterMessage();
 		logStep("Click on add new enterprise button");
 		generalSettingsPage.clickOnAddEnterprise();
 		logStep("Enter more than 100 characters in enterprise name field and verify error message for system name field");
@@ -425,7 +431,9 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		addOrgNodePage.clickOnParentEntityNameDropdown();
 		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
 		addOrgNodePage.enterSpaceInRequiredField();
-		addOrgNodePage.verifyToasterMessage(practiceNameLabelText);
+		commonMethods = new CommonMethods(driver);
+		addOrgNodePage.verifyErrorMessage(practiceNameLabelText,commonMethods.getToasterMessage());
+		commonMethods.closeToasterMessage();
 		logStep("Click on add new enterprise button");
 		generalSettingsPage.clickOnAddPractice();
 		logStep("Enter more than 100 characters in enterprise name field and verify error message for system name field");

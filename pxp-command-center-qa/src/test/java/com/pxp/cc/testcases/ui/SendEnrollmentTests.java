@@ -75,7 +75,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("Verify success toaster");
 		commonMethods = new CommonMethods(driver);
-		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
+		commonMethods.verifyToasterMessage("Enrollment sent to users successfully");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify send enrollment button functionality")
@@ -190,7 +190,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		logStep("Click on yes send button and verify success toaster message");
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		commonMethods = new CommonMethods(driver);
-		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
+		commonMethods.verifyToasterMessage("Enrollment sent to users successfully");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify that an error message is displayed on the screen if the user is searching using the default value")
@@ -264,7 +264,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		sendEnrollmentConfirmationPage.clickOnYesSendButton();
 		logStep("verify success toaster message");
 		commonMethods = new CommonMethods(driver);
-		commonMethods.verifySuccessToaster("Enrollment sent to users successfully");
+		commonMethods.verifyToasterMessage("Enrollment sent to users successfully");
 		logStep("Verify user able to set new password using password reset link found in the email");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		resetPage.urlInEmail(ccuser.getResetEmail(), autogeneratePassword);

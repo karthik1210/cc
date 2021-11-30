@@ -11,6 +11,7 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.objectmaps.MoveAgnosticPracticePage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class MoveNgePracticeTests extends CommandCenterGenericTest {
 
@@ -18,6 +19,7 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 	public GeneralSettingsPage generalSettingsPage;
 	public MoveAgnosticPracticePage movePracticeNGEPage;
 	public AddOrgNodePage addOrgNodePage;
+	public CommonMethods commonMethods;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -62,7 +64,8 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.clickOnNewEnterpriseOption();
 		movePracticeNGEPage.movePracticeNodeToEnterpriseWithDoNotInherit(testData.getProperty("search.nge.client"),
 				testData.getProperty("search.nge.enterprsie"));
-		movePracticeNGEPage.clickToasterlink();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.clickToasterlink();
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
 		generalSettingsPage.verifyPracticeNodeFieldData(practiceName, testData.getProperty("practice.sapid"),
@@ -100,7 +103,8 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.movePracticeNodeToEnterpriseWithDoNotInherit(
 				testData.getProperty("inactive.target.nge.client.name"),
 				testData.getProperty("search.inactive.nge.enterprsie"));
-		generalSettingsPage.verifyErrorMessageInactiveTargetEnterprise();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Business unit cannot be moved to an inactive Target");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "test for moving active practice to active Enterprise with inherit")
@@ -123,7 +127,8 @@ public class MoveNgePracticeTests extends CommandCenterGenericTest {
 		movePracticeNGEPage.movePracticeNodeToEnterpriseWithInherit(
 				testData.getProperty("move.enterprise.target.client.name.active"),
 				testData.getProperty("search.nge.enterprsie"));
-		movePracticeNGEPage.clickToasterlink();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.clickToasterlink();
 		generalSettingsPage.searchNode(testData.getProperty("search.nge.enterprsie"));
 		String targetEnterpriseSapId = generalSettingsPage.getOrgSapId();
 		String targetEnterpriseTimezone = generalSettingsPage.getOrgTimezone();

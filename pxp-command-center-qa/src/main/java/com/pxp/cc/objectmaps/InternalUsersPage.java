@@ -17,9 +17,6 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//span[text()=' Internal Users ']")
 	private WebElement labelPageTitle;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
 	@FindBy(id = "users")
 	private List<WebElement> selectUser;
 
@@ -92,15 +89,6 @@ public class InternalUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Internal Users");
 		log("Internal Users page title is displayed");
-	}
-
-	public void verifySuccessToaster() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		log("Verifying success toaster message.");
-		if (toasterMessage.isDisplayed() == true)
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "Success! New User has been successfully added");
-		else
-			log("Success toaster is not displayed on internal users page");
 	}
 
 	public void selectUser() throws InterruptedException {

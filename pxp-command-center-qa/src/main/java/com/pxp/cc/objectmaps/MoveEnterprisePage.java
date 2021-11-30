@@ -40,9 +40,6 @@ public class MoveEnterprisePage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='option']")
 	private WebElement selectSystemFromAutoSuggestion;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
 	@FindBy(xpath = "//h4[text()='Move Enterprise']")
 	private WebElement labelTitleMoveEnterprise;
 
@@ -81,9 +78,6 @@ public class MoveEnterprisePage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-
-	@FindBy(xpath = "//div[@class='flex']/span//following::a")
-	private WebElement toasterMessageClientLink;
 
 	public String getNodeName() {
 		CCUtils.verifyAndWaitForElement(nodeName, driver);
@@ -167,15 +161,4 @@ public class MoveEnterprisePage extends CCMainPage {
 		log("Confirm button in Move Enterprise popup is clicked");
 	}
 
-	public String getToasterMessage() {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		String message = toasterMessage.getText();
-		log("Toaster message is : " + message);
-		return message;
-	}
-
-	public void clickToasterlink() {
-		toasterMessageClientLink.click();
-		log("clicked on client in toaster message");
-	}
 }
