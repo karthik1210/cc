@@ -9,17 +9,15 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 import org.hamcrest.Matchers;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
-
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
@@ -189,21 +187,26 @@ public class CCUtils {
 		for (int i = 0; i < data.length(); i++) {
 			if (Character.isDigit(data.charAt(i))) {
 				return "number";
-			}else if(Character.isLetter(data.charAt(i))){
+			} else if (Character.isLetter(data.charAt(i))) {
 				return "letter";
-			}else if(Character.isLetter(data.charAt(i)) && Character.isDigit(data.charAt(i))) {
+			} else if (Character.isLetter(data.charAt(i)) && Character.isDigit(data.charAt(i))) {
 				return "numberletter";
-			}else if(specialCharactersString.contains(Character.toString(data.charAt(i)))) {
+			} else if (specialCharactersString.contains(Character.toString(data.charAt(i)))) {
 				return "alphanumeric";
-			}	
+			}
 		}
 		return "InvalidData";
 	}
-	
+
 	public static String dateformatter() {
 		SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 		Date date = new Date();
 		Log4jUtil.log(formatter.format(date));
 		return formatter.format(date);
+	}
+
+	public static void clearTextboxField(WebElement element) {
+		element.sendKeys(Keys.CONTROL, "a");
+		element.sendKeys(Keys.BACK_SPACE);
 	}
 }
