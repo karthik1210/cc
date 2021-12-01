@@ -12,6 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class GeneralSettingsPage extends CCMainPage {
 
@@ -159,14 +160,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()=' MOVE SYSTEM ']")
 	private WebElement buttonMoveSystem;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
-	@FindBy(xpath = "//div[@class='flex']/span//following::a")
-	private WebElement linkClientName;
-
-	@FindBy(id = "snackCloseBtn")
-	private WebElement buttonCloseToaster;
+	public CommonMethods commonMethods;
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
@@ -348,7 +342,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Clicked on Inactive radio button");
 		ClientInactiveRadioButton.click();
 	}
-	
+
 	public void clickActiveRadioButtonOfClient() {
 		CCUtils.verifyAndWaitForElement(radiobuttonActive, driver);
 		radiobuttonActive.click();
@@ -503,18 +497,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		return PageFactory.initElements(driver, MoveSystemPage.class);
 	}
 
-	public void verifyErrorMessageInactiveTargetClient() {
-		log("Verifying toaster message for inactive target client");
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(), "Client selected is inactive. Activate client and try again.");
-	}
-
-	public void verifySuccessToasterMessage(String systemName, String clientNameValue) {
-		log("Verifying success toaster message");
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(),
-				"SUCCESS " + systemName + " has been successfully moved to client " + clientNameValue);
-		linkClientName.click();
+	public void verifyClientNameValue(String clientNameValue) {
 		CCUtils.verifyAndWaitForElement(clientName, driver);
 		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
 	}
@@ -589,17 +572,6 @@ public class GeneralSettingsPage extends CCMainPage {
 			return false;
 	}
 
-	public void closeToasterMessage() {
-		CCUtils.verifyAndWaitForElement(buttonCloseToaster, driver);
-		log("Clicked on cross icon");
-		buttonCloseToaster.click();
-	}
-
-	public void verifyErrorMessageInactiveTargetEnterprise() {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(), "Business unit cannot be moved to an inactive Target");
-	}
-
 	@FindBy(xpath = "(//span[@class='value'])[2]")
 	private WebElement duplicateSapId;
 
@@ -617,43 +589,43 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//div[@class='ng-select-container ng-has-value']")
 	private WebElement dropdownTimezone;
-	
+
 	@FindBy(id = "detailActiveRadio")
 	private WebElement radiobuttonActive;
-	
+
 	@FindBy(id = "detailInactiveRadio")
 	private WebElement radiobuttonInactive;
-	
+
 	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
 	private WebElement buttonCancel;
-	
+
 	@FindBy(xpath = "//span[normalize-space()='SAVE']")
 	private WebElement buttonSave;
-	
+
 	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
 	private WebElement labelSolutionsActive;
-	
+
 	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
-	private WebElement textboxError;	
-	
+	private WebElement textboxError;
+
 	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
 	private WebElement clientTab;
-	
+
 	public void clickClientDirectory() {
 		CCUtils.verifyAndWaitForElement(clientTab, driver);
 		clientTab.click();
 		log("clicked on client directory tab:");
 	}
-	
+
 	public String getDuplicateSap() {
 		CCUtils.verifyAndWaitForElement(duplicateSapId, driver);
-		String clientSap=duplicateSapId.getText();
+		String clientSap = duplicateSapId.getText();
 		return clientSap;
 	}
 
 	public String getDuplicateClientName() {
 		CCUtils.verifyAndWaitForElement(duplicateClientName, driver);
-		String clientName=duplicateClientName.getText();
+		String clientName = duplicateClientName.getText();
 		return clientName;
 	}
 
@@ -668,11 +640,12 @@ public class GeneralSettingsPage extends CCMainPage {
 		textboxSapId.sendKeys(newSapId);
 		log("Entered text in Client name field is :" + newSapId);
 	}
+
 	public String getEditButtonText() {
 		CCUtils.verifyAndWaitForElement(editClientButton, driver);
 		return editClientButton.getText();
 	}
-	
+
 	public void clickClientType() {
 		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
 		dropdownClientType.click();
@@ -684,38 +657,39 @@ public class GeneralSettingsPage extends CCMainPage {
 		dropdownTimezone.click();
 		log("clicked on Timezone dropdown in Edit Client screen");
 	}
+
 	public void clickCancel() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		buttonCancel.click();
 		log("clicked on Cancel button in Edit Client screen");
 	}
-	
+
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
 		buttonSave.click();
 		log("clicked on Save button in Edit Client screen");
 	}
-	
+
 	public void clearClientNameField() {
-		textboxClientName.sendKeys(Keys.CONTROL,"a");
+		textboxClientName.sendKeys(Keys.CONTROL, "a");
 		textboxClientName.sendKeys(Keys.BACK_SPACE);
 		log("deleted input in Client name field");
 	}
-	
-	public void clearSapField() {	
-		textboxSapId.sendKeys(Keys.CONTROL,"a");
+
+	public void clearSapField() {
+		textboxSapId.sendKeys(Keys.CONTROL, "a");
 		textboxSapId.sendKeys(Keys.BACK_SPACE);
 		log("deleted input in Sap id field");
 	}
-	
+
 	public String getErrorMessage() {
 		CCUtils.verifyAndWaitForElement(textboxError, driver);
-		String errorMessage=textboxError.getText();
+		String errorMessage = textboxError.getText();
 		return errorMessage;
 	}
-	
+
 	public void verifyNoErrorPresent() {
-		CCUtils.assertTrue( textboxError.isDisplayed(), "error message displayed");
+		CCUtils.assertTrue(textboxError.isDisplayed(), "error message displayed");
 		log("error message not displayed");
 	}
 }

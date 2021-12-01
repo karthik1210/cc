@@ -40,10 +40,10 @@ public class MoveSystemPage extends CCMainPage {
 	@FindBy(xpath = "//input[@id='moveCheckedRadio-input']//following::label[text()='Inherit']")
 	private WebElement labelInherit;
 
-	@FindBy(xpath = "//span[text()='Cancel']")
+	@FindBy(id = "moveCancelBtn")
 	private WebElement buttonCancel;
 
-	@FindBy(xpath = "//button[text()=' Confirm ']")
+	@FindBy(id = "moveSubmitBtn")
 	private WebElement buttonConfirm;
 
 	@FindBy(xpath = "//span[text()=' clear ']")

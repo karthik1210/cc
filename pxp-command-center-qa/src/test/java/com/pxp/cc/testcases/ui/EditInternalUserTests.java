@@ -17,7 +17,7 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 	public CommandCenterUsersPage commandCenterUsersPage;
 	public InternalUsersPage internalUsersPage;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
-
+	
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
@@ -64,7 +64,6 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
 		internalUsersPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
 		internalUsersPage.clickSave();
-		internalUsersPage.verifySuccessToaster();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error messages if incorrect data is entered")

@@ -84,9 +84,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='option']")
 	private WebElement selectEnterpriseFromAutoSuggestion;
 
-	@FindBy(xpath = "//div[@class='flex']/span//following::a")
-	private WebElement toasterMessageClientLink;
-
 	@FindBy(xpath = "//div[@class='ng-option ng-option-disabled ng-star-inserted']")
 	private WebElement noOptionFound;
 
@@ -201,14 +198,14 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 
 	public void clickOnNewClientOption() {
 		CCUtils.verifyAndWaitForElement(clickNewClient, driver);
+		log("Click on New Client button");
 		clickNewClient.click();
-		log("Clicked on New Client button");
 	}
 
 	public void clickOnSearchClientfield(String clientName) {
 		CCUtils.verifyAndWaitForElement(clickSearchClientField, driver);
-		clickSearchClientField.sendKeys(clientName);
 		log("Click on search button");
+		clickSearchClientField.sendKeys(clientName);
 	}
 
 	public void searchAndSelectClientNameInClientfield() {
@@ -320,10 +317,6 @@ public class MoveAgnosticPracticePage extends CCMainPage {
 		selecEnterpriseFromAutoSugesstion();
 		selectInheritRadiobutton();
 		clickOnConfirmButton();
-	}
-
-	public void clickToasterlink() {
-		toasterMessageClientLink.click();
 	}
 
 	public void verifyNoEnterpriseFoundErrorMessage(String searchText) {

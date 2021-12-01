@@ -7,12 +7,14 @@ import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 
 public class CreateClientTests extends CommandCenterGenericTest {
 
 	public ClientDirectoryPage cchomepage;
 	public CreateClientPage createClientPage;
+	public CommonMethods commonMethods;
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class)
 	public void testNewClientCreation() throws Exception {
@@ -22,7 +24,9 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		createClientPage.clickCreateClient();
 		createClientPage.createNewClient(ccuser.getNewClientName(), ccuser.getNewClientSap(), ccuser.getNewClientType(),
 				ccuser.getClientTimezone());
-		String actualMessage = createClientPage.clickConfirmPopup();
+		createClientPage.clickConfirmPopup();
+		commonMethods = new CommonMethods(driver);
+		String actualMessage = commonMethods.getToasterMessage();
 		if (actualMessage.contains("Success")) {
 			log("Client created sucessfully, toaster message is : " + actualMessage);
 			CCUtils.assertTrue(true, "Test Pass");
@@ -53,7 +57,8 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		createClientPage.selectInactiveRadiobutton();
 		createClientPage.selectTestClient();
 		createClientPage.clickConfirmPopup();
-		String actualMessage = createClientPage.clickConfirmPopup();
+		commonMethods = new CommonMethods(driver);
+		String actualMessage = commonMethods.getToasterMessage();
 		if (actualMessage.contains("Success")) {
 			log("Client created sucessfully, toaster message is : " + actualMessage);
 			CCUtils.assertTrue(true, "Test Pass");

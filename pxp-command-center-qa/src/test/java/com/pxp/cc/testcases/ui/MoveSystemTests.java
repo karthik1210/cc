@@ -10,12 +10,14 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.objectmaps.MoveSystemPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class MoveSystemTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public AddOrgNodePage addOrgNodePage;
 	public GeneralSettingsPage generalSettingsPage;
 	public MoveSystemPage moveSystemPage;
+	public CommonMethods commonMethods;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -62,15 +64,16 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.moveSystemNodeToClientWithDoNotInherit(testData.getProperty("inactive.target.client.name"));
-		generalSettingsPage.verifyErrorMessageInactiveTargetClient();
-		generalSettingsPage.closeToasterMessage();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Client selected is inactive. Activate client and try again.");
+		commonMethods.closeToasterMessage();
 		logStep("Move inactive system node to inactive client with inhetit and verify error message");
 		generalSettingsPage.clearSearchText();
 		generalSettingsPage.searchNode(testData.getProperty("source.inactive.system.node.name"));
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage.moveSystemNodeToClientWithInherit(testData.getProperty("inactive.target.client.name"));
-		generalSettingsPage.verifyErrorMessageInactiveTargetClient();
-		generalSettingsPage.closeToasterMessage();
+		commonMethods.verifyToasterMessage("Client selected is inactive. Activate client and try again.");
+		commonMethods.closeToasterMessage();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel & cross button in move system popup")
@@ -109,7 +112,11 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.moveSystemNodeToClientWithDoNotInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(systemName, testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + systemName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		logStep("Verify that sap id, timezone and status attribute values ​​are not taken from the target client node during the transition");
 		String clientType = generalSettingsPage.getClientType();
 		generalSettingsPage.verifySystemNodeFieldData(systemName, testData.getProperty("new.system.sapid"),
@@ -144,7 +151,11 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.moveSystemNodeToClientWithDoNotInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(systemName, testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + systemName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
 		generalSettingsPage.verifySystemNodeFieldData(systemName, testData.getProperty("new.system.sapid"),
@@ -171,7 +182,11 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.moveSystemNodeToClientWithInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(systemName, testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + systemName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		String clientSapId = generalSettingsPage.getClientSapId();
 		String clientTimezone = generalSettingsPage.getClientTimezone();
 		String clientType = generalSettingsPage.getClientType();
@@ -209,7 +224,11 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.moveSystemNodeToClientWithInherit(testData.getProperty("active.target.client.name"));
-		generalSettingsPage.verifySuccessToasterMessage(systemName, testData.getProperty("active.target.client.name"));
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("SUCCESS " + systemName + " has been successfully moved to client "
+				+ testData.getProperty("active.target.client.name"));
+		commonMethods.clickToasterlink();
+		generalSettingsPage.verifyClientNameValue(testData.getProperty("active.target.client.name"));
 		String clientSapId = generalSettingsPage.getClientSapId();
 		String clientTimezone = generalSettingsPage.getClientTimezone();
 		String clientType = generalSettingsPage.getClientType();

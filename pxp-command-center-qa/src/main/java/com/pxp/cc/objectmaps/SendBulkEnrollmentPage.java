@@ -35,9 +35,6 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	@FindBy(xpath = "//mat-icon[text()='arrow_back']")
 	private WebElement iconBackArrow;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
 	@FindBy(id = "enrollStatus")
 	private List<WebElement> labelSelectedEnrollmentStatus;
 
@@ -91,14 +88,6 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonSendEnrollment, driver);
 		buttonSendEnrollment.click();
 		return PageFactory.initElements(driver, SendEnrollmentConfirmationPage.class);
-	}
-
-	public void verifySuccessToaster() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		if (toasterMessage.isDisplayed() == true)
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "Enrollment sent to users successfully");
-		else
-			log("Success toaster is not displayed");
 	}
 
 	public void verifySendEnrollmentButtonIsDisabled() {

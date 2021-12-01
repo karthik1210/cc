@@ -26,9 +26,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-card-title[@id='userName']")
 	private WebElement labelUsernameValue;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
 	@FindBy(xpath = "//mat-card-title[@class='mat-card-title pt-1 text-oneline']")
 	private WebElement labelTitleAdminView;
 
@@ -132,15 +129,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void clickOnKebabMenuButton() {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
 		javascriptClick(buttonKebabMenu);
-	}
-
-	public void verifySuccessToaster() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		log("Verifying success toaster message.");
-		if (toasterMessage.isDisplayed() == true)
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "Enrollment sent to users successfully");
-		else
-			log("Success toaster is not displayed");
 	}
 
 	public void verifySendEnrollmentButtonIsNotDisplayed() {

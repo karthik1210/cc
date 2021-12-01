@@ -11,12 +11,14 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class AddNewInternalUserTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public CommandCenterUsersPage commandCenterUsersPage;
 	public InternalUsersPage internalUsersPage;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
+	public CommonMethods commonMethods;
 
 	@DataProvider(name = "invalidTestData")
 	public Object[] getInvalidTestData() {
@@ -192,7 +194,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		logStep("Create a new internal user without adding user role and verify success toaster");
 		addNewInternalUsersPage.createInternalUser(firstName, lastName, userName, email, mobileNumber);
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
-		internalUsersPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive internal user(without user role) functionality")
@@ -213,7 +216,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		addNewInternalUsersPage.createInternalUser(firstName, lastName, userName, email, mobileNumber);
 		addNewInternalUsersPage.selectInactiveRadiobutton();
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
-		internalUsersPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
@@ -235,7 +239,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		addNewInternalUsersPage.createInternalUser(firstName, lastName, userName, email, mobileNumber);
 		addNewInternalUsersPage.addUserRoles();
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
-		internalUsersPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive internal user(with user roles) functionality")
@@ -258,6 +263,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		addNewInternalUsersPage.selectInactiveRadiobutton();
 		addNewInternalUsersPage.addUserRoles();
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
-		internalUsersPage.verifySuccessToaster();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
 }
