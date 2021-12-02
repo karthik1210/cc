@@ -2,6 +2,9 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -121,10 +124,57 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-icon[@ng-reflect-ng-class='active'][contains(text(),' check_circle')]")
 	private WebElement labelHoverActiveUserStatus;
+	
+	@FindBy(xpath = "//h2[contains(text(),'User Roles')]")
+	private WebElement labelUserRoleTitle;
+	
+	@FindBy(xpath = "//td[contains(text(),'Super Admin')]")
+	private WebElement labelSuperAdminRole;
+	
+	@FindBy(xpath = "//td[contains(text(),'Support T2')]")
+	private WebElement labelSupportT2Role;
+	
+	@FindBy(xpath = "//td[contains(text(),'Implementation')]")
+	private WebElement labelImplementationRole;
+	
+	@FindBy(xpath = "//td[contains(text(),'Support T3')]")
+	private WebElement labelSupportT3Role;
+	
+	@FindBy(xpath = "//td[contains(text(),'Demo/Sales')]")
+	private WebElement labelDemoSalesRole;
+	
+	@FindBy(xpath = "//td[contains(text(),'Support T1')]")
+	private WebElement labelSupportT1Role;
+	
+	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']")
+	private List<WebElement> buttonAddAllUserRole;
+	
+	@FindBy(xpath = "//button[@class='save-button']")
+	private WebElement buttonSaveRole;
+	
+	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']")
+	private List<WebElement>  labelAfterAddAllUserRoles;
+	
+	@FindBy(xpath = "//button[@mattooltip='Add Role']")
+	private WebElement  buttonAddSingleUserRole;
+	
+	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']")
+	private WebElement labelAfterAddSingleUserRole;
+	
+	@FindBy(xpath = " //button[@mattooltip='Delete']")
+	private List<WebElement> buttonDeleteAllUserRole;
+	
+	@FindBy(xpath = "//button[@mattooltip='Delete']")
+	private WebElement  buttonDeleteSingleUserRole;
+	
+	@FindBy(xpath = "//span[contains(text(),'CANCEL')]")
+	private WebElement buttonCancelRole;
 
 	public InternalUserDetailsPage(WebDriver driver) {
 		super(driver);
 	}
+	
+	List<String> actualRolesValues = new ArrayList<String>();
 
 	public void clickOnKebabMenuButton() {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
@@ -428,4 +478,142 @@ public class InternalUserDetailsPage extends CCMainPage {
 		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
 		CCUtils.assertEquals(labelHoverLockedUserStatus.getText(), "No roles assigned");
 	}
+	
+	public void verifyInternalUsersRoleTitle() {
+		CCUtils.verifyAndWaitForElement(labelUserRoleTitle, driver);
+		CCUtils.assertEquals(labelUserRoleTitle.getText().trim(), "User Roles");
+		log("Internal Users role title is displayed");
+	}
+	
+	public void verifyEditButtonForInternalUsersRole() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(buttonEditInternalUserRole, driver);
+		scrollAndWait(0, 150, 10);
+		CCUtils.assertEquals(buttonEditInternalUserRole.getText().trim(), "EDIT");
+		log("User role edit button is displayed");
+	}
+	
+	public void verifyLabelsOfInternalUserEditButton() throws InterruptedException {
+		log("Verifying internal user edit labels on internal user details page");
+		verifyInternalUserTitleInViewMode();
+		verifyInternalUsersRoleTitle();
+		verifyEditButtonForInternalUsersRole();
+	}
+	
+	public void clickUserRoleEditButtonInInternalUserDetailsPage() {
+		CCUtils.verifyAndWaitForElement(buttonEditInternalUserRole, driver);
+		buttonEditInternalUserRole.click();
+		log("User role button is editable");
+	}
+	
+	public void verifyLabelsOfInternalUserRoles() throws InterruptedException {
+		log("Verifying internal user roles labels on internal user details page");
+		verifyLabelOfSuperAdminRole();
+		verifyLabelOfSupportT2Role();
+		verifyLabelOfImplementationRole();
+		verifySupportT3RoleLabel();
+		verifyLabelDemoSalesRole();
+		verifylabelSupportT1RoleRole();
+	}
+	
+	public void verifyLabelOfSuperAdminRole() {
+		CCUtils.verifyAndWaitForElement(labelSuperAdminRole, driver);
+		CCUtils.assertEquals(labelSuperAdminRole.getText().trim(), "Super Admin");
+		log("Internal Users super admin role label is displayed");
+	}
+	
+	public void verifyLabelOfSupportT2Role() {
+		CCUtils.verifyAndWaitForElement(labelSupportT2Role, driver);
+		CCUtils.assertEquals(labelSupportT2Role.getText().trim(), "Support T2");
+		log("Internal Users super admin role label is displayed");
+	}
+	
+	public void verifyLabelOfImplementationRole() {
+		CCUtils.verifyAndWaitForElement(labelImplementationRole, driver);
+		CCUtils.assertEquals(labelImplementationRole.getText().trim(), "Implementation");
+		log("Internal Users super admin role label is displayed");
+	}
+	
+	public void verifySupportT3RoleLabel() {
+		CCUtils.verifyAndWaitForElement(labelSupportT3Role, driver);
+		CCUtils.assertEquals(labelSupportT3Role.getText().trim(), "Support T3");
+		log("Internal Users super admin role label is displayed");
+	}
+	
+	public void verifyLabelDemoSalesRole() {
+		CCUtils.verifyAndWaitForElement(labelDemoSalesRole, driver);
+		CCUtils.assertEquals(labelDemoSalesRole.getText().trim(), "Demo/Sales");
+		log("Internal Users super admin role label is displayed");
+	}
+	
+	public void verifylabelSupportT1RoleRole() {
+		CCUtils.verifyAndWaitForElement(labelSupportT1Role, driver);
+		CCUtils.assertEquals(labelSupportT1Role.getText().trim(), "Support T1");
+		log("Internal Users super admin role label is displayed");
+	}
+	
+	public void selectAllUsersRolesAddAndSaveFunctionality() throws AWTException {
+		CCUtils.verifyAndWaitForListOfElement(buttonAddAllUserRole, driver);
+		for(int i=0; i< buttonAddAllUserRole.size(); i++) {
+			CCUtils.scrollPageToEnd();
+			buttonAddAllUserRole.get(i).click();
+			log("All Internal User roles add buttons are selected" + buttonAddAllUserRole);
+		}
+	}
+	
+	public void clickSaveUserRoleButton() {
+		CCUtils.verifyAndWaitForElement(buttonSaveRole, driver);
+		buttonSaveRole.click();
+		log("Saved button clicked ");
+	}
+	
+	public void verifySelectedAllUserRoleNamesDisplayed() throws AWTException {
+		CCUtils.scrollPageToEnd();
+		for(int i = 0; i< labelAfterAddAllUserRoles.size(); i++) {
+			actualRolesValues.add(labelAfterAddAllUserRoles.get(i).getText());
+		}
+		List<String> expectedRoleValues = Arrays.asList("Super Admin", "Support T2", "Implementation", "Support T3", "Demo/Sales", "Support T1");
+		CCUtils.assertEquals(actualRolesValues, expectedRoleValues);
+	}
+	
+	public void selectSingleUsersRoleForAddAndSaveFunctionality() throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(buttonAddSingleUserRole, driver);
+		buttonAddSingleUserRole.click();
+			log("Single Internal User roles add button is selected");
+	}
+	
+	public void verifyAfterAddAndSaveSingleUserRole() {
+		CCUtils.verifyAndWaitForElement(labelAfterAddSingleUserRole, driver);
+		log("Verifying added user role name: " + labelAfterAddSingleUserRole.getText());
+		CCUtils.assertEquals(labelAfterAddSingleUserRole.isDisplayed(), true);
+	}
+	
+	public void selectAllUsersRolesDeleteAndSaveFunctionality() throws AWTException {
+		CCUtils.verifyAndWaitForListOfElement(buttonDeleteAllUserRole, driver);
+		for(int i=0; i< buttonDeleteAllUserRole.size(); i++) {
+			CCUtils.scrollPageToEnd();
+			buttonDeleteAllUserRole.get(i).click();
+			log("All Internal User roles add buttons are selected" + buttonDeleteAllUserRole);
+		}
+	}
+	
+	public void selectSingleUsersRoleForDeleteAndSaveFunctionality() throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(buttonDeleteSingleUserRole, driver);
+		buttonDeleteSingleUserRole.click();
+			log("Single Internal User roles delete button is selected");
+	}
+	
+	public void clickCancelUserRoleButton() {
+		CCUtils.verifyAndWaitForElement(buttonCancelRole, driver);
+		buttonCancelRole.click();
+		log("Saved button clicked ");
+	}
+	
+	public void verifyNoUserRolesNameDisplayed() {
+		for (int i = 0; i < labelAfterAddAllUserRoles.size(); i++)
+			log("Veify user roles name: " + labelAfterAddAllUserRoles.get(i).getText());
+		CCUtils.assertEquals(labelAfterAddAllUserRoles.isEmpty(), true);
+	}
+	
 }
