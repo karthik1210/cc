@@ -32,9 +32,9 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		internalUsersPage = new InternalUsersPage(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button with user roles lable on internal user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button with user roles label on internal user details page")
 	public void testInternalUsersRolesLabelsOnInternalUserDetailsPage() throws Exception {
-		logStep("Verify user roles section on internal user page");
+		logStep("Verify edit user roles section on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
@@ -45,12 +45,13 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyLabelsOfInternalUserEditButton();
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify labels on internal user details page for edit user roles");
 		internalUserDetailsPage.verifyLabelsOfInternalUserRoles();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify admin user able to add & save multiple roles after click on edit button on internal user details page")
 	public void testAllInternalUsersRolesAddAndSaveFunctionality() throws Exception {
-		logStep("Verify user roles section on internal user page");
+		logStep("Verify edit user roles section on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -60,14 +61,16 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify All Internal User roles are selected successfully from edit user roles section");
 		internalUserDetailsPage.selectAllUsersRolesAddAndSaveFunctionality();
 		internalUserDetailsPage.clickSaveUserRoleButton();
+		logStep("Verify selected all users roles displayed on internal user details page after click on save button");
 		internalUserDetailsPage.verifySelectedAllUserRoleNamesDisplayed();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify admin able to add & save single role after click on edit button on internal user details page")
 	public void testSingleInternalUsersRolesAddAndSaveFunctionality() throws Exception {
-		logStep("Verify user roles section on internal user page");
+		logStep("Verify edit user roles section on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -77,14 +80,16 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		logStep("Click any one of the user name from table");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify single Internal User role is selected successfully from edit user roles section");
 		internalUserDetailsPage.selectSingleUsersRoleForAddAndSaveFunctionality();
 		internalUserDetailsPage.clickSaveUserRoleButton();
+		logStep("Verify selected single user role displayed on internal user details page after click on save button");
 		internalUserDetailsPage.verifyAfterAddAndSaveSingleUserRole();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify when admin click on edit button then able to delete & save multiple roles after click on save button on internal user details page")
 	public void testAllInternalUsersRolesDeleteAndSaveFunctionality() throws Exception {
-		logStep("Verify user roles section on internal user page");
+		logStep("Verify edit user roles section on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -94,17 +99,21 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify All Internal User roles are selected successfully from edit user roles section");
 		internalUserDetailsPage.selectAllUsersRolesAddAndSaveFunctionality();
 		internalUserDetailsPage.clickSaveUserRoleButton();
+		logStep("Verify selected all users roles displayed on internal user details page after click on save button");
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		log("Verify All Internal User roles are deleted successfully from edit user roles section");
 		internalUserDetailsPage.selectAllUsersRolesDeleteAndSaveFunctionality();
 		internalUserDetailsPage.clickSaveUserRoleButton();
+		logStep("Verify deleted all users roles shouldn't display on internal user details page after click on save button");
 		internalUserDetailsPage.verifySelectedAllUserRoleNamesDisplayed();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is accessable to admin and admin is able to delete & save single role after click on save button on internal user details page")
 	public void testSingleInternalUsersRolesDeleteAndSaveFunctionality() throws Exception {
-		logStep("Verify user roles section on internal user page");
+		logStep("Verify edit user roles section on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -114,16 +123,20 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify single Internal User role is selected successfully from edit user roles section");
 		internalUserDetailsPage.selectSingleUsersRoleForAddAndSaveFunctionality();
+		logStep("Verify selected single user role displayed on internal user details page after click on save button");
 		internalUserDetailsPage.clickSaveUserRoleButton();
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify single Internal User role is deleted successfully from edit user roles section");
 		internalUserDetailsPage.selectSingleUsersRoleForDeleteAndSaveFunctionality();
+		logStep("Verify deleted single user role shouldn't display on internal user details page after click on save button");
 		internalUserDetailsPage.verifyAfterAddAndSaveSingleUserRole();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify admin user able to add & cancel multiple roles after click on cancel button on internal user details page")
 	public void testAllInternalUsersRolesAddAndCancelFunctionality() throws Exception {
-		logStep("Verify user roles section on internal user page");
+		logStep("Verify edit user roles section on internal user page");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -133,8 +146,10 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.clickUserRoleEditButtonInInternalUserDetailsPage();
+		logStep("Verify all Internal User roles are selected successfully from edit user roles section");
 		internalUserDetailsPage.selectAllUsersRolesAddAndSaveFunctionality();
 		internalUserDetailsPage.clickCancelUserRoleButton();
+		logStep("Verify selected user roles shouldn't display on internal user details page after click on cancel button");
 		internalUserDetailsPage.verifyNoUserRolesNameDisplayed();
 	}
 
