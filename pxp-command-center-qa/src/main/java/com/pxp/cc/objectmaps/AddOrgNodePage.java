@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -123,6 +124,9 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']")
 	private List<WebElement> labelSolutionList;
 
+	@FindBy(xpath = "//span[@class='mat-checkbox-label']//preceding::div[@class='mat-checkbox-inner-container']")
+	private List<WebElement> particularSolutionCheckbox;
+//input[@type='checkbox']
 	List<String> actualtimezoneValues = new ArrayList<String>();
 	List<String> actualSolutionValues = new ArrayList<String>();
 
@@ -479,9 +483,9 @@ public class AddOrgNodePage extends CCMainPage {
 			selectInactiveRadiobutton();
 		clickOnSaveAndAddButton();
 	}
-	
-	public void addNewPracticeNodeWithSolutions(String parentEntityName, Boolean isActive, String orgName, String sapId, String timezone,
-			String solutionDisplayName) throws InterruptedException {
+
+	public void addNewPracticeNodeWithSolutions(String parentEntityName, Boolean isActive, String orgName, String sapId,
+			String timezone, String solutionDisplayName) throws InterruptedException {
 		clickOnParentEntityNameDropdown();
 		searchTextForParentEntityName(parentEntityName);
 		createNewOrgNode(orgName, sapId, timezone, solutionDisplayName);
@@ -491,5 +495,19 @@ public class AddOrgNodePage extends CCMainPage {
 			selectInactiveRadiobutton();
 		addSolutions();
 		clickOnSaveAndAddButton();
+	}
+
+	public void selectFewSolutions(List<String> providedSolutions) throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		for (String selectSolution : providedSolutions) {
+			for (int i = 0; i < labelSolutionList.size(); i++) {
+					CCUtils.verifyAndWaitForElement(labelSolutionList.get(i), driver);
+					if ((labelSolutionList.get(i).getText().trim()).contains(selectSolution)) {
+						CCUtils.verifyAndWaitForElement(particularSolutionCheckbox.get(i), driver);
+						particularSolutionCheckbox.get(i).click();
+						log("Solution name : " + selectSolution + " is selected.");
+					}
+				}
+			}
 	}
 }
