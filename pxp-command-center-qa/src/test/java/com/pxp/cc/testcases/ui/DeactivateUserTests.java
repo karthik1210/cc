@@ -8,11 +8,13 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.DeactivateUserPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class DeactivateUserTests extends CommandCenterGenericTest {
 
 	ClientDirectoryPage cchomepage;
 	DeactivateUserPage deactivateUserPage;
+	public CommonMethods commonMethods;
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check deactive popup")
@@ -46,7 +48,8 @@ public class DeactivateUserTests extends CommandCenterGenericTest {
 		deactivateUserPage.selectUser();
 		deactivateUserPage.clickDeactivate();
 		deactivateUserPage.clickDeactivateButton();
-		String actualToasterMessage = deactivateUserPage.getToasterMessage();
+		commonMethods = new CommonMethods(driver);
+		String actualToasterMessage = commonMethods.getToasterMessage();
 		if (actualToasterMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
 			log("Popup message is displayed");
 			CCUtils.assertTrue(true, "Test Pass");
@@ -68,7 +71,8 @@ public class DeactivateUserTests extends CommandCenterGenericTest {
 		deactivateUserPage.selectUserTwo();
 		deactivateUserPage.clickDeactivate();
 		deactivateUserPage.clickDeactivateButton();
-		String actualToasterMessage = deactivateUserPage.getToasterMessage();
+		commonMethods = new CommonMethods(driver);
+		String actualToasterMessage = commonMethods.getToasterMessage();
 		if (actualToasterMessage.equalsIgnoreCase("Are you sure you want to deactivate")) {
 			log("Popup message is displayed");
 			CCUtils.assertTrue(true, "Test Pass");

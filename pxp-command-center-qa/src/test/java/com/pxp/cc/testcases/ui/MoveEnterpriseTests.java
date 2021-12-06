@@ -11,6 +11,7 @@ import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.objectmaps.MoveEnterprisePage;
 import com.pxp.cc.objectmaps.MoveSystemPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class MoveEnterpriseTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
@@ -18,6 +19,7 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 	public GeneralSettingsPage generalSettingsPage;
 	public MoveSystemPage moveSystemPage;
 	public MoveEnterprisePage moveEnterprisePage;
+	public CommonMethods commonMethods;
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify move enterprise popup")
@@ -69,11 +71,11 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.clickMoveEnterprise();
 		moveEnterprisePage.enterClientName((testData.getProperty("inactive.target.client.name")));
 		moveEnterprisePage.selectClientFromAutoSugesstion();
-
 		moveEnterprisePage.enterSystemName(testData.getProperty("move.enterprise.target.source.name.inactive"));
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
-		String actualToastermessage = moveEnterprisePage.getToasterMessage();
+		commonMethods = new CommonMethods(driver);
+		String actualToastermessage = commonMethods.getToasterMessage();
 		if (actualToastermessage.equalsIgnoreCase("Business unit cannot be moved to an inactive Target")) {
 			log("Enterprise cannot be moved to inactive system");
 			CCUtils.assertTrue(true, "Test Pass");
@@ -134,7 +136,8 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.enterSystemName(testData.getProperty("move.enterprise.target.system.name.active"));
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
-		moveEnterprisePage.clickToasterlink();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
 		String clientType = generalSettingsPage.getClientType();
 		logStep("Verify that when not inherited it does not takes the parent settings while transition.");
@@ -180,7 +183,8 @@ public class MoveEnterpriseTests extends CommandCenterGenericTest {
 		moveEnterprisePage.selectSystemFromAutoSugesstion();
 		moveEnterprisePage.clickInheritRadioButton();
 		moveEnterprisePage.clickConfirmInMoveEnterprise();
-		moveEnterprisePage.clickToasterlink();
+		commonMethods = new CommonMethods(driver);
+		commonMethods.clickToasterlink();
 		logStep("Search target system node where enterprise is moved & get it's details");
 		generalSettingsPage.searchNode(testData.getProperty("move.enterprise.target.system.name.active"));
 		String targetSystemSapId = generalSettingsPage.getOrgSapId();

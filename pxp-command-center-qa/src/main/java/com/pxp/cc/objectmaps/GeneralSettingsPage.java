@@ -13,6 +13,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class GeneralSettingsPage extends CCMainPage {
 
@@ -160,14 +161,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()=' MOVE SYSTEM ']")
 	private WebElement buttonMoveSystem;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
-	@FindBy(xpath = "//div[@class='flex']/span//following::a")
-	private WebElement linkClientName;
-
-	@FindBy(id = "snackCloseBtn")
-	private WebElement buttonCloseToaster;
+	public CommonMethods commonMethods;
 
 	@FindBy(xpath = "//div[@class='solution-header']")
 	private WebElement activeSolutionsLabel;
@@ -519,18 +513,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		return PageFactory.initElements(driver, MoveSystemPage.class);
 	}
 
-	public void verifyErrorMessageInactiveTargetClient() {
-		log("Verifying toaster message for inactive target client");
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(), "Client selected is inactive. Activate client and try again.");
-	}
-
-	public void verifySuccessToasterMessage(String systemName, String clientNameValue) {
-		log("Verifying success toaster message");
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(),
-				"SUCCESS " + systemName + " has been successfully moved to client " + clientNameValue);
-		linkClientName.click();
+	public void verifyClientNameValue(String clientNameValue) {
 		CCUtils.verifyAndWaitForElement(clientName, driver);
 		CCUtils.assertEquals(clientName.getText().trim(), clientNameValue);
 	}
@@ -603,17 +586,6 @@ public class GeneralSettingsPage extends CCMainPage {
 			return true;
 		else
 			return false;
-	}
-
-	public void closeToasterMessage() {
-		CCUtils.verifyAndWaitForElement(buttonCloseToaster, driver);
-		log("Clicked on cross icon");
-		buttonCloseToaster.click();
-	}
-
-	public void verifyErrorMessageInactiveTargetEnterprise() {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		CCUtils.assertEquals(toasterMessage.getText(), "Business unit cannot be moved to an inactive Target");
 	}
 
 	@FindBy(xpath = "(//span[@class='value'])[2]")

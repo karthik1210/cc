@@ -112,9 +112,6 @@ public class AddNewInternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Please enter valid email address']")
 	private WebElement errorValidEmail;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
 	@FindBy(xpath = "//div[text()='Username already in use']")
 	private WebElement errorUniqueUsername;
 

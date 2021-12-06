@@ -6,12 +6,14 @@ import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import com.pxp.cc.util.CCUtils;
 
 public class AddOrgNodePage extends CCMainPage {
@@ -40,13 +42,13 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//div[@aria-expanded='true']//input[@type='text']")
 	private WebElement textboxParentEntityName;
 
-	@FindBy(xpath = "//span[text()='Practice Name*']")
+	@FindBy(xpath = "//span[text()='Practice Name *']")
 	private WebElement labelPracticeName;
 
-	@FindBy(xpath = "//span[text()='System Name*']")
+	@FindBy(xpath = "//span[text()='System Name *']")
 	private WebElement labelSystemName;
 
-	@FindBy(xpath = "//span[text()='Enterprise Name*']")
+	@FindBy(xpath = "//span[text()='Enterprise Name *']")
 	private WebElement labelEnterpriseName;
 
 	@FindBy(id = "addNodeNameInput")
@@ -105,12 +107,6 @@ public class AddOrgNodePage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Parent Entity is required')]")
 	private WebElement errorParentNameRequired;
-
-	@FindBy(xpath = "//div[@class='flex']/span")
-	private WebElement toasterMessage;
-
-	@FindBy(xpath = "//mat-icon[text()='close']")
-	private WebElement closeToasterMessageIcon;
 
 	@FindBy(xpath = "//div[@aria-selected='true']/span")
 	private WebElement selectedTimezoneValue;
@@ -245,10 +241,10 @@ public class AddOrgNodePage extends CCMainPage {
 
 	public void verifyOrgNameIsRequiredField(String labelText) {
 		CCUtils.verifyAndWaitForElement(errorNameRequired, driver);
-		if (labelText.trim().equals("System Name*")) {
+		if (labelText.trim().equals("System Name *")) {
 			CCUtils.assertEquals(errorNameRequired.getText().trim(), "System name is required");
 			log("System name is required error message displayed on add new system popup");
-		} else if (labelText.trim().equals("Enterprise Name*")) {
+		} else if (labelText.trim().equals("Enterprise Name *")) {
 			CCUtils.assertEquals(errorNameRequired.getText().trim(), "Enterprise name is required");
 			log("Enterprise name is required error message displayed on add new enterprise popup");
 		} else {
@@ -262,22 +258,6 @@ public class AddOrgNodePage extends CCMainPage {
 		log("Enter space in org name textbox");
 		textboxName.sendKeys("  ");
 		clickOnSaveAndAddButton();
-	}
-
-	public void verifyToasterMessage(String labelText) {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		if (labelText.trim().equals("System Name*")) {
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "System name cannot be empty");
-			log("Error Message displayed for system name field is " + toasterMessage.getText().trim());
-		} else if (labelText.trim().equals("Enterprise Name*")) {
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "Enterprise name cannot be empty");
-			log("Error Message displayed for enterprise name field is " + toasterMessage.getText().trim());
-		} else {
-			CCUtils.assertEquals(toasterMessage.getText().trim(), "Practice name cannot be empty");
-			log("Error Message displayed for practice name field is " + toasterMessage.getText().trim());
-		}
-		CCUtils.verifyAndWaitForElement(closeToasterMessageIcon, driver);
-		closeToasterMessageIcon.click();
 	}
 
 	public void verifyParentEntityNameIsRequiredField() {

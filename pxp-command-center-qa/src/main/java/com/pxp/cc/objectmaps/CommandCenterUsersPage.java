@@ -5,6 +5,8 @@ package com.pxp.cc.objectmaps;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class CommandCenterUsersPage extends CCMainPage {
@@ -20,6 +22,9 @@ public class CommandCenterUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@tabindex='0']/div")
 	private WebElement tabTitleInternalUsers;
+
+	@FindBy(xpath = "//div[text()='CLIENT USERS']")
+	private WebElement tabClientUsers;
 
 	public CommandCenterUsersPage(WebDriver driver) {
 		super(driver);
@@ -45,6 +50,13 @@ public class CommandCenterUsersPage extends CCMainPage {
 			CCUtils.assertEquals(tabInternalUsers.getAttribute("aria-selected"), "true");
 		else
 			log("Internal users tab is not displayed on command center users page");
+	}
+
+	public ClientUsersPage clickOnClientUsersTab() {
+		CCUtils.verifyAndWaitForElement(tabClientUsers, driver);
+		tabClientUsers.click();
+		return PageFactory.initElements(driver, ClientUsersPage.class);
+
 	}
 
 }
