@@ -12,29 +12,32 @@ public class ApplyInheritPracticeSettingsPage extends CCMainPage {
 
 	@FindBy(id = "applySetting")
 	private WebElement labelApplyPracticeSettings;
-	
+
+	@FindBy(id = "inheritSetting")
+	private WebElement labelInheritPracticeSettings;
+
 	@FindBy(id = "applyDropdown")
 	private WebElement practiceDropdown;
-	
+
 	@FindBy(xpath = "//div[@role='option']")
 	private List<WebElement> listOfPractices;
-	
-	@FindBy(id="shortcutApplyButton")
+
+	@FindBy(id = "shortcutApplyButton")
 	private WebElement applyButton;
-	
-	@FindBy(id="shortcutClearButton")
+
+	@FindBy(id = "shortcutClearButton")
 	private WebElement clearButton;
-	
-	@FindBy(id="applyBtn")
+
+	@FindBy(id = "applyBtn")
 	private WebElement saveButton;
-	
-	@FindBy(id="applyCancel")
+
+	@FindBy(id = "applyCancel")
 	private WebElement cancelButton;
-	
+
 	public ApplyInheritPracticeSettingsPage(WebDriver driver) {
 		super(driver);
 	}
-	
+
 	public void clickPracticeDropdown() {
 		CCUtils.verifyAndWaitForElement(practiceDropdown, driver);
 		log("click to practice dropdown.");
@@ -43,38 +46,44 @@ public class ApplyInheritPracticeSettingsPage extends CCMainPage {
 
 	public void verifyApplyPracticeLabel() {
 		CCUtils.verifyAndWaitForElement(labelApplyPracticeSettings, driver);
-		log("Verifying label Apply Prcatice Settings is present or not.");
+		log("Verifying label Apply Practice Settings is present or not.");
 		CCUtils.assertEquals(labelApplyPracticeSettings.getText(), "Apply Practice Settings");
 	}
-	
+
+	public void verifyInheritPracticeLabel() {
+		CCUtils.verifyAndWaitForElement(labelInheritPracticeSettings, driver);
+		log("Verifying label Inherit Practice Settings is present or not.");
+		CCUtils.assertEquals(labelInheritPracticeSettings.getText(), "Inherit Practice Settings");
+	}
+
 	public void selectDesiredPractice(String practice) {
-		for(WebElement option: listOfPractices) {
-			if((option.getText()).contains(practice)){
+		for (WebElement option : listOfPractices) {
+			if ((option.getText()).contains(practice)) {
 				CCUtils.verifyAndWaitForElement(option, driver);
 				option.click();
 			}
 		}
 	}
-	
+
 	public void clickToApplyButton() {
 		CCUtils.verifyAndWaitForElement(applyButton, driver);
 		javascriptClick(applyButton);
 		log("apply button clicked");
 	}
-	
+
 	public void clickToClearButton() {
 		CCUtils.verifyAndWaitForElement(clearButton, driver);
 		javascriptClick(clearButton);
 		log("clear button clicked");
 	}
-	
+
 	public GeneralSettingsPage clickToSaveButton() {
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		saveButton.click();
 		log("save button clicked");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
-	
+
 	public GeneralSettingsPage clickToCancelButton() {
 		CCUtils.verifyAndWaitForElement(cancelButton, driver);
 		cancelButton.click();

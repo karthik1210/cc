@@ -168,16 +168,16 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@id='assignment']")
 	private List<WebElement> activeSolutionsListWithinSolutionActiveContainer;
-	
+
 	@FindBy(xpath = "//button[@id='purchaseAddButton-button']")
 	private WebElement shortcutButton;
 
 	@FindBy(xpath = "//button[@id='applyTo']")
 	private WebElement applyToButton;
-	
+
 	@FindBy(xpath = "//button[@id='inheritFrom']")
 	private WebElement inheritFromButton;
-	
+
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -720,9 +720,10 @@ public class GeneralSettingsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyListOfActiveSolutions(List<String> listOfActiveSolutionsAdded) {
+	public void verifyListOfActiveSolutions(List<String> listOfActiveSolutionsAdded) throws AWTException {
 		for (String selectSolution : listOfActiveSolutionsAdded) {
 			for (int i = 0; i < activeSolutionsListWithinSolutionActiveContainer.size(); i++) {
+				CCUtils.scrollPageToEnd();
 				CCUtils.verifyAndWaitForElement(activeSolutionsListWithinSolutionActiveContainer.get(i), driver);
 				if ((activeSolutionsListWithinSolutionActiveContainer.get(i).getText().trim())
 						.contains(selectSolution)) {
@@ -735,24 +736,28 @@ public class GeneralSettingsPage extends CCMainPage {
 			}
 		}
 	}
-	
+
 	public void clickOnShortCutButton() {
 		CCUtils.verifyAndWaitForElement(shortcutButton, driver);
 		log("Click on ShortCut button");
 		shortcutButton.click();
 	}
-	
+
 	public ApplyInheritPracticeSettingsPage clickOnApplyToButton() {
 		CCUtils.verifyAndWaitForElement(applyToButton, driver);
 		log("Click on Apply To button");
 		applyToButton.click();
 		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
 	}
-	
+
 	public ApplyInheritPracticeSettingsPage clickOnInheritFromButton() {
 		CCUtils.verifyAndWaitForElement(inheritFromButton, driver);
 		log("Click on Inherit From button");
 		inheritFromButton.click();
 		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
+	}
+
+	public void pageRefresh() {
+		CCUtils.pageRefresh(driver);
 	}
 }
