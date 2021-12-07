@@ -41,8 +41,8 @@ public class ApplyInheritPracticeSettingsPage extends CCMainPage {
 
 	public void clickPracticeDropdown() {
 		CCUtils.verifyAndWaitForElement(practiceDropdown, driver);
-		log("click to practice dropdown.");
 		practiceDropdown.click();
+		log("practice dropdown clicked");
 	}
 
 	public void verifyApplyPracticeLabel() {

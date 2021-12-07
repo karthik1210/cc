@@ -756,8 +756,4 @@ public class GeneralSettingsPage extends CCMainPage {
 		inheritFromButton.click();
 		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
 	}
-
-	public void pageRefresh() {
-		CCUtils.pageRefresh(driver);
-	}
 }

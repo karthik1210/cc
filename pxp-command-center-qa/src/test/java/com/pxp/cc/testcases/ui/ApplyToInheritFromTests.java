@@ -36,35 +36,27 @@ public class ApplyToInheritFromTests extends CommandCenterGenericTest {
 		generalSettingsPage = clientDirectoryPage.selectSearchedClientNameInClientTable();
 	}
 
-	public void createPractice(String practiceName, String clientName, List<String> solutions)
-			throws InterruptedException, AWTException {
-		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(clientName);
-		logStep("Creating Practice with name : " + practiceName + " with solutions " + solutions.toString());
-		addOrgNodePage.createNewOrgNode(practiceName, ccuser.getPracticeSapId(), ccuser.getPracticeTimezone(),
-				ccuser.getPracticeSolutionDisplayName());
-		addOrgNodePage.selectFewSolutions(solutions);
-		generalSettingsPage = addOrgNodePage.clickOnSaveAndAddButton();
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-	}
-
 	public void createAgnosticPracticeWithinClient() throws InterruptedException, AWTException {
 		logStep("Test to create two agnostic practices within client.");
 		String clientName = generalSettingsPage.getClientName();
 		List<String> listOfSolutionsAdded = Arrays.asList(testData.getProperty("solution.chat"),
 				testData.getProperty("solution.engage"));
 		practiceNameOne = ccuser.getPracticeName() + CCUtils.generateAlphaNumericString(4);
-		createPractice(practiceNameOne, clientName, listOfSolutionsAdded);
+		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
+		generalSettingsPage = addOrgNodePage.createPracticeWithSolutions(practiceNameOne, clientName, listOfSolutionsAdded,
+				ccuser.getPracticeSapId(), ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		generalSettingsPage.verifySolutionActiveWithinThisContainer();
 		CCUtils.assertEquals(generalSettingsPage.getOrgName(), practiceNameOne);
 		generalSettingsPage.verifyListOfActiveSolutions(listOfSolutionsAdded);
 		practiceNameTwo = ccuser.getPracticeName() + CCUtils.generateAlphaNumericString(4);
 		List<String> listOfSolutions = Arrays.asList(testData.getProperty("solution.pss"),
 				testData.getProperty("solution.portal"));
-		createPractice(practiceNameTwo, clientName, listOfSolutions);
+		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
+		generalSettingsPage = addOrgNodePage.createPracticeWithSolutions(practiceNameTwo, clientName, listOfSolutions,
+				ccuser.getPracticeSapId(), ccuser.getPracticeTimezone(), ccuser.getPracticeSolutionDisplayName());
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		generalSettingsPage.verifySolutionActiveWithinThisContainer();
-		// CCUtils.assertEquals(generalSettingsPage.getOrgName(), practiceNameTwo);
 		generalSettingsPage.verifyListOfActiveSolutions(listOfSolutions);
 		appliedPractices.addAll(listOfSolutions);
 		appliedPractices.addAll(listOfSolutionsAdded);
@@ -75,9 +67,7 @@ public class ApplyToInheritFromTests extends CommandCenterGenericTest {
 			throws InterruptedException, AWTException {
 		createAgnosticPracticeWithinClient();
 		logStep("Applying solutions of practice " + practiceNameTwo + " to practice " + practiceNameOne);
-		generalSettingsPage.enterSearchText(practiceNameTwo);
-		generalSettingsPage.clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
+		generalSettingsPage.searchNode(practiceNameTwo);
 		CCUtils.assertEquals(generalSettingsPage.getOrgName(), practiceNameTwo);
 		generalSettingsPage.clickOnShortCutButton();
 		applyInheritPracticePage = generalSettingsPage.clickOnApplyToButton();
@@ -87,13 +77,13 @@ public class ApplyToInheritFromTests extends CommandCenterGenericTest {
 		applyInheritPracticePage.clickToApplyButton();
 		generalSettingsPage = applyInheritPracticePage.clickToSaveButton();
 		commonMethods = new CommonMethods(driver);
+		logStep("Verifying toaster message while we applying solutions to practice.");
 		commonMethods
 				.verifyToasterMessage("Solutions settings applied from " + practiceNameTwo + " to " + practiceNameOne);
 		generalSettingsPage.clearSearchText();
-		generalSettingsPage.enterSearchText(practiceNameOne);
-		generalSettingsPage.clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
+		generalSettingsPage.searchNode(practiceNameOne);
 		CCUtils.assertEquals(generalSettingsPage.getOrgName(), practiceNameOne);
+		logStep("Verifying all solutions which are applied.");
 		generalSettingsPage.verifyListOfActiveSolutions(appliedPractices);
 	}
 
@@ -110,13 +100,13 @@ public class ApplyToInheritFromTests extends CommandCenterGenericTest {
 		applyInheritPracticePage.clickToApplyButton();
 		generalSettingsPage = applyInheritPracticePage.clickToSaveButton();
 		commonMethods = new CommonMethods(driver);
+		logStep("Verifying toaster message while we inheriting solutions to practice.");
 		commonMethods.verifyToasterMessage(
 				"Solutions settings inherited from " + practiceNameOne + " to " + practiceNameTwo);
 		generalSettingsPage.clearSearchText();
-		generalSettingsPage.enterSearchText(practiceNameTwo);
-		generalSettingsPage.clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
+		generalSettingsPage.searchNode(practiceNameTwo);
 		CCUtils.assertEquals(generalSettingsPage.getOrgName(), practiceNameTwo);
+		logStep("Verifying all solutions which are inherited.");
 		generalSettingsPage.verifyListOfActiveSolutions(appliedPractices);
 	}
 
