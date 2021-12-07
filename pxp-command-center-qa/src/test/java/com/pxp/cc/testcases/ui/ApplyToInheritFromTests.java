@@ -42,7 +42,7 @@ public class ApplyToInheritFromTests extends CommandCenterGenericTest {
 	}
 
 	public void createAgnosticPractices() throws InterruptedException, AWTException {
-		logStep("Test to create two agnostic practices within client.");
+		logStep("Test to create agnostic practices within client.");
 		String clientName = generalSettingsPage.getClientName();
 		listOfSolutionsPracOne = Arrays.asList(testData.getProperty("solution.chat"),
 				testData.getProperty("solution.engage"));
