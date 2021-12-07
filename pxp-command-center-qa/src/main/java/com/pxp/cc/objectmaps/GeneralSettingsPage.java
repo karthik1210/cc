@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -162,6 +164,24 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public CommonMethods commonMethods;
 
+	@FindBy(xpath = "//div[@class='solution-header']")
+	private WebElement activeSolutionsLabel;
+
+	@FindBy(xpath = "//span[@id='assignment']")
+	private List<WebElement> activeSolutionsListWithinSolutionActiveContainer;
+
+	@FindBy(xpath = "//button[@id='purchaseAddButton-button']")
+	private WebElement buttonShortcut;
+
+	@FindBy(xpath = "//button[@id='applyTo']")
+	private WebElement buttonApplyTo;
+
+	@FindBy(xpath = "//button[@id='inheritFrom']")
+	private WebElement buttonInheritFrom;
+
+	@FindBy(xpath = "//span[@id='solutionStatus']")
+	private List<WebElement> solutionStatus;
+
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
 		PageFactory.initElements(driver, this);
@@ -194,7 +214,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	public AddOrgNodePage clickOnAddPractice() {
 		clickOnNewButton();
 		CCUtils.verifyAndWaitForElement(buttonAddNewPractice, driver);
-		log("Clicked on practice button");
+		log("Clicking on practice button");
 		buttonAddNewPractice.click();
 		return PageFactory.initElements(driver, AddOrgNodePage.class);
 	}
@@ -691,5 +711,55 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void verifyNoErrorPresent() {
 		CCUtils.assertTrue(textboxError.isDisplayed(), "error message displayed");
 		log("error message not displayed");
+	}
+
+	public void verifySolutionActiveWithinThisContainer() throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(activeSolutionsLabel, driver);
+		if (activeSolutionsLabel.getText()
+				.contains("Solutions Active within this [Client, System, Enterprise, Practice]")) {
+			log("Verifying whether 'Solutions Active within this [Client, System, Enterprise, Practice]' container is present or not.");
+			CCUtils.assertTrue(true, "Solutions Active within this [Client, System, Enterprise, Practice] is present.");
+			;
+		}
+	}
+
+	public void verifyListOfActiveSolutions(List<String> listOfActiveSolutionsAdded) throws AWTException {
+		for (String selectSolution : listOfActiveSolutionsAdded) {
+			for (int i = 0; i < activeSolutionsListWithinSolutionActiveContainer.size(); i++) {
+				CCUtils.scrollPageToEnd();
+				CCUtils.verifyAndWaitForElement(activeSolutionsListWithinSolutionActiveContainer.get(i), driver);
+				if ((activeSolutionsListWithinSolutionActiveContainer.get(i).getText().trim())
+						.contains(selectSolution)) {
+					CCUtils.assertTrue(true,
+							"Verifying added solution :" + selectSolution
+									+ " is present within List of Active Solutions."
+									+ activeSolutionsListWithinSolutionActiveContainer.toString());
+					log("Solution name : " + selectSolution + " is present.");
+					CCUtils.assertTrue((solutionStatus.get(i).getText().trim()).contains("Newly purchased"),
+							"Verifying added solution's status is newly ppurchased or not.");
+				}
+			}
+		}
+	}
+
+	public void clickOnShortCutButton() {
+		CCUtils.verifyAndWaitForElement(buttonShortcut, driver);
+		buttonShortcut.click();
+		log("ShortCut button clicked");
+	}
+
+	public ApplyInheritPracticeSettingsPage clickOnApplyToButton() {
+		CCUtils.verifyAndWaitForElement(buttonApplyTo, driver);
+		buttonApplyTo.click();
+		log("Apply To button clicked");
+		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
+	}
+
+	public ApplyInheritPracticeSettingsPage clickOnInheritFromButton() {
+		CCUtils.verifyAndWaitForElement(buttonInheritFrom, driver);
+		buttonInheritFrom.click();
+		log("Inherit From button clicked");
+		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
 	}
 }
