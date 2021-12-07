@@ -2,6 +2,7 @@
 package com.pxp.cc.objectmaps;
 
 import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,30 +19,30 @@ public class ApplyInheritPracticeSettingsPage extends CCMainPage {
 	private WebElement labelInheritPracticeSettings;
 
 	@FindBy(id = "applyDropdown")
-	private WebElement practiceDropdown;
+	private WebElement dropdownPractice;
 
 	@FindBy(xpath = "//div[@role='option']")
 	private List<WebElement> listOfPractices;
 
 	@FindBy(id = "shortcutApplyButton")
-	private WebElement applyButton;
+	private WebElement buttonApply;
 
 	@FindBy(id = "shortcutClearButton")
-	private WebElement clearButton;
+	private WebElement buttonClear;
 
 	@FindBy(id = "applyBtn")
-	private WebElement saveButton;
+	private WebElement buttonSave;
 
 	@FindBy(id = "applyCancel")
-	private WebElement cancelButton;
+	private WebElement buttonCancel;
 
 	public ApplyInheritPracticeSettingsPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public void clickPracticeDropdown() {
-		CCUtils.verifyAndWaitForElement(practiceDropdown, driver);
-		practiceDropdown.click();
+		CCUtils.verifyAndWaitForElement(dropdownPractice, driver);
+		dropdownPractice.click();
 		log("practice dropdown clicked");
 	}
 
@@ -67,27 +68,27 @@ public class ApplyInheritPracticeSettingsPage extends CCMainPage {
 	}
 
 	public void clickToApplyButton() {
-		CCUtils.verifyAndWaitForElement(applyButton, driver);
-		javascriptClick(applyButton);
+		CCUtils.verifyAndWaitForElement(buttonApply, driver);
+		javascriptClick(buttonApply);
 		log("apply button clicked");
 	}
 
 	public void clickToClearButton() {
-		CCUtils.verifyAndWaitForElement(clearButton, driver);
-		javascriptClick(clearButton);
+		CCUtils.verifyAndWaitForElement(buttonClear, driver);
+		javascriptClick(buttonClear);
 		log("clear button clicked");
 	}
 
 	public GeneralSettingsPage clickToSaveButton() {
-		CCUtils.verifyAndWaitForElement(saveButton, driver);
-		saveButton.click();
+		CCUtils.verifyAndWaitForElement(buttonSave, driver);
+		buttonSave.click();
 		log("save button clicked");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
 	public GeneralSettingsPage clickToCancelButton() {
-		CCUtils.verifyAndWaitForElement(cancelButton, driver);
-		cancelButton.click();
+		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
+		buttonCancel.click();
 		log("cancel button clicked");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}

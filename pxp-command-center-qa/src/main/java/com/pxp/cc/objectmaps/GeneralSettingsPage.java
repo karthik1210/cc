@@ -12,6 +12,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -170,13 +171,16 @@ public class GeneralSettingsPage extends CCMainPage {
 	private List<WebElement> activeSolutionsListWithinSolutionActiveContainer;
 
 	@FindBy(xpath = "//button[@id='purchaseAddButton-button']")
-	private WebElement shortcutButton;
+	private WebElement buttonShortcut;
 
 	@FindBy(xpath = "//button[@id='applyTo']")
-	private WebElement applyToButton;
+	private WebElement buttonApplyTo;
 
 	@FindBy(xpath = "//button[@id='inheritFrom']")
-	private WebElement inheritFromButton;
+	private WebElement buttonInheritFrom;
+
+	@FindBy(xpath = "//span[@id='solutionStatus']")
+	private List<WebElement> solutionStatus;
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
@@ -732,28 +736,30 @@ public class GeneralSettingsPage extends CCMainPage {
 									+ " is present within List of Active Solutions."
 									+ activeSolutionsListWithinSolutionActiveContainer.toString());
 					log("Solution name : " + selectSolution + " is present.");
+					CCUtils.assertTrue((solutionStatus.get(i).getText().trim()).contains("Newly purchased"),
+							"Verifying added solution's status is newly ppurchased or not.");
 				}
 			}
 		}
 	}
 
 	public void clickOnShortCutButton() {
-		CCUtils.verifyAndWaitForElement(shortcutButton, driver);
-		log("Click on ShortCut button");
-		shortcutButton.click();
+		CCUtils.verifyAndWaitForElement(buttonShortcut, driver);
+		buttonShortcut.click();
+		log("ShortCut button clicked");
 	}
 
 	public ApplyInheritPracticeSettingsPage clickOnApplyToButton() {
-		CCUtils.verifyAndWaitForElement(applyToButton, driver);
-		log("Click on Apply To button");
-		applyToButton.click();
+		CCUtils.verifyAndWaitForElement(buttonApplyTo, driver);
+		buttonApplyTo.click();
+		log("Apply To button clicked");
 		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
 	}
 
 	public ApplyInheritPracticeSettingsPage clickOnInheritFromButton() {
-		CCUtils.verifyAndWaitForElement(inheritFromButton, driver);
-		log("Click on Inherit From button");
-		inheritFromButton.click();
+		CCUtils.verifyAndWaitForElement(buttonInheritFrom, driver);
+		buttonInheritFrom.click();
+		log("Inherit From button clicked");
 		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
 	}
 }
