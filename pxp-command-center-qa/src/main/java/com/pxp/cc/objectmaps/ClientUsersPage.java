@@ -23,6 +23,9 @@ public class ClientUsersPage extends CCMainPage {
 	@FindBy(id = "clientProductIcon")
 	private List<WebElement> listClientUserStatus;
 
+	@FindBy(id = "newButton")
+	private WebElement buttonNew;
+
 	public ClientUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -50,4 +53,12 @@ public class ClientUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(listClientUserStatus.get(0), driver);
 		return listClientUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
 	}
+
+	public AddNewClientUserPage clickOnNewButton() {
+		CCUtils.verifyAndWaitForElement(buttonNew, driver);
+		buttonNew.click();
+		log("Clicked on new button in client users page");
+		return PageFactory.initElements(driver, AddNewClientUserPage.class);
+	}
+
 }

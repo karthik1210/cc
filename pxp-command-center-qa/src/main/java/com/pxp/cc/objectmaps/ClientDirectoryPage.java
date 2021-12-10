@@ -81,7 +81,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
 	private List<WebElement> listOfNonFavClients;
 
-	@FindBy(id = "cmdMenuIcon")
+	@FindBy(id = "cmdCircleIcon")
 	private WebElement iconCommandCenterUsers;
 
 	@FindBy(xpath = "//span[@class='ng-tns-c112-6 ng-star-inserted']")
