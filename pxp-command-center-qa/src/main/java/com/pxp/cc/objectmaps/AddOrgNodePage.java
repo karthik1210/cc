@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -119,6 +120,9 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']")
 	private List<WebElement> labelSolutionList;
 
+	@FindBy(xpath = "//span[@class='mat-checkbox-label']//preceding::div[@class='mat-checkbox-inner-container']")
+	private List<WebElement> particularSolutionCheckbox;
+//input[@type='checkbox']
 	List<String> actualtimezoneValues = new ArrayList<String>();
 	List<String> actualSolutionValues = new ArrayList<String>();
 
@@ -471,5 +475,31 @@ public class AddOrgNodePage extends CCMainPage {
 			selectInactiveRadiobutton();
 		addSolutions();
 		clickOnSaveAndAddButton();
+	}
+
+	public GeneralSettingsPage createPracticeWithSolutions(String practiceName, String clientName,
+			List<String> solutions, String sapId, String timezone, String solutionDisplayName)
+			throws InterruptedException, AWTException {
+		clickOnParentEntityNameDropdown();
+		searchTextForParentEntityName(clientName);
+		logStep("Creating Practice with name : " + practiceName + " with solutions " + solutions.toString());
+		createNewOrgNode(practiceName, sapId, timezone, solutionDisplayName);
+		selectFewSolutions(solutions);
+		clickOnSaveAndAddButton();
+		return PageFactory.initElements(driver, GeneralSettingsPage.class);
+	}
+
+	public void selectFewSolutions(List<String> providedSolutions) throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		for (String selectSolution : providedSolutions) {
+			for (int i = 0; i < labelSolutionList.size(); i++) {
+				CCUtils.verifyAndWaitForElement(labelSolutionList.get(i), driver);
+				if ((labelSolutionList.get(i).getText().trim()).contains(selectSolution)) {
+					CCUtils.verifyAndWaitForElement(particularSolutionCheckbox.get(i), driver);
+					particularSolutionCheckbox.get(i).click();
+					log("Solution name : " + selectSolution + " is selected.");
+				}
+			}
+		}
 	}
 }
