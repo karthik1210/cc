@@ -11,12 +11,14 @@ import com.pxp.cc.objectmaps.ClientUserDetailsPage;
 import com.pxp.cc.objectmaps.ClientUsersPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class EditClientUserTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public CommandCenterUsersPage commandCenterUsersPage;
 	public ClientUsersPage clientUsersPage;
 	public ClientUserDetailsPage clientUserDetailsPage;
+	public CommonMethods commonMethods;
 
 	@DataProvider(name = "invalidTestData")
 	public Object[] getInvalidTestData() {
@@ -58,12 +60,13 @@ public class EditClientUserTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifySaveButtonIsDisplayed();
 		logStep("Verify password is not editable field");
 		clientUserDetailsPage.verifyPasswordUneditable();
+		commonMethods = new CommonMethods(driver);
 		logStep("Verify first name, last name, email, username and mobile number fields are editable");
-		clientUserDetailsPage.enterFirstName(CCUtils.generateAlphaNumericString(18));
-		clientUserDetailsPage.enterLastName(CCUtils.generateAlphaNumericString(18));
-		clientUserDetailsPage.enterEmail(CCUtils.generateNewEmail(11));
-		clientUserDetailsPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
-		clientUserDetailsPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
+		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(18));
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(18));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(11));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
+		commonMethods.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
 		clientUserDetailsPage.clickCancel();
 	}
 
@@ -71,12 +74,13 @@ public class EditClientUserTests extends CommandCenterGenericTest {
 	public void testEditClientUser() throws Exception {
 		logStep("Click on edit button");
 		clientUserDetailsPage.clickEditInClientUser();
+		commonMethods = new CommonMethods(driver);
 		logStep("Modifying editable fields detail");
-		clientUserDetailsPage.enterFirstName(CCUtils.generateAlphaNumericString(18));
-		clientUserDetailsPage.enterLastName(CCUtils.generateAlphaNumericString(18));
-		clientUserDetailsPage.enterEmail(CCUtils.generateNewEmail(11));
-		clientUserDetailsPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
-		clientUserDetailsPage.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
+		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(18));
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(18));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(11));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
+		commonMethods.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
 		clientUserDetailsPage.clickSave();
 	}
 
@@ -84,65 +88,64 @@ public class EditClientUserTests extends CommandCenterGenericTest {
 	public void testRequiredErrorMessageInEditMode() throws Exception {
 		logStep("Click on edit button");
 		clientUserDetailsPage.clickEditInClientUser();
+		commonMethods = new CommonMethods(driver);
 		logStep("Modifying editable fields detail");
-		clientUserDetailsPage.clearFirstNameField();
-		CCUtils.assertEquals(clientUserDetailsPage.getRequiredErrorForFirstNameField(), "First name is required");
-		clientUserDetailsPage.clearLastNameField();
-		CCUtils.assertEquals(clientUserDetailsPage.getRequiredErrorForLastNameField(), "Last name is required");
-		clientUserDetailsPage.clearEmailField();
-		CCUtils.assertEquals(clientUserDetailsPage.getRequiredErrorForEmailField(), "Email is required");
-		clientUserDetailsPage.clearUsernameField();
-		CCUtils.assertEquals(clientUserDetailsPage.getRequiredErrorForUsernameField(), "Username is required");
+		commonMethods.clearFirstNameField();
+		CCUtils.assertEquals(commonMethods.getRequiredErrorForFirstNameField(), "First name is required");
+		commonMethods.clearLastNameField();
+		CCUtils.assertEquals(commonMethods.getRequiredErrorForLastNameField(), "Last name is required");
+		commonMethods.clearEmailField();
+		CCUtils.assertEquals(commonMethods.getRequiredErrorForEmailField(), "Email is required");
+		commonMethods.clearUsernameField();
+		CCUtils.assertEquals(commonMethods.getRequiredErrorForUsernameField(), "Username is required");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum xharacter error message for editable fields")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum characters error message for editable fields")
 	public void testMaximumCharacterErrorInEditMode() throws Exception {
 		logStep("Click on edit button");
 		clientUserDetailsPage.clickEditInClientUser();
+		commonMethods = new CommonMethods(driver);
 		logStep("Enter more than 100 characters in first name, last name, username, email and mobile number field and verify maximum character error message");
-		clientUserDetailsPage.enterFirstName(CCUtils.generateAlphaNumericString(101));
-		CCUtils.assertEquals(clientUserDetailsPage.getMaximumCharacterErrorForFirstNameField(),
-				"Maximum characters reached");
-		clientUserDetailsPage.enterLastName(CCUtils.generateAlphaNumericString(101));
-		CCUtils.assertEquals(clientUserDetailsPage.getMaximumCharacterErrorForLastNameField(),
-				"Maximum characters reached");
-		clientUserDetailsPage.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
-		CCUtils.assertEquals(clientUserDetailsPage.getMaximumCharacterErrorForUsernameField(),
-				"Maximum characters reached");
-		clientUserDetailsPage.enterEmail(CCUtils.generateNewEmail(101));
-		CCUtils.assertEquals(clientUserDetailsPage.getMaximumCharacterErrorForEmailField(),
-				"Maximum characters reached");
+		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(101));
+		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForFirstNameField(), "Maximum characters reached");
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(101));
+		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForLastNameField(), "Maximum characters reached");
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
+		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForUsernameField(), "Maximum characters reached");
+		commonMethods.enterEmail(CCUtils.generateNewEmail(101));
+		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForEmailField(), "Maximum characters reached");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in editable fields and verify valid error message for editable fields")
 	public void testEnterValidDetailErrorInEditMode(String[] getTestData) throws Exception {
 		logStep("Click on edit button");
 		clientUserDetailsPage.clickEditInClientUser();
+		commonMethods = new CommonMethods(driver);
 		logStep("Enter invalid data in first name, last name, email,username and mobile number fields and verify error message");
-		clientUserDetailsPage.enterFirstName(getTestData[0]);
-		CCUtils.assertEquals(clientUserDetailsPage.getValidErrorForFirstNameField(), "Please enter valid first name");
-		clientUserDetailsPage.enterLastName(getTestData[1]);
-		CCUtils.assertEquals(clientUserDetailsPage.getValidErrorForLastNameField(), "Please enter valid last name");
-		clientUserDetailsPage.enterEmail(getTestData[2]);
-		CCUtils.assertEquals(clientUserDetailsPage.getValidErrorForEmailField(), "Please enter valid email address");
-		clientUserDetailsPage.enterUserName(getTestData[3]);
-		CCUtils.assertEquals(clientUserDetailsPage.getValidErrorForUsernameField(), "Please enter valid username");
-		clientUserDetailsPage.enterMobileNumber(getTestData[4]);
-		CCUtils.assertEquals(clientUserDetailsPage.getValidErrorForMobileNumberField(),
-				"Please enter valid mobile number");
+		commonMethods.enterFirstName(getTestData[0]);
+		CCUtils.assertEquals(commonMethods.getValidErrorForFirstNameField(), "Please enter valid first name");
+		commonMethods.enterLastName(getTestData[1]);
+		CCUtils.assertEquals(commonMethods.getValidErrorForLastNameField(), "Please enter valid last name");
+		commonMethods.enterEmail(getTestData[2]);
+		CCUtils.assertEquals(commonMethods.getValidErrorForEmailField(), "Please enter valid email address");
+		commonMethods.enterUserName(getTestData[3]);
+		CCUtils.assertEquals(commonMethods.getValidErrorForUsernameField(), "Please enter valid username");
+		commonMethods.enterMobileNumber(getTestData[4]);
+		CCUtils.assertEquals(commonMethods.getValidErrorForMobileNumberField(), "Please enter valid mobile number");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
 	public void testUniqueErrorMssageInEditMode() throws Exception {
 		logStep("Click on edit button");
 		clientUserDetailsPage.clickEditInClientUser();
+		commonMethods = new CommonMethods(driver);
 		logStep("Enter existing value in username, email and mobile number fields and verify error message");
-		clientUserDetailsPage.enterMobileNumber(testData.getProperty("client.user.existing.mobile.number"));
-		CCUtils.assertEquals(clientUserDetailsPage.getDuplicateErrorForMobileNumberField(),
-				"Mobile number already in use");
-		clientUserDetailsPage.enterEmail(testData.getProperty("client.user.existing.email"));
-		CCUtils.assertEquals(clientUserDetailsPage.getDuplicateErrorForEmailField(), "Email already in use");
-		clientUserDetailsPage.enterUserName(testData.getProperty("client.user.existing.username"));
-		CCUtils.assertEquals(clientUserDetailsPage.getDuplicateErrorForUsernameField(), "Username already in use");
+		commonMethods.enterMobileNumber(testData.getProperty("client.user.existing.mobile.number"));
+		CCUtils.assertEquals(commonMethods.getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
+		commonMethods.enterEmail(testData.getProperty("client.user.existing.email"));
+		CCUtils.assertEquals(commonMethods.getDuplicateErrorForEmailField(), "Email already in use");
+		commonMethods.enterUserName(testData.getProperty("client.user.existing.username"));
+		CCUtils.assertEquals(commonMethods.getDuplicateErrorForUsernameField(), "Username already in use");
 	}
+
 }
