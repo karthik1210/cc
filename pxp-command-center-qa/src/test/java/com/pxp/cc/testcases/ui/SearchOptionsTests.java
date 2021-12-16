@@ -174,7 +174,8 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
 	public void testSearchOptionsWithSingleChecboxOfStatus() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
+		logStep("Click on command center users icon in left si"
+				+ "de navigation panel");
 		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
