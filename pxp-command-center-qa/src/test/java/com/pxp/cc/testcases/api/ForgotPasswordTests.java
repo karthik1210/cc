@@ -3,7 +3,7 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.PasswordPage;
@@ -18,7 +18,7 @@ public class ForgotPasswordTests extends BaseRest {
 	private PasswordPage passwordPage;
 	Response forgotPasswordApiResponse;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilderWithoutAuthorization();
 		passwordPage = new PasswordPage();
@@ -31,7 +31,8 @@ public class ForgotPasswordTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(forgotPasswordApiResponse);
 		CCUtils.assertEquals(forgotPasswordApiResponse.getStatusCode(), 200);
-		validation.verifySuccessMessageInResponseWhenUserIsRegistered(forgotPasswordApiResponse, testData.getProperty("password.username"));
+		validation.verifySuccessMessageInResponseWhenUserIsRegistered(forgotPasswordApiResponse,
+				testData.getProperty("password.username"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test to verify forgot Password Functionality Without Entering Username")

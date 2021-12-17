@@ -3,10 +3,8 @@ package com.pxp.cc.testcases.api;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.GeneralSettingsClientDropdown;
@@ -14,7 +12,6 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.ClientDirectoryValidations;
 import com.pxp.cc.util.ClientTopNavDropdownValidations;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -27,7 +24,7 @@ public class ClientDropdownGeneralSettingApiTests extends BaseRest {
 	JsonPath jsonPath;
 	List<String> list = null;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();

@@ -3,17 +3,14 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class GetSapNumberApiTests extends BaseRest {
@@ -22,7 +19,7 @@ public class GetSapNumberApiTests extends BaseRest {
 	private Validations validation;
 	Response getSapNumberApiResponse;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();

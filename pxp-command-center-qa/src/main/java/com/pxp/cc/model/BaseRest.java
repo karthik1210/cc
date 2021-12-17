@@ -1,19 +1,15 @@
-	// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.model;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
-
 import org.apache.log4j.BasicConfigurator;
 import org.testng.ITestResult;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-
 import com.intuit.ifs.csscat.core.BaseTestNG;
 import com.medfusion.common.utils.PropertyFileLoader;
 import com.pxp.cc.apipath.ApiPath;
-
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -31,7 +27,7 @@ public class BaseRest extends BaseTestNG {
 	public CCUser ccUser;
 	public PropertyFileLoader testData;
 
-	@BeforeSuite(alwaysRun = true)
+	@BeforeClass(alwaysRun = true)
 	public void setUpTestData() throws Exception {
 		testData = new PropertyFileLoader();
 		log("Setting up the Test Data.");
@@ -63,7 +59,7 @@ public class BaseRest extends BaseTestNG {
 				.addHeader(ApiPath.AUTHORIZATION, ApiPath.BEARER_TYPE + getTokenValue())
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
-	
+
 	public void setupServiceRequestSpecBuilderWithoutAuthorization() throws IOException {
 		RestAssured.baseURI = testData.getProperty("base.url");
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)

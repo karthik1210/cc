@@ -3,10 +3,8 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
@@ -17,7 +15,7 @@ public class GetClientOrgParentTests extends BaseRest {
 
 	private ClientInfo clientInfo;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();

@@ -5,7 +5,7 @@ package com.pxp.cc.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
@@ -23,7 +23,7 @@ public class FetchClientDetailsTests extends BaseRest {
 	Response createClientApiResponse, fetchClientDetailsApiResponse, createPracticeApiResponse;
 	List<Integer> solutionList = null;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
@@ -51,7 +51,7 @@ public class FetchClientDetailsTests extends BaseRest {
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 

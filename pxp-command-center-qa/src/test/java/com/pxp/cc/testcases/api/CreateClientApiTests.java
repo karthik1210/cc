@@ -4,16 +4,13 @@ package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
 import java.util.List;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class CreateClientApiTests extends BaseRest {
@@ -23,7 +20,7 @@ public class CreateClientApiTests extends BaseRest {
 	Response createClientApiResponse, fetchClientDetailsApiResponse;
 	List<Integer> solutionList = null;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
@@ -36,19 +33,16 @@ public class CreateClientApiTests extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
+		logStep("Fetch newly created client details using client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
 				ccUser.getTimezoneId(), ccUser.getDisplayName(), ccUser.getPracticeCount(), false, solutionList);
@@ -58,11 +52,9 @@ public class CreateClientApiTests extends BaseRest {
 	public void testErrorMessagesForMandatoryFields() throws IOException {
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(null, ccUser.getClientId(), null, null,
 				ccUser.getTestClient(), null, ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyNullErrorMessageResponseBody(createClientApiResponse);
 	}
 
@@ -72,11 +64,9 @@ public class CreateClientApiTests extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				ccUser.getClientName(), clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorMessageInResponseForClientNameField(createClientApiResponse);
 	}
 
@@ -86,11 +76,9 @@ public class CreateClientApiTests extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, ccUser.getClientSapNumber(), ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorMessageInResponseForSapNumberField(createClientApiResponse);
 	}
 
@@ -101,11 +89,9 @@ public class CreateClientApiTests extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), clientType, ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorMessageInResponseForClientTypeField(createClientApiResponse, clientType);
 	}
 
@@ -116,11 +102,9 @@ public class CreateClientApiTests extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), clientTimezoneId);
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorMessageInResponseForClientTimezoneIdField(createClientApiResponse, clientTimezoneId);
 	}
 
@@ -131,11 +115,9 @@ public class CreateClientApiTests extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, ccUser.getInvalidClientSapNumber(), ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyErrorMessageInResponseForClientSapNumberField(createClientApiResponse);
 	}
 
@@ -145,12 +127,9 @@ public class CreateClientApiTests extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				ccUser.getInvalidClientName(), clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyMaximumCharacterErrorMessageInResponseForClientNameField(createClientApiResponse);
 	}
-
 }

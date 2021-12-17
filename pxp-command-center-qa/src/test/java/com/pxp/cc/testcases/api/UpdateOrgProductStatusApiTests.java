@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -16,7 +16,6 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.UpdateOrgProductStatusValidations;
-
 import io.restassured.response.Response;
 
 public class UpdateOrgProductStatusApiTests extends BaseRest {
@@ -30,7 +29,7 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 	public int practiceId = 0;
 	List<Integer> pracSolutionList = Arrays.asList(1101, 1102, 1103);
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
