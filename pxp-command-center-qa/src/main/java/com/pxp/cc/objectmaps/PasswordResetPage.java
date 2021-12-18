@@ -2,24 +2,35 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.List;
 import java.util.Random;
-
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import com.medfusion.common.utils.Mailinator;
+import com.medfusion.common.utils.YopMail;
+import com.pxp.cc.util.CommonMethods;
 
 public class PasswordResetPage extends CCMainPage {
 
-	@FindBy(id = "forgetLink")
+//	@FindBy(id = "forgetLink")
+//	private WebElement forgotPassword;
+	
+	@FindBy(id = "loginForgetLink")
 	private WebElement forgotPassword;
 
-	@FindBy(xpath = "//*[@id=\"CC-hiYV\"]")
+//	@FindBy(xpath = "//*[@id=\"CC-hiYV\"]")
+//	private WebElement usernameField;
+	
+	@FindBy(id = "passresetUsernameInput")
 	private WebElement usernameField;
 
-	@FindBy(xpath = "//*[@id=\"CC-XIC6\"]")
+//	@FindBy(xpath = "//*[@id=\"CC-XIC6\"]")
+//	private WebElement emailMeTheLink;
+	
+	@FindBy(xpath = "//button[contains(text(),'Email me the Link')]")
 	private WebElement emailMeTheLink;
 
 	@FindBy(id = "errormsg")
@@ -31,16 +42,25 @@ public class PasswordResetPage extends CCMainPage {
 	@FindBy(xpath = "//*[@id=\"CC-bbst\"]")
 	private WebElement changePasswordMsgContactAdmin;
 
-	@FindBy(xpath = "//*[@id=\"CC-ig5S\"]")
+//	@FindBy(xpath = "//*[@id=\"CC-ig5S\"]")
+//	private WebElement userNotificationMsg;
+	
+	@FindBy(id = "passresetVerifiction")
 	private WebElement userNotificationMsg;
 
-	@FindBy(xpath = "//*[@id=\"CC-0yAC\"]")
+//	@FindBy(xpath = "//*[@id=\"CC-0yAC\"]")
+//	private WebElement emailSentNotification;
+	
+	@FindBy(id = "passresetUserEmail")
 	private WebElement emailSentNotification;
 
 	@FindBy(id = "userRequire")
 	private WebElement blankEmail;
 
-	@FindBy(xpath = "//*[@id=\"CC-K1wo\"]")
+//	@FindBy(xpath = "//*[@id=\"CC-K1wo\"]")
+//	private WebElement receivedEmailAddress;
+	
+	@FindBy(id = "passresetEmailMessage")
 	private WebElement receivedEmailAddress;
 
 	@FindBy(xpath = "//*[@id=\"CC-XIC6\"]")
@@ -89,7 +109,7 @@ public class PasswordResetPage extends CCMainPage {
 		super(driver, url);
 	}
 
-	public Mailinator mailinator = new Mailinator();
+	public YopMail mailinator = new YopMail(driver);
 
 	public void clickForgotPasswordAndEnterEmailAddress(String resetEmail, String autogeneratePwd)
 			throws InterruptedException {
@@ -310,28 +330,50 @@ public class PasswordResetPage extends CCMainPage {
 				"Password should have less than 100 characters"));
 	}
 
-	public void deleteEmail(String mailinatorEmail) {
+	public void deleteEmail(String mailinatorEmail) throws InterruptedException {
 		log("Delete EmailID Verification :" + mailinatorEmail);
-		driver.navigate().to("https://www.mailinator.com/v4/public/inboxes.jsp?to=" + mailinatorEmail);
+//		driver.navigate().to("https://www.mailinator.com/v4/public/inboxes.jsp?to=" + mailinatorEmail);
+		driver.get("https://yopmail.com/en/");
 		driver.manage().window().maximize();
-		int rowCount = driver.findElements(By.xpath("//*[@id=\"inbox_pane\"]/div[3]/div/div[4]/div/div/table/tbody/tr"))
-				.size();
-		log("print: " + rowCount);
-		for (int i = 1; i <= rowCount; i++) {
-			driver.findElement(By.xpath("//*[@id=\"inbox_pane\"]/div[3]/div/div[4]/div/div/table/tbody/tr[" + i + "]"))
-					.click();
-		}
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		Thread.sleep(2000);
+		CommonMethods cm = new CommonMethods(driver);
+		WebElement d = driver.findElement(By.xpath("//input[@id='login']"));
+		d.clear();
+		d.sendKeys(mailinatorEmail);
+		Thread.sleep(2000);
 
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id=\"pills-html-tab\"]")));
-		driver.findElement(By.className("btn-delete")).click();
-		driver.navigate().to("https://www.mailinator.com/v4/public/inboxes.jsp?to=" + mailinatorEmail);
-		driver.navigate().refresh();
+		WebElement goInboxButton = driver.findElement(By.xpath("//button[@title='Check Inbox @yopmail.com']"));
+		goInboxButton.click();
+		Thread.sleep(2000);
+
+		driver.switchTo().frame("ifinbox");
+
+		List<WebElement> subList = driver.findElements(By.xpath("//div[@class='m']/button"));
+		List<WebElement> chkList = driver.findElements(By.xpath("//input[@class='mc']"));
+
+		String subject_line = "Your appointment is now scheduled";
+		for (int i = 0; i < subList.size(); i++) {
+
+			if (subList.get(i).getText().contains(subject_line)) {
+
+				log(subList.get(i).getText() + "---Text");
+
+				cm.highlightElement(chkList.get(i));
+				chkList.get(i).click();
+			}
+		}
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollBy(550,0)", "");
+		Thread.sleep(1000);
+		driver.switchTo().parentFrame();
+
+		WebElement buttonDelete = driver.findElement(By.xpath("//button[@id='delsel']"));
+
+		driver.manage().deleteAllCookies();
+		cm.highlightElement(buttonDelete);
+		buttonDelete.click();
 	}
+
 
 	private static final String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&@?<>~!%#";
 
