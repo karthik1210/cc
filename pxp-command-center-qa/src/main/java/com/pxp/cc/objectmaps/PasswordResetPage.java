@@ -12,6 +12,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.medfusion.common.utils.YopMail;
 import com.pxp.cc.util.CommonMethods;
+import com.pxp.cc.util.MailinatorUtils;
+import com.pxp.cc.util.YopMailUtility;
 
 public class PasswordResetPage extends CCMainPage {
 
@@ -109,7 +111,8 @@ public class PasswordResetPage extends CCMainPage {
 		super(driver, url);
 	}
 
-	public YopMail mailinator = new YopMail(driver);
+	public YopMailUtility mailinator = new YopMailUtility(driver);
+//	public MailinatorUtils mailinator = new MailinatorUtils(driver);
 
 	public void clickForgotPasswordAndEnterEmailAddress(String resetEmail, String autogeneratePwd)
 			throws InterruptedException {
@@ -336,7 +339,7 @@ public class PasswordResetPage extends CCMainPage {
 		driver.get("https://yopmail.com/en/");
 		driver.manage().window().maximize();
 		Thread.sleep(2000);
-		CommonMethods cm = new CommonMethods(driver);
+//		CommonMethods cm = new CommonMethods(driver);
 		WebElement d = driver.findElement(By.xpath("//input[@id='login']"));
 		d.clear();
 		d.sendKeys(mailinatorEmail);
@@ -351,27 +354,30 @@ public class PasswordResetPage extends CCMainPage {
 		List<WebElement> subList = driver.findElements(By.xpath("//div[@class='m']/button"));
 		List<WebElement> chkList = driver.findElements(By.xpath("//input[@class='mc']"));
 
-		String subject_line = "Your appointment is now scheduled";
+		String subject_line = "Password reset request";
 		for (int i = 0; i < subList.size(); i++) {
 
 			if (subList.get(i).getText().contains(subject_line)) {
 
 				log(subList.get(i).getText() + "---Text");
 
-				cm.highlightElement(chkList.get(i));
+//				cm.highlightElement(chkList.get(i));
 				chkList.get(i).click();
 			}
 		}
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollBy(550,0)", "");
-		Thread.sleep(1000);
+//		JavascriptExecutor js = (JavascriptExecutor) driver;
+//		js.executeScript("window.scrollBy(550,0)", "");
+//		Thread.sleep(1000);
 		driver.switchTo().parentFrame();
 
 		WebElement buttonDelete = driver.findElement(By.xpath("//button[@id='delsel']"));
 
-		driver.manage().deleteAllCookies();
-		cm.highlightElement(buttonDelete);
+//		driver.manage().deleteAllCookies();
+//		cm.highlightElement(buttonDelete);
+//		buttonDelete.click();
+//		javascriptClick(buttonDelete);
 		buttonDelete.click();
+//		WebElement labelDelete = driver.findElement(By.id("Messages deleted"));
 	}
 
 
