@@ -2,6 +2,8 @@
 
 package com.pxp.cc.testcases.ui;
 
+import java.util.Arrays;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -24,10 +26,6 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search options for client user popup")
-	public void testSearchOptionsClientUserPopup() throws Exception {
 		logStep("Click on command center users icon in left side navigation panel");
 		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
@@ -37,40 +35,26 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
 		logStep("Click on search button");
 		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search options for client user popup")
+	public void testSearchOptionsClientUserPopup() throws Exception {
 		logStep("Verify search client user popup");
 		searchOptionsPage.verifySearchClientUserPopup();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message is displayed for search option page")
 	public void testErrorMessageWhenAllFieldsOfSearchOptionsIsBlank() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
 		logStep("Verify required error message is displayed for mandatory fields");
 		searchOptionsPage.verifyErrorMessageOnSearchOptionsPage();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, last name,username, email and mobile field and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, last name,username and email field and verify error message")
 	public void testMaximumCharactersErrorMessageForInputFields() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
 		logStep("Verify maximum character reached error message for firstname, last name,username, email and mobile field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
-				CCUtils.generateNewEmail(101), CCUtils.generateMobileNumber());
+				CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
 	}
 
 	@DataProvider(name = "invalidTestData")
@@ -92,15 +76,6 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, client, email, username and mobile number field and verify error message")
 	public void testErrorMessageForInvalidData(String[] getTestData) throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
 		logStep("Enter invalid data in first name, last name, client, email, username and mobile number field and verify error message");
 		searchOptionsPage.verifyFieldErrorMessageWithInvalidData(getTestData[0], getTestData[1], getTestData[2],
 				getTestData[3], getTestData[4]);
@@ -108,17 +83,8 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
 	public void testSearchOptionsWithSingleChecboxOfStatus() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
-		searchOptionsPage.selectSingleCheckboxOfEnrollmentStatus();
-		searchOptionsPage.selectSingleCheckboxOfUserStatus();
+		searchOptionsPage.selectUserStatus(Arrays.asList("Active"));
+		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed"));
 		searchOptionsPage.clickOnSearchButton();
 		clientUserPage.verifyClientUsersPageTitle();
 		searchOptionsPage.verifyClearAllButtonIsDisplayed();
@@ -126,15 +92,6 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button on search option page")
 	public void testClearButtonFunctionalityOnSearchPage() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
 		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
 				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
@@ -150,15 +107,6 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button after getting the search result")
 	public void testClearButtonFunctionalityWhenSearchResultDisplayed() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
 		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
 				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
@@ -166,24 +114,15 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("valid.user.email"),
 				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.mobile.number"));
-		logStep("Verify after clicking on cancel button user redirected to internal users page");
 		searchOptionsPage.clickOnSearchButton();
 		searchOptionsPage.verifySearchFilterCrossIcon();
+		logStep("Verify after clicking on cancel button user redirected to client users page");
 		clientUserPage.verifyClientUsersPageTitle();
 		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
-	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
-		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		logStep("Verify user redirected to command center users page");
-		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
-		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
-		clientUserPage = commandCenterUsersPage.clickOnClientUsersTab();
-		logStep("Click on search button");
-		searchOptionsPage = clientUserPage.clickOnSearchOptionPage();
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with single checkbox are filled & 'CLEAR All' button clicked after search result")
+	public void testSearchOptionsWithAllTheFieldsAndSingleCheckbox() throws Exception {
 		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(
 				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
@@ -191,6 +130,28 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("valid.user.email"),
 				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
 				testData.getProperty("valid.user.mobile.number"));
+		searchOptionsPage.selectUserStatus(Arrays.asList("Active"));
+		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed"));
+		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.clickOnClearAllSearchData();
+		clientUserPage.verifyClientUsersPageTitle();
+		searchOptionsPage.verifyClearAllButtonIsDisplayed();
+	}
+
+	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled & 'CLEAR All' button clicked after search result")
+	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
+		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(
+				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
+				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
+				testData.getProperty("valid.user.client.name").concat(CCUtils.generateAlphaNumericString(2)),
+				testData.getProperty("valid.user.email"),
+				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
+				testData.getProperty("valid.user.mobile.number"));
+		searchOptionsPage.selectUserStatus(Arrays.asList("Active","Inactive"));
+		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed","Delivered","Not Sent"));
+		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.clickOnClearAllSearchData();
 		clientUserPage.verifyClientUsersPageTitle();
 		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}

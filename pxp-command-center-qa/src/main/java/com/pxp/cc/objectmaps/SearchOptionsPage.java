@@ -19,9 +19,6 @@ public class SearchOptionsPage extends CCMainPage {
 		super(driver);
 	}
 
-	@FindBy(id = "internal Users")
-	private WebElement labelTitleInternalUsersPage;
-
 	@FindBy(xpath = "//div[contains(text(),'First Name')]")
 	private WebElement labelFirstName;
 
@@ -387,17 +384,12 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
 		textboxMobileNumber.sendKeys(mobileNumber);
 		log("Entered text in email field is " + mobileNumber);
-
-		clickEnrollmentStatusCheckboxes();
-
-		clickOnSearchButton();
-		scrollAndWait(0, 500, 8000);
-		clickOnClearAllSearchData();
 	}
 
 	public void clickOnSearchButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
 		scrollAndWait(0, 500, 200);
+		scrollAndWait(0, 500, 8000);
 		javascriptClick(buttonSearch);
 	}
 
@@ -475,8 +467,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	}
 
-	public void verifyMaximumCharactersErrorMessage(String firstName, String lastName, String username, String email,
-			Long mobileNumber) {
+	public void verifyMaximumCharactersErrorMessage(String firstName, String lastName, String username, String email) {
 		log("Enter more than 100 characters in first name textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
 		textboxFirstName.sendKeys(firstName);
@@ -509,14 +500,6 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMaximumCharacterEmail, driver);
 		CCUtils.assertEquals(errorMaximumCharacterEmail.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for email field is " + errorMaximumCharacterEmail.getText().trim());
-
-		log("Enter 10 numbers in mobile textbox field and verify error message");
-		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
-		textboxMobileNumber.sendKeys(String.valueOf(mobileNumber));
-		log("Entered text in email field is " + mobileNumber);
-		CCUtils.verifyAndWaitForElement(errorMaximumCharacterMobileNumber, driver);
-		CCUtils.assertEquals(errorMaximumCharacterMobileNumber.getText().trim(), "Maximum characters reached");
-		log("Error message displayed for email field is " + errorMaximumCharacterMobileNumber.getText().trim());
 	}
 
 	public void verifyWebElement(String webElement) {

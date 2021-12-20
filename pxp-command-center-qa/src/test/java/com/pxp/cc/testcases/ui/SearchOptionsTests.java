@@ -86,7 +86,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		logStep("Verify maximum character reached error message for firstname, last name,username, email and mobile field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
-				CCUtils.generateNewEmail(101), CCUtils.generateMobileNumber());
+				CCUtils.generateNewEmail(101));
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
