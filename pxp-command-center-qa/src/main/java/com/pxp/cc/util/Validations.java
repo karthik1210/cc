@@ -147,7 +147,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForClientTimezoneIdField(Response response, String clientTimezoneId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone id=" + clientTimezoneId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "TimezoneId=" + clientTimezoneId + " doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
@@ -1012,4 +1012,12 @@ public class Validations {
 			CCUtils.assertTrue(true, "Verification Input search data is invalid");
 		}
 	}
+
+	public void verifyErrorMessageInResponseForSapIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client SAP ID already use");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
+
 }

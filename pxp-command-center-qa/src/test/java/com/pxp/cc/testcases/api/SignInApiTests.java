@@ -2,22 +2,16 @@
 package com.pxp.cc.testcases.api;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
-
 import org.apache.log4j.BasicConfigurator;
-import org.testng.ITestResult;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.BaseTestNG;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.medfusion.common.utils.PropertyFileLoader;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.SignInValidations;
-
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -39,11 +33,6 @@ public class SignInApiTests extends BaseTestNG {
 		testData = new PropertyFileLoader();
 		log("Setting up the Test Data.");
 		BasicConfigurator.configure();
-	}
-
-	@BeforeMethod(enabled = true)
-	public void getMethodName(ITestResult result) throws IOException {
-		log("Method Name-- " + result.getMethod().getMethodName());
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating Simple Sign In Functionality.")
