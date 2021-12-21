@@ -4,7 +4,7 @@ package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
 import java.util.List;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.OrgInfo;
@@ -21,9 +21,8 @@ public class AddNewOrgApiTest extends BaseRest {
 			fetchEnterpriseDetailsApiResponse, createPracticeApiResponse, fetchPracticeDetailsApiResponse;
 	List<Integer> solutionList = null;
 
-	@BeforeMethod()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
-
 		setupServiceRequestSpecBuilder();
 		orgInfo = new OrgInfo();
 		validation = new Validations();

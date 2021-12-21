@@ -5,7 +5,7 @@ package com.pxp.cc.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -27,7 +27,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 	JsonPath jsonPath;
 	List<String> list = null;
 
-	@BeforeMethod()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientDirectory = new ClientDirectory();

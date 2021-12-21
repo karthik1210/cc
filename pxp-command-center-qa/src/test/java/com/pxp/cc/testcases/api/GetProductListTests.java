@@ -3,7 +3,7 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.Product;
@@ -16,7 +16,7 @@ public class GetProductListTests extends BaseRest {
 	private Validations validation;
 	private Product product;
 
-	@BeforeMethod()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		validation = new Validations();

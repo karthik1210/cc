@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AuditLog;
@@ -40,7 +40,7 @@ public class OrgNodeAuditLogTests extends BaseRest {
 	private static final String ORG_TYPE_ENTERPRISE = "ENTERPRISE";
 	private static final String ORG_TYPE_PRACTICE = "ORG";
 
-	@BeforeMethod()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();

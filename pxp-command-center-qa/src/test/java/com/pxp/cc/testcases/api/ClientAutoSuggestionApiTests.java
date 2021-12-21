@@ -3,7 +3,7 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -19,7 +19,7 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 	private Validations validation;
 	Response getSearchedClientDetailsApiResponse;
 
-	@BeforeMethod()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientData = new ClientInfo();
