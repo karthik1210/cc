@@ -13,9 +13,15 @@
 			<class name="com.pxp.cc.testcases.api.AddNewOrgApiTest" />
 			<class
 				name="com.pxp.cc.testcases.api.ApplyToInheritFromApiTests" />
+			<class
+				name="com.pxp.cc.testcases.api.ClientAutoSuggestionApiTests" />
+
 			<class name="com.pxp.cc.testcases.api.ClientDirectoryApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.ClientDropdownGeneralSettingApiTests" />
+			<class name="com.pxp.cc.testcases.api.CreateClientApiTests" />
+			<class
+				name="com.pxp.cc.testcases.api.CreateClientOrgControllerApiTests" />
 			<class name="com.pxp.cc.testcases.api.EditClientApiTests" />
 			<class name="com.pxp.cc.testcases.api.EditOrgNodeApiTest" />
 			<class name="com.pxp.cc.testcases.api.FetchClientDetailsTests" />
@@ -29,19 +35,27 @@
 				name="com.pxp.cc.testcases.api.GetOrgHierarchyControllerApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.GetOrgIdSystemEnterprisePracticeApiTest" />
+			<class
+				name="com.pxp.cc.testcases.api.GetOrgPracticesProductsCount" />
+			<class name="com.pxp.cc.testcases.api.GetProductListTests" />
+
 			<class name="com.pxp.cc.testcases.api.GetSapNumberApiTests" />
+
 			<class name="com.pxp.cc.testcases.api.GetTimezoneTests" />
+			<class name="com.pxp.cc.testcases.api.MoveOrgNodeAuditLogTests" />
 			<class
 				name="com.pxp.cc.testcases.api.MoveOrgNodeWithDoNotInheritTests" />
 			<class
 				name="com.pxp.cc.testcases.api.MoveOrgNodeWithInheritTests" />
 			<class name="com.pxp.cc.testcases.api.OrgNodeAuditLogTests" />
+			<class name="com.pxp.cc.testcases.api.ResetPasswordTests" />
 			<class name="com.pxp.cc.testcases.api.SignInApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.UpdateClientStatusApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.UpdateOrgNodeStatusApiTests" />
-
+			<class
+				name="com.pxp.cc.testcases.api.UpdateOrgProductStatusApiTests" />
 		</classes>
 	</test>
 </suite>

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
@@ -32,7 +32,7 @@ public class GetOrgPracticesProductsCount extends BaseRest {
 	List<Integer> practiceThreeSolutionList = Arrays.asList(1104, 1102);
 	List<Integer> practiceFourSolutionList = Arrays.asList(1105, 1102);
 
-	@BeforeMethod()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
