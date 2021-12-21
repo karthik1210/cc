@@ -33,13 +33,12 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
 		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@y*****.com");
-//		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@m*****.com");
-//		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
-//				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
-//		resetPage.urlInEmail(ccuser.getResetEmail(), autogeneratePassword);
-//		logStep("Navigating to reset password page and verifying success message");
-//		CCUtils.assertEquals(resetPage.getNewPaswwordCreatedMsg(), "Success! Your password has been reset.");
-//		resetPage.callPasswordUpdated(ccuser.getResetEmail(), autogeneratePassword);
+		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
+				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
+		resetPage.urlInEmail(ccuser.getResetEmail(), autogeneratePassword);
+		logStep("Navigating to reset password page and verifying success message");
+		CCUtils.assertEquals(resetPage.getNewPaswwordCreatedMsg(), "Success! Your password has been reset.");
+		resetPage.callPasswordUpdated(ccuser.getResetEmail(), autogeneratePassword);
 		resetPage.deleteEmail(ccuser.getResetEmail());
 		driver.navigate().refresh();
 		driver.close();
@@ -77,16 +76,15 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorInvalidToken(),
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail(),
 				ccuser.getInvalidTokenUrl());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
-		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "u*****@m*****.com");
+		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@y*****.com");
 		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
 				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
-
-		resetPage.invalidTokenUrlInEmail(ccuser.getMailinatorInvalidToken(), ccuser.getInvalidTokenUrl());
+		resetPage.invalidTokenUrlInEmail(ccuser.getResetEmail(), ccuser.getInvalidTokenUrl());
 		logStep("Navigating to reset password page and verifying error");
 	}
 
@@ -136,14 +134,14 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorRepetitiveSequence());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
-		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@m*****.com");
+		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@y*****.com");
 		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
 				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
-		resetPage.linkInEmail(ccuser.getMailinatorRepetitiveSequence());
+		resetPage.linkUnderEmail(ccuser.getResetEmail());
 	}
 
 	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -153,15 +151,14 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorSpaceInPassword());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail());
 		logStep("Validating email received");
 		CCUtils.assertEquals("We just sent a verification message to the following address:",
 				resetPage.getUserNotificationMsg());
-		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "p*****@m*****.com");
+		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@y*****.com");
 		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
 				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
-		resetPage.linkInEmail(ccuser.getMailinatorSpaceInPassword());
-		logStep("Navigating to reset password page and verifying error");
+		resetPage.linkInEmail(ccuser.getResetEmail());
 	}
 
 	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -171,14 +168,14 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorCommonPassword());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
-		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "c*****@m*****.com");
+		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@y*****.com");
 		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
 				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
-		resetPage.commonPasswordUrlInEmail(ccuser.getMailinatorCommonPassword());
+		resetPage.commonPasswordUrlInEmail(ccuser.getResetEmail());
 	}
 
 	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class)
@@ -188,14 +185,14 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getMailinatorMaximumCharacters());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
-		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "M*****@m*****.com");
+		CCUtils.assertEquals(resetPage.getEmailSentNotificationMsg(), "r*****@y*****.com");
 		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
 				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
-		resetPage.maximumCharacterValidationlinkInEmail(ccuser.getMailinatorMaximumCharacters());
+		resetPage.maximumCharacterValidationlinkInEmail(ccuser.getResetEmail());
 		logStep("Navigating to reset password page and verifying error");
 	}
 }

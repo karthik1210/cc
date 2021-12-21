@@ -25,12 +25,7 @@ public class CCUser {
 	public String resetEmail;
 	public String unregisteredEmail;
 	public String invalidTokenUrl;
-	public String mailinatorSpaceInPassword;
-	public String mailinatorRepetitiveSequence;
 	public String mailinatorOldPassword;
-	public String mailinatorInvalidToken;
-	public String mailinatorCommonPassword;
-	public String mailinatorMaximumCharacters;
 	public String newClientName;
 	public String newClientSap;
 	public String newClientType;
@@ -177,12 +172,7 @@ public class CCUser {
 		setUsername(getProperty("user.name"));
 		setPassword(getProperty("user.password"));
 		setResetEmail(getProperty("reset.password.reset.email"));
-		setMailinatorSpaceInPassword(getProperty("reset.password.space.in.password"));
-		setMailinatorRepetitiveSequence(getProperty("reset.password.repetitive.sequence"));
 		setMailinatorOldPassword(getProperty("reset.password.old.password"));
-		setMailinatorInvalidToken(getProperty("reset.password.invalid.token"));
-		setMailinatorCommonPassword(getProperty("reset.password.common.password"));
-		setMailinatorMaximumCharacters(getProperty("reset.password.maximum.characters"));
 		setUnregisteredEmail(getProperty("reset.password.unregistered.email"));
 		setExternalUser(getProperty("reset.password.external.user"));
 		setInvalidTokenUrl(getProperty("reset.password.invalid.token.url"));

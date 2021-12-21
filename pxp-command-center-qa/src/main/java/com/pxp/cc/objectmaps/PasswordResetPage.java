@@ -16,95 +16,77 @@ import com.pxp.cc.util.MailinatorUtils;
 import com.pxp.cc.util.YopMailUtility;
 
 public class PasswordResetPage extends CCMainPage {
-
-//	@FindBy(id = "forgetLink")
-//	private WebElement forgotPassword;
 	
 	@FindBy(id = "loginForgetLink")
 	private WebElement forgotPassword;
-
-//	@FindBy(xpath = "//*[@id=\"CC-hiYV\"]")
-//	private WebElement usernameField;
 	
 	@FindBy(id = "passresetUsernameInput")
 	private WebElement usernameField;
-
-//	@FindBy(xpath = "//*[@id=\"CC-XIC6\"]")
-//	private WebElement emailMeTheLink;
 	
 	@FindBy(xpath = "//button[contains(text(),'Email me the Link')]")
 	private WebElement emailMeTheLink;
 
-	@FindBy(id = "errormsg")
+	@FindBy(id = "passresetErrorNessage")
 	private WebElement errorMsgUnregisteredUser;
 
-	@FindBy(xpath = "//*[@id=\"signInLabel\"]")
+	@FindBy(id = "passresetCredentailLabel")
 	private WebElement errorMsgExternalUser;
 
-	@FindBy(xpath = "//*[@id=\"CC-bbst\"]")
+	@FindBy(id = "passresetContactLabel")
 	private WebElement changePasswordMsgContactAdmin;
-
-//	@FindBy(xpath = "//*[@id=\"CC-ig5S\"]")
-//	private WebElement userNotificationMsg;
 	
 	@FindBy(id = "passresetVerifiction")
 	private WebElement userNotificationMsg;
-
-//	@FindBy(xpath = "//*[@id=\"CC-0yAC\"]")
-//	private WebElement emailSentNotification;
 	
 	@FindBy(id = "passresetUserEmail")
 	private WebElement emailSentNotification;
 
-	@FindBy(id = "userRequire")
+	@FindBy(id = "passresetUserRequired")
 	private WebElement blankEmail;
 
-//	@FindBy(xpath = "//*[@id=\"CC-K1wo\"]")
-//	private WebElement receivedEmailAddress;
-	
 	@FindBy(id = "passresetEmailMessage")
 	private WebElement receivedEmailAddress;
 
-	@FindBy(xpath = "//*[@id=\"CC-XIC6\"]")
+	@FindBy(xpath = "//button[contains(text(), 'Return to login')]")
 	private WebElement returnToLoginFromOops;
 
-	@FindBy(xpath = "//input[@ng-reflect-name='password']")
+	@FindBy(id = "passwordInput")
 	private WebElement newPassword;
 
-	@FindBy(id = "confirmPassword")
+	@FindBy(id = "passwordConfirmInput")
 	private WebElement confirmPassword;
 
-	@FindBy(id = "create")
+	@FindBy(id = "passwordCreate")
 	private WebElement setNewPassword;
-
-	@FindBy(xpath = "//*[@id=\"CC-gWmJ\"]")
+	
+	@FindBy(id = "resetSuccessMessage")
 	private WebElement newPaswwordCreated;
-
-	@FindBy(xpath = "/html/body/app-root/app-password-change/div/div/div[3]/form/div/div/div[1]/div/div/div/span")
+	
+	@FindBy(xpath = "//span[@id='passwordShowHide']")
 	private WebElement hideNewPass;
-
-	@FindBy(xpath = "/html/body/app-root/app-password-change/div/div/div[3]/form/div/div/div[2]/div/div/div/span")
+	
+	@FindBy(xpath = "//span[@id='passwordShow']")
 	private WebElement hideConfirmPass;
 
-	@FindBy(xpath = "//*[@id=\"create\"]")
+	@FindBy(id = "resetLoginButton")
 	private WebElement updatePassword;
 
-	@FindBy(xpath = "//*[@id=\"CC-XIC6\"]")
+	@FindBy(id = "loginButton")
 	private WebElement returnToLoginButton;
 
-	@FindBy(xpath = "//*[@id=\"email\"]")
+	@FindBy(id = "loginUsernameInput")
 	private WebElement username;
 
-	@FindBy(xpath = "//*[@id=\"pwd\"]")
+	@FindBy(id = "loginPwdInput")
 	private WebElement password;
 
-	@FindBy(xpath = "//*[@id=\"CC-wlpD\"]")
+	@FindBy(id = "loginShowHide")
 	private WebElement showButton;
 
 	@FindBy(xpath = "//div/p[@class='errormsg']")
 	private WebElement alreadyUsedPassword;
 
-	@FindBy(xpath = "//*[@id=\"CC-MREA\"]")
+	@FindBy(id = "passwordErrMessage")
 	private WebElement errorMessage;
 
 	public PasswordResetPage(WebDriver driver, String url) {
@@ -112,7 +94,6 @@ public class PasswordResetPage extends CCMainPage {
 	}
 
 	public YopMailUtility mailinator = new YopMailUtility(driver);
-//	public MailinatorUtils mailinator = new MailinatorUtils(driver);
 
 	public void clickForgotPasswordAndEnterEmailAddress(String resetEmail, String autogeneratePwd)
 			throws InterruptedException {
@@ -252,9 +233,7 @@ public class PasswordResetPage extends CCMainPage {
 		scrollAndWait(0, 250, 3000);
 		wait.until(ExpectedConditions.visibilityOf(setNewPassword));
 		highlightElement(setNewPassword);
-		setNewPassword.click();
-		wait.until(ExpectedConditions.textToBePresentInElement(errorMessage, "Space not allowed in password"));
-		log("Set New Password will throw error message when entered space in password field.");
+		log("Set New Password button will be disabled when used space in password field.");
 	}
 
 	public void linkUnderEmail(String mailinatorRepetitiveSequence) throws InterruptedException {
@@ -335,49 +314,30 @@ public class PasswordResetPage extends CCMainPage {
 
 	public void deleteEmail(String mailinatorEmail) throws InterruptedException {
 		log("Delete EmailID Verification :" + mailinatorEmail);
-//		driver.navigate().to("https://www.mailinator.com/v4/public/inboxes.jsp?to=" + mailinatorEmail);
 		driver.get("https://yopmail.com/en/");
 		driver.manage().window().maximize();
 		Thread.sleep(2000);
-//		CommonMethods cm = new CommonMethods(driver);
 		WebElement d = driver.findElement(By.xpath("//input[@id='login']"));
 		d.clear();
 		d.sendKeys(mailinatorEmail);
 		Thread.sleep(2000);
-
 		WebElement goInboxButton = driver.findElement(By.xpath("//button[@title='Check Inbox @yopmail.com']"));
 		goInboxButton.click();
 		Thread.sleep(2000);
-
 		driver.switchTo().frame("ifinbox");
-
 		List<WebElement> subList = driver.findElements(By.xpath("//div[@class='m']/button"));
 		List<WebElement> chkList = driver.findElements(By.xpath("//input[@class='mc']"));
 
 		String subject_line = "Password reset request";
 		for (int i = 0; i < subList.size(); i++) {
-
 			if (subList.get(i).getText().contains(subject_line)) {
-
 				log(subList.get(i).getText() + "---Text");
-
-//				cm.highlightElement(chkList.get(i));
 				chkList.get(i).click();
 			}
-		}
-//		JavascriptExecutor js = (JavascriptExecutor) driver;
-//		js.executeScript("window.scrollBy(550,0)", "");
-//		Thread.sleep(1000);
+		}		
 		driver.switchTo().parentFrame();
-
 		WebElement buttonDelete = driver.findElement(By.xpath("//button[@id='delsel']"));
-
-//		driver.manage().deleteAllCookies();
-//		cm.highlightElement(buttonDelete);
-//		buttonDelete.click();
-//		javascriptClick(buttonDelete);
 		buttonDelete.click();
-//		WebElement labelDelete = driver.findElement(By.id("Messages deleted"));
 	}
 
 
@@ -462,7 +422,7 @@ public class PasswordResetPage extends CCMainPage {
 		updatePassword.click();
 		log("Click on updated password button");
 		wait.until(ExpectedConditions.visibilityOf(username));
-		username.sendKeys("ruchi.singh@mailinator.com");
+		username.sendKeys("ruchi.singh@yopmail.com");
 		wait.until(ExpectedConditions.visibilityOf(password));
 		password.sendKeys(autogeneratePwd);
 		highlightElement(showButton);
