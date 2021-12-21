@@ -43,7 +43,7 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.verifySearchClientUserPopup();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message is displayed for search option page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message is displayed in search option page")
 	public void testErrorMessageWhenAllFieldsOfSearchOptionsIsBlank() throws Exception {
 		logStep("Verify required error message is displayed for mandatory fields");
 		searchOptionsPage.verifyErrorMessageOnSearchOptionsPage();
@@ -74,7 +74,7 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 		return obj;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, client, email, username and mobile number field and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
 	public void testErrorMessageForInvalidData(String[] getTestData) throws Exception {
 		logStep("Enter invalid data in first name, last name, client, email, username and mobile number field and verify error message");
 		searchOptionsPage.verifyFieldErrorMessageWithInvalidData(getTestData[0], getTestData[1], getTestData[2],
@@ -93,67 +93,53 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button on search option page")
 	public void testClearButtonFunctionalityOnSearchPage() throws Exception {
 		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
-				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.client.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.mobile.number"));
+				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"),
+				testData.getProperty("valid.user.client.name"), testData.getProperty("valid.user.email"),
+				testData.getProperty("valid.username"), testData.getProperty("valid.user.mobile.number"));
 		searchOptionsPage.verifyClearButtonIsDisplayed();
 		searchOptionsPage.clickOnClearButton();
-		logStep("Verify after clicking on cancel button user redirected to internal users page");
+		logStep("Verify after clicking on clear button, all text-box and checkbox got empty");
 		searchOptionsPage.verifyTextboxIsEmptyWhenClickOnClearButton();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button after getting the search result")
 	public void testClearButtonFunctionalityWhenSearchResultDisplayed() throws Exception {
 		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
-				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.client.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.mobile.number"));
+				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"),
+				testData.getProperty("valid.user.client.name"), testData.getProperty("valid.user.email"),
+				testData.getProperty("valid.username"), testData.getProperty("valid.user.mobile.number"));
 		searchOptionsPage.clickOnSearchButton();
 		searchOptionsPage.verifySearchFilterCrossIcon();
-		logStep("Verify after clicking on cancel button user redirected to client users page");
+		logStep("Verify after clicking on cross icon on every selected items user redirected to client users page");
 		clientUserPage.verifyClientUsersPageTitle();
-		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with single checkbox are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndSingleCheckbox() throws Exception {
-		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(
-				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.client.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
+		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(testData.getProperty("valid.user.first.name"),
+				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.client.name"),
+				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
 				testData.getProperty("valid.user.mobile.number"));
 		searchOptionsPage.selectUserStatus(Arrays.asList("Active"));
 		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed"));
 		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 		searchOptionsPage.clickOnClearAllSearchData();
 		clientUserPage.verifyClientUsersPageTitle();
-		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}
 
-	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
-		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(
-				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.client.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
+		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(testData.getProperty("valid.user.first.name"),
+				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.client.name"),
+				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
 				testData.getProperty("valid.user.mobile.number"));
-		searchOptionsPage.selectUserStatus(Arrays.asList("Active","Inactive"));
-		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed","Delivered","Not Sent"));
+		searchOptionsPage.selectUserStatus(Arrays.asList("Active", "Inactive"));
+		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed", "Delivered", "Not Sent"));
 		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 		searchOptionsPage.clickOnClearAllSearchData();
 		clientUserPage.verifyClientUsersPageTitle();
-		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 	}
 
 }

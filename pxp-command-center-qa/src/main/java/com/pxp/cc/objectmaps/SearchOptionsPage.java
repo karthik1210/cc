@@ -454,10 +454,15 @@ public class SearchOptionsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
+	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		log("Verifying required error message is displayed on search options popup");
 		buttonSearch.click();
+		log("search button clicked");
+
+	}
+
+	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
+		clickToSearchButton();
 		scrollAndWait(0, 500, 200);
 		CCUtils.verifyAndWaitForElement(buttonHideSearchOptions, driver);
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
