@@ -3,18 +3,14 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import java.util.List;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class ClientAutoSuggestionApiTests extends BaseRest {
@@ -23,7 +19,7 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 	private Validations validation;
 	Response getSearchedClientDetailsApiResponse;
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientData = new ClientInfo();
@@ -32,7 +28,7 @@ public class ClientAutoSuggestionApiTests extends BaseRest {
 
 	@DataProvider(name = "typesofsearchdata")
 	public Object[] typesOfSearchData() {
-		Object[] obj = new Object[] { "Client", "4051", "client1","Client@12" };
+		Object[] obj = new Object[] { "Client", "4051", "client1", "Client@12" };
 		return obj;
 	}
 

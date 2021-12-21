@@ -3,17 +3,14 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
@@ -24,7 +21,7 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
 			getOrgIdApiResponse;
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
@@ -102,7 +99,7 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		int clientId = createClientApiResponse.jsonPath().get("id");
 		logStep("Fetching Client Id Response");

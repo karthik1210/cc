@@ -3,7 +3,7 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.PasswordPage;
@@ -17,7 +17,7 @@ public class ResetPasswordTests extends BaseRest {
 	private PasswordPage passwordPage;
 	Response resetPasswordApiResponse, forgotPasswordApiResponse;
 
-	@BeforeTest()
+	@BeforeMethod()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilderWithoutAuthorization();
 		passwordPage = new PasswordPage();

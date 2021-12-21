@@ -4,7 +4,7 @@ package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
 import java.util.List;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -25,7 +25,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 			createPracticeApiResponse, createEnterpriseApiResponse, fetchOrgDetailsApiResponse;
 	List<Integer> solutionList = null;
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();

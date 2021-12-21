@@ -5,10 +5,8 @@ package com.pxp.cc.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
@@ -16,7 +14,6 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class GetClientOrgControllerAgnosticPracticeTests extends BaseRest {
@@ -28,7 +25,7 @@ public class GetClientOrgControllerAgnosticPracticeTests extends BaseRest {
 			createEnterpriseApiResponse;
 	List<Integer> solutionList = null;
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
