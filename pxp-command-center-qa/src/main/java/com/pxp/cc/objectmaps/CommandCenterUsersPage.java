@@ -55,6 +55,7 @@ public class CommandCenterUsersPage extends CCMainPage {
 	public ClientUsersPage clickOnClientUsersTab() {
 		CCUtils.verifyAndWaitForElement(tabClientUsers, driver);
 		tabClientUsers.click();
+		log("User clicked Client Users tab.");
 		return PageFactory.initElements(driver, ClientUsersPage.class);
 
 	}

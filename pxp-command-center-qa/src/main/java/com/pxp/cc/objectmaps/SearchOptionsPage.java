@@ -6,9 +6,11 @@ import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import com.pxp.cc.util.CCUtils;
 
 public class SearchOptionsPage extends CCMainPage {
@@ -17,14 +19,14 @@ public class SearchOptionsPage extends CCMainPage {
 		super(driver);
 	}
 
-	@FindBy(id = "internal Users")
-	private WebElement labelTitleInternalUsersPage;
-
 	@FindBy(xpath = "//div[contains(text(),'First Name')]")
 	private WebElement labelFirstName;
 
 	@FindBy(xpath = "//div[contains(text(),'Last Name')]")
 	private WebElement labelLastName;
+
+	@FindBy(xpath = "//div[contains(text(),'Client')]")
+	private WebElement labelClient;
 
 	@FindBy(xpath = "//div[contains(text(),'Email')]")
 	private WebElement labelEmail;
@@ -43,6 +45,12 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//input[@formcontrolname='userName']")
 	private WebElement textboxUsername;
+
+	@FindBy(xpath = "//input[@formcontrolname='clientName']")
+	private WebElement dropdownSearchClient;
+
+	@FindBy(xpath = "//span[@class='mat-option-text']")
+	private WebElement selectFirstInAutoSuggestion;
 
 	@FindBy(xpath = "//input[@formcontrolname='email']")
 	private WebElement textboxEmail;
@@ -158,6 +166,20 @@ public class SearchOptionsPage extends CCMainPage {
 		verifySearchButtonIsDisplayed();
 	}
 
+	public void verifySearchClientUserPopup() throws InterruptedException, AWTException {
+		log("Verifying search client user pop-up");
+		verifyFirstNameLabelTextAndTextboxDefaultValue();
+		verifyLastNameLabelTextAndTextboxDefaultValue();
+		verifyClientLabelTextAndTextboxDefaultValue();
+		verifyUsernameLabelTextAndTextboxDefaultValue();
+		verifyEmailLabelTextAndTextboxDefaultValue();
+		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		verifyUserStatusLabelTextAndCheckboxes();
+		verifyEnrollmentStatusLabelTextAndCheckboxes();
+		verifyClearButtonIsDisplayed();
+		verifySearchButtonIsDisplayed();
+	}
+
 	public void verifyFirstNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelFirstName, driver);
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
@@ -169,7 +191,7 @@ public class SearchOptionsPage extends CCMainPage {
 			CCUtils.assertEquals(textboxFirstName.getAttribute("placeholder").trim(), "Input Text");
 			log("Box text for first name textbox field is " + textboxFirstName.getAttribute("placeholder").trim());
 		} else {
-			log("First name label and input textbox are not displayed on search internal user page");
+			log("First name label and input textbox are not displayed on search options popup");
 		}
 	}
 
@@ -184,7 +206,22 @@ public class SearchOptionsPage extends CCMainPage {
 			CCUtils.assertEquals(textboxLastName.getAttribute("placeholder").trim(), "Input Text");
 			log("Box text for last name textbox field is " + textboxLastName.getAttribute("placeholder").trim());
 		} else {
-			log("Last name label and input textbox are not displayed on search internal user page");
+			log("Last name label and input textbox are not displayed on search options popup");
+		}
+	}
+
+	public void verifyClientLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelClient, driver);
+		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
+		if (labelClient.isDisplayed() && dropdownSearchClient.isDisplayed()) {
+			log("Verifying client label text");
+			CCUtils.assertEquals(labelClient.getText().trim(), "Client");
+			log("Client label text is " + labelClient.getText().trim());
+			log("Verifying Search/Select placeholder is displayed for client textbox field");
+			CCUtils.assertEquals(dropdownSearchClient.getAttribute("placeholder").trim(), "Search/Select");
+			log("Box text for client textbox field is " + dropdownSearchClient.getAttribute("placeholder").trim());
+		} else {
+			log("Client label and Search/Select dropdown are not displayed on search options popup");
 		}
 	}
 
@@ -199,7 +236,7 @@ public class SearchOptionsPage extends CCMainPage {
 			CCUtils.assertEquals(textboxUsername.getAttribute("placeholder").trim(), "Input Text");
 			log("Box text for username textbox field is " + textboxUsername.getAttribute("placeholder").trim());
 		} else {
-			log("Username label and input textbox are not displayed on search internal user page");
+			log("Username label and input textbox are not displayed on search options popup");
 		}
 	}
 
@@ -214,7 +251,7 @@ public class SearchOptionsPage extends CCMainPage {
 			CCUtils.assertEquals(textboxEmail.getAttribute("placeholder").trim(), "Input Text");
 			log("Box text for email textbox field is " + textboxEmail.getAttribute("placeholder").trim());
 		} else {
-			log("Email label and input textbox are not displayed on search internal user page");
+			log("Email label and input textbox are not displayed on search options popup");
 		}
 	}
 
@@ -230,7 +267,7 @@ public class SearchOptionsPage extends CCMainPage {
 			log("Box text for mobile number textbox field is "
 					+ textboxMobileNumber.getAttribute("placeholder").trim());
 		} else {
-			log("Mobile number label and input textbox are not displayed on search internal user page");
+			log("Mobile number label and input textbox are not displayed on search options popup");
 		}
 	}
 
@@ -241,12 +278,12 @@ public class SearchOptionsPage extends CCMainPage {
 			log("Verifying status label text");
 			CCUtils.assertEquals(labelUserStatus.getText().trim(), "User Status");
 			log("User Status label text is " + labelUserStatus.getText().trim());
-			log("Verifying User status label are displayed on search internal user page");
+			log("Verifying User status label are displayed on search options popup");
 			verifyUserStatusValues();
 			log("Verifying user role checkboxes are not selected");
 			verifyUserStatusCheckboxesAreNotByDefaultSelected();
 		} else {
-			log("User status label is not displayed on search internal user page");
+			log("User status label is not displayed on search options popup");
 		}
 	}
 
@@ -285,7 +322,7 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickOnClearButton() throws InterruptedException {
-		log("Verifying clear button is displayed on search internal user page");
+		log("Verifying clear button is displayed on search options popup");
 		verifyClearButtonIsDisplayed();
 		CCUtils.verifyAndWaitForElement(buttonClear, driver);
 		buttonClear.click();
@@ -321,9 +358,38 @@ public class SearchOptionsPage extends CCMainPage {
 		clickOnClearAllSearchData();
 	}
 
+	public void verifyClearAllButtonFunctionalityWithAllFields(String firstName, String lastName, String clientName,
+			String email, String username, String mobileNumber) throws AWTException, InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(firstName);
+		log("Entered text in first name field is " + firstName);
+
+		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
+		textboxLastName.sendKeys(lastName);
+		log("Entered text in last name field is " + lastName);
+
+		clearSearchTextInClientSearchBox();
+		searchNode(clientName);
+		log("Entered text in client field is " + clientName);
+
+		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
+		textboxEmail.sendKeys(email);
+		log("Entered text in email field is " + email);
+
+		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
+		textboxUsername.clear();
+		textboxUsername.sendKeys(username);
+		log("Entered text in username field is " + username);
+
+		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
+		textboxMobileNumber.sendKeys(mobileNumber);
+		log("Entered text in email field is " + mobileNumber);
+	}
+
 	public void clickOnSearchButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
 		scrollAndWait(0, 500, 200);
+		scrollAndWait(0, 500, 8000);
 		javascriptClick(buttonSearch);
 	}
 
@@ -335,14 +401,14 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void verifySearchButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		log("Verifying search button is displayed on search internal user page");
+		log("Verifying search button is displayed on search options popup");
 		if (buttonSearch.isDisplayed() == true) {
 			log("Verifying search button is enabled");
 			CCUtils.assertTrue(buttonSearch.isEnabled(), "search button is disabled");
 			log("Verifying search button text");
 			CCUtils.assertEquals(buttonSearch.getText().trim(), "SEARCH");
 		} else {
-			log("Search button is not displayed on search internal user page");
+			log("Search button is not displayed on search options popup");
 		}
 	}
 
@@ -357,7 +423,7 @@ public class SearchOptionsPage extends CCMainPage {
 			log("Verifying user role checkboxes are not selected");
 			verifyUserStatusCheckboxesAreNotByDefaultSelected();
 		} else {
-			log("Enrollment status label is not displayed on search internal user page");
+			log("Enrollment status label is not displayed on search options popup");
 		}
 	}
 
@@ -388,10 +454,15 @@ public class SearchOptionsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
+	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		log("Verifying required error message is displayed on search internal user page");
 		buttonSearch.click();
+		log("search button clicked");
+
+	}
+
+	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
+		clickToSearchButton();
 		scrollAndWait(0, 500, 200);
 		CCUtils.verifyAndWaitForElement(buttonHideSearchOptions, driver);
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
@@ -401,8 +472,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	}
 
-	public void verifyMaximumCharactersErrorMessage(String firstName, String lastName, String username, String email,
-			Long mobileNumber) {
+	public void verifyMaximumCharactersErrorMessage(String firstName, String lastName, String username, String email) {
 		log("Enter more than 100 characters in first name textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
 		textboxFirstName.sendKeys(firstName);
@@ -435,14 +505,16 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMaximumCharacterEmail, driver);
 		CCUtils.assertEquals(errorMaximumCharacterEmail.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for email field is " + errorMaximumCharacterEmail.getText().trim());
+	}
 
-		log("Enter 10 numbers in mobile textbox field and verify error message");
-		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
-		textboxMobileNumber.sendKeys(String.valueOf(mobileNumber));
-		log("Entered text in email field is " + mobileNumber);
-		CCUtils.verifyAndWaitForElement(errorMaximumCharacterMobileNumber, driver);
-		CCUtils.assertEquals(errorMaximumCharacterMobileNumber.getText().trim(), "Maximum characters reached");
-		log("Error message displayed for email field is " + errorMaximumCharacterMobileNumber.getText().trim());
+	public void verifyWebElement(String webElement) {
+		log("Enter more than 100 characters in first name textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(webElement);
+		log("Entered text in first name field is " + webElement);
+		CCUtils.verifyAndWaitForElement(errorMaximumCharacterFirstName, driver);
+		CCUtils.assertEquals(errorMaximumCharacterFirstName.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for first name field is " + errorMaximumCharacterFirstName.getText().trim());
 	}
 
 	public void verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(String firstName, String lastName,
@@ -458,6 +530,35 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
 		textboxEmail.sendKeys(email);
 		log("Entered text in email field is " + email);
+
+		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
+		textboxUsername.clear();
+		textboxUsername.sendKeys(username);
+		log("Entered text in username field is " + username);
+
+		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
+		textboxMobileNumber.sendKeys(mobileNumber);
+		log("Entered text in email field is " + mobileNumber);
+	}
+
+	public void verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(String firstName, String lastName,
+			String clientName, String email, String username, String mobileNumber)
+			throws AWTException, InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(firstName);
+		log("Entered text in first name field is " + firstName);
+
+		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
+		textboxLastName.sendKeys(lastName);
+		log("Entered text in last name field is " + lastName);
+
+		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
+		textboxEmail.sendKeys(email);
+		log("Entered text in email field is " + email);
+
+		clearSearchTextInClientSearchBox();
+		searchNode(clientName);
+		log("Entered text in client field is " + clientName);
 
 		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
 		textboxUsername.clear();
@@ -570,7 +671,7 @@ public class SearchOptionsPage extends CCMainPage {
 			log("Verifying enrollment status checkboxes are not selected");
 			verifyStatusCheckboxesAreNotByDefaultSelectedOnEnrollmentSearchOptionsPage();
 		} else {
-			log("Enrollment status label is not displayed on search internal user page");
+			log("Enrollment status label is not displayed on search options popup");
 		}
 	}
 
@@ -671,4 +772,35 @@ public class SearchOptionsPage extends CCMainPage {
 		enterSearchTextInSearchFields(firstName, lastName, email, username, mobileNumber);
 		selectEnrollmentStatusOnTheEnrollmentSearchPage(enrollmentStatusList);
 	}
+
+	public void clearSearchTextInClientSearchBox() {
+		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
+		dropdownSearchClient.clear();
+		log("text in client search box is cleared");
+	}
+
+	public void searchNode(String clientName) {
+		enterSearchText(clientName);
+		clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+	}
+
+	public void enterSearchText(String nodeName) {
+		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
+		dropdownSearchClient.sendKeys(nodeName);
+		log("Entered text in search :" + nodeName);
+	}
+
+	public void clickFirstInAutoSuggestion() {
+		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
+		if (selectFirstInAutoSuggestion.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			javascriptClick(selectFirstInAutoSuggestion);
+
+		} else {
+			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present in client");
+		}
+	}
+
 }

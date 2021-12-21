@@ -86,7 +86,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		logStep("Verify maximum character reached error message for firstname, last name,username, email and mobile field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
-				CCUtils.generateNewEmail(101), CCUtils.generateMobileNumber());
+				CCUtils.generateNewEmail(101));
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
@@ -174,7 +174,8 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
 	public void testSearchOptionsWithSingleChecboxOfStatus() throws Exception {
-		logStep("Click on command center users icon in left side navigation panel");
+		logStep("Click on command center users icon in left si"
+				+ "de navigation panel");
 		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
