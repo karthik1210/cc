@@ -8,7 +8,7 @@
 		<listener
 			class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
-	<test name="API Regression Test">
+	<test name="TimezoneApiAutomationTest">
 		<classes>
 			<class name="com.pxp.cc.testcases.api.GetTimezoneTests" />
 		</classes>
