@@ -6,6 +6,8 @@ import static io.restassured.RestAssured.given;
 import java.io.IOException;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.util.CCUtils;
+
 import io.restassured.response.Response;
 
 public class Timezone extends BaseRest {
@@ -19,4 +21,10 @@ public class Timezone extends BaseRest {
 		String url = ApiPath.GET_TIMEZONES;
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response getInvalidTimezoneUrl() throws IOException {
+		String url = ApiPath.GET_TIMEZONES.concat(CCUtils.generateAlphaNumericString(4));
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }

@@ -11,16 +11,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -1011,6 +1008,12 @@ public class Validations {
 					+ " is either null or blank space value so validating with Input search data is invalid error message.");
 			CCUtils.assertTrue(true, "Verification Input search data is invalid");
 		}
+	}
+
+	public void verifyErrorMessageInResponseForInvalidMethod(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PUT' not supported");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
 
 	public void verifyErrorMessageInResponseForSapIdField(Response response) throws IOException {

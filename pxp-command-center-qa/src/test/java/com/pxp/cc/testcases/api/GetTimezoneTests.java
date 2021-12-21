@@ -26,20 +26,27 @@ public class GetTimezoneTests extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check timezone id & displayname ")
 	public void testTimezoneValues() throws IOException {
 		Response res = timezone.getTimezone();
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(res);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(res.getStatusCode(), 200);
 		logStep("Validating Timezone id and displayname");
 		validation.verifyGetTimezonApiResponseBody(res);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instaead of get ")
-	public void testPracticeParentDropdown() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
+	public void testErrorForInvalidMethod() throws IOException {
 		Response res = timezone.getInvalidTimezone();
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(res);
-		logStep("Validating error Response code");
 		CCUtils.assertEquals(res.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidMethod(res);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error status code if user enter invalid url")
+	public void testErrorForInvalidTimezoneUrl() throws IOException {
+		Response res = timezone.getInvalidTimezoneUrl();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(res);
+		CCUtils.assertEquals(res.getStatusCode(), 404);
 	}
 }
