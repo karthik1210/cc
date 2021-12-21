@@ -208,7 +208,7 @@ public class SendEnrollmentTests extends CommandCenterGenericTest {
 		logStep("Verify maximum character error message for first name, last name, email,username and mobile number search fields");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
-				CCUtils.generateNewEmail(101), Long.parseLong(testData.getProperty("invalid.mobile.number")));
+				CCUtils.generateNewEmail(101));
 	}
 
 	@Test(enabled = true, dataProvider = "invalidTestData", retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in firstname, lastname,email,username and mobile number field and verify error message")

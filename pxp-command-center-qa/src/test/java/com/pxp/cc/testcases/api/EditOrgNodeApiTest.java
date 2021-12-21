@@ -3,17 +3,14 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class EditOrgNodeApiTest extends BaseRest {
@@ -27,90 +24,108 @@ public class EditOrgNodeApiTest extends BaseRest {
 			fetchClientDetailsApiResponse, fetchEnterpriseDetailsApiResponse, updatePracticeApiResponse,
 			fetchPracticeDetailsApiResponse;
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
-
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit an existing system details and fetch updated system details using system id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit system details and fetch updated system details using system id")
 	public void testEditOrgSystemNode() throws IOException {
-		String systemName = ccUser.getSystemNameApi();
+		logStep("Create a active system node below client");
+		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(),
+				createClientApiResponse.jsonPath().getInt("id"), ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
+		logStep("Update system details");
 		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
-		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemOrgId(), systemSapNumber, ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		String systemDisplayName = ccUser.getSystemDisplayNameApi().concat(CCUtils.generateRandomString());
+		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getOrgActive(), systemDisplayName, systemId,
+				systemSapNumber, testData.getProperty("new.timezone"));
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateSystemResponseBody(updateSystemApiResponse, systemName);
+		validation.verifyCreateSystemResponseBody(updateSystemApiResponse, ccUser.getSystemNameApi());
 		String orgId = updateSystemApiResponse.jsonPath().get("id").toString();
+		logStep("Fetch updated system details using system id");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(fetchSystemDetailsApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(fetchSystemDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-
-		validation.verifySearchUpdatedSystemResponseBody(fetchSystemDetailsApiResponse, orgId,
-				ccUser.getSystemDisplayNameApi(), systemSapNumber, ccUser.getSystemeActiveApi(),
-				ccUser.getSystemTimezoneIdApi());
+		validation.verifySearchUpdatedSystemResponseBody(fetchSystemDetailsApiResponse, orgId, systemDisplayName,
+				systemSapNumber, ccUser.getOrgActive(), testData.getProperty("new.timezone"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit an existing enterprise details and fetch updated enterprise details using enterprise id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit enterprise details and fetch updated enterprise details using enterprise id")
 	public void testEditOrgEnterpriseNode() throws IOException {
-		String enterpriseName = ccUser.getEnterpriseNameApi();
+		logStep("Create inactive enterprise node below system");
+		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
+				ccUser.getTimezoneId());
+		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(),
+				createClientApiResponse.jsonPath().getInt("id"), ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getOrgActive(),
+				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
+				createSystemApiResponse.jsonPath().getInt("id"), ccUser.getEnterpriseParentTypeApi(),
+				ccUser.getEnterpriseSapNumberApi(), ccUser.getEnterpriseTimezoneIdApi());
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
+		logStep("Edit enterprise details");
 		String enterpriseSapNumber = ccUser.getEnterpriseSapNumberApi().concat(CCUtils.generateRandomString());
-		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getEnterpriseActiveApi(),
-				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseOrgId(), enterpriseSapNumber,
-				ccUser.getEnterpriseTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(updateEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(updateEnterpriseApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateEnterpriseResponseBody(updateEnterpriseApiResponse, enterpriseName);
+		String enterpriseDisplayName = ccUser.getEnterpriseDisplayNameApi().concat(CCUtils.generateRandomString());
+		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getEnterpriseActiveApi(), enterpriseDisplayName,
+				enterpriseId, enterpriseSapNumber, testData.getProperty("new.timezone"));
 		String orgId = updateEnterpriseApiResponse.jsonPath().get("id").toString();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateEnterpriseApiResponse);
+		CCUtils.assertEquals(updateEnterpriseApiResponse.getStatusCode(), 200);
+		logStep("fetch updated enterprise details using enterprise id");
 		fetchEnterpriseDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(fetchEnterpriseDetailsApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(fetchEnterpriseDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-
 		validation.verifySearchUpdatedEnterpriseResponseBody(fetchEnterpriseDetailsApiResponse, orgId,
-				ccUser.getEnterpriseDisplayNameApi(), enterpriseSapNumber, ccUser.getEnterpriseActiveApi(),
-				ccUser.getEnterpriseTimezoneIdApi());
+				enterpriseDisplayName, enterpriseSapNumber, ccUser.getEnterpriseActiveApi(),
+				testData.getProperty("new.timezone"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit an existing practice details and fetch updated practice details using practice id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit nge practice details and fetch updated practice details using practice id")
 	public void testEditOrgPracticeNode() throws IOException {
-		String practiceName = ccUser.getPracticeNameApi();
+		logStep("Create active nge practice node below enterprise");
+		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
+				ccUser.getTimezoneId());
+		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(),
+				createClientApiResponse.jsonPath().getInt("id"), ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
+				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
+				createSystemApiResponse.jsonPath().getInt("id"), ccUser.getEnterpriseParentTypeApi(),
+				ccUser.getEnterpriseSapNumberApi(), ccUser.getEnterpriseTimezoneIdApi());
+		createPracticeApiResponse = orgInfo.createPractice(ccUser.getPracticeActiveApi(),
+				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
+				createEnterpriseApiResponse.jsonPath().getInt("id"), ccUser.getPracticeParentTypeApi(),
+				ccUser.getPracticeSapNumberApi(), ccUser.getPracticeTimezoneIdApi());
+		int practiceId = createPracticeApiResponse.jsonPath().getInt("id");
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
-		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getPracticeActiveApi(),
-				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeOrgId(), practiceSapNumber,
-				ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreatePracticeResponseBody(updatePracticeApiResponse, practiceName);
+		String practiceSolutionDisplayName = ccUser.getPracticeDisplayNameApi().concat(CCUtils.generateRandomString());
+		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getOrgActive(), practiceSolutionDisplayName,
+				practiceId, practiceSapNumber, testData.getProperty("new.timezone"));
 		String orgId = updatePracticeApiResponse.jsonPath().get("id").toString();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updatePracticeApiResponse);
+		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 200);
 		fetchPracticeDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(fetchPracticeDetailsApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(fetchPracticeDetailsApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-
 		validation.verifySearchUpdatedPracticeResponseBody(fetchPracticeDetailsApiResponse, orgId,
-				ccUser.getPracticeDisplayNameApi(), practiceSapNumber, ccUser.getPracticeActiveApi(),
-				ccUser.getPracticeTimezoneIdApi());
+				practiceSolutionDisplayName, practiceSapNumber, ccUser.getOrgActive(),
+				testData.getProperty("new.timezone"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create & edit agnostic practice below inactive client & verify response")
@@ -119,35 +134,20 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getOrgActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive practice below inactive client.");
 		createPracticeApiResponse = orgInfo.createAgnosticPractice(ccUser.getOrgActive(),
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
-				Integer.parseInt(clientId), ccUser.getParentTypeApi(), ccUser.getPracticeSapNumberApi(),
+				clientId, ccUser.getParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		String orgId = createPracticeApiResponse.jsonPath().get("id").toString();
-
+		int orgId = createPracticeApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing practice from inactive to active status below inactive client.");
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getPracticeActiveApi(),
-				ccUser.getPracticeDisplayNameApi(), Integer.parseInt(orgId), practiceSapNumber,
-				ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
+				ccUser.getPracticeDisplayNameApi(), orgId, practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyInactiveClientErrorResponsForPractice(updatePracticeApiResponse);
 	}
 
@@ -157,45 +157,26 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getOrgActive(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active enterprise below active client.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
-
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing enterprise below inactive system.");
 		String enterpriseSapNumber = ccUser.getEnterpriseSapNumberApi().concat(CCUtils.generateRandomString());
 		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getEnterpriseActiveApi(),
-				ccUser.getEnterpriseDisplayNameApi(), Integer.parseInt(orgId), enterpriseSapNumber,
+				ccUser.getEnterpriseDisplayNameApi(), enterpriseId, enterpriseSapNumber,
 				ccUser.getEnterpriseTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateEnterpriseApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyInactiveSystemErrorResponForEnterprise(updateEnterpriseApiResponse);
 	}
 
@@ -205,57 +186,31 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive enterprise below active system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getOrgActive(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive practice below inactive enterprise.");
 		createPracticeApiResponse = orgInfo.createPractice(ccUser.getPracticeActiveApi(),
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
+				enterpriseId, ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
-
+		int practiceId = createPracticeApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing practice status below inactive enterprise.");
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getPracticeActiveApi(),
-				ccUser.getPracticeDisplayNameApi(), Integer.parseInt(orgId), practiceSapNumber,
-				ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
+				ccUser.getPracticeDisplayNameApi(), practiceId, practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyInactivePracticeErrorResponsWhileUpdataingActivePractice(updatePracticeApiResponse);
 	}
 
@@ -265,33 +220,19 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getOrgActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive system below inactive client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getOrgActive(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int orgId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing system status below inactive client.");
 		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
 		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				Integer.parseInt(orgId), systemSapNumber, ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+				orgId, systemSapNumber, ccUser.getSystemTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyInactiveClientErrorResponsforSystem(updateSystemApiResponse);
 	}
 
@@ -301,32 +242,20 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createPracticeApiResponse = orgInfo.createAgnosticPractice(ccUser.getPracticeActiveApi(),
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
-				Integer.parseInt(clientId), ccUser.getParentTypeApi(), ccUser.getPracticeSapNumberApi(),
+				clientId, ccUser.getParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		String orgId = createPracticeApiResponse.jsonPath().get("id").toString();
-
+		int orgId = createPracticeApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive practice below active client.");
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getOrgActive(), ccUser.getPracticeDisplayNameApi(),
-				Integer.parseInt(orgId), practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
+				orgId, practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 200);
 	}
 
@@ -336,43 +265,25 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active enterprise below active system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
-
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing enterprise below active system.");
 		String enterpriseSapNumber = ccUser.getEnterpriseSapNumberApi().concat(CCUtils.generateRandomString());
 		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getOrgActive(),
-				ccUser.getEnterpriseDisplayNameApi(), Integer.parseInt(orgId), enterpriseSapNumber,
+				ccUser.getEnterpriseDisplayNameApi(), enterpriseId, enterpriseSapNumber,
 				ccUser.getEnterpriseTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateEnterpriseApiResponse.getStatusCode(), 200);
 	}
 
@@ -382,54 +293,30 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active enterprise below active system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active practice below active enterprise.");
 		createPracticeApiResponse = orgInfo.createPractice(ccUser.getPracticeActiveApi(),
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
+				enterpriseId, ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
-
+		int practiceId = createPracticeApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing practice below active enterprise.");
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getOrgActive(), ccUser.getPracticeDisplayNameApi(),
-				Integer.parseInt(orgId), practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
+				practiceId, practiceSapNumber, ccUser.getPracticeTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 200);
 	}
 
@@ -439,31 +326,18 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int orgId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing system below active client.");
 		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
-		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getOrgActive(), ccUser.getSystemDisplayNameApi(),
-				Integer.parseInt(orgId), systemSapNumber, ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getOrgActive(), ccUser.getSystemDisplayNameApi(), orgId,
+				systemSapNumber, ccUser.getSystemTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemApiResponse.getStatusCode(), 200);
 	}
 
@@ -473,40 +347,22 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new enterprise below active system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(), null,
-				ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(), Integer.parseInt(orgId),
+				ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(), systemId,
 				ccUser.getEnterpriseParentTypeApi(), " ", null);
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
-
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing enterprise below active system.");
-		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getEnterpriseActiveApi(), null,
-				Integer.parseInt(orgId), " ", null);
-		logStep("Validating Response Time");
+		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getEnterpriseActiveApi(), null, enterpriseId, " ",
+				null);
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateEnterpriseApiResponse.getStatusCode(), 200);
 	}
 
@@ -516,52 +372,27 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
-		logStep("Create a new active system below active client.");
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
+		logStep("Create a new active system below client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-		logStep("Create a new active enterprise below active system.");
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
+		logStep("Create a new active enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
-		logStep("Create a new active practice below active enterprise.");
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
+		logStep("Create a new active practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createPractice(ccUser.getPracticeActiveApi(), null,
-				ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(), Integer.parseInt(orgId),
+				ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(), enterpriseId,
 				ccUser.getPracticeParentTypeApi(), " ", null);
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
-
-		logStep("Update an existing practice below active system.");
-		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getPracticeActiveApi(), null, Integer.parseInt(orgId),
-				" ", null);
-		logStep("Validating Response Time");
+		int practiceId = createPracticeApiResponse.jsonPath().getInt("id");
+		logStep("Update an existing practice.");
+		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getPracticeActiveApi(), null, practiceId, " ", null);
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 200);
 	}
 
@@ -571,29 +402,15 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below inactive client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), null, ccUser.getSystemNameApi(),
-				ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId), ccUser.getParentTypeApi(), " ", null);
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-
+				ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(), " ", null);
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing system below active client.");
-		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getSystemeActiveApi(), null, Integer.parseInt(orgId), " ",
-				null);
-		logStep("Validating Response Time");
+		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getSystemeActiveApi(), null, systemId, " ", null);
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemApiResponse.getStatusCode(), 200);
 	}
 
@@ -603,34 +420,18 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
-
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int SystemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing system below active client.");
-		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getOrgActive(),
-				"WTUWTRXBNVNXVOERUWOHF VC848684425643610242937645@$$q$&(**&*^bcgd64SVFSFVVNWORIU78YGBVJ8QHJSFBN77BJGS1",
-				Integer.parseInt(orgId), "WTUWTXBN242937645@$$q$& (**&*^bcgd64SVFSFVVNWUVJ8QH",
-				ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
+		updateSystemApiResponse = orgInfo.updateSystem(ccUser.getOrgActive(), ccUser.getInvalidSolutionDisplayName(),
+				SystemId, ccUser.getInvalidSap(), ccUser.getSystemTimezoneIdApi());
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSystemApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyMaximumCharacterAndFreeTextFieldErrorResponsForOrgNode(updateSystemApiResponse);
 	}
 
@@ -640,45 +441,25 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active enterprise below active system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
-
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing enterprise below active system.");
 		updateEnterpriseApiResponse = orgInfo.updateEnterprise(ccUser.getOrgActive(),
-				"WTUWTRXBNVNXVOERUWOHF VC848684425643610242937645@$$q$&(**&*^bcgd64SVFSFVVNWORIU78YGBVJ8QHJSFBN77BJGS1",
-				Integer.parseInt(orgId), "WTUWTXBN242937645@$$q$& (**&*^bcgd64SVFSFVVNWUVJ8QH",
+				ccUser.getInvalidSolutionDisplayName(), enterpriseId, ccUser.getInvalidSap(),
 				ccUser.getEnterpriseTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateEnterpriseApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updateEnterpriseApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyMaximumCharacterAndFreeTextFieldErrorResponsForOrgNode(updateEnterpriseApiResponse);
 	}
 
@@ -688,58 +469,31 @@ public class EditOrgNodeApiTest extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
+		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), Integer.parseInt(clientId),
-				ccUser.getParentTypeApi(), ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createSystemApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
-		String orgId = createSystemApiResponse.jsonPath().get("id").toString();
+				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getSystemSapNumberApi(), ccUser.getSystemTimezoneIdApi());
+		int systemId = createSystemApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active enterprise below active system.");
 		createEnterpriseApiResponse = orgInfo.createEnterprise(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
 				ccUser.getEnterpriseTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		orgId = createEnterpriseApiResponse.jsonPath().get("id").toString();
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active practice below active enterprise.");
 		createPracticeApiResponse = orgInfo.createPractice(ccUser.getPracticeActiveApi(),
 				ccUser.getPracticeDisplayNameApi(), ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
-				Integer.parseInt(orgId), ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
+				enterpriseId, ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(),
 				ccUser.getPracticeTimezoneIdApi());
-
-		logStep("Validating Response Time");
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		logStep("Validating Response Code");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
-		orgId = createPracticeApiResponse.jsonPath().get("id").toString();
-
+		int practiceId = createPracticeApiResponse.jsonPath().getInt("id");
 		logStep("Update an existing practice below active enterprise.");
 		updatePracticeApiResponse = orgInfo.updatePractice(ccUser.getOrgActive(),
-				"WTUWTRXBNVNXVOERUWOHF VC848684425643610242937645@$$q$&(**&*^bcgd64SVFSFVVNWORIU78YGBVJ8QHJSFBN77BJGS1",
-				Integer.parseInt(orgId), "WTUWTXBN242937645@$$q$& (**&*^bcgd64SVFSFVVNWUVJ8QH",
+				ccUser.getInvalidSolutionDisplayName(), practiceId, ccUser.getInvalidSap(),
 				ccUser.getPracticeTimezoneIdApi());
-		logStep("Validating Response Time");
+		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updatePracticeApiResponse);
-		logStep("Validating Response Code");
 		CCUtils.assertEquals(updatePracticeApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
 		validation.verifyMaximumCharacterAndFreeTextFieldErrorResponsForOrgNode(updatePracticeApiResponse);
 	}
-
 }

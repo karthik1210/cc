@@ -3,7 +3,7 @@
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.Timezone;
@@ -16,7 +16,7 @@ public class GetTimezoneTests extends BaseRest {
 	private Validations validation;
 	Timezone timezone;
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		validation = new Validations();

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AuditLog;
@@ -40,7 +40,7 @@ public class OrgNodeAuditLogTests extends BaseRest {
 	private static final String ORG_TYPE_ENTERPRISE = "ENTERPRISE";
 	private static final String ORG_TYPE_PRACTICE = "ORG";
 
-	@BeforeTest()
+	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();
@@ -148,8 +148,8 @@ public class OrgNodeAuditLogTests extends BaseRest {
 		logStep("Verify audit log for updated agnostic practice node");
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 		verifyAuditLogForUpdatedOrgNodeFields(auditLogApiResponse, orgId, ORG_TYPE_PRACTICE,
-				ccUser.getPracticeTimezoneIdApi(), testData.getProperty("new.timezone"),
-				practiceSapNumber, " ", "true", "false");
+				ccUser.getPracticeTimezoneIdApi(), testData.getProperty("new.timezone"), practiceSapNumber, " ", "true",
+				"false");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create and update enterprise node and verify audit log for enterprise node")
@@ -221,18 +221,18 @@ public class OrgNodeAuditLogTests extends BaseRest {
 				ccUser.getPracticeOrgTypeApi(), enterpriseId, ccUser.getPracticeParentTypeApi(), practiceSapNumber,
 				ccUser.getPracticeTimezoneIdApi());
 		int orgId = createPracticeApiResponse.jsonPath().get("id");
-		
+
 		logStep("Verify audit log for newly created nge practice node");
 		orgTypes = new ArrayList<String>();
 		orgTypes.add(ORG_TYPE_PRACTICE);
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
-		
+
 		logStep("Validating response information");
 		verifyAuditLogForNewlyCreatedOrgNode(auditLogApiResponse, orgId, ORG_TYPE_PRACTICE);
-		
+
 		logStep("Modify sap id, timezone and status fields of newly created nge practice node");
 		orgInfo.updatePractice("true", ccUser.getPracticeDisplayNameApi(), orgId, "", "");
-		
+
 		logStep("Verify audit log for updated nge practice node");
 		auditLogApiResponse = auditLog.viewAuditLog(orgTypes, 10);
 		verifyAuditLogForUpdatedOrgNodeFields(auditLogApiResponse, orgId, ORG_TYPE_PRACTICE,
