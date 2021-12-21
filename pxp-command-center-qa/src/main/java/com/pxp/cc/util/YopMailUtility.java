@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -74,8 +73,7 @@ public class YopMailUtility {
 						driver.switchTo().defaultContent();
 						Thread.sleep(2000);
 						driver.switchTo().frame("ifmail");
-						List<WebElement> mailLinks = driver
-								.findElements(By.xpath(" //*[contains(@id,'mail')]//tr//a"));
+						List<WebElement> mailLinks = driver.findElements(By.xpath(" //*[contains(@id,'mail')]//tr//a"));
 						for (int j = 0; j < mailLinks.size(); j++) {
 							emailContent = mailLinks.get(j).getText();
 							if (emailContent.contains(findInEmail)) {

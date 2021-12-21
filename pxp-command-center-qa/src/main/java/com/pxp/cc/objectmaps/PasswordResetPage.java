@@ -5,24 +5,20 @@ package com.pxp.cc.objectmaps;
 import java.util.List;
 import java.util.Random;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import com.medfusion.common.utils.YopMail;
-import com.pxp.cc.util.CommonMethods;
-import com.pxp.cc.util.MailinatorUtils;
 import com.pxp.cc.util.YopMailUtility;
 
 public class PasswordResetPage extends CCMainPage {
-	
+
 	@FindBy(id = "loginForgetLink")
 	private WebElement forgotPassword;
-	
+
 	@FindBy(id = "passresetUsernameInput")
 	private WebElement usernameField;
-	
+
 	@FindBy(xpath = "//button[contains(text(),'Email me the Link')]")
 	private WebElement emailMeTheLink;
 
@@ -34,10 +30,10 @@ public class PasswordResetPage extends CCMainPage {
 
 	@FindBy(id = "passresetContactLabel")
 	private WebElement changePasswordMsgContactAdmin;
-	
+
 	@FindBy(id = "passresetVerifiction")
 	private WebElement userNotificationMsg;
-	
+
 	@FindBy(id = "passresetUserEmail")
 	private WebElement emailSentNotification;
 
@@ -58,13 +54,13 @@ public class PasswordResetPage extends CCMainPage {
 
 	@FindBy(id = "passwordCreate")
 	private WebElement setNewPassword;
-	
+
 	@FindBy(id = "resetSuccessMessage")
 	private WebElement newPaswwordCreated;
-	
+
 	@FindBy(xpath = "//span[@id='passwordShowHide']")
 	private WebElement hideNewPass;
-	
+
 	@FindBy(xpath = "//span[@id='passwordShow']")
 	private WebElement hideConfirmPass;
 
@@ -334,12 +330,11 @@ public class PasswordResetPage extends CCMainPage {
 				log(subList.get(i).getText() + "---Text");
 				chkList.get(i).click();
 			}
-		}		
+		}
 		driver.switchTo().parentFrame();
 		WebElement buttonDelete = driver.findElement(By.xpath("//button[@id='delsel']"));
 		buttonDelete.click();
 	}
-
 
 	private static final String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&@?<>~!%#";
 

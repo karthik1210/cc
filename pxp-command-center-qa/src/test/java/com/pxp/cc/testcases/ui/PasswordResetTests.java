@@ -2,11 +2,9 @@
 package com.pxp.cc.testcases.ui;
 
 import java.security.SecureRandom;
-
 import org.apache.log4j.BasicConfigurator;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.PasswordResetPage;
 import com.pxp.cc.util.CCUtils;
@@ -76,8 +74,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
-		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail(),
-				ccuser.getInvalidTokenUrl());
+		resetPage.clickForgotPasswordAndEnterEmailAddress(ccuser.getResetEmail(), ccuser.getInvalidTokenUrl());
 		logStep("Validating email received");
 		CCUtils.assertEquals(resetPage.getUserNotificationMsg(),
 				"We just sent a verification message to the following address:");
