@@ -33,7 +33,7 @@ public class GetTimezoneTests extends BaseRest {
 		validation.verifyGetTimezonApiResponseBody(res);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instaead of get ")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
 	public void testErrorForInvalidMethod() throws IOException {
 		Response res = timezone.getInvalidTimezone();
 		logStep("Validating response information");
