@@ -1012,4 +1012,11 @@ public class Validations {
 			CCUtils.assertTrue(true, "Verification Input search data is invalid");
 		}
 	}
+
+	public void verifyErrorMessageInResponseForInvalidMethod(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PUT' not supported");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+	}
+
 }
