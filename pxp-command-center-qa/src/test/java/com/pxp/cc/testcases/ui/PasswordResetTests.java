@@ -19,7 +19,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		BasicConfigurator.configure();
 	}
 
-	@Test(priority = 0, groups = { "UISmokeTest" }, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 0, groups = { "UISmokeTest" }, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify successfully Password reset functionality")
 	public void testSuccessfullyPasswordResetFunctionality() throws Exception {
 		log("Test to verify new password created successfully :" + autogeneratePassword);
 		log("Set the Test Data for CC");
@@ -42,7 +42,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		driver.close();
 	}
 
-	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify already used Password reset functionality")
 	public void testSetNewPasswordFunctionalityWithAlreadyUsedPassword() throws Exception {
 		log("Test to verify email validation with already used ten old password with auto generated password"
 				+ autogeneratePassword);
@@ -58,7 +58,7 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(resetPage.getReceivedEmailAddressMsg(),
 				"If the email doesn’t arrive soon, check your spam folder. We sent it from confirm@nextgen.com.");
 		resetPage.oldPasswordLinkInEmail(ccuser.getMailinatorOldPassword(), autogeneratePassword);
-		logStep("Navigating to reset password page and verifying error");
+		logStep("Navigating to reset password page and verifying error message for already used password");
 		CCUtils.assertEquals(resetPage.getAlreadyUsedPasswordMsg(),
 				"New password must not match with last 10 old passwords");
 		logStep("Deleting email for user");
@@ -67,10 +67,8 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		driver.close();
 	}
 
-	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify already used Password reset functionality")
 	public void testPasswordResetFunctionalityForAlreadyUsedToken() throws Exception {
-		log("Test to verify set new password with alredy used link of password reset");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
@@ -85,10 +83,8 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		logStep("Navigating to reset password page and verifying error");
 	}
 
-	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify username functionality when user directly click on email me link button without entered username")
 	public void testPasswordResetFunctionalityWithoutEnteringUsername() throws Exception {
-		log("Test to verify reset password with blank email id");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
@@ -97,21 +93,16 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(resetPage.getBlankEmailMsg(), "Username is required");
 	}
 
-	@Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Password reset functionality with unregistered user")
 	public void testPasswordResetFunctionalityForUnregisteredUser() throws Exception {
-		log("Test to verify reset password with unregistered user");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
-		logStep("Click forgot password and send email");
+		logStep("Click forgot password and send validate email received");
 		resetPage.clickForgotPasswordAndEnterUnregisteredUserEmailAddress(ccuser.getUnregisteredEmail());
-		logStep("Validating email received");
 	}
 
-	@Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Password reset functionality for external user")
 	public void testPasswordResetFunctionalityForExternalUser() throws Exception {
-		log("Test to verify reset password with external user");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
@@ -124,10 +115,8 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		resetPage.callReturnToLogin();
 	}
 
-	@Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify password reset with repetitive sequence entered in password fields")
 	public void testSetNewPasswordFunctionalityWithRepetitiveSequenceInPasswordField() throws Exception {
-		log("Test to verify password reset with repetitive sequence entered in password fields");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
@@ -141,10 +130,8 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		resetPage.linkUnderEmail(ccuser.getResetEmail());
 	}
 
-	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Password reset functionality with space in password")
 	public void testSetNewPasswordFunctionalityWithSpaceInPasswordField() throws Exception {
-		log("Test to verify set password validation with space entered in password fields");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
@@ -158,10 +145,8 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		resetPage.linkInEmail(ccuser.getResetEmail());
 	}
 
-	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Password reset functionality with commonly used password")
 	public void testSetNewPasswordFunctionalityWithCommonlyUsedPassword() throws Exception {
-		log("Test to verify set new password with commonly used password");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");
@@ -175,10 +160,8 @@ public class PasswordResetTests extends CommandCenterGenericTest {
 		resetPage.commonPasswordUrlInEmail(ccuser.getResetEmail());
 	}
 
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class)
+	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Password reset functionality with maximum characters")
 	public void testSetNewPasswordFunctionalityWithMaximumCharacters() throws Exception {
-		log("Test to verify set new password with max 101 characters");
-		log("Set the Test Data for CC");
 		logStep("Navigating to Command Center portal");
 		resetPage = new PasswordResetPage(driver, ccuser.getUrl());
 		logStep("Click forgot password and send email");

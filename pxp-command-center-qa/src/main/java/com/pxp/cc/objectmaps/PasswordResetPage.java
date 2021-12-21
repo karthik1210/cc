@@ -115,7 +115,7 @@ public class PasswordResetPage extends CCMainPage {
 		log("Navigate to choose a new Password Page ");
 		highlightElement(hideNewPass);
 		hideNewPass.click();
-		log("Click on hide button of new password field");
+		log("Clicked on hide button of new password field");
 		wait.until(ExpectedConditions.visibilityOf(newPassword));
 		newPassword.sendKeys(autogeneratePwd);
 		highlightElement(confirmPassword);
@@ -128,7 +128,7 @@ public class PasswordResetPage extends CCMainPage {
 		wait.until(ExpectedConditions.visibilityOf(setNewPassword));
 		highlightElement(setNewPassword);
 		setNewPassword.click();
-		log("Click on set the new password button");
+		log("Clicked on set the new password button");
 		wait.until(ExpectedConditions.visibilityOf(setNewPassword));
 
 	}
