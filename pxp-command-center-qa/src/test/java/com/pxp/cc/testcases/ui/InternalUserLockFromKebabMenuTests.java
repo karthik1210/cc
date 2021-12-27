@@ -144,9 +144,9 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality for lock button popup")
 	public void testInternalUserLockButtonCancelAndCrossIconFunctionality() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
-		logStep("Search and select locked user");
+		logStep("Search and select active user");
 		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.lockedout"));
+		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
 		String userStatus = internalUsersPage.getInternalUserStatus();
@@ -168,7 +168,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locked out user functionality")
-	public void testInternalUserLockedoutFunctionality() throws Exception {
+	public void testInternalUserLockedOutFunctionality() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
 		userStatusList = new ArrayList<String>();
