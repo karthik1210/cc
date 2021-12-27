@@ -647,7 +647,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	}
 
 	public void verifyLockUserButtonIsDisplayed() {
-		log("Verifying lock user button is isplayed in kebab menu");
+		log("Verifying lock user button is displayed in kebab menu");
 		CCUtils.assertEquals(buttonLockUser.isDisplayed(), true);
 	}
 
