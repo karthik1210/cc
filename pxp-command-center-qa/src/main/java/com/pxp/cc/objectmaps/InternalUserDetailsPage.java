@@ -656,13 +656,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 		CCUtils.assertEquals(buttonLockUser.isDisplayed(), false);
 	}
 
-	public InternalUserDetailsPage verifyConfirmationTextForSingleUser() {
-		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
-		log("Click on lock user button");
-		javascriptClick(buttonLockUser);
-		return PageFactory.initElements(driver, InternalUserDetailsPage.class);
-	}
-
 	public LockUserConfirmationPage clickOnLockUserButton() {
 		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
 		log("Click on lock user button");
