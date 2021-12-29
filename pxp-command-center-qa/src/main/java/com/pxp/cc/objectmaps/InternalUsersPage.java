@@ -74,6 +74,9 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']")
 	private List<WebElement> tableRowsData;
 
+	@FindBy(id = "userStatus")
+	private List<WebElement> listInternalUserStatus;
+
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -212,6 +215,11 @@ public class InternalUsersPage extends CCMainPage {
 			tableRowsData.get(i).click();
 		log("Clicked on any of the user name in internal users page");
 		return PageFactory.initElements(driver, InternalUserDetailsPage.class);
+	}
+
+	public String getInternalUserStatus() {
+		CCUtils.verifyAndWaitForElement(listInternalUserStatus.get(0), driver);
+		return listInternalUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
 	}
 
 }
