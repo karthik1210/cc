@@ -2,6 +2,8 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -39,6 +41,12 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "password")
 	private WebElement labelPassword;
+
+	@FindBy(xpath = "//mat-list-item[@role='listitem']")
+	private List<WebElement> listOfAssociatedEntities;
+
+	@FindBy(id = "addUserRole")
+	private WebElement buttonAdd;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -128,6 +136,19 @@ public class ClientUserDetailsPage extends CCMainPage {
 		} else {
 			logStep("Save button is not present on client user details page");
 		}
+	}
+
+	public void selectEntity() {
+		CCUtils.verifyAndWaitForElement(listOfAssociatedEntities.get(0), driver);
+		javascriptClick(listOfAssociatedEntities.get(0));
+		log("Clicked on the first entity");
+	}
+
+	public AddUserRolesAndPermissionsPage clickOnAddButton() {
+		CCUtils.verifyAndWaitForElement(buttonAdd, driver);
+		buttonAdd.click();
+		log("Clicked on add button on the client user details page");
+		return PageFactory.initElements(driver, AddUserRolesAndPermissionsPage.class);
 	}
 
 }
