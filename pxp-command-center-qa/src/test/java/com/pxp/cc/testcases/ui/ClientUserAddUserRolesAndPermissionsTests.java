@@ -75,14 +75,14 @@ public class ClientUserAddUserRolesAndPermissionsTests extends CommandCenterGene
 		CCUtils.assertEquals(addUserRolesAndPermissionsPage.getRequiredFieldErrorMessage(), "User Role is required");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user select and deselect all locations checkboxes using select all checkbox on the add user roles & permissions popup")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user select and deselect all locations checkboxes by check and uncheck select all checkbox on the add user roles & permissions popup")
 	public void testSelectAllCheckboxFunctionality() throws Exception {
 		logStep("Click on locations dropdown");
 		addUserRolesAndPermissionsPage.clickOnLocationsDropdown();
 		logStep("Verify that the user is able to select all location checkboxes using the select all checkbox");
 		addUserRolesAndPermissionsPage.clickOnSelectAllCheckbox();
 		addUserRolesAndPermissionsPage.verifyAllCheckboxesAreSelected();
-		logStep("Verify that the user is able to deselect all selected location checkboxes using the select all checkbox");
+		logStep("Verify that the user is able to deselect all selected location checkboxes by unselecting select all checkbox");
 		addUserRolesAndPermissionsPage.clickOnSelectAllCheckbox();
 		addUserRolesAndPermissionsPage.verifyAllCheckboxesAreNotSelected();
 	}
