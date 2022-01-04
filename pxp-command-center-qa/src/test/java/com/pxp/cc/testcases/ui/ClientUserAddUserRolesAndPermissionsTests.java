@@ -32,8 +32,7 @@ public class ClientUserAddUserRolesAndPermissionsTests extends CommandCenterGene
 		clientUsersPage = commandCenterUsersPage.clickOnClientUsersTab();
 		clientUsersPage.verifyClientUsersPageTitle();
 		logStep("Select client user");
-		clientUsersPage.selectUser();
-		clientUserDetailsPage = new ClientUserDetailsPage(driver);
+		clientUserDetailsPage = clientUsersPage.selectUser();
 		logStep("Select associate entity on client user details page and click on add button");
 		clientUserDetailsPage.selectEntity();
 		addUserRolesAndPermissionsPage = clientUserDetailsPage.clickOnAddButton();

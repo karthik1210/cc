@@ -43,13 +43,7 @@ public class ClientUsersPage extends CCMainPage {
 		return PageFactory.initElements(driver, SearchOptionsPage.class);
 	}
 
-	public void selectUser() {
-		CCUtils.verifyAndWaitForElement(selectUser.get(0), driver);
-		javascriptClick(selectUser.get(0));
-		log("Clicked on first client user");
-	}
-
-	public ClientUserDetailsPage selectFirstUser() {
+	public ClientUserDetailsPage selectUser() {
 		CCUtils.verifyAndWaitForElement(selectUser.get(0), driver);
 		javascriptClick(selectUser.get(0));
 		log("Clicked on first client user");

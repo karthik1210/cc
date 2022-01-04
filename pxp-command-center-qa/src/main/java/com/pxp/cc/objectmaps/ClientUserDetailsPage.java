@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -47,9 +47,6 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "addUserRole")
 	private WebElement buttonAdd;
-
-	@FindBy(xpath = "//mat-card-title[@id='UserRoles']")
-	private WebElement labelUserRolesAndPermissions;
 
 	@FindBy(xpath = "//mat-card-title[@id='listUserRoles']")
 	private List<WebElement> listOfUserRoles;
@@ -153,7 +150,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 		log("Clicked on the first entity");
 	}
 
-	public EditUserRolesAndPermissionsPage selectUserRolesAndClickEditButton(String userRoleText) {
+	public EditUserRolesAndPermissionsPage selectUserRoleAndClickOnEditButton(String userRoleText) {
 		for (WebElement userRole : listOfUserRoles) {
 			CCUtils.verifyAndWaitForElement(userRole, driver);
 			if (userRole.getText().contains(userRoleText)) {
