@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -43,12 +43,13 @@ public class ClientUsersPage extends CCMainPage {
 		return PageFactory.initElements(driver, SearchOptionsPage.class);
 	}
 
-	public void selectUser() {
+	public ClientUserDetailsPage selectUser() {
 		CCUtils.verifyAndWaitForElement(selectUser.get(0), driver);
 		javascriptClick(selectUser.get(0));
 		log("Clicked on first client user");
+		return PageFactory.initElements(driver, ClientUserDetailsPage.class);
 	}
-
+	
 	public String getClientUserStatus() {
 		CCUtils.verifyAndWaitForElement(listClientUserStatus.get(0), driver);
 		return listClientUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
