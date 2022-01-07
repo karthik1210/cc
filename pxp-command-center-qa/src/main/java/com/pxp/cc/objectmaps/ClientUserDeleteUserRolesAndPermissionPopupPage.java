@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.pxp.cc.util.CCUtils;
 
-public class DeleteUserRolesAndPermissionPopupPage extends CCMainPage {
+public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage {
 
 	@FindBy(className = "delete user role-page-title")
 	private WebElement labelConfirmationQuestion;
@@ -21,7 +21,7 @@ public class DeleteUserRolesAndPermissionPopupPage extends CCMainPage {
 	@FindBy(id = "applyCrossIcon")
 	private WebElement buttonCrossIcon;
 
-	public DeleteUserRolesAndPermissionPopupPage(WebDriver driver) {
+	public ClientUserDeleteUserRolesAndPermissionPopupPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -35,11 +35,11 @@ public class DeleteUserRolesAndPermissionPopupPage extends CCMainPage {
 		}
 	}
 
-	public DeleteUserRolesAndPermissionPopupPage clickOnYesButton() {
+	public  void clickOnButtonYes() {
 		CCUtils.verifyAndWaitForElement(buttonYes, driver);
 		log("Click on Yes button");
 		buttonYes.click();
-		return null;
+		
 	}
 
 	public void clickOnCancelButton() {
@@ -55,7 +55,7 @@ public class DeleteUserRolesAndPermissionPopupPage extends CCMainPage {
 	public void verifyYesButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonYes, driver);
 		if (buttonYes.isDisplayed()) {
-			CCUtils.assertEquals(buttonYes.getText().trim(), "Yes, send");
+			CCUtils.assertEquals(buttonYes.getText().trim(), "Yes");
 			CCUtils.assertEquals(buttonYes.isEnabled(), true);
 		} else {
 			log("Yes button is not displayed on delete user roles & permissions popup");
