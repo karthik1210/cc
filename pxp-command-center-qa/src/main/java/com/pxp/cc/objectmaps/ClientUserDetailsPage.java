@@ -53,6 +53,9 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "editicon")
 	private WebElement buttonEditIcon;
+	
+	@FindBy(id = "redicon")
+	private WebElement buttonRedIcon;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -168,5 +171,12 @@ public class ClientUserDetailsPage extends CCMainPage {
 		log("Clicked on add button on the client user details page");
 		return PageFactory.initElements(driver, AddUserRolesAndPermissionsPage.class);
 	}
-
+	
+	public DeleteUserRolesAndPermissionPopupPage clickOnRedIconButton() {
+		CCUtils.verifyAndWaitForElement(buttonRedIcon, driver);
+		log("Click on RedIcon button");
+		javascriptClick(buttonRedIcon);
+		return PageFactory.initElements(driver, DeleteUserRolesAndPermissionPopupPage.class);
+	}
+	
 }
