@@ -54,8 +54,8 @@ public class ClientUserDetailsPage extends CCMainPage {
 	@FindBy(id = "editicon")
 	private WebElement buttonEditIcon;
 	
-	@FindBy(id = "redicon")
-	private WebElement buttonRedIcon;
+	@FindBy(id = "DeleteUserRole")
+	private WebElement buttonDeleteUserRole;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -172,11 +172,11 @@ public class ClientUserDetailsPage extends CCMainPage {
 		return PageFactory.initElements(driver, AddUserRolesAndPermissionsPage.class);
 	}
 	
-	public DeleteUserRolesAndPermissionPopupPage clickOnRedIconButton() {
-		CCUtils.verifyAndWaitForElement(buttonRedIcon, driver);
-		log("Click on RedIcon button");
-		javascriptClick(buttonRedIcon);
-		return PageFactory.initElements(driver, DeleteUserRolesAndPermissionPopupPage.class);
+	public ClientUserDeleteUserRolesAndPermissionPopupPage clickOnDeleteUserRoleButton() {
+		CCUtils.verifyAndWaitForElement(buttonDeleteUserRole, driver);
+		log("Click on DeleteUserRole button");
+		javascriptClick(buttonDeleteUserRole);
+		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionPopupPage.class);
 	}
 	
 }

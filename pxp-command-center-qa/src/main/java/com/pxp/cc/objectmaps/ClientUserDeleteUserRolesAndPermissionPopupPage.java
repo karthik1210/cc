@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage {
 
@@ -54,14 +55,14 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage 
 
 	public void verifyYesButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonYes, driver);
-		if (buttonYes.isDisplayed()) {
+		if(buttonYes.isDisplayed()) {
 			CCUtils.assertEquals(buttonYes.getText().trim(), "Yes");
 			CCUtils.assertEquals(buttonYes.isEnabled(), true);
 		} else {
-			log("Yes button is not displayed on delete user roles & permissions popup");
+			log("Yes button is not displayed on delete user roles & permissions ");
 		}
+	
 	}
-
 	public void verifyCancelButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		if (buttonCancel.isDisplayed()) {
