@@ -21,9 +21,9 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 
 	@FindBy(id = "applyClearIcon")
 	private WebElement buttonCrossIcon;
-
+	
 	@FindBy(id = "applyBtn")
-	private WebElement buttonYesSend;
+	private WebElement buttonYesDeactivate;
 
 	public void verifyConfirmationTextForSingleUser(String userName) {
 		CCUtils.verifyAndWaitForElement(labelConfirmationQuestion, driver);
@@ -46,9 +46,9 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 		buttonCrossIcon.click();
 	}
 
-	public void clickOnYesSendButton() {
-		CCUtils.verifyAndWaitForElement(buttonYesSend, driver);
-		log("Click on yes send button");
-		buttonYesSend.click();
+	public void clickOnYesDeactivateButton() {
+		CCUtils.verifyAndWaitForElement(buttonYesDeactivate, driver);
+		log("Click on yes deactivate button");
+		buttonYesDeactivate.click();
 	}
 }

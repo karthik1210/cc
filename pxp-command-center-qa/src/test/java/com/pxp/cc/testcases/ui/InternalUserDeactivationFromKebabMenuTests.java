@@ -29,8 +29,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage=clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 	}
@@ -177,7 +176,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 		deactivateUserConfirmationPage = internalUserDetailsPage.clickOnDeactivateUserButton();
 		logStep("Verify deactivate user confirmation popup");
 		deactivateUserConfirmationPage.verifyConfirmationTextForSingleUser(userName);
-		deactivateUserConfirmationPage.clickOnYesSendButton();
+		deactivateUserConfirmationPage.clickOnYesDeactivateButton();
 		logStep("verify success toaster message");
 		commonMethods = new CommonMethods(driver);
 		commonMethods.verifyToasterMessage("Deactivation email sent to users successfully");

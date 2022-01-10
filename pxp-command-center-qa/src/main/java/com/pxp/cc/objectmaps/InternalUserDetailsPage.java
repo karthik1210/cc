@@ -667,7 +667,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	}
 
 	public void verifyDeactivateUserButtonIsDisplayed() {
-		log("Verifying deactivate user button is isplayed in kebab menu");
+		log("Verifying deactivate user button is displayed in kebab menu");
 		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
 	}
 	
