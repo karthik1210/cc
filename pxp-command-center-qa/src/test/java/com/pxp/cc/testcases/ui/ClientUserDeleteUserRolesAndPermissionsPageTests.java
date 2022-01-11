@@ -41,7 +41,7 @@ public class ClientUserDeleteUserRolesAndPermissionsPageTests extends CommandCen
 	public void testDeleteUserRolesAndPermissionsPopup() throws Exception {
 		logStep("Verify delete user roles and permissions popup");
 		deleteUserRolesPermissionPage.verifyConfirmationQuestion();
-		deleteUserRolesPermissionPage.verifycloseWindowIconIsDisplayed();
+		deleteUserRolesPermissionPage.verifycloseWindowIsDisplayed();
 		deleteUserRolesPermissionPage.verifyCancelButtonIsDisplayed();
 		deleteUserRolesPermissionPage.verifyYesButtonIsDisplayed();
 	}
@@ -57,7 +57,7 @@ public class ClientUserDeleteUserRolesAndPermissionsPageTests extends CommandCen
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify  functionality of cross button on delete user roles & permissions popup")
 	public void testCrossBtnFunctionalityOnDeleteUserRolesPopup() throws Exception {
 		logStep("Verify after clicking on Cross Icon button, user redirected to Client user details page");
-		deleteUserRolesPermissionPage.clickOncloseWindowIcon();
+		deleteUserRolesPermissionPage.clickOncloseWindow();
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 	}
 
