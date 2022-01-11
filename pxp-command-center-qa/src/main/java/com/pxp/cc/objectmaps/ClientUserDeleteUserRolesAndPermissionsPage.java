@@ -45,7 +45,7 @@ public class ClientUserDeleteUserRolesAndPermissionsPage extends CCMainPage {
 		buttonCancel.click();
 	}
 
-	public void clickOncloseWindow() {
+	public void clickOnCloseWindow() {
 		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
 		buttonCloseWindow.click();
 	}
@@ -66,7 +66,7 @@ public class ClientUserDeleteUserRolesAndPermissionsPage extends CCMainPage {
 		CCUtils.assertEquals(buttonCancel.isEnabled(), true);
 	}
 
-	public void verifycloseWindowIsDisplayed() {
+	public void verifyCloseWindowIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
 		CCUtils.assertTrue(buttonCloseWindow.isDisplayed(),
 				"Cross icon is not displayed on delete user roles & permissions popup");
