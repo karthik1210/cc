@@ -41,7 +41,7 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPageTests extends Comman
 	public void testDeleteUserRolesAndPermissionsPopup() throws Exception {
 		logStep("Verify delete user roles and permissions popup");
 		deleteUserRolesPermissionPage.verifyConfirmationQuestion();
-		deleteUserRolesPermissionPage.verifyCrossIconIsDisplayed();
+		deleteUserRolesPermissionPage.verifycloseWindowIconIsDisplayed();
 		deleteUserRolesPermissionPage.verifyCancelButtonIsDisplayed();
 		deleteUserRolesPermissionPage.verifyYesButtonIsDisplayed();
 	}
@@ -60,7 +60,7 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPageTests extends Comman
 
         clientUserDetailsPage.clickOnDeleteUserRoleButton();
 		logStep("Verify after clicking on Cross Icon button, user redirected to Client user details page");
-		deleteUserRolesPermissionPage.clickOnCrossIcon();
+		deleteUserRolesPermissionPage.clickOncloseWindowIcon();
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 
 	}

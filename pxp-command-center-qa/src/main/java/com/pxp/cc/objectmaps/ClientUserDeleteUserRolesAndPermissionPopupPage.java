@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 
 public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage {
 
@@ -19,8 +18,8 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage 
 	@FindBy(id = "YesBtn")
 	private WebElement buttonYes;
 
-	@FindBy(id = "applyCrossIcon")
-	private WebElement buttonCrossIcon;
+	@FindBy(id = "applycloseWindowIcon")
+	private WebElement buttoncloseWindowIcon;
 
 	public ClientUserDeleteUserRolesAndPermissionPopupPage(WebDriver driver) {
 		super(driver);
@@ -38,7 +37,6 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage 
 
 	public  void clickOnButtonYes() {
 		CCUtils.verifyAndWaitForElement(buttonYes, driver);
-		log("Click on Yes button");
 		buttonYes.click();
 		
 	}
@@ -48,9 +46,9 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage 
 		buttonCancel.click();
 	}
 
-	public void clickOnCrossIcon() {
-		CCUtils.verifyAndWaitForElement(buttonCrossIcon, driver);
-		buttonCrossIcon.click();
+	public void clickOncloseWindowIcon() {
+		CCUtils.verifyAndWaitForElement(buttoncloseWindowIcon, driver);
+		buttoncloseWindowIcon.click();
 	}
 
 	public void verifyYesButtonIsDisplayed() {
@@ -73,11 +71,11 @@ public class ClientUserDeleteUserRolesAndPermissionPopupPage extends CCMainPage 
 		}
 	}
 
-	public void verifyCrossIconIsDisplayed() {
-		CCUtils.verifyAndWaitForElement(buttonCrossIcon, driver);
-		if (buttonCrossIcon.isDisplayed()) {
-			CCUtils.assertEquals(buttonCrossIcon.getText().trim(), "clear");
-			CCUtils.assertEquals(buttonCrossIcon.isEnabled(), true);
+	public void verifycloseWindowIconIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(buttoncloseWindowIcon, driver);
+		if (buttoncloseWindowIcon.isDisplayed()) {
+			CCUtils.assertEquals(buttoncloseWindowIcon.getText().trim(), "clear");
+			CCUtils.assertEquals(buttoncloseWindowIcon.isEnabled(), true);
 		} else {
 			log("Cross icon is not displayed on delete user roles & permissions popup");
 		}
