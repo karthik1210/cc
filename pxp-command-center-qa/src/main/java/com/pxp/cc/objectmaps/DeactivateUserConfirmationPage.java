@@ -20,7 +20,7 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 	private WebElement buttonCancel;
 
 	@FindBy(id = "applyClearIcon")
-	private WebElement buttonCrossIcon;
+	private WebElement closeWindowIcon;
 	
 	@FindBy(id = "applyBtn")
 	private WebElement buttonYesDeactivate;
@@ -42,8 +42,8 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 	}
 
 	public void clickOnCrossIcon() {
-		CCUtils.verifyAndWaitForElement(buttonCrossIcon, driver);
-		buttonCrossIcon.click();
+		CCUtils.verifyAndWaitForElement(closeWindowIcon, driver);
+		closeWindowIcon.click();
 	}
 
 	public void clickOnYesDeactivateButton() {
