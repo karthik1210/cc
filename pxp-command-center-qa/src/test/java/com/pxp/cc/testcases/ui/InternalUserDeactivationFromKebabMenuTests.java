@@ -128,7 +128,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify deactivate user button is not displayed in kebab menu for locked user");
-		internalUserDetailsPage.verifyLockUsertButtonIsNotDisplayed();
+		internalUserDetailsPage.verifyDeactivateUsertButtonIsNotDisplayed();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality for deactivate user button popup")
