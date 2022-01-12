@@ -153,7 +153,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		internalUserDetailsPage.clickOnDeactivateUserButton();
 		logStep("Verify after clicking on cross icon, user redirected to internal user details page");
-		deactivateUserConfirmationPage.clickOnCrossIcon();
+		deactivateUserConfirmationPage.clickOnCloseWindow();
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
 	}
 

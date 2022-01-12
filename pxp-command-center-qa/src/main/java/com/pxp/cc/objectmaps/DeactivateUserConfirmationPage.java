@@ -41,7 +41,7 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 		buttonCancel.click();
 	}
 
-	public void clickOnCrossIcon() {
+	public void clickOnCloseWindow() {
 		CCUtils.verifyAndWaitForElement(closeWindowIcon, driver);
 		closeWindowIcon.click();
 	}
