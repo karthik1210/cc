@@ -27,7 +27,7 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 
 	public void verifyConfirmationTextForSingleUser(String userName) {
 		CCUtils.verifyAndWaitForElement(labelConfirmationQuestion, driver);
-		if (labelConfirmationQuestion.isDisplayed()) {
+		if (labelConfirmationQuestion.isDisplayed()==true) {
 			CCUtils.assertEquals(labelConfirmationQuestion.getText().trim(),
 					"Are you sure you would like to Deactivate User the selected user " + userName + "?");
 			log("Deactivate User confirmation text is " + labelConfirmationQuestion.getText().trim());
