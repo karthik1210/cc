@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.ui;
 
@@ -20,7 +20,7 @@ import com.pxp.cc.objectmaps.SendEnrollmentConfirmationPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
-public class SendEnrollmentTests extends CommandCenterGenericTest {
+public class InternalUserSendEnrollmentTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public CommandCenterUsersPage commandCenterUsersPage;
 	public InternalUsersPage internalUsersPage;

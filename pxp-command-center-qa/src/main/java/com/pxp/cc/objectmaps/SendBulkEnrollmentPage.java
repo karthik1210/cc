@@ -29,7 +29,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	@FindBy(xpath = "//td[@role='gridcell']/mat-checkbox/label/div/input")
 	private List<WebElement> checkboxList;
 
-	@FindBy(id = "mat-button-toggle-4-button")
+	@FindBy(id = "searchToggle")
 	private WebElement buttonSearchOptions;
 
 	@FindBy(xpath = "//mat-icon[text()='arrow_back']")
@@ -58,6 +58,9 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
 	private WebElement buttonClearAll;
+
+	@FindBy(id = "resellerName")
+	private WebElement labelSelectedVarResellerName;
 
 	public SendBulkEnrollmentPage(WebDriver driver) {
 		super(driver);
@@ -168,6 +171,21 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	public void verifyAllOptionsGotCleared() {
 		log("Verifying search labels are not displayed on screen.");
 		CCUtils.assertTrue(labelSelectedSearchOptions.isEmpty(), "Search labels are displayed on screen");
+	}
+
+	public VarResellerUsersPage clickOnBackArrow() {
+		CCUtils.verifyAndWaitForElement(iconBackArrow, driver);
+		iconBackArrow.click();
+		return PageFactory.initElements(driver, VarResellerUsersPage.class);
+	}
+
+	public void verifySelectedVarResellerName(String resellerName) {
+		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
+			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");
+			if (fieldId.equals("resellerName")) {
+				CCUtils.assertEquals(labelSelectedVarResellerName.getText().trim(), resellerName);
+			}
+		}
 	}
 
 }
