@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -65,12 +65,9 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 
 	public void verifySendBulkEnrollmentPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed()) {
-			CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Send Enrollment");
-			log("Send bulk enrollments page title is " + labelPageTitle.getText().trim());
-		} else {
-			log("Send bulk enrollments page title is not displayed");
-		}
+		CCUtils.assertTrue(labelPageTitle.isDisplayed(), "Send bulk enrollments page title is not displayed");
+		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Send Enrollment");
+		log("Send bulk enrollments page title is " + labelPageTitle.getText().trim());
 	}
 
 	public void selectUsers(int numberOfUsers) {
@@ -96,7 +93,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	}
 
 	public void verifySendEnrollmentButtonIsEnabled() {
-		log("Verifying send enrollment button is disabled.");
+		log("Verifying send enrollment button is enabled.");
 		CCUtils.verifyAndWaitForElement(buttonSendEnrollment, driver);
 		CCUtils.assertTrue(buttonSendEnrollment.isEnabled(), "Send Enrollment button is disabled");
 	}
@@ -111,6 +108,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	public void clickOnIndeterminateCheckbox() {
 		CCUtils.verifyAndWaitForElement(indeterminateCheckbox, driver);
 		indeterminateCheckbox.click();
+		log("Clicked on indeterminate checkbox");
 	}
 
 	public void verifyAllCheckboxesAreSelected() {
@@ -130,6 +128,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	public void clickOnCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		buttonCancel.click();
+		log("Clicked on cancel button");
 	}
 
 	public SearchOptionsPage clickOnSearchOptionsButton() {

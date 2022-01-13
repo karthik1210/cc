@@ -157,7 +157,7 @@ public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCen
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		clientUserDetailsPage.clickOnSendEnrollmentEmailButton();
 		logStep("Verify after clicking on cross icon, user redirected to client user details page");
-		sendEnrollmentConfirmationPage.clickOnCrossIcon();
+		sendEnrollmentConfirmationPage.clickOnCloseWindow();
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 	}
 

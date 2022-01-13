@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -21,8 +21,8 @@ public class SendEnrollmentConfirmationPage extends CCMainPage {
 	@FindBy(id = "applyBtn")
 	private WebElement buttonYesSend;
 
-	@FindBy(id = "applyClearIcon")
-	private WebElement buttonCrossIcon;
+	@FindBy(id = "applyCrossIcon")
+	private WebElement buttonCloseWindow;
 
 	public SendEnrollmentConfirmationPage(WebDriver driver) {
 		super(driver);
@@ -30,7 +30,7 @@ public class SendEnrollmentConfirmationPage extends CCMainPage {
 
 	public void verifyConfirmationPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed()) {
+		if (labelPageTitle.isDisplayed() == true) {
 			CCUtils.assertEquals(labelPageTitle.getText().trim(), "Send Enrollment?");
 			log("Send bulk enrollments confirmation page title is " + labelPageTitle.getText().trim());
 		} else {
@@ -40,7 +40,7 @@ public class SendEnrollmentConfirmationPage extends CCMainPage {
 
 	public void verifyConfirmationTextForBulkEnrollment(int numberOfUser) {
 		CCUtils.verifyAndWaitForElement(labelConfirmationQuestion, driver);
-		if (labelConfirmationQuestion.isDisplayed()) {
+		if (labelConfirmationQuestion.isDisplayed() == true) {
 			CCUtils.assertEquals(labelConfirmationQuestion.getText().trim(),
 					"Are you sure you would like to send an enrollment email to the " + numberOfUser
 							+ " selected user(s).");
@@ -52,59 +52,53 @@ public class SendEnrollmentConfirmationPage extends CCMainPage {
 
 	public void clickOnYesSendButton() {
 		CCUtils.verifyAndWaitForElement(buttonYesSend, driver);
-		log("Click on yes send button");
 		buttonYesSend.click();
+		log("Clicked on yes,send button");
 	}
 
 	public void clickOnCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		buttonCancel.click();
+		logStep("Clicked on cancel button");
 	}
 
-	public void clickOnCrossIcon() {
-		CCUtils.verifyAndWaitForElement(buttonCrossIcon, driver);
-		buttonCrossIcon.click();
+	public void clickOnCloseWindow() {
+		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
+		buttonCloseWindow.click();
+		logStep("Clicked on close window button");
 	}
 
 	public void verifyConfirmationTextForSingleUser(String userName) {
 		CCUtils.verifyAndWaitForElement(labelConfirmationQuestion, driver);
-		if (labelConfirmationQuestion.isDisplayed()) {
-			CCUtils.assertEquals(labelConfirmationQuestion.getText().trim(),
-					"Are you sure you would like to send an enrollment email to the selected user " + userName + "?");
-			log("Send enrollment confirmation text is " + labelConfirmationQuestion.getText().trim());
-		} else {
-			log("Send enrollment confirmation text is not displayed");
-		}
+		CCUtils.assertTrue(labelConfirmationQuestion.isDisplayed(),
+				"Send enrollment confirmation text is not displayed");
+		CCUtils.assertEquals(labelConfirmationQuestion.getText().trim(),
+				"Are you sure you would like to send an enrollment email to the selected user " + userName + "?");
+		log("Send enrollment confirmation text is " + labelConfirmationQuestion.getText().trim());
 	}
 
 	public void verifyYesSendButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonYesSend, driver);
-		if (buttonYesSend.isDisplayed()) {
-			CCUtils.assertEquals(buttonYesSend.getText().trim(), "Yes, send");
-			CCUtils.assertEquals(buttonYesSend.isEnabled(), true);
-		} else {
-			log("Yes, send button is not displayed on send enrollment confirmation popup");
-		}
+		CCUtils.assertTrue(buttonYesSend.isDisplayed(),
+				"Yes, send button is not displayed on send enrollment confirmation popup");
+		CCUtils.assertEquals(buttonYesSend.getText().trim(), "Yes, send");
+		CCUtils.assertEquals(buttonYesSend.isEnabled(), true);
 	}
 
 	public void verifyCancelButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		if (buttonCancel.isDisplayed()) {
-			CCUtils.assertEquals(buttonCancel.getText().trim(), "Cancel");
-			CCUtils.assertEquals(buttonCancel.isEnabled(), true);
-		} else {
-			log("Cancel button is not displayed on send enrollment confirmation popup");
-		}
+		CCUtils.assertTrue(buttonCancel.isDisplayed(),
+				"Cancel button is not displayed on send enrollment confirmation popup");
+		CCUtils.assertEquals(buttonCancel.getText().trim(), "Cancel");
+		CCUtils.assertEquals(buttonCancel.isEnabled(), true);
 	}
 
 	public void verifyCrossIconIsDisplayed() {
-		CCUtils.verifyAndWaitForElement(buttonCrossIcon, driver);
-		if (buttonCrossIcon.isDisplayed()) {
-			CCUtils.assertEquals(buttonCrossIcon.getText().trim(), "clear");
-			CCUtils.assertEquals(buttonCrossIcon.isEnabled(), true);
-		} else {
-			log("Cross icon is not displayed on send enrollment confirmation popup");
-		}
+		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
+		CCUtils.assertTrue(buttonCloseWindow.isDisplayed(),
+				"Cross icon is not displayed on send enrollment confirmation popup");
+		CCUtils.assertEquals(buttonCloseWindow.getText().trim(), "clear");
+		CCUtils.assertEquals(buttonCloseWindow.isEnabled(), true);
 	}
 
 	public void VerifyConfirmationPopupForSingleUser(String userName) {
@@ -114,5 +108,4 @@ public class SendEnrollmentConfirmationPage extends CCMainPage {
 		verifyCrossIconIsDisplayed();
 		verifyYesSendButtonIsDisplayed();
 	}
-
 }
