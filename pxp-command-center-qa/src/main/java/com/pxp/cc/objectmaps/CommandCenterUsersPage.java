@@ -25,6 +25,9 @@ public class CommandCenterUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[text()='CLIENT USERS']")
 	private WebElement tabClientUsers;
+	
+	@FindBy(xpath = "//div[text()='VAR/RESELLER USERS']")
+	private WebElement tabVARResellerUsers;
 
 	public CommandCenterUsersPage(WebDriver driver) {
 		super(driver);
@@ -60,4 +63,11 @@ public class CommandCenterUsersPage extends CCMainPage {
 
 	}
 
+	public VARResellerUsersPage clickOnVARResellerUsersTab() {
+		CCUtils.verifyAndWaitForElement(tabClientUsers, driver);
+		tabVARResellerUsers.click();
+		log("User clicked VARReseller Users tab.");
+		return PageFactory.initElements(driver, VARResellerUsersPage.class);
+
+    }
 }
