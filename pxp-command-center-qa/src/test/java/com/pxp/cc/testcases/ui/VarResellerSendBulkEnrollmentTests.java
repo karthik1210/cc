@@ -36,8 +36,7 @@ public class VarResellerSendBulkEnrollmentTests extends CommandCenterGenericTest
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Click on command center users icon and verify internal users tab is by default selected");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		logStep("Click on VAR/Reseller tab on the command center users page");
 		varResellerUsersPage = commandCenterUsersPage.clickOnVarResellerUsersTab();
