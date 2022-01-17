@@ -28,10 +28,6 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),'Client')]")
 	private WebElement labelClient;
 	
-	@FindBy(xpath = "//div[contains(text(),'VARReseller')]")
-	private WebElement labelVARReseller;
-
-
 	@FindBy(xpath = "//div[contains(text(),'Email')]")
 	private WebElement labelEmail;
 
@@ -53,10 +49,6 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//input[@formcontrolname='clientName']")
 	private WebElement dropdownSearchClient;
 	
-	@FindBy(xpath = "//input[@formcontrolname='VARReseller']")
-	private WebElement dropdownSearchVARReseller;
-
-
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
@@ -195,7 +187,7 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void verifySearchVarResellerUserPopup() throws InterruptedException, AWTException {
-		log("Verifying search VarReseller user pop-up");
+		log("Verifying Search Options pop up on the VAR/Reseller users page");
 		verifyFirstNameLabelTextAndTextboxDefaultValue();
 		verifyLastNameLabelTextAndTextboxDefaultValue();
 		verifyVarResellerLabelTextAndTextboxDefaultValue();

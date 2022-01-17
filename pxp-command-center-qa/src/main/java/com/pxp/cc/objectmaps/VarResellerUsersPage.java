@@ -50,7 +50,7 @@ public class VarResellerUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonSearchOption, driver);
 		CCUtils.assertTrue(buttonSearchOption.isDisplayed(),
 				"Search Option button is not displayed on var/reseller users page");
-		CCUtils.assertEquals(buttonSearchOption.getText().trim(), " SEARCH OPTIONS");
+		CCUtils.assertEquals(buttonSearchOption.getText().trim(), "SEARCH OPTIONS");
 		CCUtils.assertTrue(buttonSearchOption.isEnabled(),
 				"Search Option button is not enabled on var/reseller users page");
 	}
