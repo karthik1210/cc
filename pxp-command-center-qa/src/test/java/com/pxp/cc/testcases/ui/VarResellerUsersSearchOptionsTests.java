@@ -113,8 +113,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		searchOptionsPage.clickOnClearAllSearchData();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 		logStep("Verify all search options are cleared after clicking the Clear button");
-		
-	}
+    }
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled ")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
