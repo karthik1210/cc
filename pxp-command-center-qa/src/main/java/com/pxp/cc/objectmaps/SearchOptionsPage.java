@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -139,6 +139,12 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()=' Enrollment Status ']//following::span[@class='mat-checkbox-label']")
 	private List<WebElement> listEnrollmentStatusLabel;
 
+	@FindBy(xpath = "//div[text()='VAR/Reseller']")
+	private WebElement labelVarReseller;
+
+	@FindBy(xpath = "//input[@formcontrolname='resellerName']")
+	private WebElement dropdownSearchVarReseller;
+
 	List<String> actualUserStatusValues = new ArrayList<String>();
 	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
 
@@ -183,7 +189,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyFirstNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelFirstName, driver);
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
-		if (labelFirstName.isDisplayed() && textboxFirstName.isDisplayed()) {
+		if (labelFirstName.isDisplayed() == true && textboxFirstName.isDisplayed() == true) {
 			log("Verifying first name label text");
 			CCUtils.assertEquals(labelFirstName.getText().trim(), "First Name");
 			log("First name label text is " + labelFirstName.getText().trim());
@@ -198,7 +204,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyLastNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelLastName, driver);
 		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
-		if (labelLastName.isDisplayed() && textboxLastName.isDisplayed()) {
+		if (labelLastName.isDisplayed() == true && textboxLastName.isDisplayed() == true) {
 			log("Verifying last name label text");
 			CCUtils.assertEquals(labelLastName.getText().trim(), "Last Name");
 			log("Last name label text is " + labelLastName.getText().trim());
@@ -213,7 +219,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyClientLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelClient, driver);
 		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
-		if (labelClient.isDisplayed() && dropdownSearchClient.isDisplayed()) {
+		if (labelClient.isDisplayed() == true && dropdownSearchClient.isDisplayed() == true) {
 			log("Verifying client label text");
 			CCUtils.assertEquals(labelClient.getText().trim(), "Client");
 			log("Client label text is " + labelClient.getText().trim());
@@ -228,7 +234,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyUsernameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelUsername, driver);
 		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
-		if (labelUsername.isDisplayed() && textboxUsername.isDisplayed()) {
+		if (labelUsername.isDisplayed() == true && textboxUsername.isDisplayed() == true) {
 			log("Verifying username label text");
 			CCUtils.assertEquals(labelUsername.getText().trim(), "Username");
 			log("Username label text is " + labelUsername.getText().trim());
@@ -243,7 +249,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyEmailLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelEmail, driver);
 		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
-		if (labelEmail.isDisplayed() && textboxEmail.isDisplayed()) {
+		if (labelEmail.isDisplayed() == true && textboxEmail.isDisplayed() == true) {
 			log("Verifying email label text");
 			CCUtils.assertEquals(labelEmail.getText().trim(), "Email");
 			log("Email label text is " + labelEmail.getText().trim());
@@ -258,7 +264,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyMobileNumberLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelMobileNumber, driver);
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
-		if (labelMobileNumber.isDisplayed() && textboxMobileNumber.isDisplayed()) {
+		if (labelMobileNumber.isDisplayed() == true && textboxMobileNumber.isDisplayed() == true) {
 			log("Verifying mobile number label text");
 			CCUtils.assertEquals(labelMobileNumber.getText().trim(), "Mobile Number");
 			log("Mobile number label text is " + labelMobileNumber.getText().trim());
@@ -274,7 +280,7 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyUserStatusLabelTextAndCheckboxes() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(labelUserStatus, driver);
 		CCUtils.scrollPageToEnd();
-		if (labelUserStatus.isDisplayed()) {
+		if (labelUserStatus.isDisplayed() == true) {
 			log("Verifying status label text");
 			CCUtils.assertEquals(labelUserStatus.getText().trim(), "User Status");
 			log("User Status label text is " + labelUserStatus.getText().trim());
@@ -464,9 +470,9 @@ public class SearchOptionsPage extends CCMainPage {
 	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
 		clickToSearchButton();
 		scrollAndWait(0, 500, 200);
-		CCUtils.verifyAndWaitForElement(buttonHideSearchOptions, driver);
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
 		log("Error message displayed for empty search field " + errorSearchOptionsPage.getText().trim());
+		CCUtils.verifyAndWaitForElement(buttonHideSearchOptions, driver);
 		buttonHideSearchOptions.click();
 		log("search button closed " + buttonHideSearchOptions);
 
@@ -636,16 +642,16 @@ public class SearchOptionsPage extends CCMainPage {
 		String userName = textboxUsername.getText().trim();
 		String emailName = textboxEmail.getText().trim();
 		String mobileNumber = textboxMobileNumber.getText().trim();
-		CCUtils.assertTrue(firstName.length() == 0, "Text is not present in first field");
 		log("Verifying text is not present in firstname field");
-		CCUtils.assertTrue(lastName.length() == 0, "Text is not present in last field");
+		CCUtils.assertTrue(firstName.length() == 0, "Text is present in first field");
 		log("Verifying text is not present in lastname field");
-		CCUtils.assertTrue(userName.length() == 0, "Text is not present in username field");
+		CCUtils.assertTrue(lastName.length() == 0, "Text is present in last field");
 		log("Verifying text is not present in username field");
-		CCUtils.assertTrue(emailName.length() == 0, "Text is not present in email field");
+		CCUtils.assertTrue(userName.length() == 0, "Text is present in username field");
 		log("Verifying text is not present in email field");
-		CCUtils.assertTrue(mobileNumber.length() == 0, "Text is not present in mobilenumber field");
+		CCUtils.assertTrue(emailName.length() == 0, "Text is present in email field");
 		log("Verifying text is not present in mobilenumber field");
+		CCUtils.assertTrue(mobileNumber.length() == 0, "Text is present in mobilenumber field");
 	}
 
 	public void verifyEnrollmentSearchOptionsPopup() throws InterruptedException {
@@ -689,6 +695,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void verifyStatusCheckboxesAreNotByDefaultSelectedOnEnrollmentSearchOptionsPage()
 			throws InterruptedException {
+		log("Verifying enrollment status checkboxes are not selected");
 		for (int i = 0; i < enrollmentStatusCheckboxList.size(); i++) {
 			CCUtils.assertTrue(!enrollmentStatusCheckboxList.get(i).isSelected(),
 					"Enrollment checkboxes are already selected");
@@ -801,6 +808,55 @@ public class SearchOptionsPage extends CCMainPage {
 			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
 			CCUtils.assertTrue(false, "Searched text not present in client");
 		}
+	}
+
+	public void verifyVarResellerLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelVarReseller, driver);
+		CCUtils.assertTrue(labelVarReseller.isDisplayed(),
+				"VAR/Reseller label is not displayed on search options popup");
+		log("Verifying var/reseller label text");
+		CCUtils.assertEquals(labelVarReseller.getText().trim(), "VAR/Reseller");
+		log("VAR/Reseller label text is " + labelVarReseller.getText().trim());
+		CCUtils.verifyAndWaitForElement(dropdownSearchVarReseller, driver);
+		CCUtils.assertTrue(dropdownSearchVarReseller.isDisplayed(),
+				"VAR/Reseller search textbox is not displayed on search options popup");
+		log("Verifying input text placeholder is displayed for var/reseller textbox field");
+		CCUtils.assertEquals(dropdownSearchVarReseller.getAttribute("placeholder").trim(), "Input Text");
+		log("Box text for var/reseller textbox field is "
+				+ dropdownSearchVarReseller.getAttribute("placeholder").trim());
+	}
+
+	public void verifyEnrollmentSearchOptionsPopupForVarResellerUser() throws InterruptedException {
+		log("Verifying search VAR/Reseller user pop-up");
+		verifyFirstNameLabelTextAndTextboxDefaultValue();
+		verifyLastNameLabelTextAndTextboxDefaultValue();
+		verifyVarResellerLabelTextAndTextboxDefaultValue();
+		verifyUsernameLabelTextAndTextboxDefaultValue();
+		verifyEmailLabelTextAndTextboxDefaultValue();
+		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions();
+		verifyClearButtonIsDisplayed();
+		verifySearchButtonIsDisplayed();
+	}
+
+	public void enterSeachTextInVarResellerField(String varReseller) {
+		CCUtils.verifyAndWaitForElement(dropdownSearchVarReseller, driver);
+		dropdownSearchVarReseller.sendKeys(varReseller);
+		log("Entered text in var/reseller field is " + varReseller);
+	}
+
+	public void searchVarResellerUser(String firstName, String lastName, String varReseller, String email,
+			String username, String mobileNumber, List<String> enrollmentStatusList) {
+		enterSearchTextInSearchFields(firstName, lastName, email, username, mobileNumber);
+		enterSeachTextInVarResellerField(varReseller);
+		selectEnrollmentStatusOnTheEnrollmentSearchPage(enrollmentStatusList);
+	}
+
+	public void verifyVarResellerTextboxIsEmptyWhenClickOnClearButton() {
+		CCUtils.verifyAndWaitForElement(dropdownSearchVarReseller, driver);
+		log("Verifying text is not present in var/reseller field");
+		CCUtils.assertTrue(dropdownSearchVarReseller.getText().trim().length() == 0,
+				"Text is present in var/reseller textbox field");
 	}
 
 }
