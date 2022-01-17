@@ -57,7 +57,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 	public void testErrorMessageWhenAllFieldsOfSearchOptionsIsBlank() throws Exception {
 		logStep("Click on search  button when all fields of search options are blank");
 		searchOptionsPage.verifySearchButtonIsDisplayed();
-		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.clickToSearchButton();
 		searchOptionsPage.verifyErrorMessageOnSearchOptionsPage();
 	}
 
@@ -107,7 +107,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.VARReseller.name"),
 				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
 				testData.getProperty("valid.user.mobile.number"));
-		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.clickToSearchButton();
 		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 		logStep("Verify that the selected search options are displayed on the VAR/Reseller page.");
 		searchOptionsPage.clickOnClearAllSearchData();
@@ -124,7 +124,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 				testData.getProperty("valid.user.mobile.number"));
 		searchOptionsPage.selectUserStatus(Arrays.asList("Active", "Inactive"));
 		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed", "Delivered", "Not Sent"));
-		searchOptionsPage.clickOnSearchButton();
+		searchOptionsPage.clickToSearchButton();
 		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 		logStep("Verify that the selected search options are displayed on the VAR/Reseller page.");
 		searchOptionsPage.clickOnClearAllSearchData();
