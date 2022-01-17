@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.testcases.ui;
 
@@ -157,7 +157,7 @@ public class ClientUserSendEnrollmentEmailUsingKebabMenuTests extends CommandCen
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		clientUserDetailsPage.clickOnSendEnrollmentEmailButton();
 		logStep("Verify after clicking on cross icon, user redirected to client user details page");
-		sendEnrollmentConfirmationPage.clickOnCrossIcon();
+		sendEnrollmentConfirmationPage.clickOnCloseWindow();
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 	}
 

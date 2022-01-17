@@ -26,6 +26,9 @@ public class CommandCenterUsersPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='CLIENT USERS']")
 	private WebElement tabClientUsers;
 
+	@FindBy(xpath = "//div[text()='VAR/RESELLER USERS']")
+	private WebElement tabVarResellerUsers;
+
 	public CommandCenterUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -37,7 +40,7 @@ public class CommandCenterUsersPage extends CCMainPage {
 				"Command center users icon is not displayed on screen.");
 		log("Verifying command center users page title");
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed())
+		if (labelPageTitle.isDisplayed() == true)
 			CCUtils.assertEquals(labelPageTitle.getText().trim(), "Command Center Users");
 		else
 			log("Command center users page title is not displayed on screen");
@@ -57,6 +60,13 @@ public class CommandCenterUsersPage extends CCMainPage {
 		tabClientUsers.click();
 		log("User clicked Client Users tab.");
 		return PageFactory.initElements(driver, ClientUsersPage.class);
+	}
+
+	public VarResellerUsersPage clickOnVarResellerUsersTab() {
+		CCUtils.verifyAndWaitForElement(tabVarResellerUsers, driver);
+		tabVarResellerUsers.click();
+		log("Clicked on var/reseller users tab");
+		return PageFactory.initElements(driver, VarResellerUsersPage.class);
 
 	}
 

@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -29,7 +29,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	@FindBy(xpath = "//td[@role='gridcell']/mat-checkbox/label/div/input")
 	private List<WebElement> checkboxList;
 
-	@FindBy(id = "mat-button-toggle-4-button")
+	@FindBy(id = "searchToggle")
 	private WebElement buttonSearchOptions;
 
 	@FindBy(xpath = "//mat-icon[text()='arrow_back']")
@@ -59,18 +59,18 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
 	private WebElement buttonClearAll;
 
+	@FindBy(id = "resellerName")
+	private WebElement labelSelectedVarResellerName;
+
 	public SendBulkEnrollmentPage(WebDriver driver) {
 		super(driver);
 	}
 
 	public void verifySendBulkEnrollmentPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed()) {
-			CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Send Enrollment");
-			log("Send bulk enrollments page title is " + labelPageTitle.getText().trim());
-		} else {
-			log("Send bulk enrollments page title is not displayed");
-		}
+		CCUtils.assertTrue(labelPageTitle.isDisplayed(), "Send bulk enrollments page title is not displayed");
+		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Send Enrollment");
+		log("Send bulk enrollments page title is " + labelPageTitle.getText().trim());
 	}
 
 	public void selectUsers(int numberOfUsers) {
@@ -96,7 +96,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	}
 
 	public void verifySendEnrollmentButtonIsEnabled() {
-		log("Verifying send enrollment button is disabled.");
+		log("Verifying send enrollment button is enabled.");
 		CCUtils.verifyAndWaitForElement(buttonSendEnrollment, driver);
 		CCUtils.assertTrue(buttonSendEnrollment.isEnabled(), "Send Enrollment button is disabled");
 	}
@@ -111,6 +111,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	public void clickOnIndeterminateCheckbox() {
 		CCUtils.verifyAndWaitForElement(indeterminateCheckbox, driver);
 		indeterminateCheckbox.click();
+		log("Clicked on indeterminate checkbox");
 	}
 
 	public void verifyAllCheckboxesAreSelected() {
@@ -130,6 +131,7 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	public void clickOnCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		buttonCancel.click();
+		log("Clicked on cancel button");
 	}
 
 	public SearchOptionsPage clickOnSearchOptionsButton() {
@@ -169,6 +171,21 @@ public class SendBulkEnrollmentPage extends CCMainPage {
 	public void verifyAllOptionsGotCleared() {
 		log("Verifying search labels are not displayed on screen.");
 		CCUtils.assertTrue(labelSelectedSearchOptions.isEmpty(), "Search labels are displayed on screen");
+	}
+
+	public VarResellerUsersPage clickOnBackArrow() {
+		CCUtils.verifyAndWaitForElement(iconBackArrow, driver);
+		iconBackArrow.click();
+		return PageFactory.initElements(driver, VarResellerUsersPage.class);
+	}
+
+	public void verifySelectedVarResellerName(String resellerName) {
+		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
+			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");
+			if (fieldId.equals("resellerName")) {
+				CCUtils.assertEquals(labelSelectedVarResellerName.getText().trim(), resellerName);
+			}
+		}
 	}
 
 }

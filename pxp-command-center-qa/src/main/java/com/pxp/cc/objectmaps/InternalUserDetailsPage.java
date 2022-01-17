@@ -178,6 +178,9 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
 	private WebElement buttonLockUser;
+	
+	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
+	private WebElement buttonDeactivateUser;
 
 	public InternalUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -663,4 +666,20 @@ public class InternalUserDetailsPage extends CCMainPage {
 		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
 	}
 
+	public void verifyDeactivateUserButtonIsDisplayed() {
+		log("Verifying deactivate user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
+	}
+	
+	public void verifyDeactivateUsertButtonIsNotDisplayed() {
+		log("Verifying deactivate user button is not displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), false);
+	}
+	
+	public DeactivateUserConfirmationPage clickOnDeactivateUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonDeactivateUser, driver);
+		log("Click on deactivate user button");
+		javascriptClick(buttonDeactivateUser);
+		return PageFactory.initElements(driver, DeactivateUserConfirmationPage.class);
+	}
 }
