@@ -27,6 +27,10 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Client')]")
 	private WebElement labelClient;
+	
+	@FindBy(xpath = "//div[contains(text(),'VARReseller')]")
+	private WebElement labelVARReseller;
+
 
 	@FindBy(xpath = "//div[contains(text(),'Email')]")
 	private WebElement labelEmail;
@@ -48,6 +52,10 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//input[@formcontrolname='clientName']")
 	private WebElement dropdownSearchClient;
+	
+	@FindBy(xpath = "//input[@formcontrolname='VARReseller']")
+	private WebElement dropdownSearchVARReseller;
+
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
@@ -186,6 +194,19 @@ public class SearchOptionsPage extends CCMainPage {
 		verifySearchButtonIsDisplayed();
 	}
 
+	public void verifySearchVarResellerUserPopup() throws InterruptedException, AWTException {
+		log("Verifying search VarReseller user pop-up");
+		verifyFirstNameLabelTextAndTextboxDefaultValue();
+		verifyLastNameLabelTextAndTextboxDefaultValue();
+		verifyVarResellerLabelTextAndTextboxDefaultValue();
+		verifyUsernameLabelTextAndTextboxDefaultValue();
+		verifyEmailLabelTextAndTextboxDefaultValue();
+		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		verifyUserStatusLabelTextAndCheckboxes();
+		verifyEnrollmentStatusLabelTextAndCheckboxes();
+		verifyClearButtonIsDisplayed();
+		verifySearchButtonIsDisplayed();
+	}
 	public void verifyFirstNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelFirstName, driver);
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
@@ -230,8 +251,8 @@ public class SearchOptionsPage extends CCMainPage {
 			log("Client label and Search/Select dropdown are not displayed on search options popup");
 		}
 	}
-
-	public void verifyUsernameLabelTextAndTextboxDefaultValue() {
+	
+    public void verifyUsernameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelUsername, driver);
 		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
 		if (labelUsername.isDisplayed() == true && textboxUsername.isDisplayed() == true) {

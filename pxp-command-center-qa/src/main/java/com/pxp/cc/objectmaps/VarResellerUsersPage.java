@@ -17,6 +17,9 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
 	private WebElement buttonSendEnrollment;
 
+	@FindBy(xpath = "//button[text()=' SEARCH OPTIONS ']")
+	private WebElement buttonSearchOption;
+	
 	public VarResellerUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -42,5 +45,20 @@ public class VarResellerUsersPage extends CCMainPage {
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "VAR/Reseller Users");
 		log("VAR/Reseller users page title is displayed");
 	}
-
+	
+	public void verifySearchOptionsButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(buttonSearchOption, driver);
+		CCUtils.assertTrue(buttonSearchOption.isDisplayed(),
+				"Search Option button is not displayed on var/reseller users page");
+		CCUtils.assertEquals(buttonSearchOption.getText().trim(), " SEARCH OPTIONS");
+		CCUtils.assertTrue(buttonSearchOption.isEnabled(),
+				"Search Option button is not enabled on var/reseller users page");
+	}
+	
+	public SearchOptionsPage clickOnSearchOptionsButton(){
+		CCUtils.verifyAndWaitForElement(buttonSearchOption, driver);
+		buttonSearchOption.click();
+		log("Clicked on Search Option button in VAR Reseller");
+		return PageFactory.initElements(driver, SearchOptionsPage.class);
+	}
 }
