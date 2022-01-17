@@ -63,7 +63,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, last name,username, and email field and verify error message")
 	public void testMaximumCharactersErrorMessageForInputFields() throws Exception {
-		logStep("Verify maximum character reached error message for firstname, last name,username, email and mobile field");
+		logStep("Verify maximum character reached error message for firstname, last name,username, email field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
 				CCUtils.generateNewEmail(101));
@@ -113,7 +113,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		searchOptionsPage.clickOnClearAllSearchData();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 		logStep("Verify all search options are cleared after clicking the Clear button");
-		searchOptionsPage.verifyTextboxIsEmptyWhenClickOnClearButton();
+		
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled ")
@@ -130,7 +130,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		searchOptionsPage.clickOnClearAllSearchData();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 		logStep("Verify all search options are cleared after clicking the Clear All button.");
-		searchOptionsPage.verifyTextboxIsEmptyWhenClickOnClearButton();
+		
 	}
 
 }
