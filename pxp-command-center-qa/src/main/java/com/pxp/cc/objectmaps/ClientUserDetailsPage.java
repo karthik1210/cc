@@ -56,6 +56,9 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "DeleteUserRole")
 	private WebElement buttonDeleteUserRole;
+	
+	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
+	private WebElement buttonLockUser;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -177,6 +180,23 @@ public class ClientUserDetailsPage extends CCMainPage {
 		javascriptClick(buttonDeleteUserRole);
 		log("Clicked on delete user role button on the client user details page");
 		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionsPage.class);
+	}
+	
+	public void verifyLockUserButtonIsDisplayed() {
+		log("Verifying lock user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonLockUser.isDisplayed(), true);
+	}
+	
+	public void verifyLockUserButtonIsNotDisplayed() {
+		log("Verifying lock user button is not displayed in kebab menu");
+		CCUtils.assertEquals(buttonLockUser.isDisplayed(), false);
+	}
+	
+	public LockUserConfirmationPage clickOnLockUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
+		log("Click on lock user button");
+		javascriptClick(buttonLockUser);
+		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
 	}
 
 }
