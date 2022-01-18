@@ -2,8 +2,8 @@
 
 package com.pxp.cc.testcases.ui;
 
-import java.util.Arrays;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -49,6 +49,10 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 		logStep("Click on search options button");
 		searchOptionsPage = varResellerUsersPage.clickOnSearchOptionsButton();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search VAR/Reseller user popup")
+	public void testSearchVarResellerUserPopup() throws Exception {
 		logStep("Verify search VAR/Reseller user popup");
 		searchOptionsPage.verifySearchVarResellerUserPopup();
 	}
@@ -92,13 +96,20 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
-	public void testSearchOptionsWithSingleChecboxOfStatus() throws Exception {
+	public void testSearchOptionsWithSingleCheckboxOfStatus() throws Exception {
+		List<String> userStatusList = new ArrayList<String>();
+		userStatusList.add(testData.getProperty("user.status.Active"));
+		List<String> enrollmentStatusList = new ArrayList<String>();
+		enrollmentStatusList.add(testData.getProperty("enrollment.status.Confirmed"));
+		varResellerUsersPage.verifySelectedSearchOptionsWithSingleCheckboxOfStatus(userStatusList,
+				enrollmentStatusList);
+		logStep("Verify clear all button is displayed");
+		varResellerUsersPage.verifyClearAllButtonIsDisplayed();
+		logStep("Click on clear all button");
+		varResellerUsersPage.clickOnClearAllButton();
+		logStep("Verify all search options are cleared after clicking the Clear All button.");
+		varResellerUsersPage.verifyAllOptionsGotCleared();
 
-		searchOptionsPage.selectSingleCheckboxOfEnrollmentStatus();
-		searchOptionsPage.selectSingleCheckboxOfUserStatus();
-		searchOptionsPage.clickOnSearchButton();
-		varResellerUsersPage.verifyVarResellerUsersPageTitle();
-		logStep("Verify that the selected search options are displayed on the VAR/Reseller page.");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields without  checkboxes are selected")
@@ -107,29 +118,47 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.VARReseller.name"),
 				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
 				testData.getProperty("valid.user.mobile.number"));
+		logStep("Click on search button on the search options popup");
 		searchOptionsPage.clickToSearchButton();
-		searchOptionsPage.verifyClearAllButtonIsDisplayed();
 		logStep("Verify that the selected search options are displayed on the VAR/Reseller page.");
-		searchOptionsPage.clickOnClearAllSearchData();
-		varResellerUsersPage.verifyVarResellerUsersPageTitle();
-		logStep("Verify all search options are cleared after clicking the Clear button");
-    }
+		varResellerUsersPage.verifySelectedSearchOptionsWithoutStatus(testData.getProperty("valid.user.first.name"),
+				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"),
+				testData.getProperty("valid.user.var.reseller.name"), testData.getProperty("valid.user.email"),
+				testData.getProperty("valid.username"));
+		logStep("Verify clear all button is displayed");
+		varResellerUsersPage.verifyClearAllButtonIsDisplayed();
+		logStep("Click on clear all button");
+		varResellerUsersPage.clickOnClearAllButton();
+		logStep("Verify all search options are cleared after clicking the Clear All button.");
+		varResellerUsersPage.verifyAllOptionsGotCleared();
+
+	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled ")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
-		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(testData.getProperty("valid.user.first.name"),
-				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.VARReseller.name"),
+		List<String> enrollmentStatusList = new ArrayList<String>();
+		enrollmentStatusList.add(testData.getProperty("enrollment.status.pending"));
+		enrollmentStatusList.add(testData.getProperty("enrollment.status.notsent"));
+		searchOptionsPage.searchVarResellerUser(testData.getProperty("valid.user.first.name"),
+				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.var.reseller.name"),
 				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
-				testData.getProperty("valid.user.mobile.number"));
-		searchOptionsPage.selectUserStatus(Arrays.asList("Active", "Inactive"));
-		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed", "Delivered", "Not Sent"));
-		searchOptionsPage.clickToSearchButton();
-		searchOptionsPage.verifyClearAllButtonIsDisplayed();
-		logStep("Verify that the selected search options are displayed on the VAR/Reseller page.");
-		searchOptionsPage.clickOnClearAllSearchData();
+				testData.getProperty("valid.user.mobile.number"), enrollmentStatusList);
+		logStep("Click on search button on the search options popup");
+		searchOptionsPage.clickOnSearchButton();
+		logStep("Verify after clicking on search button on the each options popup, user redirected to Var/Reseller users page");
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
+		logStep("Verify selected search options are displayed on VAR/Reseller users page.");
+		varResellerUsersPage.verifySelectedSearchOptions(enrollmentStatusList,
+				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.first.name"),
+				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.var.reseller.name"),
+				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"));
+		logStep("Verify clear all button is displayed");
+		varResellerUsersPage.verifyClearAllButtonIsDisplayed();
+		logStep("Click on clear all button");
+		varResellerUsersPage.clickOnClearAllButton();
 		logStep("Verify all search options are cleared after clicking the Clear All button.");
-		
+		varResellerUsersPage.verifyAllOptionsGotCleared();
+
 	}
 
 }

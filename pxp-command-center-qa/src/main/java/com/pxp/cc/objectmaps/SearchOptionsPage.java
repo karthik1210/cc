@@ -185,9 +185,9 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyClearButtonIsDisplayed();
 		verifySearchButtonIsDisplayed();
 	}
-
-	public void verifySearchVarResellerUserPopup() throws InterruptedException, AWTException {
-		log("Verifying Search Options pop up on the VAR/Reseller users page");
+	
+	public void verifySearchVarResellerUserPopup()  throws InterruptedException, AWTException {
+		log("Verifying search client user pop-up");
 		verifyFirstNameLabelTextAndTextboxDefaultValue();
 		verifyLastNameLabelTextAndTextboxDefaultValue();
 		verifyVarResellerLabelTextAndTextboxDefaultValue();
@@ -199,6 +199,7 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyClearButtonIsDisplayed();
 		verifySearchButtonIsDisplayed();
 	}
+
 	public void verifyFirstNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelFirstName, driver);
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
@@ -407,7 +408,6 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void clickOnSearchButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		scrollAndWait(0, 500, 200);
 		scrollAndWait(0, 500, 8000);
 		javascriptClick(buttonSearch);
 	}
@@ -678,8 +678,8 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyClearButtonIsDisplayed();
 		verifySearchButtonIsDisplayed();
 	}
-
-	public void verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions() throws InterruptedException {
+	
+   public void verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(labelEnrollmentStatus, driver);
 		if (labelEnrollmentStatus.isDisplayed()) {
 			log("Verifying enrollment status label text");
