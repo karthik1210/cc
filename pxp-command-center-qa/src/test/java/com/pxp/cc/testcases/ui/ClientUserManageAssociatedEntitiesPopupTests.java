@@ -68,12 +68,12 @@ public class ClientUserManageAssociatedEntitiesPopupTests extends CommandCenterG
 	public void testSelectAllEntitiesFunctionality() {
 		logStep("verify select all checkbox is unchecked");
 		manageAssociatedEntitiesPage.verifySelectAllCheckBoxStateInManagePopup("false");
-		logStep("verify Save & Apply button is disabled and non-clickable");
+		logStep("verify Save & Apply button is disabled.");
 		manageAssociatedEntitiesPage.verifySaveApplyButtonStatusInManagePopup("confirmbutton disabled");
 		manageAssociatedEntitiesPage.clickToSelectAllCheckBox();
 		logStep("verify select all checkbox is checked");
 		manageAssociatedEntitiesPage.verifySelectAllCheckBoxStateInManagePopup("true");
-		logStep("verify Save & Apply button is enabled and clickable");
+		logStep("verify Save & Apply button is enabled.");
 		manageAssociatedEntitiesPage.verifySaveApplyButtonStatusInManagePopup("confirmbutton");
 
 	}
@@ -95,7 +95,7 @@ public class ClientUserManageAssociatedEntitiesPopupTests extends CommandCenterG
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new entity from non-selected entities list by selecting it's checkbox")
 	public void testAddNewEntityInManagePopUp() {
 		logStep("Add a new entity from non-selected entities list by selecting it's checkbox");
-		manageAssociatedEntitiesPage.addNonSelectedEntities(testData.getProperty("addNewEntity"));
+		manageAssociatedEntitiesPage.addNonSelectedEntities(testData.getProperty("new.entity"));
 		logStep("Verify Save & Apply button is enabled");
 		manageAssociatedEntitiesPage.verifySaveApplyButtonStatusInManagePopup("confirmbutton");
 		logStep("click to save & apply button and navigate to client users details page.");
@@ -107,10 +107,10 @@ public class ClientUserManageAssociatedEntitiesPopupTests extends CommandCenterG
 		commonMethods.verifyToasterMessage("Success! Entities have been updated");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify existing entity should be from selected entities list by selecting it's checkbox")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify existing entity should be removed from selected entities list by selecting it's checkbox")
 	public void testRemoveExistingEntityInManagePopUp() {
 		logStep("Remove existing entity from selected entities list by selecting it's checkbox");
-		manageAssociatedEntitiesPage.removeSelectedEntities(testData.getProperty("addNewEntity"));
+		manageAssociatedEntitiesPage.removeSelectedEntities(testData.getProperty("new.entity"));
 		logStep("Verify Save & Apply button is enabled");
 		manageAssociatedEntitiesPage.verifySaveApplyButtonStatusInManagePopup("confirmbutton");
 		logStep("click to save & apply button and navigate to client users details page.");

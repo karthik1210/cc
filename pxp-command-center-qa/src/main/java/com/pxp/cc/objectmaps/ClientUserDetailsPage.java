@@ -82,7 +82,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifySelectedUserStatusIsSameOnClientUserDetailsPage(String userStatus) {
 		CCUtils.verifyAndWaitForElement(labelUserStatusValue, driver);
-		if (labelUserStatusValue.isDisplayed()) {
+		if (labelUserStatusValue.isDisplayed() == true) {
 			CCUtils.assertEquals(labelUserStatusValue.getText().trim(), userStatus);
 		} else {
 			log("User status value is not present on client user details page");
@@ -108,7 +108,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyClientUserDetailsPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed()) {
+		if (labelPageTitle.isDisplayed() == true) {
 			String title = labelPageTitle.getText().trim().replace("arrow_back", "");
 			CCUtils.assertEquals(title.trim(), "Client User Details");
 		} else {
@@ -139,7 +139,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyCancelButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		if (buttonCancel.isDisplayed()) {
+		if (buttonCancel.isDisplayed() == true) {
 			CCUtils.assertEquals(buttonCancel.getText().trim(), "CANCEL");
 		} else {
 			logStep("Cancel button is not present on client user details page");
@@ -148,7 +148,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifySaveButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
-		if (buttonSave.isDisplayed()) {
+		if (buttonSave.isDisplayed() == true) {
 			CCUtils.assertEquals(buttonSave.getText().trim(), "SAVE");
 		} else {
 			logStep("Save button is not present on client user details page");

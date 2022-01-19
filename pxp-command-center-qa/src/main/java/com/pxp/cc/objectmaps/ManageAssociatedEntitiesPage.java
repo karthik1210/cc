@@ -88,14 +88,18 @@ public class ManageAssociatedEntitiesPage extends CCMainPage {
 	public void verifyCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		CCUtils.assertEquals(buttonCancel.getText().trim(), "Cancel");
-		CCUtils.assertTrue((buttonCancel.isDisplayed() && buttonCancel.isEnabled()),
-				"Cancel button is not displayed on the manage associated entities page and is disabled");
+		CCUtils.assertTrue((buttonCancel.isDisplayed()),
+				"Cancel button is not displayed on the manage associated entities page");
+		CCUtils.assertTrue((buttonCancel.isEnabled()),
+				"Cancel button is disabled on the manage associated entities page");
 	}
 
 	public void verifyCrossButton() {
 		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
-		CCUtils.assertTrue((buttonCloseWindow.isDisplayed() && buttonCloseWindow.isEnabled()),
-				"Cross icon is not displayed on the manage associated entities page and its disabled");
+		CCUtils.assertTrue(buttonCloseWindow.isDisplayed(),
+				"Cross icon is not displayed on the manage associated entities page");
+		CCUtils.assertTrue(buttonCloseWindow.isEnabled(),
+				"Cross icon is disabled on the manage associated entities page");
 	}
 
 	public void verifySaveApplyButton() {
