@@ -2,12 +2,14 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class ClientUserDetailsPage extends CCMainPage {
@@ -56,6 +58,12 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "DeleteUserRole")
 	private WebElement buttonDeleteUserRole;
+
+	@FindBy(xpath = "//div[@class='editbutton']")
+	private WebElement buttonManage;
+
+	@FindBy(xpath = "//div[@class='header px-4 mb-2']")
+	private List<WebElement> systemHeaderAssociatedEntities;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -177,6 +185,41 @@ public class ClientUserDetailsPage extends CCMainPage {
 		javascriptClick(buttonDeleteUserRole);
 		log("Clicked on delete user role button on the client user details page");
 		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionsPage.class);
+	}
+
+	public ManagePopupPage clickOnManageButton() {
+		CCUtils.verifyAndWaitForElement(buttonManage, driver);
+		buttonManage.click();
+		log("Clicked on Manage button on the client user details page");
+		return PageFactory.initElements(driver, ManagePopupPage.class);
+	}
+
+	public List<String> listOfAssociatedEntities() {
+		List<String> list = new ArrayList<String>();
+		for (WebElement element : listOfAssociatedEntities) {
+			CCUtils.verifyAndWaitForElement(element, driver);
+			list.add(element.getText().trim());
+		}
+		return list;
+	}
+
+	public List<String> listOfSystemAssociatedEntities() {
+		List<String> list = new ArrayList<String>();
+		for (WebElement element : systemHeaderAssociatedEntities) {
+			CCUtils.verifyAndWaitForElement(element, driver);
+			list.add(element.getText().trim());
+		}
+		return list;
+	}
+
+	public void verifySelectedEntitiesInManagePopupSameAsAssociatedEntities(String managePopupSelectedEntities) {
+		List<String> listOfAssociatedEntities = new ArrayList<String>();
+		listOfAssociatedEntities.addAll(listOfAssociatedEntities());
+		listOfAssociatedEntities.addAll(listOfSystemAssociatedEntities());
+		for (int i = 0; i < listOfAssociatedEntities.size(); i++) {
+			CCUtils.assertTrue(managePopupSelectedEntities.contains(listOfAssociatedEntities.get(i)),
+					"Verfying fetched entities from Manage popup should be same as associated entities container");
+		}
 	}
 
 }
