@@ -137,6 +137,7 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();
+		commonMethods = new CommonMethods(driver);
 		commonMethods.verifyToasterMessage("Success! User status has been successfully locked");
 		commonMethods.closeToasterMessage();
 	}
@@ -158,6 +159,7 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();
+		commonMethods = new CommonMethods(driver);
 		logStep("Verify success toaster message");
 		commonMethods.verifyToasterMessage("Success! User status has been successfully locked");
 		commonMethods.closeToasterMessage();
