@@ -872,13 +872,4 @@ public class SearchOptionsPage extends CCMainPage {
 				"Text is present in var/reseller textbox field");
 	}
 
-	public void verifyStatusCheckboxesAreNotByDefaultSelectedOnVarResellerSearchOptionsPage()
-			throws InterruptedException {
-		log("Verifying enrollment status checkboxes are not selected");
-		for (int i = 0; i < enrollmentStatusCheckboxList.size(); i++) {
-			CCUtils.assertTrue(!enrollmentStatusCheckboxList.get(i).isSelected(),
-					"Enrollment checkboxes are already selected");
-		}
-
-	}
 }

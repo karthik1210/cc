@@ -127,29 +127,8 @@ public class VarResellerUsersPage extends CCMainPage {
 		}
 	}
 
-	public void verifySelectedSearchOptionsWithoutStatus(String firstName, String lastName, String varResellerName,
-			String email, String username, String mobileNumber) {
-
-		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
-			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");
-			if (fieldId.equals("firstName")) {
-				CCUtils.assertEquals(labelSelectedFirstName.getText().trim(), firstName);
-			} else if (fieldId.equals("VarResellerName")) {
-				CCUtils.assertEquals(labelSelectedLastName.getText().trim(), varResellerName);
-			} else if (fieldId.equals("lastName")) {
-				CCUtils.assertEquals(labelSelectedLastName.getText().trim(), lastName);
-			} else if (fieldId.equals("userName")) {
-				CCUtils.assertEquals(labelSelectedUserName.getText().trim(), username);
-			} else if (fieldId.equals("email")) {
-				CCUtils.assertEquals(labelSelectedEmail.getText().trim(), email);
-			} else if (fieldId.equals("mobileNumber")) {
-				CCUtils.assertEquals(labelSelectedMobileNumber.getText().trim(), mobileNumber);
-			}
-		}
-	}
-
-	public void verifySelectedSearchOptions(List<String> enrollmentStatus, String firstName, String lastName,
-			String varResellerName, String email, String username, String mobileNumber) {
+	public void verifySelectedSearchOptions(List<String> enrollmentStatus, List<String> userStatus, String firstName,
+			String lastName, String varResellerName, String email, String username, String mobileNumber) {
 
 		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
 			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");
@@ -168,6 +147,8 @@ public class VarResellerUsersPage extends CCMainPage {
 				CCUtils.assertEquals(labelSelectedMobileNumber.getText().trim(), mobileNumber);
 			} else if (fieldId.equals("enrollStatus")) {
 				CCUtils.assertTrue(enrollmentStatus.contains(fieldValue), "Enrollment status is not present");
+			} else if (fieldId.equals("userStatus")) {
+				CCUtils.assertTrue(userStatus.contains(fieldValue), "User status is not present");
 			}
 		}
 	}
