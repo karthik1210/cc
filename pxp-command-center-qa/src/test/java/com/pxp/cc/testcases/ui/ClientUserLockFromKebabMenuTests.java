@@ -33,7 +33,6 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 	public PasswordResetPage resetPage;
 	public LockUserConfirmationPage lockUserConfirmationPage;
 
-
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
@@ -136,11 +135,12 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
-	    clientUserDetailsPage.clickOnLockUserButton();
+		log("Click on the lock user button in the kebab menu");
+		clientUserDetailsPage.clickOnLockUserButton();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality for lock button popup")
-	public void testClientUserLockButtonCancelAndCrossIconFunctionality() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user unlock functionality")
+	public void testClientUserUnlockFunctionality() throws Exception {
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
 		userStatusList = new ArrayList<String>();
@@ -154,15 +154,15 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
+		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();
-		logStep("Verify after clicking on cancel button, user redirected to client user details page");
-		lockUserConfirmationPage.clickOnCancelButton();
-		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
-		clientUserDetailsPage.clickOnKebabMenuButton();
-		clientUserDetailsPage.clickOnLockUserButton();
-		logStep("Verify after clicking on cross icon, user redirected to client user details page");
-		lockUserConfirmationPage.clickOnCrossIcon();
-		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
+		logStep("Verify success toaster message");
+		commonMethods.verifyLockUserToasterMessage("Success! User status has been successfully locked");
+		commonMethods.closeToasterMessage();
+		clientUserDetailsPage.clickOnUnlockButton();
+		logStep("Verify success toaster message");
+		commonMethods.verifyUnlockUserToasterMessage("Success! User status has been successfully activated");
+		commonMethods.closeToasterMessage();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locked out user functionality")
@@ -181,12 +181,14 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		logStep("Verify lock button popup");
 		clientUserDetailsPage.clickOnKebabMenuButton();
+		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();
 		commonMethods = new CommonMethods(driver);
 		commonMethods.verifyToasterMessage("Lockedout email sent to users successfully");
 		logStep("Login to CC portal");
 		LoginPage commandcenterloginpage = new LoginPage(driver, ccuser.getUrl());
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage = login(ccuser.getUrl(), commonMethods.getClientUserName(), ccuser.getPassword());
+		logStep("Verify an error message is displayed on the login page when the user tries to log in using the locked user credentials");
 		CCUtils.assertEquals(commandcenterloginpage.getLockOutErrMsg().trim(),
 				commandcenterloginpage.lockoutErrorMsg.trim());
 		logStep("Verify user able to set new password using password reset link found in the email");

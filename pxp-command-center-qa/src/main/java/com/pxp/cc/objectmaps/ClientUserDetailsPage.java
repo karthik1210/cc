@@ -59,6 +59,9 @@ public class ClientUserDetailsPage extends CCMainPage {
 	
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
 	private WebElement buttonLockUser;
+	
+	@FindBy(id = "detailSaveBtn")
+	private WebElement buttonUnlockUser;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -194,9 +197,14 @@ public class ClientUserDetailsPage extends CCMainPage {
 	
 	public LockUserConfirmationPage clickOnLockUserButton() {
 		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
-		log("Click on lock user button");
 		javascriptClick(buttonLockUser);
 		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
+	}
+	
+	public void clickOnUnlockButton() {
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
+		javascriptClick(buttonUnlockUser);
+		log("Clicked on unlock user button on the client user details page");
 	}
 
 }

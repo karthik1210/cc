@@ -13,6 +13,15 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
 
+	@FindBy(xpath = "//span[contains(text(),'Success! User status has been successfully locked')]")
+	private WebElement toasterMessageForLockUser;
+
+	@FindBy(xpath = "//span[contains(text(),'Success! User status has been successfully activated')]")
+	private WebElement toasterMessageForUnlockUser;
+
+	@FindBy(id = "loginUsernameInput")
+	private WebElement loginUserName;
+
 	@FindBy(id = "snackCloseBtn")
 	private WebElement buttonCloseToaster;
 
@@ -120,6 +129,24 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		Log4jUtil.log("Verifying success toaster message.");
 		if (toasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void verifyLockUserToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessageForLockUser.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void verifyUnlockUserToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessageForUnlockUser.isDisplayed() == true)
 			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
 		else
 			Log4jUtil.log("Success toaster is not displayed");
@@ -389,5 +416,10 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(radioButtonInactive, driver);
 		javascriptClick(radioButtonInactive);
 		log("Clicked on inactive radiobutton in popup");
+	}
+
+	public String getClientUserName() {
+		CCUtils.verifyAndWaitForElement(loginUserName, driver);
+		return loginUserName.getAttribute("value").trim();
 	}
 }
