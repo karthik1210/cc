@@ -26,12 +26,12 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 	public ClientUsersPage clientUsersPage;
 	public SearchOptionsPage searchOptionsPage;
 	public ClientUserDetailsPage clientUserDetailsPage;
-	public LockUserConfirmationPage lockUserConfirmationPage;
 	public List<String> userStatusList = null;
 	public CommonMethods commonMethods;
 	SecureRandom random = new SecureRandom();
 	String autogeneratePassword = PasswordResetPage.genPassword(random);
 	public PasswordResetPage resetPage;
+	public LockUserConfirmationPage lockUserConfirmationPage;
 
 
 	@BeforeMethod()
@@ -121,8 +121,8 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifyLockUserButtonIsNotDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock user confirmation popup")
-	public void testClientUserLockConfirmationPopup() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock user button popup")
+	public void testClientUserLockButtonPopup() throws Exception {
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
 		userStatusList = new ArrayList<String>();
@@ -135,11 +135,8 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
-		String userName = clientUserDetailsPage.getUserName();
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		lockUserConfirmationPage = clientUserDetailsPage.clickOnLockUserButton();
-		logStep("Verify lock user confirmation popup");
-		lockUserConfirmationPage.verifyConfirmationTextForSingleUser(userName);
+	    clientUserDetailsPage.clickOnLockUserButton();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality for lock button popup")
@@ -157,7 +154,7 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		lockUserConfirmationPage = clientUserDetailsPage.clickOnLockUserButton();
+		clientUserDetailsPage.clickOnLockUserButton();
 		logStep("Verify after clicking on cancel button, user redirected to client user details page");
 		lockUserConfirmationPage.clickOnCancelButton();
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
@@ -182,13 +179,9 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
-		String userName = clientUserDetailsPage.getUserName();
+		logStep("Verify lock button popup");
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		lockUserConfirmationPage = clientUserDetailsPage.clickOnLockUserButton();
-		logStep("Verify lock user confirmation popup");
-		lockUserConfirmationPage.verifyConfirmationTextForSingleUser(userName);
-		lockUserConfirmationPage.clickOnYesSendButton();
-		logStep("verify success toaster message");
+		clientUserDetailsPage.clickOnLockUserButton();
 		commonMethods = new CommonMethods(driver);
 		commonMethods.verifyToasterMessage("Lockedout email sent to users successfully");
 		logStep("Login to CC portal");
