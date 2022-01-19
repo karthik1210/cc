@@ -187,11 +187,11 @@ public class ClientUserDetailsPage extends CCMainPage {
 		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionsPage.class);
 	}
 
-	public ManagePopupPage clickOnManageButton() {
+	public ManageAssociatedEntitiesPage clickOnManageButton() {
 		CCUtils.verifyAndWaitForElement(buttonManage, driver);
 		buttonManage.click();
 		log("Clicked on Manage button on the client user details page");
-		return PageFactory.initElements(driver, ManagePopupPage.class);
+		return PageFactory.initElements(driver, ManageAssociatedEntitiesPage.class);
 	}
 
 	public List<String> listOfAssociatedEntities() {

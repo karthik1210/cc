@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.pxp.cc.util.CCUtils;
 
-public class ManagePopupPage extends CCMainPage {
+public class ManageAssociatedEntitiesPage extends CCMainPage {
 
 	@FindBy(id = "addNewTitle")
 	private WebElement headerManageAssociatedEntities;
@@ -23,7 +23,7 @@ public class ManagePopupPage extends CCMainPage {
 	private WebElement textBoxSearch;
 
 	@FindBy(id = "cancel-text")
-	private WebElement crossIcon;
+	private WebElement buttonCloseWindow;
 
 	@FindBy(id = "addEntityCancelBtn")
 	private WebElement buttonCancel;
@@ -67,7 +67,7 @@ public class ManagePopupPage extends CCMainPage {
 	@FindBy(xpath = "//td[@role='gridcell']")
 	private List<WebElement> tableColumnData;
 
-	public ManagePopupPage(WebDriver driver) {
+	public ManageAssociatedEntitiesPage(WebDriver driver) {
 		super(driver);
 	}
 
@@ -79,6 +79,7 @@ public class ManagePopupPage extends CCMainPage {
 
 	public void verifySearchTextbox() {
 		CCUtils.verifyAndWaitForElement(textBoxSearch, driver);
+		CCUtils.assertTrue(textBoxSearch.isDisplayed(),"Search textbox is not displayed on manage associated entities page");
 		log("verified the presence of search textbox.");
 		log("Verifying Search placeholder is displayed in search textbox");
 		CCUtils.assertEquals(textBoxSearch.getAttribute("placeholder").trim(), "Search");
@@ -93,8 +94,8 @@ public class ManagePopupPage extends CCMainPage {
 	}
 
 	public void verifyCrossButton() {
-		CCUtils.verifyAndWaitForElement(crossIcon, driver);
-		CCUtils.assertTrue((crossIcon.isDisplayed() && crossIcon.isEnabled()),
+		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
+		CCUtils.assertTrue((buttonCloseWindow.isDisplayed() && buttonCloseWindow.isEnabled()),
 				"Verifying cross icon button is displayed and enabled");
 	}
 
@@ -163,8 +164,8 @@ public class ManagePopupPage extends CCMainPage {
 	}
 
 	public ClientUserDetailsPage clickOnCloseWindow() {
-		CCUtils.verifyAndWaitForElement(crossIcon, driver);
-		crossIcon.click();
+		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
+		buttonCloseWindow.click();
 		log("Cross icon button Clicked");
 		return PageFactory.initElements(driver, ClientUserDetailsPage.class);
 	}
