@@ -186,6 +186,20 @@ public class SearchOptionsPage extends CCMainPage {
 		verifySearchButtonIsDisplayed();
 	}
 
+	public void verifySearchVarResellerUserPopup() throws InterruptedException, AWTException {
+		log("Verifying Search Options pop up on the VAR/Reseller users page");
+		verifyFirstNameLabelTextAndTextboxDefaultValue();
+		verifyLastNameLabelTextAndTextboxDefaultValue();
+		verifyVarResellerLabelTextAndTextboxDefaultValue();
+		verifyUsernameLabelTextAndTextboxDefaultValue();
+		verifyEmailLabelTextAndTextboxDefaultValue();
+		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		verifyUserStatusLabelTextAndCheckboxes();
+		verifyEnrollmentStatusLabelTextAndCheckboxes();
+		verifyClearButtonIsDisplayed();
+		verifySearchButtonIsDisplayed();
+	}
+
 	public void verifyFirstNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelFirstName, driver);
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
@@ -394,7 +408,6 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void clickOnSearchButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		scrollAndWait(0, 500, 200);
 		scrollAndWait(0, 500, 8000);
 		javascriptClick(buttonSearch);
 	}
