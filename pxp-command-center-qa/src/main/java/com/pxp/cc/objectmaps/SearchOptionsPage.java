@@ -27,7 +27,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Client')]")
 	private WebElement labelClient;
-	
+
 	@FindBy(xpath = "//div[contains(text(),'Email')]")
 	private WebElement labelEmail;
 
@@ -48,7 +48,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//input[@formcontrolname='clientName']")
 	private WebElement dropdownSearchClient;
-	
+
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
@@ -185,9 +185,9 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyClearButtonIsDisplayed();
 		verifySearchButtonIsDisplayed();
 	}
-	
-	public void verifySearchVarResellerUserPopup()  throws InterruptedException, AWTException {
-		log("Verifying search client user pop-up");
+
+	public void verifySearchVarResellerUserPopup() throws InterruptedException, AWTException {
+		log("Verifying Search Options pop up on the VAR/Reseller users page");
 		verifyFirstNameLabelTextAndTextboxDefaultValue();
 		verifyLastNameLabelTextAndTextboxDefaultValue();
 		verifyVarResellerLabelTextAndTextboxDefaultValue();
@@ -244,8 +244,8 @@ public class SearchOptionsPage extends CCMainPage {
 			log("Client label and Search/Select dropdown are not displayed on search options popup");
 		}
 	}
-	
-    public void verifyUsernameLabelTextAndTextboxDefaultValue() {
+
+	public void verifyUsernameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelUsername, driver);
 		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
 		if (labelUsername.isDisplayed() == true && textboxUsername.isDisplayed() == true) {
@@ -678,8 +678,8 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyClearButtonIsDisplayed();
 		verifySearchButtonIsDisplayed();
 	}
-	
-   public void verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions() throws InterruptedException {
+
+	public void verifyEnrollmentStatusLabelTextAndCheckboxesAtEnrollmentSearchOptions() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(labelEnrollmentStatus, driver);
 		if (labelEnrollmentStatus.isDisplayed()) {
 			log("Verifying enrollment status label text");
@@ -872,4 +872,13 @@ public class SearchOptionsPage extends CCMainPage {
 				"Text is present in var/reseller textbox field");
 	}
 
+	public void verifyStatusCheckboxesAreNotByDefaultSelectedOnVarResellerSearchOptionsPage()
+			throws InterruptedException {
+		log("Verifying enrollment status checkboxes are not selected");
+		for (int i = 0; i < enrollmentStatusCheckboxList.size(); i++) {
+			CCUtils.assertTrue(!enrollmentStatusCheckboxList.get(i).isSelected(),
+					"Enrollment checkboxes are already selected");
+		}
+
+	}
 }

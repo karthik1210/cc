@@ -82,17 +82,22 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button on search option popup")
 	public void testClearButtonFunctionalityOnSearchPage() throws Exception {
-
-		searchOptionsPage.verifyClearButtonFunctionalityWhenDataIsAvailableForAllFields(
-				testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username").concat(CCUtils.generateAlphaNumericString(2)),
-				testData.getProperty("valid.user.mobile.number"));
+		logStep("Search user using first name, last name, user name, email, mobile number and enrollment status");
+		List<String> enrollmentStatusList = new ArrayList<String>();
+		enrollmentStatusList.add(testData.getProperty("enrollment.status.Confirmed"));
+		enrollmentStatusList.add(testData.getProperty("enrollment.status.pending"));
+		searchOptionsPage.searchVarResellerUser(testData.getProperty("valid.user.first.name"),
+				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.var.reseller.name"),
+				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
+				testData.getProperty("valid.user.mobile.number"), enrollmentStatusList);
+		logStep("Verify clear button is displayed on search options popup");
 		searchOptionsPage.verifyClearButtonIsDisplayed();
+		logStep("Click on clear button");
 		searchOptionsPage.clickOnClearButton();
-		logStep("Verify all search options are cleared after clicking the Clear button");
+		logStep("Verify after clicking on clear button, all text-box and checkbox got empty");
 		searchOptionsPage.verifyTextboxIsEmptyWhenClickOnClearButton();
+		searchOptionsPage.verifyVarResellerTextboxIsEmptyWhenClickOnClearButton();
+		searchOptionsPage.verifyStatusCheckboxesAreNotByDefaultSelectedOnVarResellerSearchOptionsPage();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
