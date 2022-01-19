@@ -9,8 +9,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.pxp.cc.util.CCUtils;
 
@@ -79,8 +77,9 @@ public class ManageAssociatedEntitiesPage extends CCMainPage {
 
 	public void verifySearchTextbox() {
 		CCUtils.verifyAndWaitForElement(textBoxSearch, driver);
-		CCUtils.assertTrue(textBoxSearch.isDisplayed(),"Search textbox is not displayed on manage associated entities page");
 		log("verified the presence of search textbox.");
+		CCUtils.assertTrue(textBoxSearch.isDisplayed(),
+				"Search textbox is not displayed on manage associated entities page");
 		log("Verifying Search placeholder is displayed in search textbox");
 		CCUtils.assertEquals(textBoxSearch.getAttribute("placeholder").trim(), "Search");
 		log("Box text for search textbox is: " + textBoxSearch.getAttribute("placeholder").trim());
@@ -90,21 +89,21 @@ public class ManageAssociatedEntitiesPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		CCUtils.assertEquals(buttonCancel.getText().trim(), "Cancel");
 		CCUtils.assertTrue((buttonCancel.isDisplayed() && buttonCancel.isEnabled()),
-				"Verifying cancel button is displayed and enabled");
+				"Cancel button is not displayed on the manage associated entities page and is disabled");
 	}
 
 	public void verifyCrossButton() {
 		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
 		CCUtils.assertTrue((buttonCloseWindow.isDisplayed() && buttonCloseWindow.isEnabled()),
-				"Verifying cross icon button is displayed and enabled");
+				"Cross icon is not displayed on the manage associated entities page and its disabled");
 	}
 
 	public void verifySaveApplyButton() {
 		CCUtils.verifyAndWaitForElement(buttonSaveApply, driver);
 		CCUtils.assertEquals(buttonSaveApply.getText().trim(), "Save & Apply");
-		CCUtils.assertTrue(buttonSaveApply.isDisplayed(), "Verifying cross icon button is displayed");
-		WebDriverWait wait = new WebDriverWait(driver, 5);
-		wait.until(ExpectedConditions.attributeToBe(buttonSaveApply, "ng-reflect-ng-class", "disabled"));
+		CCUtils.assertTrue(buttonSaveApply.isDisplayed(),
+				"Save & Apply button is not displayed on manage associated entities page");
+		CCUtils.assertEquals(buttonSaveApply.getAttribute("ng-reflect-ng-class"), "disabled");
 	}
 
 	public void verifySystemFilter() {
@@ -122,7 +121,7 @@ public class ManageAssociatedEntitiesPage extends CCMainPage {
 		CCUtils.assertEquals(filterPractice.getText().trim(), "arrow_upward");
 	}
 
-	public void fetchListOfNonSelectedEntities(String addNewEntity) {
+	public void addNonSelectedEntities(String addNewEntity) {
 		List<String> listOfEntities = new ArrayList<String>();
 		for (WebElement element : listOfNonSelectedEntities) {
 			CCUtils.verifyAndWaitForElement(element, driver);
@@ -134,7 +133,7 @@ public class ManageAssociatedEntitiesPage extends CCMainPage {
 		}
 	}
 
-	public void fetchListOfSelectedEntities(String removeEntity) {
+	public void removeSelectedEntities(String removeEntity) {
 		List<String> listOfEntities = new ArrayList<String>();
 		for (WebElement element : listOfSelectedAssociateEntities) {
 			listOfEntities.add(element.getText().trim());
@@ -201,7 +200,7 @@ public class ManageAssociatedEntitiesPage extends CCMainPage {
 		log("Select All CheckBox clicked");
 	}
 
-	public void verifySelectAllCheckBoxInManagePopup(String value) {
+	public void verifySelectAllCheckBoxStateInManagePopup(String value) {
 		CCUtils.verifyAndWaitForElement(checkBoxSelectAllEntities, driver);
 		CCUtils.assertEquals(checkBoxSelectAllEntities.getAttribute("aria-checked"), value);
 	}

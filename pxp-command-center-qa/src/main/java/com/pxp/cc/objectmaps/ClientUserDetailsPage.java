@@ -218,7 +218,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 		listOfAssociatedEntities.addAll(listOfSystemAssociatedEntities());
 		for (int i = 0; i < listOfAssociatedEntities.size(); i++) {
 			CCUtils.assertTrue(managePopupSelectedEntities.contains(listOfAssociatedEntities.get(i)),
-					"Verfying fetched entities from Manage popup should be same as associated entities container");
+					"Fetched entities from manage popup are different than associated entities container");
 		}
 	}
 
