@@ -2,12 +2,14 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class ClientUserDetailsPage extends CCMainPage {
@@ -57,6 +59,12 @@ public class ClientUserDetailsPage extends CCMainPage {
 	@FindBy(id = "DeleteUserRole")
 	private WebElement buttonDeleteUserRole;
 
+	@FindBy(xpath = "//div[@class='editbutton']")
+	private WebElement buttonManage;
+
+	@FindBy(xpath = "//div[@class='header px-4 mb-2']")
+	private List<WebElement> systemHeaderAssociatedEntities;
+
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
 	}
@@ -74,7 +82,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifySelectedUserStatusIsSameOnClientUserDetailsPage(String userStatus) {
 		CCUtils.verifyAndWaitForElement(labelUserStatusValue, driver);
-		if (labelUserStatusValue.isDisplayed()) {
+		if (labelUserStatusValue.isDisplayed() == true) {
 			CCUtils.assertEquals(labelUserStatusValue.getText().trim(), userStatus);
 		} else {
 			log("User status value is not present on client user details page");
@@ -100,7 +108,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyClientUserDetailsPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed()) {
+		if (labelPageTitle.isDisplayed() == true) {
 			String title = labelPageTitle.getText().trim().replace("arrow_back", "");
 			CCUtils.assertEquals(title.trim(), "Client User Details");
 		} else {
@@ -131,7 +139,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyCancelButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		if (buttonCancel.isDisplayed()) {
+		if (buttonCancel.isDisplayed() == true) {
 			CCUtils.assertEquals(buttonCancel.getText().trim(), "CANCEL");
 		} else {
 			logStep("Cancel button is not present on client user details page");
@@ -140,7 +148,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifySaveButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
-		if (buttonSave.isDisplayed()) {
+		if (buttonSave.isDisplayed() == true) {
 			CCUtils.assertEquals(buttonSave.getText().trim(), "SAVE");
 		} else {
 			logStep("Save button is not present on client user details page");
@@ -177,6 +185,41 @@ public class ClientUserDetailsPage extends CCMainPage {
 		javascriptClick(buttonDeleteUserRole);
 		log("Clicked on delete user role button on the client user details page");
 		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionsPage.class);
+	}
+
+	public ManageAssociatedEntitiesPage clickOnManageButton() {
+		CCUtils.verifyAndWaitForElement(buttonManage, driver);
+		buttonManage.click();
+		log("Clicked on Manage button on the client user details page");
+		return PageFactory.initElements(driver, ManageAssociatedEntitiesPage.class);
+	}
+
+	public List<String> listOfAssociatedEntities() {
+		List<String> list = new ArrayList<String>();
+		for (WebElement element : listOfAssociatedEntities) {
+			CCUtils.verifyAndWaitForElement(element, driver);
+			list.add(element.getText().trim());
+		}
+		return list;
+	}
+
+	public List<String> listOfSystemAssociatedEntities() {
+		List<String> list = new ArrayList<String>();
+		for (WebElement element : systemHeaderAssociatedEntities) {
+			CCUtils.verifyAndWaitForElement(element, driver);
+			list.add(element.getText().trim());
+		}
+		return list;
+	}
+
+	public void verifySelectedEntitiesInManagePopupSameAsAssociatedEntities(String managePopupSelectedEntities) {
+		List<String> listOfAssociatedEntities = new ArrayList<String>();
+		listOfAssociatedEntities.addAll(listOfAssociatedEntities());
+		listOfAssociatedEntities.addAll(listOfSystemAssociatedEntities());
+		for (int i = 0; i < listOfAssociatedEntities.size(); i++) {
+			CCUtils.assertTrue(managePopupSelectedEntities.contains(listOfAssociatedEntities.get(i)),
+					"Fetched entities from manage popup are different than associated entities container");
+		}
 	}
 
 }
