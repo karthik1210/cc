@@ -113,7 +113,8 @@ public class VarResellerUsersPage extends CCMainPage {
 		CCUtils.assertTrue(labelSelectedSearchOptions.isEmpty(), "Search labels are displayed on screen");
 	}
 
-	public void verifySelectedSearchOptionsWithSingleCheckboxOfStatus(List<String> enrollmentStatus, List<String> userStatus) {
+	public void verifySelectedSearchOptionsWithSingleCheckboxOfStatus(List<String> enrollmentStatus,
+			List<String> userStatus) {
 
 		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
 			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");
@@ -171,4 +172,4 @@ public class VarResellerUsersPage extends CCMainPage {
 		}
 	}
 
-}	
+}
