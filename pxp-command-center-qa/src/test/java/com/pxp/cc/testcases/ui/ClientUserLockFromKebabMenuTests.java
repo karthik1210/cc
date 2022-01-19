@@ -120,8 +120,8 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifyLockUserButtonIsNotDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock user button popup")
-	public void testClientUserLockButtonPopup() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock user button")
+	public void testClientUserLockButton() throws Exception {
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
 		userStatusList = new ArrayList<String>();
@@ -137,9 +137,11 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();
+		commonMethods.verifyToasterMessage("Success! User status has been successfully locked");
+		commonMethods.closeToasterMessage();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user unlock functionality")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify unlock user functionality")
 	public void testClientUserUnlockFunctionality() throws Exception {
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
@@ -157,15 +159,17 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();
 		logStep("Verify success toaster message");
-		commonMethods.verifyLockUserToasterMessage("Success! User status has been successfully locked");
+		commonMethods.verifyToasterMessage("Success! User status has been successfully locked");
 		commonMethods.closeToasterMessage();
+		logStep("Verify Unlock button is displayed and click on unlock button");
+		clientUserDetailsPage.verifyUnlockButtonIsDispalyed();
 		clientUserDetailsPage.clickOnUnlockButton();
 		logStep("Verify success toaster message");
-		commonMethods.verifyUnlockUserToasterMessage("Success! User status has been successfully activated");
+		commonMethods.verifyToasterMessage("Success! User status has been successfully activated");
 		commonMethods.closeToasterMessage();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locked out user functionality")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to set new password using password reset link found in the email for locked out user")
 	public void testClientUserLockedOutFunctionality() throws Exception {
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
@@ -179,7 +183,7 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifyClientUserDetailsPageTitle();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
-		logStep("Verify lock button popup");
+		logStep("Click on kebab menu button");
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		log("Click on the lock user button in the kebab menu");
 		clientUserDetailsPage.clickOnLockUserButton();

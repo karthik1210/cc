@@ -13,12 +13,6 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
 
-	@FindBy(xpath = "//span[contains(text(),'Success! User status has been successfully locked')]")
-	private WebElement toasterMessageForLockUser;
-
-	@FindBy(xpath = "//span[contains(text(),'Success! User status has been successfully activated')]")
-	private WebElement toasterMessageForUnlockUser;
-
 	@FindBy(id = "loginUsernameInput")
 	private WebElement loginUserName;
 
@@ -133,25 +127,7 @@ public class CommonMethods extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-
-	public void verifyLockUserToasterMessage(String expectedToasterMessage) {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		Log4jUtil.log("Verifying success toaster message.");
-		if (toasterMessageForLockUser.isDisplayed() == true)
-			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
-		else
-			Log4jUtil.log("Success toaster is not displayed");
-	}
-
-	public void verifyUnlockUserToasterMessage(String expectedToasterMessage) {
-		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
-		Log4jUtil.log("Verifying success toaster message.");
-		if (toasterMessageForUnlockUser.isDisplayed() == true)
-			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
-		else
-			Log4jUtil.log("Success toaster is not displayed");
-	}
-
+	
 	public String getToasterMessage() {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		return toasterMessage.getText().trim();

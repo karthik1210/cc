@@ -201,6 +201,11 @@ public class ClientUserDetailsPage extends CCMainPage {
 		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
 	}
 	
+	public void verifyUnlockButtonIsDispalyed() {
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver); 
+		CCUtils.assertTrue(buttonUnlockUser.isDisplayed(), "Unlock button is not displayed on client user details page");
+	}
+	
 	public void clickOnUnlockButton() {
 		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
 		javascriptClick(buttonUnlockUser);
