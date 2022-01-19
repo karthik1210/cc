@@ -13,6 +13,9 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
 
+	@FindBy(id = "loginUsernameInput")
+	private WebElement loginUserName;
+
 	@FindBy(id = "snackCloseBtn")
 	private WebElement buttonCloseToaster;
 
@@ -124,7 +127,7 @@ public class CommonMethods extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-
+	
 	public String getToasterMessage() {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		return toasterMessage.getText().trim();
@@ -389,5 +392,10 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(radioButtonInactive, driver);
 		javascriptClick(radioButtonInactive);
 		log("Clicked on inactive radiobutton in popup");
+	}
+
+	public String getClientUserName() {
+		CCUtils.verifyAndWaitForElement(loginUserName, driver);
+		return loginUserName.getAttribute("value").trim();
 	}
 }

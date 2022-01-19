@@ -58,6 +58,12 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "DeleteUserRole")
 	private WebElement buttonDeleteUserRole;
+	
+	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
+	private WebElement buttonLockUser;
+	
+	@FindBy(id = "detailSaveBtn")
+	private WebElement buttonUnlockUser;
 
 	@FindBy(xpath = "//div[@class='editbutton']")
 	private WebElement buttonManage;
@@ -185,6 +191,33 @@ public class ClientUserDetailsPage extends CCMainPage {
 		javascriptClick(buttonDeleteUserRole);
 		log("Clicked on delete user role button on the client user details page");
 		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionsPage.class);
+	}
+	
+	public void verifyLockUserButtonIsDisplayed() {
+		log("Verifying lock user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonLockUser.isDisplayed(), true);
+	}
+	
+	public void verifyLockUserButtonIsNotDisplayed() {
+		log("Verifying lock user button is not displayed in kebab menu");
+		CCUtils.assertEquals(buttonLockUser.isDisplayed(), false);
+	}
+	
+	public LockUserConfirmationPage clickOnLockUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
+		javascriptClick(buttonLockUser);
+		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
+	}
+	
+	public void verifyUnlockButtonIsDispalyed() {
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver); 
+		CCUtils.assertTrue(buttonUnlockUser.isDisplayed(), "Unlock button is not displayed on client user details page");
+	}
+	
+	public void clickOnUnlockButton() {
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
+		javascriptClick(buttonUnlockUser);
+		log("Clicked on unlock user button on the client user details page");
 	}
 
 	public ManageAssociatedEntitiesPage clickOnManageButton() {
