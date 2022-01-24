@@ -193,7 +193,7 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		commonMethods.verifyToasterMessage("Lockedout email sent to users successfully");
 		logStep("Login to CC portal");
 		LoginPage commandcenterloginpage = new LoginPage(driver, ccuser.getUrl());
-		clientDirectoryPage = login(ccuser.getUrl(), commonMethods.getClientUserName(), ccuser.getPassword());
+		clientDirectoryPage = login(ccuser.getUrl(), commonMethods.getUserName(), ccuser.getPassword());
 		logStep("Verify an error message is displayed on the login page when the user tries to log in using the locked user credentials");
 		CCUtils.assertEquals(commandcenterloginpage.getLockOutErrMsg().trim(),
 				commandcenterloginpage.lockoutErrorMsg.trim());
