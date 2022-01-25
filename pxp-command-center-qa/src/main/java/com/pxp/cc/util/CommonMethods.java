@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -115,6 +115,21 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(xpath = "//input[@id='createUserInactiveRadio-input']")
 	private WebElement radioButtonInactive;
 
+	@FindBy(id = "FirstNameInput")
+	private WebElement labelFirstNameValue;
+
+	@FindBy(id = "LastNameInput")
+	private WebElement labelLastNameValue;
+
+	@FindBy(id = "EmailInput")
+	private WebElement labelEmailValue;
+
+	@FindBy(id = "MobileNumberInput")
+	private WebElement labelMobileNumberValue;
+
+	@FindBy(id = "usernameValidationMsg")
+	private WebElement iconUsernameValidationError;
+
 	public CommonMethods(WebDriver driver) {
 		super(driver);
 	}
@@ -127,7 +142,7 @@ public class CommonMethods extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-	
+
 	public String getToasterMessage() {
 		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
 		return toasterMessage.getText().trim();
@@ -394,8 +409,35 @@ public class CommonMethods extends CCMainPage {
 		log("Clicked on inactive radiobutton in popup");
 	}
 
-	public String getClientUserName() {
+	public String getUserName() {
 		CCUtils.verifyAndWaitForElement(loginUserName, driver);
 		return loginUserName.getAttribute("value").trim();
+	}
+
+	public String getFirstName() {
+		CCUtils.verifyAndWaitForElement(labelFirstNameValue, driver);
+		return labelFirstNameValue.getAttribute("value").trim();
+	}
+
+	public String getLastName() {
+		CCUtils.verifyAndWaitForElement(labelLastNameValue, driver);
+		return labelLastNameValue.getAttribute("value").trim();
+	}
+
+	public String getEmailAddress() {
+		CCUtils.verifyAndWaitForElement(labelEmailValue, driver);
+		return labelEmailValue.getAttribute("value").trim();
+	}
+
+	public String getMobileNumber() {
+		CCUtils.verifyAndWaitForElement(labelMobileNumberValue, driver);
+		return labelMobileNumberValue.getAttribute("value").trim();
+	}
+
+	public String getTooltipTextForUsernameField() {
+		CCUtils.verifyAndWaitForElement(iconUsernameValidationError, driver);
+		log("Hovering the mouse over the username field error icon");
+		CCUtils.mouseHoverOverTheElement(driver, iconUsernameValidationError);
+		return iconUsernameValidationError.getAttribute("title").trim();
 	}
 }

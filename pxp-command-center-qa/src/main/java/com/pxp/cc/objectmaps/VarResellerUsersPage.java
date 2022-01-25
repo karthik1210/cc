@@ -52,6 +52,9 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
 	private WebElement buttonClearAll;
 
+	@FindBy(id = "firstName")
+	private List<WebElement> selectUser;
+
 	public VarResellerUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -151,6 +154,13 @@ public class VarResellerUsersPage extends CCMainPage {
 				CCUtils.assertTrue(userStatus.contains(fieldValue), "User status is not present");
 			}
 		}
+	}
+
+	public VarResellerUserDetailsPage selectUser() {
+		CCUtils.verifyAndWaitForElement(selectUser.get(0), driver);
+		javascriptClick(selectUser.get(0));
+		log("Clicked on first VAR/Reseller user");
+		return PageFactory.initElements(driver, VarResellerUserDetailsPage.class);
 	}
 
 }
