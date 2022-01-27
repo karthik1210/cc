@@ -5,6 +5,8 @@ package com.pxp.cc.objectmaps;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class VarResellerUserDetailsPage extends CCMainPage {
@@ -23,6 +25,21 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "saveDetail")
 	private WebElement buttonSave;
+	
+    @FindBy(id = "kebabMenu")
+	private WebElement buttonKebabMenu;
+
+	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
+	private WebElement buttonLockUser;
+
+	@FindBy(id = "detailSaveBtn")
+	private WebElement buttonUnlockUser;
+
+	@FindBy(id = "userStatus")
+	private WebElement labelSelectedUserStatus;
+
+	@FindBy(xpath = "//mat-card-title[@id='userName']")
+	private WebElement labelUsernameValue;
 
 	public VarResellerUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -66,5 +83,52 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 		buttonSave.click();
 		logStep("Clicked on save button");
 	}
+	public String getUserName() {
+		CCUtils.verifyAndWaitForElement(labelUsernameValue, driver);
+		return labelUsernameValue.getText().trim();
+	}
 
+	public void clickOnKebabMenuButton() {
+		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
+		log("Click on kebab menu icon on VarReseller user details page");
+		javascriptClick(buttonKebabMenu);
+	}
+
+	public void verifyLockUserButtonIsDisplayed() {
+		log("Verifying lock user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonLockUser.isDisplayed(), true);
+	}
+
+	public void verifyLockUserButtonIsNotDisplayed() {
+		log("Verifying lock user button is not displayed in kebab menu");
+		CCUtils.assertEquals(buttonLockUser.isDisplayed(), false);
+	}
+
+	public LockUserConfirmationPage clickOnLockUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
+		javascriptClick(buttonLockUser);
+		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
+	}
+
+	public void verifyUnlockButtonIsDispalyed() {
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
+		CCUtils.assertTrue(buttonUnlockUser.isDisplayed(),
+				"Unlock button is not displayed on VarReseller user details page");
+	}
+
+	public void clickOnUnlockButton() {
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
+		javascriptClick(buttonUnlockUser);
+		log("Clicked on unlock user button on the VarReseller user details page");
+	}
+
+	public void verifySelectedUserStatusIsSameOnVarResellerUserDetailsPage(String userStatus) {
+		CCUtils.verifyAndWaitForElement(labelSelectedUserStatus, driver);
+		if (labelSelectedUserStatus.isDisplayed() == true) {
+			CCUtils.assertEquals(labelSelectedUserStatus.getText().trim(), userStatus);
+		} else {
+			log("User status value is not present on  user details page");
+		}
+
+	}
 }
