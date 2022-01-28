@@ -25,8 +25,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Select command center users icon in left navigation panel");
-		clientDirectoryPage.clickOnCommandCenterUsersIcon();
-		commandCenterUsersPage = new CommandCenterUsersPage(driver);
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Select VAR/Reseller users tab in command center users page");
 		varResellerUsersPage = commandCenterUsersPage.clickOnVarResellerUsersTab();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
@@ -35,6 +34,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		varResellerUserDetailsPage.verifyVarResellerUserDetailsPageTitle();
 		logStep("Click on edit button");
 		varResellerUserDetailsPage.clickEditInVarResellerUser();
+		commonMethods = new CommonMethods(driver);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & after clicking on edit button fields available for editing")
@@ -42,7 +42,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		logStep("Verify after clicking on edit button, save and cancel button is displayed on VAR/Reseller user details page");
 		varResellerUserDetailsPage.verifyCancelButtonIsDisplayed();
 		varResellerUserDetailsPage.verifySaveButtonIsDisplayed();
-		commonMethods = new CommonMethods(driver);
 		logStep("Verify first name, last name, email, username and mobile number fields are editable");
 		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(18));
 		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(18));
@@ -55,7 +54,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
 	public void testEditVarResellerUser() throws Exception {
-		commonMethods = new CommonMethods(driver);
 		logStep("Modifying editable fields detail");
 		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
 		commonMethods.enterFirstName(firstNameValueInEditMode);
@@ -79,7 +77,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in edit mode")
 	public void testRequiredErrorMessageInEditMode() throws Exception {
-		commonMethods = new CommonMethods(driver);
 		logStep("Modifying editable fields detail");
 		commonMethods.clearFirstNameField();
 		CCUtils.assertEquals(commonMethods.getRequiredErrorForFirstNameField(), "First name is required");
@@ -93,7 +90,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum characters error message for editable fields")
 	public void testMaximumCharacterErrorInEditMode() throws Exception {
-		commonMethods = new CommonMethods(driver);
 		logStep("Enter more than 100 characters in first name field and verify maximum characters error message");
 		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(101));
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForFirstNameField(), "Maximum characters reached");
@@ -127,7 +123,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in editable fields and verify valid error message for editable fields")
 	public void testEnterValidDetailErrorInEditMode(String[] getTestData) throws Exception {
-		commonMethods = new CommonMethods(driver);
 		logStep("Enter invalid data in first name, last name, email,username and mobile number fields and verify error message");
 		commonMethods.enterFirstName(getTestData[0]);
 		CCUtils.assertEquals(commonMethods.getValidErrorForFirstNameField(), "Please enter valid first name");
@@ -143,7 +138,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
 	public void testUniqueErrorMssageInEditMode() throws Exception {
-		commonMethods = new CommonMethods(driver);
 		logStep("Enter existing value in username, email and mobile number fields and verify error message");
 		commonMethods.enterMobileNumber(testData.getProperty("client.user.existing.mobile.number"));
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
@@ -155,7 +149,6 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in username field and verify error and tooltip text for username field")
 	public void testTooltipForUsernameField() throws Exception {
-		commonMethods = new CommonMethods(driver);
 		logStep("Enter invalid username in username field");
 		commonMethods.enterUserName(testData.getProperty("invalid.username.one"));
 		CCUtils.assertEquals(commonMethods.getValidErrorForUsernameField(), "Please enter valid username");

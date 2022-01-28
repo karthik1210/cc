@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import com.pxp.cc.util.CCUtils;
 
 public class EditOrgNodePage extends CCMainPage {
@@ -72,6 +71,9 @@ public class EditOrgNodePage extends CCMainPage {
 
 	@FindBy(id = "orgSolutionError")
 	private WebElement errorMessageSolutionDisplayNameMaxLength;
+
+	@FindBy(id = "detailNameInput")
+	private WebElement textboxOrgName;
 
 	public void clickOnClientCarretIcon() {
 		CCUtils.verifyAndWaitForElement(clientCarretIcon, driver);
@@ -188,4 +190,65 @@ public class EditOrgNodePage extends CCMainPage {
 		return InactiveClient;
 	}
 
+	public String getOrgName() {
+		CCUtils.verifyAndWaitForElement(textboxOrgName, driver);
+		return textboxOrgName.getAttribute("value").trim();
+	}
+
+	public void enterOrgName(String orgName) {
+		CCUtils.verifyAndWaitForElement(textboxOrgName, driver);
+		textboxOrgName.sendKeys(orgName);
+		log("Entered text in org name field is :" + orgName);
+	}
+
+	public void clearOrgNameField() {
+		CCUtils.clearTextboxField(textboxOrgName);
+		log("deleted input in org name field");
+	}
+
+	public void clearSapIdField() {
+		CCUtils.clearTextboxField(textBoxOrgEditSapId);
+		log("deleted input in Sap id field");
+	}
+
+	public void enterOrgSapId(String OrgSapId) {
+		CCUtils.verifyAndWaitForElement(textBoxOrgEditSapId, driver);
+		textBoxOrgEditSapId.sendKeys(OrgSapId);
+		log("Entered text in org sap id field is :" + OrgSapId);
+	}
+
+	public void clearSolutionDisplayNameField() {
+		CCUtils.clearTextboxField(textBoxSolutionDisplayName);
+		log("deleted input in solution display name field");
+	}
+
+	public void enterOrgSolutionDisplayName(String OrgSolutionDisplayName) {
+		CCUtils.verifyAndWaitForElement(textBoxSolutionDisplayName, driver);
+		textBoxSolutionDisplayName.sendKeys(OrgSolutionDisplayName);
+		log("Entered text in org solution display name field is :" + OrgSolutionDisplayName);
+	}
+
+	public void selectTimezone(String timezone) {
+		CCUtils.verifyAndWaitForElement(dropDownTimezone, driver);
+		dropDownTimezone.click();
+		textBoxTimezone.sendKeys(timezone);
+		CCUtils.pressEnterKey();
+	}
+
+	public void selectOrgNodeStatus(String existingStatusValue) {
+		if ((existingStatusValue.trim().contains("active")) == true)
+			clickInactiveRadioButtonOfOrgNode();
+		else if (existingStatusValue.equals("inactive") == true)
+			clickActiveRadioButtonOfOrgNode();
+	}
+
+	public String getOrgStatus() {
+		CCUtils.verifyAndWaitForElement(orgActiveRadioButton, driver);
+		CCUtils.verifyAndWaitForElement(orgInactiveRadioButton, driver);
+		if ((orgInactiveRadioButton.getAttribute("class").contains("mat-radio-checked") == true)) {
+			return "inactive";
+		} else {
+			return "active";
+		}
+	}
 }

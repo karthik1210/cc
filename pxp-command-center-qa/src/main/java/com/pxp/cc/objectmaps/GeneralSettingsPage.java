@@ -1,18 +1,16 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.openqa.selenium.Keys;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -100,7 +98,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	private WebElement clientTextBoxTimezone;
 
 	@FindBy(id = "detailInactiveRadio")
-	private WebElement ClientInactiveRadioButton;
+	private WebElement clientInactiveRadioButton;
 
 	@FindBy(id = "detailSaveBtn")
 	private WebElement clientSaveBtn;
@@ -181,6 +179,25 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@id='solutionStatus']")
 	private List<WebElement> solutionStatus;
+
+	@FindBy(xpath = "//mat-icon[text()=' menu_book ']")
+	private WebElement iconClientDirectory;
+
+	@FindBy(id = "orgEditBtn")
+	private WebElement editOrgButton;
+
+	@FindBy(xpath = "//span[@id='solutionAvailable']//preceding::span[@class='form']")
+	private List<WebElement> listActiveSolutions;
+
+	@FindBy(xpath = "//div[@aria-expanded='true']//input[@type='text']")
+	private WebElement textBoxTimezone;
+
+	@FindBy(xpath = "//mat-tree-node[@aria-level='1']")
+	private WebElement treeClientNode;
+
+	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+
+	List<String> activeSolutionName = new ArrayList<String>();
 
 	public GeneralSettingsPage(WebDriver driver) {
 		super(driver);
@@ -358,9 +375,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickInactiveRadioButtonOfClient() {
-		CCUtils.verifyAndWaitForElement(ClientInactiveRadioButton, driver);
+		CCUtils.verifyAndWaitForElement(radiobuttonInactive, driver);
+		radiobuttonInactive.click();
 		log("Clicked on Inactive radio button");
-		ClientInactiveRadioButton.click();
 	}
 
 	public void clickActiveRadioButtonOfClient() {
@@ -371,9 +388,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void clickSaveButtonClient() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(clientSaveBtn, driver);
-		log("Clicked on save button");
 		scrollAndWait(0, 500, 200);
 		clientSaveBtn.click();
+		log("Clicked on save button");
 	}
 
 	public String getClientDropdownHeader() {
@@ -691,14 +708,12 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clearClientNameField() {
-		textboxClientName.sendKeys(Keys.CONTROL, "a");
-		textboxClientName.sendKeys(Keys.BACK_SPACE);
+		CCUtils.clearTextboxField(textboxClientName);
 		log("deleted input in Client name field");
 	}
 
 	public void clearSapField() {
-		textboxSapId.sendKeys(Keys.CONTROL, "a");
-		textboxSapId.sendKeys(Keys.BACK_SPACE);
+		CCUtils.clearTextboxField(textboxSapId);
 		log("deleted input in Sap id field");
 	}
 
@@ -762,4 +777,80 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Inherit From button clicked");
 		return PageFactory.initElements(driver, ApplyInheritPracticeSettingsPage.class);
 	}
+
+	public void clickOnClientDirectoryIcon() {
+		CCUtils.verifyAndWaitForElement(iconClientDirectory, driver);
+		iconClientDirectory.click();
+		log("Clicked on client directory icon");
+	}
+
+	public String getNameInEditMode() {
+		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
+		return textboxClientName.getAttribute("value").trim();
+	}
+
+	public String getSapIdInEditMode() {
+		CCUtils.verifyAndWaitForElement(textBoxClientEditSapId, driver);
+		return textBoxClientEditSapId.getAttribute("value").trim();
+	}
+
+	public void clickOnEditButtonOfOrg() {
+		CCUtils.verifyAndWaitForElement(editOrgButton, driver);
+		log("Clicked on edit button");
+		editOrgButton.click();
+	}
+
+	public String getOrgSolutionDisplayName() {
+		CCUtils.verifyAndWaitForElement(labelOrgSolutionDisplayNameValue, driver);
+		return labelOrgSolutionDisplayNameValue.getText().trim();
+	}
+
+	public List<String> getListOfActiveSolutions() throws AWTException {
+		for (int i = 0; i < listActiveSolutions.size(); i++) {
+			CCUtils.scrollPageToEnd();
+			activeSolutionName.add(listActiveSolutions.get(i).getText().trim());
+		}
+		return activeSolutionName;
+	}
+
+	public void selectTimezone(String timezone) {
+		clickTimeZoneDropdown();
+		textBoxTimezone.sendKeys(timezone);
+		CCUtils.pressEnterKey();
+	}
+
+	private WebElement prepareDynamicXpathForClientType(String xpathValue, String substitutionValue) {
+		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
+	}
+
+	public void selectClientType(String clientTypeName) {
+		WebElement clientType = prepareDynamicXpathForClientType(xpathRequiredClientType, clientTypeName);
+		CCUtils.verifyAndWaitForElement(clientType, driver);
+		clientType.click();
+		log("Clicked on : " + clientTypeName);
+	}
+
+	public void selectClientNodeStatus(String existingStatusValue) {
+		if ((existingStatusValue.trim().contains("active")) == true)
+			clickInactiveRadioButtonOfClient();
+		else if (existingStatusValue.equals("inactive") == true)
+			clickActiveRadioButtonOfClient();
+	}
+
+	public String getClientNodeStatus() {
+		CCUtils.verifyAndWaitForElement(clientInactiveRadioButton, driver);
+		CCUtils.verifyAndWaitForElement(radiobuttonActive, driver);
+		if ((clientInactiveRadioButton.getAttribute("class").contains("mat-radio-checked") == true)) {
+			return "inactive";
+		} else {
+			return "active";
+		}
+	}
+
+	public void selectClientNodeInTheTree() {
+		CCUtils.verifyAndWaitForElement(treeClientNode, driver);
+		treeClientNode.click();
+		log("Clicked on the client node in the tree");
+	}
+
 }
