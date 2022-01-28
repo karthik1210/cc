@@ -162,5 +162,10 @@ public class VarResellerUsersPage extends CCMainPage {
 		log("Clicked on first VAR/Reseller user");
 		return PageFactory.initElements(driver, VarResellerUserDetailsPage.class);
 	}
+	public String getVarResellerUserStatus() {
+		CCUtils.verifyAndWaitForElement(labelSelectedUserStatus.get(0), driver);
+		return labelSelectedUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
+	}
+
 
 }
