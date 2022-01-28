@@ -25,8 +25,8 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "saveDetail")
 	private WebElement buttonSave;
-	
-    @FindBy(id = "kebabMenu")
+
+	@FindBy(id = "kebabMenu")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
@@ -37,9 +37,6 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "userStatus")
 	private WebElement labelSelectedUserStatus;
-
-	@FindBy(xpath = "//mat-card-title[@id='userName']")
-	private WebElement labelUsernameValue;
 
 	public VarResellerUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -82,10 +79,6 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
 		buttonSave.click();
 		logStep("Clicked on save button");
-	}
-	public String getUserName() {
-		CCUtils.verifyAndWaitForElement(labelUsernameValue, driver);
-		return labelUsernameValue.getText().trim();
 	}
 
 	public void clickOnKebabMenuButton() {
