@@ -1,12 +1,11 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import org.apache.xalan.xsltc.compiler.sym;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -59,9 +58,9 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		buttonOrgEdit.click();
 	}
 
-	public String selectTerminateCheckboxForSingleProduct() throws InterruptedException {
+	public String selectTerminateCheckboxForSingleProduct() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(checkboxTerminateSolutions, driver);
-		scrollAndWait(0, 250, 8000);
+		CCUtils.scrollPageToEnd();
 		String currentSolutionsName = LabelSolutionsNameOfActiveImlementation.getText();
 		checkboxTerminateSolutions.click();
 		String[] list = currentSolutionsName.split(" ");
@@ -79,8 +78,8 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		String solutionNameTerminated = listTerminated[1];
 		String[] listStatus = terminateSolutionsName.split("\n");
 		String[] solutionStatus = listStatus[1].split(" ");
-		String date= "Terminated("+CCUtils.dateformatter()+")";
-		CCUtils.assertEquals(solutionStatus[1],date);
+		String date = "Terminated(" + CCUtils.dateformatter() + ")";
+		CCUtils.assertEquals(solutionStatus[1], date);
 		return solutionNameTerminated;
 	}
 
@@ -90,9 +89,9 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		buttonOrgSave.click();
 	}
 
-	public String selectActivateCheckboxForSingleProduct() throws InterruptedException {
+	public String selectActivateCheckboxForSingleProduct() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(checkboxActivateTerminatedSolutions, driver);
-		scrollAndWait(0, 250, 8000);
+		CCUtils.scrollPageToEnd();
 		log("Print the Activate solutions : " + checkboxActivateTerminatedSolutions);
 		String currentSolutionsName = verifyTerminatedSolutionsName.getText();
 		checkboxActivateTerminatedSolutions.click();

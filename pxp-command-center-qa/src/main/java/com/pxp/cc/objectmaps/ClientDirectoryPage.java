@@ -123,6 +123,9 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
 	private WebElement itemsPerPageTwoHundred;
 
+	@FindBy(id = "directoryTitle")
+	private WebElement labelPageTitle;
+
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
 
@@ -227,8 +230,9 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public void clickSearchResult() {
 		CCUtils.verifyAndWaitForElement(tableClientNameInSearchResult.get(0), driver);
+		String searchResultText = tableClientNameInSearchResult.get(0).getText().trim();
 		tableClientNameInSearchResult.get(0).click();
-		log("Clicked on Client :" + tableClientNameInSearchResult.get(0).getText());
+		log("Clicked on Client :" + searchResultText);
 	}
 
 	public void verfiySearchResult(String searchNodeName) {
@@ -666,5 +670,12 @@ public class ClientDirectoryPage extends CCMainPage {
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
 			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
 		}
+	}
+
+	public void verifyClientDirectioryPageTitle() {
+		log("Verifying client directiory page title");
+		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
+		CCUtils.assertTrue(labelPageTitle.isDisplayed(), "Client directory page title is not displayed");
+		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Client Directory");
 	}
 }
