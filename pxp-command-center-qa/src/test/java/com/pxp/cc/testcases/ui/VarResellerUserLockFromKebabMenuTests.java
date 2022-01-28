@@ -155,7 +155,7 @@ public class VarResellerUserLockFromKebabMenuTests extends CommandCenterGenericT
 		varResellerUsersPage.selectUser();
 		varResellerUserDetailsPage = new VarResellerUserDetailsPage(driver);
 		varResellerUserDetailsPage.verifyVarResellerUserDetailsPageTitle();
-		logStep("Verify selected client user status is same on VAR/Reseller user details page");
+		logStep("Verify selected user status is same on VAR/Reseller user details page");
 		varResellerUserDetailsPage.verifySelectedUserStatusIsSameOnVarResellerUserDetailsPage(userStatus);
 		varResellerUserDetailsPage.clickOnKebabMenuButton();
 		log("Click on the lock user button in the kebab menu");
