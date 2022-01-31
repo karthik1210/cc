@@ -3,7 +3,6 @@ package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.ClientUserDetailsPage;
@@ -34,13 +33,13 @@ public class ClientUserAssociatedEntitiesTests extends CommandCenterGenericTest 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Associated Entities container elements in client users details page")
 	public void testAssociatedEntitiesContainer() throws Exception {
 		logStep("Verify Associated Entities container elements");
-		clientUserDetailsPage.verifyManageButtonPresentOn();
+		clientUserDetailsPage.verifyManageButtonPresentOnAssociatedEntitiesTab();
 		clientUserDetailsPage.verifySearchTextbox();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search functionality in Associated Entities container")
 	public void testSearchFunctionality() throws Exception {
-		logStep("Search the entity and check whether it is found or not.");
+		logStep("Verify search entity textbox");
 		clientUserDetailsPage.searchEntity(testData.getProperty("search.entity"));
 		logStep("Verify search result is displayed in web table or not");
 		clientUserDetailsPage.verifySearchResultDisplayed(testData.getProperty("search.entity"));

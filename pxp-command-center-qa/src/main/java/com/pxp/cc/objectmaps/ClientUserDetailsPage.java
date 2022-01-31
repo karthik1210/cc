@@ -4,13 +4,11 @@ package com.pxp.cc.objectmaps;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 
 public class ClientUserDetailsPage extends CCMainPage {
@@ -282,7 +280,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyManageButtonPresentOn() {
+	public void verifyManageButtonPresentOnAssociatedEntitiesTab() {
 		CCUtils.verifyAndWaitForElement(buttonManage, driver);
 		if (buttonManage.isDisplayed() == true) {
 			String title = buttonManage.getText().trim();
