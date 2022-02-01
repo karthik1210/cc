@@ -4,12 +4,11 @@ package com.pxp.cc.objectmaps;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 
 public class ClientUserDetailsPage extends CCMainPage {
@@ -58,10 +57,10 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "DeleteUserRole")
 	private WebElement buttonDeleteUserRole;
-	
+
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
 	private WebElement buttonLockUser;
-	
+
 	@FindBy(id = "detailSaveBtn")
 	private WebElement buttonUnlockUser;
 
@@ -70,6 +69,21 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='header px-4 mb-2']")
 	private List<WebElement> systemHeaderAssociatedEntities;
+
+	@FindBy(xpath = "//h2[text()='Associated Entities']")
+	private WebElement headerAssociatedEntities;
+
+	@FindBy(id = "searchEntities")
+	private WebElement textBoxSearch;
+
+	@FindBy(className = "role-name")
+	private WebElement textRoleName;
+
+	@FindBy(xpath = "//div[@class='role-container']")
+	private List<WebElement> userRoles;
+
+	@FindBy(xpath = "//span[@class='location-name ng-star-inserted']")
+	private List<WebElement> listOfLocations;
 
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -192,28 +206,29 @@ public class ClientUserDetailsPage extends CCMainPage {
 		log("Clicked on delete user role button on the client user details page");
 		return PageFactory.initElements(driver, ClientUserDeleteUserRolesAndPermissionsPage.class);
 	}
-	
+
 	public void verifyLockUserButtonIsDisplayed() {
 		log("Verifying lock user button is displayed in kebab menu");
 		CCUtils.assertEquals(buttonLockUser.isDisplayed(), true);
 	}
-	
+
 	public void verifyLockUserButtonIsNotDisplayed() {
 		log("Verifying lock user button is not displayed in kebab menu");
 		CCUtils.assertEquals(buttonLockUser.isDisplayed(), false);
 	}
-	
+
 	public LockUserConfirmationPage clickOnLockUserButton() {
 		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
 		javascriptClick(buttonLockUser);
 		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
 	}
-	
+
 	public void verifyUnlockButtonIsDispalyed() {
-		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver); 
-		CCUtils.assertTrue(buttonUnlockUser.isDisplayed(), "Unlock button is not displayed on client user details page");
+		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
+		CCUtils.assertTrue(buttonUnlockUser.isDisplayed(),
+				"Unlock button is not displayed on client user details page");
 	}
-	
+
 	public void clickOnUnlockButton() {
 		CCUtils.verifyAndWaitForElement(buttonUnlockUser, driver);
 		javascriptClick(buttonUnlockUser);
@@ -255,4 +270,75 @@ public class ClientUserDetailsPage extends CCMainPage {
 		}
 	}
 
+	public void verifyAssociateEntitiesTitle() {
+		CCUtils.verifyAndWaitForElement(headerAssociatedEntities, driver);
+		if (headerAssociatedEntities.isDisplayed() == true) {
+			String title = headerAssociatedEntities.getText().trim();
+			CCUtils.assertEquals(title.trim(), "Associated Entities");
+		} else {
+			log("Associated Entities header is not displayed on client users details page");
+		}
+	}
+
+	public void verifyManageButtonPresentOnAssociatedEntitiesTab() {
+		CCUtils.verifyAndWaitForElement(buttonManage, driver);
+		if (buttonManage.isDisplayed() == true) {
+			String title = buttonManage.getText().trim();
+			CCUtils.assertEquals(title.trim(), "MANAGE");
+		} else {
+			log("Manage button is not displayed on client users details page");
+		}
+	}
+
+	public void verifySearchTextbox() {
+		CCUtils.verifyAndWaitForElement(textBoxSearch, driver);
+		log("verified the presence of search textbox");
+		CCUtils.assertTrue(textBoxSearch.isDisplayed(),
+				"Search textbox is not displayed in associated entities container on client users details page");
+		log("Verifying Search placeholder is displayed in search textbox");
+		CCUtils.assertEquals(textBoxSearch.getAttribute("placeholder").trim(), "Search");
+		log("Box text for search textbox is: " + textBoxSearch.getAttribute("placeholder").trim());
+	}
+
+	public void searchEntity(String enitity) {
+		verifySearchTextbox();
+		textBoxSearch.sendKeys(enitity);
+		textBoxSearch.sendKeys(Keys.ENTER);
+		log("Searched text " + enitity + "in search textbox");
+	}
+
+	public void verifySearchResultDisplayed(String searchData) {
+		for (WebElement element : listOfAssociatedEntities) {
+			CCUtils.verifyAndWaitForElement(element, driver);
+			if (element.getText().contains("No search results found")) {
+				log("entity " + searchData + " does not found.");
+			} else if (element.getText().contains(searchData)) {
+				log("Entity" + searchData + " found.");
+			}
+		}
+	}
+
+	public void clickDesiredAssociatedEntity(String associatedEntity) {
+		for (WebElement ele : listOfAssociatedEntities) {
+			CCUtils.verifyAndWaitForElement(ele, driver);
+			CCUtils.assertTrue((ele.getText().trim().contains(associatedEntity)),
+					"Verifying desired associated entity found on Associated Entities container");
+			ele.click();
+			log("clicked to desired entity.");
+		}
+	}
+
+	public void displayAssociatedEntityUserRoleAndLocation() {
+		for (WebElement role : userRoles) {
+			CCUtils.verifyAndWaitForElement(role, driver);
+			log("User role " + role.getText() + " is present");
+			if ((role.getText().trim().equals("Client - Super Admin"))
+					|| (role.getText().trim().equals("Client - Staff(View Only)"))) {
+				for (WebElement location : listOfLocations) {
+					CCUtils.verifyAndWaitForElement(location, driver);
+				}
+				log("corresponding locations are present");
+			}
+		}
+	}
 }
