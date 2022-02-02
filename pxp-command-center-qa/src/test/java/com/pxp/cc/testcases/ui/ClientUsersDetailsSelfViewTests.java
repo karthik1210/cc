@@ -84,9 +84,9 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify active user & send enrollment email options are not displayed in kebab menu");
+		logStep("Verify deactivate user & send enrollment email options are disabled in kebab menu");
 		clientUserDetailsPage.verifyActivateOrDeactivateOptionDisabledToSelfUser();
-		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
+		clientUserDetailsPage.verifySendEnrollmentOptionDisabledInKebabMenuToSelfUser();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for inactive user status kebab menu options displayed to self user")
@@ -105,7 +105,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify activate user & send enrollment email options are disabled in kebab menu");
 		clientUserDetailsPage.verifyActivateOrDeactivateOptionDisabledToSelfUser();
-		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
+		clientUserDetailsPage.verifySendEnrollmentOptionDisabledInKebabMenuToSelfUser();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for locked out user status kebab menu options displayed to self user")
@@ -123,9 +123,9 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify unlock & send enrollment email options should not displayed in kebab menu");
-		clientUserDetailsPage.verifyLockAndUnlockOptionDisplayedToSelfUser();
-		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
+		logStep("Verify unlock & send enrollment email options should disabled in kebab menu");
+		clientUserDetailsPage.verifyLockAndUnlockOptionDisabledToSelfUser();
+		clientUserDetailsPage.verifySendEnrollmentOptionDisabledInKebabMenuToSelfUser();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options for no roles assiged user status in self view mode")
@@ -143,12 +143,11 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify send enrollment email options should not displayed in kebab menu");
-		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
+		clientUserDetailsPage.verifySendEnrollmentOptionDisabledInKebabMenuToSelfUser();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fields are editable")
 	public void testEditButtonEnabledToSelfUserForDemographicDetails() throws Exception {
-		logStep("Verify self view for no roles assigned user on client user page for self view");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));

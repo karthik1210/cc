@@ -123,7 +123,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='unlock']")
 	private WebElement labelUserStatusUnlock;
-	
+
 	@FindBy(xpath = "//span[@class='locked']")
 	private WebElement labelUserStatusLocked;
 
@@ -407,47 +407,55 @@ public class ClientUserDetailsPage extends CCMainPage {
 		verifyClientUserConnectedResourceLinkInSelfViewMode();
 		verifyClientUserStatusInSelfViewMode();
 	}
-	
+
 	public void verifyClientUserFullNameInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelNameTitleSelfView, driver);
-		CCUtils.assertTrue(labelNameTitleSelfView.isDisplayed(),"Client full name label is not displayed on client user details page");
+		CCUtils.assertTrue(labelNameTitleSelfView.isDisplayed(),
+				"Client full name label is not displayed on client user details page");
 		log("Client User Full name on Client User Details screen: " + labelNameTitleSelfView.getText().trim());
-		}
+	}
 
 	public void verifyClientUserSubtitleInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelSubtitleNameSelfView, driver);
-		CCUtils.assertTrue(labelSubtitleNameSelfView.isDisplayed(), "Client subtitle label is not displayed on client user details page");
+		CCUtils.assertTrue(labelSubtitleNameSelfView.isDisplayed(),
+				"Client subtitle label is not displayed on client user details page");
 		log("Client User sub tiltle on Client User Details screen: " + labelSubtitleNameSelfView.getText());
 	}
 
 	public void verifyClientUserNameIntialsInViewMode() {
 		CCUtils.verifyAndWaitForElement(labelIntialNameSelfView, driver);
-		CCUtils.assertTrue(labelIntialNameSelfView.isDisplayed(), "Client intials label is not displayed on client user details page");
+		CCUtils.assertTrue(labelIntialNameSelfView.isDisplayed(),
+				"Client intials label is not displayed on client user details page");
 		log("Client User intials name on Client User Details screen: " + labelIntialNameSelfView.getText());
 	}
 
 	public void verifyClientUserLastLoginInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelLastLoginSelfView, driver);
-		CCUtils.assertTrue(labelLastLoginSelfView.isDisplayed(), "Client last login date label is not displayed on client user details page");
-		log("Client User sub tiltle on Client User Details screen: " + labelLastLoginSelfView.getText());
+		CCUtils.assertTrue(labelLastLoginSelfView.isDisplayed(),
+				"Client last login date label is not displayed on client user details page");
+		log("Client User last login date on Client User Details screen: " + labelLastLoginSelfView.getText());
 	}
 
 	public void verifyClientUserEnrollmentStatusInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelEnrollmentStatusSelfView, driver);
-		CCUtils.assertTrue(labelEnrollmentStatusSelfView.isDisplayed(), "Client enrollment status label is not displayed on client user details page");
-		log("Client User sub tiltle on Client User Details screen: " + labelEnrollmentStatusSelfView.getText());
+		CCUtils.assertTrue(labelEnrollmentStatusSelfView.isDisplayed(),
+				"Client enrollment status label is not displayed on client user details page");
+		log("Client User enrollment status on Client User Details screen: " + labelEnrollmentStatusSelfView.getText());
 	}
 
 	public void verifyClientUserConnectedResourceLinkInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelUserConnectedResourceSelfView, driver);
-		CCUtils.assertTrue(labelUserConnectedResourceSelfView.isDisplayed(), "Client connected resource link label is not displayed on client user details page");
-		log("Client User sub tiltle on Client User Details screen: " + labelUserConnectedResourceSelfView.getText());
+		CCUtils.assertTrue(labelUserConnectedResourceSelfView.isDisplayed(),
+				"Client connected resource link label is not displayed on client user details page");
+		log("Client User connected resource on Client User Details screen: "
+				+ labelUserConnectedResourceSelfView.getText());
 	}
 
 	public void verifyClientUserStatusInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelUserStatusSelfView, driver);
-		CCUtils.assertTrue(labelUserStatusSelfView.isDisplayed(), "Client user status label is not displayed on client user details page");
-		log("Client User sub tiltle on Client User Details screen: " + labelUserStatusSelfView.getText());
+		CCUtils.assertTrue(labelUserStatusSelfView.isDisplayed(),
+				"Client user status label is not displayed on client user details page");
+		log("Client User status on Client User Details screen: " + labelUserStatusSelfView.getText());
 	}
 
 	public void verifyClientLastLoginDateEnrollmentAndStatusValuesAreNotBlankInSelfViewMode() {
@@ -471,38 +479,25 @@ public class ClientUserDetailsPage extends CCMainPage {
 	public void verifyActivateOrDeactivateOptionDisabledToSelfUser() {
 		if (labelUserStatusValue.getText().trim().equals("Active")) {
 			clickOnKebabMenuButton();
-			log("Verify kebab menu display option of Deactivate user");
-			CCUtils.assertEquals(kebabDeactiveUserOption.getText().trim(), "Deactivate User");
+			CCUtils.assertEquals(kebabDeactiveUserOption.isEnabled(), false);
 		} else if (labelUserStatusValue.getText().trim().equals("Inactive")) {
 			clickOnKebabMenuButton();
-			log("Verify kebab menu display option of activate user");
-			CCUtils.assertEquals(kebabActiveUserOption.getText().trim(), "Activate User");
+			CCUtils.assertEquals(kebabActiveUserOption.isEnabled(), false);
 		}
 	}
 
-	public void verifySendEnrollmentOptionInKebabMenuToSelfUser() {
-		if (labelUserStatusValue.getText().trim().equals("Active")) {
-			clickOnKebabMenuButton();
-			log("Verify kebab menu display option of Send Enrollment Email");
-			CCUtils.assertEquals(buttonSendEnrollmentEmail.getText().trim(), "Send Enrollment Email");
-		} else if (labelUserStatusValue.getText().trim().equals("Inactive")
-				|| labelUserStatusValue.getText().trim().equals("No roles assigned")
-				|| labelUserStatusValue.getText().trim().equals("Locked")) {
-			clickOnKebabMenuButton();
-			log("Verifying send enrollment email button is not displayed in kebab menu");
-			CCUtils.assertEquals(buttonSendEnrollmentEmail.isDisplayed(), false);
-		}
+	public void verifySendEnrollmentOptionDisabledInKebabMenuToSelfUser() {
+		clickOnKebabMenuButton();
+		CCUtils.assertEquals(buttonSendEnrollmentEmail.isEnabled(), false);
 	}
 
-	public void verifyLockAndUnlockOptionDisplayedToSelfUser() {
+	public void verifyLockAndUnlockOptionDisabledToSelfUser() {
 		if (labelUserStatusValue.getText().trim().equals("Lock")) {
 			clickOnKebabMenuButton();
-			log("Verify kebab menu display option of Unlock User");
-			CCUtils.assertEquals(labelUserStatusUnlock.getText().trim(), "Unlock User");
+			CCUtils.assertEquals(labelUserStatusUnlock.isEnabled(), false);
 		} else if (labelUserStatusValue.getText().trim().equals("Unlock")) {
 			clickOnKebabMenuButton();
-			log("Verify kebab menu display option of lock User");
-			CCUtils.assertEquals(labelUserStatusLocked.getText().trim(), "Lock User");
+			CCUtils.assertEquals(labelUserStatusLocked.isEnabled(), false);
 		}
 	}
 
@@ -513,7 +508,8 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyHoverOverMessageOnLockedUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
-		CCUtils.assertEquals(labelHoverLockedUserStatus.getAttribute("ng-reflect-message").toString().trim(), "User exceeded login attempts");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getAttribute("ng-reflect-message").toString().trim(),
+				"User exceeded login attempts");
 	}
 
 	public void verifyHoverOverMessageOnActiveUserStatus() {
@@ -530,7 +526,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyHoverOverMessageOnNoRoleAssignedUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
-		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
-		CCUtils.assertEquals(labelHoverLockedUserStatus.getAttribute("ng-reflect-message").toString().trim(), "No roles assigned");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getAttribute("ng-reflect-message").toString().trim(),
+				"No roles assigned");
 	}
 }
