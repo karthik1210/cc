@@ -35,7 +35,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUserDetailsPage = new ClientUserDetailsPage(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view all the labels on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verifying all the labels on client user details page")
 	public void testClientUsersDetailsSelfViewLabels() throws Exception {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
@@ -43,7 +43,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifyClientUserSelfViewLabels();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view last login date, enrollment status & user status all the field is present on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify last login date, enrollment & user status all the field having respective data on client user details page")
 	public void testClientUserLastLoginDateEnrollmentAndUserStatusInSelfViewMode() throws Exception {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
@@ -61,7 +61,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.verifyClientUsersPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options is displayed with self user login on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options is displayed in self view mode on client user details page")
 	public void testClientUsersKebabMenuWithSelfView() throws Exception {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
