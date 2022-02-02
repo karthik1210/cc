@@ -35,7 +35,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUserDetailsPage = new ClientUserDetailsPage(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verifying all the labels on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify all the labels on client user details page")
 	public void testClientUsersDetailsSelfViewLabels() throws Exception {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
@@ -48,7 +48,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
 		logStep("Verify all the fields on client user details page");
-		clientUserDetailsPage.verifyClientLastLoginDateEnrollmentAndStatusIsBlankInSelfViewMode();
+		clientUserDetailsPage.verifyClientLastLoginDateEnrollmentAndStatusValuesAreNotBlankInSelfViewMode();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "verify user redirected to client users page after clicking on back arrow on client user details page")
@@ -61,12 +61,12 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.verifyClientUsersPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options is displayed in self view mode on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options are displayed on client user details page in self view")
 	public void testClientUsersKebabMenuWithSelfView() throws Exception {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify self user display the kebab menu options on client user page");
+		logStep("Verify kebab menu options are displayed on client user details page in self view");
 		clientUserDetailsPage.verifyClientUserKebabMenuOptionsDisplayedForSelfView();
 	}
 
@@ -84,14 +84,14 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify deactivate user & send enrollment email options are not enable in kebab menu");
+		logStep("Verify active user & send enrollment email options are not displayed in kebab menu");
 		clientUserDetailsPage.verifyActivateOrDeactivateOptionDisabledToSelfUser();
 		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for inactive user status kebab menu options displayed to self user")
 	public void testKebabMenuOptionsDisplayedToSelfUserForInactiveStatus() throws Exception {
-		logStep("Verify kebab menu option for self view to the inactive user on client user details page");
+		logStep("Verify kebab menu options for inactive user on client user details page for self view");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.inactive"));
@@ -103,14 +103,14 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
 		clientUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify activate user option should display & send enrollment email option shouldn't displayed in kebab menu");
+		logStep("Verify activate user & send enrollment email options are disabled in kebab menu");
 		clientUserDetailsPage.verifyActivateOrDeactivateOptionDisabledToSelfUser();
 		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for locked out user status kebab menu options displayed to self user")
 	public void testKebabMenuOptionsDisplayedToSelfUserWithLockedStatus() throws Exception {
-		logStep("Verify self view for locked user on client user page");
+		logStep("Verify kebab menu options for locked user on client user page for self view");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("search and select user");
 		userStatusList = new ArrayList<String>();
@@ -128,9 +128,9 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.verifySendEnrollmentOptionInKebabMenuToSelfUser();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for no roles assiged user status kebab menu options displayed to self user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify kebab menu options for no roles assiged user status in self view mode")
 	public void testKebabMenuOptionsDisplayedToSelfUserForNoRolesAssignedStatus() throws Exception {
-		logStep("Verify self view for no roles assigned user on client user page");
+		logStep("Verify kebab menu options for no roles assigned user on client user page for self view");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
@@ -148,7 +148,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fields are editable")
 	public void testEditButtonEnabledToSelfUserForDemographicDetails() throws Exception {
-		logStep("Verify self view for no roles assigned user on client user page");
+		logStep("Verify self view for no roles assigned user on client user page for self view");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -159,13 +159,11 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.selectUser();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
-		logStep("Verifying demographic fields are editable to self user");
-		clientUserDetailsPage.verifykEditDemographicDetailsInClientUserDetailsPage();
 		logStep("Clicked on edit button on client user details page");
 		clientUserDetailsPage.clickEditInClientUser();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view all the labels on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify connected resource link on client user details page for self view")
 	public void testClientUserConnectedResourceLinkInSelfViewMode() throws Exception {
 		logStep("Select client user");
 		clientUsersPage.selectUser();
@@ -202,7 +200,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		addUserRolesAndPermissionsPage.verifyAddButtonIsDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view locked status on hover on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Hover over the locked user status on the client user details and Verify hover text for locked user status in self view mode")
 	public void testHoverMessageForClientUsersOnLockedStatusSelfView() throws Exception {
 		logStep("Verify self view for locked user on client user page");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
@@ -215,12 +213,13 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.selectUser();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
+		logStep("Verify hover text for locked user status in self view mode");
 		clientUserDetailsPage.verifyHoverOverMessageOnLockedUserStatus();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view active status on hover on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Hover over the active user status on the client user details and Verify hover text for active user status in self view mode")
 	public void testHoverMessageForClientUsersOnActiveStatusSelfView() throws Exception {
-		logStep("Verify self view for locked user on client user page");
+		logStep("Verify self view for active user on client user page");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
@@ -231,12 +230,13 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.selectUser();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
+		logStep("Verify hover text for active user status in self view mode");
 		clientUserDetailsPage.verifyHoverOverMessageOnActiveUserStatus();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view inactive status on hover on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Hover over the inactive user status on the client user details and Verify hover text for inactive user status in self view mode")
 	public void testHoverMessageForClientUsersOnInactiveStatusSelfView() throws Exception {
-		logStep("Verify self view for locked user on client user page");
+		logStep("Verify self view for inactive user on client user page");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.inactive"));
@@ -247,12 +247,13 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.selectUser();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
+		logStep("Verify hover text for inactive user status in self view mode");
 		clientUserDetailsPage.verifyHoverOverMessageOnInactiveUserStatus();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify for self view no role assigned status on hover on client user details page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Hover over the no role assigned user status on the client user details and Verify hover text for no role assigned user status in self view mode")
 	public void testHoverMessageForClientUsersOnNoRoleAssignedStatusSelfView() throws Exception {
-		logStep("Verify self view for locked user on client user page");
+		logStep("Verify self view for no role assigned user on client user page");
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
@@ -263,6 +264,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 		clientUsersPage.selectUser();
 		logStep("Verify selected client user status is same on client user details page");
 		clientUserDetailsPage.verifySelectedUserStatusIsSameOnClientUserDetailsPage(userStatus);
+		logStep("Verify hover text for no role assigned user status in self view mode");
 		clientUserDetailsPage.verifyHoverOverMessageOnNoRoleAssignedUserStatus();
 	}
 

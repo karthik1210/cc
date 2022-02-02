@@ -123,9 +123,9 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='unlock']")
 	private WebElement labelUserStatusUnlock;
-
-	@FindBy(xpath = "//h2[contains(text(),'User Roles')]//preceding::div[contains(text(),'EDIT')]")
-	private WebElement buttonEditClientUserDemographicDetails;
+	
+	@FindBy(xpath = "//span[@class='locked']")
+	private WebElement labelUserStatusLocked;
 
 	@FindBy(id = "connected-resource")
 	private WebElement linkConnectedResource;
@@ -407,50 +407,50 @@ public class ClientUserDetailsPage extends CCMainPage {
 		verifyClientUserConnectedResourceLinkInSelfViewMode();
 		verifyClientUserStatusInSelfViewMode();
 	}
-
+	
 	public void verifyClientUserFullNameInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelNameTitleSelfView, driver);
-		log("Verify Client User Full name on Client User Details screen: " + labelNameTitleSelfView.getText());
-		CCUtils.assertEquals(labelNameTitleSelfView.isDisplayed(), true);
-	}
+		CCUtils.assertTrue(labelNameTitleSelfView.isDisplayed(),"Client full name label is not displayed on client user details page");
+		log("Client User Full name on Client User Details screen: " + labelNameTitleSelfView.getText().trim());
+		}
 
 	public void verifyClientUserSubtitleInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelSubtitleNameSelfView, driver);
+		CCUtils.assertTrue(labelSubtitleNameSelfView.isDisplayed(), "Client subtitle label is not displayed on client user details page");
 		log("Client User sub tiltle on Client User Details screen: " + labelSubtitleNameSelfView.getText());
-		CCUtils.assertEquals(labelSubtitleNameSelfView.isDisplayed(), true);
 	}
 
 	public void verifyClientUserNameIntialsInViewMode() {
 		CCUtils.verifyAndWaitForElement(labelIntialNameSelfView, driver);
+		CCUtils.assertTrue(labelIntialNameSelfView.isDisplayed(), "Client intials label is not displayed on client user details page");
 		log("Client User intials name on Client User Details screen: " + labelIntialNameSelfView.getText());
-		CCUtils.assertEquals(labelIntialNameSelfView.isDisplayed(), true);
 	}
 
 	public void verifyClientUserLastLoginInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelLastLoginSelfView, driver);
+		CCUtils.assertTrue(labelLastLoginSelfView.isDisplayed(), "Client last login date label is not displayed on client user details page");
 		log("Client User sub tiltle on Client User Details screen: " + labelLastLoginSelfView.getText());
-		CCUtils.assertEquals(labelLastLoginSelfView.isDisplayed(), true);
 	}
 
 	public void verifyClientUserEnrollmentStatusInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelEnrollmentStatusSelfView, driver);
+		CCUtils.assertTrue(labelEnrollmentStatusSelfView.isDisplayed(), "Client enrollment status label is not displayed on client user details page");
 		log("Client User sub tiltle on Client User Details screen: " + labelEnrollmentStatusSelfView.getText());
-		CCUtils.assertEquals(labelEnrollmentStatusSelfView.isDisplayed(), true);
 	}
 
 	public void verifyClientUserConnectedResourceLinkInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelUserConnectedResourceSelfView, driver);
+		CCUtils.assertTrue(labelUserConnectedResourceSelfView.isDisplayed(), "Client connected resource link label is not displayed on client user details page");
 		log("Client User sub tiltle on Client User Details screen: " + labelUserConnectedResourceSelfView.getText());
-		CCUtils.assertEquals(labelUserConnectedResourceSelfView.isDisplayed(), true);
 	}
 
 	public void verifyClientUserStatusInSelfViewMode() {
 		CCUtils.verifyAndWaitForElement(labelUserStatusSelfView, driver);
+		CCUtils.assertTrue(labelUserStatusSelfView.isDisplayed(), "Client user status label is not displayed on client user details page");
 		log("Client User sub tiltle on Client User Details screen: " + labelUserStatusSelfView.getText());
-		CCUtils.assertEquals(labelUserStatusSelfView.isDisplayed(), true);
 	}
 
-	public void verifyClientLastLoginDateEnrollmentAndStatusIsBlankInSelfViewMode() {
+	public void verifyClientLastLoginDateEnrollmentAndStatusValuesAreNotBlankInSelfViewMode() {
 		for (int i = 0; i < labelLastLoginDateEnrollmentStatusUserStatusSelfView.size(); i++) {
 			CCUtils.assertEquals(labelLastLoginDateEnrollmentStatusUserStatusSelfView.isEmpty(), false);
 		}
@@ -459,7 +459,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 	public void clickBackArrowOnClientUserDetailsPage() {
 		CCUtils.verifyAndWaitForElement(buttonBackArrow, driver);
 		buttonBackArrow.click();
-		log("Click back button on client user details page");
+		log("Clicked back button on client user details page");
 	}
 
 	public void verifyClientUserKebabMenuOptionsDisplayedForSelfView() {
@@ -500,14 +500,10 @@ public class ClientUserDetailsPage extends CCMainPage {
 			log("Verify kebab menu display option of Unlock User");
 			CCUtils.assertEquals(labelUserStatusUnlock.getText().trim(), "Unlock User");
 		} else if (labelUserStatusValue.getText().trim().equals("Unlock")) {
-			CCUtils.assertEquals(buttonUnlockUser.isDisplayed(), true);
+			clickOnKebabMenuButton();
+			log("Verify kebab menu display option of lock User");
+			CCUtils.assertEquals(labelUserStatusLocked.getText().trim(), "Lock User");
 		}
-	}
-
-	public void verifykEditDemographicDetailsInClientUserDetailsPage() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(buttonEditClientUserDemographicDetails, driver);
-		javascriptClick(buttonEditClientUserDemographicDetails);
-		log("Clicked on Edit button");
 	}
 
 	public void verifyConnectedResourceLinkIsDisplayed() {
@@ -517,27 +513,24 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void verifyHoverOverMessageOnLockedUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
-		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
-		CCUtils.assertEquals(labelHoverLockedUserStatus.getText(), "User exceeded login attempts");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getAttribute("ng-reflect-message").toString().trim(), "User exceeded login attempts");
 	}
 
 	public void verifyHoverOverMessageOnActiveUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverActiveUserStatus, driver);
-		labelHoverActiveUserStatus.getAttribute("ng-reflect-message");
 		String date = CCUtils.dateformatter();
-		CCUtils.assertEquals(labelHoverActiveUserStatus.getText(), date);
+		CCUtils.assertEquals(labelHoverActiveUserStatus.getAttribute("ng-reflect-message").toString().trim(), date);
 	}
 
 	public void verifyHoverOverMessageOnInactiveUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverInactiveUserStatus, driver);
-		labelHoverInactiveUserStatus.getAttribute("ng-reflect-message").toString();
-		CCUtils.assertEquals(labelHoverInactiveUserStatus.getText(),
+		CCUtils.assertEquals(labelHoverInactiveUserStatus.getAttribute("ng-reflect-message").toString().trim(),
 				labelNameTitleSelfView.getText().concat(labelLastLoginSelfView.getText()));
 	}
 
 	public void verifyHoverOverMessageOnNoRoleAssignedUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelHoverLockedUserStatus, driver);
 		labelHoverLockedUserStatus.getAttribute("ng-reflect-message");
-		CCUtils.assertEquals(labelHoverLockedUserStatus.getText(), "No roles assigned");
+		CCUtils.assertEquals(labelHoverLockedUserStatus.getAttribute("ng-reflect-message").toString().trim(), "No roles assigned");
 	}
 }
