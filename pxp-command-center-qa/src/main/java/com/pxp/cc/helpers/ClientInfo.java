@@ -1,22 +1,19 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
-
 import io.restassured.response.Response;
 
 public class ClientInfo extends BaseRest {
 
 	public Response getClientDetails(String clientId) {
-		String url = ApiPath.GET_CLIENT + clientId;
+		String url = ApiPath.GET_CLIENT_BL + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -24,8 +21,8 @@ public class ClientInfo extends BaseRest {
 			String testClient, String type, String timezoneId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
 				sapNumber, testClient, type, timezoneId);
-		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.POST_CLIENT).then().extract()
-				.response();
+		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.POST_CLIENT_BL).then()
+				.extract().response();
 	}
 
 	public Response getSapNumber(String clientSapNumber) throws IOException {
@@ -80,6 +77,15 @@ public class ClientInfo extends BaseRest {
 	public Response getAutoSuggestionClient(String serachClient) {
 		String url = ApiPath.GET_AUTOSUGGESTION_CLIENT;
 		return given().spec(requestSpec).queryParam("searchClient", serachClient).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response createNewClientUpdateClientUsingInvalidUrl(String active, String clientId, String clientName,
+			String sapNumber, String testClient, String type, String timezoneId) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
+				sapNumber, testClient, type, timezoneId);
+		String invalidUrl = ApiPath.POST_CLIENT_BL + "abc";
+		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
 				.response();
 	}
 

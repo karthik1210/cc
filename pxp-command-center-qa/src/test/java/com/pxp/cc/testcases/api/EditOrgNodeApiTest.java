@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.api;
 
@@ -14,8 +14,6 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class EditOrgNodeApiTest extends BaseRest {
-
-	public CreateClientApiTests createClientTest;
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validation;

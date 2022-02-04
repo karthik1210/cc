@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.apipath;
 
@@ -11,7 +11,6 @@ public class ApiPath {
 	public static final String SERVICE_CC = "/service/cc";
 	public static final String V1_CLIENTS = "/v1/clients";
 	public static final String GET_CLIENT = SERVICE_CC + V1_CLIENTS + "/";
-	public static final String POST_CLIENT = SERVICE_CC + V1_CLIENTS;
 	public static final String GET_CLIENT_TYPES = SERVICE_CC + V1_CLIENTS + "/types";
 	public static final String GET_CLIENT_DIRECTORY = SERVICE_CC + V1_CLIENTS + "/directory";
 	public static final String POST_SYSTEM_PRACTICE = "/service/cc/v1/client-orgs";
@@ -47,4 +46,7 @@ public class ApiPath {
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
 	public static final String GET_AUTOSUGGESTION_CLIENT = SERVICE_CC + V1_CLIENTS + "/auto-suggestion-client";
+	public static final String SERVICE_CLIENT_BL = "/service/client";
+	public static final String POST_CLIENT_BL = SERVICE_CLIENT_BL + "/clients";
+	public static final String GET_CLIENT_BL = SERVICE_CLIENT_BL + "/clients/";
 }
