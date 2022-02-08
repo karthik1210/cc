@@ -46,7 +46,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response getClientName(String clientName) throws IOException {
-		String url = ApiPath.GET_CLIENTNAME + clientName;
+		String url = ApiPath.GET_CLIENTNAME_BL + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -87,6 +87,11 @@ public class ClientInfo extends BaseRest {
 		String invalidUrl = ApiPath.POST_CLIENT_BL + "abc";
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
 				.response();
+	}
+
+	public Response getClientNameUsingInvalidUrl(String clientName) throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_CLIENTNAME_BL + clientName;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 }

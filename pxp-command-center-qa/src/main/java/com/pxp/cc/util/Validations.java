@@ -1070,4 +1070,26 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
 	}
+
+	public void verifyResponseForExistingClientName(Response response, String existingClientName) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("clientId"), "Client id is not in the response");
+		CCUtils.assertNotNull(jsonpath.get("name"), "Client name is not in the response");
+		CCUtils.assertEquals(response.jsonPath().get("name").toString(), existingClientName);
+	}
+
+	public void verifyErrorMessageIfClientNameIsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"name\"");
+	}
+
+	public void verifyResponseForNonExistingClientName(Response response, String nonExistingClientName)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "client not found by name=" + nonExistingClientName);
+	}
+
 }

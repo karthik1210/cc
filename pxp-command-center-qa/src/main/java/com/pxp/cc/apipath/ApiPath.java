@@ -35,7 +35,6 @@ public class ApiPath {
 		return GET_CLIENT + clientId + "/menu";
 	}
 
-	public static final String GET_CLIENTNAME = SERVICE_CC + V1_CLIENTS + "/name/";
 	public static final String GET_ORGID = "/service/cc/v1/orgs/";
 	public static final String GET_ORG_HIERARCHY = "/service/cc/v1/org-hierarchy/";
 	public static final String PATCH_ORG_STATUS = "/status/";
@@ -49,4 +48,6 @@ public class ApiPath {
 	public static final String SERVICE_CLIENT_BL = "/service/client";
 	public static final String POST_CLIENT_BL = SERVICE_CLIENT_BL + "/clients";
 	public static final String GET_CLIENT_BL = SERVICE_CLIENT_BL + "/clients/";
+	public static final String GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/name/";
+	public static final String INVALID_PATH_GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/nameabc##$122/";
 }
