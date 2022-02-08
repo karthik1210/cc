@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -20,6 +20,7 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import rp.com.google.common.base.CharMatcher;
 
 public class Validations {
 	private static final String TIMEZONE = "TimeZone";
@@ -33,7 +34,7 @@ public class Validations {
 	public void verifyCreateAndUpdateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "Client id is not in the response");
+		CCUtils.assertNotNull(jsonpath.get("clientId"), "Client id is not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Client name is not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), clientNameValue);
 
@@ -62,7 +63,8 @@ public class Validations {
 		List<Integer> solutionsList = new ArrayList<Integer>();
 		solutionsList = response.jsonPath().getList("solutions");
 		if (practiceCount == 0) {
-			CCUtils.assertTrue(solutionsList.isEmpty(), "Solutions list is not empty");
+			Boolean solutionsObjectIsNull = Objects.isNull(jsonpath.get("solutions"));
+			CCUtils.assertTrue(solutionsObjectIsNull, "solutions object is not null");
 		} else {
 			if (isPurchased.booleanValue()) {
 				if (!purchasedSolutionList.isEmpty()) {
@@ -1023,4 +1025,49 @@ public class Validations {
 
 	}
 
+	public String getMessage(Response response) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String message = jsonpath.get("message").toString();
+		String[] messageList = message.split(",");
+		message = CharMatcher.is('"').trimFrom(messageList[4]).replace("message\":\"", "");
+		return message;
+	}
+
+	public void verifyInvalidServerError(Response response) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Internal Server Error");
+	}
+
+	public void verifyErrorMessageInResponseForExistingClientName(Response response, String existingClientName)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client name=" + existingClientName + " already in use");
+	}
+
+	public void verifyErrorMessageInResponseForExistingSapNumber(Response response, String existingClientSapNumber)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client sap number=" + existingClientSapNumber + " already in use");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidClientType(Response response, String clientType)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client type=" + clientType + " doesn't exist");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidTimezoneId(Response response, String clientTimezoneId)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " doesn't exist");
+	}
+
+	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
+	}
 }
