@@ -1079,10 +1079,11 @@ public class Validations {
 	}
 
 	public void verifyErrorMessageIfClientNameIsNull(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
-		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"name\"");
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		System.out.println("message" + message);
+		CCUtils.assertEquals(message,
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"name\\");
 	}
 
 	public void verifyResponseForNonExistingClientName(Response response, String nonExistingClientName)

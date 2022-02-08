@@ -45,7 +45,8 @@ public class GetClientNameApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client name in client name field and validate error message")
 	public void testErrorMessageForNonExistingClientName() throws IOException {
-		String clientName = testData.getProperty("api.existing.client.name").concat(CCUtils.generateRandomString());
+		String clientName = testData.getProperty("api.existing.client.name")
+				.concat(CCUtils.generateAlphaNumericString(5));
 		getClientNameApiResponse = clientInfo.getClientName(clientName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);
@@ -58,7 +59,7 @@ public class GetClientNameApiTests_BusinessLayer extends BaseRest {
 		getClientNameApiResponse = clientInfo.getClientName(" ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);
-		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 400);
+		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 500);
 		validation.verifyErrorMessageIfClientNameIsNull(getClientNameApiResponse);
 	}
 

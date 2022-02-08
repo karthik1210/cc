@@ -46,8 +46,8 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response getClientName(String clientName) throws IOException {
-		String url = ApiPath.GET_CLIENTNAME_BL + clientName;
-		return given().spec(requestSpec).when().get(url).then().extract().response();
+		String url = ApiPath.GET_CLIENTNAME_BL + "{name}";
+		return given().spec(requestSpec).pathParam("name", clientName).when().get(url).then().extract().response();
 	}
 
 	public Response getOrgHierarchyWithClientNode(String clientId, Boolean forClientValue) throws IOException {
