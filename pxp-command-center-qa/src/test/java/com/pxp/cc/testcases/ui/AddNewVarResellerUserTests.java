@@ -49,7 +49,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 		commonMethods.verifyStatusLabelTextAndRadioButtons();
 		commonMethods.verifyActiveRadioButtonByDefaultSelected();
 		addNewVarResellerUserPage.verifyUserRolesLabelTextAndRadioButtons();
-		addNewVarResellerUserPage.verifyCrossIconIsDisplayed();
+		addNewVarResellerUserPage.verifyCloseWindowButtonIsDisplayed();
 		addNewVarResellerUserPage.verifyCancelButtonIsDisplayed();
 		addNewVarResellerUserPage.verifySaveAndAddButtonIsDisplayed();
 	}
@@ -86,7 +86,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 		logStep("Click on new button");
 		varResellerUsersPage.clickOnNewButton();
 		logStep("Click on cross icon and verify user redirected to VAR/reseller users page");
-		varResellerUsersPage = addNewVarResellerUserPage.clickOnCrossIcon();
+		varResellerUsersPage = addNewVarResellerUserPage.clickOnCloseWindowButton();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 	}
 

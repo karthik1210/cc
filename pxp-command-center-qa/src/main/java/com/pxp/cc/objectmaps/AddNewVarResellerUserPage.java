@@ -47,7 +47,7 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 	private WebElement labelNoRoleAssigned;
 
 	@FindBy(id = "cancel-text")
-	private WebElement crossIcon;
+	private WebElement buttonCloseWindow;
 
 	@FindBy(id = "resellerIdRequiredErr")
 	private WebElement labelVarResellerNameReqError;
@@ -87,11 +87,11 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 				+ textboxSearchVarResellerName.getAttribute("placeholder").trim());
 	}
 
-	public void verifyCrossIconIsDisplayed() {
-		CCUtils.verifyAndWaitForElement(crossIcon, driver);
-		log("Verifying cross icon is displayed on add VAR/Reseller user page");
-		CCUtils.assertTrue(crossIcon.isDisplayed(), "cross icon is not displayed on add VAR/Reseller user page");
-		CCUtils.assertEquals(crossIcon.getText().trim(), "clear");
+	public void verifyCloseWindowButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
+		log("Verifying close window button is displayed on add VAR/Reseller user page");
+		CCUtils.assertTrue(buttonCloseWindow.isDisplayed(), "Close window button is not displayed on add VAR/Reseller user page");
+		CCUtils.assertEquals(buttonCloseWindow.getText().trim(), "clear");
 	}
 
 	public void verifyCancelButtonIsDisplayed() {
@@ -122,9 +122,9 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 		return PageFactory.initElements(driver, VarResellerUsersPage.class);
 	}
 
-	public VarResellerUsersPage clickOnCrossIcon() {
-		CCUtils.verifyAndWaitForElement(crossIcon, driver);
-		crossIcon.click();
+	public VarResellerUsersPage clickOnCloseWindowButton() {
+		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
+		buttonCloseWindow.click();
 		log("Clicked on cross icon");
 		return PageFactory.initElements(driver, VarResellerUsersPage.class);
 	}
