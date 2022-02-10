@@ -50,4 +50,6 @@ public class ApiPath {
 	public static final String GET_CLIENT_BL = SERVICE_CLIENT_BL + "/clients/";
 	public static final String GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/nameabc##$122/";
+	public static final String GET_ORGID_BL = "/service/org/orgs/";
+	public static final String POST_SYSTEM_BL = "/service/org/orgs";
 }

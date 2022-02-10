@@ -13,7 +13,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
+public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
@@ -23,7 +23,7 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
@@ -31,16 +31,16 @@ public class GetOrgIdSystemEnterprisePracticeApiTest extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter system id in orgId field and validate response body")
 	public void testFetchingSystemOrgId() throws IOException {
-		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
-		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
-		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
-				systemName, ccUser.getSystemOrgTypeApi(), ccUser.getParentIdApi(), ccUser.getParentTypeApi(),
-				systemSapNumber, ccUser.getSystemTimezoneIdApi());
+		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
+		String systemSapNumber = testData.getProperty("api.system.sapnumber").concat(CCUtils.generateRandomString());
+		createSystemApiResponse = orgInfo.createSystem(testData.getProperty("api.system.active"), testData.getProperty("api.system.displayname"),
+				systemName, testData.getProperty("api.system.orgtype"), Integer.parseInt(testData.getProperty("api.Parentid")), testData.getProperty("api.parenttype"),
+				systemSapNumber, testData.getProperty("api.system.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createSystemApiResponse);
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
 		validation.verifyCreateSystemResponseBody(createSystemApiResponse, systemName);
-		int orgId = createSystemApiResponse.jsonPath().get("id");
+		int orgId = createSystemApiResponse.jsonPath().get("orgId");
 		logStep("Fetching System Id Response body");
 		getOrgIdApiResponse = orgInfo.getOrgId(orgId);
 		logStep("Validating Response Time");

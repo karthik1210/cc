@@ -168,7 +168,7 @@ public class Validations {
 	public void verifyCreateSystemResponseBody(Response response, String systemName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "System id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "System id was not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "System name was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), systemName);
 

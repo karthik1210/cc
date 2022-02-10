@@ -26,7 +26,7 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_PRACTICE).then()
+		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_BL).then()
 				.extract().response();
 	}
 
@@ -50,7 +50,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getOrgId(int orgId) throws IOException {
-		String url = ApiPath.GET_ORGID + orgId;
+		String url = ApiPath.GET_ORGID_BL + orgId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
