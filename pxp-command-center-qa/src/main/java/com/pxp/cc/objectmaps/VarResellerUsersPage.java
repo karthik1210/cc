@@ -55,6 +55,9 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(id = "firstName")
 	private List<WebElement> selectUser;
 
+	@FindBy(id = "newButton")
+	private WebElement buttonNew;
+
 	public VarResellerUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -162,10 +165,17 @@ public class VarResellerUsersPage extends CCMainPage {
 		log("Clicked on first VAR/Reseller user");
 		return PageFactory.initElements(driver, VarResellerUserDetailsPage.class);
 	}
+
 	public String getVarResellerUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelSelectedUserStatus.get(0), driver);
 		return labelSelectedUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
 	}
 
+	public AddNewVarResellerUserPage clickOnNewButton() {
+		CCUtils.verifyAndWaitForElement(buttonNew, driver);
+		buttonNew.click();
+		log("Clicked on new button in VAR/Reseller users page");
+		return PageFactory.initElements(driver, AddNewVarResellerUserPage.class);
+	}
 
 }
