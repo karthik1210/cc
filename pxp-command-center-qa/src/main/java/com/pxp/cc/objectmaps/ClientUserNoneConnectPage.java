@@ -106,7 +106,7 @@ public class ClientUserNoneConnectPage extends CCMainPage {
 		}
 	}
 
-	public void verifyCrossIconIsDisplayed() {
+	public void verifyCloseWindowIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCrossWindow, driver);
 		log("Verifying cross icon is displayed on connect existing resource popup");
 		if (buttonCrossWindow.isDisplayed() == true) {
@@ -133,7 +133,7 @@ public class ClientUserNoneConnectPage extends CCMainPage {
 		return selectedProvider;
 	}
 
-	public void verifySearchTextboxdataAfterSelectingProvider(String searchData) {
+	public void verifySearchTextboxDataAfterSelectingProvider(String searchData) {
 		verifySearchTextbox();
 		CCUtils.verifyAndWaitForElement(selectedSearchData, driver);
 		if (selectedSearchData.getText().trim().contains(searchData)) {
@@ -185,9 +185,9 @@ public class ClientUserNoneConnectPage extends CCMainPage {
 	}
 
 	public ClientUserDetailsPage clickOnCloseWindow() {
-		verifyCrossIconIsDisplayed();
+		verifyCloseWindowIsDisplayed();
 		buttonCrossWindow.click();
-		log("Cross icon button clicked");
+		log("Close window button clicked");
 		return PageFactory.initElements(driver, ClientUserDetailsPage.class);
 	}
 }
