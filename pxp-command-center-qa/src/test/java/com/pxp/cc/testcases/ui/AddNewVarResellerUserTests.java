@@ -170,7 +170,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 		addNewVarResellerUserPage.searchAndSelectVarReseller(testData.getProperty("var.reseller.name"));
 		commonMethods = new CommonMethods(driver);
 		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(18));
-		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(18));
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(18).concat("'s"));
 		commonMethods.enterEmail(CCUtils.generateNewEmail(11));
 		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		commonMethods.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
@@ -212,11 +212,13 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 		logStep("Enter data in mandatory fields");
 		addNewVarResellerUserPage.searchAndSelectVarReseller(testData.getProperty("var.reseller.name"));
 		commonMethods = new CommonMethods(driver);
-		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(18));
+		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(18).concat("'s"));
 		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(18));
 		commonMethods.enterEmail(CCUtils.generateNewEmail(11));
 		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		commonMethods.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
+		logStep("Verify active radio button is by default selected on add VAR/Reseller user page");
+		commonMethods.verifyActiveRadioButtonByDefaultSelected();
 		logStep("Click on save and add button");
 		addNewVarResellerUserPage.clickOnSaveAndAdd();
 		logStep("Verify success toaster message");
