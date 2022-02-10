@@ -5,17 +5,20 @@ package com.pxp.cc.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
+
 import io.restassured.response.Response;
 
-public class FetchClientDetailsTests extends BaseRest {
+public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
@@ -37,9 +40,10 @@ public class FetchClientDetailsTests extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(ccUser.getNonExistingClientId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForClientIdField(fetchClientDetailsApiResponse,
-				ccUser.getNonExistingClientId());
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 500);
+		String message = validation.getMessage(fetchClientDetailsApiResponse);
+		logStep("Validating response message");
+		CCUtils.assertEquals(message, "client not found by clientId="+ccUser.getNonExistingClientId());
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client and fetch newly created client details using client id")
