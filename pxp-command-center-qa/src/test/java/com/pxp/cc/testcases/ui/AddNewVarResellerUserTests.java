@@ -78,14 +78,14 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getRequiredErrorForUsernameField(), "Username is required");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the functionality of cancel button and cross icon on add VAR/Reseller user page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the functionality of cancel button and close window button on add VAR/Reseller user page")
 	public void testFunctionalityOfCancelAndCrossButton() throws Exception {
 		logStep("Click on cancel button and verify user redirected to VAR/reseller users page");
 		varResellerUsersPage = addNewVarResellerUserPage.clickOnCancelButton();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 		logStep("Click on new button");
 		varResellerUsersPage.clickOnNewButton();
-		logStep("Click on cross icon and verify user redirected to VAR/reseller users page");
+		logStep("Click on close window button and verify user redirected to VAR/reseller users page");
 		varResellerUsersPage = addNewVarResellerUserPage.clickOnCloseWindowButton();
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 	}

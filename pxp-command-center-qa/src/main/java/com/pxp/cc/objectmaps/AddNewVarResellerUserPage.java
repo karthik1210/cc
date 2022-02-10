@@ -125,7 +125,7 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 	public VarResellerUsersPage clickOnCloseWindowButton() {
 		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
 		buttonCloseWindow.click();
-		log("Clicked on cross icon");
+		log("Clicked on close window button");
 		return PageFactory.initElements(driver, VarResellerUsersPage.class);
 	}
 
