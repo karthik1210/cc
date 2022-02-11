@@ -79,7 +79,6 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("api.practice.timezoneid"));
 
 		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
-		logStep("Fetch newly created practice details using practice id");
 		logStep("Fetching Practice Id Response body");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId(orgId);
 		logStep("Validating response information");
