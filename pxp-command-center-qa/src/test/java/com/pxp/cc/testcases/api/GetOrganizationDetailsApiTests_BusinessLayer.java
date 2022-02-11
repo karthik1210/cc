@@ -31,7 +31,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 	public void testFetchSystemDetailsUsingSystemId() throws IOException {
 		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
 		String systemSapNumber = testData.getProperty("api.system.sapnumber").concat(CCUtils.generateRandomString());
-		createSystemApiResponse = orgInfo.createSystem(testData.getProperty("api.system.active"),
+		createSystemApiResponse = orgInfo.createOrg(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), systemName, testData.getProperty("api.system.orgtype"),
 				Integer.parseInt(testData.getProperty("api.parentid")), testData.getProperty("api.parenttype"),
 				systemSapNumber, testData.getProperty("api.system.timezoneid"));
@@ -50,7 +50,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		String enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateRandomString());
 		String enterpriseSapNumber = testData.getProperty("api.enterprise.sapnumber")
 				.concat(CCUtils.generateRandomString());
-		createEnterpriseApiResponse = orgInfo.createEnterprise(testData.getProperty("api.enterprise.active"),
+		createEnterpriseApiResponse = orgInfo.createOrg(testData.getProperty("api.enterprise.active"),
 				testData.getProperty("api.enterprise.displayname"), enterpriseName,
 				testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("api.enterprise.parentid")),
@@ -71,7 +71,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		String practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateRandomString());
 		String practiceSapNumber = testData.getProperty("api.practice.sapnumber")
 				.concat(CCUtils.generateRandomString());
-		createPracticeApiResponse = orgInfo.createPractice(testData.getProperty("api.practice.active"),
+		createPracticeApiResponse = orgInfo.createOrg(testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.displayname"), practiceName,
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("api.practice.parentid")),
@@ -96,11 +96,12 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidOrgId", description = "Enter invalid org id in orgid field and validate response body")
 	public void testErrorResponseForInvalidOrgId(String invalidOrgId) throws IOException {
-		fetchOrgDetailsApiResponse = orgInfo.getOrgId(Integer.parseInt(invalidOrgId));
+		int orgId = Integer.parseInt(invalidOrgId);
+		fetchOrgDetailsApiResponse = orgInfo.getOrgId(orgId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 500);
-		validation.verifyErrorResponseBodyForInvalidOrgId(fetchOrgDetailsApiResponse);
+		validation.verifyErrorMessageInResponseForInvalidInOrgId(fetchOrgDetailsApiResponse, orgId);
 	}
 
 }

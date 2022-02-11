@@ -20,14 +20,24 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response createOrg(String active, String displayName, String name, String orgType, int parentId,
+			String parentType, String sapNumber, String timezoneId) throws IOException {
+
+		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId);
+
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.POST_ORG_BL).then().extract()
+				.response();
+	}
+
 	public Response createSystem(String active, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
 
 		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_ORG_BL).then().extract()
-				.response();
+		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_PRACTICE).then()
+				.extract().response();
 	}
 
 	public Response createAgnosticPractice(String active, String displayName, String name, String orgType, int parentId,
@@ -50,7 +60,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getOrgId(int orgId) throws IOException {
-		String url = ApiPath.GET_ORGID_BL + orgId;
+		String url = ApiPath.GET_ORG_DETAILS_BL + orgId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -60,8 +70,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewEnterprisePayload = postCreateEnterprise(active, displayName, name, orgType, orgId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ORG_BL).then()
-				.extract().response();
+		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+				.then().extract().response();
 	}
 
 	public Response updateEnterprise(String active, String displayName, int orgId, String sapNumber, String timezoneId)
@@ -80,8 +90,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticePayload = postCreatePractice(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ORG_BL).then()
-				.extract().response();
+		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+				.then().extract().response();
 	}
 
 	public Response createPracticeWithSolutions(String active, String displayName, String name, String orgType,
@@ -149,6 +159,20 @@ public class OrgInfo extends BaseRest {
 		systemMap.put("sapNumber", sapNumber);
 		systemMap.put("timezoneId", timezoneId);
 		return systemMap;
+	}
+
+	public static Map<String, Object> postCreateOrg(String active, String displayName, String name, String orgType,
+			int parentId, String parentType, String sapNumber, String timezoneId) {
+		Map<String, Object> orgMap = new HashMap<String, Object>();
+		orgMap.put("active", active);
+		orgMap.put("displayName", displayName);
+		orgMap.put("name", name);
+		orgMap.put("orgType", orgType);
+		orgMap.put("parentId", parentId);
+		orgMap.put("parentType", parentType);
+		orgMap.put("sapNumber", sapNumber);
+		orgMap.put("timezoneId", timezoneId);
+		return orgMap;
 	}
 
 	public static Map<String, Object> putUpdateSystem(String active, String displayName, int orgId, String sapNumber,

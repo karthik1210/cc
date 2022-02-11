@@ -177,7 +177,7 @@ public class Validations {
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("orgId"), "System id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "Org id was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("orgId"), orgId);
 
 	}
@@ -186,13 +186,6 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=4014");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
-	}
-
-	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "400 : [{\\\"timestamp\\\":1644555501401,\\\"requestId\\\":null,\\\"status\\\":400,\\\"error\\\":\\\"Bad Request\\\",\\\"message\\\":\\\"Client not found for orgId=6453645\\\",\\\"path\\\":\\\"https://dev-cc-private.dev.pxp-mf-cc.nextgenaws.net/service/org-data/orgs/6453645\\\",\\\"propertyMessages\\\":[]}]");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
 
 	}
 
@@ -1033,35 +1026,35 @@ public class Validations {
 		return message;
 	}
 
-	public void verifyErrorResponseBodyForInvalidOrgId(Response response) {
+	public void verifyInvalidServerError(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Internal Server Error");
 	}
 
 	public void verifyErrorMessageInResponseForExistingClientName(Response response, String existingClientName)
 			throws IOException {
-		verifyErrorResponseBodyForInvalidOrgId(response);
+		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "Client name=" + existingClientName + " already in use");
 	}
 
 	public void verifyErrorMessageInResponseForExistingSapNumber(Response response, String existingClientSapNumber)
 			throws IOException {
-		verifyErrorResponseBodyForInvalidOrgId(response);
+		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "Client sap number=" + existingClientSapNumber + " already in use");
 	}
 
 	public void verifyErrorMessageInResponseForInvalidClientType(Response response, String clientType)
 			throws IOException {
-		verifyErrorResponseBodyForInvalidOrgId(response);
+		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "Client type=" + clientType + " doesn't exist");
 	}
 
 	public void verifyErrorMessageInResponseForInvalidTimezoneId(Response response, String clientTimezoneId)
 			throws IOException {
-		verifyErrorResponseBodyForInvalidOrgId(response);
+		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " doesn't exist");
 	}
@@ -1079,7 +1072,7 @@ public class Validations {
 	}
 
 	public void verifyErrorMessageIfClientNameIsNull(Response response) throws IOException {
-		verifyErrorResponseBodyForInvalidOrgId(response);
+		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message,
 				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"name\\");
@@ -1087,9 +1080,15 @@ public class Validations {
 
 	public void verifyResponseForNonExistingClientName(Response response, String nonExistingClientName)
 			throws IOException {
-		verifyErrorResponseBodyForInvalidOrgId(response);
+		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "client not found by name=" + nonExistingClientName);
+	}
+
+	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response, int orgId) throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client not found for orgId=" + orgId);
 	}
 
 }
