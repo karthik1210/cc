@@ -217,7 +217,7 @@ public class CCUser {
 		setClientTypeApi(getProperty("api.client.type"));
 		setSystemOrgTypeApi(getProperty("api.system.orgtype"));
 		setSystemeActiveApi(getProperty("api.system.active"));
-		setParentIdApi(Integer.parseInt(getProperty("api.Parentid")));
+		setParentIdApi(Integer.parseInt(getProperty("api.parentid")));
 		setParentTypeApi(getProperty("api.parenttype"));
 		setSystemDisplayNameApi(getProperty("api.system.displayname"));
 		setSystemTimezoneIdApi(getProperty("api.system.timezoneid"));

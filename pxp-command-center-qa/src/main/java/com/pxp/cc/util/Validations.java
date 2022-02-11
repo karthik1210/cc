@@ -174,7 +174,7 @@ public class Validations {
 
 	}
 
-	public void verifyGetOrgIdResponseBody(Response response, int orgId) throws IOException {
+	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertNotNull(jsonpath.get("orgId"), "System id was not in the response");
@@ -1033,35 +1033,35 @@ public class Validations {
 		return message;
 	}
 
-	public void verifyInvalidServerError(Response response) {
+	public void verifyErrorResponseBodyForInvalidOrgId(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Internal Server Error");
 	}
 
 	public void verifyErrorMessageInResponseForExistingClientName(Response response, String existingClientName)
 			throws IOException {
-		verifyInvalidServerError(response);
+		verifyErrorResponseBodyForInvalidOrgId(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "Client name=" + existingClientName + " already in use");
 	}
 
 	public void verifyErrorMessageInResponseForExistingSapNumber(Response response, String existingClientSapNumber)
 			throws IOException {
-		verifyInvalidServerError(response);
+		verifyErrorResponseBodyForInvalidOrgId(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "Client sap number=" + existingClientSapNumber + " already in use");
 	}
 
 	public void verifyErrorMessageInResponseForInvalidClientType(Response response, String clientType)
 			throws IOException {
-		verifyInvalidServerError(response);
+		verifyErrorResponseBodyForInvalidOrgId(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "Client type=" + clientType + " doesn't exist");
 	}
 
 	public void verifyErrorMessageInResponseForInvalidTimezoneId(Response response, String clientTimezoneId)
 			throws IOException {
-		verifyInvalidServerError(response);
+		verifyErrorResponseBodyForInvalidOrgId(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " doesn't exist");
 	}
@@ -1079,7 +1079,7 @@ public class Validations {
 	}
 
 	public void verifyErrorMessageIfClientNameIsNull(Response response) throws IOException {
-		verifyInvalidServerError(response);
+		verifyErrorResponseBodyForInvalidOrgId(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message,
 				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"name\\");
@@ -1087,7 +1087,7 @@ public class Validations {
 
 	public void verifyResponseForNonExistingClientName(Response response, String nonExistingClientName)
 			throws IOException {
-		verifyInvalidServerError(response);
+		verifyErrorResponseBodyForInvalidOrgId(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "client not found by name=" + nonExistingClientName);
 	}

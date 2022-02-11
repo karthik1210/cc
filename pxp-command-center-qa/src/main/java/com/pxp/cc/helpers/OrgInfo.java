@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -26,8 +26,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_ORG_BL).then()
-				.extract().response();
+		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_ORG_BL).then().extract()
+				.response();
 	}
 
 	public Response createAgnosticPractice(String active, String displayName, String name, String orgType, int parentId,
@@ -60,8 +60,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewEnterprisePayload = postCreateEnterprise(active, displayName, name, orgType, orgId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ORG_BL)
-				.then().extract().response();
+		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ORG_BL).then()
+				.extract().response();
 	}
 
 	public Response updateEnterprise(String active, String displayName, int orgId, String sapNumber, String timezoneId)
@@ -80,14 +80,15 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticePayload = postCreatePractice(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ORG_BL)
-				.then().extract().response();
+		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ORG_BL).then()
+				.extract().response();
 	}
-	
-	public Response createPracticeWithSolutions(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId,List<Integer> productList) throws IOException {
-		Map<String, Object> createNewPracticePayload = postCreatePracticeNode(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId, productList);
+
+	public Response createPracticeWithSolutions(String active, String displayName, String name, String orgType,
+			int parentId, String parentType, String sapNumber, String timezoneId, List<Integer> productList)
+			throws IOException {
+		Map<String, Object> createNewPracticePayload = postCreatePracticeNode(active, displayName, name, orgType,
+				parentId, parentType, sapNumber, timezoneId, productList);
 		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
 				.then().extract().response();
 	}
