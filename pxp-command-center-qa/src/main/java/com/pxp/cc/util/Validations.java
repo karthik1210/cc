@@ -168,16 +168,16 @@ public class Validations {
 	public void verifyCreateSystemResponseBody(Response response, String systemName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "System id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "System id was not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "System name was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), systemName);
 
 	}
 
-	public void verifyGetOrgIdResponseBody(Response response, int orgId) throws IOException {
+	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("orgId"), "System id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "Org id was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("orgId"), orgId);
 
 	}
@@ -185,13 +185,6 @@ public class Validations {
 	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=4014");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
-	}
-
-	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=401455678");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
@@ -256,7 +249,7 @@ public class Validations {
 	public void verifyCreateEnterpriseResponseBody(Response response, String enterprise) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "Enterprise id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "Enterprise id was not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Enterprise name was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), enterprise);
 
@@ -305,7 +298,7 @@ public class Validations {
 	public void verifyCreatePracticeResponseBody(Response response, String practice) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "Practice id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "Practice id was not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Practice name was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), practice);
 
@@ -1090,6 +1083,12 @@ public class Validations {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "client not found by name=" + nonExistingClientName);
+	}
+
+	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response, int orgId) throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client not found for orgId=" + orgId);
 	}
 
 }
