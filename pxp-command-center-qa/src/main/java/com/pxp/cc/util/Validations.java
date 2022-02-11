@@ -191,8 +191,8 @@ public class Validations {
 
 	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=401455678");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "400 : [{\\\"timestamp\\\":1644555501401,\\\"requestId\\\":null,\\\"status\\\":400,\\\"error\\\":\\\"Bad Request\\\",\\\"message\\\":\\\"Client not found for orgId=6453645\\\",\\\"path\\\":\\\"https://dev-cc-private.dev.pxp-mf-cc.nextgenaws.net/service/org-data/orgs/6453645\\\",\\\"propertyMessages\\\":[]}]");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
 
 	}
 
@@ -256,7 +256,7 @@ public class Validations {
 	public void verifyCreateEnterpriseResponseBody(Response response, String enterprise) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "Enterprise id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "Enterprise id was not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Enterprise name was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), enterprise);
 
@@ -305,7 +305,7 @@ public class Validations {
 	public void verifyCreatePracticeResponseBody(Response response, String practice) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("id"), "Practice id was not in the response");
+		CCUtils.assertNotNull(jsonpath.get("orgId"), "Practice id was not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Practice name was not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), practice);
 

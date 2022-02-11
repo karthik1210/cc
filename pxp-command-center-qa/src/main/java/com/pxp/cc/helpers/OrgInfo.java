@@ -26,7 +26,7 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewSystemPayload = postCreateSystem(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_SYSTEM_BL).then()
+		return given().spec(requestSpec).body(createNewSystemPayload).when().post(ApiPath.POST_ORG_BL).then()
 				.extract().response();
 	}
 
@@ -60,7 +60,7 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewEnterprisePayload = postCreateEnterprise(active, displayName, name, orgType, orgId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+		return given().spec(requestSpec).body(createNewEnterprisePayload).when().post(ApiPath.POST_ORG_BL)
 				.then().extract().response();
 	}
 
@@ -80,7 +80,7 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticePayload = postCreatePractice(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
+		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ORG_BL)
 				.then().extract().response();
 	}
 	
