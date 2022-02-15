@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.api;
 
@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetClientTypesApiTests extends BaseRest {
+public class GetClientTypesApiTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
@@ -20,7 +20,7 @@ public class GetClientTypesApiTests extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
