@@ -11,7 +11,6 @@ public class ApiPath {
 	public static final String SERVICE_CC = "/service/cc";
 	public static final String V1_CLIENTS = "/v1/clients";
 	public static final String GET_CLIENT = SERVICE_CC + V1_CLIENTS + "/";
-	public static final String GET_CLIENT_TYPES = "/service/client/clients/types";
 	public static final String GET_CLIENT_DIRECTORY = SERVICE_CC + V1_CLIENTS + "/directory";
 	public static final String POST_SYSTEM_PRACTICE = "/service/cc/v1/client-orgs";
 	public static final String GET_ORG_DETAILS = "/service/cc/v1/orgs/";
@@ -53,4 +52,5 @@ public class ApiPath {
 	public static final String SERVICE_ORG_BL = "/service/org";
 	public static final String GET_ORG_DETAILS_BL = SERVICE_ORG_BL + "/orgs/";
 	public static final String POST_ORG_BL = SERVICE_ORG_BL + "/orgs/";
+	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL+"/clients/types";
 }
