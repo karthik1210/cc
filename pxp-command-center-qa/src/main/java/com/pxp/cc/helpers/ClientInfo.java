@@ -93,5 +93,9 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTNAME_BL + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	public Response getClientTypeUsingInvalidUrl() throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_CLIENTTYPE_BL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 }

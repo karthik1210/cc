@@ -53,4 +53,5 @@ public class ApiPath {
 	public static final String GET_ORG_DETAILS_BL = SERVICE_ORG_BL + "/orgs/";
 	public static final String POST_ORG_BL = SERVICE_ORG_BL + "/orgs/";
 	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL+"/clients/types";
+	public static final String INVALID_PATH_GET_CLIENTTYPE_BL = SERVICE_CLIENT_BL+"/typesadsds";
 }

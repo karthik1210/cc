@@ -33,20 +33,13 @@ public class GetClientTypesApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getClientTypesApiResponse.getStatusCode(), 200);
 		validation.verifyGetClientTypesApiResponseBody(getClientTypesApiResponse);
 	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
-		getClientTypesApiResponse = clientInfo.getClientTypes();
+		getClientTypesApiResponse = clientInfo.getClientTypeUsingInvalidUrl();
 		logStep("Validating Response Information");
 		CCUtils.responseTimeValidation(getClientTypesApiResponse);
 		CCUtils.assertEquals(getClientTypesApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(getClientTypesApiResponse);
-	}
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code when no content")
-	public void testStatusCodeWhenNoContent() throws IOException {
-		getClientTypesApiResponse = clientInfo.getClientTypes();
-		logStep("Validating Response Information");
-		CCUtils.responseTimeValidation(getClientTypesApiResponse);
-		CCUtils.assertEquals(getClientTypesApiResponse.getStatusCode(), 204);
-		validation.verifyGetClientTypesApiResponseBody(getClientTypesApiResponse);
 	}
 }
