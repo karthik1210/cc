@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.api;
 
@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetClientTypesApiTests extends BaseRest {
+public class GetClientTypesApiTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
@@ -20,7 +20,7 @@ public class GetClientTypesApiTests extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
@@ -28,11 +28,18 @@ public class GetClientTypesApiTests extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify client types")
 	public void testClientTypes() throws IOException {
 		getClientTypesApiResponse = clientInfo.getClientTypes();
-		logStep("Validating Response Time");
+		logStep("Validating Response Information");
 		CCUtils.responseTimeValidation(getClientTypesApiResponse);
-		logStep("Validating Response code");
 		CCUtils.assertEquals(getClientTypesApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
 		validation.verifyGetClientTypesApiResponseBody(getClientTypesApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
+	public void testErrorMessageForInvalidUrl() throws IOException {
+		getClientTypesApiResponse = clientInfo.getClientTypeUsingInvalidUrl();
+		logStep("Validating Response Information");
+		CCUtils.responseTimeValidation(getClientTypesApiResponse);
+		CCUtils.assertEquals(getClientTypesApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(getClientTypesApiResponse);
 	}
 }
