@@ -26,8 +26,9 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response getSapNumber(String clientSapNumber) throws IOException {
-		String url = ApiPath.GET_CLIENTSAPNUMBER + clientSapNumber;
-		return given().spec(requestSpec).when().get(url).then().extract().response();
+		String url = ApiPath.GET_CLIENTSAPNUMBER_BL + "{sapNumber}";
+		return given().spec(requestSpec).pathParam("sapNumber", clientSapNumber).when().get(url).then().extract()
+				.response();
 	}
 
 	public Response patchClientStatus(String clientId, String clientStatus) throws IOException {
@@ -93,8 +94,14 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTNAME_BL + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
 	public Response getClientTypeUsingInvalidUrl() throws IOException {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTTYPE_BL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getClientSapNumbrUsingInvalidUrl(String clietSapNumber) throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_CLIENTSAPNUMBER_BL + clietSapNumber;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
