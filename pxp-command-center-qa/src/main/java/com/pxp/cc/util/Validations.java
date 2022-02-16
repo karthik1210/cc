@@ -1091,4 +1091,24 @@ public class Validations {
 		CCUtils.assertEquals(message, "Client not found for orgId=" + orgId);
 	}
 
+	public void verifyResponseForExistingClientSapNumber(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("clientId"), "Client id is not in the response");
+		CCUtils.assertNotNull(jsonpath.get("name"), "Client name is not in the response");
+	}
+	
+	public void verifyResponseForNonExistingClientSapNumber(Response response, String nonExistingClientSapNumber)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "client not found by sap number=" + nonExistingClientSapNumber);
+	}
+	
+	public void verifyErrorMessageIfClientSapNumberIsNull(Response response) throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message,
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"sapnumber\\");
+	}
+
 }
