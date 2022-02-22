@@ -316,7 +316,7 @@ public class EditClientApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForClientNameField(updateClientApiResponse);
+		validation.verifyErrorMessageInResponseForClientNameField(updateClientApiResponse, ccUser.getClientName());
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client and enter existing client sap number and verify error message for sap number field")

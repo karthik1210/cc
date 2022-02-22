@@ -51,8 +51,11 @@ public class ApiPath {
 	public static final String SERVICE_ORG_BL = "/service/org";
 	public static final String GET_ORG_DETAILS_BL = SERVICE_ORG_BL + "/orgs/";
 	public static final String POST_ORG_BL = SERVICE_ORG_BL + "/orgs/";
-	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL+"/clients/types";
-	public static final String INVALID_PATH_GET_CLIENTTYPE_BL = SERVICE_CLIENT_BL+"/typesadsds";
+	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL + "/clients/types";
+	public static final String INVALID_PATH_GET_CLIENTTYPE_BL = SERVICE_CLIENT_BL + "/typesadsds";
 	public static final String GET_CLIENTSAPNUMBER_BL = SERVICE_CLIENT_BL + "/clients/sapnumber/";
 	public static final String INVALID_PATH_GET_CLIENTSAPNUMBER_BL = SERVICE_CLIENT_BL + "/clients/sapnumber#1234sdF/";
+	public static final String SERVICE_CLIENT_DL = "/service/client-data";
+	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
+	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
 }
