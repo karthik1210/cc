@@ -11,12 +11,10 @@ public class ApiPath {
 	public static final String SERVICE_CC = "/service/cc";
 	public static final String V1_CLIENTS = "/v1/clients";
 	public static final String GET_CLIENT = SERVICE_CC + V1_CLIENTS + "/";
-	public static final String GET_CLIENT_TYPES = SERVICE_CC + V1_CLIENTS + "/types";
 	public static final String GET_CLIENT_DIRECTORY = SERVICE_CC + V1_CLIENTS + "/directory";
 	public static final String POST_SYSTEM_PRACTICE = "/service/org/orgs";
 	public static final String GET_ORG_DETAILS = "/service/cc/v1/orgs/";
 	public static final String POST_ENTERPRISE_PRACTICE = "/service/cc/v1/orgs";
-	public static final String GET_CLIENTSAPNUMBER = SERVICE_CC + V1_CLIENTS + "/sapnumber/";
 	public static final String GET_PARENT_DROPDOWN = "/TYPES​​/";
 	public static final String PUT_ORG_CONTROLLER = "/service/cc/v1/orgs";
 	public static final String GET_CLIENT_STATUS = "/status/";
@@ -51,4 +49,15 @@ public class ApiPath {
 	public static final String GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/nameabc##$122/";
 	public static final String GET_ORGID = SERVICE_ORG_BL + "/orgs/";
+
+	public static final String GET_ORG_DETAILS_BL = SERVICE_ORG_BL + "/orgs/";
+	public static final String POST_ORG_BL = SERVICE_ORG_BL + "/orgs/";
+	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL + "/clients/types";
+	public static final String INVALID_PATH_GET_CLIENTTYPE_BL = SERVICE_CLIENT_BL + "/typesadsds";
+	public static final String GET_CLIENTSAPNUMBER_BL = SERVICE_CLIENT_BL + "/clients/sapnumber/";
+	public static final String INVALID_PATH_GET_CLIENTSAPNUMBER_BL = SERVICE_CLIENT_BL + "/clients/sapnumber#1234sdF/";
+	public static final String SERVICE_CLIENT_DL = "/service/client-data";
+	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
+	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
+
 }

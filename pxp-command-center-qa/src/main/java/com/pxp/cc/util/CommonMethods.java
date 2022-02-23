@@ -61,13 +61,13 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(id = "emailError")
 	private WebElement errorEmailRequired;
 
-	@FindBy(xpath = "//div[text()='Username already in use']")
+	@FindBy(xpath = "//div[normalize-space()='Username already in use']")
 	private WebElement errorUniqueUsername;
 
-	@FindBy(xpath = "//div[text()='Email already in use']")
+	@FindBy(xpath = "//div[normalize-space()='Email already in use']")
 	private WebElement errorUniqueEmail;
 
-	@FindBy(xpath = "//div[text()='Mobile number already in use']")
+	@FindBy(xpath = "//div[normalize-space()='Mobile number already in use']")
 	private WebElement errorUniqueMobileNumber;
 
 	@FindBy(id = "validMobileNumberError")
@@ -361,21 +361,20 @@ public class CommonMethods extends CCMainPage {
 		log("Verifying status label text");
 		CCUtils.assertEquals(labelStatus.getText().trim(), "Status *");
 		log("Status label text is " + labelStatus.getText().trim());
-		log("Verifying active label and radio button are displayed on add new internal user page");
+		log("Verifying active label and radio button are displayed on add new user page");
 		CCUtils.assertEquals(labelActive.getText().trim(), "Active");
-		CCUtils.assertTrue(radioButtonActive.isDisplayed(),
-				"Active radiobutton is not present on add new internal user page");
-		log("Verifying inactive label and radio button are displayed on add new internal user page");
+		CCUtils.assertTrue(radioButtonActive.isDisplayed(), "Active radiobutton is not present on add new user page");
+		log("Verifying inactive label and radio button are displayed on add new user page");
 		CCUtils.assertEquals(labelInactive.getText().trim(), "Inactive");
 		CCUtils.assertTrue(radioButtonInactive.isDisplayed(),
-				"Inactive radiobutton is not present on add new internal user page");
+				"Inactive radiobutton is not present on add new user page");
 	}
 
 	public void verifyActiveRadioButtonByDefaultSelected() {
 		CCUtils.verifyAndWaitForElement(radioButtonActive, driver);
 		log("Verifying active button is by default selected");
 		CCUtils.assertTrue(radioButtonActive.isSelected(),
-				"Active button is not displayed on add new internal user page and selected");
+				"Active button is not displayed on add new user page and selected");
 	}
 
 	public String getFirstNameValue() {
