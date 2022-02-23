@@ -114,7 +114,15 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTNAME_DL + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	public Response getClientTypeUsingInvalidUrl_DataLayer() throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_CLIENTTYPE_DL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
+	public Response getClientTypes_DataLayer() {
+		String url = ApiPath.GET_CLIENT_TYPES_DL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 
 }
