@@ -61,4 +61,5 @@ public class ApiPath {
 	public static final String SERVICE_ORG_DL = "/service/org-data";
 	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/orgs/";
 	public static final String POST_ORG_DL = SERVICE_ORG_DL + "/orgs";
+	public static final String INVALID_PATH_GET_DETAILS_DL = SERVICE_ORG_DL + "/orgsnameabc##$122/";
 }

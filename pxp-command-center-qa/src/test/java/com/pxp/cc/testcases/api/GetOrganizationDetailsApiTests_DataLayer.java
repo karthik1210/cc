@@ -103,4 +103,14 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForClientIdInOrgIdField(fetchOrgDetailsApiResponse);
 	}
 
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
+	public void testErrorMessageForInvalidUrl() throws IOException {
+		fetchOrgDetailsApiResponse = orgInfo
+				.getOrgIdUsingInvalidUrl_DataLayer(Integer.parseInt(testData.getProperty("api.existing.orgid")));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
+		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(fetchOrgDetailsApiResponse);
+	}
+
 }
