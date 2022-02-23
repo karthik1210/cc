@@ -60,4 +60,6 @@ public class ApiPath {
 	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
 
+	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL+"/clients/types";
+	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL+"/typesadsds";
 }
