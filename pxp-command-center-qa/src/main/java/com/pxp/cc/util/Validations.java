@@ -11,13 +11,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import rp.com.google.common.base.CharMatcher;
@@ -185,7 +188,7 @@ public class Validations {
 
 	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=4014");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for orgId=4014");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}

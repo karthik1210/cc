@@ -58,4 +58,7 @@ public class ApiPath {
 	public static final String SERVICE_CLIENT_DL = "/service/client-data";
 	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
+	public static final String SERVICE_ORG_DL = "/service/org-data";
+	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/orgs/";
+	public static final String POST_ORG_DL = SERVICE_ORG_DL + "/orgs";
 }
