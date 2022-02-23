@@ -97,11 +97,20 @@ public class OrgInfo extends BaseRest {
 				.then().extract().response();
 	}
 
+	public Response createAgnosticPracticeNode(String active, String displayName, String name, String orgType,
+			int parentId, String parentType, String sapNumber, String timezoneId, List<Integer> products)
+			throws IOException {
+		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(active, displayName, name, orgType,
+				parentId, parentType, sapNumber, timezoneId, products);
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_SYSTEM_PRACTICE)
+				.then().extract().response();
+	}
+
 	public Response createPracticeWithSolutions(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId, List<Integer> productList)
 			throws IOException {
-		Map<String, Object> createNewPracticePayload = postCreatePractice(name, displayName, sapNumber, active,
-				timezoneId, productList, orgType, parentId, parentType);
+		Map<String, Object> createNewPracticePayload = postCreatePracticeNode(active, displayName, name, orgType,
+				parentId, parentType, sapNumber, timezoneId, productList);
 		return given().spec(requestSpec).body(createNewPracticePayload).when().post(ApiPath.POST_ENTERPRISE_PRACTICE)
 				.then().extract().response();
 	}
@@ -273,6 +282,22 @@ public class OrgInfo extends BaseRest {
 		practiceMap.put("orgType", orgType);
 		practiceMap.put("parentId", parentId);
 		practiceMap.put("parentType", parentType);
+		return practiceMap;
+	}
+
+	public static Map<String, Object> postCreatePracticeNode(String active, String displayName, String name,
+			String orgType, int parentId, String parentType, String sapNumber, String timezoneId,
+			List<Integer> products) {
+		Map<String, Object> practiceMap = new HashMap<String, Object>();
+		practiceMap.put("active", active);
+		practiceMap.put("displayName", displayName);
+		practiceMap.put("name", name);
+		practiceMap.put("orgType", orgType);
+		practiceMap.put("parentId", parentId);
+		practiceMap.put("parentType", parentType);
+		practiceMap.put("sapNumber", sapNumber);
+		practiceMap.put("timezoneId", timezoneId);
+		practiceMap.put("products", products);
 		return practiceMap;
 	}
 }
