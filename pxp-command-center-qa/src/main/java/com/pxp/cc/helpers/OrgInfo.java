@@ -145,7 +145,7 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(name, displayName, sapNumber, active,
 				timezoneId, products, orgType, parentId, parentType);
 
-		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_SYSTEM_PRACTICE)
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL)
 				.then().extract().response();
 	}
 
