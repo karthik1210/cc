@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetClientTypesApiTests_DataBaseLayer extends BaseRest {
+public class GetClientTypesApiTests_DataLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
