@@ -9,5 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Solutions {
 	private Integer activeCount;
-	private Integer productId;
+	private Integer solutionId;
 }
+
