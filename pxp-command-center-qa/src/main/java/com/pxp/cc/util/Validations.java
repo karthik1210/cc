@@ -121,9 +121,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseForClientNameField(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForClientNameField(Response response, String nonExistingClientName)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client name already use");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "client not found by name=" + nonExistingClientName);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
@@ -1096,14 +1097,14 @@ public class Validations {
 		CCUtils.assertNotNull(jsonpath.get("clientId"), "Client id is not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Client name is not in the response");
 	}
-	
+
 	public void verifyResponseForNonExistingClientSapNumber(Response response, String nonExistingClientSapNumber)
 			throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
 		CCUtils.assertEquals(message, "client not found by sap number=" + nonExistingClientSapNumber);
 	}
-	
+
 	public void verifyErrorMessageIfClientSapNumberIsNull(Response response) throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
