@@ -14,9 +14,6 @@ import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
 
-	public static final String HEADER_DL_ORGS = "pxp-cc-user";
-	public static final String HEADER_DL_ORGS_VALUE = "1234";
-
 	public Response getOrgNodesDetails(String orgId) {
 
 		String url = ApiPath.GET_ORG_DETAILS + orgId;
@@ -34,12 +31,12 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrg_DataLayer(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId) throws IOException {
+			String parentType, String sapNumber, String timezoneId, int userId) throws IOException {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
-
-		return given().spec(requestSpec).header(HEADER_DL_ORGS, HEADER_DL_ORGS_VALUE).body(createNewOrgPayload).when()
+		
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
 				.post(ApiPath.POST_ORG_DL).then().extract().response();
 	}
 

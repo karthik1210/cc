@@ -64,4 +64,5 @@ public class ApiPath {
 	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL+"/clients/types";
 	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL+"/typesadsds";
 	public static final String INVALID_PATH_GET_ORGID_DL = SERVICE_ORG_DL + "/orgsnameabc##$122/";
+	public static final String PXP_CC_USER = "pxp-cc-user";
 }

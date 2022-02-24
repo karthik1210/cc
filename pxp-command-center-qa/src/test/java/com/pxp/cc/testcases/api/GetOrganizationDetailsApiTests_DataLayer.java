@@ -34,8 +34,9 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), systemName, testData.getProperty("api.system.orgtype"),
 				Integer.parseInt(testData.getProperty("api.parentid")), testData.getProperty("api.parenttype"),
-				systemSapNumber, testData.getProperty("api.system.timezoneid"));
-
+				systemSapNumber, testData.getProperty("api.system.timezoneid"),
+		Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		
 		int orgId = createSystemApiResponse.jsonPath().get("orgId");
 		logStep("Fetch newly created system details using system id");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
@@ -55,8 +56,9 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("api.enterprise.parentid")),
 				testData.getProperty("api.enterprise.parenttype"), enterpriseSapNumber,
-				testData.getProperty("api.enterprise.timezoneid"));
-
+				testData.getProperty("api.enterprise.timezoneid"),
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		
 		int orgId = createEnterpriseApiResponse.jsonPath().get("orgId");
 		logStep("Fetch newly created enterprise details using enterprise id");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
@@ -76,7 +78,8 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("api.practice.parentid")),
 				testData.getProperty("api.practice.parenttype"), practiceSapNumber,
-				testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 
 		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
 		logStep("Fetching Practice Id Response body");
