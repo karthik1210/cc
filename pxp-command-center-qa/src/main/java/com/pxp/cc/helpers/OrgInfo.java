@@ -290,7 +290,7 @@ public class OrgInfo extends BaseRest {
 		practiceMap.put("products", products);
 		return practiceMap;
 	}
-	
+
 	public Response getOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
 		String url = ApiPath.INVALID_PATH_GET_ORGID_DL + orgId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
