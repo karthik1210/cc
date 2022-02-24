@@ -188,7 +188,7 @@ public class Validations {
 
 	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for orgId=4014");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=4014");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
@@ -1092,7 +1092,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response, int orgId) throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client not found for orgId=" + orgId);
+		CCUtils.assertEquals(message, "Org not found for orgId=" + orgId);
 	}
 
 	public void verifyResponseForExistingClientSapNumber(Response response) throws IOException {
