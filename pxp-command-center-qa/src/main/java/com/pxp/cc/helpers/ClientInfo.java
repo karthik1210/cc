@@ -104,16 +104,17 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTSAPNUMBER_BL + clietSapNumber;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getClientName_DataLayer(String clientName) throws IOException {
 		String url = ApiPath.GET_CLIENTNAME_DL + "{name}";
 		return given().spec(requestSpec).pathParam("name", clientName).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getClientNameUsingInvalidUrl_DataLayer(String clientName) throws IOException {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTNAME_DL + clientName;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
 	public Response getClientTypeUsingInvalidUrl_DataLayer() throws IOException {
 		String url = ApiPath.INVALID_PATH_GET_CLIENTTYPE_DL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -121,6 +122,29 @@ public class ClientInfo extends BaseRest {
 
 	public Response getClientTypes_DataLayer() {
 		String url = ApiPath.GET_CLIENT_TYPES_DL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response createNewClientUpdateClient_DataLayer(String active, String clientId, String clientName,
+			String sapNumber, String testClient, String type, String timezoneId, int userId) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
+				sapNumber, testClient, type, timezoneId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
+				.post(ApiPath.POST_CLIENT_DL).then().extract().response();
+	}
+
+	public Response createNewClientUpdateClient_DataLayerUsingInvalidUrl(String active, String clientId,
+			String clientName, String sapNumber, String testClient, String type, String timezoneId, int userId)
+			throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
+				sapNumber, testClient, type, timezoneId);
+		String invalidUrl = ApiPath.POST_CLIENT_DL + "abc";
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
+				.post(invalidUrl).then().extract().response();
+	}
+	
+	public Response getClientDetails_DataLayer(String clientId) {
+		String url = ApiPath.GET_CLIENT_DL + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
