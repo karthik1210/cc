@@ -147,6 +147,4 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.GET_CLIENT_DL + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
-
 }

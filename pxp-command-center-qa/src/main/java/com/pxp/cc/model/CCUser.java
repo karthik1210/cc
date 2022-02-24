@@ -259,7 +259,6 @@ public class CCUser {
 		setInactivePracticeNodeTestData();
 		setActiveClientName(getProperty("new.active.client.name"));
 		setInactiveClientName(getProperty("new.inactive.client.name"));
-		setOrgClientId(getProperty("api.org.client.id"));
 		setOrgInvalidId(Integer.parseInt(getProperty("api.org.invalid.id")));
 		setNonExistingOrgId(getProperty("api.nonexisting.orgid"));
 		setSearchSymbolInGeneralSetting(getProperty("general.setting.search.sybmol"));
