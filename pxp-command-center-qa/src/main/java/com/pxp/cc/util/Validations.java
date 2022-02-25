@@ -128,42 +128,39 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
+
 	public void verifyErrorMessageInResponseForSapNumberField(Response response, String nonExistingClientSapNumber)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "client not found by sap number=" + nonExistingClientSapNumber);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"client not found by sap number=" + nonExistingClientSapNumber);
 
 	}
 
 	public void verifyErrorMessageInResponseForClientTypeField(Response response, String clientType)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client type=" + clientType + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client type=" + clientType + " does not exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyErrorMessageInResponseForClientTimezoneIdField(Response response, String clientTimezoneId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "TimezoneId=" + clientTimezoneId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "TimezoneId=" + clientTimezoneId + " does not exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyErrorMessageInResponseForClientSapNumberField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Sap number size maximum 50 character");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyMaximumCharacterErrorMessageInResponseForClientNameField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Name size maximum 100 character");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyCreateSystemResponseBody(Response response, String systemName) throws IOException {
@@ -175,19 +172,31 @@ public class Validations {
 
 	}
 
-	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId) throws IOException {
+	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String systemName, String orgType,
+			String clientType, String displayName, String sapNumber, String systemeActive, String testClient,
+			String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertNotNull(jsonpath.get("orgId"), "Org id was not in the response");
-		CCUtils.assertEquals(response.jsonPath().get("orgId"), orgId);
-
+		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), systemName);
+		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+		CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
+		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), systemeActive);
+		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
+		if (Objects.isNull(jsonpath.get("timezone"))) {
+			Log4jUtil.log("timezone is null");
+		} else {
+			Map<String, String> timezone = response.jsonPath().getMap("timezone");
+			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+		}
 	}
 
-	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for org id=4014");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifySearchSystemResponseBody(Response response, String orgId, String systemName, String orgType,
@@ -1089,7 +1098,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response, int orgId) throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client not found for orgId=" + orgId);
+		CCUtils.assertEquals(message, "Org not found for orgId=" + orgId);
 	}
 
 	public void verifyResponseForExistingClientSapNumber(Response response) throws IOException {
@@ -1111,7 +1120,33 @@ public class Validations {
 		CCUtils.assertEquals(message,
 				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"sapnumber\\");
 	}
-	
-	
-	
+
+	public void verifyErrorMessageInResponseForClientName(Response response, String existingClientName)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Client name=" + existingClientName + " already in use");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetClientDetailsApiResponseBody(Response response, String clientId, String clientName,
+			String type, String sapNumber, String active, String testClient, String timezoneId,
+			String timezoneDisplayName) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
+		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
+		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
+		if (Objects.isNull(jsonpath.get("timezone"))) {
+			Log4jUtil.log("timezone is null");
+		} else {
+			Map<String, String> timezone = response.jsonPath().getMap("timezone");
+			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+			CCUtils.assertEquals(timezone.get("displayName").toString(), timezoneDisplayName);
+		}
+	}
+
 }

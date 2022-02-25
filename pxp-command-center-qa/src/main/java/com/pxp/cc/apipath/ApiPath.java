@@ -58,8 +58,15 @@ public class ApiPath {
 	public static final String SERVICE_CLIENT_DL = "/service/client-data";
 	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
+	public static final String SERVICE_ORG_DL = "/service/org-data";
+	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/orgs/";
+	public static final String POST_ORG_DL = SERVICE_ORG_DL + "/orgs";
 	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL+"/clients/types";
 	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL+"/typesadsds";
 	public static final String GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber/";
 	public static final String INVALID_PATH_GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber#1234sdF/";
+	public static final String INVALID_PATH_GET_ORGID_DL = SERVICE_ORG_DL + "/orgsnameabc##$122/";
+	public static final String PXP_CC_USER = "pxp-cc-user";
+	public static final String POST_CLIENT_DL = SERVICE_CLIENT_DL + "/clients";
+	public static final String GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
 }
