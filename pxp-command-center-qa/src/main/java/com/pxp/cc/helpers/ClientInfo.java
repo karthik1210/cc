@@ -123,6 +123,14 @@ public class ClientInfo extends BaseRest {
 		String url = ApiPath.GET_CLIENT_TYPES_DL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
+	public Response getClientSapNumber_DataLayer(String clientSapNumber) throws IOException {
+		String url = ApiPath.GET_CLIENTSAPNUMBER_DL + "{sapNumber}";
+		return given().spec(requestSpec).pathParam("sapNumber", clientSapNumber).when().get(url).then().extract()
+				.response();
+	}
+	public Response getClientSapNumbrUsingInvalidUrl_DataLayer(String clietSapNumber) throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_CLIENTSAPNUMBER_DL + clietSapNumber;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 }

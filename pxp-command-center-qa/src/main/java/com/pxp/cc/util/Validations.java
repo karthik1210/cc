@@ -128,10 +128,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-
-	public void verifyErrorMessageInResponseForSapNumberField(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForSapNumberField(Response response, String nonExistingClientSapNumber)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client sap number already use");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "client not found by sap number=" + nonExistingClientSapNumber);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
@@ -1111,5 +1111,7 @@ public class Validations {
 		CCUtils.assertEquals(message,
 				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"sapnumber\\");
 	}
-
+	
+	
+	
 }
