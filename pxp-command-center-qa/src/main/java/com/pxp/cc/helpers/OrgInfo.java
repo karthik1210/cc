@@ -3,13 +3,16 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.UpdateProductStatus;
+
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -109,6 +112,15 @@ public class OrgInfo extends BaseRest {
 				.then().extract().response();
 	}
 
+	public Response createAgnosticPracticeNode(String active, String displayName, String name, String orgType,
+			int parentId, String parentType, String sapNumber, String timezoneId, List<Integer> products)
+			throws IOException {
+		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(active, displayName, name, orgType,
+				parentId, parentType, sapNumber, timezoneId, products);
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_SYSTEM_PRACTICE)
+				.then().extract().response();
+	}
+
 	public Response createPracticeWithSolutions(String active, String displayName, String name, String orgType,
 			int parentId, String parentType, String sapNumber, String timezoneId, List<Integer> productList)
 			throws IOException {
@@ -141,14 +153,14 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().patch(url).then().extract().response();
 	}
 
-	public Response createAgnosticPracticeNode(String active, String displayName, String name, String orgType,
-			int parentId, String parentType, String sapNumber, String timezoneId, List<Integer> products)
+	public Response createAgnosticPracticeNode(String name, String displayName, String sapNumber, String active,
+			String timezoneId, List<Map<String, Object>> products, String orgType, int parentId, String parentType)
 			throws IOException {
 
-		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(active, displayName, name, orgType,
-				parentId, parentType, sapNumber, timezoneId, products);
+		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(name, displayName, sapNumber, active,
+				timezoneId, products, orgType, parentId, parentType);
 
-		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_SYSTEM_PRACTICE)
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL)
 				.then().extract().response();
 	}
 
@@ -270,6 +282,22 @@ public class OrgInfo extends BaseRest {
 		solutionMap.put("statusDate", statusDate);
 		solutionMap.put("statusNotes", statusNotes);
 		return solutionMap;
+	}
+
+	public static Map<String, Object> postCreatePracticeNode(String name, String displayName, String sapNumber,
+			String active, String timezoneId, List<Map<String, Object>> products, String orgType, int parentId,
+			String parentType) {
+		Map<String, Object> practiceMap = new HashMap<String, Object>();
+		practiceMap.put("name", name);
+		practiceMap.put("displayName", displayName);
+		practiceMap.put("sapNumber", sapNumber);
+		practiceMap.put("active", active);
+		practiceMap.put("timezoneId", timezoneId);
+		practiceMap.put("solutions", products);
+		practiceMap.put("orgType", orgType);
+		practiceMap.put("parentId", parentId);
+		practiceMap.put("parentType", parentType);
+		return practiceMap;
 	}
 
 	public static Map<String, Object> postCreatePracticeNode(String active, String displayName, String name,

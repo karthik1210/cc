@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.pojos;
 
@@ -9,5 +9,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Solutions {
 	private Integer activeCount;
-	private Integer productId;
+	private Integer solutionId;
 }
+

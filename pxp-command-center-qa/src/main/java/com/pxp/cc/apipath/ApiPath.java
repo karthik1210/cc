@@ -44,11 +44,12 @@ public class ApiPath {
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
 	public static final String GET_AUTOSUGGESTION_CLIENT = SERVICE_CC + V1_CLIENTS + "/auto-suggestion-client";
 	public static final String SERVICE_CLIENT_BL = "/service/client";
+	public static final String SERVICE_ORG_BL = "/service/org";
 	public static final String POST_CLIENT_BL = SERVICE_CLIENT_BL + "/clients";
 	public static final String GET_CLIENT_BL = SERVICE_CLIENT_BL + "/clients/";
 	public static final String GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/nameabc##$122/";
-	public static final String SERVICE_ORG_BL = "/service/org";
+
 	public static final String GET_ORG_DETAILS_BL = SERVICE_ORG_BL + "/orgs/";
 	public static final String POST_ORG_BL = SERVICE_ORG_BL + "/orgs/";
 	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL + "/clients/types";
@@ -58,9 +59,11 @@ public class ApiPath {
 	public static final String SERVICE_CLIENT_DL = "/service/client-data";
 	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
+
 	public static final String SERVICE_ORG_DL = "/service/org-data";
 	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/orgs/";
 	public static final String POST_ORG_DL = SERVICE_ORG_DL + "/orgs";
+
 	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL+"/clients/types";
 	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL+"/typesadsds";
 	public static final String GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber/";

@@ -10,9 +10,11 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
@@ -88,7 +90,7 @@ public class Validations {
 						for (int i = 0; i < jsonArray.length(); i++) {
 							jsonObject = jsonArray.getJSONObject(i);
 							CCUtils.assertTrue(actualSolutionList.contains(
-									new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("productId"))),
+									new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("solutionId"))),
 									"Purchased Solution is not present");
 						}
 					} else if (jsonArray.length() == 0) {
@@ -101,6 +103,119 @@ public class Validations {
 				CCUtils.assertTrue(solutionsList.isEmpty(), "Solutions list is not empty");
 			}
 		}
+	}
+
+	public void verifySearchClientIdResponseBody(Response response, String clientId, String clientName, String type,
+			String sapNumber, String active, String testClient, String timezoneId, String timezoneDisplayName,
+			Integer practiceCountValue, List<Map<String, Object>> purchasedSolutionList) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
+		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
+		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
+		validateTimeZoneInGetClientDetails(response, jsonpath, timezoneId, timezoneDisplayName);
+		int practiceCount = jsonpath.get("practiceCount");
+		CCUtils.assertEquals(practiceCount, practiceCountValue);
+		List<Integer> solutionsList = new ArrayList<Integer>();
+		solutionsList = response.jsonPath().getList("solutions");
+		if (practiceCount == 0) {
+			Boolean solutionsObjectIsNull = Objects.isNull(jsonpath.get("solutions"));
+			CCUtils.assertTrue(solutionsObjectIsNull, "solutions object is not null");
+		} else {
+
+		}
+
+		Integer value;
+		List<Integer> solutionId = new ArrayList<Integer>();
+		for (Map<String, Object> solutionList : purchasedSolutionList) {
+			for (Entry<String, Object> entry : solutionList.entrySet()) {
+				if (entry.getKey().contains("solutionId")) {
+					value = Integer.parseInt(entry.getValue().toString());
+					solutionId.add(value);
+				}
+			}
+		}
+
+		Log4jUtil.log(solutionId.toString());
+
+		Map<Integer, Integer> productMap = new HashMap<Integer, Integer>();
+		for (Integer productId : solutionId) {
+			if (productMap.containsKey(productId)) {
+				productMap.put(productId, productMap.get(productId) + 1);
+			} else {
+				productMap.put(productId, 1);
+			}
+		}
+
+		List<Solutions> actualSolutionList = new ArrayList<Solutions>();
+		for (Map.Entry<Integer, Integer> entry : productMap.entrySet()) {
+			actualSolutionList.add(new Solutions(entry.getValue(), entry.getKey()));
+			System.out.println("Product id" + entry.getKey() + "Active Count" + entry.getValue());
+		}
+		JSONArray jsonArray = new JSONArray(response.jsonPath().getList("solutions"));
+		JSONObject jsonObject;
+		if (actualSolutionList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						actualSolutionList.contains(
+								new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("solutionId"))),
+						"Purchased Solution is not present");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("solution list is empty");
+		} else {
+			Log4jUtil.log("Size of actual solution list and expected solution list is not same");
+		}
+	}
+
+	public void validateTimeZoneInGetClientDetails(Response response, JsonPath jsonpath, String timezoneId,
+			String timezoneDisplayName) {
+		if (Objects.isNull(jsonpath.get("timezone"))) {
+			Log4jUtil.log("timezone is null");
+		} else {
+			Map<String, String> timezone = response.jsonPath().getMap("timezone");
+			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+			CCUtils.assertEquals(timezone.get("displayName").toString(), timezoneDisplayName);
+		}
+	}
+
+	public int validateActiveandSolutionStatusInGetPracticeDetails(List<Response> response) {
+		int flag = 0;
+		Log4jUtil.log("print size of response : " + response.size());
+		if (response.size() > 0) {
+			Log4jUtil.log("Print List of response :" + response.toString());
+			for (Response res : response) {
+				Log4jUtil.log("Print response data solutions key value : " + res.jsonPath().getList("solutions"));
+				if (res.jsonPath().get("active").equals(true)) {
+					if (validateSolutionStatusOfGetOrgDetails(res.jsonPath().getList("solutions"))) {
+						flag++;
+						Log4jUtil.log("Verified that a practice is created with solutions");
+					} else {
+						Log4jUtil.log("Active practice is created without solutions");
+					}
+				} else
+					Log4jUtil.log("Inactive practice is created");
+			}
+		} else {
+			Log4jUtil.log("Response List is null");
+		}
+		return flag;
+	}
+
+	public Boolean validateSolutionStatusOfGetOrgDetails(List<Object> solutions) {
+		for (Object obj : solutions) {
+			String jsonInString = new Gson().toJson(obj);
+			JSONObject mJSONObject = new JSONObject(jsonInString);
+			if (mJSONObject.has("status") && Objects.nonNull(mJSONObject.getString("status"))) {
+				Log4jUtil.log("Print the value of status key within solutions : " + mJSONObject.getString("status"));
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public void verifyNullErrorMessageResponseBody(Response response) throws IOException {
@@ -616,7 +731,7 @@ public class Validations {
 
 	public void verifyErrorResponseBodyForClientIdField(Response response, String clientId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Clientid=" + clientId + " doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "client not found by clientId=" + clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 

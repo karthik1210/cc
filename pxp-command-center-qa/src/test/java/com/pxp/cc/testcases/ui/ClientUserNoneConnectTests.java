@@ -12,7 +12,7 @@ import com.pxp.cc.objectmaps.ClientUsersPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.util.CommonMethods;
 
-public class ClientUserConnectingResourceTests extends CommandCenterGenericTest {
+public class ClientUserNoneConnectTests extends CommandCenterGenericTest {
 
 	public ClientDirectoryPage clientDirectoryPage;
 	public CommandCenterUsersPage commandCenterUsersPage;
@@ -47,7 +47,7 @@ public class ClientUserConnectingResourceTests extends CommandCenterGenericTest 
 		clientUserNoneConnectPage.verifySearchTextbox();
 		clientUserNoneConnectPage.verifyCancelButtonPresentOnNoneConnectPopup();
 		clientUserNoneConnectPage.verifyConnectButtonPresentOnNoneConnectPopup();
-		clientUserNoneConnectPage.verifyCrossIconIsDisplayed();
+		clientUserNoneConnectPage.verifyCloseWindowIsDisplayed();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search functionality in connect existing resource popup")
@@ -55,7 +55,7 @@ public class ClientUserConnectingResourceTests extends CommandCenterGenericTest 
 		logStep("Searching for staff/provider in search textbox in connect existing resource popup");
 		String searchData = clientUserNoneConnectPage.searchProvider(testData.getProperty("search.provider"));
 		logStep("Verify selected staff/provider from search list and clear button are displayed in search textbox");
-		clientUserNoneConnectPage.verifySearchTextboxdataAfterSelectingProvider(searchData);
+		clientUserNoneConnectPage.verifySearchTextboxDataAfterSelectingProvider(searchData);
 		clientUserNoneConnectPage.verifyClearButtonPresentInSearchTextbox();
 		logStep("verify after selecting data from search text box mandatory override message with two radio buttons should appear");
 		clientUserNoneConnectPage.verifyOverrideDemographicDetailsMessage();
@@ -112,7 +112,7 @@ public class ClientUserConnectingResourceTests extends CommandCenterGenericTest 
 	}
 	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cross icon and cancel button functionality on connect existing resource popup")
-	public void testCrossIconAndCancelButtonFunctionality() throws Exception {
+	public void testCloseWindowAndCancelButtonFunctionality() throws Exception {
 		logStep("Search/Select any provider from search textbox");
 		clientUserNoneConnectPage.searchProvider(testData.getProperty("search.provider"));
 		logStep("Click the cancel button on connect existing resource pop up");
