@@ -129,12 +129,12 @@ public class Validations {
 
 	}
 
-	public void verifyErrorMessageInResponseForSapNumberField(Response response, String existingClientSapNumber)
+	public void verifyErrorMessageInResponseForSapNumberField(Response response, String nonExistingClientSapNumber)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Client sap number=" + existingClientSapNumber + " already in use");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+				"client not found by sap number=" + nonExistingClientSapNumber);
+
 	}
 
 	public void verifyErrorMessageInResponseForClientTypeField(Response response, String clientType)
@@ -171,27 +171,27 @@ public class Validations {
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), systemName);
 
 	}
-	
+
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String systemName, String orgType,
 			String clientType, String displayName, String sapNumber, String systemeActive, String testClient,
 			String timezoneId) throws IOException {
-			JsonPath jsonpath = new JsonPath(response.getBody().asString());
-			CCUtils.assertNotNull(jsonpath, "Response is null");
-			CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
-			CCUtils.assertEquals(jsonpath.get("name").toString(), systemName);
-			CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
-			CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
-			CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
-			CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
-			CCUtils.assertEquals(jsonpath.get("active").toString(), systemeActive);
-			CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
-			if (Objects.isNull(jsonpath.get("timezone"))) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), systemName);
+		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+		CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
+		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), systemeActive);
+		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
+		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
-			} else {
+		} else {
 			Map<String, String> timezone = response.jsonPath().getMap("timezone");
 			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
-			}
-			}
+		}
+	}
 
 	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());

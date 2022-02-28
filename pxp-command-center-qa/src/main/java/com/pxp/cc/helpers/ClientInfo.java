@@ -125,12 +125,25 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getClientSapNumber_DataLayer(String clientSapNumber) throws IOException {
+		String url = ApiPath.GET_CLIENTSAPNUMBER_DL + "{sapNumber}";
+		return given().spec(requestSpec).pathParam("sapNumber", clientSapNumber).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response getClientSapNumbrUsingInvalidUrl_DataLayer(String clietSapNumber) throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_CLIENTSAPNUMBER_DL + clietSapNumber;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+
+	}
+
 	public Response createNewClientUpdateClient_DataLayer(String active, String clientId, String clientName,
 			String sapNumber, String testClient, String type, String timezoneId, int userId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
 				sapNumber, testClient, type, timezoneId);
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
 				.post(ApiPath.POST_CLIENT_DL).then().extract().response();
+
 	}
 
 	public Response createNewClientUpdateClient_DataLayerUsingInvalidUrl(String active, String clientId,
@@ -142,7 +155,7 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
 				.post(invalidUrl).then().extract().response();
 	}
-	
+
 	public Response getClientDetails_DataLayer(String clientId) {
 		String url = ApiPath.GET_CLIENT_DL + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
