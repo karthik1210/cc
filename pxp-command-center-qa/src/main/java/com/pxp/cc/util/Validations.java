@@ -1263,5 +1263,10 @@ public class Validations {
 			CCUtils.assertEquals(timezone.get("displayName").toString(), timezoneDisplayName);
 		}
 	}
-
+	
+	public void verifyResponseForNonExistingClientId(Response response, int nonExistingClientId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=" + nonExistingClientId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }

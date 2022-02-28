@@ -37,7 +37,7 @@ public class GetClientOrgControllerAgnosticPracticeTests extends BaseRest {
 	public void testFetchDetailsOfNewlyCreatedAgnosticPractice() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -78,7 +78,7 @@ public class GetClientOrgControllerAgnosticPracticeTests extends BaseRest {
 	public void testFetchDetailsOfNewlyCreatedMultiplePractices() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 
 		logStep("Create multiple agnostic practices below client level");
