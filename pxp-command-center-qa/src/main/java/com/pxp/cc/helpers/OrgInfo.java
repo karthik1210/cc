@@ -33,6 +33,21 @@ public class OrgInfo extends BaseRest {
 				.response();
 	}
 
+	public Response createOrg_DataLayer(String active, String displayName, String name, String orgType, int parentId,
+			String parentType, String sapNumber, String timezoneId, int userId) throws IOException {
+
+		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId);
+		
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
+				.post(ApiPath.POST_ORG_DL).then().extract().response();
+	}
+
+	public Response getOrgId_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.GET_ORG_DETAILS_DL + orgId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response createSystem(String active, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws IOException {
 
@@ -299,5 +314,10 @@ public class OrgInfo extends BaseRest {
 		practiceMap.put("timezoneId", timezoneId);
 		practiceMap.put("products", products);
 		return practiceMap;
+	}
+
+	public Response getOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.INVALID_PATH_GET_ORGID_DL + orgId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
