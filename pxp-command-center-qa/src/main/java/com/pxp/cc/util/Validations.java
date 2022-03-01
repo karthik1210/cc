@@ -1184,9 +1184,51 @@ public class Validations {
 		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " doesn't exist");
 	}
 
+	public void verifyErrorMessageInResponseForUpdatingClientWithExistingSapID(Response response, String sapId)
+			throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client sap number=" + sapId + " already in use");
+	}
+
+	public void verifyErrorMessageInResponseForUpdatingClientWithExistingClientName(Response response,
+			String clientName) throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client client name=" + clientName + " already in use");
+	}
+
+	public void verifyErrorMessageInResponseForUpdatingClientWithInvalidTimeZoneId(Response response,
+			String invalidTimeZoneId) throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "TimezoneId=" + invalidTimeZoneId + " does not exist");
+	}
+
+	public void verifyErrorMessageInResponseForUpdatingClientWithInvalidClientType(Response response,
+			String invalidClientType) throws IOException {
+		verifyInvalidServerError(response);
+		String message = getMessage(response);
+		CCUtils.assertEquals(message, "Client type=" + invalidClientType + " does not exist");
+	}
+
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
+	}
+
+	public void verifyResponseBodyUpdatingClientWithOutClientIdAndAllValuesNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Method Not Allowed");
+		CCUtils.assertEquals(jsonpath.getString("message"), "Request method 'PUT' not supported");
+	}
+
+	public void verifyResponseBodyUpdatingClientWithClientIdAndAllValuesNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		if (jsonpath.get("message").toString().contains(
+				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))
+			CCUtils.assertTrue(true, "Message : " + jsonpath.get("message").toString() + " is not verified");
 	}
 
 	public void verifyResponseForExistingClientName(Response response, String existingClientName) throws IOException {

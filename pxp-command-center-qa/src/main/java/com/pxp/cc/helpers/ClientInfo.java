@@ -13,7 +13,7 @@ import io.restassured.response.Response;
 public class ClientInfo extends BaseRest {
 
 	public Response getClientDetails(String clientId) {
-		String url = ApiPath.GET_CLIENT_BL + clientId;
+		String url = ApiPath.GET_CLIENT_BL+clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -22,6 +22,24 @@ public class ClientInfo extends BaseRest {
 		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
 				sapNumber, testClient, type, timezoneId);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.POST_CLIENT_BL).then()
+				.extract().response();
+	}
+
+	public Response updateClient(String active, String clientId, String clientName, String sapNumber, String testClient,
+			String type, String timezoneId) throws IOException {
+		String url = ApiPath.GET_CLIENT_BL + clientId;
+		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
+				sapNumber, testClient, type, timezoneId);
+		return given().spec(requestSpec).body(createNewClientPayload).when().put(url).then()
+				.extract().response();
+	}
+	
+	public Response updateClientWithInvalidUrl(String active, String clientId, String clientName, String sapNumber, String testClient,
+			String type, String timezoneId) throws IOException {
+		String url = ApiPath.INVALID_PATH_PUT_UPDATECLIENT_BL + clientId;
+		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
+				sapNumber, testClient, type, timezoneId);
+		return given().spec(requestSpec).body(createNewClientPayload).when().put(url).then()
 				.extract().response();
 	}
 
