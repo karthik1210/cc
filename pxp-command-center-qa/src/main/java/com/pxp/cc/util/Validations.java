@@ -12,14 +12,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import rp.com.google.common.base.CharMatcher;
@@ -1174,42 +1177,14 @@ public class Validations {
 			throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client type=" + clientType + " doesn't exist");
+		CCUtils.assertEquals(message, "Client type=" + clientType + " does not exist");
 	}
 
 	public void verifyErrorMessageInResponseForInvalidTimezoneId(Response response, String clientTimezoneId)
 			throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
-		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " doesn't exist");
-	}
-
-	public void verifyErrorMessageInResponseForUpdatingClientWithExistingSapID(Response response, String sapId)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client sap number=" + sapId + " already in use");
-	}
-
-	public void verifyErrorMessageInResponseForUpdatingClientWithExistingClientName(Response response,
-			String clientName) throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client client name=" + clientName + " already in use");
-	}
-
-	public void verifyErrorMessageInResponseForUpdatingClientWithInvalidTimeZoneId(Response response,
-			String invalidTimeZoneId) throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "TimezoneId=" + invalidTimeZoneId + " does not exist");
-	}
-
-	public void verifyErrorMessageInResponseForUpdatingClientWithInvalidClientType(Response response,
-			String invalidClientType) throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client type=" + invalidClientType + " does not exist");
+		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " does not exist");
 	}
 
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
