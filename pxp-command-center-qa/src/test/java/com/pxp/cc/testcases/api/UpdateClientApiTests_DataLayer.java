@@ -152,7 +152,7 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForSapNumberField(updateClientApiResponse,
+		validation.verifyErrorMessageInResponseForClientSapNumber(updateClientApiResponse,
 				testData.getProperty("api.existing.client.sapnumber"));
 	}
 
