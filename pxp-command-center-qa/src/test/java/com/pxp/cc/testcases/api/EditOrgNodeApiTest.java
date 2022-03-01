@@ -35,7 +35,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Create a active system node below client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
 				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(),
@@ -63,7 +63,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Create inactive enterprise node below system");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
@@ -96,7 +96,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 		logStep("Create active nge practice node below enterprise");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
@@ -130,7 +130,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testEditActiveAgnosticPracticeBelowInactiveClient() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getOrgActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getOrgActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive practice below inactive client.");
@@ -153,7 +153,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testEditActiveEnterpriseBelowInactiveSystem() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive system below active client.");
@@ -182,7 +182,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testEditActiveNgePracticeBelowInactieEnterprise() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -216,7 +216,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testChangeStatusSystemActiveBelowInactiveClient() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getOrgActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getOrgActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new inactive system below inactive client.");
@@ -238,7 +238,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testChangeStatusInactiveAgnosticPracticeBelowActiveClient() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
@@ -261,7 +261,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testChangeStatusInactiveEnterpriseBelowActiveSystem() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -289,7 +289,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testChangeStatusNgePracticeInactiveBelowActieEnterprise() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -322,7 +322,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testChangeStatusInactiveSystemBelowActiveClient() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -343,7 +343,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testInheritanceFunctionalityEditAtEnterpriseNode() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -368,7 +368,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testInheritanceFunctionalityEditAtPracticeNode() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below client.");
@@ -398,7 +398,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testInheritanceFunctionalityEditAtSystemNode() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below inactive client.");
@@ -416,7 +416,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testEditForMaximumCharacterAndFreeTextFieldErrorResponsAtSystem() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -437,7 +437,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testEditForMaximumCharacterAndFreeTextFieldErrorResponsAtEnterprise() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");
@@ -465,7 +465,7 @@ public class EditOrgNodeApiTest extends BaseRest {
 	public void testEditForMaximumCharacterAndFreeTextFieldErrorResponsAtPractice() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().getInt("id");
 		logStep("Create a new active system below active client.");

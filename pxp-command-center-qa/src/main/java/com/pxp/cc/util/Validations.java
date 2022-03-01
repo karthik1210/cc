@@ -1264,4 +1264,18 @@ public class Validations {
 		}
 	}
 
+	public void verifyResponseForNonExistingClientId(Response response, int nonExistingClientId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=" + nonExistingClientId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForClientSapNumber(Response response, String existingClientsapNumber)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Client sap number=" + existingClientsapNumber + " already in use");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
 }
