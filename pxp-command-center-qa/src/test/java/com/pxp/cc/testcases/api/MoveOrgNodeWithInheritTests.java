@@ -55,7 +55,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), "GBS", ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -69,7 +69,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		String targetClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targetClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				targetClientName, targetClientSapNumber, ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
 		int targetClientId = createClientApiResponse.jsonPath().get("id");
@@ -94,7 +94,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), "TSI", null);
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -108,7 +108,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		String targetClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targetClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				targetClientName, targetClientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), null);
 		int targetClientId = createClientApiResponse.jsonPath().get("id");
 
@@ -132,7 +132,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new active client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -145,7 +145,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new target client node");
 		String targetClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targetClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(),
 				targetClientName, targetClientSapNumber, ccUser.getTestClient(), ccUser.getClientType(),
 				ccUser.getTimezoneId());
 		int targetClientId = createClientApiResponse.jsonPath().get("id");
@@ -164,7 +164,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new active client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -188,7 +188,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new inactive client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(), clientName,
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName,
 				clientSapNumber, ccUser.getTestClient(), "TSI", ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -201,7 +201,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new target client");
 		String targetClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targetClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				targetClientName, targetClientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), null);
 		int targetClientId = createClientApiResponse.jsonPath().get("id");
 
@@ -225,7 +225,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new active client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -239,7 +239,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new target client");
 		String targetClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targetClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				targetClientName, targetClientSapNumber, ccUser.getTestClient(), "TSI", ccUser.getTimezoneId());
 		int targetClientId = createClientApiResponse.jsonPath().get("id");
 
@@ -263,7 +263,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new active client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -288,7 +288,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), null);
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -331,7 +331,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), null);
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -369,7 +369,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -400,7 +400,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -462,7 +462,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -512,7 +512,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new active client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), null);
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
@@ -612,7 +612,7 @@ public class MoveOrgNodeWithInheritTests extends BaseRest {
 		logStep("Create a new active client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		int clientId = createClientApiResponse.jsonPath().get("id");
 

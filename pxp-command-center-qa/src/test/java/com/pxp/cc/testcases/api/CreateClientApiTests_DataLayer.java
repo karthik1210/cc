@@ -31,7 +31,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -55,7 +55,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message")
 	public void testErrorMessagesForMandatoryFields() throws IOException {
 		logStep("Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(null,
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(null,
 				testData.getProperty("api.client.id"), null, null, testData.getProperty("api.client.testclient"), null,
 				testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
@@ -69,7 +69,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseForClientNameField() throws IOException {
 		logStep("Enter already existing value in client name field and validate error message");
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"),
 				testData.getProperty("api.existing.client.name"), clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
@@ -86,7 +86,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseForSapNumberField() throws IOException {
 		logStep("Enter already existing value in sap number field and validate error message");
 		String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				testData.getProperty("api.existing.client.sapnumber"), testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
@@ -104,7 +104,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		String clientType = testData.getProperty("api.client.type").concat(CCUtils.generateRandomString());
 		String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), clientType,
 				testData.getProperty("api.client.timezoneid"),
@@ -121,7 +121,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		String clientTimezoneId = testData.getProperty("api.client.timezoneid").concat(CCUtils.generateRandomString());
 		String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				clientTimezoneId, Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
@@ -136,7 +136,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		logStep("Enter more than 50 characters in sap id field and validate error message");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(4));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				testData.getProperty("api.invalid.client.sapnumber"), testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
@@ -152,7 +152,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		logStep("Enter more than 100 characters in client name field and validate error message");
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(4));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"),
 				testData.getProperty("api.invalid.client.name"), clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
@@ -167,7 +167,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message")
 	public void testErrorMessagesForBlankFields() throws IOException {
 		logStep("Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(" ",
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(" ",
 				testData.getProperty("api.client.id"), " ", " ", testData.getProperty("api.client.testclient"), " ",
 				" ", Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		logStep("Validating response information");
@@ -183,7 +183,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayerUsingInvalidUrl(
+		createClientApiResponse = clientInfo.createNewClient_DataLayerUsingInvalidUrl(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -201,7 +201,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer("false",
+		createClientApiResponse = clientInfo.createNewClient_DataLayer("false",
 				testData.getProperty("api.client.id"), clientName, clientSapNumber, "false",
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
