@@ -319,6 +319,18 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getOrganizationListByClientId_DataLayer(int clientId, String orgType) throws IOException {
+		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgs";
+		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
+
+	}
+	
+	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType) throws IOException {
+		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgsabcdfef";
+		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
+
+	}
+
 	public Response createAgnosticPracticeNodeDataLayer(String name, String displayName, String sapNumber,
 			String active, String timezoneId, String orgType, int parentId, String parentType, int userId)
 			throws IOException {
