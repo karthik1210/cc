@@ -3,16 +3,14 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.UpdateProductStatus;
-
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -38,7 +36,7 @@ public class OrgInfo extends BaseRest {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
-		
+
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
 				.post(ApiPath.POST_ORG_DL).then().extract().response();
 	}
@@ -160,8 +158,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(name, displayName, sapNumber, active,
 				timezoneId, products, orgType, parentId, parentType);
 
-		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL)
-				.then().extract().response();
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL).then()
+				.extract().response();
 	}
 
 	public Response createEnterpriseNodeForAgnostic(String active, String displayName, String name, String orgType,
@@ -319,5 +317,50 @@ public class OrgInfo extends BaseRest {
 	public Response getOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
 		String url = ApiPath.INVALID_PATH_GET_ORGID_DL + orgId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response createAgnosticPracticeNodeDataLayer(String name, String displayName, String sapNumber,
+			String active, String timezoneId, String orgType, int parentId, String parentType, int userId)
+			throws IOException {
+
+		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNodeDataLayer(name, displayName, sapNumber,
+				active, timezoneId, orgType, parentId, parentType);
+
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewPracticeNodePayload).when()
+				.post(ApiPath.POST_ORG_DL).then().extract().response();
+	}
+
+	public static Map<String, Object> postCreatePracticeNodeDataLayer(String name, String displayName, String sapNumber,
+			String active, String timezoneId, String orgType, int parentId, String parentType) {
+		Map<String, Object> practiceMap = new HashMap<String, Object>();
+		practiceMap.put("name", name);
+		practiceMap.put("displayName", displayName);
+		practiceMap.put("sapNumber", sapNumber);
+		practiceMap.put("active", active);
+		practiceMap.put("timezoneId", timezoneId);
+		practiceMap.put("orgType", orgType);
+		practiceMap.put("parentId", parentId);
+		practiceMap.put("parentType", parentType);
+		return practiceMap;
+	}
+
+	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId, int userId)
+			throws IOException {
+		String url = ApiPath.PUT_ORGS_SOLUTION_DL + orgId + "/solutions";
+		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
+				status);
+
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(updateOrgsSolutionPayload).when()
+				.put(url).then().extract().response();
+	}
+
+	public static List<Map<String, Object>> putUpdateOrgsSolutionsDetails_DataLayer(int solutionId,
+			String NewlyPurchased) {
+		List<Map<String, Object>> solutionsList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> solutionsMap = new HashMap<String, Object>();
+		solutionsMap.put("solutionId", 1101);
+		solutionsMap.put("status", NewlyPurchased);
+		solutionsList.add(solutionsMap);
+		return solutionsList;
 	}
 }
