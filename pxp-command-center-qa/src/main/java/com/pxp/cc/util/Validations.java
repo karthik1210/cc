@@ -734,7 +734,7 @@ public class Validations {
 
 	public void verifyErrorResponseBodyForClientIdField(Response response, String clientId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "client not found by clientId=" + clientId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=" + clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
