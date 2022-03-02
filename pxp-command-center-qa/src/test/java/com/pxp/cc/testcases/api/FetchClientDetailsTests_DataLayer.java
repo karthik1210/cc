@@ -45,7 +45,7 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -69,8 +69,8 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
-				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
+				testData.getProperty("api.client.active"), testData.getProperty("apicreateNewClient_DataLayer.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
