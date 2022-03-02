@@ -3,11 +3,14 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+
 import io.restassured.response.Response;
 
 public class ClientInfo extends BaseRest {
@@ -173,6 +176,11 @@ public class ClientInfo extends BaseRest {
 
 	public Response getClientDetails_DataLayer(String clientId) {
 		String url = ApiPath.GET_CLIENT_DL + clientId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getClientDetails_DataLayerInvalidUrl(String clientId) {
+		String url = ApiPath.INVALID_PATH_GET_CLIENT_DL + clientId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
