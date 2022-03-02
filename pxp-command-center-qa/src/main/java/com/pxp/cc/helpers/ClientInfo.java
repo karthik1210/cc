@@ -19,10 +19,26 @@ public class ClientInfo extends BaseRest {
 
 	public Response createNewClient(String active, String clientId, String clientName, String sapNumber,
 			String testClient, String type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName,
-				sapNumber, testClient, type, timezoneId);
+		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName, sapNumber,
+				testClient, type, timezoneId);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.POST_CLIENT_BL).then()
 				.extract().response();
+	}
+
+	public Response updateClient(String active, String clientId, String clientName, String sapNumber, String testClient,
+			String type, String timezoneId) throws IOException {
+		String url = ApiPath.GET_CLIENT_BL + clientId;
+		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
+				timezoneId);
+		return given().spec(requestSpec).body(updateClientPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateClientWithInvalidUrl(String active, String clientId, String clientName, String sapNumber,
+			String testClient, String type, String timezoneId) throws IOException {
+		String url = ApiPath.INVALID_PATH_PUT_UPDATECLIENT_BL + clientId;
+		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
+				timezoneId);
+		return given().spec(requestSpec).body(updateClientPayload).when().put(url).then().extract().response();
 	}
 
 	public Response getSapNumber(String clientSapNumber) throws IOException {
@@ -81,10 +97,10 @@ public class ClientInfo extends BaseRest {
 				.response();
 	}
 
-	public Response createNewClientUsingInvalidUrl(String active, String clientId, String clientName,
-			String sapNumber, String testClient, String type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName,
-				sapNumber, testClient, type, timezoneId);
+	public Response createNewClientUsingInvalidUrl(String active, String clientId, String clientName, String sapNumber,
+			String testClient, String type, String timezoneId) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName, sapNumber,
+				testClient, type, timezoneId);
 		String invalidUrl = ApiPath.POST_CLIENT_BL + "abc";
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
 				.response();
@@ -137,20 +153,19 @@ public class ClientInfo extends BaseRest {
 
 	}
 
-	public Response createNewClient_DataLayer(String active, String clientId, String clientName,
-			String sapNumber, String testClient, String type, String timezoneId, int userId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName,
-				sapNumber, testClient, type, timezoneId);
+	public Response createNewClient_DataLayer(String active, String clientId, String clientName, String sapNumber,
+			String testClient, String type, String timezoneId, int userId) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName, sapNumber,
+				testClient, type, timezoneId);
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
 				.post(ApiPath.POST_CLIENT_DL).then().extract().response();
 
 	}
 
-	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientId,
-			String clientName, String sapNumber, String testClient, String type, String timezoneId, int userId)
-			throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName,
-				sapNumber, testClient, type, timezoneId);
+	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientId, String clientName,
+			String sapNumber, String testClient, String type, String timezoneId, int userId) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient(active, clientId, clientName, sapNumber,
+				testClient, type, timezoneId);
 		String invalidUrl = ApiPath.POST_CLIENT_DL + "abc";
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
 				.post(invalidUrl).then().extract().response();
