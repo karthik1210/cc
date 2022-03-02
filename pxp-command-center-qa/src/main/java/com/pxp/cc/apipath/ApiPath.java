@@ -74,6 +74,9 @@ public class ApiPath {
 	public static final String GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
 
 	public static final String INVALID_PATH_GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clientsss/";
+	public static final String INVALID_PATH_PUT_UPDATECLIENT_BL = SERVICE_CLIENT_BL + "/clients/fhg/";
+
 	public static final String PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
 	public static final String INVALID_PATH_PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clientssssss/";
+
 }

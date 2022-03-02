@@ -28,6 +28,22 @@ public class ClientInfo extends BaseRest {
 				.extract().response();
 	}
 
+	public Response updateClient(String active, String clientId, String clientName, String sapNumber, String testClient,
+			String type, String timezoneId) throws IOException {
+		String url = ApiPath.GET_CLIENT_BL + clientId;
+		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
+				timezoneId);
+		return given().spec(requestSpec).body(updateClientPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateClientWithInvalidUrl(String active, String clientId, String clientName, String sapNumber,
+			String testClient, String type, String timezoneId) throws IOException {
+		String url = ApiPath.INVALID_PATH_PUT_UPDATECLIENT_BL + clientId;
+		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
+				timezoneId);
+		return given().spec(requestSpec).body(updateClientPayload).when().put(url).then().extract().response();
+	}
+
 	public Response getSapNumber(String clientSapNumber) throws IOException {
 		String url = ApiPath.GET_CLIENTSAPNUMBER_BL + "{sapNumber}";
 		return given().spec(requestSpec).pathParam("sapNumber", clientSapNumber).when().get(url).then().extract()
