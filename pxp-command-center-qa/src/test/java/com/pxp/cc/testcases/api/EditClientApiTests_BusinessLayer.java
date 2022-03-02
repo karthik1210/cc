@@ -6,13 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
+
 import io.restassured.response.Response;
 
 public class EditClientApiTests_BusinessLayer extends BaseRest {
@@ -201,10 +204,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Create a new inactive client");
 		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName, clientSapNumber,
 				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Update client status from inactive to active");
 		updateClientApiResponse = clientInfo.updateClientWithInvalidUrl("true", clientId, clientName, clientSapNumber,
