@@ -72,6 +72,7 @@ public class ApiPath {
 	public static final String PXP_CC_USER = "pxp-cc-user";
 	public static final String POST_CLIENT_DL = SERVICE_CLIENT_DL + "/clients";
 	public static final String GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
+	public static final String INVALID_PATH_PUT_UPDATECLIENT_BL = SERVICE_CLIENT_BL + "/clients/fhg/";
 	public static final String PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
 	public static final String INVALID_PATH_PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clientssssss/";
 	public static final String GET_CLIENT_SOLUTION_DL = SERVICE_CLIENT_DL + "/clients/";

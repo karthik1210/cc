@@ -53,10 +53,10 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 	public void testCreateClientWithoutPracticeNode() throws IOException {
 		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -74,10 +74,10 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 	public void testCreateAgnosticPracticeWithoutSolutions() throws IOException {
 		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -104,10 +104,10 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 	public void testCreateAgnosticPracticeWithPurchasedSolution() throws IOException {
 		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -144,10 +144,10 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 	public void testCreateInactiveClientWithInactivePracticeNodeWithPurchasedSolution() throws IOException {
 		logStep("Create inactive client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer("false",
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer("false",
 				testData.getProperty("api.client.id"), clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -182,10 +182,10 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 	public void testCreateActiveClientWithInactivePracticeNodeWithPurchasedSolution() throws IOException {
 		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),
@@ -220,10 +220,10 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 	public void testCreateNgePracticeWithPurchasedSolution() throws IOException {
 		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClientUpdateClient_DataLayer(
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(
 				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"),

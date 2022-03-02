@@ -25,6 +25,22 @@ public class ClientInfo extends BaseRest {
 				.extract().response();
 	}
 
+	public Response updateClient(String active, String clientId, String clientName, String sapNumber, String testClient,
+			String type, String timezoneId) throws IOException {
+		String url = ApiPath.GET_CLIENT_BL + clientId;
+		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
+				timezoneId);
+		return given().spec(requestSpec).body(updateClientPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateClientWithInvalidUrl(String active, String clientId, String clientName, String sapNumber,
+			String testClient, String type, String timezoneId) throws IOException {
+		String url = ApiPath.INVALID_PATH_PUT_UPDATECLIENT_BL + clientId;
+		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
+				timezoneId);
+		return given().spec(requestSpec).body(updateClientPayload).when().put(url).then().extract().response();
+	}
+
 	public Response getSapNumber(String clientSapNumber) throws IOException {
 		String url = ApiPath.GET_CLIENTSAPNUMBER_BL + "{sapNumber}";
 		return given().spec(requestSpec).pathParam("sapNumber", clientSapNumber).when().get(url).then().extract()
@@ -193,26 +209,5 @@ public class ClientInfo extends BaseRest {
 	public Response getClientSolutionsDetails_DataLayer(int clientId) {
 		String url = ApiPath.GET_CLIENT_SOLUTION_DL + clientId + "/solutions";
 		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}
-
-	public Response createNewClientUpdateClient_DataLayer(String active, String clientId, String clientName,
-			String sapNumber, String testClient, String type, String timezoneId, int userId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClientUpdateClient(active, clientId, clientName,
-				sapNumber, testClient, type, timezoneId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
-				.post(ApiPath.POST_CLIENT_DL).then().extract().response();
-	}
-
-	private Map<String, Object> postCreateClientUpdateClient(String active, String clientId, String clientName,
-			String clientSapNumber, String testClient, String type, String timezoneId) {
-		Map<String, Object> createClientMap = new HashMap<String, Object>();
-		createClientMap.put("active", active);
-		createClientMap.put("clientId", clientId);
-		createClientMap.put("name", clientName);
-		createClientMap.put("sapNumber", clientSapNumber);
-		createClientMap.put("testClient", testClient);
-		createClientMap.put("type", type);
-		createClientMap.put("timezoneId", timezoneId);
-		return createClientMap;
 	}
 }
