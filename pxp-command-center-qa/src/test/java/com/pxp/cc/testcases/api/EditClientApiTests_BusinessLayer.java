@@ -29,33 +29,13 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	public String createClientAndValidateResponseBody() throws IOException {
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
-		return clientId;
-	}
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client name and fetch updated client details using client id")
 	public void testEditClientName() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		String newClientName = clientName.concat(CCUtils.generateRandomString());
 		logStep("Edit non-existing client name of created client");
@@ -68,9 +48,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, newClientName);
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify updated client details");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, newClientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
@@ -82,30 +59,22 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		String newSapNumber = clientSapNumber.concat(CCUtils.generateRandomString());
 		logStep("Edit non-existing client sapnumber of created clients");
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, newSapNumber,
 				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-
+		logStep("Edit client sapnumber");
+		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, newSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		logStep("Verify updated client details");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), newSapNumber, ccUser.getActive(), ccUser.getTestClient(),
 				ccUser.getTimezoneId(), ccUser.getDisplayName(), 0, solutionLists);
@@ -116,12 +85,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client type");
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, clientSapNumber,
@@ -132,9 +97,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify updated client details");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName, "TSI",
 				clientSapNumber, ccUser.getActive(), ccUser.getTestClient(), ccUser.getTimezoneId(),
@@ -146,12 +108,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client timezone");
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, clientSapNumber,
@@ -162,9 +120,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify updated client details");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(), "Asia/Kuwait",
@@ -176,12 +131,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new active client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Update client status from active to inactive");
 		updateClientApiResponse = clientInfo.updateClient("false", clientId, clientName, clientSapNumber,
@@ -192,9 +143,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify Client Status is changed from active to inactive");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, "false", ccUser.getTestClient(), ccUser.getTimezoneId(),
@@ -206,12 +154,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new inactive client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(), clientName,
-				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName, clientSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Update client status from inactive to active");
 		updateClientApiResponse = clientInfo.updateClient("true", clientId, clientName, clientSapNumber,
@@ -222,9 +166,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify Client Status is changed from inactive to active");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, "true", ccUser.getTestClient(), ccUser.getTimezoneId(),
@@ -236,12 +177,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(), clientName,
-				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName, clientSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter null value in timezone field");
 		updateClientApiResponse = clientInfo.updateClient("true", clientId, clientName, clientSapNumber,
@@ -252,9 +189,6 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify updated client details");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, "true", ccUser.getTestClient(), null, null, 0, solutionLists);
@@ -265,8 +199,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new inactive client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(), clientName,
-				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName, clientSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -288,12 +222,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new inactive client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(), clientName,
-				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName, clientSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Update all key values of client details to null");
 		updateClientApiResponse = clientInfo.updateClient("", "", "", "", "", "", "");
@@ -309,12 +239,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new inactive client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient("false", ccUser.getClientId(), clientName,
-				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient("false", ccUser.getClientId(), clientName, clientSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Update client status from inactive to active");
 		updateClientApiResponse = clientInfo.updateClient("", clientId, "", "", "", "", "");
@@ -330,12 +256,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter more than 50 characters in sap id field");
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName,
@@ -352,14 +274,12 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter more than 100 characters in client name field");
+		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, ccUser.getInvalidClientName(),
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, ccUser.getInvalidClientName(),
 				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
@@ -373,12 +293,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter invalid client type");
 		String invalidClientType = ccUser.getClientType().concat(CCUtils.generateRandomString());
@@ -395,15 +311,13 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter invalid client timezone id");
 		String invalidClientTimezoneId = ccUser.getTimezoneId().concat(CCUtils.generateRandomString());
+		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, clientSapNumber,
+				ccUser.getTestClient(), ccUser.getClientType(), invalidClientTimezoneId);
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, clientSapNumber,
 				ccUser.getTestClient(), ccUser.getClientType(), invalidClientTimezoneId);
 		logStep("Validating response information");
@@ -417,12 +331,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter existing client name and verify error message for client name field");
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, "ABGCLIENT", clientSapNumber,
@@ -438,12 +348,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter existing client sap number and verify error message for sap number field");
 		updateClientApiResponse = clientInfo.updateClient(ccUser.getActive(), clientId, clientName, "SAPII",
@@ -459,16 +365,12 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClientUpdateClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter null values in mandatory field");
-		updateClientApiResponse = clientInfo.createNewClientUpdateClient(null, clientId, null, null,
-				ccUser.getTestClient(), null, ccUser.getTimezoneId());
+		updateClientApiResponse = clientInfo.updateClient(null, clientId, null, null, ccUser.getTestClient(), null,
+				ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
