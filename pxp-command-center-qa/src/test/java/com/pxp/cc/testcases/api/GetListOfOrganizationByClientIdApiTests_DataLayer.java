@@ -62,14 +62,14 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 	public void testResponseCodeForSingleClientNode(String orgType) throws Exception {
 		logStep("Create new inactive client node");
 		int clientId = createClient("false");
-		logStep("Get organization list by client id");
+		logStep("Get list of organization by client id");
 		getOrganizationListApiResponse = orgInfo.getOrganizationListByClientId_DataLayer(clientId, orgType);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client with subsequent child nodes and verify user able get organization list by client id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client with subsequent child nodes and verify user able get list of organization by client id")
 	public void testGetOrganizationListByClientIdFunctionality() throws Exception {
 		logStep("Create new active client");
 		int clientId = createClient(testData.getProperty("api.client.active"));
@@ -80,7 +80,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				testData.getProperty("api.parenttype"));
 		List<OrgDetails> systemList = Arrays.asList(new OrgDetails(systemIdOne, "System_name_1"),
 				new OrgDetails(systemIdTwo, "System_name_2"));
-		logStep("Get organization details by client id and org type system");
+		logStep("Get list of organization by client id and org type system");
 		getOrganizationListApiResponse = orgInfo.getOrganizationListByClientId_DataLayer(clientId,
 				testData.getProperty("api.system.orgtype"));
 		logStep("Validating response information");
@@ -95,7 +95,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.parenttype"));
 		List<OrgDetails> enterpriseList = Arrays.asList(new OrgDetails(enterpriseIdOne, "Enterprise_name_1"),
 				new OrgDetails(enterpriseIdTwo, "Enterprise_name_2"));
-		logStep("Get organization details by client id and org type enterprise");
+		logStep("Get list of organization by client id and org type enterprise");
 		getOrganizationListApiResponse = orgInfo.getOrganizationListByClientId_DataLayer(clientId,
 				testData.getProperty("api.enterprise.orgtype"));
 		logStep("Validating response information");
@@ -112,7 +112,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				clientId, testData.getProperty("api.practice.orgtype"), testData.getProperty("api.parenttype"));
 		int agnosticPracticeTwo = createOrgNode("false", "agnostic_practice_name_2", clientId,
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.parenttype"));
-		logStep("Get organization details by client id and org type practice");
+		logStep("Get list of organization by client id and org type practice");
 		List<OrgDetails> practiceList = Arrays.asList(new OrgDetails(ngePracticeOne, "Practice_name_1"),
 				new OrgDetails(ngePracticeTwo, "Practice_name_2"),
 				new OrgDetails(agnosticPracticeOne, "agnostic_practice_name_1"),
@@ -127,7 +127,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgType", description = "Enter invalid client id in clientId field and verify 204 status code")
 	public void testErrorResponseForInvalidClientId(String orgType) throws Exception {
-		logStep("Get organization list using invalid client id and valid org type");
+		logStep("Get list of organization using invalid client id and valid org type");
 		getOrganizationListApiResponse = orgInfo.getOrganizationListByClientId_DataLayer(
 				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")), orgType);
 		logStep("Validating response information");
@@ -145,7 +145,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidOrgType", description = "Enter invalid org type in type field and verify error response")
 	public void testErrorResponseForInvalidOrgType(String invalidOrgType) throws Exception {
-		logStep("Get organization list using valid client id and invalid org type");
+		logStep("Get list of organization using valid client id and invalid org type");
 		getOrganizationListApiResponse = orgInfo.getOrganizationListByClientId_DataLayer(
 				Integer.parseInt(testData.getProperty("api.existing.client.id")), invalidOrgType);
 		logStep("Validating response information");
