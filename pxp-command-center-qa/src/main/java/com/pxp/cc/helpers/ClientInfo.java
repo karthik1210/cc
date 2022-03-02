@@ -3,11 +3,14 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+
 import io.restassured.response.Response;
 
 public class ClientInfo extends BaseRest {
@@ -176,6 +179,11 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getClientDetails_DataLayerInvalidUrl(String clientId) {
+		String url = ApiPath.INVALID_PATH_GET_CLIENT_DL + clientId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response UpdateClient_DataLayer(int clientId, String active, String clientName, String sapNumber,
 			String testClient, String type, String timezoneId, int userId) throws IOException {
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
@@ -204,5 +212,10 @@ public class ClientInfo extends BaseRest {
 		updateClientMap.put("type", type);
 		updateClientMap.put("timezoneId", timezoneId);
 		return updateClientMap;
+	}
+
+	public Response getClientSolutionsDetails_DataLayer(int clientId) {
+		String url = ApiPath.GET_CLIENT_SOLUTION_DL + clientId + "/solutions";
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
