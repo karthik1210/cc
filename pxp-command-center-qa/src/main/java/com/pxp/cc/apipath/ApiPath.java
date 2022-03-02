@@ -64,8 +64,8 @@ public class ApiPath {
 	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/orgs/";
 	public static final String POST_ORG_DL = SERVICE_ORG_DL + "/orgs";
 
-	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL+"/clients/types";
-	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL+"/typesadsds";
+	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL + "/clients/types";
+	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL + "/typesadsds";
 	public static final String GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber/";
 	public static final String INVALID_PATH_GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber#1234sdF/";
 	public static final String INVALID_PATH_GET_ORGID_DL = SERVICE_ORG_DL + "/orgsnameabc##$122/";
@@ -74,4 +74,5 @@ public class ApiPath {
 	public static final String GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
 	public static final String PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
 	public static final String INVALID_PATH_PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clientssssss/";
+	public static final String GET_ORGANIZATION_LIST_DL = SERVICE_ORG_DL + "/clients/";
 }

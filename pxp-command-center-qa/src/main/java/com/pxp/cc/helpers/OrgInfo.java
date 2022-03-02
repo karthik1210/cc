@@ -38,7 +38,7 @@ public class OrgInfo extends BaseRest {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
-		
+
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
 				.post(ApiPath.POST_ORG_DL).then().extract().response();
 	}
@@ -160,8 +160,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(name, displayName, sapNumber, active,
 				timezoneId, products, orgType, parentId, parentType);
 
-		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL)
-				.then().extract().response();
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL).then()
+				.extract().response();
 	}
 
 	public Response createEnterpriseNodeForAgnostic(String active, String displayName, String name, String orgType,
@@ -320,4 +320,17 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_GET_ORGID_DL + orgId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	public Response getOrganizationListByClientId_DataLayer(int clientId, String orgType) throws IOException {
+		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgs";
+		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
+
+	}
+	
+	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType) throws IOException {
+		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgsabcdfef";
+		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
+
+	}
+
 }

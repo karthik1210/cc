@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
+import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import io.restassured.path.json.JsonPath;
@@ -1278,4 +1279,28 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyGetOrganizationListApiResponse(Response response, List<OrgDetails> orgList) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (orgList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						orgList.contains(new OrgDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"))),
+						"Org id " + jsonObject.getInt("orgId") + " doesn't exist");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("Org list is empty");
+		} else {
+			Log4jUtil.log("Size of actual org list and expected org list is not same");
+		}
+
+	}
+
+	public void verifyErrorMessageInResponseForInvalidOrgType(Response response, String invalidOrgType)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "OrgType not found for type=" + invalidOrgType);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
