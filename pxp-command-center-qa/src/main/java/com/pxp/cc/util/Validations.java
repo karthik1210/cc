@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -21,6 +23,7 @@ import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import rp.com.google.common.base.CharMatcher;
@@ -1175,19 +1178,33 @@ public class Validations {
 			throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client type=" + clientType + " doesn't exist");
+		CCUtils.assertEquals(message, "Client type=" + clientType + " does not exist");
 	}
 
 	public void verifyErrorMessageInResponseForInvalidTimezoneId(Response response, String clientTimezoneId)
 			throws IOException {
 		verifyInvalidServerError(response);
 		String message = getMessage(response);
-		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " doesn't exist");
+		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " does not exist");
 	}
 
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
+	}
+
+	public void verifyResponseBodyUpdatingClientWithOutClientIdAndAllValuesNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Method Not Allowed");
+		CCUtils.assertEquals(jsonpath.getString("message"), "Request method 'PUT' not supported");
+	}
+
+	public void verifyResponseBodyUpdatingClientWithClientIdAndAllValuesNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		if (jsonpath.get("message").toString().contains(
+				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))
+			CCUtils.assertTrue(true, "Message : " + jsonpath.get("message").toString() + " is not verified");
 	}
 
 	public void verifyResponseForExistingClientName(Response response, String existingClientName) throws IOException {
