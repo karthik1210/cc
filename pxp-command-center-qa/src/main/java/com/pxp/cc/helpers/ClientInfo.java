@@ -214,4 +214,8 @@ public class ClientInfo extends BaseRest {
 		return updateClientMap;
 	}
 
+	public Response getClientSolutionsDetails_DataLayer(int clientId) {
+		String url = ApiPath.GET_CLIENT_SOLUTION_DL + clientId + "/solutions";
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
