@@ -29,8 +29,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing id in clientId solutions field and verify error message for client id field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client id in clientId solutions field and verify error message for client id field")
 	public void testErrorMessageForNonExistingClientId() throws IOException {
+		logStep("Enter non existing client id and validate error message");
 		int clientId = Integer.parseInt(testData.getProperty("api.nonexisting.client.id"));
 		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(clientId);
 		logStep("Validating response information");
@@ -41,15 +42,16 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing org id in clientId solutions field and verify error message for client id field")
 	public void testErrorMessageWhenSearchOrgIdInClientIdField() throws IOException {
+		logStep("Enter orgId instead of client id in clientId field and validate error message");
 		int clientId = Integer.parseInt(testData.getProperty("api.existing.orgid"));
 		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client without practice node & verify status code and response body error message for clientId solutions field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client without practice node & verify status code and response error message for clientId solutions field")
 	public void testCreateClientWithoutPracticeNode() throws IOException {
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
+		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
@@ -72,9 +74,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create a new practice node without solutions and verify response & status code in clientId solutions field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create agnostic practice without solutions and verify response & status code in clientId solutions field")
 	public void testCreateAgnosticPracticeWithoutSolutions() throws IOException {
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
+		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
@@ -90,27 +92,15 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
-
-		String practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateRandomString());
-		String practiceSapNumber = testData.getProperty("api.practice.sapnumber")
-				.concat(CCUtils.generateRandomString());
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), practiceName,
-				testData.getProperty("api.practice.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				practiceSapNumber, testData.getProperty("api.practice.timezoneid"),
+		logStep("create an active practice node");
+		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
+		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
+		logStep("create an active practice node with solutions");
+		createPracticeApiResponse = orgInfo.createAgnosticPracticeNodeDataLayer(practiceName,
+				ccUser.getPracticeDisplayNameApi(), practiceSapNumber, "true", ccUser.getPracticeTimezoneIdApi(),
+				ccUser.getPracticeOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-
-		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
-		logStep("Fetching Practice Id Response body");
-		fetchPracticeApiResponse = orgInfo.getOrgId_DataLayer(orgId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchPracticeApiResponse);
-		CCUtils.assertEquals(fetchPracticeApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgDeatilsApiResponseBody(fetchPracticeApiResponse, orgId, practiceName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.practice.displayname"), practiceSapNumber,
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.testclient"),
-				testData.getProperty("api.practice.timezoneid"));
+		validation.verifyCreateOrgIdPracticeResponseBody(createPracticeApiResponse, practiceName);
 
 		logStep("Fetch newly created client details using client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(clientId);
@@ -119,8 +109,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create a new practice node with solutions and verify response body are displayed in the client details")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create agnostic practice with solutions and verify response & status code in clientId solutions field")
 	public void testCreateAgnosticPracticeWithPurchasedSolution() throws IOException {
+		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
@@ -136,7 +127,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
-		logStep("create an active practice node with solutions");
+		logStep("create an active practice node");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
@@ -147,6 +138,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateOrgIdPracticeResponseBody(createPracticeApiResponse, practiceName);
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		logStep("Purchase solution for practice node");
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutionsDetails_DataLayer(1101, "Newly purchased", practiceId,
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		logStep("Validating response information");
@@ -162,8 +154,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				1101, "Newly purchased");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client without practice node & verify status code and response body error message for clientId solutions field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create inactive client with inactive practice having solution verify response & status code in clientId solutions field")
 	public void testCreateInactiveClientWithInactivePracticeNodeWithPurchasedSolution() throws IOException {
+		logStep("Create inactive client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
@@ -179,7 +172,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
-		logStep("create an active practice node with solutions");
+		logStep("create an inactive practice node");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
@@ -187,9 +180,13 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				ccUser.getPracticeDisplayNameApi(), practiceSapNumber, "false", ccUser.getPracticeTimezoneIdApi(),
 				ccUser.getPracticeOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createPracticeApiResponse);
+		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
 		validation.verifyCreateOrgIdPracticeResponseBody(createPracticeApiResponse, practiceName);
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		logStep("Purchase solution for inactive practice node");
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutionsDetails_DataLayer(1101, "Newly purchased", practiceId,
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		logStep("Validating response information");
@@ -203,8 +200,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client without practice node & verify status code and response body error message for clientId solutions field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create active client with inactive practice having solution verify response & status code in clientId solutions field")
 	public void testCreateActiveClientWithInactivePracticeNodeWithPurchasedSolution() throws IOException {
+		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
@@ -220,7 +218,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
-		logStep("create an active practice node with solutions");
+		logStep("create an inactive practice node");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
@@ -228,9 +226,13 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				ccUser.getPracticeDisplayNameApi(), practiceSapNumber, "false", ccUser.getPracticeTimezoneIdApi(),
 				ccUser.getPracticeOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createPracticeApiResponse);
+		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
 		validation.verifyCreateOrgIdPracticeResponseBody(createPracticeApiResponse, practiceName);
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		logStep("Purchase solution for inactive practice node");
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutionsDetails_DataLayer(1101, "Newly purchased", practiceId,
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		logStep("Validating response information");
@@ -244,9 +246,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit inherit functionality for practice node & verify response")
-	public void testCreateNgePracticeWithWithPurchasedSolution() throws IOException {
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create nge practice with purchased solution verify response & status code in clientId solutions field")
+	public void testCreateNgePracticeWithPurchasedSolution() throws IOException {
+		logStep("Create active client with valid client details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
@@ -282,6 +284,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				ccUser.getPracticeTimezoneIdApi(), Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 
 		int practiceId = createPracticeApiResponse.jsonPath().getInt("orgId");
+		logStep("Purchase solution for inactive practice node");
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutionsDetails_DataLayer(1101, "Newly purchased", practiceId,
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		logStep("Validating response information");
