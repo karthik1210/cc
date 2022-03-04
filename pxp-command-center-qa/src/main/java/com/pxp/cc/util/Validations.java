@@ -1355,4 +1355,31 @@ public class Validations {
 			}
 		}
 	}
+
+	public void verifyErrorResponseBodyForOrgIdSolutionsField(Response response, int orgId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifySearchOrgIdSolutionsResponseBody(Response response, int orgId, String practiceName,
+			int solutionId, String status) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject object = jsonArray.getJSONObject(i);
+			JSONObject org = object.getJSONObject("org");
+			CCUtils.assertEquals(org.getInt("orgId"), orgId);
+			CCUtils.assertEquals(org.get("name").toString(), practiceName);
+			JSONArray getSolutionsArray = object.getJSONArray("solutions");
+			for (int j = 0; j < getSolutionsArray.length(); j++) {
+				JSONObject solutionsObjects = getSolutionsArray.getJSONObject(j);
+				System.out.println("print the solutions id" + solutionsObjects.getInt("solutionId"));
+				CCUtils.assertEquals(solutionsObjects.getInt("solutionId"), solutionId);
+				CCUtils.assertEquals(solutionsObjects.get("status").toString(), status);
+				CCUtils.assertNotNull(solutionsObjects.get("solutionName"), "solutionName was not in the response");
+				CCUtils.assertNotNull(solutionsObjects.get("date"), "date was not in the response");
+				CCUtils.assertNotNull(solutionsObjects.get("statusNotes"), "statusNotes was not in the response");
+			}
+		}
+	}
 }
