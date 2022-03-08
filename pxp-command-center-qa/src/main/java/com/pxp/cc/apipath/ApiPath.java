@@ -80,4 +80,5 @@ public class ApiPath {
 	public static final String GET_ORGANIZATION_LIST_DL = SERVICE_ORG_DL + "/clients/";
 	public static final String GET_CLIENT_SOLUTION_DL = SERVICE_CLIENT_DL + "/clients/";
 	public static final String PUT_ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/orgs/";
+	public static final String INVALID_PATH_ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/orgsnameabc##$122/";
 }
