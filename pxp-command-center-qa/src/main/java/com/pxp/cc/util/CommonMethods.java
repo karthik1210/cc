@@ -2,6 +2,9 @@
 
 package com.pxp.cc.util;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -129,6 +132,18 @@ public class CommonMethods extends CCMainPage {
 
 	@FindBy(id = "usernameValidationMsg")
 	private WebElement iconUsernameValidationError;
+
+	@FindBy(id = "timezoneSelect")
+	private WebElement dropdownTimezone;
+
+	@FindBy(id = "clientTypeSelect")
+	private WebElement dropdownClientType;
+
+	@FindBy(xpath = "//div[@role='option']")
+	private List<WebElement> listOfOptions;
+
+	List<String> actualtimezoneValues = new ArrayList<String>();
+	List<String> actualClientTypeValues = new ArrayList<String>();
 
 	public CommonMethods(WebDriver driver) {
 		super(driver);
@@ -439,4 +454,56 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.mouseHoverOverTheElement(driver, iconUsernameValidationError);
 		return iconUsernameValidationError.getAttribute("title").trim();
 	}
+
+	public final List<String> expectedTimezoneValues = Arrays.asList("Select", "International Date Line West",
+			"Midway Island, Samoa", "Hawaii Standard Time", "Alaska Standard Time", "Pacific Standard Time",
+			"Tijuana, Baja California", "Arizona Standard Time", "Chihuahua, La Paz, Mazatlan",
+			"Mountain Standard Time", "Central America", "Central Standard Time", "Guadalajara, Mexico City, Monterrey",
+			"Saskatchewan", "Bagota, Lima, Quito, Rio Branco", "Eastern Standard Time", "Indiana Standard Time",
+			"Caracas", "Atlantic Standard Time", "La Paz", "Manaus", "Santiago", "Newfoundland",
+			"Buenos Aires, Georgetown", "Greenland", "Montevideo", "Mid-Atlantic", "Azores", "Cape Verde Is.",
+			"Casablanca,Monrovia,Reykjavik", "Greenwich Mean Time", "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
+			"Belgrade, Bratislava, Budapest, Ljubljana, Prague", "Brussels, Copenhagen, Madrid, Paris",
+			"Sarajevo, Skopje, Warsaw, Zagreb", "West Central Africa", "Amman", "Athens, Bucharest, Istanbul", "Beirut",
+			"Cairo", "Harare, Pretoria", "Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Jerusalem", "Minsk",
+			"Baghdad", "Kuwait, Riyadh", "Moscow, St. Petersburg, Volgograd", "Nairobi", "Tehran", "Abu Dhabi, Muscat",
+			"Baku", "Yerevan", "Kabul", "Ekaterinburg", "Islamabad, Karachi, Tashkent",
+			"Chennai, Kolkata, Mumbai, New Delhi", "Kathmandu", "Almaty, Novosibirsk", "Astana, Dhaka",
+			"Yangon (Rangoon)", "Bangkok, Hanoi, Jakarta", "Krasnoyarsk", "Hong Kong Standard Time",
+			"Irkutsk, Ulaan Bataar", "Kuala Lumpur, Singapore", "Perth", "Taipei", "Osaka, Sapporo, Tokyo", "Seoul",
+			"Yakutsk", "Adelaide", "Darwin", "Brisbane", "Canberra, Melbourne, Sydney", "Guam, Port Moresby", "Hobart",
+			"Vladivostok", "Magadan, Solomon Is., New Caledonia", "Auckland, Wellington", "Nuku'alofa");
+
+	public void getTimezoneDropdownValue() {
+		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
+		dropdownTimezone.click();
+		for (int i = 0; i < listOfOptions.size(); i++) {
+			actualtimezoneValues.add(listOfOptions.get(i).getText().trim());
+		}
+		log("Timezone values present for user are :" + actualtimezoneValues);
+
+	}
+
+	public void verifyTimezoneDropdownValues() throws InterruptedException {
+		CCUtils.assertEquals(actualtimezoneValues, expectedTimezoneValues);
+	}
+
+	public final List<String> expectedClientTypes = Arrays.asList("Direct Client", "Dedicated IT", "GBS", "Itelagen",
+			"KM Strategic", "MdCentric", "Medicalistics", "MTS/MMIC", "OSIS", "SharedMed", "TSI", "Virmedice",
+			"Health Prime International", "Newport Medical Group", "New Stork Healthdata Management");
+
+	public void getClientTypeDropdownValue() {
+		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
+		dropdownClientType.click();
+		for (int i = 0; i < listOfOptions.size(); i++) {
+			actualClientTypeValues.add(listOfOptions.get(i).getText().trim());
+		}
+		log("Client type values present for user are :" + actualClientTypeValues);
+
+	}
+
+	public void verifyClientTypeDropdownValues() throws InterruptedException {
+		CCUtils.assertEquals(actualClientTypeValues, expectedClientTypes);
+	}
+
 }
