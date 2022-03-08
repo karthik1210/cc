@@ -382,7 +382,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
-		String url = ApiPath.INVALID_PATH_PUT_ORGS_SOLUTION_DL  + orgId;
+		String url = ApiPath.PUT_ORGS_SOLUTION_DL + orgId + "/solutionsabcde";
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
