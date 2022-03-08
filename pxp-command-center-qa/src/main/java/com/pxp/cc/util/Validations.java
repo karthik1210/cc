@@ -312,7 +312,7 @@ public class Validations {
 		}
 	}
 
-	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response, int orgId) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -1354,12 +1354,6 @@ public class Validations {
 				CCUtils.assertNotNull(solutionsObjects.get("statusNotes"), "statusNotes was not in the response");
 			}
 		}
-	}
-
-	public void verifyErrorResponseBodyForOrgIdSolutionsField(Response response, int orgId) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifySearchOrgIdSolutionsResponseBody(Response response, int orgId, String practiceName,

@@ -377,7 +377,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getOrgSolutionsDetails_DataLayer(int orgId) {
-		String url = ApiPath.GET_ORGS_SOLUTION_DL + orgId + "/solutions";
+		String url = ApiPath.PUT_ORGS_SOLUTION_DL + orgId + "/solutions";
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 	
