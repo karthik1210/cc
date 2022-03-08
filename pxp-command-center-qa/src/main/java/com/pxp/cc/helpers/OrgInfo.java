@@ -380,5 +380,9 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.PUT_ORGS_SOLUTION_DL + orgId + "/solutions";
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
+	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.INVALID_PATH_PUT_ORGS_SOLUTION_DL  + orgId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
