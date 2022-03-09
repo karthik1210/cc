@@ -19,4 +19,14 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getUserRoles_DataLayer(String userType) {
+		String url = ApiPath.USER_ROLES_DL + "{userType}" + "/roles";
+		return given().spec(requestSpec).pathParam("userType", userType).when().get(url).then().extract().response();
+	}
+
+	public Response getUserRolesUsingInvalidUrl_DataLayer(String userType) {
+		String url = ApiPath.INVALID_PATH_USER_ROLES_DL(userType);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }

@@ -85,4 +85,9 @@ public class ApiPath {
 	public static final String INVALID_PATH_USER_ROLES_BL(String userType) {
 		return USER_ROLES_BL + userType + "/rolesss";
 	}
+	public static final String SERVICE_USER_DL = "/service/user-data";
+	public static final String USER_ROLES_DL = SERVICE_USER_DL + "/usertypes/";
+	public static final String INVALID_PATH_USER_ROLES_DL(String userType) {
+		return USER_ROLES_DL + userType + "/rolesss";
+	}
 }
