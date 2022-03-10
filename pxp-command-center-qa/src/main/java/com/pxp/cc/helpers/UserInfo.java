@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 public class UserInfo extends BaseRest {
 
 	public Response getUserRoles(String userType) {
-		String url = ApiPath.USER_ROLES_BL + "{userType}" + "/roles";
+		String url = ApiPath.USER_ROLES_BL(userType);
 		return given().spec(requestSpec).pathParam("userType", userType).when().get(url).then().extract().response();
 	}
 
@@ -20,7 +20,7 @@ public class UserInfo extends BaseRest {
 	}
 
 	public Response getUserRoles_DataLayer(String userType) {
-		String url = ApiPath.USER_ROLES_DL + "{userType}" + "/roles";
+		String url = ApiPath.USER_ROLES_DL(userType);
 		return given().spec(requestSpec).pathParam("userType", userType).when().get(url).then().extract().response();
 	}
 
