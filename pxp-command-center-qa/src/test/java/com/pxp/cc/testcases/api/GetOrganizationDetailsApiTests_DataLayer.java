@@ -115,7 +115,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForClientIdInOrgIdField(fetchOrgDetailsApiResponse, orgId);
+		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(fetchOrgDetailsApiResponse, orgId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
