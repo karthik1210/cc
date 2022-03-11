@@ -99,8 +99,19 @@ public class ApiPath {
 	public static final String INVALID_PATH_USER_ROLES_DL(String userType) {
 		return SERVICE_USER_DL + "/usertypes/" + userType + "/rolesss";
 	}
+
 	public static final String ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/orgs/";
+
 	public static final String INVALID_PATH_ORGS_SOLUTION_DL(int orgId) {
-		return ORGS_SOLUTION_DL + orgId+ "/Solutionsaaaa";
+		return ORGS_SOLUTION_DL + orgId + "/Solutionsaaaa";
 	}
+
+	public static final String USER_ROLES_BY_USER_BL(int userId) {
+		return SERVICE_USER_BL + "/users/" + "{userId}" + "/roles";
+	}
+	
+	public static final String INVALID_PATH_USER_ROLES_BY_USER_BL(int userId) {
+		return SERVICE_USER_BL + "/users/" + "{userId}" + "/rolessss";
+	}
+
 }
