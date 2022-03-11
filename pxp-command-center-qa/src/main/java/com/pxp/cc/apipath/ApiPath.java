@@ -81,8 +81,23 @@ public class ApiPath {
 	public static final String GET_CLIENT_SOLUTION_DL = SERVICE_CLIENT_DL + "/clients/";
 	public static final String SERVICE_USER_BL = "/service/user";
 	public static final String USER_ROLES_BL = SERVICE_USER_BL + "/usertypes/";
+
+	public static final String USER_ROLES_BL(String userType) {
+		return SERVICE_USER_BL + "/usertypes/" + "{userType}" + "/roles";
+	}
+
 	public static final String INVALID_PATH_USER_ROLES_BL(String userType) {
-		return USER_ROLES_BL + userType + "/rolesss";
+		return SERVICE_USER_BL + "/usertypes/" + userType + "/rolesss";
+	}
+
+	public static final String SERVICE_USER_DL = "/service/user-data";
+
+	public static final String USER_ROLES_DL(String userType) {
+		return SERVICE_USER_DL + "/usertypes/" + "{userType}" + "/roles";
+	}
+
+	public static final String INVALID_PATH_USER_ROLES_DL(String userType) {
+		return SERVICE_USER_DL + "/usertypes/" + userType + "/rolesss";
 	}
 	public static final String ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/orgs/";
 	public static final String INVALID_PATH_ORGS_SOLUTION_DL(int orgId) {
