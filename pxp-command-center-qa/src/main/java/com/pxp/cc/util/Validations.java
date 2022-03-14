@@ -313,7 +313,8 @@ public class Validations {
 		}
 	}
 
-	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, int orgId) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, int orgId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -1410,5 +1411,23 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyGetUserRolesByUserApiResponse(Response response, List<UserRoles> userRolesListByUser)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (userRolesListByUser.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						userRolesListByUser.contains(
+								new UserRoles(jsonObject.getInt("roleId"), jsonObject.get("name").toString())),
+						"User role " + jsonObject.get("name").toString() + " doesn't exist");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("User roles list is empty");
+		} else {
+			Log4jUtil.log("Size of actual user roles list and expected user roles list is not same");
+		}
+	}
 
 }

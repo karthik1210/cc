@@ -29,4 +29,14 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getUserRolesByUser(int userId) {
+		String url = ApiPath.USER_ROLES_BY_USER_BL(userId);
+		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
+	}
+
+	public Response getUserRolesByUserUsingInvalidUrl(int userId) {
+		String url = ApiPath.INVALID_PATH_USER_ROLES_BY_USER_BL(userId);
+		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
+	}
+
 }
