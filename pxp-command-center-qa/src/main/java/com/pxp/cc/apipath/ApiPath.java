@@ -43,7 +43,7 @@ public class ApiPath {
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
 	public static final String GET_AUTOSUGGESTION_CLIENT = SERVICE_CC + V1_CLIENTS + "/auto-suggestion-client";
-	public static final String SERVICE_CLIENT_BL = "/service/client";
+	public static final String SERVICE_CLIENT_BL = "/service/client-service";
 	public static final String SERVICE_ORG_BL = "/service/org";
 	public static final String POST_CLIENT_BL = SERVICE_CLIENT_BL + "/clients";
 	public static final String GET_CLIENT_BL = SERVICE_CLIENT_BL + "/clients/";
@@ -113,5 +113,10 @@ public class ApiPath {
 	public static final String INVALID_PATH_USER_ROLES_BY_USER_BL(int userId) {
 		return SERVICE_USER_BL + "/users/" + "{userId}" + "/rolessss";
 	}
+	public static final String CLIENT_DIRECTORY_BL = SERVICE_CLIENT_BL+ "/v1/clients";
+	public static final String CLIENT_DIRECTORY_BL  (String searchData, String page, String pageSize,Object type)
 
+    {return SERVICE_CLIENT_BL  + "/v1/clients";
+	}
+	
 }
