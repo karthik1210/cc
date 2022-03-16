@@ -23,6 +23,7 @@ import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
+import com.pxp.cc.pojos.UserRoles;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -312,7 +313,8 @@ public class Validations {
 		}
 	}
 
-	public void verifyErrorMessageInResponseForClientIdInOrgIdField(Response response, int orgId) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, int orgId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -1355,4 +1357,77 @@ public class Validations {
 			}
 		}
 	}
+
+	public void verifySearchOrgIdSolutionsResponseBody(Response response, int orgId, String practiceName,
+			int solutionId, String status) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject object = jsonArray.getJSONObject(i);
+			JSONObject org = object.getJSONObject("org");
+			CCUtils.assertEquals(org.getInt("orgId"), orgId);
+			CCUtils.assertEquals(org.get("name").toString(), practiceName);
+			JSONArray getSolutionsArray = object.getJSONArray("solutions");
+			for (int j = 0; j < getSolutionsArray.length(); j++) {
+				JSONObject solutionsObjects = getSolutionsArray.getJSONObject(j);
+				System.out.println("print the solutions id" + solutionsObjects.getInt("solutionId"));
+				CCUtils.assertEquals(solutionsObjects.getInt("solutionId"), solutionId);
+				CCUtils.assertEquals(solutionsObjects.get("status").toString(), status);
+				CCUtils.assertNotNull(solutionsObjects.get("solutionName"), "solutionName was not in the response");
+				CCUtils.assertNotNull(solutionsObjects.get("date"), "date was not in the response");
+				CCUtils.assertNotNull(solutionsObjects.get("statusNotes"), "statusNotes was not in the response");
+			}
+		}
+	}
+
+	public void verifyGetUserRolesResponseForInternalUser(Response response) throws IOException {
+		List<UserRoles> actualUserRolesList = new ArrayList<UserRoles>();
+		actualUserRolesList.add(new UserRoles(2, "Solutions"));
+		actualUserRolesList.add(new UserRoles(1, "Super Admin"));
+		actualUserRolesList.add(new UserRoles(4, "Support T3"));
+		actualUserRolesList.add(new UserRoles(3, "Implementation"));
+		actualUserRolesList.add(new UserRoles(6, "Support T1"));
+		actualUserRolesList.add(new UserRoles(5, "Support T2"));
+		actualUserRolesList.add(new UserRoles(7, "Demo/Sales"));
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (actualUserRolesList.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						actualUserRolesList.contains(
+								new UserRoles(jsonObject.getInt("roleId"), jsonObject.get("name").toString())),
+						"User role " + jsonObject.get("name").toString() + " doesn't exist");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("User roles list is empty");
+		} else {
+			Log4jUtil.log("Size of actual user roles list and expected user roles list is not same");
+		}
+	}
+
+	public void verifyErrorResponseBodyForUserTypeField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid userType");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetUserRolesByUserApiResponse(Response response, List<UserRoles> userRolesListByUser)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		if (userRolesListByUser.size() == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertTrue(
+						userRolesListByUser.contains(
+								new UserRoles(jsonObject.getInt("roleId"), jsonObject.get("name").toString())),
+						"User role " + jsonObject.get("name").toString() + " doesn't exist");
+			}
+		} else if (jsonArray.length() == 0) {
+			Log4jUtil.log("User roles list is empty");
+		} else {
+			Log4jUtil.log("Size of actual user roles list and expected user roles list is not same");
+		}
+	}
+
 }

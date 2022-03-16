@@ -15,6 +15,7 @@ import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
 
+	
 	public Response getOrgNodesDetails(String orgId) {
 
 		String url = ApiPath.GET_ORG_DETAILS + orgId;
@@ -358,7 +359,7 @@ public class OrgInfo extends BaseRest {
 
 	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId, int userId)
 			throws IOException {
-		String url = ApiPath.PUT_ORGS_SOLUTION_DL + orgId + "/solutions";
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
 				status);
 
@@ -375,4 +376,15 @@ public class OrgInfo extends BaseRest {
 		solutionsList.add(solutionsMap);
 		return solutionsList;
 	}
+
+	public Response getOrgSolutionsDetails_DataLayer(int orgId) {
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL (orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
 }
