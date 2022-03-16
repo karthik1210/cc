@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.Timezone;
+import com.pxp.cc.helpers.CommonsInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
@@ -14,13 +14,13 @@ import io.restassured.response.Response;
 
 public class GetTimezoneTests extends BaseRest {
 	private Validations validation;
-	Timezone timezone;
+	CommonsInfo timezone;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		validation = new Validations();
-		timezone = new Timezone();
+		timezone = new CommonsInfo();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check timezone id & displayname ")
