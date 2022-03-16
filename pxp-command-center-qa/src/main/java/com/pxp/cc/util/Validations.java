@@ -765,7 +765,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source already exist in target");
 	}
 
-	public void verifyGetTimezonApiResponseBody(Response response) throws IOException {
+	public void verifyGetTimezonesApiResponseBody(Response response) throws IOException {
 		List<Timezone> actualTimezoneList = new ArrayList<Timezone>();
 		final List<String> expectedTimezoneDisplayName = Arrays.asList("International Date Line West",
 				"Midway Island, Samoa", "Hawaii Standard Time", "Alaska Standard Time", "Pacific Standard Time",

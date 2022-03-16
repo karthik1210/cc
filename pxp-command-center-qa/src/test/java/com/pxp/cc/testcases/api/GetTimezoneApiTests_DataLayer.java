@@ -31,7 +31,7 @@ public class GetTimezoneApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getTimezoneApiResponse);
 		CCUtils.assertEquals(getTimezoneApiResponse.getStatusCode(), 200);
 		logStep("Validating Timezone id and displayname");
-		validation.verifyGetTimezonApiResponseBody(getTimezoneApiResponse);
+		validation.verifyGetTimezonesApiResponseBody(getTimezoneApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
