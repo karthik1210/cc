@@ -43,4 +43,21 @@ public class ClientDirectory extends BaseRest {
 		return given().spec(requestSpec).when().delete(ApiPath.DELETE_FAVORITE(clientID)).then().extract().response();
 	}
 
+	public Response selectClientFavorite(String clientId) {
+		int clientID = Integer.parseInt(clientId);
+		Log4jUtil.log("Favoriting client Id : " + clientID);
+		return given().spec(requestSpec).when().post(ApiPath.FAVORITE(clientID)).then().extract().response();
+	}
+
+	public Response selectClientFavoriteWithInvalidUrl(String clientId) {
+		int clientID = Integer.parseInt(clientId);
+		Log4jUtil.log("Favoriting client Id : " + clientID);
+		return given().spec(requestSpec).when().post(ApiPath.INVALID_PATH_FAVORITE(clientID)).then().extract()
+				.response();
+	}
+
+	public Response deleteFavoriteClient(int clientId) {
+		Log4jUtil.log("DE Favoriting client Id : " + clientId);
+		return given().spec(requestSpec).when().put(ApiPath.FAVORITE(clientId)).then().extract().response();
+	}
 }

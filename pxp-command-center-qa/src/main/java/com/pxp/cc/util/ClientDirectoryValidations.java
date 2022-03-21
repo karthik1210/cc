@@ -5,8 +5,13 @@ package com.pxp.cc.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.helpers.ClientDirectory;
+import com.pxp.cc.pojos.SearchClientData;
+import com.pxp.cc.pojos.Solutions;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -33,6 +38,50 @@ public class ClientDirectoryValidations {
 						"Found data " + clientIteratePerData + " is present in expected data" + getSearchClientDetails);
 			}
 		}
+	}
+
+	public List<Integer> verifyFavoriteClientOutputWithoutFilter(Response response, String getSearchClientDetails) {
+		jsonPath = new JsonPath(response.asString());
+		List<Integer> listOfClientIds = new ArrayList<Integer>();
+		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
+		JSONArray jsonArray = new JSONArray(response.jsonPath().getList("data"));
+		Log4jUtil.log("Display list of clients in response body : " + jsonArray.toString());
+		JSONObject jsonObject;
+		if (jsonPath.getInt("data.size()") == jsonArray.length()) {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				jsonObject = jsonArray.getJSONObject(i);
+				SearchClientData searchClientData = new SearchClientData(jsonObject.getInt("clientId"),
+						jsonObject.get("name").toString(), jsonObject.get("type").toString(),
+						jsonObject.getBoolean("favorite"));
+				if (searchClientData.isFavorite()) {
+					listOfClientIds.add(searchClientData.getClientId());
+				} else if (jsonArray.length() == 0) {
+					Log4jUtil.log("client data list is empty");
+				} else {
+					Log4jUtil.log("Size of client data and json array list is not same");
+				}
+			}
+		}
+
+		/*
+		 * Log4jUtil.log("Display list of clients in response body : " +
+		 * jsonPath.get("data"));
+		 * Log4jUtil.log("Get the size of clients in response body : " +
+		 * jsonPath.getInt("data.size()")); Log4jUtil.log("Page Number : " +
+		 * jsonPath.getInt("pageNo")); Log4jUtil.log("Items(Clients) per Page : " +
+		 * jsonPath.getInt("pageSize")); Log4jUtil.
+		 * log("Comparing Searched Items names/ids with client data received in Response body."
+		 * ); for (int dataArrayIteration = 0; dataArrayIteration <
+		 * jsonPath.getInt("data.size()"); dataArrayIteration++) { String
+		 * clientIteratePerData = jsonPath.get("data[" + dataArrayIteration +
+		 * "].favorite"); Log4jUtil.log("Print Value : " + clientIteratePerData); if
+		 * (((CharSequence) jsonPath.get("data[" + dataArrayIteration + "].favorite"))!=
+		 * null) { Log4jUtil.log("searched client : " + jsonPath.get("data[" +
+		 * dataArrayIteration + "].name") + "is favorited client with client id : ");
+		 * listOfClientIds.add((Integer) jsonPath.get("data[" + dataArrayIteration +
+		 * "].clientId)")); } } return listOfClientIds;
+		 */
+		return listOfClientIds;
 	}
 
 	public void verifyClientOutputWithFilter(Response response, Object searchedClientData, Object appliedWithFilter) {
@@ -79,7 +128,7 @@ public class ClientDirectoryValidations {
 
 	public void verifyClientIdNotFoundErrorMsgWhileFavoritingClient(Response response, String clientId) {
 		jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("message").toString(), "Clientid=" + clientId + " doesn't exist");
+		CCUtils.assertEquals(jsonPath.get("message").toString(), "Client not found by clientId=" + clientId);
 	}
 
 	public void verifyClientIdNotFoundErrorMsgWhileUnFavoritingClient(Response response) {
@@ -107,6 +156,19 @@ public class ClientDirectoryValidations {
 				String s = ClientId.toString();
 				Response respons = clientDirectory.deleteFavoritesClient(s);
 				CCUtils.assertEquals(respons.getStatusCode(), 200);
+			}
+		} else {
+			Log4jUtil.log("There are less than five Favorite Clients.");
+		}
+	}
+
+	public void verifyExistingFavClientsIsFive(List<Integer> list) {
+		if (list.size() == 5) {
+			Log4jUtil.log("There are five Favorite Clients.");
+			Log4jUtil.log("Deleting all five Fav clients to handle 'Can't favorite more than 5 clients error.");
+			for (Integer ClientId : list) {
+				Response response = clientDirectory.deleteFavoriteClient(ClientId);
+				CCUtils.assertEquals(response.getStatusCode(), 200);
 			}
 		} else {
 			Log4jUtil.log("There are less than five Favorite Clients.");
