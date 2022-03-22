@@ -19,28 +19,18 @@
 			<class name="com.pxp.cc.testcases.api.ClientDirectoryApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.ClientDropdownGeneralSettingApiTests" />
-			<class name="com.pxp.cc.testcases.api.CreateClientApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.CreateClientOrgControllerApiTests" />
-			<class name="com.pxp.cc.testcases.api.EditClientApiTests" />
 			<class name="com.pxp.cc.testcases.api.EditOrgNodeApiTest" />
-			<class name="com.pxp.cc.testcases.api.FetchClientDetailsTests" />
 			<class name="com.pxp.cc.testcases.api.ForgotPasswordTests" />
-			<class name="com.pxp.cc.testcases.api.GetClientNameApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.GetClientOrgControllerAgnosticPracticeTests" />
 			<class name="com.pxp.cc.testcases.api.GetClientOrgParentTests" />
-			<class name="com.pxp.cc.testcases.api.GetClientTypesApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.GetOrgHierarchyControllerApiTests" />
 			<class
-				name="com.pxp.cc.testcases.api.GetOrgIdSystemEnterprisePracticeApiTest" />
-			<class
 				name="com.pxp.cc.testcases.api.GetOrgPracticesProductsCount" />
 			<class name="com.pxp.cc.testcases.api.GetProductListTests" />
-
-			<class name="com.pxp.cc.testcases.api.GetSapNumberApiTests" />
-
 			<class name="com.pxp.cc.testcases.api.GetTimezoneTests" />
 			<class name="com.pxp.cc.testcases.api.MoveOrgNodeAuditLogTests" />
 			<class
