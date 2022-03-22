@@ -119,4 +119,12 @@ public class ApiPath {
     {return SERVICE_CLIENT_BL  + "/v1/clients";
 	}
 	
+	public static final String CLIENT_DIRECTORY_DL = SERVICE_CLIENT_DL + "/v1/clients";
+
+	public static final String CLIENT_DIRECTORY_DL(String searchData, String page, String pageSize, Object type)
+
+	{
+		return SERVICE_CLIENT_DL + "/v1/clients";
+	}
+	
 }

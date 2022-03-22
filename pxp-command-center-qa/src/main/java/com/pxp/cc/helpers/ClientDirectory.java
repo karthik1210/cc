@@ -3,7 +3,9 @@ package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.apipath.ApiPath;
@@ -41,6 +43,22 @@ public class ClientDirectory extends BaseRest {
 		int clientID = Integer.parseInt(clientId);
 		Log4jUtil.log("DE Favoriting client Id : " + clientID);
 		return given().spec(requestSpec).when().delete(ApiPath.DELETE_FAVORITE(clientID)).then().extract().response();
+	}
+
+	public Response getClientFromClientDirectoryWithFilter_DL(String searchData, String page, String pageSize,
+			String pxp_cc_user, Object types) {
+
+		return given().spec(requestSpec).queryParam("query", searchData).queryParams("type", types)
+				.queryParam("page", page).queryParam("pageSize", pageSize).header(ApiPath.PXP_CC_USER, pxp_cc_user)
+				.when().get(ApiPath.CLIENT_DIRECTORY_DL).then().extract().response();
+	}
+
+	public Response getClientFromClientDirectoryWithoutFilter_DL(String searchData, String page, String pageSize,
+			String pxp_cc_user) {
+
+		return given().spec(requestSpec).queryParam("query", searchData).queryParam("type", "").queryParam("page", page)
+				.queryParam("pageSize", pageSize).header(ApiPath.PXP_CC_USER, pxp_cc_user).when()
+				.get(ApiPath.CLIENT_DIRECTORY_DL).then().extract().response();
 	}
 
 }
