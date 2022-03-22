@@ -11,17 +11,19 @@
 	<test name="Client Service API Test">
 		<classes>
 			<class
-				name="com.pxp.cc.testcases.api.CreateClientApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateClientApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.EditClientApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.EditClientApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.FetchClientDetailsTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.FetchClientDetailsTests_BusinessLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetClientNameApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientNameApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetClientTypesApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetSapNumberApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSapNumberApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientsFromClientDirectoryApiTest_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
