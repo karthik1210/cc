@@ -1,0 +1,116 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
+package com.pxp.cc.testcases.api;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.OrgInfo;
+import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.OrgNode;
+import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.Validations;
+import io.restassured.response.Response;
+
+public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
+
+	private ClientInfo clientInfo;
+	private OrgInfo orgInfo;
+	private Validations validation;
+	Response createClientApiResponse, fetchClientDetailsApiResponse, createPracticeApiResponse,
+			fetchPracticeApiResponse, createSystemApiResponse, createEnterpriseApiResponse;
+
+	@BeforeClass()
+	public void setBaseUri() throws Exception {
+		setupServiceRequestSpecificationBuilder();
+		clientInfo = new ClientInfo();
+		orgInfo = new OrgInfo();
+		validation = new Validations();
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing id in client id field and verify error message for client id field")
+	public void testErrorMessageForClientIdField() throws IOException {
+		logStep("Enter non existing client id");
+		fetchClientDetailsApiResponse = clientInfo
+				.getClientOrgHierarchyDetails(Integer.parseInt(testData.getProperty("api.nonexisting.client.id")));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
+		logStep("Validating error message of response body");
+		validation.verifyErrorResponseBodyForClientIdSolutionsField(fetchClientDetailsApiResponse,
+				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client & add org node below the client then fetch & validate client org hierarchy details with client id")
+	public void testExistingClientIdWithoutOrgNode() throws IOException {
+		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
+		String clientName = testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
+				testData.getProperty("api.client.id"), clientName, clientSapNumber,
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		List<OrgNode> datalist = new ArrayList();
+		int clientId = createClientApiResponse.jsonPath().get("clientId");
+
+		datalist.add(new OrgNode(clientId, 0, "CLIENT", clientName,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
+
+		logStep("Create a new system below client.");
+		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
+		String systemSapNumber = testData.getProperty("api.system.sapnumber").concat(CCUtils.generateRandomString());
+		createSystemApiResponse = orgInfo.createOrg(testData.getProperty("api.system.active"),
+				testData.getProperty("api.system.displayname"), systemName, testData.getProperty("api.system.orgtype"),
+				clientId, testData.getProperty("api.parenttype"), systemSapNumber,
+				testData.getProperty("api.system.timezoneid"));
+		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
+
+		datalist.add(new OrgNode(systemId, 1, testData.getProperty("api.system.orgtype"), systemName,
+				Boolean.parseBoolean(testData.getProperty("api.system.active")), 2));
+
+		logStep("Create a new enterprise below system.");
+		String enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateRandomString());
+		String enterpriseSapNumber = testData.getProperty("api.enterprise.sapnumber")
+				.concat(CCUtils.generateRandomString());
+		createEnterpriseApiResponse = orgInfo.createOrg(testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.displayname"), enterpriseName,
+				testData.getProperty("api.enterprise.orgtype"), systemId,
+				testData.getProperty("api.enterprise.parenttype"), enterpriseSapNumber,
+				testData.getProperty("api.enterprise.timezoneid"));
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
+
+		datalist.add(new OrgNode(enterpriseId, 2, testData.getProperty("api.enterprise.orgtype"), enterpriseName,
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), 3));
+
+		logStep("Create a new practice below enterprise.");
+		String practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateRandomString());
+		String practiceSapNumber = testData.getProperty("api.practice.sapnumber")
+				.concat(CCUtils.generateRandomString());
+		createPracticeApiResponse = orgInfo.createOrg(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), practiceName,
+				testData.getProperty("api.practice.orgtype"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"), practiceSapNumber,
+				testData.getProperty("api.practice.timezoneid"));
+
+		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+
+		datalist.add(new OrgNode(practiceId, 3, testData.getProperty("api.practice.orgtype"), practiceName,
+				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 4));
+
+		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
+		logStep("Validating error message of response body");
+
+		validation.verifySearchClientOrgHierarchyResponseBody(fetchClientDetailsApiResponse, datalist);
+	}
+}
