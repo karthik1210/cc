@@ -1,3 +1,4 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.testcases.api;
 
 import java.io.IOException;
@@ -15,7 +16,7 @@ import com.pxp.cc.util.Validations;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-public class FavoriteUnFavoriteClientApiTests extends BaseRest {
+public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 
 	private ClientDirectory clientDirectory;
 	private ClientDirectoryValidations clientDirectoryValidations;
