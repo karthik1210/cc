@@ -142,7 +142,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	public void clickSSO() {
 		CCUtils.verifyAndWaitForElement(ssoLinks, driver);
 		javascriptClick(ssoLinks);
-		log("SSOlinks clicked.....");
+		log("SSOlinks clicked....");
 	}
 
 	public void clickUserIcon() {
