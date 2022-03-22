@@ -46,7 +46,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client & add org node below the client then fetch & validate client org hierarchy details with client id")
-	public void testExistingClientIdWithOrgNode() throws IOException {
+	public void testExistingClientIdWithNgeFlow() throws IOException {
 		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -65,44 +65,39 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
 
 		logStep("Create a new system below client.");
-		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
-		String systemSapNumber = testData.getProperty("api.system.sapnumber").concat(CCUtils.generateRandomString());
 		createSystemApiResponse = orgInfo.createOrg(testData.getProperty("api.system.active"),
-				testData.getProperty("api.system.displayname"), systemName, testData.getProperty("api.system.orgtype"),
-				clientId, testData.getProperty("api.parenttype"), systemSapNumber,
-				testData.getProperty("api.system.timezoneid"));
+				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
+				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
-		datalist.add(new OrgNode(systemId, 1, testData.getProperty("api.system.orgtype"), systemName,
+		datalist.add(new OrgNode(systemId, 1, testData.getProperty("api.system.orgtype"),
+				testData.getProperty("api.system.name"),
 				Boolean.parseBoolean(testData.getProperty("api.system.active")), 2));
 
 		logStep("Create a new enterprise below system.");
-		String enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateRandomString());
-		String enterpriseSapNumber = testData.getProperty("api.enterprise.sapnumber")
-				.concat(CCUtils.generateRandomString());
 		createEnterpriseApiResponse = orgInfo.createOrg(testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.displayname"), enterpriseName,
+				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), enterpriseSapNumber,
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.sapnumber"),
 				testData.getProperty("api.enterprise.timezoneid"));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 
-		datalist.add(new OrgNode(enterpriseId, 2, testData.getProperty("api.enterprise.orgtype"), enterpriseName,
+		datalist.add(new OrgNode(enterpriseId, 2, testData.getProperty("api.enterprise.orgtype"),
+				testData.getProperty("api.enterprise.name"),
 				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), 3));
 
 		logStep("Create a new practice below enterprise.");
-		String practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateRandomString());
-		String practiceSapNumber = testData.getProperty("api.practice.sapnumber")
-				.concat(CCUtils.generateRandomString());
 		createPracticeApiResponse = orgInfo.createOrg(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), practiceName,
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), practiceSapNumber,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.sapnumber"),
 				testData.getProperty("api.practice.timezoneid"));
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 
-		datalist.add(new OrgNode(practiceId, 3, testData.getProperty("api.practice.orgtype"), practiceName,
+		datalist.add(new OrgNode(practiceId, 3, testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.name"),
 				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 4));
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
@@ -151,6 +146,82 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(fetchClientDetailsApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client & add org node below the client then fetch & validate client org hierarchy details with client id")
+	public void testExistingClientIdWithAgnosticFlow() throws IOException {
+		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
+		String clientName = testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
+				testData.getProperty("api.client.id"), clientName, clientSapNumber,
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		List<OrgNode> datalist = new ArrayList();
+		int clientId = createClientApiResponse.jsonPath().get("clientId");
+
+		datalist.add(new OrgNode(clientId, 0, "CLIENT", clientName,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
+
+		logStep("Create a new practice below client.");
+		createPracticeApiResponse = orgInfo.createOrg(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT",
+				testData.getProperty("api.practice.sapnumber"), testData.getProperty("api.practice.timezoneid"));
+
+		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+
+		datalist.add(new OrgNode(practiceId, 1, testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.name"),
+				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 2));
+
+		logStep("Create a new system below client.");
+		createSystemApiResponse = orgInfo.createOrg(testData.getProperty("api.system.active"),
+				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
+				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"));
+		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
+
+		datalist.add(new OrgNode(systemId, 1, testData.getProperty("api.system.orgtype"),
+				testData.getProperty("api.system.name"),
+				Boolean.parseBoolean(testData.getProperty("api.system.active")), 3));
+
+		logStep("Create a new enterprise below system.");
+		createEnterpriseApiResponse = orgInfo.createOrg(testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), systemId,
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.sapnumber"),
+				testData.getProperty("api.enterprise.timezoneid"));
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
+
+		datalist.add(new OrgNode(enterpriseId, 3, testData.getProperty("api.enterprise.orgtype"),
+				testData.getProperty("api.enterprise.name"),
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), 4));
+
+		logStep("Create a new practice below enterprise.");
+		createPracticeApiResponse = orgInfo.createOrg(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.sapnumber"),
+				testData.getProperty("api.practice.timezoneid"));
+
+		int ngePracticeId = createPracticeApiResponse.jsonPath().get("orgId");
+
+		datalist.add(new OrgNode(ngePracticeId, 4, testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.name"),
+				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 5));
+
+		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
+		logStep("Validating error message of response body");
+
+		validation.verifySearchClientOrgHierarchyResponseBody(fetchClientDetailsApiResponse, datalist);
 	}
 
 }
