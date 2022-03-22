@@ -1430,8 +1430,9 @@ public class Validations {
 			Log4jUtil.log("Size of actual user roles list and expected user roles list is not same");
 		}
 	}
-	
-	public void verifySearchClientOrgHierarchyResponseBody(Response response,List<OrgNode> datalist) throws IOException {
+
+	public void verifySearchClientOrgHierarchyResponseBody(Response response, List<OrgNode> datalist)
+			throws IOException {
 		List<OrgNode> responseDatalist = new ArrayList();
 		JSONArray responseBody = new JSONArray(response.getBody().asString());
 		for (int i = 0; i < responseBody.length(); i++) {
@@ -1442,5 +1443,4 @@ public class Validations {
 		}
 		CCUtils.assertEquals(responseDatalist, datalist);
 	}
-
 }

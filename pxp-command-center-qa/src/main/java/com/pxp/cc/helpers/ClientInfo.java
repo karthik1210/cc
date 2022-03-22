@@ -217,7 +217,12 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response getClientOrgHierarchyDetails(int clientId) {
-		String url = ApiPath.GET_CLIENT_ORG_HIERARCHY_BL + clientId + "/org-hierarchy";
+		String url = ApiPath.CLIENT_ORG_HIERARCHY_BL(clientId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getClientOrgHierarchyUsingInvalidUrl(int clientId) {
+		String url = ApiPath.INVALID_PATH_CLIENT_ORGS_HIERARCHY_BL(clientId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }

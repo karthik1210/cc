@@ -41,12 +41,12 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
 		logStep("Validating error message of response body");
-		validation.verifyErrorResponseBodyForClientIdSolutionsField(fetchClientDetailsApiResponse,
-				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")));
+		validation.verifyErrorResponseBodyForClientIdField(fetchClientDetailsApiResponse,
+				(testData.getProperty("api.nonexisting.client.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client & add org node below the client then fetch & validate client org hierarchy details with client id")
-	public void testExistingClientIdWithoutOrgNode() throws IOException {
+	public void testExistingClientIdWithOrgNode() throws IOException {
 		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -113,4 +113,44 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		validation.verifySearchClientOrgHierarchyResponseBody(fetchClientDetailsApiResponse, datalist);
 	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client & without adding org node below the client then fetch & validate client org hierarchy details with client id")
+	public void testExistingClientIdWithoutOrgNode() throws IOException {
+		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
+		String clientName = testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
+				testData.getProperty("api.client.id"), clientName, clientSapNumber,
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		List<OrgNode> datalist = new ArrayList();
+		int clientId = createClientApiResponse.jsonPath().get("clientId");
+
+		datalist.add(new OrgNode(clientId, 0, "CLIENT", clientName,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
+
+		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
+		logStep("Validating error message of response body");
+
+		validation.verifySearchClientOrgHierarchyResponseBody(fetchClientDetailsApiResponse, datalist);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error response for invalid url")
+	public void testErrorResponseForInvalidUrl() throws Exception {
+		logStep("Enter invalid url and validate error status code");
+		fetchClientDetailsApiResponse = clientInfo
+				.getClientOrgHierarchyUsingInvalidUrl(Integer.parseInt(testData.getProperty("api.existing.client.id")));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(fetchClientDetailsApiResponse);
+	}
+
 }
