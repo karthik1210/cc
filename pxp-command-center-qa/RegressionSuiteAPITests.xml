@@ -56,6 +56,48 @@
 				name="com.pxp.cc.testcases.api.UpdateOrgNodeStatusApiTests" />
 			<class
 				name="com.pxp.cc.testcases.api.UpdateOrgProductStatusApiTests" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateClientApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.EditClientApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.FetchClientDetailsTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientNameApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientTypesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSapNumberApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientsFromClientDirectoryApiTest_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateClientApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateClientApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.FetchClientDetailsTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientNameApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientTypesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSapNumberApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByClientIdApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrganizationDetailsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
