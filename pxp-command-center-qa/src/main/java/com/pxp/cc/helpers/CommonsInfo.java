@@ -10,7 +10,7 @@ import com.pxp.cc.util.CCUtils;
 
 import io.restassured.response.Response;
 
-public class Timezone extends BaseRest {
+public class CommonsInfo extends BaseRest {
 
 	public Response getTimezone() throws IOException {
 		String url = ApiPath.GET_TIMEZONES;
@@ -27,4 +27,18 @@ public class Timezone extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getTimezones_DataLayer() throws IOException {
+		String url = ApiPath.TIMEZONES_DL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCall_DataLayer() throws IOException {
+		String url = ApiPath.TIMEZONES_DL;
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getTimezonesUsingInvalidUrl_DataLayer() throws IOException {
+		String url = ApiPath.INVALID_PATH_TIMEZONES_DL;
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }

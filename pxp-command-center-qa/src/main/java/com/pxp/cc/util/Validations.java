@@ -766,43 +766,43 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source already exist in target");
 	}
 
-	public void verifyGetTimezonApiResponseBody(Response response) throws IOException {
+	public void verifyGetTimezonesApiResponseBody(Response response) throws IOException {
 		List<Timezone> actualTimezoneList = new ArrayList<Timezone>();
-		final List<String> expectedTimezoneDisplayName = Arrays.asList("Eastern Standard Time",
-				"Atlantic Standard Time", "Central Standard Time", "Mountain Standard Time", "Pacific Standard Time",
-				"Alaska Standard Time", "Hawaii Standard Time", "Hong Kong Standard Time", "Indiana Standard Time",
-				"Arizona Standard Time", "Midway Island, Samoa", "International Date Line West", "Nuku'alofa",
-				"Tijuana, Baja California", "Chihuahua, La Paz, Mazatlan", "Central America",
-				"Guadalajara, Mexico City, Monterrey", "Saskatchewan", "Bagota, Lima, Quito, Rio Branco", "Caracas",
-				"La Paz", "Manaus", "Santiago", "Newfoundland", "Buenos Aires, Georgetown", "Greenland", "Montevideo",
-				"Azores", "Cape Verde Is.", "Casablanca,Monrovia,Reykjavik", "Greenwich Mean Time",
+		final List<String> expectedTimezoneDisplayName = Arrays.asList("International Date Line West",
+				"Midway Island, Samoa", "Hawaii Standard Time", "Alaska Standard Time", "Pacific Standard Time",
+				"Tijuana, Baja California", "Arizona Standard Time", "Chihuahua, La Paz, Mazatlan",
+				"Mountain Standard Time", "Central America", "Central Standard Time",
+				"Guadalajara, Mexico City, Monterrey", "Saskatchewan", "Bagota, Lima, Quito, Rio Branco",
+				"Eastern Standard Time", "Indiana Standard Time", "Caracas", "Atlantic Standard Time", "La Paz",
+				"Manaus", "Santiago", "Newfoundland", "Buenos Aires, Georgetown", "Greenland", "Montevideo",
+				"Mid-Atlantic", "Azores", "Cape Verde Is.", "Casablanca,Monrovia,Reykjavik", "Greenwich Mean Time",
 				"Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Belgrade, Bratislava, Budapest, Ljubljana, Prague",
 				"Brussels, Copenhagen, Madrid, Paris", "Sarajevo, Skopje, Warsaw, Zagreb", "West Central Africa",
 				"Amman", "Athens, Bucharest, Istanbul", "Beirut", "Cairo", "Harare, Pretoria",
-				"Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Jerusalem", "Minsk", "Mid-Atlantic", "Baghdad",
-				"Kuwait, Riyadh", "Moscow, St. Petersburg, Volgograd", "Nairobi", "Tehran", "Abu Dhabi, Muscat", "Baku",
-				"Yerevan", "Kabul", "Ekaterinburg", "Islamabad, Karachi, Tashkent",
-				"Chennai, Kolkata, Mumbai, New Delhi", "Kathmandu", "Almaty, Novosibirsk", "Astana, Dhaka",
-				"Yangon (Rangoon)", "Bangkok, Hanoi, Jakarta", "Krasnoyarsk", "Irkutsk, Ulaan Bataar",
-				"Kuala Lumpur, Singapore", "Perth", "Taipei", "Osaka, Sapporo, Tokyo", "Seoul", "Yakutsk", "Adelaide",
-				"Darwin", "Brisbane", "Canberra, Melbourne, Sydney", "Guam, Port Moresby", "Hobart", "Vladivostok",
-				"Magadan, Solomon Is., New Caledonia", "Auckland, Wellington");
+				"Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Jerusalem", "Minsk", "Baghdad", "Kuwait, Riyadh",
+				"Moscow, St. Petersburg, Volgograd", "Nairobi", "Tehran", "Abu Dhabi, Muscat", "Baku", "Yerevan",
+				"Kabul", "Ekaterinburg", "Islamabad, Karachi, Tashkent", "Chennai, Kolkata, Mumbai, New Delhi",
+				"Kathmandu", "Almaty, Novosibirsk", "Astana, Dhaka", "Yangon (Rangoon)", "Bangkok, Hanoi, Jakarta",
+				"Krasnoyarsk", "Hong Kong Standard Time", "Irkutsk, Ulaan Bataar", "Kuala Lumpur, Singapore", "Perth",
+				"Taipei", "Osaka, Sapporo, Tokyo", "Seoul", "Yakutsk", "Adelaide", "Darwin", "Brisbane",
+				"Canberra, Melbourne, Sydney", "Guam, Port Moresby", "Hobart", "Vladivostok",
+				"Magadan, Solomon Is., New Caledonia", "Auckland, Wellington", "Nuku'alofa");
 
-		final List<String> expectedTimezoneId = Arrays.asList("US/Eastern", "Canada/Atlantic", "US/Central",
-				"US/Mountain", "US/Pacific", "US/Alaska", "US/Hawaii", "Asia/Hong_Kong", "US/East-Indiana",
-				"US/Arizona", "US/Samoa", "Etc/GMT-12", "Pacific/Tongatapu", "America/Tijuana", "America/Mazatlan",
-				"Mexico/General", "Mexico/General", "Canada/Saskatchewan", "America/Lima", "America/Caracas",
-				"America/La_Paz", "America/Manaus", "America/Santiago", "Canada/Newfoundland", "America/Buenos_Aires",
-				"America/Godthab", "America/Montevideo", "Atlantic/Azores", "Atlantic/Cape_Verde", "Africa/Casablanca",
+		final List<String> expectedTimezoneId = Arrays.asList("Etc/GMT-12", "US/Samoa", "US/Hawaii", "US/Alaska",
+				"US/Pacific", "America/Tijuana", "US/Arizona", "America/Mazatlan", "US/Mountain", "Mexico/General",
+				"US/Central", "Mexico/General", "Canada/Saskatchewan", "America/Lima", "US/Eastern", "US/East-Indiana",
+				"America/Caracas", "Canada/Atlantic", "America/La_Paz", "America/Manaus", "America/Santiago",
+				"Canada/Newfoundland", "America/Buenos_Aires", "America/Godthab", "America/Montevideo",
+				"Atlantic/South_Georgia", "Atlantic/Azores", "Atlantic/Cape_Verde", "Africa/Casablanca",
 				"Europe/Dublin", "Europe/Amsterdam", "Europe/Belgrade", "Europe/Brussels", "Europe/Sarajevo",
 				"Africa/Lagos", "Asia/Amman", "Europe/Athens", "Asia/Beirut", "Africa/Cairo", "Africa/Harare",
-				"Europe/Helsinki", "Asia/Jerusalem", "Europe/Minsk", "Atlantic/South_Georgia", "Asia/Baghdad",
-				"Asia/Kuwait", "Europe/Moscow", "Africa/Nairobi", "Asia/Tehran", "Asia/Muscat", "Asia/Baku",
-				"Asia/Yerevan", "Asia/Kabul", "Asia/Yekaterinburg", "Asia/Karachi", "Asia/Calcutta", "Asia/Katmandu",
-				"Asia/Almaty", "Asia/Dhaka", "Asia/Rangoon", "Asia/Bangkok", "Asia/Krasnoyarsk", "Asia/Irkutsk",
-				"Asia/Singapore", "Australia/Perth", "Asia/Taipei", "Asia/Tokyo", "Asia/Seoul", "Asia/Yakutsk",
-				"Australia/Adelaide", "Australia/Darwin", "Australia/Brisbane", "Australia/Sydney", "Pacific/Guam",
-				"Australia/Hobart", "Asia/Vladivostok", "Asia/Magadan", "Pacific/Auckland");
+				"Europe/Helsinki", "Asia/Jerusalem", "Europe/Minsk", "Asia/Baghdad", "Asia/Kuwait", "Europe/Moscow",
+				"Africa/Nairobi", "Asia/Tehran", "Asia/Muscat", "Asia/Baku", "Asia/Yerevan", "Asia/Kabul",
+				"Asia/Yekaterinburg", "Asia/Karachi", "Asia/Calcutta", "Asia/Katmandu", "Asia/Almaty", "Asia/Dhaka",
+				"Asia/Rangoon", "Asia/Bangkok", "Asia/Krasnoyarsk", "Asia/Hong_Kong", "Asia/Irkutsk", "Asia/Singapore",
+				"Australia/Perth", "Asia/Taipei", "Asia/Tokyo", "Asia/Seoul", "Asia/Yakutsk", "Australia/Adelaide",
+				"Australia/Darwin", "Australia/Brisbane", "Australia/Sydney", "Pacific/Guam", "Australia/Hobart",
+				"Asia/Vladivostok", "Asia/Magadan", "Pacific/Auckland", "Pacific/Tongatapu");
 
 		for (int i = 0; i < expectedTimezoneDisplayName.size(); i++) {
 			actualTimezoneList.add(new Timezone(expectedTimezoneId.get(i), expectedTimezoneDisplayName.get(i)));
