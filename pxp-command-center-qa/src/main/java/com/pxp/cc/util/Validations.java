@@ -21,6 +21,7 @@ import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
+import com.pxp.cc.pojos.OrgNode;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
@@ -1430,4 +1431,16 @@ public class Validations {
 		}
 	}
 
+	public void verifySearchClientOrgHierarchyResponseBody(Response response, List<OrgNode> datalist)
+			throws IOException {
+		List<OrgNode> responseDatalist = new ArrayList();
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < responseBody.length(); i++) {
+			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"),
+					responseBody.getJSONObject(i).getInt("parentId"), responseBody.getJSONObject(i).getString("type"),
+					responseBody.getJSONObject(i).getString("name"), responseBody.getJSONObject(i).getBoolean("active"),
+					responseBody.getJSONObject(i).getInt("id")));
+		}
+		CCUtils.assertEquals(responseDatalist, datalist);
+	}
 }

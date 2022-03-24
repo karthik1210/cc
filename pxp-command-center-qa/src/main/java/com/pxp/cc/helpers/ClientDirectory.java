@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
@@ -45,6 +45,7 @@ public class ClientDirectory extends BaseRest {
 		return given().spec(requestSpec).when().delete(ApiPath.DELETE_FAVORITE(clientID)).then().extract().response();
 	}
 
+
 	public Response getClientFromClientDirectoryWithFilter_DL(String searchData, String page, String pageSize,
 			String pxp_cc_user, Object types) {
 
@@ -59,6 +60,25 @@ public class ClientDirectory extends BaseRest {
 		return given().spec(requestSpec).queryParam("query", searchData).queryParam("type", "").queryParam("page", page)
 				.queryParam("pageSize", pageSize).header(ApiPath.PXP_CC_USER, pxp_cc_user).when()
 				.get(ApiPath.CLIENT_DIRECTORY_DL).then().extract().response();
+	}
+
+
+	public Response selectClientFavorite(String clientId) {
+		int clientID = Integer.parseInt(clientId);
+		Log4jUtil.log("Favoriting client Id : " + clientID);
+		return given().spec(requestSpec).when().post(ApiPath.FAVORITE(clientID)).then().extract().response();
+	}
+
+	public Response selectClientFavoriteWithInvalidUrl(String clientId) {
+		int clientID = Integer.parseInt(clientId);
+		Log4jUtil.log("Favoriting client Id : " + clientID);
+		return given().spec(requestSpec).when().post(ApiPath.INVALID_PATH_FAVORITE(clientID)).then().extract()
+				.response();
+	}
+
+	public Response deleteFavoriteClient(int clientId) {
+		Log4jUtil.log("DE Favoriting client Id : " + clientId);
+		return given().spec(requestSpec).when().put(ApiPath.FAVORITE(clientId)).then().extract().response();
 	}
 
 }

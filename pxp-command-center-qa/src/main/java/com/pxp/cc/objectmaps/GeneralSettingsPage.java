@@ -138,8 +138,8 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
-
-	@FindBy(xpath = "//span[@class='mat-option-text']")
+	
+	@FindBy(xpath = "//div[@class='s_item_name']//span")
 	private WebElement selectFirstInAutoSuggestion;
 
 	@FindBy(className = "info")

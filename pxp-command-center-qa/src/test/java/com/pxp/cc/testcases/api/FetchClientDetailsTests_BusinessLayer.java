@@ -67,8 +67,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -91,8 +91,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 
 		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
@@ -139,8 +139,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
 		logStep("create another active practice node without solutions");
@@ -170,8 +170,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
-				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(), clientName,
+				clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
 
