@@ -109,18 +109,27 @@ public class ApiPath {
 	public static final String USER_ROLES_BY_USER_BL(int userId) {
 		return SERVICE_USER_BL + "/users/" + "{userId}" + "/roles";
 	}
-	
+
 	public static final String INVALID_PATH_USER_ROLES_BY_USER_BL(int userId) {
 		return SERVICE_USER_BL + "/users/" + "{userId}" + "/rolessss";
 	}
-	public static final String CLIENT_DIRECTORY_BL = SERVICE_CLIENT_BL+ "/v1/clients";
-	public static final String CLIENT_DIRECTORY_BL  (String searchData, String page, String pageSize,Object type)
 
-    {return SERVICE_CLIENT_BL  + "/v1/clients";
+	public static final String CLIENT_DIRECTORY_BL = SERVICE_CLIENT_BL + "/v1/clients";
+
+	public static final String CLIENT_DIRECTORY_BL(String searchData, String page, String pageSize, Object type)
+
+	{
+		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
 
+<<<<<<< HEAD
 	public static final String AUTOSUGGESTION_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients/auto-suggestions";
 	public static final String AUTOSUGGESTION_CLIENT_BL (String searchData)
 	{ return SERVICE_CLIENT_BL  +  "/v1/clients/auto-suggestions";
 }
+=======
+	public static final String SERVICE_COMMONS_DL = "service/commons-data";
+	public static final String TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezones";
+	public static final String INVALID_PATH_TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezonesssss";
+>>>>>>> cc27521f4d3923c780b36eadc58311d38090ec13
 }
