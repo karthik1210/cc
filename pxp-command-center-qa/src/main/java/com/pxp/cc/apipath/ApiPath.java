@@ -130,7 +130,6 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/org-hierarchyyrteytr";
 	}
 
-	}
 
 	public static final String SERVICE_COMMONS_DL = "service/commons-data";
 	public static final String TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezones";
