@@ -120,6 +120,14 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
 
+	public static final String FAVORITE(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favorites";
+	}
+
+	public static final String INVALID_PATH_FAVORITE(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favoritesss";
+	}
+	
 	public static final String CLIENT_ORG_HIERARCHY_BL(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/org-hierarchy";
 	}

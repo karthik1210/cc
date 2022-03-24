@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.api;
 
@@ -68,7 +68,7 @@ public class ClientDirectoryApiTests extends BaseRest {
 				getSearchClientDetails[0], getSearchClientDetails[1], getSearchClientDetails[2]);
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(searchClientDirResult);
-		logStep("Validating Response Code");
+		logStep("Validating response code");
 		CCUtils.assertEquals(searchClientDirResult.getStatusCode(), 200);
 		clientDirectoryValidations.verifyClientOutputWithoutFilter(searchClientDirResult, getSearchClientDetails[0]);
 	}
