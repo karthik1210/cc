@@ -142,6 +142,9 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(xpath = "//div[@role='option']")
 	private List<WebElement> listOfOptions;
 
+	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//following::div[@role='option']")
+	private List<WebElement> listOfClientTypeOptions;
+
 	List<String> actualtimezoneValues = new ArrayList<String>();
 	List<String> actualClientTypeValues = new ArrayList<String>();
 
@@ -171,7 +174,6 @@ public class CommonMethods extends CCMainPage {
 	}
 
 	public void clickToasterlink() {
-		CCUtils.verifyAndWaitForElement(linkClientName, driver);
 		linkClientName.click();
 	}
 
@@ -495,8 +497,8 @@ public class CommonMethods extends CCMainPage {
 	public void getClientTypeDropdownValue() {
 		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
 		dropdownClientType.click();
-		for (int i = 0; i < listOfOptions.size(); i++) {
-			actualClientTypeValues.add(listOfOptions.get(i).getText().trim());
+		for (int i = 0; i < listOfClientTypeOptions.size(); i++) {
+			actualClientTypeValues.add(listOfClientTypeOptions.get(i).getText().trim());
 		}
 		log("Client type values present for user are :" + actualClientTypeValues);
 

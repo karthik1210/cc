@@ -138,7 +138,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
-	
+
 	@FindBy(xpath = "//div[@class='s_item_name']//span")
 	private WebElement selectFirstInAutoSuggestion;
 
@@ -180,7 +180,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@id='solutionStatus']")
 	private List<WebElement> solutionStatus;
 
-	@FindBy(xpath = "//mat-icon[text()=' menu_book ']")
+	@FindBy(xpath = "//a[@id='headerBookIcon']")
 	private WebElement iconClientDirectory;
 
 	@FindBy(id = "orgEditBtn")
@@ -780,7 +780,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void clickOnClientDirectoryIcon() {
 		CCUtils.verifyAndWaitForElement(iconClientDirectory, driver);
-		iconClientDirectory.click();
+		javascriptClick(iconClientDirectory);
 		log("Clicked on client directory icon");
 	}
 
