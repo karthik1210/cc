@@ -116,9 +116,7 @@ public class ApiPath {
 
 	public static final String CLIENT_DIRECTORY_BL = SERVICE_CLIENT_BL + "/v1/clients";
 
-	public static final String CLIENT_DIRECTORY_BL(String searchData, String page, String pageSize, Object type)
-
-	{
+	public static final String CLIENT_DIRECTORY_BL(String searchData, String page, String pageSize, Object type) {
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
 
@@ -129,7 +127,6 @@ public class ApiPath {
 	public static final String INVALID_PATH_CLIENT_ORGS_HIERARCHY_BL(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/org-hierarchyyrteytr";
 	}
-
 
 	public static final String SERVICE_COMMONS_DL = "service/commons-data";
 	public static final String TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezones";
