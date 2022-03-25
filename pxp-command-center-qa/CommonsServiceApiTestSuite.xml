@@ -10,7 +10,7 @@
 	</listeners>
 	<test name="Commons Service Api Test">
 		<classes>
-			<class name="com.pxp.cc.testcases.api.GetTimezoneTests" />
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTimezoneApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
