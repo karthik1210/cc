@@ -1,6 +1,6 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.cc.testcases.api;
+package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
@@ -13,7 +13,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetSapNumberApiTests_DataLayer extends BaseRest {
+public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
@@ -21,7 +21,7 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
@@ -36,7 +36,7 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientSapNumber", description = "Enter already existing client SapNumber and verify client name and client id details displayed in response body")
 	public void testAlreadyExistingSapNumber(String clientSapNumber) throws IOException {
-		getSapNumberApiResponse = clientInfo.getClientSapNumber_DataLayer(clientSapNumber);
+		getSapNumberApiResponse = clientInfo.getSapNumber(clientSapNumber);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 200);
@@ -47,33 +47,29 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 	public void testErrorMessageForNonExistingSapNumber() throws IOException {
 		String clientSapNumber = testData.getProperty("api.existing.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericString(5));
-		getSapNumberApiResponse = clientInfo.getClientSapNumber_DataLayer(clientSapNumber);
+		getSapNumberApiResponse = clientInfo.getSapNumber(clientSapNumber);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse, clientSapNumber);
 	}
 
-
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in client SapNumber field and validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in SapNumber field and validate error message")
 	public void testErrorMessageForBlankSapNumberField() throws IOException {
-		getSapNumberApiResponse = clientInfo.getClientSapNumber_DataLayer(" ");
+		getSapNumberApiResponse = clientInfo.getSapNumber(" ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse," ");}
+		validation.verifyErrorMessageIfClientSapNumberIsNull(getSapNumberApiResponse);
+	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
 		getSapNumberApiResponse = clientInfo
-				.getClientSapNumbrUsingInvalidUrl_DataLayer(testData.getProperty("api.existing.client.sapnumber"));
+				.getClientSapNumbrUsingInvalidUrl(testData.getProperty("api.existing.client.sapnumber"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(getSapNumberApiResponse);
 	}
-
-	
-
 }

@@ -1,6 +1,6 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.cc.testcases.api;
+package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
@@ -13,14 +13,14 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetClientNameApiTests_DataLayer extends BaseRest {
+public class GetClientNameApiTests_BusinessLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private Validations validation;
 	Response getClientNameApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
@@ -35,7 +35,7 @@ public class GetClientNameApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientName", description = "Enter already existing client name and verify client name and client id details displayed in response body")
 	public void testAlreadyExistingClientName(String clientName) throws IOException {
-		getClientNameApiResponse = clientInfo.getClientName_DataLayer(clientName);
+		getClientNameApiResponse = clientInfo.getClientName(clientName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);
 		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 200);
@@ -47,7 +47,7 @@ public class GetClientNameApiTests_DataLayer extends BaseRest {
 	public void testErrorMessageForNonExistingClientName() throws IOException {
 		String clientName = testData.getProperty("api.existing.client.name")
 				.concat(CCUtils.generateAlphaNumericString(5));
-		getClientNameApiResponse = clientInfo.getClientName_DataLayer(clientName);
+		getClientNameApiResponse = clientInfo.getClientName(clientName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);
 		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 400);
@@ -56,21 +56,20 @@ public class GetClientNameApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in client name field and validate error message")
 	public void testErrorMessageForBlankClientNameField() throws IOException {
-		getClientNameApiResponse = clientInfo.getClientName_DataLayer(" ");
+		getClientNameApiResponse = clientInfo.getClientName(" ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);
 		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForClientNameField(getClientNameApiResponse, " ");
+		validation.verifyErrorMessageIfClientNameIsNull(getClientNameApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
 		getClientNameApiResponse = clientInfo
-				.getClientNameUsingInvalidUrl_DataLayer(testData.getProperty("api.existing.client.name"));
+				.getClientNameUsingInvalidUrl(testData.getProperty("api.existing.client.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getClientNameApiResponse);
 		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(getClientNameApiResponse);
 	}
-
 }

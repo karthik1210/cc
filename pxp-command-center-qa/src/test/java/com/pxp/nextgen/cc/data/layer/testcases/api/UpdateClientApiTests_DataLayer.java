@@ -1,6 +1,6 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.cc.testcases.api;
+package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
@@ -32,16 +32,16 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				testData.getProperty("api.client.id"), clientName, clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Edit Client Details");
-		String newClientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
-		String newClientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
+		String newClientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
+		String newClientSapNumber = CCUtils
+				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
+						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, "false", newClientName,
 				newClientSapNumber, testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.forteen.type"), testData.getProperty("new.timezone"),
@@ -51,7 +51,7 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, newClientName);
 		logStep("Fetch updated client details using clientid");
-		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(Integer.toString(clientId));
+		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		logStep("Verify updated client details");
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, Integer.toString(clientId),
 				newClientName, testData.getProperty("api.client.forteen.type"), newClientSapNumber, "false",
@@ -66,9 +66,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", testData.getProperty("api.client.id"),
-				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
+		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumber,
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Update client status from inactive to active and update timezone from not null value to null value");
@@ -81,7 +81,7 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
 		logStep("Fetch updated client details using clientid");
-		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(Integer.toString(clientId));
+		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		logStep("Verify client status is changed from inactive to active and timezone value is changed from not null value to null value");
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, Integer.toString(clientId),
 				clientName, testData.getProperty("api.client.forteen.type"), clientSapNumber, "true",

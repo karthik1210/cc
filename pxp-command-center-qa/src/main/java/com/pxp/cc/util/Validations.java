@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -25,10 +23,8 @@ import com.pxp.cc.pojos.OrgNode;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import rp.com.google.common.base.CharMatcher;
 
 public class Validations {
 	private static final String TIMEZONE = "TimeZone";
@@ -245,23 +241,22 @@ public class Validations {
 	public void verifyErrorMessageInResponseForClientNameField(Response response, String nonExistingClientName)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "client not found by name=" + nonExistingClientName);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by name=" + nonExistingClientName);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyErrorMessageInResponseForSapNumberField(Response response, String nonExistingClientSapNumber)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"client not found by sap number=" + nonExistingClientSapNumber);
-
+				"Client not found by sap number=" + nonExistingClientSapNumber);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorMessageInResponseForClientTypeField(Response response, String clientType)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client type=" + clientType + " does not exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Type=" + clientType + " does not exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1150,47 +1145,6 @@ public class Validations {
 
 	}
 
-	public String getMessage(Response response) {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String message = jsonpath.get("message").toString();
-		String[] messageList = message.split(",");
-		message = CharMatcher.is('"').trimFrom(messageList[4]).replace("message\":\"", "");
-		return message;
-	}
-
-	public void verifyInvalidServerError(Response response) {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getString("error"), "Internal Server Error");
-	}
-
-	public void verifyErrorMessageInResponseForExistingClientName(Response response, String existingClientName)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client name=" + existingClientName + " already in use");
-	}
-
-	public void verifyErrorMessageInResponseForExistingSapNumber(Response response, String existingClientSapNumber)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client sap number=" + existingClientSapNumber + " already in use");
-	}
-
-	public void verifyErrorMessageInResponseForInvalidClientType(Response response, String clientType)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Client type=" + clientType + " does not exist");
-	}
-
-	public void verifyErrorMessageInResponseForInvalidTimezoneId(Response response, String clientTimezoneId)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "TimezoneId=" + clientTimezoneId + " does not exist");
-	}
-
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
@@ -1218,23 +1172,10 @@ public class Validations {
 	}
 
 	public void verifyErrorMessageIfClientNameIsNull(Response response) throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message,
-				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"name\\");
-	}
-
-	public void verifyResponseForNonExistingClientName(Response response, String nonExistingClientName)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "client not found by name=" + nonExistingClientName);
-	}
-
-	public void verifyErrorMessageInResponseForInvalidInOrgId(Response response, int orgId) throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "Org not found for orgId=" + orgId);
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message"),
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"name\"");
 	}
 
 	public void verifyResponseForExistingClientSapNumber(Response response) throws IOException {
@@ -1243,18 +1184,11 @@ public class Validations {
 		CCUtils.assertNotNull(jsonpath.get("name"), "Client name is not in the response");
 	}
 
-	public void verifyResponseForNonExistingClientSapNumber(Response response, String nonExistingClientSapNumber)
-			throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message, "client not found by sap number=" + nonExistingClientSapNumber);
-	}
-
 	public void verifyErrorMessageIfClientSapNumberIsNull(Response response) throws IOException {
-		verifyInvalidServerError(response);
-		String message = getMessage(response);
-		CCUtils.assertEquals(message,
-				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\\"sapnumber\\");
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"sapnumber\"");
 	}
 
 	public void verifyErrorMessageInResponseForClientName(Response response, String existingClientName)

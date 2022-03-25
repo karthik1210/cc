@@ -51,9 +51,8 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
-				testData.getProperty("api.client.id"), clientName, clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
+				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -115,9 +114,8 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
-				testData.getProperty("api.client.id"), clientName, clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
+				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -154,9 +152,8 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
-				testData.getProperty("api.client.id"), clientName, clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
+				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
