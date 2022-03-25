@@ -77,8 +77,7 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 		CCUtils.assertEquals(searchClientDirResult.getStatusCode(), 200);
 		clientDirectoryValidations.verifyClientOutputWithoutFilter(searchClientDirResult, getSearchClientDetails[0]);
 	}
-
-	@DataProvider(name = "clientdatanonexisting")
+    @DataProvider(name = "clientdatanonexisting")
 	public Object[] searchClientDetails() {
 		ArrayList<String> filterType = new ArrayList<String>();
 		filterType.add(ccUser.getClientOneType());
