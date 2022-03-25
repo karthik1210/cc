@@ -1,6 +1,6 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.cc.testcases.api;
+package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
@@ -29,7 +29,7 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 	public void testErrorMessageForClientIdField() throws IOException {
 		logStep("Enter non existing client id");
 		fetchClientDetailsApiResponse = clientInfo
-				.getClientDetails_DataLayer(testData.getProperty("api.nonexisting.client.id"));
+				.getClientDetails_DataLayer(Integer.parseInt(testData.getProperty("api.nonexisting.client.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
@@ -42,39 +42,37 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 	public void testGetExistingClientIdDetails() throws IOException {
 		logStep("Creat a new client and search that client");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(
-				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
+		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Enter existing client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.type"), clientSapNumber, testData.getProperty("api.client.active"),
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"),
-				testData.getProperty("api.client.displayname"));
+		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, String.valueOf(clientId),
+				clientName, testData.getProperty("api.client.type"), clientSapNumber,
+				testData.getProperty("api.client.active"), testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("api.client.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessagesForInvalidUrl() throws IOException {
 		logStep("Enter invalid url and validate error status code");
 		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(
-				testData.getProperty("api.client.active"), testData.getProperty("api.client.id"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
+		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Enter existing client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayerInvalidUrl(clientId);
 		logStep("Validating response information");

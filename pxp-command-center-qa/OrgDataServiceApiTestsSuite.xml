@@ -11,11 +11,11 @@
 	<test name="Org Date Service API test">
 		<classes>
 			<class
-				name="com.pxp.cc.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
 		</classes>
 	</test>
 </suite>
