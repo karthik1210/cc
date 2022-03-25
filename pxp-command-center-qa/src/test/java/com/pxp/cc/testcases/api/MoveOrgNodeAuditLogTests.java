@@ -47,7 +47,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create a active system node below client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
 				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(),
@@ -58,7 +58,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create a new target client node");
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				targeClientName, targeClientSapNumber, ccUser.getTestClient(),
 				testData.getProperty("api.client.five.type"), testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
@@ -83,7 +83,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create active agnostic practice node below client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createPracticeApiResponse = orgInfo.createAgnosticPracticeNode(ccUser.getPracticeActiveApi(),
@@ -95,7 +95,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create a new target client node");
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				targeClientName, targeClientSapNumber, ccUser.getTestClient(), ccUser.getClientType(),
 				testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
@@ -120,7 +120,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create inactive enterprise node below system");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
@@ -161,7 +161,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create active nge practice node below enterprise");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
@@ -207,7 +207,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create a active system node below client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
 				ccUser.getSystemNameApi(), ccUser.getSystemOrgTypeApi(),
@@ -218,7 +218,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create a new target client node");
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				targeClientName, targeClientSapNumber, ccUser.getTestClient(),
 				testData.getProperty("api.client.five.type"), testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
@@ -245,7 +245,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create inactive agnostic practice node below client");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		createPracticeApiResponse = orgInfo.createAgnosticPracticeNode("false", ccUser.getPracticeDisplayNameApi(),
 				ccUser.getPracticeNameApi(), ccUser.getPracticeOrgTypeApi(),
@@ -256,7 +256,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create a new target client node");
 		String targeClientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String targeClientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				targeClientName, targeClientSapNumber, ccUser.getTestClient(),
 				testData.getProperty("api.client.five.type"), testData.getProperty("new.timezone"));
 		int targetClientId = createClientApiResponse.jsonPath().getInt("id");
@@ -283,7 +283,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create inactive practice node below enterprise");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),
@@ -331,7 +331,7 @@ public class MoveOrgNodeAuditLogTests extends BaseRest {
 		logStep("Create inactive enterprise node below system");
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), ccUser.getClientId(),
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), 
 				clientName, clientSapNumber, ccUser.getTestClient(), testData.getProperty("api.client.five.type"),
 				ccUser.getTimezoneId());
 		createSystemApiResponse = orgInfo.createSystem(ccUser.getSystemeActiveApi(), ccUser.getSystemDisplayNameApi(),

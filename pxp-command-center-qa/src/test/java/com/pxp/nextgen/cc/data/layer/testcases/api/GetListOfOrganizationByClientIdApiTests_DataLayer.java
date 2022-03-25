@@ -1,6 +1,6 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.cc.testcases.api;
+package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +42,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, testData.getProperty("api.client.id"),
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, 
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));

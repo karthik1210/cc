@@ -244,4 +244,29 @@ public class CCUtils {
 		}
 		return new String(chars);
 	}
+
+	public static String generateStringWithSpace(String text) {
+		String stringWithSpace = text.replaceAll("................................(?!$)", "$0 ");
+		return stringWithSpace;
+	}
+
+	public static String getName(String name) {
+		int size = name.trim().length();
+		if (size <= 100) {
+			return name.trim();
+		} else {
+			int difference = size - 100;
+			return name.replaceAll(name.substring(size - difference), "").trim();
+		}
+	}
+
+	public static String getSapNumber(String sapNumber) {
+		int size = sapNumber.trim().length();
+		if (size <= 50) {
+			return sapNumber.trim();
+		} else {
+			int difference = size - 50;
+			return sapNumber.replaceAll(sapNumber.substring(size - difference), "").trim();
+		}
+	}
 }
