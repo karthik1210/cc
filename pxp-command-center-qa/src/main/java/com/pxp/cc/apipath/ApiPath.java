@@ -37,7 +37,6 @@ public class ApiPath {
 	public static final String GET_ORG_HIERARCHY = "/service/cc/v1/org-hierarchy/";
 	public static final String PATCH_ORG_STATUS = "/status/";
 	public static final String POST_MOVE_ORG_NODE = "/service/cc/v1/business-units";
-	public static final String GET_TIMEZONES = "/service/cc/v1/timezones";
 	public static final String GET_CLIENT_ORG_ID = "/service/cc/v1/client-orgs/";
 	public static final String POST_AUDIT_LOG = "/service/cc/v1/audit/view";
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
@@ -196,4 +195,7 @@ public class ApiPath {
 	public static final String SERVICE_COMMONS_DL = "service/commons-data";
 	public static final String TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezones";
 	public static final String INVALID_PATH_TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezonesssss";
+	public static final String SERVICE_COMMONS_BL = "service/commons-service";
+	public static final String TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezones";
+	public static final String INVALID_PATH_TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezonesssss";
 }
