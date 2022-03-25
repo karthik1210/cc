@@ -119,7 +119,7 @@ public class ApiPath {
 	public static final String CLIENT_DIRECTORY_BL(String searchData, String page, String pageSize, Object type) {
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
-<<<<<<< HEAD
+
 	
 	public static final String CLIENT_DIRECTORY_DL = SERVICE_CLIENT_DL + "/v1/clients";
 
@@ -129,7 +129,7 @@ public class ApiPath {
 		return SERVICE_CLIENT_DL + "/v1/clients";
 	}
 	
-=======
+
 
 	public static final String FAVORITE(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favorites";
@@ -150,5 +150,5 @@ public class ApiPath {
 	public static final String SERVICE_COMMONS_DL = "service/commons-data";
 	public static final String TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezones";
 	public static final String INVALID_PATH_TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezonesssss";
->>>>>>> cc27521f4d3923c780b36eadc58311d38090ec13
+
 }
