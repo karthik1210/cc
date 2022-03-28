@@ -1377,4 +1377,21 @@ public class Validations {
 		}
 		CCUtils.assertEquals(responseDatalist, datalist);
 	}
+
+	public void verifySearchClientOrgHierarchyResponseBodyDataLayer(Response response, List<OrgNode> datalist)
+			throws IOException {
+		List<OrgNode> responseDatalist = new ArrayList();
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < responseBody.length(); i++) {
+			Integer parentId = null;
+			if (!responseBody.getJSONObject(i).isNull("parentId")) {
+				parentId = responseBody.getJSONObject(i).getInt("parentId");
+			}
+			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"), parentId,
+					responseBody.getJSONObject(i).getString("type"), responseBody.getJSONObject(i).getString("name"),
+					responseBody.getJSONObject(i).getBoolean("active"), null));
+		}
+		CCUtils.assertEquals(responseDatalist, datalist);
+	}
+
 }
