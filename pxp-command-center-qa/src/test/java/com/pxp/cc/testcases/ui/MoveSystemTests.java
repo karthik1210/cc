@@ -65,14 +65,14 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		moveSystemPage = new MoveSystemPage(driver);
 		moveSystemPage.moveSystemNodeToClientWithDoNotInherit(testData.getProperty("inactive.target.client.name"));
 		commonMethods = new CommonMethods(driver);
-		commonMethods.verifyToasterMessage("Client selected is inactive. Activate client and try again.");
+		commonMethods.verifyToasterMessage("Client selected is inactive. Activate Client and try again.");
 		commonMethods.closeToasterMessage();
 		logStep("Move inactive system node to inactive client with inhetit and verify error message");
 		generalSettingsPage.clearSearchText();
 		generalSettingsPage.searchNode(testData.getProperty("source.inactive.system.node.name"));
 		generalSettingsPage.clickOnMoveSystem();
 		moveSystemPage.moveSystemNodeToClientWithInherit(testData.getProperty("inactive.target.client.name"));
-		commonMethods.verifyToasterMessage("Client selected is inactive. Activate client and try again.");
+		commonMethods.verifyToasterMessage("Client selected is inactive. Activate Client and try again.");
 		commonMethods.closeToasterMessage();
 	}
 
@@ -104,7 +104,8 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		logStep("Add inactive system node below client");
 		generalSettingsPage.clickOnAddSystem();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		String systemName = testData.getProperty("new.system.name").concat(CCUtils.generateRandomString());
+		String systemName = testData.getProperty("new.system.name").concat("@  ")
+				.concat(CCUtils.generateAlphaNumericString(2));
 		addOrgNodePage.addNewSystemNode(systemName, testData.getProperty("new.system.sapid"),
 				testData.getProperty("new.system.timezone"), testData.getProperty("new.system.solutiondisplayname"),
 				false);
@@ -174,7 +175,8 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		logStep("Add inactive system node below client");
 		generalSettingsPage.clickOnAddSystem();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		String systemName = testData.getProperty("new.system.name").concat(CCUtils.generateRandomString());
+		String systemName = testData.getProperty("new.system.name").concat("_  ")
+				.concat(CCUtils.generateAlphaNumericString(3));
 		addOrgNodePage.addNewSystemNode(systemName, testData.getProperty("new.system.sapid"),
 				testData.getProperty("new.system.timezone"), testData.getProperty("new.system.solutiondisplayname"),
 				false);
@@ -204,7 +206,8 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 		logStep("Add active system node below client with the child nodes enterprise and practice");
 		generalSettingsPage.clickOnAddSystem();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		String systemName = testData.getProperty("new.system.name").concat(CCUtils.generateRandomString());
+		String systemName = testData.getProperty("new.system.name").concat("  ")
+				.concat(CCUtils.generateAlphaNumericString(4));
 		addOrgNodePage.addNewSystemNode(systemName, testData.getProperty("new.system.sapid"),
 				testData.getProperty("new.system.timezone"), testData.getProperty("new.system.solutiondisplayname"),
 				true);
