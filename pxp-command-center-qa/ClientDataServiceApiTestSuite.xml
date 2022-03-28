@@ -11,19 +11,19 @@
 	<test name="Client Data Service API Test">
 		<classes>
 			<class
-				name="com.pxp.cc.testcases.api.CreateClientApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateClientApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.UpdateClientApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateClientApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.FetchClientDetailsTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.FetchClientDetailsTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetClientNameApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientNameApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetClientTypesApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientTypesApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetSapNumberApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSapNumberApiTests_DataLayer" />
 			<class
-				name="com.pxp.cc.testcases.api.GetSolutionsByClientIdApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByClientIdApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

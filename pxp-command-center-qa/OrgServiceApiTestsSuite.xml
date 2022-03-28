@@ -11,7 +11,7 @@
 	<test name="Org Service API Test">
 		<classes>
 			<class
-				name="com.pxp.cc.testcases.api.GetOrganizationDetailsApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrganizationDetailsApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

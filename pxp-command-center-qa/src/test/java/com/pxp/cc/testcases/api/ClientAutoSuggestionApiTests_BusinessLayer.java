@@ -71,5 +71,4 @@ public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getSearchedClientDetailsApiResponse.getStatusCode(), 204);
 		CCUtils.responseTimeValidation(getSearchedClientDetailsApiResponse);
 	}
-
 }

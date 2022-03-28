@@ -15,7 +15,6 @@ import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
 
-	
 	public Response getOrgNodesDetails(String orgId) {
 
 		String url = ApiPath.GET_ORG_DETAILS + orgId;
@@ -28,7 +27,7 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId);
 
-		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.POST_ORG_BL).then().extract()
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
@@ -39,7 +38,7 @@ public class OrgInfo extends BaseRest {
 				parentType, sapNumber, timezoneId);
 
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
-				.post(ApiPath.POST_ORG_DL).then().extract().response();
+				.post(ApiPath.ORG_DL).then().extract().response();
 	}
 
 	public Response getOrgId_DataLayer(int orgId) throws IOException {
@@ -77,7 +76,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getOrgId(int orgId) throws IOException {
-		String url = ApiPath.GET_ORG_DETAILS_BL + orgId;
+		String url = ApiPath.ORG_DETAILS_BL(orgId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -159,8 +158,8 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNode(name, displayName, sapNumber, active,
 				timezoneId, products, orgType, parentId, parentType);
 
-		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.POST_ORG_BL).then()
-				.extract().response();
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.ORG_BL).then().extract()
+				.response();
 	}
 
 	public Response createEnterpriseNodeForAgnostic(String active, String displayName, String name, String orgType,
@@ -325,8 +324,9 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
 
 	}
-	
-	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType) throws IOException {
+
+	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType)
+			throws IOException {
 		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgsabcdfef";
 		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
 
@@ -340,7 +340,7 @@ public class OrgInfo extends BaseRest {
 				active, timezoneId, orgType, parentId, parentType);
 
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewPracticeNodePayload).when()
-				.post(ApiPath.POST_ORG_DL).then().extract().response();
+				.post(ApiPath.ORG_DL).then().extract().response();
 	}
 
 	public static Map<String, Object> postCreatePracticeNodeDataLayer(String name, String displayName, String sapNumber,
@@ -381,10 +381,10 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
-		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL (orgId);
+		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL(orgId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 }

@@ -11,7 +11,7 @@
 	<test name="Commons Data Service Api Test">
 		<classes>
 			<class
-				name="com.pxp.cc.testcases.api.GetTimezoneApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetTimezoneApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

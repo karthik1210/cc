@@ -37,48 +37,102 @@ public class ApiPath {
 	public static final String GET_ORG_HIERARCHY = "/service/cc/v1/org-hierarchy/";
 	public static final String PATCH_ORG_STATUS = "/status/";
 	public static final String POST_MOVE_ORG_NODE = "/service/cc/v1/business-units";
-	public static final String GET_TIMEZONES = "/service/cc/v1/timezones";
 	public static final String GET_CLIENT_ORG_ID = "/service/cc/v1/client-orgs/";
 	public static final String POST_AUDIT_LOG = "/service/cc/v1/audit/view";
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
 	
 	public static final String SERVICE_CLIENT_BL = "/service/client-service";
-	public static final String SERVICE_ORG_BL = "/service/org";
-	public static final String POST_CLIENT_BL = SERVICE_CLIENT_BL + "/clients";
+	public static final String SERVICE_ORG_BL = "/service/org-service";
+	public static final String CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients";
+	public static final String INVALID_PATH_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clientsabc";
+
+	public static final String CLIENT_DETAILS_BL(String clientId) {
+		return CLIENT_BL + "/" + "{clientId}";
+	}
+
+	public static final String CLIENTNAME_BL(String name) {
+		return SERVICE_CLIENT_BL + "/v1/clients/name/" + "{name}";
+	}
+
+	public static final String INVALID_PATH_CLIENTNAME_BL(String name) {
+		return SERVICE_CLIENT_BL + "/v1/clients/nameabc##$122/" + "{name}";
+	}
+
+	public static final String ORG_DETAILS_BL(int orgId) {
+		return SERVICE_ORG_BL + "/v1/orgs/" + orgId;
+	}
+
+	public static final String ORG_BL = SERVICE_ORG_BL + "/v1/orgs/";
+	public static final String CLIENT_TYPES = SERVICE_CLIENT_BL + "/v1/clients/types";
+	public static final String INVALID_PATH_CLIENTTYPE_BL = SERVICE_CLIENT_BL + "/typesadsds";
+
+	public static final String CLIENTSAPNUMBER_BL(String sapNumber) {
+		return SERVICE_CLIENT_BL + "/v1/clients/sapnumber/" + "{sapNumber}";
+	}
+
+	public static final String INVALID_PATH_CLIENTSAPNUMBER_BL(String sapNumber) {
+		return SERVICE_CLIENT_BL + "/v1/clients/sapnumber#1234sdF/" + "{sapNumber}";
+	}
+
+	public static final String POST_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients";
 	public static final String GET_CLIENT_BL = SERVICE_CLIENT_BL + "/clients/";
 	public static final String GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/name/";
 	public static final String INVALID_PATH_GET_CLIENTNAME_BL = SERVICE_CLIENT_BL + "/clients/nameabc##$122/";
 	public static final String GET_AUTOSUGGESTION_CLIENT = SERVICE_CLIENT_BL + "/auto-suggestion-client";
 	public static final String GET_ORG_DETAILS_BL = SERVICE_ORG_BL + "/orgs/";
-	public static final String POST_ORG_BL = SERVICE_ORG_BL + "/orgs/";
+	public static final String POST_ORG_BL = SERVICE_ORG_BL + "v1/orgs";
 	public static final String GET_CLIENT_TYPES = SERVICE_CLIENT_BL + "/clients/types";
 	public static final String INVALID_PATH_GET_CLIENTTYPE_BL = SERVICE_CLIENT_BL + "/typesadsds";
 	public static final String GET_CLIENTSAPNUMBER_BL = SERVICE_CLIENT_BL + "/clients/sapnumber/";
 	public static final String INVALID_PATH_GET_CLIENTSAPNUMBER_BL = SERVICE_CLIENT_BL + "/clients/sapnumber#1234sdF/";
 	public static final String SERVICE_CLIENT_DL = "/service/client-data";
-	public static final String GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/name/";
-	public static final String INVALID_PATH_GET_CLIENTNAME_DL = SERVICE_CLIENT_DL + "/clients/nameabc##$122/";
+
+	public static final String CLIENTNAME_DL(String name) {
+		return SERVICE_CLIENT_DL + "/v1/clients/name/" + "{name}";
+	}
+
+	public static final String INVALID_PATH_CLIENTNAME_DL(String name) {
+		return SERVICE_CLIENT_DL + "/v1/clients/nameabc##$122/" + "{name}";
+	}
 
 	public static final String SERVICE_ORG_DL = "/service/org-data";
-	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/orgs/";
-	public static final String POST_ORG_DL = SERVICE_ORG_DL + "/orgs";
+	public static final String GET_ORG_DETAILS_DL = SERVICE_ORG_DL + "/v1/orgs/";
+	public static final String ORG_DL = SERVICE_ORG_DL + "/v1/orgs";
+	public static final String CLIENT_TYPES_DL = SERVICE_CLIENT_DL + "/v1/clients/types";
+	public static final String INVALID_PATH_CLIENTTYPE_DL = SERVICE_CLIENT_DL + "/typesadsds";
 
-	public static final String GET_CLIENT_TYPES_DL = SERVICE_CLIENT_DL + "/clients/types";
-	public static final String INVALID_PATH_GET_CLIENTTYPE_DL = SERVICE_CLIENT_DL + "/typesadsds";
-	public static final String GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber/";
-	public static final String INVALID_PATH_GET_CLIENTSAPNUMBER_DL = SERVICE_CLIENT_DL + "/clients/sapnumber#1234sdF/";
-	public static final String INVALID_PATH_GET_ORGID_DL = SERVICE_ORG_DL + "/orgsnameabc##$122/";
+	public static final String CLIENTSAPNUMBER_DL(String sapNumber) {
+		return SERVICE_CLIENT_DL + "/v1/clients/sapnumber/" + "{sapNumber}";
+	}
+
+	public static final String INVALID_PATH_CLIENTSAPNUMBER_DL(String sapNumber) {
+		return SERVICE_CLIENT_DL + "/v1/clients/sapnumber#1234sdF/" + "{sapNumber}";
+	}
+
+	public static final String INVALID_PATH_GET_ORGID_DL = SERVICE_ORG_DL + "/v1/orgsnameabc##$122/";
 	public static final String PXP_CC_USER = "pxp-cc-user";
-	public static final String POST_CLIENT_DL = SERVICE_CLIENT_DL + "/v1/clients";
-	public static final String GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
+	public static final String CLIENT_DL = SERVICE_CLIENT_DL + "/v1/clients";
+	public static final String INVALID_PATH_CLIENT_DL = SERVICE_CLIENT_DL + "/v1/clientsabc";
 
-	public static final String INVALID_PATH_GET_CLIENT_DL = SERVICE_CLIENT_DL + "/clientsss/";
-	public static final String INVALID_PATH_PUT_UPDATECLIENT_BL = SERVICE_CLIENT_BL + "/clients/fhg/";
-	public static final String PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clients/";
-	public static final String INVALID_PATH_PUT_CLIENT_DL = SERVICE_CLIENT_DL + "/clientssssss/";
-	public static final String GET_ORGANIZATION_LIST_DL = SERVICE_ORG_DL + "/clients/";
-	public static final String GET_CLIENT_SOLUTION_DL = SERVICE_CLIENT_DL + "/clients/";
+	public static final String CLIENT_DETAILS_DL(int clientId) {
+		return CLIENT_DL + "/" + "{clientId}";
+	}
+
+	public static final String INVALID_PATH_CLIENT_DETAILS_BL(String clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/fhg/" + "{clientId}";
+	}
+
+	public static final String INVALID_PATH_CLIENT_DETAILS_DL(int clientId) {
+		return SERVICE_CLIENT_DL + "/v1/clientssssss/" + "{clientId}";
+	}
+
+	public static final String GET_ORGANIZATION_LIST_DL = SERVICE_ORG_DL + "/v1/clients/";
+
+	public static final String CLIENT_SOLUTION_DL(int clientId) {
+		return SERVICE_CLIENT_DL + "/v1/clients/" + "{clientId}" + "/solutions";
+	}
+
 	public static final String SERVICE_USER_BL = "/service/user";
 	public static final String USER_ROLES_BL = SERVICE_USER_BL + "/usertypes/";
 
@@ -100,7 +154,7 @@ public class ApiPath {
 		return SERVICE_USER_DL + "/usertypes/" + userType + "/rolesss";
 	}
 
-	public static final String ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/orgs/";
+	public static final String ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/v1/orgs/";
 
 	public static final String INVALID_PATH_ORGS_SOLUTION_DL(int orgId) {
 		return ORGS_SOLUTION_DL + orgId + "/Solutionsaaaa";
@@ -122,14 +176,34 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
 
-<<<<<<< HEAD
+
 	public static final String AUTOSUGGESTION_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients/auto-suggestions";
 	public static final String AUTOSUGGESTION_CLIENT_BL (String searchData)
 	{ return SERVICE_CLIENT_BL  +  "/v1/clients/auto-suggestions";
 }
-=======
+
+	
+	public static final String FAVORITE(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favorites";
+	}
+
+	public static final String INVALID_PATH_FAVORITE(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favoritesss";
+	}
+
+	public static final String CLIENT_ORG_HIERARCHY_BL(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/org-hierarchy";
+	}
+
+	public static final String INVALID_PATH_CLIENT_ORGS_HIERARCHY_BL(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/org-hierarchyyrteytr";
+	}
+
 	public static final String SERVICE_COMMONS_DL = "service/commons-data";
 	public static final String TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezones";
 	public static final String INVALID_PATH_TIMEZONES_DL = SERVICE_COMMONS_DL + "/v1/timezonesssss";
->>>>>>> cc27521f4d3923c780b36eadc58311d38090ec13
+	public static final String SERVICE_COMMONS_BL = "service/commons-service";
+	public static final String TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezones";
+	public static final String INVALID_PATH_TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezonesssss";
+
 }
