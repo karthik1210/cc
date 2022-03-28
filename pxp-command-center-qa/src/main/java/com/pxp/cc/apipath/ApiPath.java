@@ -207,4 +207,11 @@ public class ApiPath {
 		return SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/rolessss";
 	}
 
+	public static final String CLIENT_ORG_HIERARCHY_DL(int clientId) {
+		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarchy";
+	}
+
+	public static final String INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(int clientId) {
+		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
+	}
 }
