@@ -206,4 +206,13 @@ public class ApiPath {
 	public static final String TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezones";
 	public static final String INVALID_PATH_TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezonesssss";
 
+
+	public static final String CLIENT_ORG_HIERARCHY_DL(int clientId) {
+		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarchy";
+	}
+
+	public static final String INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(int clientId) {
+		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
+	}
+
 }
