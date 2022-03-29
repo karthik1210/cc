@@ -1313,29 +1313,33 @@ public class Validations {
 		}
 	}
 
-	public void verifyGetUserRolesResponseForInternalUser(Response response) throws IOException {
+	public void verifyGetUserRolesResponseBody(Response response, String userType) throws IOException {
 		List<UserRoles> actualUserRolesList = new ArrayList<UserRoles>();
-		actualUserRolesList.add(new UserRoles(2, "Solutions"));
-		actualUserRolesList.add(new UserRoles(1, "Super Admin"));
-		actualUserRolesList.add(new UserRoles(4, "Support T3"));
-		actualUserRolesList.add(new UserRoles(3, "Implementation"));
-		actualUserRolesList.add(new UserRoles(6, "Support T1"));
-		actualUserRolesList.add(new UserRoles(5, "Support T2"));
-		actualUserRolesList.add(new UserRoles(7, "Demo/Sales"));
+		if (userType.equals("INTERNAL")) {
+			actualUserRolesList.add(new UserRoles(2, "Solutions"));
+			actualUserRolesList.add(new UserRoles(1, "Super Admin"));
+			actualUserRolesList.add(new UserRoles(4, "Support T3"));
+			actualUserRolesList.add(new UserRoles(3, "Implementation"));
+			actualUserRolesList.add(new UserRoles(6, "Support T1"));
+			actualUserRolesList.add(new UserRoles(5, "Support T2"));
+			actualUserRolesList.add(new UserRoles(7, "Demo/Sales"));
+		} else if (userType.equals("CLIENT")) {
+			actualUserRolesList.add(new UserRoles(600, "Client Admin"));
+			actualUserRolesList.add(new UserRoles(601, "Client Staff"));
+		} else if (userType.equals("VARESELLER")) {
+			actualUserRolesList.add(new UserRoles(500, "VAR/Reseller Admin"));
+			actualUserRolesList.add(new UserRoles(501, "VAR/Reseller Staff"));
+		}
+
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
-		if (actualUserRolesList.size() == jsonArray.length()) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertTrue(
-						actualUserRolesList.contains(
-								new UserRoles(jsonObject.getInt("roleId"), jsonObject.get("name").toString())),
-						"User role " + jsonObject.get("name").toString() + " doesn't exist");
-			}
-		} else if (jsonArray.length() == 0) {
-			Log4jUtil.log("User roles list is empty");
-		} else {
-			Log4jUtil.log("Size of actual user roles list and expected user roles list is not same");
+		CCUtils.assertTrue(jsonArray.length() > 0, "User roles list is empty");
+		CCUtils.assertTrue(actualUserRolesList.size() == jsonArray.length(),
+				"Size of actual user roles list and expected user roles list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(actualUserRolesList.get(i),
+					new UserRoles(jsonObject.getInt("roleId"), jsonObject.getString("name")));
 		}
 	}
 
@@ -1366,7 +1370,7 @@ public class Validations {
 
 	public void verifySearchClientOrgHierarchyResponseBody(Response response, List<OrgNode> datalist)
 			throws IOException {
-		List<OrgNode> responseDatalist = new ArrayList();
+		List<OrgNode> responseDatalist = new ArrayList<OrgNode>();
 		JSONArray responseBody = new JSONArray(response.getBody().asString());
 		for (int i = 0; i < responseBody.length(); i++) {
 			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"),
