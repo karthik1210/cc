@@ -1090,8 +1090,7 @@ public class Validations {
 				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter"))) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
-				if (jsonObject.get("id").toString().contains(searchedData)
-						|| jsonObject.get("name").toString().contains(searchedData)) {
+				if ( jsonObject.get("name").toString().contains(searchedData)) {
 					Log4jUtil.log(searchedData
 							+ " is checked whether it is numberic or letter or both within id and name of client");
 					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
@@ -1377,4 +1376,21 @@ public class Validations {
 		}
 		CCUtils.assertEquals(responseDatalist, datalist);
 	}
+
+	public void verifySearchClientOrgHierarchyResponseBodyDataLayer(Response response, List<OrgNode> datalist)
+			throws IOException {
+		List<OrgNode> responseDatalist = new ArrayList();
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < responseBody.length(); i++) {
+			Integer parentId = null;
+			if (!responseBody.getJSONObject(i).isNull("parentId")) {
+				parentId = responseBody.getJSONObject(i).getInt("parentId");
+			}
+			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"), parentId,
+					responseBody.getJSONObject(i).getString("type"), responseBody.getJSONObject(i).getString("name"),
+					responseBody.getJSONObject(i).getBoolean("active"), null));
+		}
+		CCUtils.assertEquals(responseDatalist, datalist);
+	}
+
 }

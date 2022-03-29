@@ -92,9 +92,9 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getAutoSuggestionClient(String serachClient) {
-		String url = ApiPath.GET_AUTOSUGGESTION_CLIENT;
-		return given().spec(requestSpec).queryParam("searchClient", serachClient).when().get(url).then().extract()
+	public Response getAutoSuggestionClient_BL(String searchData) {
+		String url = ApiPath.AUTOSUGGESTION_CLIENT_BL;
+		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract()
 				.response();
 	}
 
@@ -227,5 +227,17 @@ public class ClientInfo extends BaseRest {
 	public Response getClientOrgHierarchyUsingInvalidUrl(int clientId) {
 		String url = ApiPath.INVALID_PATH_CLIENT_ORGS_HIERARCHY_BL(clientId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getClientOrgHierarchyDetails_DataLayer(int clientId, int userId) {
+		String url = ApiPath.CLIENT_ORG_HIERARCHY_DL(clientId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response getClientOrgHierarchyUsingInvalidUrl_DataLayer(int clientId, int userId) {
+		String url = ApiPath.INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(clientId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).when().get(url).then().extract()
+				.response();
 	}
 }

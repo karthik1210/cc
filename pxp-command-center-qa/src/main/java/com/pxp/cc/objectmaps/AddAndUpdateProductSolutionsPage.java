@@ -50,6 +50,9 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),' Solutions Available for Purchase ')]//following::span[@class='form']")
 	private List<WebElement> listOfSolutionsAvailableAfterTerminate;
 
+	@FindBy(xpath = "//span[contains(text(),' Solutions Available for Purchase ')]//preceding::span[@class='form']")
+	private List<WebElement> listOfActiveSolutions;
+
 	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public void clickOnOrgPageEditButton() throws InterruptedException {
@@ -121,6 +124,17 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 		for (int i = 0; i < listOfSolutionsAvailableAfterTerminate.size(); i++) {
 			actualSolutionValues.add(listOfSolutionsAvailableAfterTerminate.get(i).getText());
 		}
+		List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "Pay", "Portal", "PSS",
+				"Virtual Visits");
+
+		CCUtils.assertEquals(actualSolutionValues, expectedSolutionValues);
+	}
+
+	public void verifyActiveSolutions() throws InterruptedException {
+		for (int i = 0; i < listOfActiveSolutions.size(); i++) {
+			actualSolutionValues.add(listOfActiveSolutions.get(i).getText());
+		}
+
 		List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "Pay", "Portal", "PSS",
 				"Virtual Visits");
 

@@ -21,7 +21,7 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(id = "addNodeTitle")
 	private WebElement lablePageTitle;
 
-	@FindBy(id = "cancel-text")
+	@FindBy(xpath = "//span[text()=' clear ']")
 	private WebElement crossIcon;
 
 	@FindBy(id = "addNodeCancel")
@@ -31,7 +31,7 @@ public class AddOrgNodePage extends CCMainPage {
 	private WebElement buttonSaveAndAdd;
 
 	@FindBy(id = "parent-label")
-	private WebElement parentLabel;
+	private WebElement labelParentEntity;
 
 	@FindBy(id = "addNodeClientDisp")
 	private WebElement textboxParentEntityNameAtSystem;
@@ -55,19 +55,19 @@ public class AddOrgNodePage extends CCMainPage {
 	private WebElement textboxName;
 
 	@FindBy(xpath = "//span[text()='Solutions Display Name']")
-	private WebElement solutionDisplayNameLabel;
+	private WebElement labelSolutionDisplayName;
 
 	@FindBy(id = "addNodeSolutionInput")
 	private WebElement textboxSolutionDisplayName;
 
 	@FindBy(xpath = "//span[text()='SAP ID']")
-	private WebElement sapIdLabel;
+	private WebElement labelSapId;
 
 	@FindBy(id = "addNodeSapInput")
 	private WebElement textboxSapId;
 
 	@FindBy(id = "timezone-label")
-	private WebElement timezoneLabel;
+	private WebElement labelTimezone;
 
 	@FindBy(id = "timezoneSelect")
 	private WebElement dropdownTimezone;
@@ -75,8 +75,8 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//div[@aria-expanded='true']//input[@type='text']")
 	private WebElement textboxTimezone;
 
-	@FindBy(xpath = "//span[text()='Status * ']")
-	private WebElement statusLabel;
+	@FindBy(xpath = "//label[text()='Status * ']")
+	private WebElement labelStatus;
 
 	@FindBy(xpath = "//input[@id='addNodeActiveRadio-input']")
 	private WebElement radioButtonActive;
@@ -122,29 +122,14 @@ public class AddOrgNodePage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']//preceding::div[@class='mat-checkbox-inner-container']")
 	private List<WebElement> particularSolutionCheckbox;
-//input[@type='checkbox']
-	List<String> actualtimezoneValues = new ArrayList<String>();
-	List<String> actualSolutionValues = new ArrayList<String>();
 
-	public final List<String> expectedTimezoneValues = Arrays.asList("Select", "Eastern Standard Time",
-			"Atlantic Standard Time", "Central Standard Time", "Mountain Standard Time", "Pacific Standard Time",
-			"Alaska Standard Time", "Hawaii Standard Time", "Hong Kong Standard Time", "Indiana Standard Time",
-			"Arizona Standard Time", "Midway Island, Samoa", "International Date Line West", "Nuku'alofa",
-			"Tijuana, Baja California", "Chihuahua, La Paz, Mazatlan", "Central America",
-			"Guadalajara, Mexico City, Monterrey", "Saskatchewan", "Bagota, Lima, Quito, Rio Branco", "Caracas",
-			"La Paz", "Manaus", "Santiago", "Newfoundland", "Buenos Aires, Georgetown", "Greenland", "Montevideo",
-			"Azores", "Cape Verde Is.", "Casablanca,Monrovia,Reykjavik", "Greenwich Mean Time",
-			"Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna", "Belgrade, Bratislava, Budapest, Ljubljana, Prague",
-			"Brussels, Copenhagen, Madrid, Paris", "Sarajevo, Skopje, Warsaw, Zagreb", "West Central Africa", "Amman",
-			"Athens, Bucharest, Istanbul", "Beirut", "Cairo", "Harare, Pretoria",
-			"Helsinki, Kyiv, Riga, Sofia, Tallinn, Vilnius", "Jerusalem", "Minsk", "Mid-Atlantic", "Baghdad",
-			"Kuwait, Riyadh", "Moscow, St. Petersburg, Volgograd", "Nairobi", "Tehran", "Abu Dhabi, Muscat", "Baku",
-			"Yerevan", "Kabul", "Ekaterinburg", "Islamabad, Karachi, Tashkent", "Chennai, Kolkata, Mumbai, New Delhi",
-			"Kathmandu", "Almaty, Novosibirsk", "Astana, Dhaka", "Yangon (Rangoon)", "Bangkok, Hanoi, Jakarta",
-			"Krasnoyarsk", "Irkutsk, Ulaan Bataar", "Kuala Lumpur, Singapore", "Perth", "Taipei",
-			"Osaka, Sapporo, Tokyo", "Seoul", "Yakutsk", "Adelaide", "Darwin", "Brisbane",
-			"Canberra, Melbourne, Sydney", "Guam, Port Moresby", "Hobart", "Vladivostok",
-			"Magadan, Solomon Is., New Caledonia", "Auckland, Wellington");
+	@FindBy(xpath = "//label[text()='Active']")
+	private WebElement labelActive;
+
+	@FindBy(xpath = "//label[text()='Inactive']")
+	private WebElement labelInactive;
+
+	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public final List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "PSS", "Pay", "Portal",
 			"Virtual Visits");
@@ -193,22 +178,22 @@ public class AddOrgNodePage extends CCMainPage {
 
 	public GeneralSettingsPage clickOnSaveAndAddButton() {
 		CCUtils.verifyAndWaitForElement(buttonSaveAndAdd, driver);
-		log("Clicked on Save&Add button");
 		buttonSaveAndAdd.click();
+		log("Clicked on Save&Add button");
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
 	public GeneralSettingsPage clickOnCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancelInAddNewNode, driver);
+		javascriptClick(buttonCancelInAddNewNode);
 		log("Clicked on Cancel button");
-		buttonCancelInAddNewNode.click();
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
 	public GeneralSettingsPage clickOnCrossIcon() {
 		CCUtils.verifyAndWaitForElement(crossIcon, driver);
+		javascriptClick(crossIcon);
 		log("Clicked on X icon");
-		crossIcon.click();
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
@@ -247,7 +232,7 @@ public class AddOrgNodePage extends CCMainPage {
 		} else if (labelText.trim().equals("Enterprise Name *")) {
 			CCUtils.assertEquals(errorNameRequired.getText().trim(), "Enterprise name is required");
 			log("Enterprise name is required error message displayed on add new enterprise popup");
-		} else {
+		} else if (labelText.trim().equals("Practice Name *")) {
 			CCUtils.assertEquals(errorNameRequired.getText().trim(), "Practice name is required");
 			log("Practice name is required error message displayed on add new practice popup");
 		}
@@ -416,20 +401,6 @@ public class AddOrgNodePage extends CCMainPage {
 		textboxSapId.sendKeys(" ");
 	}
 
-	public void getTimezoneDropdownValue() {
-		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
-		dropdownTimezone.click();
-		for (int i = 0; i < timezoneOptionList.size(); i++) {
-			actualtimezoneValues.add(timezoneOptionList.get(i).getText().trim());
-		}
-		log("Timezone values present for user are :" + actualtimezoneValues);
-
-	}
-
-	public void verifyTimezoneDropdownValues() throws InterruptedException {
-		CCUtils.assertEquals(actualtimezoneValues, expectedTimezoneValues);
-	}
-
 	public void getSolutionValues() throws InterruptedException {
 		scrollAndWait(0, 500, 3000);
 		for (int i = 0; i < labelSolutionList.size(); i++) {
@@ -502,4 +473,106 @@ public class AddOrgNodePage extends CCMainPage {
 			}
 		}
 	}
+
+	public void verifyAddOrgNodePageTitle(String nodeName) {
+		log("Verifying add org node page title");
+		if (nodeName.equals("SYSTEM")) {
+			CCUtils.verifyAndWaitForElement(lablePageTitle, driver);
+			CCUtils.assertTrue(lablePageTitle.isDisplayed(),
+					"Add new system page title is not displayed on add new system popup");
+			CCUtils.assertEquals(lablePageTitle.getText().trim(), "Add New System");
+		} else if (nodeName.equals("ENTERPRISE")) {
+			CCUtils.verifyAndWaitForElement(lablePageTitle, driver);
+			CCUtils.assertTrue(lablePageTitle.isDisplayed(),
+					"Add new enterprise page title is not displayed on add new enterprise popup");
+			CCUtils.assertEquals(lablePageTitle.getText().trim(), "Add New Enterprise");
+		} else if (nodeName.equals("PRACTICE")) {
+			CCUtils.verifyAndWaitForElement(lablePageTitle, driver);
+			CCUtils.assertTrue(lablePageTitle.isDisplayed(),
+					"Add new practice page title is not displayed on add new practice popup");
+			CCUtils.assertEquals(lablePageTitle.getText().trim(), "Add New Practice");
+		}
+	}
+
+	public void verifyParentEntityLableText() {
+		CCUtils.verifyAndWaitForElement(labelParentEntity, driver);
+		log("Verifying parent entity label text");
+		CCUtils.assertTrue(labelParentEntity.isDisplayed(),
+				"Parent entity label is not displayed on add new node popup");
+		CCUtils.assertEquals(labelParentEntity.getText().trim(), "Parent Entity *");
+	}
+
+	public void verifyNodeNameLableText(String node) {
+		log("Verifying org node name label text");
+		if (node.equals("SYSTEM")) {
+			CCUtils.verifyAndWaitForElement(labelSystemName, driver);
+			CCUtils.assertTrue(labelSystemName.isDisplayed(),
+					"System name label is not displayed on add new system popup");
+			CCUtils.assertEquals(labelSystemName.getText().trim(), "System Name *");
+		} else if (node.equals("ENTERPRISE")) {
+			CCUtils.verifyAndWaitForElement(labelEnterpriseName, driver);
+			CCUtils.assertTrue(labelEnterpriseName.isDisplayed(),
+					"Enterprise name label is not displayed on add new enterprise popup");
+			CCUtils.assertEquals(labelEnterpriseName.getText().trim(), "Enterprise Name *");
+		} else if (node.equals("PRACTICE")) {
+			CCUtils.verifyAndWaitForElement(labelPracticeName, driver);
+			CCUtils.assertTrue(labelPracticeName.isDisplayed(),
+					"Practice name label is not displayed on add new practice popup");
+			CCUtils.assertEquals(labelPracticeName.getText().trim(), "Practice Name *");
+		}
+	}
+
+	public void verifySolutionDisplayNameLableText() {
+		CCUtils.verifyAndWaitForElement(labelSolutionDisplayName, driver);
+		log("Verifying solution display name label text");
+		CCUtils.assertTrue(labelSolutionDisplayName.isDisplayed(),
+				"Solution display name label is not displayed on add new node popup");
+		CCUtils.assertEquals(labelSolutionDisplayName.getText().trim(), "Solutions Display Name");
+	}
+
+	public void verifySapIdLableText() {
+		CCUtils.verifyAndWaitForElement(labelSapId, driver);
+		log("Verifying sap id label text");
+		CCUtils.assertTrue(labelSapId.isDisplayed(), "Sap id label is not displayed on add new node popup");
+		CCUtils.assertEquals(labelSapId.getText().trim(), "SAP ID");
+	}
+
+	public void verifyTimezoneLableText() {
+		CCUtils.verifyAndWaitForElement(labelTimezone, driver);
+		log("Verifying timezone label text");
+		CCUtils.assertTrue(labelTimezone.isDisplayed(), "Timezone label is not displayed on add new node popup");
+		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone");
+	}
+
+	public void verifyStatusLabelTextAndRadioButtons() {
+		CCUtils.verifyAndWaitForElement(labelStatus, driver);
+		CCUtils.assertTrue(labelStatus.isDisplayed(), "Status label is not displayed on add new node popup");
+		log("Verifying status label text");
+		CCUtils.assertEquals(labelStatus.getText().trim(), "Status *");
+		log("Status label text is " + labelStatus.getText().trim());
+		log("Verifying active label and radio button are displayed on add new node popup");
+		CCUtils.assertEquals(labelActive.getText().trim(), "Active");
+		CCUtils.assertTrue(radioButtonActive.isDisplayed(), "Active radiobutton is not present on add new node popup");
+		log("Verifying inactive label and radio button are displayed on add new node popup");
+		CCUtils.assertEquals(labelInactive.getText().trim(), "Inactive");
+		CCUtils.assertTrue(radioButtonInactive.isDisplayed(),
+				"Inactive radiobutton is not present on add new node popup");
+	}
+
+	public void verifyLabelPresentOnAddNewNodePopup(String nodeName) {
+		verifyAddOrgNodePageTitle(nodeName);
+		verifyParentEntityLableText();
+		verifyNodeNameLableText(nodeName);
+		verifySolutionDisplayNameLableText();
+		verifySapIdLableText();
+		verifyTimezoneLableText();
+		verifyStatusLabelTextAndRadioButtons();
+	}
+
+	public void enterOrgName(String orgName) {
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.sendKeys(orgName);
+		log("Entered org name is " + orgName);
+	}
+
 }
