@@ -25,13 +25,20 @@ public class GetUserRolesForUserTypeApiTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get user roles for internal user")
-	public void testUserRolesForInternalUser() throws IOException {
-		getUserRolesApiResponse = userInfo.getUserRoles(testData.getProperty("user.type.internal"));
+	@DataProvider(name = "userTypeValue")
+	public Object[][] getUserTypes() throws Exception {
+		return new Object[][] { { testData.getProperty("user.type.internal").trim() },
+				{ testData.getProperty("user.type.client").trim() },
+				{ testData.getProperty("user.type.varreseller").trim() } };
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userTypeValue", description = "Get user roles for internal user")
+	public void testUserRolesForUserType(String userType) throws IOException {
+		getUserRolesApiResponse = userInfo.getUserRoles(userType);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
-		validation.verifyGetUserRolesResponseForInternalUser(getUserRolesApiResponse);
+		validation.verifyGetUserRolesResponseBody(getUserRolesApiResponse, userType);
 	}
 
 	@DataProvider(name = "userType")
@@ -66,5 +73,4 @@ public class GetUserRolesForUserTypeApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(getUserRolesApiResponse);
 	}
-
 }

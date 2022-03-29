@@ -11,7 +11,9 @@
 	<test name="User Data Service Api Test">
 		<classes>
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
