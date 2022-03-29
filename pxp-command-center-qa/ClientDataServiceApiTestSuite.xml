@@ -24,6 +24,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSapNumberApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByClientIdApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
