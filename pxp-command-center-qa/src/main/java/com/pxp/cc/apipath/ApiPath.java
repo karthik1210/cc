@@ -229,5 +229,9 @@ public class ApiPath {
 	public static final String INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
 	}
-
+ 
+	public static final String AUTOSUGGESTION_CLIENT_DL = SERVICE_CLIENT_DL + "/v1/clients/auto-suggestions";
+	public static final String AUTOSUGGESTION_CLIENT_DL(String searchData) {
+		return SERVICE_CLIENT_DL + "/v1/clients/auto-suggestions";
+	}
 }

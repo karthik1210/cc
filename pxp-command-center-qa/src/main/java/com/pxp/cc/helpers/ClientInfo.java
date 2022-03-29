@@ -240,4 +240,9 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).when().get(url).then().extract()
 				.response();
 	}
+	public Response getAutoSuggestionClient_DL(String searchData) {
+		String url = ApiPath.AUTOSUGGESTION_CLIENT_DL;
+		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract()
+				.response();
+	}
 }
