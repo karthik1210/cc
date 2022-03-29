@@ -41,7 +41,7 @@ public class ApiPath {
 	public static final String POST_AUDIT_LOG = "/service/cc/v1/audit/view";
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
-	
+
 	public static final String SERVICE_CLIENT_BL = "/service/client-service";
 	public static final String SERVICE_ORG_BL = "/service/org-service";
 	public static final String CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients";
@@ -176,13 +176,12 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
 
-
 	public static final String AUTOSUGGESTION_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients/auto-suggestions";
-	public static final String AUTOSUGGESTION_CLIENT_BL (String searchData)
-	{ return SERVICE_CLIENT_BL  +  "/v1/clients/auto-suggestions";
-}
 
-	
+	public static final String AUTOSUGGESTION_CLIENT_BL(String searchData) {
+		return SERVICE_CLIENT_BL + "/v1/clients/auto-suggestions";
+	}
+
 	public static final String FAVORITE(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favorites";
 	}
@@ -206,13 +205,20 @@ public class ApiPath {
 	public static final String TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezones";
 	public static final String INVALID_PATH_TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezonesssss";
 
-
 	public static final String CLIENT_ORG_HIERARCHY_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarchy";
 	}
 
 	public static final String INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
+	}
+
+	public static final String GET_ORGANIZATION_LIST_BL(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgs";
+	}
+
+	public static final String INVALID_PATH_GET_ORGANIZATION_LIST_BL(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgsssssabc";
 	}
 
 }
