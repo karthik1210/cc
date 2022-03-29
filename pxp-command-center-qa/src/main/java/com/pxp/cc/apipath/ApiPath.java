@@ -41,7 +41,7 @@ public class ApiPath {
 	public static final String POST_AUDIT_LOG = "/service/cc/v1/audit/view";
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
-	
+
 	public static final String SERVICE_CLIENT_BL = "/service/client-service";
 	public static final String SERVICE_ORG_BL = "/service/org-service";
 	public static final String CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients";
@@ -133,25 +133,25 @@ public class ApiPath {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + "{clientId}" + "/solutions";
 	}
 
-	public static final String SERVICE_USER_BL = "/service/user";
+	public static final String SERVICE_USER_BL = "/service/user-service";
 	public static final String USER_ROLES_BL = SERVICE_USER_BL + "/usertypes/";
 
 	public static final String USER_ROLES_BL(String userType) {
-		return SERVICE_USER_BL + "/usertypes/" + "{userType}" + "/roles";
+		return SERVICE_USER_BL + "/v1/usertypes/" + "{userType}" + "/roles";
 	}
 
 	public static final String INVALID_PATH_USER_ROLES_BL(String userType) {
-		return SERVICE_USER_BL + "/usertypes/" + userType + "/rolesss";
+		return SERVICE_USER_BL + "/v1/usertypes/" + userType + "/rolesss";
 	}
 
 	public static final String SERVICE_USER_DL = "/service/user-data";
 
 	public static final String USER_ROLES_DL(String userType) {
-		return SERVICE_USER_DL + "/usertypes/" + "{userType}" + "/roles";
+		return SERVICE_USER_DL + "/v1/usertypes/" + "{userType}" + "/roles";
 	}
 
 	public static final String INVALID_PATH_USER_ROLES_DL(String userType) {
-		return SERVICE_USER_DL + "/usertypes/" + userType + "/rolesss";
+		return SERVICE_USER_DL + "/v1/usertypes/" + userType + "/rolesss";
 	}
 
 	public static final String ORGS_SOLUTION_DL = SERVICE_ORG_DL + "/v1/orgs/";
@@ -161,11 +161,11 @@ public class ApiPath {
 	}
 
 	public static final String USER_ROLES_BY_USER_BL(int userId) {
-		return SERVICE_USER_BL + "/users/" + "{userId}" + "/roles";
+		return SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/roles";
 	}
 
 	public static final String INVALID_PATH_USER_ROLES_BY_USER_BL(int userId) {
-		return SERVICE_USER_BL + "/users/" + "{userId}" + "/rolessss";
+		return SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/rolessss";
 	}
 
 	public static final String CLIENT_DIRECTORY_BL = SERVICE_CLIENT_BL + "/v1/clients";
@@ -175,7 +175,7 @@ public class ApiPath {
 	{
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
-	
+
 	public static final String CLIENT_DIRECTORY_DL = SERVICE_CLIENT_DL + "/v1/clients";
 
 	public static final String CLIENT_DIRECTORY_DL(String searchData, String page, String pageSize, Object type)
@@ -183,12 +183,13 @@ public class ApiPath {
 	{
 		return SERVICE_CLIENT_DL + "/v1/clients";
 	}
-	
 
 	public static final String AUTOSUGGESTION_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients/auto-suggestions";
-	public static final String AUTOSUGGESTION_CLIENT_BL (String searchData)
-	{ return SERVICE_CLIENT_BL  +  "/v1/clients/auto-suggestions";
-}
+
+	public static final String AUTOSUGGESTION_CLIENT_BL(String searchData) {
+		return SERVICE_CLIENT_BL + "/v1/clients/auto-suggestions";
+	}
+
 	public static final String FAVORITE(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/favorites";
 	}
@@ -213,6 +214,13 @@ public class ApiPath {
 	public static final String TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezones";
 	public static final String INVALID_PATH_TIMEZONES_BL = SERVICE_COMMONS_BL + "/v1/timezonesssss";
 
+	public static final String USER_ROLES_BY_USER_DL(int userId) {
+		return SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/roles";
+	}
+
+	public static final String INVALID_PATH_USER_ROLES_BY_USER_DL(int userId) {
+		return SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/rolessss";
+	}
 
 	public static final String CLIENT_ORG_HIERARCHY_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarchy";
