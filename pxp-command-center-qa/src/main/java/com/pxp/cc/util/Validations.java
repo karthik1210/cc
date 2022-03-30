@@ -1090,7 +1090,7 @@ public class Validations {
 				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter"))) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
-				if ( jsonObject.get("name").toString().contains(searchedData)) {
+				if (jsonObject.get("name").toString().contains(searchedData)) {
 					Log4jUtil.log(searchedData
 							+ " is checked whether it is numberic or letter or both within id and name of client");
 					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
@@ -1235,19 +1235,15 @@ public class Validations {
 	public void verifyGetOrganizationListApiResponse(Response response, List<OrgDetails> orgList) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
-		if (orgList.size() == jsonArray.length()) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertTrue(
-						orgList.contains(new OrgDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"))),
-						"Org id " + jsonObject.getInt("orgId") + " doesn't exist");
-			}
-		} else if (jsonArray.length() == 0) {
-			Log4jUtil.log("Org list is empty");
-		} else {
-			Log4jUtil.log("Size of actual org list and expected org list is not same");
+		CCUtils.assertTrue(jsonArray.length() > 0, "Org list is empty");
+		CCUtils.assertTrue(orgList.size() == jsonArray.length(),
+				"Size of actual org list and expected org list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertTrue(
+					orgList.contains(new OrgDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"))),
+					"Org id " + jsonObject.getInt("orgId") + " doesn't exist");
 		}
-
 	}
 
 	public void verifyErrorMessageInResponseForInvalidOrgType(Response response, String invalidOrgType)

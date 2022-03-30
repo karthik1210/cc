@@ -120,12 +120,14 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrganizationListApiResponse(getOrganizationListApiResponse, practiceList);
-		logStep("Enter blank space in orgType field and valid clientId and Verify practice list display in response body");
+		logStep("Enter blank space in orgType field and valid clientId and Verify actice nge/agnostic practice node list should be displayed in response body");
+		List<OrgDetails> activePracticeList = Arrays.asList(new OrgDetails(ngePracticeOne, "Practice_name_1"),
+				new OrgDetails(agnosticPracticeOne, "agnostic_practice_name_1"));
 		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(clientId, " ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrganizationListApiResponse(getOrganizationListApiResponse, practiceList);
+		validation.verifyGetOrganizationListApiResponse(getOrganizationListApiResponse, activePracticeList);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgType", description = "Enter invalid client id in clientId field and verify 204 status code")
