@@ -38,15 +38,15 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"),
 				testData.getProperty("api.system.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
 		logStep("Validating Response Body");
-		validation.verifyCreateSystemResponseBody(createSystemApiResponse, testData.getProperty("api.system.name"));
+		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(createSystemApiResponse);
+		validation.verifyCreateSystemResponseBody(createSystemApiResponse, testData.getProperty("api.system.name"));		
 
 		int orgId = createSystemApiResponse.jsonPath().get("orgId");
 		logStep("Fetch newly created system details using system id");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
+		logStep("Validating response information");	
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
@@ -62,8 +62,9 @@ public class CreateOrg_DataLayer extends BaseRest {
 				null, null, Integer.parseInt(testData.getProperty("api.parentid")), null,
 				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+				logStep("Validating Response Information");
+				CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
+				CCUtils.responseTimeValidation(createSystemApiResponse);
 		validation.verifyOrgNodeNullErrorMessageResponseBody(createSystemApiResponse);
 	}
 
@@ -76,9 +77,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.enterprise.parentid")),
 				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.sapnumber"),
 				testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
 		validation.verifyCreateEnterpriseResponseBody(createEnterpriseApiResponse,
 				testData.getProperty("api.enterprise.name"));
 
@@ -86,8 +88,6 @@ public class CreateOrg_DataLayer extends BaseRest {
 		logStep("Fetch newly created enterprise details using enterprise id");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.enterprise.displayname"),
@@ -102,9 +102,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.enterprise.displayname"), null, null,
 				Integer.parseInt(testData.getProperty("api.enterprise.parentid")), null,
 				testData.getProperty("api.enterprise.sapnumber"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));	
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
 		validation.verifyOrgNodeNullErrorMessageResponseBody(createEnterpriseApiResponse);
 	}
 
@@ -118,19 +119,17 @@ public class CreateOrg_DataLayer extends BaseRest {
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
+				int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT",
 				testData.getProperty("api.practice.sapnumber"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createPracticeApiResponse);
 		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse,
 				testData.getProperty("api.practice.name"));
 
@@ -138,8 +137,6 @@ public class CreateOrg_DataLayer extends BaseRest {
 		logStep("Fetching Practice Id Response body");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.practice.displayname"),
@@ -157,9 +154,6 @@ public class CreateOrg_DataLayer extends BaseRest {
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new system below client.");
@@ -185,9 +179,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.practice.orgtype"), enterpriseId,
 				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.sapnumber"),
 				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));	
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createPracticeApiResponse);
 		validation.verifyCreatePracticeResponseBody(createPracticeApiResponse,
 				testData.getProperty("api.practice.name"));
 
@@ -195,8 +190,6 @@ public class CreateOrg_DataLayer extends BaseRest {
 		logStep("Fetching Practice Id Response body");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.practice.displayname"),
@@ -212,8 +205,9 @@ public class CreateOrg_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.practice.parentid")), null,
 				testData.getProperty("api.practice.sapnumber"), testData.getProperty("api.practice.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				logStep("Validating Response Body");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
 		validation.verifyOrgNodeNullErrorMessageResponseBody(createEnterpriseApiResponse);
 	}
 
@@ -225,9 +219,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), Integer.parseInt(testData.getProperty("api.parentid")),
 				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), orgTimezoneId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createSystemApiResponse);
 		validation.verifyErrorMessageInResponseForOrgTimezoneIdField(createSystemApiResponse, orgTimezoneId);
 	}
 
@@ -239,9 +234,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"), orgType,
 				Integer.parseInt(testData.getProperty("api.parentid")), testData.getProperty("api.parenttype"),
 				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createSystemApiResponse);
 		validation.verifyErrorMessageInResponseForOrgTypeField(createSystemApiResponse, orgType);
 	}
 
@@ -253,9 +249,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), orgParentId, testData.getProperty("api.parenttype"),
 				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createSystemApiResponse);
 		validation.verifyErrorMessageInResponseForOrgParentIdField(createSystemApiResponse, orgParentId);
 	}
 
@@ -268,9 +265,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				testData.getProperty("api.system.orgtype"), Integer.parseInt(testData.getProperty("api.parentid")),
 				orgParentType, testData.getProperty("api.system.sapnumber"),
 				testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));	
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createSystemApiResponse);
 		validation.verifyErrorMessageInResponseForParentTypeField(createSystemApiResponse);
 	}
 
@@ -284,9 +282,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				systemDisplayName, systemName, testData.getProperty("api.system.orgtype"),
 				Integer.parseInt(testData.getProperty("api.parentid")), testData.getProperty("api.parenttype"),
 				systemSapNumber, testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createSystemApiResponse);
 		validation.verifyMaximumCharacterErrorMessageInResponseForOrgField(createSystemApiResponse);
 	}
 
@@ -301,9 +300,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.enterprise.parentid")),
 				testData.getProperty("api.enterprise.parenttype"), enterpriseSapNumber,
 				testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));	
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
 		validation.verifyMaximumCharacterErrorMessageInResponseForOrgField(createEnterpriseApiResponse);
 	}
 
@@ -318,9 +318,10 @@ public class CreateOrg_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.practice.parentid")),
 				testData.getProperty("api.practice.parenttype"), practiceSapNumber,
 				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));		
+		logStep("Validating Response Information");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 400);
-		logStep("Validating Response Body");
+		CCUtils.responseTimeValidation(createPracticeApiResponse);
 		validation.verifyMaximumCharacterErrorMessageInResponseForOrgField(createPracticeApiResponse);
 	}
 
