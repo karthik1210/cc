@@ -1249,13 +1249,6 @@ public class Validations {
 
 	}
 
-	public void verifyErrorMessageInResponseForInvalidOrgType(Response response, String invalidOrgType)
-			throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "OrgType not found for type=" + invalidOrgType);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyErrorResponseBodyForClientIdSolutionsField(Response response, int clientId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=" + clientId);
@@ -1395,7 +1388,7 @@ public class Validations {
 		}
 		CCUtils.assertEquals(responseDatalist, datalist);
 	}
-	
+
 	public void verifyOrgNodeNullErrorMessageResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Name cannot be null or empty, Status cannot be null";
@@ -1415,32 +1408,29 @@ public class Validations {
 		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForOrgTypeField(Response response, String orgType)
-			throws IOException {
+
+	public void verifyErrorMessageInResponseForOrgTypeField(Response response, String orgType) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "OrgType not found for type=" + orgType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForParentTypeField(Response response)
-			throws IOException {
+
+	public void verifyErrorMessageInResponseForParentTypeField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid type");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForOrgTimezoneIdField(Response response, String systemTimezoneId)
+
+	public void verifyErrorMessageInResponseForOrgTimezoneIdField(Response response, String timezoneId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for id=" + systemTimezoneId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for id=" + timezoneId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifyErrorMessageInResponseForOrgParentIdField(Response response, int orgSystemParentId)
-			throws IOException {
+
+	public void verifyErrorMessageInResponseForOrgParentIdField(Response response, int parentId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for clientId=" + orgSystemParentId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for clientId=" + parentId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1591,21 +1581,9 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorResponsForInvalidParentType(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid type");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyErrorResponseForBlankFields(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "orgType, name, parentType cannot be null or empty");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
-	public void verifyErrorResponseForTimezoneField(Response response, String invalidTimezoneId) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for id=" + invalidTimezoneId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1626,13 +1604,6 @@ public class Validations {
 		Collections.sort(expectedValue);
 
 		CCUtils.assertEquals(actualValue, expectedValue);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
-	public void verifyErrorResponseForInvalidClientIdInParentIdField(Response response, int clientId)
-			throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for clientId=" + clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 

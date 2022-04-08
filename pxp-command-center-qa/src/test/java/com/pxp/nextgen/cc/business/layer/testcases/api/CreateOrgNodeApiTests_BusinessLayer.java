@@ -337,7 +337,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForTimezoneField(createOrgNodeApiResponse, invalidTimezoneId);
+		validation.verifyErrorMessageInResponseForOrgTimezoneIdField(createOrgNodeApiResponse, invalidTimezoneId);
 	}
 
 	@DataProvider(name = "getInvalidParentTypes")
@@ -366,7 +366,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponsForInvalidParentType(createOrgNodeApiResponse);
+		validation.verifyErrorMessageInResponseForParentTypeField(createOrgNodeApiResponse);
 	}
 
 	@DataProvider(name = "getParentId")
@@ -413,7 +413,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgType(createOrgNodeApiResponse, getInvalidOrgTypeDetails[0]);
+		validation.verifyErrorMessageInResponseForOrgTypeField(createOrgNodeApiResponse, getInvalidOrgTypeDetails[0]);
 	}
 
 	@DataProvider(name = "getPracticeNodeDetails")
@@ -465,7 +465,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForInvalidClientIdInParentIdField(createOrgNodeApiResponse,
+		validation.verifyErrorMessageInResponseForOrgParentIdField(createOrgNodeApiResponse,
 				Integer.parseInt(orgNodeDetail[2]));
 	}
 
