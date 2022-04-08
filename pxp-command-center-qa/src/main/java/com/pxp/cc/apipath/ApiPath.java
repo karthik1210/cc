@@ -63,7 +63,8 @@ public class ApiPath {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId;
 	}
 
-	public static final String ORG_BL = SERVICE_ORG_BL + "/v1/orgs/";
+	public static final String ORG_BL = SERVICE_ORG_BL + "/v1/orgs";
+	public static final String INVALID_PATH_ORG_BL = SERVICE_ORG_BL + "/v1/orgsssss";
 	public static final String CLIENT_TYPES = SERVICE_CLIENT_BL + "/v1/clients/types";
 	public static final String INVALID_PATH_CLIENTTYPE_BL = SERVICE_CLIENT_BL + "/typesadsds";
 
