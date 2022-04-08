@@ -122,7 +122,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
 		solutionListOne.add(solutionMap);
 		List<Map<String, Object>> solutionListTwo = new ArrayList<Map<String, Object>>();
-		solutionMapTwo.put("solutionId", testData.getProperty("Forms.id"));
+		solutionMapTwo.put("solutionId", testData.getProperty("forms.id"));
 		solutionMapTwo.put("status", testData.getProperty("status.newly.purchased"));
 		solutionListTwo.add(solutionMapTwo);
 		List<Map<String, Object>> finalSolutionLists = new ArrayList<Map<String, Object>>();
@@ -220,7 +220,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Create an inactive NGE practice node with solutions below enterprise");
 		List<Map<String, Object>> solutionListOne = new ArrayList<Map<String, Object>>();
-		solutionMap.put("solutionId", testData.getProperty("Forms.id"));
+		solutionMap.put("solutionId", testData.getProperty("forms.id"));
 		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
 		solutionListOne.add(solutionMap);
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "NGE_Practice_Name_1",
