@@ -230,4 +230,12 @@ public class ApiPath {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
 	}
 
+	public static final String UPDATE_ORG(int orgId) {
+		return ORG_DL + "/" + "{orgId}";
+	}
+
+	public static final String INVALID_PATH_UPDATE_ORG(int orgId) {
+		return ORG_DL + "sssssssssssssssssss/" + "{orgId}";
+	}
+
 }

@@ -370,7 +370,7 @@ public class AddNewOrgApiTest extends BaseRest {
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
 
 		logStep("Validating Response Body");
-		validation.verifyMaximumCharacterAndFreeTextFieldErrorResponsForEnterprise(createEnterpriseApiResponse);
+		validation.verifyMaximumCharacterErrorResponseBody(createEnterpriseApiResponse);
 
 	}
 

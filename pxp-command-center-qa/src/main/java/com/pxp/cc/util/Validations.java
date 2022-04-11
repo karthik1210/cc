@@ -289,7 +289,7 @@ public class Validations {
 	}
 
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String systemName, String orgType,
-			String clientType, String displayName, String sapNumber, String systemeActive, String testClient,
+			String clientType, String displayName, String sapNumber, String active, String testClient,
 			String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -299,7 +299,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
 		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
-		CCUtils.assertEquals(jsonpath.get("active").toString(), systemeActive);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
 		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
@@ -580,7 +580,7 @@ public class Validations {
 
 	}
 
-	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForEnterprise(Response response) throws IOException {
+	public void verifyMaximumCharacterErrorResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
 		List<String> actualValue = new ArrayList<String>();
@@ -1090,7 +1090,7 @@ public class Validations {
 				|| CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("numberletter"))) {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
-				if ( jsonObject.get("name").toString().contains(searchedData)) {
+				if (jsonObject.get("name").toString().contains(searchedData)) {
 					Log4jUtil.log(searchedData
 							+ " is checked whether it is numberic or letter or both within id and name of client");
 					CCUtils.assertTrue(true, "Validation for searched data present within id and name of client");
@@ -1395,6 +1395,43 @@ public class Validations {
 					responseBody.getJSONObject(i).getBoolean("active"), null));
 		}
 		CCUtils.assertEquals(responseDatalist, datalist);
+	}
+
+	public void verifyErrorMessageResponseForMandatoryFields(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Status cannot be null, Name cannot be null or empty";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseForTimezoneField(Response response, String invalidTimezoneId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for id=" + invalidTimezoneId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyUpdateOrgApiResponseBody(Response response, int orgId, String nodeName) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), nodeName);
+	}
+
+	public void verifyOrgNodeStatus(Response response, int orgId, String nodeName, String status) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), nodeName);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), status);
 	}
 
 }
