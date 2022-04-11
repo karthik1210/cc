@@ -48,7 +48,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageResponseForMandatoryFields(updateOrgNodeApiResponse);
+		validation.verifyOrgNodeNullErrorMessageResponseBody(updateOrgNodeApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter maximum characters in sap id,splution display name and name field and validate error response body")
@@ -61,7 +61,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyMaximumCharacterErrorResponseBody(updateOrgNodeApiResponse);
+		validation.verifyMaximumCharacterErrorMessageInResponseBody(updateOrgNodeApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter invalid timezone id in timezone field and validate error response body")

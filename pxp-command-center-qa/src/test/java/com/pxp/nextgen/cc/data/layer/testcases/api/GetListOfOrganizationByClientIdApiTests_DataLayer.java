@@ -151,7 +151,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgType(getOrganizationListApiResponse, invalidOrgType);
+		validation.verifyErrorMessageInResponseForOrgTypeField(getOrganizationListApiResponse, invalidOrgType);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid client id ,type in clientId and type field and verify error response")
@@ -162,7 +162,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgType(getOrganizationListApiResponse,
+		validation.verifyErrorMessageInResponseForOrgTypeField(getOrganizationListApiResponse,
 				testData.getProperty("api.parenttype"));
 	}
 

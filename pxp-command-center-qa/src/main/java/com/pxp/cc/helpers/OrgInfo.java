@@ -417,4 +417,40 @@ public class OrgInfo extends BaseRest {
 				.body(updateOrgNodePayload).when().put(url).then().extract().response();
 	}
 
+	public static Map<String, Object> createOrgNodeMap(String active, String displayName, String name, String orgType,
+			Integer parentId, String parentType, String sapNumber, String timezoneId,
+			List<Map<String, Object>> solutionList) {
+		Map<String, Object> orgMap = new HashMap<String, Object>();
+		orgMap.put("active", active);
+		orgMap.put("displayName", displayName);
+		orgMap.put("name", name);
+		orgMap.put("orgType", orgType);
+		orgMap.put("parentId", parentId);
+		orgMap.put("parentType", parentType);
+		orgMap.put("sapNumber", sapNumber);
+		orgMap.put("timezoneId", timezoneId);
+		orgMap.put("solutions", solutionList);
+		return orgMap;
+	}
+
+	public Response createOrgNode(String active, String displayName, String name, String orgType, Integer parentId,
+			String parentType, String sapNumber, String timezoneId, List<Map<String, Object>> solutionList)
+			throws Exception {
+
+		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId, solutionList);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
+				.response();
+	}
+
+	public Response createOrgNodeUsingInvalidUrl(String active, String displayName, String name, String orgType,
+			Integer parentId, String parentType, String sapNumber, String timezoneId,
+			List<Map<String, Object>> solutionList) throws Exception {
+
+		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId, solutionList);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
+				.extract().response();
+	}
+
 }
