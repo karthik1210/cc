@@ -558,27 +558,6 @@ public class Validations {
 
 	}
 
-	public void verifyMaximumCharacterErrorMessageInResponseForSystemField(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Active can not be null, Display name size maximum 100 character, Name size maximum 100 character, Sap number size maximum 50 character";
-		List<String> actualValue = new ArrayList<String>();
-		for (String val : Arrays.asList(actual.split(","))) {
-			actualValue.add(val.trim());
-		}
-		Collections.sort(actualValue);
-
-		String expected = jsonpath.get("message").toString();
-		List<String> expectedValue = new ArrayList<String>();
-		for (String val : Arrays.asList(expected.split(","))) {
-			expectedValue.add(val.trim());
-		}
-		Collections.sort(expectedValue);
-
-		CCUtils.assertEquals(actualValue, expectedValue);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
-	}
-
 	public void verifyMaximumCharacterErrorMessageInResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
@@ -598,26 +577,6 @@ public class Validations {
 		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
-	}
-
-	public void verifyMaximumCharacterAndFreeTextFieldErrorResponsForPractice(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
-		List<String> actualValue = new ArrayList<String>();
-		for (String val : Arrays.asList(actual.split(","))) {
-			actualValue.add(val.trim());
-		}
-		Collections.sort(actualValue);
-
-		String expected = jsonpath.get("message").toString();
-		List<String> expectedValue = new ArrayList<String>();
-		for (String val : Arrays.asList(expected.split(","))) {
-			expectedValue.add(val.trim());
-		}
-		Collections.sort(expectedValue);
-
-		CCUtils.assertEquals(actualValue, expectedValue);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyResponseBodyForSapNumberField(Response response) throws IOException {
