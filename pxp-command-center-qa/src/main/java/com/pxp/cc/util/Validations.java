@@ -1451,27 +1451,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyMaximumCharacterErrorMessageInResponseForOrgField(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name size maximum 100 character, Display name size maximum 100 character, Sap number size maximum 50 character";
-		List<String> actualValue = new ArrayList<String>();
-		for (String val : Arrays.asList(actual.split(","))) {
-			actualValue.add(val.trim());
-		}
-		Collections.sort(actualValue);
-
-		String expected = jsonpath.get("message").toString();
-		List<String> expectedValue = new ArrayList<String>();
-		for (String val : Arrays.asList(expected.split(","))) {
-			expectedValue.add(val.trim());
-		}
-		Collections.sort(expectedValue);
-
-		CCUtils.assertEquals(actualValue, expectedValue);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
-	}
-
 	public void verifyCreateOrgNodeApiResponseBody(Response response, String nodeName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
