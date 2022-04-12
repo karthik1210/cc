@@ -14,6 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
+
 import com.pxp.cc.util.CCUtils;
 
 public class ClientDirectoryPage extends CCMainPage {
@@ -75,7 +76,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
 
-	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='directoryGradeIcon']")
+	@FindBy(xpath = "//mat-icon[@id='directoryGradeIcon']")
 	private List<WebElement> listOfFavClients;
 
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
@@ -126,6 +127,15 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "directoryTitle")
 	private WebElement labelPageTitle;
 
+	@FindBy(xpath = "//mat-icon[@id='star-icon']")
+	private WebElement unFavoritedStarIcon;
+
+	@FindBy(xpath = "//mat-icon[@id='star-icon']")
+	private WebElement FavoritedStarIcon;
+
+	@FindBy(xpath = "//div[@id='cdk-describedby-message-16']")
+	private WebElement tooltipMsg;
+
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
 
@@ -137,6 +147,10 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public ClientDirectoryPage(WebDriver driver) {
 		super(driver);
+	}
+
+	public ClientDirectoryPage(WebDriver driver, String url) {
+		super(driver, url);
 	}
 
 	public void clickSSO() {
@@ -175,7 +189,6 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public void getSsoLinks() {
 		log("number of sso links present for user is " + ssoLinkList.size());
-
 		for (int i = 0; i < ssoLinkList.size(); i++) {
 			actualSsoLinks.add(ssoLinkList.get(i).getText());
 		}
@@ -209,11 +222,9 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void clickSearchButton() {
-
 		CCUtils.verifyAndWaitForElement(buttonSearchClientDirectory, driver);
-		buttonSearchClientDirectory.click();
+		javascriptClick(buttonSearchClientDirectory);
 		log("Clicked on Search button");
-
 	}
 
 	public void applyClientTypeFilter() {
@@ -332,32 +343,6 @@ public class ClientDirectoryPage extends CCMainPage {
 		return PageFactory.initElements(driver, GeneralSettingsPage.class);
 	}
 
-	public void deselectFavClientInClientDirectory() {
-		for (int i = listOfFavClients.size() - 1; i >= 0; i--) {
-			CCUtils.verifyAndWaitForElement(listOfFavClients.get(i), driver);
-			highlightElement(listOfFavClients.get(i));
-			listOfFavClients.get(i).click();
-		}
-		log("Un-Favorited all cliens in client directory table");
-	}
-
-	public void selectFavClientInClientDirectory() {
-		for (int i = listOfFavClients.size(); i <= 4; i++) {
-			CCUtils.verifyAndWaitForElement(listOfNonFavClients.get(i), driver);
-			highlightElement(listOfNonFavClients.get(i));
-			listOfNonFavClients.get(i).click();
-		}
-		log("Favorited all cliens in client directory table");
-	}
-
-	public int getSizeOfListOfFavClients() {
-		return listOfFavClients.size();
-	}
-
-	public int getSizeOfListOfNonFavClients() {
-		return listOfNonFavClients.size();
-	}
-
 	public void searchAndSelectClientNameInClientTable(String searchText) {
 		log("Enter search text in search textbox");
 		searchNode(searchText);
@@ -365,6 +350,32 @@ public class ClientDirectoryPage extends CCMainPage {
 		clickSearchButton();
 		log("Click on client name in client directory table");
 		selectSearchedClientNameInClientTable();
+	}
+
+	public void listOfFavoritingClients(List<String> list) throws AWTException, InterruptedException {
+		for (int i = 0; i < list.size(); i++) {
+			if (i == 5) {
+				textboxSearchClientDirectory.clear();
+				searchNode(list.get(i).trim());
+				clickSearchButton();
+				CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+				unFavoritedStarIcon.click();
+				CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+				log("Clicked to Favorite star icon");
+				CCUtils.performMoveCursor(unFavoritedStarIcon, driver);
+				CCUtils.hover(unFavoritedStarIcon, driver);
+				String text = tooltipMsg.getText();
+				log("print the error msg : " + text);
+			} else {
+				textboxSearchClientDirectory.clear();
+				searchNode(list.get(i).trim());
+				clickSearchButton();
+				CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+				unFavoritedStarIcon.click();
+				log("Clicked to Favorite star icon");
+				textboxSearchClientDirectory.clear();
+			}
+		}
 	}
 
 	public CommandCenterUsersPage clickOnCommandCenterUsersIcon() {
@@ -677,5 +688,119 @@ public class ClientDirectoryPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertTrue(labelPageTitle.isDisplayed(), "Client directory page title is not displayed");
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Client Directory");
+	}
+
+	public void deselectFavClientInClientDirectory() {
+		for (int i = listOfFavClients.size() - 1; i >= 0; i--) {
+			CCUtils.verifyAndWaitForElement(listOfFavClients.get(i), driver);
+			highlightElement(listOfFavClients.get(i));
+			listOfFavClients.get(i).click();
+			CCUtils.verifyAndWaitForElement(listOfNonFavClients.get(i), driver);
+		}
+		log("Un-Favorited all clients in client directory table");
+	}
+
+	public void selectFavClientInClientDirectory() {
+		for (int i = listOfFavClients.size(); i <= 5; i++) {
+			CCUtils.verifyAndWaitForElement(listOfNonFavClients.get(i), driver);
+			highlightElement(listOfNonFavClients.get(i));
+			listOfNonFavClients.get(i).click();
+		}
+		log("Favorited all clients in client directory table");
+	}
+
+	public int getSizeOfListOfFavClients() {
+		log("print size of client :" + listOfFavClients.size());
+		return listOfFavClients.size();
+	}
+
+	public void unFavoriteAllFavoritedClients() {
+		for (WebElement ele : listOfFavClients) {
+			// CCUtils.verifyAndWaitForElement(ele, driver);
+			log("unfavoriting fav clients" + ele.getText());
+			javascriptClick(ele);
+		}
+	}
+
+	public void FavoriteAClient() {
+		if (FavoritedStarIcon.isSelected()) {
+			log("client is already favorited");
+		} else {
+			CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+			unFavoritedStarIcon.click();
+			log("Clicked to Favorite star icon");
+		}
+	}
+
+	public boolean getNoOfFavoriteClients() {
+		if (getSizeOfListOfFavClients() == 5) {
+			log("Total no of favorited clients is five");
+			return false;
+		} else
+			log("Total no of favorited clients is less than five");
+		return true;
+
+	}
+
+	public boolean verifyAClientIsNonFav() {
+		CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+		if (unFavoritedStarIcon.isDisplayed()) {
+			log("It is un - favorited");
+			return true;
+		} else
+			return false;
+	}
+
+	public int getSizeOfListOfNonFavClients() {
+		return listOfNonFavClients.size();
+	}
+
+	public int getSizeListOfFavClients() {
+		return listOfFavClients.size();
+	}
+
+	public void verifyNoOfFavoriteClient(boolean value) {
+		if (value == false) {
+			log("since favorited clients are 5 so unfavoriting all favorited client.");
+			unFavoriteAllFavoritedClients();
+		} else
+			log("favorited clients are less tham 5");
+	}
+
+	public void validateFavClientsAndUnFavThem(int value) {
+		if ((value <= 5) && (value != 0)) {
+			log("since favorited clients are 5 or less than 5 so unfavoriting all favorited client.");
+			unFavoriteAllFavoritedClients();
+		} else
+			log("No need to un favorite as no favorite clients present");
+	}
+
+	public void howManyFavClients(int value) {
+		if ((value <= 5) && (value != 0)) {
+			log("favorited clients are 5 or less than 5");
+		} else
+			log("no favorite clients present");
+	}
+
+	public boolean checkNoOfFavClientsAndUnFavoriteThem(int value) {
+		if (value <= 5 && value != 0) {
+			log("Favorite clients are : " + value);
+			deselectFavClientInClientDirectory();
+			return true;
+		} else {
+			log("No Favorite clients so selecting first five client as favorite and unfavorite them");
+			return false;
+		}
+	}
+
+	public void FavoriteClientThenUnfavorite(boolean value, String ClientName) {
+		if (value == false) {
+			searchNode(ClientName);
+			clickSearchButton();
+			FavoriteAClient();
+			deselectFavClientInClientDirectory();
+		} else
+			log("Already deselected all clients");
+
 	}
 }
