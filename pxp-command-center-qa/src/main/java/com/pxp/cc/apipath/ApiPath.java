@@ -63,7 +63,8 @@ public class ApiPath {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId;
 	}
 
-	public static final String ORG_BL = SERVICE_ORG_BL + "/v1/orgs/";
+	public static final String ORG_BL = SERVICE_ORG_BL + "/v1/orgs";
+	public static final String INVALID_PATH_ORG_BL = SERVICE_ORG_BL + "/v1/orgsssss";
 	public static final String CLIENT_TYPES = SERVICE_CLIENT_BL + "/v1/clients/types";
 	public static final String INVALID_PATH_CLIENTTYPE_BL = SERVICE_CLIENT_BL + "/typesadsds";
 
@@ -127,7 +128,13 @@ public class ApiPath {
 		return SERVICE_CLIENT_DL + "/v1/clientssssss/" + "{clientId}";
 	}
 
-	public static final String GET_ORGANIZATION_LIST_DL = SERVICE_ORG_DL + "/v1/clients/";
+	public static final String GET_ORGANIZATION_LIST_DL(int clientId) {
+		return SERVICE_ORG_DL + "/v1/clients/" + clientId + "/orgs";
+	}
+
+	public static final String INVALID_PATH_GET_ORGANIZATION_LIST_DL(int clientId) {
+		return SERVICE_ORG_DL + "/v1/clients/" + clientId + "/orgsabcdfef";
+	}
 
 	public static final String CLIENT_SOLUTION_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + "{clientId}" + "/solutions";
@@ -228,6 +235,14 @@ public class ApiPath {
 
 	public static final String INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
+	}
+
+	public static final String GET_ORGANIZATION_LIST_BL(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgs";
+	}
+
+	public static final String INVALID_PATH_GET_ORGANIZATION_LIST_BL(int clientId) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgsssssabc";
 	}
 
 }
