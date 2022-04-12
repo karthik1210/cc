@@ -286,7 +286,7 @@ public class CreateOrg_DataLayer extends BaseRest {
 		logStep("Validating Response Information");
 		CCUtils.assertEquals(createSystemApiResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(createSystemApiResponse);
-		validation.verifyMaximumCharacterErrorMessageInResponseForOrgField(createSystemApiResponse);
+		validation.verifyMaximumCharacterErrorMessageInResponseBody(createSystemApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter maximum characters in enterprise field and verify response for free text field as well")
@@ -304,7 +304,7 @@ public class CreateOrg_DataLayer extends BaseRest {
 		logStep("Validating Response Information");
 		CCUtils.assertEquals(createEnterpriseApiResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(createEnterpriseApiResponse);
-		validation.verifyMaximumCharacterErrorMessageInResponseForOrgField(createEnterpriseApiResponse);
+		validation.verifyMaximumCharacterErrorMessageInResponseBody(createEnterpriseApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create New Practice and fetch newly created Practice details using Practice id")
@@ -322,7 +322,7 @@ public class CreateOrg_DataLayer extends BaseRest {
 		logStep("Validating Response Information");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		validation.verifyMaximumCharacterErrorMessageInResponseForOrgField(createPracticeApiResponse);
+		validation.verifyMaximumCharacterErrorMessageInResponseBody(createPracticeApiResponse);
 	}
 
 }
