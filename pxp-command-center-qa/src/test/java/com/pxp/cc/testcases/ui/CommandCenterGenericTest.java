@@ -26,9 +26,7 @@ public class CommandCenterGenericTest extends BaseTestNGWebDriver {
 	}
 
 	public ClientDirectoryPage login(String url, String username, String password) throws InterruptedException {
-		LoginPage loginPage = new LoginPage(driver, url);
-		//ClientDirectoryPage clientDirectoryPage = loginPage.login(username, password);
-		//return clientDirectoryPage;
+        LoginPage loginPage = new LoginPage(driver, url);
 		return PageFactory.initElements(driver, ClientDirectoryPage.class);
 	}
 }
