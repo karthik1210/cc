@@ -1234,19 +1234,15 @@ public class Validations {
 	public void verifyGetOrganizationListApiResponse(Response response, List<OrgDetails> orgList) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
-		if (orgList.size() == jsonArray.length()) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertTrue(
-						orgList.contains(new OrgDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"))),
-						"Org id " + jsonObject.getInt("orgId") + " doesn't exist");
-			}
-		} else if (jsonArray.length() == 0) {
-			Log4jUtil.log("Org list is empty");
-		} else {
-			Log4jUtil.log("Size of actual org list and expected org list is not same");
+		CCUtils.assertTrue(jsonArray.length() > 0, "Org list is empty");
+		CCUtils.assertTrue(orgList.size() == jsonArray.length(),
+				"Size of actual org list and expected org list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertTrue(
+					orgList.contains(new OrgDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"))),
+					"Org id " + jsonObject.getInt("orgId") + " doesn't exist");
 		}
-
 	}
 
 	public void verifyErrorResponseBodyForClientIdSolutionsField(Response response, int clientId) throws IOException {
