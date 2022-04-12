@@ -1,25 +1,34 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.ui;
 
 import java.util.List;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
-public class GeneralSettingsTests extends CommandCenterGenericTest {
+public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	ClientDirectoryPage clientDirectoryPage;
 	GeneralSettingsPage generalSettingsPage;
+	public CommonMethods commonMethods;
+
+	@BeforeMethod()
+	public void loginToCommandCenterPortal() throws Exception {
+		logStep("Login to CC portal");
+		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
+				testData.getProperty("user.password"));
+		commonMethods = new CommonMethods(driver);
+	}
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test verify default text, searchicon & search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
@@ -37,8 +46,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select & verify Auto Suggestion list for symbol & numbers search in node name")
 	public void testAutoSuggestionForSingleCharcaterSearch() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
@@ -56,6 +64,10 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 			log("Test case Failed");
 			CCUtils.assertTrue(false, "Test Failed");
 		}
+		actualTitle.contains(ccuser.searchSymbolInGeneralSetting);
+		log("Test Case pass");
+		CCUtils.assertTrue(true, "node selected");
+
 		generalSettingsPage.clearSearchText();
 		logStep("Searching for nodes with number in General setting search");
 		generalSettingsPage.enterSearchText(ccuser.searchNumberInGeneralSetting);
@@ -69,13 +81,15 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 			log("Test case Failed");
 			CCUtils.assertTrue(false, "Test Failed");
 		}
+		actualTitleForNumSearch.contains(ccuser.searchNumberInGeneralSetting);
+		log("Test Case pass, Numbers searched in general setting is succesfull");
+		CCUtils.assertTrue(true, "node selected");
 	}
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node in Client's General setting page")
 	public void testNodeSearch() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
@@ -95,8 +109,7 @@ public class GeneralSettingsTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General setting page")
 	public void testNoResultFound() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();

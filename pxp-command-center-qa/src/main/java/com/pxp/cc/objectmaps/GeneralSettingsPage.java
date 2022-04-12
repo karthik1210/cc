@@ -139,7 +139,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
 
-	@FindBy(xpath = "//div[@class='s_item_name']//span")
+	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
 	@FindBy(className = "info")
@@ -483,6 +483,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Node title on right panel is : " + labelNodeNameRightPanel.getText());
 		return labelNodeNameRightPanel.getText();
 	}
+	
 
 	public void verifyStatusIcon() {
 		CCUtils.verifyAndWaitForElement(nodeStatusInGeneralSetting.get(0), driver);

@@ -3,6 +3,7 @@
 package com.pxp.cc.testcases.ui;
 
 import org.apache.log4j.BasicConfigurator;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 
 import com.intuit.ifs.csscat.core.BaseTestNGWebDriver;
@@ -26,7 +27,8 @@ public class CommandCenterGenericTest extends BaseTestNGWebDriver {
 
 	public ClientDirectoryPage login(String url, String username, String password) throws InterruptedException {
 		LoginPage loginPage = new LoginPage(driver, url);
-		ClientDirectoryPage clientDirectoryPage = loginPage.login(username, password);
-		return clientDirectoryPage;
+		//ClientDirectoryPage clientDirectoryPage = loginPage.login(username, password);
+		//return clientDirectoryPage;
+		return PageFactory.initElements(driver, ClientDirectoryPage.class);
 	}
 }
