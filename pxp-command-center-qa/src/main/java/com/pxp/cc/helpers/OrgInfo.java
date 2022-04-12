@@ -320,14 +320,14 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getOrganizationListByClientId_DataLayer(int clientId, String orgType) throws IOException {
-		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgs";
+		String url = ApiPath.GET_ORGANIZATION_LIST_DL(clientId);
 		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
 
 	}
 
 	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType)
 			throws IOException {
-		String url = ApiPath.GET_ORGANIZATION_LIST_DL + clientId + "/orgsabcdfef";
+		String url = ApiPath.GET_ORGANIZATION_LIST_DL(clientId);
 		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
 
 	}
@@ -385,6 +385,42 @@ public class OrgInfo extends BaseRest {
 	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
 		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL(orgId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public static Map<String, Object> createOrgNodeMap(String active, String displayName, String name, String orgType,
+			Integer parentId, String parentType, String sapNumber, String timezoneId,
+			List<Map<String, Object>> solutionList) {
+		Map<String, Object> orgMap = new HashMap<String, Object>();
+		orgMap.put("active", active);
+		orgMap.put("displayName", displayName);
+		orgMap.put("name", name);
+		orgMap.put("orgType", orgType);
+		orgMap.put("parentId", parentId);
+		orgMap.put("parentType", parentType);
+		orgMap.put("sapNumber", sapNumber);
+		orgMap.put("timezoneId", timezoneId);
+		orgMap.put("solutions", solutionList);
+		return orgMap;
+	}
+
+	public Response createOrgNode(String active, String displayName, String name, String orgType, Integer parentId,
+			String parentType, String sapNumber, String timezoneId, List<Map<String, Object>> solutionList)
+			throws Exception {
+
+		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId, solutionList);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
+				.response();
+	}
+
+	public Response createOrgNodeUsingInvalidUrl(String active, String displayName, String name, String orgType,
+			Integer parentId, String parentType, String sapNumber, String timezoneId,
+			List<Map<String, Object>> solutionList) throws Exception {
+
+		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
+				parentType, sapNumber, timezoneId, solutionList);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
+				.extract().response();
 	}
 
 }

@@ -42,9 +42,9 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, 
-				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber,
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
@@ -151,7 +151,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgType(getOrganizationListApiResponse, invalidOrgType);
+		validation.verifyErrorMessageInResponseForOrgTypeField(getOrganizationListApiResponse, invalidOrgType);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid client id ,type in clientId and type field and verify error response")
@@ -162,7 +162,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgType(getOrganizationListApiResponse,
+		validation.verifyErrorMessageInResponseForOrgTypeField(getOrganizationListApiResponse,
 				testData.getProperty("api.parenttype"));
 	}
 
