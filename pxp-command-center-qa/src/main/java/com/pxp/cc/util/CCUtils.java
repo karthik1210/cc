@@ -9,16 +9,21 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 import org.hamcrest.Matchers;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.asserts.SoftAssert;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
+
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
@@ -31,6 +36,7 @@ public class CCUtils {
 	private static String alphaNumericStringIncludingSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
 			+ "abcdefghijklmnopqrstuvxyz" + ".,!@#$%&*_-";
 	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
+	public static SoftAssert softAssert = new SoftAssert();
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -217,7 +223,10 @@ public class CCUtils {
 
 	public static void mouseHoverOverTheElement(WebDriver driver, WebElement element) {
 		Actions action = new Actions(driver);
-		action.moveToElement(element).build().perform();
+		long end = System.currentTimeMillis() + 5000;
+		while (System.currentTimeMillis() < end) {
+			action.moveToElement(element).pause(3000).build().perform();
+		}
 	}
 
 	public static void assertNotEquals(Object actual, Object expected) throws RuntimeException {
@@ -269,4 +278,31 @@ public class CCUtils {
 			return sapNumber.replaceAll(sapNumber.substring(size - difference), "").trim();
 		}
 	}
+
+	public static void performDoubleClick(WebElement element, WebDriver driver) {
+		Actions action = new Actions(driver);
+		action.doubleClick(element).perform();
+	}
+
+	public static void performMoveCursor(WebElement element, WebDriver driver) {
+		Actions action = new Actions(driver);
+		action.moveByOffset(20, 150).click().build().perform();
+	}
+
+	public static void hover(WebElement element, WebDriver driver) throws AWTException {
+		long end = System.currentTimeMillis() + 5000;
+		while (System.currentTimeMillis() < end) {
+			Point coordinates = element.getLocation();
+			int xcord = coordinates.getX();
+			int ycord = coordinates.getY();
+			Robot robot = new Robot();
+			robot.mouseMove(xcord, ycord + 100);
+			robot.setAutoDelay(2000);
+			robot.mouseMove(xcord + 6, ycord + 135);
+			robot.setAutoDelay(2000);
+			robot.mouseMove(xcord + 6, ycord + 135);
+
+		}
+	}
+
 }
