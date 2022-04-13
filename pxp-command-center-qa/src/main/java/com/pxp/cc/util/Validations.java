@@ -1584,17 +1584,4 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyUpdateOrgApiResponseBody(Response response, int orgId, String nodeName) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
-		CCUtils.assertEquals(jsonpath.get("name").toString(), nodeName);
-	}
-
-	public void verifyOrgNodeStatus(Response response, int orgId, String nodeName, String status) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
-		CCUtils.assertEquals(jsonpath.get("name").toString(), nodeName);
-		CCUtils.assertEquals(jsonpath.get("active").toString(), status);
-	}
-
 }
