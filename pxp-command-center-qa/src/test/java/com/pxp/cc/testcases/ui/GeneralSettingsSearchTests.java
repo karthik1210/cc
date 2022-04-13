@@ -27,7 +27,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test verify default text, searchicon & search node functionality")
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test verify default text, search icon & search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
@@ -35,10 +35,9 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchResult();
 		logStep("Navigating To General Setting page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Verifying default text & status icon");
-		String actualDefaultText = generalSettingsPage.defaultTextInSearch();
-		CCUtils.assertEquals(actualDefaultText, "Search");
-		generalSettingsPage.verifyStatusIcon();
+		logStep("Verifying search icon");
+		generalSettingsPage.clickSearchicon();
+
 		logStep("Verifying Auto-suggestion list is displayed");
 		generalSettingsPage.enterSearchText(ccuser.searchNodeInGeneralSetting);
 		generalSettingsPage.verifyAutoSuggestionList(ccuser.searchNodeInGeneralSetting);
@@ -52,6 +51,8 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verifying search icon");
+		generalSettingsPage.clickSearchicon();
 		logStep("Searching for nodes with single character name in General setting seacrh");
 		generalSettingsPage.enterSearchText(ccuser.searchSymbolInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -67,9 +68,20 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		actualTitle.contains(ccuser.searchSymbolInGeneralSetting);
 		log("Test Case pass");
 		CCUtils.assertTrue(true, "node selected");
+	}
 
-		generalSettingsPage.clearSearchText();
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select & verify Auto Suggestion list for  numbers search in node name")
+	public void testAutoSuggestionForNumbersSearch() throws Exception {
+
+		logStep("Searching a client in client directory");
+		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
+		clientDirectoryPage.clickSearchButton();
+		clientDirectoryPage.clickSearchResult();
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verifying search icon");
+		generalSettingsPage.clickSearchicon();
 		logStep("Searching for nodes with number in General setting search");
+
 		generalSettingsPage.enterSearchText(ccuser.searchNumberInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
@@ -95,6 +107,9 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verifying search icon");
+		generalSettingsPage.clickSearchicon();
+
 		logStep("Searching a node under client in general setting page");
 		generalSettingsPage.enterSearchText(ccuser.searchNodeInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -115,6 +130,8 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verifying search icon");
+		generalSettingsPage.clickSearchicon();
 		logStep("Searching inavlid node under client in general setting page, to check client details are highlighted");
 		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
 		CCUtils.pressEnterKey();
