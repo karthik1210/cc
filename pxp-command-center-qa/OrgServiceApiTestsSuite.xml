@@ -14,6 +14,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrganizationDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateOrgNodeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
