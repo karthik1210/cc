@@ -64,7 +64,7 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 		return obj;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "nonexistingclientdata", description = "Create a new client and fetch newly created client details using client id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "nonexistingclientdata", description = "Enter non existing client name in search textbox field and verify error message")
 	public void testNoContentOfClientStatusCode(String nonExistingClientData) throws IOException {
 		getSearchedClientDetailsApiResponse = clientData.getAutoSuggestionClient_DL(nonExistingClientData);
 		logStep("Validating response information");
