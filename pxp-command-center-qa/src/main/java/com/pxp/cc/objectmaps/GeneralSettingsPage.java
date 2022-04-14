@@ -858,7 +858,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 	
 
-	public void clickSearchicon() {
+	public void clickSearchIcon() {
 		CCUtils.verifyAndWaitForElement(SearchiconInGeneralSetting, driver);
 		javascriptClick(SearchiconInGeneralSetting);
 		log("Clicked on Search icon");
