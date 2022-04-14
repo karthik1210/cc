@@ -72,4 +72,14 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getSearchedClientDetailsApiResponse);
 	}
 
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
+	public void testErrorMessageForInvalidUrl() throws IOException {
+		getSearchedClientDetailsApiResponse = clientData
+				.getAutoSuggestionClientInvalidUrl_DL(testData.getProperty("api.existing.client.data"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getSearchedClientDetailsApiResponse);
+		CCUtils.assertEquals(getSearchedClientDetailsApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(getSearchedClientDetailsApiResponse);
+	}
+
 }

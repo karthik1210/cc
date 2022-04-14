@@ -238,8 +238,8 @@ public class ApiPath {
 	}
  
 	public static final String AUTOSUGGESTION_CLIENT_DL = SERVICE_CLIENT_DL + "/v1/clients/auto-suggestions";
+	public static final String INVALID_PATH_AUTOSUGGESTION_CLIENT_DL = SERVICE_CLIENT_DL + "/auto-suggestionsadsds";
 	
-
 	public static final String INVALID_PATH_UPDATE_ORG(int orgId) {
 		return ORG_DL + "sssssssssssssssssss/" + "{orgId}";
 	}

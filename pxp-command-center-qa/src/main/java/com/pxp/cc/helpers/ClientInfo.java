@@ -245,6 +245,12 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract()
 				.response();
 	}
+	
+	public Response getAutoSuggestionClientInvalidUrl_DL(String searchData) {
+		String url = ApiPath.INVALID_PATH_AUTOSUGGESTION_CLIENT_DL;
+		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract()
+				.response();
+	}
 
     public Response getOrganizationListByClientId(int clientId, String orgType) throws IOException {
 		String url = ApiPath.GET_ORGANIZATION_LIST_BL(clientId);
