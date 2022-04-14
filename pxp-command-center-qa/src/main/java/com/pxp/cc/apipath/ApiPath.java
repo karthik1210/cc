@@ -254,4 +254,14 @@ public class ApiPath {
 	public static final String INVALID_PATH_GET_ORGANIZATION_LIST_BL(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgsssssabc";
 	}
- }
+
+
+	public static final String UPDATE_ORG_BL(int orgId) {
+		return ORG_BL + "/" + "{orgId}";
+	}
+
+	public static final String INVALID_PATH_UPDATE_ORG_BL(int orgId) {
+		return ORG_BL + "sssssssssssssssssss/" + "{orgId}";
+	}
+
+}
