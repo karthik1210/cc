@@ -136,10 +136,13 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='info']")
 	private WebElement clientGeneralSettings;
 
+	@FindBy(id = "searchIcon")
+	private WebElement SearchiconInGeneralSetting;
+	
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
 
-	@FindBy(xpath = "//div[@class='s_item_name']//span")
+	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
 	@FindBy(className = "info")
@@ -148,7 +151,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(className = "mat-option-text")
 	private List<WebElement> listOfSuggestions;
 
-	@FindBy(id = "treeActiveIcon")
+	@FindBy(id = "treeNodeName")
 	private List<WebElement> nodeStatusInGeneralSetting;
 
 	@FindBy(xpath = "(//span[@class='value'])[3]")
@@ -483,6 +486,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Node title on right panel is : " + labelNodeNameRightPanel.getText());
 		return labelNodeNameRightPanel.getText();
 	}
+	
 
 	public void verifyStatusIcon() {
 		CCUtils.verifyAndWaitForElement(nodeStatusInGeneralSetting.get(0), driver);
@@ -852,5 +856,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		treeClientNode.click();
 		log("Clicked on the client node in the tree");
 	}
+	
+
+	public void clickSearchIcon() {
+		CCUtils.verifyAndWaitForElement(SearchiconInGeneralSetting, driver);
+		javascriptClick(SearchiconInGeneralSetting);
+		log("Clicked on Search icon");
+		
+	}	
 
 }
