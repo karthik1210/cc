@@ -43,7 +43,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyAutoSuggestionList(ccuser.searchNodeInGeneralSetting);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select & verify Auto Suggestion list for symbol & numbers search in node name")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select & verify Auto Suggestion list for symbol search in node name")
 	public void testAutoSuggestionForSingleCharcaterSearch() throws Exception {
 
 		logStep("Searching a client in client directory");
