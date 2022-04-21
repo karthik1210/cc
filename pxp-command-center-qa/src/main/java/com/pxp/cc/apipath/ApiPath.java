@@ -245,4 +245,12 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgsssssabc";
 	}
 
+	public static final String UPDATE_ORG(int orgId) {
+		return ORG_DL + "/" + "{orgId}";
+	}
+
+	public static final String MOVE_ORG_NODE(int clientId, int sourceId, Boolean inheritFlag) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/orgs";
+	}
+
 }
