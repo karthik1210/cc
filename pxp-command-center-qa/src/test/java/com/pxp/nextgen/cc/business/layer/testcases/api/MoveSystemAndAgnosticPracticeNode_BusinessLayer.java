@@ -55,7 +55,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive system node from one client to another client with inherit")
 	public void testMoveInactiveSystemNodeToAnotherClientWithInherite() throws Exception {
-
 		logStep("Create an active client node");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -98,7 +97,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active system node from one client to another client with inherit")
 	public void testMoveActiveSystemNodeToAnotherClientWithInherite() throws Exception {
-
 		logStep("Create an active client node");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -139,7 +137,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive system node to an inactive client with inherite and verify error message")
@@ -183,7 +180,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move an system node to same client with inherite")
@@ -215,7 +211,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive agnostic practice node from one client to another client with inherit")
@@ -258,7 +253,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active agnostic practice node from one client to another client with inherit")
@@ -302,7 +296,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move an agnostic practice node to an same client with inherite")
@@ -375,7 +368,6 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active system node from one client to another client with do not inherit")

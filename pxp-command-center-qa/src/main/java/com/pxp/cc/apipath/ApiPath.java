@@ -255,13 +255,18 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgsssssabc";
 	}
 
-	public static final String MOVE_ORG_NODE(int clientId, int sourceId, Boolean inheritFlag) {
-		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/orgs";
-	}
 	public static final String UPDATE_ORG_BL(int orgId) {
 		return ORG_BL + "/" + "{orgId}";
 	}
 
-
+	public static final String INVALID_PATH_UPDATE_ORG_BL(int orgId) {
+		return ORG_BL + "sssssssssssssssssss/" + "{orgId}";
+	}
+	
+	public static final String MOVE_ORG_NODE(int clientId, int sourceId, Boolean inheritFlag) {
+		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/orgs";
+	}
 }
+
+
 
