@@ -697,7 +697,7 @@ public class Validations {
 
 	public void verifyErrorMessageForInvalidCombinationOfSourceAndTargetType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source and target not found");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=40043");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
