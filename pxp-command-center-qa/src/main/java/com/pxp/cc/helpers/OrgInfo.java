@@ -387,6 +387,36 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public static Map<String, Object> updateOrgNodeMap(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId) {
+		Map<String, Object> updateOrgMap = new HashMap<String, Object>();
+		updateOrgMap.put("name", name);
+		updateOrgMap.put("orgType", orgType);
+		updateOrgMap.put("displayName", displayName);
+		updateOrgMap.put("sapNumber", sapNumber);
+		updateOrgMap.put("active", active);
+		updateOrgMap.put("timezoneId", timezoneId);
+		return updateOrgMap;
+	}
+
+	public Response updateOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, Integer orgId, Integer userId) throws IOException {
+		String url = ApiPath.UPDATE_ORG(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeMap(name, orgType, displayName, sapNumber, active,
+				timezoneId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).pathParam("orgId", orgId)
+				.body(updateOrgNodePayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateOrgNodeUsingInvalidUrl_DataLayer(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId, Integer orgId, Integer userId) throws IOException {
+		String url = ApiPath.INVALID_PATH_UPDATE_ORG(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeMap(name, orgType, displayName, sapNumber, active,
+				timezoneId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).pathParam("orgId", orgId)
+				.body(updateOrgNodePayload).when().put(url).then().extract().response();
+	}
+
 	public static Map<String, Object> createOrgNodeMap(String active, String displayName, String name, String orgType,
 			Integer parentId, String parentType, String sapNumber, String timezoneId,
 			List<Map<String, Object>> solutionList) {
@@ -420,6 +450,38 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
 				parentType, sapNumber, timezoneId, solutionList);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
+				.extract().response();
+	}
+
+	public static Map<String, Object> updateOrgNodeDetailsMap(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId, List<Map<String, Object>> solutionList) {
+		Map<String, Object> updateOrgNodeValueMap = new HashMap<String, Object>();
+		updateOrgNodeValueMap.put("name", name);
+		updateOrgNodeValueMap.put("orgType", orgType);
+		updateOrgNodeValueMap.put("displayName", displayName);
+		updateOrgNodeValueMap.put("sapNumber", sapNumber);
+		updateOrgNodeValueMap.put("active", active);
+		updateOrgNodeValueMap.put("timezoneId", timezoneId);
+		updateOrgNodeValueMap.put("solutions", solutionList);
+		return updateOrgNodeValueMap;
+	}
+
+	public Response updateOrgNode(String name, String orgType, String displayName, String sapNumber, String active,
+			String timezoneId, List<Map<String, Object>> solutionList, Integer orgId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, solutionList);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response updateOrgNodeUsingInvalidUrl(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, List<Map<String, Object>> solutionList, Integer orgId)
+			throws IOException {
+		String url = ApiPath.INVALID_PATH_UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, solutionList);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
 				.extract().response();
 	}
 

@@ -236,6 +236,16 @@ public class ApiPath {
 	public static final String INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(int clientId) {
 		return SERVICE_CLIENT_DL + "/v1/clients/" + clientId + "/org-hierarcchyyrteytr";
 	}
+ 
+	public static final String AUTOSUGGESTION_CLIENT_DL = SERVICE_CLIENT_DL + "/v1/clients/auto-suggestions";
+	public static final String INVALID_PATH_AUTOSUGGESTION_CLIENT_DL = SERVICE_CLIENT_DL + "/auto-suggestionsadsds";
+	
+	public static final String UPDATE_ORG(int orgId) {
+		return ORG_DL + "/" + "{orgId}";
+		}
+	public static final String INVALID_PATH_UPDATE_ORG(int orgId) {
+		return ORG_DL + "sssssssssssssssssss/" + "{orgId}";
+	}
 
 	public static final String GET_ORGANIZATION_LIST_BL(int clientId) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgs";
@@ -245,12 +255,13 @@ public class ApiPath {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + "{clientId}" + "/orgsssssabc";
 	}
 
-	public static final String UPDATE_ORG(int orgId) {
-		return ORG_DL + "/" + "{orgId}";
-	}
-
 	public static final String MOVE_ORG_NODE(int clientId, int sourceId, Boolean inheritFlag) {
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/orgs";
 	}
+	public static final String UPDATE_ORG_BL(int orgId) {
+		return ORG_BL + "/" + "{orgId}";
+	}
+
 
 }
+

@@ -239,8 +239,20 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).when().get(url).then().extract()
 				.response();
 	}
+	
+	public Response getAutoSuggestionClient_DL(String searchData) {
+		String url = ApiPath.AUTOSUGGESTION_CLIENT_DL;
+		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract()
+				.response();
+	}
+	
+	public Response getAutoSuggestionClientInvalidUrl_DL(String searchData) {
+		String url = ApiPath.INVALID_PATH_AUTOSUGGESTION_CLIENT_DL;
+		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract()
+				.response();
+	}
 
-	public Response getOrganizationListByClientId(int clientId, String orgType) throws IOException {
+    public Response getOrganizationListByClientId(int clientId, String orgType) throws IOException {
 		String url = ApiPath.GET_ORGANIZATION_LIST_BL(clientId);
 		return given().spec(requestSpec).queryParam("orgType", orgType).pathParam("clientId", clientId).when().get(url)
 				.then().extract().response();
@@ -251,5 +263,4 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("orgType", orgType).when().pathParam("clientId", clientId).get(url)
 				.then().extract().response();
 	}
-
 }

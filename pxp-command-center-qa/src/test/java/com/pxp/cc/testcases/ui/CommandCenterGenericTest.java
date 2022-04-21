@@ -3,6 +3,7 @@
 package com.pxp.cc.testcases.ui;
 
 import org.apache.log4j.BasicConfigurator;
+import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.BeforeClass;
 
 import com.intuit.ifs.csscat.core.BaseTestNGWebDriver;
