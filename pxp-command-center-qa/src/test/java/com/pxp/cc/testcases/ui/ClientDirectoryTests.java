@@ -4,6 +4,8 @@ package com.pxp.cc.testcases.ui;
 
 import java.awt.AWTException;
 import java.util.List;
+
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
@@ -12,12 +14,16 @@ import com.pxp.cc.util.CCUtils;
 public class ClientDirectoryTests extends CommandCenterGenericTest {
 
 	ClientDirectoryPage clientDirectoryPage;
+	
+	@BeforeMethod
+	public void 
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
 	public void testClientNameSearch() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		//logStep("Login to Command Center");
+		//clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		clientDirectoryPage = new ClientDirectoryPage(driver, ccuser.getUrl());
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
