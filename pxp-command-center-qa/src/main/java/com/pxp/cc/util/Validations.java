@@ -697,7 +697,8 @@ public class Validations {
 
 	public void verifyErrorMessageForInvalidCombinationOfSourceAndTargetType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source and target not found");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=40043");
+
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1561,6 +1562,26 @@ public class Validations {
 	public void verifyErrorResponseForInvalidOrgIdInParentIdField(Response response, int orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Parent org not found for orgId=" + orgId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageResponseBodyForNullValueInMandatoryField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Name cannot be null, Status cannot be null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+
+		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 

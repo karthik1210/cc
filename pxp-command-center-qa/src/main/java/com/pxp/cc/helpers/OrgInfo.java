@@ -453,4 +453,36 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
+	public static Map<String, Object> updateOrgNodeDetailsMap(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId, List<Map<String, Object>> solutionList) {
+		Map<String, Object> updateOrgNodeValueMap = new HashMap<String, Object>();
+		updateOrgNodeValueMap.put("name", name);
+		updateOrgNodeValueMap.put("orgType", orgType);
+		updateOrgNodeValueMap.put("displayName", displayName);
+		updateOrgNodeValueMap.put("sapNumber", sapNumber);
+		updateOrgNodeValueMap.put("active", active);
+		updateOrgNodeValueMap.put("timezoneId", timezoneId);
+		updateOrgNodeValueMap.put("solutions", solutionList);
+		return updateOrgNodeValueMap;
+	}
+
+	public Response updateOrgNode(String name, String orgType, String displayName, String sapNumber, String active,
+			String timezoneId, List<Map<String, Object>> solutionList, Integer orgId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, solutionList);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response updateOrgNodeUsingInvalidUrl(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, List<Map<String, Object>> solutionList, Integer orgId)
+			throws IOException {
+		String url = ApiPath.INVALID_PATH_UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, solutionList);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
+	}
+
 }
