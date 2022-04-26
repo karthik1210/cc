@@ -30,6 +30,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientOrgHierarchyApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.MoveSystemAndAgnosticPracticeNode_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

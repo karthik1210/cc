@@ -21,7 +21,7 @@ public class TransferBusinessUnits extends BaseRest {
 
 	public Response moveOrgNode_BL(int clientId, int sourceId, Boolean inheritFlag) throws IOException {
 		Map<String, Object> transferBusinessUnitsPayload = putTransferBusinessUnits(sourceId, inheritFlag);
-		String url = ApiPath.MOVE_ORG_NODE(clientId, sourceId, inheritFlag);
+		String url = ApiPath.MOVE_ORG_NODE(clientId);
 		return given().spec(requestSpec).body(transferBusinessUnitsPayload).when().put(url).then().extract().response();
 	}
 

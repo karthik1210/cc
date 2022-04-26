@@ -694,17 +694,23 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=" + clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyErrorResponseBodyForOrgId(Response response, String orgId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 	public void verifyErrorMessageForInvalidCombinationOfSourceAndTargetType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=40043");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Business unit source and target not found");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorMessageForMovingOrgNodeToInactiveClient(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Client selected is inactive. Activate client and try again.");
+				"Client selected is inactive. Activate Client and try again.");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1582,6 +1588,23 @@ public class Validations {
 
 		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyOrgNodeDetailsApiResponseBody(Response response, int orgId, String orgName, String active,
+			String parentType, String sapNumber, String timezoneId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), orgName);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
+		CCUtils.assertEquals(jsonpath.get("clientType").toString(), parentType);
+		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
+		if (Objects.isNull(jsonpath.get("timezone"))) {
+			Log4jUtil.log("timezone is null");
+		} else {
+			Map<String, String> timezone = response.jsonPath().getMap("timezone");
+			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+		}
 	}
 
 }

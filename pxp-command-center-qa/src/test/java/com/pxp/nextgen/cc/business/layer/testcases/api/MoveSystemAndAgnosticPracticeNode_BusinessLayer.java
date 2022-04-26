@@ -3,10 +3,7 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
@@ -23,10 +20,9 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	private Validations validation;
 	private TransferBusinessUnits transferBusinessUnits;
 	Response transferBusinessUnitsApiResponse, createClientApiResponse, createOrgNodeApiResponse,
-			createPracticeApiResponse, createEnterpriseApiResponse, fetchOrgDetailsApiResponse;
-	List<Map<String, Object>> solutionList = null;
-	List<Map<String, Object>> solutionListtwo = null;
-	Map<String, Object> solutionMap;
+			fetchOrgNodeApiResponse;
+	int clientId, targetClientId, inactivetargetClientId;
+	String clientSapNumber, targetclientSapNumber;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -35,574 +31,218 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		orgInfo = new OrgInfo();
 		validation = new Validations();
 		transferBusinessUnits = new TransferBusinessUnits();
-	}
 
-	@DataProvider(name = "invalidCombinationOfSourceAndTargetId")
-	public Object[] invalidCombinationOfSourceAndTarget() {
-		Object[][] obj = new Object[][] { { "SYSTEM", "ENTERPRISE" }, { "SYSTEM", "PRACTICE" },
-				{ "ENTERPRISE", "CLIENT" }, { "ENTERPRISE", "PRACTICE" }, { "PRACTICE", "SYSTEM" } };
-		return obj;
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid combination of source and target type and verify error message")
-	public void testErrorMessageForInvalidSourceAndTargetType() throws IOException {
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(40043, 40061, true);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForInvalidCombinationOfSourceAndTargetType(transferBusinessUnitsApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive system node from one client to another client with inherit")
-	public void testMoveInactiveSystemNodeToAnotherClientWithInherite() throws Exception {
 		logStep("Create an active client node");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
+		clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
 				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
-				solutionList);
-		int sourcesystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
+		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create target client");
 		String targetclientName = testData.getProperty("api.targetclient.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String targetclientSapNumber = testData.getProperty("api.targetclient.sapnumber")
+		targetclientSapNumber = testData.getProperty("api.targetclient.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
 				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
 				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Move an system node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourcesystemId,
-				inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-
+		targetClientId = createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active system node from one client to another client with inherit")
-	public void testMoveActiveSystemNodeToAnotherClientWithInherite() throws Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an active system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_1", testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				solutionListtwo);
-		int sourcesystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an system node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourcesystemId,
-				inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive system node to an inactive client with inherite and verify error message")
-	public void testErrorMessageForInactiveTargetClientNodeWithInherite() throws Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
-				solutionListtwo);
-		int sourcesystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient("false", targetclientName, targetclientSapNumber,
-				testData.getProperty("api.targetclient.testclient"), testData.getProperty("api.targetclient.type"),
-				testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an system node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourcesystemId,
-				inheritFlag);
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing clientId and verify error message for client id field")
+	public void testErrorMessageForInvalidClientId() throws IOException {
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(40043, 4324, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseBodyForClientIdField(transferBusinessUnitsApiResponse, String.valueOf(40043));
 	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move an system node to same client with inherite")
-	public void testMoveSystemNodToSameClientWithISnherite() throws Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an active system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_1", testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				solutionListtwo);
-		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-
-		logStep("Move an system node to an same client ");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(clientId, sourceSystemId, inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive agnostic practice node from one client to another client with inherit")
-	public void testMoveInactiveAgnosticPracticeNodeToClientWithInherite() throws NullPointerException, Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive practice node with solutions below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", " ", "Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "", solutionList);
-		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "Agnostic_Practice_Name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an agnostic practice node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId,
-				inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active agnostic practice node from one client to another client with inherit")
-	public void testMoveActiveAgnosticPracticeNodeToClientWithInherite() throws NullPointerException, Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive practice node with solutions below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
-				"Agnostic_Practice_Name_1", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "",
-				solutionList);
-		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "Agnostic_Practice_Name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an agnostic practice node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId,
-				inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move an agnostic practice node to an same client with inherite")
-	public void testMoveAnAgnosticPracticeNodeToSameClientWithInherite() throws NullPointerException, Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive practice node with solutions below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
-				"Agnostic_Practice_Name_1", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "",
-				solutionList);
-		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "Agnostic_Practice_Name_1");
-
-		logStep("Move an agnostic practice node to an same client ");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(clientId, practiceId, inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive system node from one client to another client with do not inherit")
-	public void testMoveInactiveSystemNodeToAnotherClientWithDoNotInherite() throws Exception {
-
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
-				solutionList);
-		int sourcesystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-		logStep("Create target client");
-		String targetclientName = testData.getProperty("api.targetclient.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String targetclientSapNumber = testData.getProperty("api.targetclient.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Move an system node from one client to another client with inherit");
-		Boolean inheritFlag = false;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourcesystemId,
-				inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active system node from one client to another client with do not inherit")
-	public void testMoveActiveSystemNodeToAnotherClientWithDoNotInherite() throws Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an active system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_1", testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				solutionListtwo);
-		int sourcesystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an system node from one client to another client with inherit");
-		Boolean inheritFlag = false;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourcesystemId,
-				inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive system node to an inactive client with do not inherite and verify error message")
-	public void testErrorMessageForInactiveTargetClientNodeWithDoNotInherite() throws Exception {
-
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
-				solutionListtwo);
-		int sourcesystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient("false", targetclientName, targetclientSapNumber,
-				testData.getProperty("api.targetclient.testclient"), testData.getProperty("api.targetclient.type"),
-				testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an system node from one client to another client with inherit");
-		Boolean inheritFlag = false;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourcesystemId,
-				inheritFlag);
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing orgId and verify error message ")
+	public void testErrorMessageForInvalidOrgId() throws IOException {
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(4176, 0, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
-
+		validation.verifyErrorResponseBodyForOrgId(transferBusinessUnitsApiResponse, String.valueOf(0));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move system node to same client with do not inherite")
-	public void testMoveSystemNodeToSameClientWithDoNotInherite() throws Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive/active  system node from one client to another client with inherit")
+	public void testMoveActiveAndInactiveSystemNodeToAnotherClientWithInherit() throws Exception {
+		logStep("Create an inactive system node below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
+				null);
+		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an system node from one client to another client with inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemId, true);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemId);
+		logStep("Verify system node inherit client type,sap number,timezone and status attributes from target client node");
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemId, "System_name_1",
+				testData.getProperty("api.targetclient.active"), testData.getProperty("api.targetclient.type"),
+				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 
 		logStep("Create an active system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_1", testData.getProperty("api.system.orgtype"), clientId,
+				"System_name_2", testData.getProperty("api.system.orgtype"), clientId,
 				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				solutionListtwo);
+				null);
+		int sourceSystemIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an system node from one client to another client with inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemIdOne,
+				true);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemIdOne);
+		logStep("Verify system node inherit client type,sap number,timezone and status attributes from target client node");
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemIdOne, "System_name_2",
+				testData.getProperty("api.targetclient.active"), testData.getProperty("api.targetclient.type"),
+				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = ".Verify user able to move active/inactive system node to active/inactive client with do not inherit. Verify error message is displayed when user move active/inactive system node to inactive target client node")
+	public void testMoveInactiveAndActiveSystemNodeActiveInactiveTargetClientNodeWithDoNotInherit() throws Exception {
+		logStep("Create an inactive system node below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
+				null);
 		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an system node from one client to another client with do not inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemId, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "System_name_1");
-
-		logStep("Move an system node to an same client ");
-		Boolean inheritFlag = false;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(clientId, sourceSystemId, inheritFlag);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive agnostic practice node from one client to another client with do not inherit")
-	public void testMoveInactiveAgnosticPracticeNodeToClientWithDoNotInherite() throws NullPointerException, Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemId);
+		logStep("Verify system node do not inherit client type,sap number,timezone and status attributes from target client node");
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemId, "System_name_1",
+				"false", testData.getProperty("api.targetclient.type"), clientSapNumber,
 				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
-		logStep("Create an inactive practice node with solutions below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", " ", "Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "", solutionList);
-		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "Agnostic_Practice_Name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an agnostic practice node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId,
-				inheritFlag);
+		logStep("Create an active system node below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
+				"System_name_2", testData.getProperty("api.system.orgtype"), clientId,
+				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
+				null);
+		int sourceSystemIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an active system node from one client to another client with do not inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemIdOne,
+				false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
-	}
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemIdOne);
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemIdOne, "System_name_2",
+				"true", testData.getProperty("api.targetclient.type"), testData.getProperty("api.system.sapnumber"),
+				"US/Central");
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active agnostic practice node from one client to another client with do not inherit")
-	public void testMoveActiveAgnosticPracticeNodeToClientWithDoNotInherite() throws NullPointerException, Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive practice node with solutions below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
-				"Agnostic_Practice_Name_1", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "",
-				solutionList);
-		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "Agnostic_Practice_Name_1");
-
-		logStep("Create target client ");
-		String targetclientName = CCUtils
-				.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.name")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10))));
-		String targetclientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.targetclient.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
-				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
-		int targetClientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Move an agnostic practice node from one client to another client with inherit");
-		Boolean inheritFlag = true;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId,
-				inheritFlag);
+		logStep("Move an inactive system node an inactive client and verify error message");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(
+				Integer.parseInt(testData.getProperty("inactive.target.client.id")), sourceSystemId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
-		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
+
+		logStep("Move an active system node an inactive client and verify error message");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(
+				Integer.parseInt(testData.getProperty("inactive.target.client.id")), sourceSystemIdOne, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move an agnostic practice node to an same client with do not inherite")
-	public void testMoveAnAgnosticPracticeNodeToSameClientWithinhDoNotInherite()
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive & active agnostic practice node from one client to another client with inherit")
+	public void testMoveMoveInactiveAndActiveAgnosticPracticeNodeToClientWithInherit()
 			throws NullPointerException, Exception {
-		logStep("Create an active client node");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
-		logStep("Create an inactive practice node with solutions below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
-				"Agnostic_Practice_Name_1", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "",
-				solutionList);
+		logStep("Create an inactive agnostic practice node  below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode("false", " ", "Agnostic_Practice_Name_1",
+				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "", null);
 		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
-		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
-		validation.verifyCreateOrgNodeApiResponseBody(createOrgNodeApiResponse, "Agnostic_Practice_Name_1");
-
-		logStep("Move an agnostic practice node to an same client ");
-		Boolean inheritFlag = false;
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(clientId, practiceId, inheritFlag);
+		logStep("Move an agnostic practice node from one client to another client with inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceId);
+		logStep("Verify agnostic practice node inherit client type,sap number,timezone and status attributes from target client node");
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceId, "Agnostic_Practice_Name_1",
+				testData.getProperty("api.targetclient.active"), testData.getProperty("api.targetclient.type"),
+				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
+
+		logStep("Create an active agnostic practice below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
+				"Agnostic_Practice_Name_1", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "",
+				null);
+		int practiceIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an agnostic practice node from one client to another client with inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceIdOne, true);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceIdOne);
+		logStep("Verify system node inherit client type,sap number,timezone and status attributes from target client node");
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceIdOne,
+				"Agnostic_Practice_Name_1", testData.getProperty("api.targetclient.active"),
+				testData.getProperty("api.targetclient.type"), targetclientSapNumber,
+				testData.getProperty("api.targetclient.timezoneid"));
 	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive & active agnostic practice node from one client to another active/inactive client with do not inherit")
+	public void testMoveInactiveAndactiveAgnosticPracticeNodeToClientWithDoNotInherit()
+			throws NullPointerException, Exception {
+		logStep("Create an inactive agnostic practice node");
+		createOrgNodeApiResponse = orgInfo.createOrgNode("false", " ", "Agnostic_Practice_Name_1",
+				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "", null);
+		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an inactive agnostic practice node from one client to another client with do not inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
+		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 200);
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceId);
+		logStep("Verify practice node do not inherit client type,sap number,timezone and status attributes from target client node");
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceId, "Agnostic_Practice_Name_1",
+				"false", testData.getProperty("api.targetclient.type"), clientSapNumber,
+				testData.getProperty("api.client.timezoneid"));
+
+		logStep("Create an active agnostic practice below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
+				"Agnostic_Practice_Name_2", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "PRA@001",
+				"US/Alaska", null);
+		int practiceIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an active agnostic practice node from one client to another client with do not inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceIdOne, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
+		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceIdOne);
+		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceIdOne,
+				"Agnostic_Practice_Name_2", "true", testData.getProperty("api.targetclient.type"), "PRA@001",
+				"US/Alaska");
+
+		logStep("Move an inactive agnostic practice node an inactive client and verify error message");
+		transferBusinessUnitsApiResponse = transferBusinessUnits
+				.moveOrgNode_BL(Integer.parseInt(testData.getProperty("inactive.target.client.id")), practiceId, true);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
+
+		logStep("Move an active agnostic practice node an inactive client and verify error message");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(
+				Integer.parseInt(testData.getProperty("inactive.target.client.id")), practiceIdOne, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
+	} 
 }
