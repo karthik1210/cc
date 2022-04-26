@@ -24,6 +24,12 @@ public class TransferBusinessUnits extends BaseRest {
 		String url = ApiPath.MOVE_ORG_NODE(clientId);
 		return given().spec(requestSpec).body(transferBusinessUnitsPayload).when().put(url).then().extract().response();
 	}
+	
+	public Response moveOrgNodeUsingInvalidUrl(int clientId, int sourceId, Boolean inheritFlag) throws IOException {
+		Map<String, Object> transferBusinessUnitsPayload = putTransferBusinessUnits(sourceId, inheritFlag);
+		String url = ApiPath.INVALID_PATH_MOVE_ORG_NODE(clientId);
+		return given().spec(requestSpec).body(transferBusinessUnitsPayload).when().put(url).then().extract().response();
+	}
 
 	private Map<String, Object> postTransferBusinessUnits(Boolean inheritFlag, int sourceId, String sourceType,
 			int targetId, String targetType) {
