@@ -1110,7 +1110,7 @@ public class Validations {
 
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
+		CCUtils.assertEquals(jsonpath.getString("error"),"Not Found");
 	}
 
 	public void verifyResponseBodyUpdatingClientWithOutClientIdAndAllValuesNull(Response response) throws IOException {

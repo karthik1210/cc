@@ -245,4 +245,21 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
 	} 
+
+	@Test(retryAnalyzer = RetryAnalyzer.class,  description = "Enter invalid url and verify error response body")
+	public void testErrorResponseForInvalidUrl() throws Exception {
+		logStep("Create an active system node below client");
+		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
+				"System_name_2", testData.getProperty("api.system.orgtype"), clientId,
+				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
+				null);
+		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
+		logStep("Move an system node from one client to another client with inherit");
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNodeUsingInvalidUrl(targetClientId, sourceSystemId,
+				true);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
+		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(transferBusinessUnitsApiResponse);
+	}
 }
