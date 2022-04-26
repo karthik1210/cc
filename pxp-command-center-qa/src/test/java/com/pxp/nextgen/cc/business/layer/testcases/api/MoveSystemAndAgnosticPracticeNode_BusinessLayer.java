@@ -61,7 +61,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorResponseBodyForClientIdField(transferBusinessUnitsApiResponse, String.valueOf(40043));
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing orgId and verify error message ")
 	public void testErrorMessageForInvalidOrgId() throws IOException {
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(4176, 0, true);
@@ -71,7 +71,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		validation.verifyErrorResponseBodyForOrgId(transferBusinessUnitsApiResponse, String.valueOf(0));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive/active  system node from one client to another client with inherit")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive/active  system node from one client to another client with inherit.")
 	public void testMoveActiveAndInactiveSystemNodeToAnotherClientWithInherit() throws Exception {
 		logStep("Create an inactive system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
@@ -108,7 +108,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = ".Verify user able to move active/inactive system node to active/inactive client with do not inherit. Verify error message is displayed when user move active/inactive system node to inactive target client node")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active/inactive system node to active/inactive client with do not inherit. Verify error message is displayed when user move active/inactive system node to inactive target client node")
 	public void testMoveInactiveAndActiveSystemNodeActiveInactiveTargetClientNodeWithDoNotInherit() throws Exception {
 		logStep("Create an inactive system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
@@ -160,7 +160,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive & active agnostic practice node from one client to another client with inherit")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive & active agnostic practice node from one client to another client with inherit.Verify error message is displayed when user move active/inactive system node to  target client node")
 	public void testMoveMoveInactiveAndActiveAgnosticPracticeNodeToClientWithInherit()
 			throws NullPointerException, Exception {
 		logStep("Create an inactive agnostic practice node  below client");
@@ -244,9 +244,9 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForMovingOrgNodeToInactiveClient(transferBusinessUnitsApiResponse);
-	} 
+	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class,  description = "Enter invalid url and verify error response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and verify error response body")
 	public void testErrorResponseForInvalidUrl() throws Exception {
 		logStep("Create an active system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
@@ -255,8 +255,8 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				null);
 		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an system node from one client to another client with inherit");
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNodeUsingInvalidUrl(targetClientId, sourceSystemId,
-				true);
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNodeUsingInvalidUrl(targetClientId,
+				sourceSystemId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 404);
