@@ -48,4 +48,16 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_USER_ROLES_BY_USER_DL(userId);
 		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
 	}
+
+	public Response validateUserDetails(String email, String username, String mobileNumber) {
+		String url = ApiPath.VALIDATE_USER_BL();
+		return given().spec(requestSpec).queryParam("email", email).queryParam("username", username)
+				.queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
+	}
+
+	public Response validateUserDetailsUsingInvalidUrl(String email, String username, String mobileNumber) {
+		String url = ApiPath.INVALID_PATH_VALIDATE_USER_BL();
+		return given().spec(requestSpec).queryParam("email", email).queryParam("username", username)
+				.queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
+	}
 }

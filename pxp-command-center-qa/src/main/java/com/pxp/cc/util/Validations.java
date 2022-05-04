@@ -694,7 +694,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found by clientId=" + clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorResponseBodyForOrgId(Response response, String orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + orgId);
@@ -1110,7 +1110,7 @@ public class Validations {
 
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getString("error"),"Not Found");
+		CCUtils.assertEquals(jsonpath.getString("error"), "Not Found");
 	}
 
 	public void verifyResponseBodyUpdatingClientWithOutClientIdAndAllValuesNull(Response response) throws IOException {
@@ -1607,4 +1607,22 @@ public class Validations {
 		}
 	}
 
+	public void verifyErrorResponseForDuplicateEmail(Response response, String existingEmail) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate email=" + existingEmail);
+	}
+
+	public void verifyErrorResponseForDuplicateUsername(Response response, String existingUsername) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=" + existingUsername);
+	}
+
+	public void verifyErrorResponseForDuplicateMobile(Response response, String existingMobileNumber)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=" + existingMobileNumber);
+	}
 }

@@ -270,7 +270,15 @@ public class ApiPath {
 	}
 
 	public static String INVALID_PATH_MOVE_ORG_NODE(int clientId) {
-		
+
 		return SERVICE_CLIENT_BL + "/v1/clients/" + clientId + "/orgssssss";
+	}
+
+	public static String VALIDATE_USER_BL() {
+		return SERVICE_USER_BL + "/v1/users/validate-user";
+	}
+
+	public static String INVALID_PATH_VALIDATE_USER_BL() {
+		return SERVICE_USER_BL + "/v1/userssss/validate-usersssss";
 	}
 }
