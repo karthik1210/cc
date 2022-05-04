@@ -14,6 +14,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
