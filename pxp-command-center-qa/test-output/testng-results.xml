@@ -1,0 +1,1130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="2" ignored="0" total="11" passed="9">
+  <reporter-output>
+    <line>
+      <![CDATA[Setting up the Test Data.<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testErrorMessagesForInvalidUrl<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 977<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 977<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 404 Actual value: 404 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: Not Found Actual value: Not Found - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testErrorRepsonseForBlankUserType<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 123<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 123<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 400 Actual value: 400 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: Invalid userType Actual value: Invalid userType - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: Bad Request Actual value: Bad Request - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testResponseCodeForNonExistingUserType<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 210<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 210<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 204 Actual value: 204 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testResponseCodeForNonExistingUserType<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 205<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 205<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 204 Actual value: 204 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testUserRolesForUserType<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 171<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 171<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: testUserRolesForUserType FAILED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testUserRolesForUserType<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 185<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 185<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: UserRoles(roleId=600, name=Client Admin) Actual value: UserRoles(roleId=600, name=Client Admin) - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: UserRoles(roleId=601, name=Client Staff) Actual value: UserRoles(roleId=601, name=Client Staff) - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testUserRolesForUserType<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 195<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 195<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: UserRoles(roleId=500, name=VAR/Reseller Admin) Actual value: UserRoles(roleId=500, name=VAR/Reseller Admin) - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: UserRoles(roleId=501, name=VAR/Reseller Staff) Actual value: UserRoles(roleId=501, name=VAR/Reseller Staff) - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Setting up the Test Data.<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testErrorMessagesForInvalidUrl<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 335<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 335<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 404 Actual value: 404 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: Not Found Actual value: Not Found - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testGetUserRolesByUserFunctionality<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 198<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 198<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality PASSED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testResponseForUserWithoutUserRoles<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 165<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 165<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: testResponseForUserWithoutUserRoles FAILED >>><br/>]]>
+    </line>
+    <line>
+      <![CDATA[Method Name-- testResponseStatuscodeForNonExistingUserId<br/>]]>
+    </line>
+    <line>
+      <![CDATA[---------------------------------------------<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId >>> <br/>]]>
+    </line>
+    <line>
+      <![CDATA[STEP 1: Validating response information<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response time 157<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Response Time in ms- 157<br/>]]>
+    </line>
+    <line>
+      <![CDATA[Expected value: 204 Actual value: 204 - PASSED<br/>]]>
+    </line>
+    <line>
+      <![CDATA[<<< END: GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId PASSED >>><br/>]]>
+    </line>
+  </reporter-output>
+  <suite name="UserServiceApiTestSuite" duration-ms="49147" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:44:02 EDT">
+    <groups>
+    </groups>
+    <test name="User Service Api Test" duration-ms="49147" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:44:02 EDT">
+      <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="setUp" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="setUpTestData()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="setUpTestData" is-config="true" duration-ms="2" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[Setting up the Test Data.<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- setUpTestData -->
+        <test-method status="PASS" signature="setBaseUri()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="setBaseUri" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setBaseUri -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="getMethodName" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testErrorMessagesForInvalidUrl<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testErrorMessagesForInvalidUrl()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testErrorMessagesForInvalidUrl" duration-ms="2392" started-at="2022-05-05T20:43:45 EDT" description="Verify error message for invalid url" finished-at="2022-05-05T20:43:47 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 335<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 335<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 404 Actual value: 404 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: Not Found Actual value: Not Found - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testErrorMessagesForInvalidUrl -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:49 EDT" finished-at="2022-05-05T20:43:49 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testErrorMessagesForInvalidUrl status=SUCCESS method=GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:49 EDT" finished-at="2022-05-05T20:43:49 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="getMethodName" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:49 EDT" finished-at="2022-05-05T20:43:49 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testGetUserRolesByUserFunctionality<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testGetUserRolesByUserFunctionality()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testGetUserRolesByUserFunctionality" duration-ms="2230" started-at="2022-05-05T20:43:49 EDT" description="Get user roles of existing user using user id and verify response body" finished-at="2022-05-05T20:43:51 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 198<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 198<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testGetUserRolesByUserFunctionality -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="getMethodName" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:53 EDT" finished-at="2022-05-05T20:43:53 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testResponseForUserWithoutUserRoles<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="postTestCase" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:53 EDT" finished-at="2022-05-05T20:43:53 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testGetUserRolesByUserFunctionality status=SUCCESS method=GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:53 EDT" finished-at="2022-05-05T20:43:53 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="FAIL" signature="testResponseForUserWithoutUserRoles()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testResponseForUserWithoutUserRoles" duration-ms="2190" started-at="2022-05-05T20:43:53 EDT" description="Enter existing user id that does not contains user roles and verify response status code" finished-at="2022-05-05T20:43:55 EDT">
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected [204] but found [200]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected [204] but found [200]
+at org.testng.Assert.fail(Assert.java:99)
+at org.testng.Assert.failNotEquals(Assert.java:1037)
+at org.testng.Assert.assertEqualsImpl(Assert.java:140)
+at org.testng.Assert.assertEquals(Assert.java:122)
+at org.testng.Assert.assertEquals(Assert.java:617)
+at com.pxp.cc.util.CCUtils.assertEquals(CCUtils.java:65)
+at com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles(GetRolesByUserApiTests_BusinessLayer.java:62)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.util.ArrayList.forEach(ArrayList.java:1257)
+at org.testng.TestRunner.privateRun(TestRunner.java:764)
+at org.testng.TestRunner.run(TestRunner.java:585)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+at org.testng.TestNG.runSuites(TestNG.java:1069)
+at org.testng.TestNG.run(TestNG.java:1037)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 165<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 165<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: testResponseForUserWithoutUserRoles FAILED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testResponseForUserWithoutUserRoles -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:58 EDT" finished-at="2022-05-05T20:43:58 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testResponseForUserWithoutUserRoles status=FAILURE method=GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="getMethodName" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:58 EDT" finished-at="2022-05-05T20:43:58 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testResponseStatuscodeForNonExistingUserId<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:58 EDT" finished-at="2022-05-05T20:43:58 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="testResponseStatuscodeForNonExistingUserId()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="testResponseStatuscodeForNonExistingUserId" duration-ms="2182" started-at="2022-05-05T20:43:58 EDT" description="Enter non existing user id in user id field and verify response status code" finished-at="2022-05-05T20:44:00 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 157<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 157<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 204 Actual value: 204 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testResponseStatuscodeForNonExistingUserId -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:44:02 EDT" finished-at="2022-05-05T20:44:02 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testResponseStatuscodeForNonExistingUserId status=SUCCESS method=GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74]" name="tearDown" is-config="true" duration-ms="0" started-at="2022-05-05T20:44:02 EDT" finished-at="2022-05-05T20:44:02 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer -->
+      <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="setUp" is-config="true" duration-ms="12" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:43:13 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method status="PASS" signature="setUpTestData()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="setUpTestData" is-config="true" duration-ms="18" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:43:13 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[Setting up the Test Data.<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- setUpTestData -->
+        <test-method status="PASS" signature="setBaseUri()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="setBaseUri" is-config="true" duration-ms="410" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:43:13 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setBaseUri -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:43:13 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="2" started-at="2022-05-05T20:43:13 EDT" finished-at="2022-05-05T20:43:13 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testErrorMessagesForInvalidUrl<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testErrorMessagesForInvalidUrl()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testErrorMessagesForInvalidUrl" duration-ms="4020" started-at="2022-05-05T20:43:13 EDT" description="Verify error message for invalid url" finished-at="2022-05-05T20:43:17 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 977<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 977<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 404 Actual value: 404 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: Not Found Actual value: Not Found - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testErrorMessagesForInvalidUrl -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:19 EDT" finished-at="2022-05-05T20:43:19 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testErrorMessagesForInvalidUrl status=SUCCESS method=GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:19 EDT" finished-at="2022-05-05T20:43:19 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testErrorRepsonseForBlankUserType<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:19 EDT" finished-at="2022-05-05T20:43:19 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="testErrorRepsonseForBlankUserType()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testErrorRepsonseForBlankUserType" duration-ms="2184" started-at="2022-05-05T20:43:19 EDT" description="Enter blank space in user type field and verify error message" finished-at="2022-05-05T20:43:21 EDT">
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 123<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 123<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 400 Actual value: 400 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: Invalid userType Actual value: Invalid userType - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: Bad Request Actual value: Bad Request - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testErrorRepsonseForBlankUserType -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:23 EDT" finished-at="2022-05-05T20:43:23 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testErrorRepsonseForBlankUserType status=SUCCESS method=GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:23 EDT" finished-at="2022-05-05T20:43:23 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:23 EDT" finished-at="2022-05-05T20:43:23 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testResponseCodeForNonExistingUserType<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testResponseCodeForNonExistingUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testResponseCodeForNonExistingUserType" duration-ms="2245" started-at="2022-05-05T20:43:23 EDT" description="Enter non existing user type and verify response status code" data-provider="userType" finished-at="2022-05-05T20:43:26 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[INTERNALQZWa4]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 210<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 210<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 204 Actual value: 204 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testResponseCodeForNonExistingUserType -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:28 EDT" finished-at="2022-05-05T20:43:28 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testResponseCodeForNonExistingUserType status=SUCCESS method=GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:28 EDT" finished-at="2022-05-05T20:43:28 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testResponseCodeForNonExistingUserType<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:28 EDT" finished-at="2022-05-05T20:43:28 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="testResponseCodeForNonExistingUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testResponseCodeForNonExistingUserType" duration-ms="2255" started-at="2022-05-05T20:43:28 EDT" description="Enter non existing user type and verify response status code" data-provider="userType" finished-at="2022-05-05T20:43:30 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[4010]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 205<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 205<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 204 Actual value: 204 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testResponseCodeForNonExistingUserType -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:32 EDT" finished-at="2022-05-05T20:43:32 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testResponseCodeForNonExistingUserType status=SUCCESS method=GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:32 EDT" finished-at="2022-05-05T20:43:32 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:32 EDT" finished-at="2022-05-05T20:43:32 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testUserRolesForUserType<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="FAIL" signature="testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testUserRolesForUserType" duration-ms="2210" started-at="2022-05-05T20:43:32 EDT" description="Get user roles for internal user" data-provider="userTypeValue" finished-at="2022-05-05T20:43:34 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[INTERNAL]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected [true] but found [false]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected [true] but found [false]
+at org.testng.Assert.fail(Assert.java:99)
+at org.testng.Assert.failNotEquals(Assert.java:1037)
+at org.testng.Assert.assertTrue(Assert.java:45)
+at org.testng.Assert.assertTrue(Assert.java:55)
+at com.pxp.cc.util.CCUtils.assertTrue(CCUtils.java:77)
+at com.pxp.cc.util.Validations.verifyGetUserRolesResponseBody(Validations.java:1290)
+at com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(GetUserRolesForUserTypeApiTests_BusinessLayer.java:41)
+at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+at java.lang.reflect.Method.invoke(Method.java:498)
+at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
+at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
+at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
+at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+at java.util.ArrayList.forEach(ArrayList.java:1257)
+at org.testng.TestRunner.privateRun(TestRunner.java:764)
+at org.testng.TestRunner.run(TestRunner.java:585)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+at org.testng.TestNG.runSuites(TestNG.java:1069)
+at org.testng.TestNG.run(TestNG.java:1037)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 171<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 171<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: testUserRolesForUserType FAILED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testUserRolesForUserType -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:36 EDT" finished-at="2022-05-05T20:43:36 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testUserRolesForUserType status=FAILURE method=GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:36 EDT" finished-at="2022-05-05T20:43:36 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:36 EDT" finished-at="2022-05-05T20:43:36 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testUserRolesForUserType<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testUserRolesForUserType" duration-ms="2218" started-at="2022-05-05T20:43:36 EDT" description="Get user roles for internal user" data-provider="userTypeValue" finished-at="2022-05-05T20:43:38 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[CLIENT]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 185<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 185<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: UserRoles(roleId=600, name=Client Admin) Actual value: UserRoles(roleId=600, name=Client Admin) - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: UserRoles(roleId=601, name=Client Staff) Actual value: UserRoles(roleId=601, name=Client Staff) - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testUserRolesForUserType -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:40 EDT" finished-at="2022-05-05T20:43:40 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testUserRolesForUserType status=SUCCESS method=GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="testSetup()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testSetup" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:40 EDT" finished-at="2022-05-05T20:43:40 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testSetup -->
+        <test-method status="PASS" signature="getMethodName(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="getMethodName" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:40 EDT" finished-at="2022-05-05T20:43:40 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name={null} status=CREATED method=GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output={null}]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Method Name-- testUserRolesForUserType<br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- getMethodName -->
+        <test-method status="PASS" signature="testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="testUserRolesForUserType" duration-ms="2224" started-at="2022-05-05T20:43:40 EDT" description="Get user roles for internal user" data-provider="userTypeValue" finished-at="2022-05-05T20:43:43 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[VARESELLER]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[---------------------------------------------<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/>]]>
+            </line>
+            <line>
+              <![CDATA[STEP 1: Validating response information<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response time 195<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Response Time in ms- 195<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: 200 Actual value: 200 - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: true Actual value: true - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: UserRoles(roleId=500, name=VAR/Reseller Admin) Actual value: UserRoles(roleId=500, name=VAR/Reseller Admin) - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[Expected value: UserRoles(roleId=501, name=VAR/Reseller Staff) Actual value: UserRoles(roleId=501, name=VAR/Reseller Staff) - PASSED<br/>]]>
+            </line>
+            <line>
+              <![CDATA[<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType PASSED >>><br/>]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- testUserRolesForUserType -->
+        <test-method status="PASS" signature="postTestCase(org.testng.ITestResult)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="postTestCase" is-config="true" duration-ms="1" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[[TestResult name=testUserRolesForUserType status=SUCCESS method=GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(java.lang.String)[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3] output=---------------------------------------------<br/>]]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- postTestCase -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3]" name="tearDown" is-config="true" duration-ms="0" started-at="2022-05-05T20:43:45 EDT" finished-at="2022-05-05T20:43:45 EDT">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer -->
+    </test> <!-- User Service Api Test -->
+  </suite> <!-- UserServiceApiTestSuite -->
+</testng-results>

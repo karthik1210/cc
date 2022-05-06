@@ -1,0 +1,383 @@
+<html>
+<head>
+<title>TestNG:  User Service Api Test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>User Service Api Test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>9/2/0</td>
+</tr><tr>
+<td>Started on:</td><td>Thu May 05 20:43:13 EDT 2022</td>
+</tr>
+<tr><td>Total time:</td><td>49 seconds (49147 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles()'><b>testResponseForUserWithoutUserRoles</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer<br>Test method: Enter existing user id that does not contains user roles and verify response status code<br/>
+<a href="#Output-1755634886" onClick='toggleBox("Output-1755634886", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1755634886" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1755634886">
+---------------------------------------------<br/><br/>
+<<< START: GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 165<br/><br/>
+Response Time in ms- 165<br/><br/>
+<<< END: testResponseForUserWithoutUserRoles FAILED >>><br/><br/>
+</div>
+</td>
+<td><div><pre>java.lang.AssertionError: expected [204] but found [200]
+	at com.pxp.cc.util.CCUtils.assertEquals(CCUtils.java:65)
+	at com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles(GetRolesByUserApiTests_BusinessLayer.java:62)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+... Removed 32 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace1755634886", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1755634886'><pre>java.lang.AssertionError: expected [204] but found [200]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:140)
+	at org.testng.Assert.assertEquals(Assert.java:122)
+	at org.testng.Assert.assertEquals(Assert.java:617)
+	at com.pxp.cc.util.CCUtils.assertEquals(CCUtils.java:65)
+	at com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testResponseForUserWithoutUserRoles(GetRolesByUserApiTests_BusinessLayer.java:62)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+	at org.testng.TestRunner.privateRun(TestRunner.java:764)
+	at org.testng.TestRunner.run(TestRunner.java:585)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.runSuites(TestNG.java:1069)
+	at org.testng.TestNG.run(TestNG.java:1037)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType()'><b>testUserRolesForUserType</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Get user roles for internal user<br>Parameters: INTERNAL<br/>
+<a href="#Output-602928593" onClick='toggleBox("Output-602928593", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-602928593" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-602928593">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 171<br/><br/>
+Response Time in ms- 171<br/><br/>
+Expected value: 200 Actual value: 200 - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+<<< END: testUserRolesForUserType FAILED >>><br/><br/>
+</div>
+</td>
+<td><div><pre>java.lang.AssertionError: expected [true] but found [false]
+	at com.pxp.cc.util.CCUtils.assertTrue(CCUtils.java:77)
+	at com.pxp.cc.util.Validations.verifyGetUserRolesResponseBody(Validations.java:1290)
+	at com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(GetUserRolesForUserTypeApiTests_BusinessLayer.java:41)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+... Removed 31 stack frames</pre></div><a href='#' onClick='toggleBox("stack-trace602928593", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace602928593'><pre>java.lang.AssertionError: expected [true] but found [false]
+	at org.testng.Assert.fail(Assert.java:99)
+	at org.testng.Assert.failNotEquals(Assert.java:1037)
+	at org.testng.Assert.assertTrue(Assert.java:45)
+	at org.testng.Assert.assertTrue(Assert.java:55)
+	at com.pxp.cc.util.CCUtils.assertTrue(CCUtils.java:77)
+	at com.pxp.cc.util.Validations.verifyGetUserRolesResponseBody(Validations.java:1290)
+	at com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType(GetUserRolesForUserTypeApiTests_BusinessLayer.java:41)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:132)
+	at org.testng.internal.TestInvoker.invokeMethod(TestInvoker.java:599)
+	at org.testng.internal.TestInvoker.invokeTestMethod(TestInvoker.java:174)
+	at org.testng.internal.MethodRunner.runInSequence(MethodRunner.java:46)
+	at org.testng.internal.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:822)
+	at org.testng.internal.TestInvoker.invokeTestMethods(TestInvoker.java:147)
+	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:146)
+	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:128)
+	at java.util.ArrayList.forEach(ArrayList.java:1257)
+	at org.testng.TestRunner.privateRun(TestRunner.java:764)
+	at org.testng.TestRunner.run(TestRunner.java:585)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:384)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:378)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:337)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:286)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:53)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:96)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1218)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1140)
+	at org.testng.TestNG.runSuites(TestNG.java:1069)
+	at org.testng.TestNG.run(TestNG.java:1037)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</pre></div></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl()'><b>testErrorMessagesForInvalidUrl</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Verify error message for invalid url<br/>
+<a href="#Output-352776719" onClick='toggleBox("Output-352776719", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-352776719" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-352776719">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 977<br/><br/>
+Response Time in ms- 977<br/><br/>
+Expected value: 404 Actual value: 404 - PASSED<br/><br/>
+Expected value: Not Found Actual value: Not Found - PASSED<br/><br/>
+<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorMessagesForInvalidUrl PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>4</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl()'><b>testErrorMessagesForInvalidUrl</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer<br>Test method: Verify error message for invalid url<br/>
+<a href="#Output-62182667" onClick='toggleBox("Output-62182667", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-62182667" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-62182667">
+---------------------------------------------<br/><br/>
+<<< START: GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 335<br/><br/>
+Response Time in ms- 335<br/><br/>
+Expected value: 404 Actual value: 404 - PASSED<br/><br/>
+Expected value: Not Found Actual value: Not Found - PASSED<br/><br/>
+<<< END: GetRolesByUserApiTests_BusinessLayer.testErrorMessagesForInvalidUrl PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType()'><b>testErrorRepsonseForBlankUserType</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Enter blank space in user type field and verify error message<br/>
+<a href="#Output-1270565296" onClick='toggleBox("Output-1270565296", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1270565296" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1270565296">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 123<br/><br/>
+Response Time in ms- 123<br/><br/>
+Expected value: 400 Actual value: 400 - PASSED<br/><br/>
+Expected value: Invalid userType Actual value: Invalid userType - PASSED<br/><br/>
+Expected value: Bad Request Actual value: Bad Request - PASSED<br/><br/>
+<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testErrorRepsonseForBlankUserType PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality()'><b>testGetUserRolesByUserFunctionality</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer<br>Test method: Get user roles of existing user using user id and verify response body<br/>
+<a href="#Output-672777312" onClick='toggleBox("Output-672777312", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-672777312" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-672777312">
+---------------------------------------------<br/><br/>
+<<< START: GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 198<br/><br/>
+Response Time in ms- 198<br/><br/>
+Expected value: 200 Actual value: 200 - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+<<< END: GetRolesByUserApiTests_BusinessLayer.testGetUserRolesByUserFunctionality PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType()'><b>testResponseCodeForNonExistingUserType</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Enter non existing user type and verify response status code<br>Parameters: INTERNALQZWa4<br/>
+<a href="#Output-19578363" onClick='toggleBox("Output-19578363", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-19578363" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-19578363">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 210<br/><br/>
+Response Time in ms- 210<br/><br/>
+Expected value: 204 Actual value: 204 - PASSED<br/><br/>
+<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType()'><b>testResponseCodeForNonExistingUserType</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Enter non existing user type and verify response status code<br>Parameters: 4010<br/>
+<a href="#Output-922486271" onClick='toggleBox("Output-922486271", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-922486271" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-922486271">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 205<br/><br/>
+Response Time in ms- 205<br/><br/>
+Expected value: 204 Actual value: 204 - PASSED<br/><br/>
+<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testResponseCodeForNonExistingUserType PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId()'><b>testResponseStatuscodeForNonExistingUserId</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer<br>Test method: Enter non existing user id in user id field and verify response status code<br/>
+<a href="#Output-427939937" onClick='toggleBox("Output-427939937", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-427939937" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-427939937">
+---------------------------------------------<br/><br/>
+<<< START: GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 157<br/><br/>
+Response Time in ms- 157<br/><br/>
+Expected value: 204 Actual value: 204 - PASSED<br/><br/>
+<<< END: GetRolesByUserApiTests_BusinessLayer.testResponseStatuscodeForNonExistingUserId PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer@3023df74</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType()'><b>testUserRolesForUserType</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Get user roles for internal user<br>Parameters: CLIENT<br/>
+<a href="#Output-1440939580" onClick='toggleBox("Output-1440939580", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1440939580" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1440939580">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 185<br/><br/>
+Response Time in ms- 185<br/><br/>
+Expected value: 200 Actual value: 200 - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+Expected value: UserRoles(roleId=600, name=Client Admin) Actual value: UserRoles(roleId=600, name=Client Admin) - PASSED<br/><br/>
+Expected value: UserRoles(roleId=601, name=Client Staff) Actual value: UserRoles(roleId=601, name=Client Staff) - PASSED<br/><br/>
+<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+<tr>
+<td title='com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType()'><b>testUserRolesForUserType</b><br>Test class: com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer<br>Test method: Get user roles for internal user<br>Parameters: VARESELLER<br/>
+<a href="#Output-1119277260" onClick='toggleBox("Output-1119277260", this, "Show output", "Hide output");'>Show output</a>
+
+<a href="#Output-1119277260" onClick="toggleAllBoxes();">Show all outputs</a>
+<div class='log' id="Output-1119277260">
+---------------------------------------------<br/><br/>
+<<< START: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType >>> <br/><br/>
+STEP 1: Validating response information<br/><br/>
+Response time 195<br/><br/>
+Response Time in ms- 195<br/><br/>
+Expected value: 200 Actual value: 200 - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+Expected value: true Actual value: true - PASSED<br/><br/>
+Expected value: UserRoles(roleId=500, name=VAR/Reseller Admin) Actual value: UserRoles(roleId=500, name=VAR/Reseller Admin) - PASSED<br/><br/>
+Expected value: UserRoles(roleId=501, name=VAR/Reseller Staff) Actual value: UserRoles(roleId=501, name=VAR/Reseller Staff) - PASSED<br/><br/>
+<<< END: GetUserRolesForUserTypeApiTests_BusinessLayer.testUserRolesForUserType PASSED >>><br/><br/>
+</div>
+</td>
+<td></td>
+<td>2</td>
+<td>com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer@145f66e3</td></tr>
+</table><p>
+</body>
+</html>
