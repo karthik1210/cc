@@ -8,7 +8,6 @@ phases:
     commands:
       - yum update -y
       - yum install GConf2 liberation-fonts-common gtk3 libappindicator-gtk3 yum-utils libXScrnSaver redhat-lsb-core alsa-lib-devel dbus-x11 ImageMagick Xvfb net-tools -y
-      #- curl -O https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
       - curl -O https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-93.0.4577.82-1.x86_64.rpm
       - ls -l /usr/bin
       - rpm -Uvh --nodeps google-chrome-stable-93.0.4577.82-1.x86_64.rpm
@@ -22,7 +21,6 @@ phases:
   build:
     commands:
       - cd pxp-command-center-qa
-#      - mvn -U clean integration-test -Dsuite.xml=Z_RS_SuiteTest.xml -Dexecution.mode=headless
       - REPLACE_STRING="${ENVIRONMENT}-"
       - testSuiteName=$(echo $APPLICATION_NAME | sed "s/$REPLACE_STRING/ /")
       - testSuiteName=`echo $testSuiteName | sed 's/ *$//g'`
@@ -30,7 +28,7 @@ phases:
       - |
         if [ -f "$testSuiteFileName" ]; then   
         echo "$testSuiteFileName exists";
-        mvn -U clean integration-test -Dsuite.xml=${testSuiteFileName} -Dexecution.mode=headless 
+        mvn -U clean integration-test -Dsuite.xml=${testSuiteFileName} -Dtest.environment=${ENVIRONMENT} -Dexecution.mode=headless 
         else     
         echo "$testSuiteFileName Not exists"; 
         fi
