@@ -60,4 +60,13 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("email", email).queryParam("username", username)
 				.queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
 	}
+	public Response getUserDetails(String userId) {
+		String url = ApiPath.USER_DETAILS_BL(userId);
+		return given().spec(requestSpec).when().pathParam("userId", userId).get(url).then().extract().response();
+	}
+
+	public Response getUserDetailsInvalidUrl(String userId) {
+		String url = ApiPath.INVALID_PATH_USER_DETAILS_BL(userId);
+		return given().spec(requestSpec).when().pathParam("userId", userId).get(url).then().extract().response();
+	}
 }
