@@ -281,4 +281,8 @@ public class ApiPath {
 	public static String INVALID_PATH_VALIDATE_USER_BL() {
 		return SERVICE_USER_BL + "/v1/userssss/validate-usersssss";
 	}
+	
+	public static final String USER_DETAILS_BL = SERVICE_USER_BL + "/v1/users/";
+	public static final String INVALID_PATH_USER_DETAILS_BL = SERVICE_USER_BL + "/v1/usersss/";
+
 }

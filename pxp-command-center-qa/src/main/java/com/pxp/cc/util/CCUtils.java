@@ -64,10 +64,21 @@ public class CCUtils {
 		try {
 			Assert.assertEquals(actual, expected);
 			Log4jUtil.log(
-					"Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - PASSED");
+                    "Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - PASSED");
 		} catch (Exception e) {
 			Log4jUtil.log(
-					"Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - FAILED");
+                    "Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - FAILED");
+			throw new RuntimeException(e);
+		}
+	}
+	public static void assertEqualsNull(Object actual, Object expected) throws RuntimeException {
+		try {
+			Assert.assertEquals(actual, expected);
+			Log4jUtil.log(
+					"Expected value: " + (expected == null ? null : expected.toString() )+ " Actual value: " + (actual==null ? null : actual.toString()) + " - PASSED");
+		} catch (Exception e) {
+			Log4jUtil.log(
+					"Expected value: " + (expected == null ? null : expected.toString() )+ " Actual value: " + (actual==null ? null : actual.toString()) + " - FAILED");
 			throw new RuntimeException(e);
 		}
 	}

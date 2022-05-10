@@ -1625,4 +1625,54 @@ public class Validations {
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=" + existingMobileNumber);
 	}
+	public void verifyErrorResponseBodyForUserIdField(Response response, String userId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),  "User not found for userId=" + userId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	
+	public void verifyClientUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
+			String lastName, String userName, String email, String mobile, String userStatus,String clientId,String clientName ,String providerId,String providerName ,String statusMsg
+			) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("authId").toString(), authId);
+		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
+		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"),null);
+		CCUtils.assertEquals(jsonpath.get("client.id").toString(), clientId);
+		CCUtils.assertEquals(jsonpath.get("client.name").toString(), clientName);
+		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
+		CCUtils.assertEquals(jsonpath.get("provider.id").toString(), providerId);
+		CCUtils.assertEquals(jsonpath.get("provider.name").toString(), providerName);	
+		 CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg); 
+		return;
+}
+	public void verifyUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
+			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg
+			) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("authId").toString(), authId);
+		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
+		  CCUtils.assertEqualsNull(jsonpath.get("expiryDate"),null);
+		  CCUtils.assertEqualsNull(jsonpath.get("client"), null);
+		  CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
+		  CCUtils.assertEqualsNull(jsonpath.get("provider"), null);	 
+		 CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg); 
+		  
+		
+}
 }
