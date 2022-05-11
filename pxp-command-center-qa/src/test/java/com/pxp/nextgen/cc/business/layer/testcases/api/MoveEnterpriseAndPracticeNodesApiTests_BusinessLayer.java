@@ -367,7 +367,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 				"AG_Practice_Name_1", testData.getProperty("api.practice.active"), targetNodeClientType, "AG_Prac@001",
 				"US/Alaska");
 
-		logStep("Move an active agnostic practice node back to previous enterprise node with do not inherit");
+		logStep("Move an active agnostic practice node to an  enterprise node previous client with do not inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrganizationNode_BL(
 				Integer.parseInt(testData.getProperty("active.enterprise.id.same.client")), sourceAgnosticPracticeId,
 				Boolean.parseBoolean(testData.getProperty("do.not.inherit")));
@@ -544,7 +544,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, enterpriseIdOne, "Ent_name_2", "false",
 				targetNodeClientType, "e1", timezone);
 
-		logStep("Move the inactive enterprise node back to the previous system node");
+		logStep("Move the inactive enterprise node to an system node of previous client with do not inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrganizationNode_BL(
 				Integer.parseInt(testData.getProperty("active.system.id.same.client")), enterpriseIdOne,
 				Boolean.parseBoolean(testData.getProperty("do.not.inherit")));
