@@ -48,4 +48,16 @@ public class TransferBusinessUnits extends BaseRest {
 		transferBusinessUnitsMap.put("inherit", inheritFlag);
 		return transferBusinessUnitsMap;
 	}
+	
+	public Response moveOrganizationNode_BL(int targetId, int sourceId, Boolean inheritFlag) throws IOException {
+		String url = ApiPath.MOVE_ORGANIZATION_NODE(targetId);
+		Map<String, Object> transferBusinessUnitsPayload = putTransferBusinessUnits(sourceId, inheritFlag);
+		return given().spec(requestSpec).body(transferBusinessUnitsPayload).when().put(url).then().extract().response();
+	}
+	
+	public Response moveOrganizationNodeUsingInvalidUrl(int targetId, int sourceId, Boolean inheritFlag) throws IOException {
+		String url = ApiPath.INVALID_PATH_MOVE_ORGANIZATION_NODE(targetId);
+		Map<String, Object> transferBusinessUnitsPayload = putTransferBusinessUnits(sourceId, inheritFlag);
+		return given().spec(requestSpec).body(transferBusinessUnitsPayload).when().put(url).then().extract().response();
+	}
 }
