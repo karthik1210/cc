@@ -281,15 +281,23 @@ public class ApiPath {
 	public static String INVALID_PATH_VALIDATE_USER_BL() {
 		return SERVICE_USER_BL + "/v1/userssss/validate-usersssss";
 	}
-	
+
 	public static final String USER_DETAILS_BL = SERVICE_USER_BL + "/v1/users/";
 	public static final String INVALID_PATH_USER_DETAILS_BL = SERVICE_USER_BL + "/v1/usersss/";
-	
+
 	public static String MOVE_ORGANIZATION_NODE(int orgId) {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/client-orgs";
 	}
 
 	public static String INVALID_PATH_MOVE_ORGANIZATION_NODE(int orgId) {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/client-orgssssss";
+	}
+
+	public static String VALIDATE_USER_DL() {
+		return SERVICE_USER_DL + "/v1/users/validate-user";
+	}
+
+	public static String INVALID_PATH_VALIDATE_USER_DL() {
+		return SERVICE_USER_DL + "/v1/Usersss/validateUser";
 	}
 }
