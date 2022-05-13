@@ -1709,4 +1709,11 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid orgType");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+
+	public void verifyErrorResponseForInvalidFormatEmail(Response response, String existingEmail) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"validateUserDetail.email: must be a well-formed email address");
+	}
 }
