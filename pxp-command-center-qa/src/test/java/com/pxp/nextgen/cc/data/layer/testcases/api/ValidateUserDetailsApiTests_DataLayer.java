@@ -3,14 +3,17 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
+
 import io.restassured.response.Response;
 
 public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
@@ -52,15 +55,6 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 		return obj;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getDuplicateEmailDetails", description = "Enter already Existing Email and verify error message in response body")
-	public void testAlreadyExistingEmail(String[] getDetails) throws IOException {
-		getValidateUserApiResponse = userInfo.validateUserDetails_DL(getDetails[0], getDetails[1], getDetails[2]);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(getValidateUserApiResponse);
-		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForDuplicateEmail(getValidateUserApiResponse, getDetails[0]);
-	}
-
 	@DataProvider(name = "getDuplicateUserNameDetails")
 	public Object[] getUserDetails() {
 		Object[][] obj = new Object[][] {
@@ -92,16 +86,7 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 						"1000000001" } };
 		return obj;
 	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getDuplicateUserNameDetails", description = "Enter already existing username in username field and verify error message in response body")
-	public void testAlreadyExistingUsername(String[] getUserDetails) throws IOException {
-		getValidateUserApiResponse = userInfo.validateUserDetails_DL(getUserDetails[0], getUserDetails[1],
-				getUserDetails[2]);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(getValidateUserApiResponse);
-		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForDuplicateUsername(getValidateUserApiResponse, getUserDetails[1]);
-	}
+	
 
 	@DataProvider(name = "getDuplicateMobileNumberDetails")
 	public Object[] getCommandCenterUserDetails() {
@@ -113,6 +98,35 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 				{ "xyz.xyz.abc@gmail.com", "xyz.xyz.abc@1234",
 						testData.getProperty("existing.reseller.user.mobile.number").trim() } };
 		return obj;
+	}
+	
+	@DataProvider(name = "getInvalidFormatEmail")
+	public Object[] getInvalidEmailDetails() {
+		Object[][] obj = new Object[][] {
+				{ testData.getProperty("invalid.internal.user.emailid"), "xyz.xyz.abc@1234", "1000000001" },
+				{ testData.getProperty("invalid.client.user.emailid").trim(), "xyz.xyz.abc@1234", "1000000001" },
+				{ testData.getProperty("invalid.reseller.user.emailid").trim(), "xyz.xyz.abc@1234", "1000000001" } };
+
+		return obj;
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getDuplicateEmailDetails", description = "Enter already Existing Email and verify error message in response body")
+	public void testAlreadyExistingEmail(String[] getDetails) throws IOException {
+		getValidateUserApiResponse = userInfo.validateUserDetails_DL(getDetails[0], getDetails[1], getDetails[2]);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getValidateUserApiResponse);
+		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseForDuplicateEmail(getValidateUserApiResponse, getDetails[0]);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getDuplicateUserNameDetails", description = "Enter already existing username in username field and verify error message in response body")
+	public void testAlreadyExistingUsername(String[] getUserDetails) throws IOException {
+		getValidateUserApiResponse = userInfo.validateUserDetails_DL(getUserDetails[0], getUserDetails[1],
+				getUserDetails[2]);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getValidateUserApiResponse);
+		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseForDuplicateUsername(getValidateUserApiResponse, getUserDetails[1]);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getDuplicateMobileNumberDetails", description = "Enter already existing mobile number in mobile field and verify error message in response body")
@@ -132,16 +146,6 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
 		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 200);
-	}
-
-	@DataProvider(name = "getInvalidFormatEmail")
-	public Object[] getInvalidEmailDetails() {
-		Object[][] obj = new Object[][] {
-				{ testData.getProperty("invalid.internal.user.emailid"), "xyz.xyz.abc@1234", "1000000001" },
-				{ testData.getProperty("invalid.client.user.emailid").trim(), "xyz.xyz.abc@1234", "1000000001" },
-				{ testData.getProperty("invalid.reseller.user.emailid").trim(), "xyz.xyz.abc@1234", "1000000001" } };
-
-		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getInvalidFormatEmail", description = "Enter Existing Email in email field with invalid format and verify error response code")
