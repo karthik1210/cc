@@ -13,7 +13,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class CreateOrg_DataLayer extends BaseRest {
+public class CreateOrgApiTests_DataLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
