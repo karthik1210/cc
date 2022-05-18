@@ -19,7 +19,7 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrg_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
 		</classes>

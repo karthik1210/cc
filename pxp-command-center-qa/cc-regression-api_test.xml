@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="RegressionSuiteTest">
+<suite name="CCRegressionApiTestSuite">
 	<listeners>
 		<listener
 			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
@@ -8,7 +8,7 @@
 		<listener
 			class-name="org.uncommons.reportng.JUnitXMLReporter" />
 	</listeners>
-	<test name="API Regression Test">
+	<test name="CC Regression API Test">
 		<classes>
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.FetchClientDetailsTests_BusinessLayer" />
@@ -73,8 +73,6 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
 			<class
