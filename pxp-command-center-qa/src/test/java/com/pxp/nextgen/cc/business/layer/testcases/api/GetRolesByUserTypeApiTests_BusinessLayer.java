@@ -32,6 +32,13 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 				{ testData.getProperty("user.type.varreseller").trim() } };
 	}
 
+	@DataProvider(name = "userType")
+	public Object[][] getUserType() throws Exception {
+		return new Object[][] {
+				{ testData.getProperty("user.type.internal").concat(CCUtils.generateAlphaNumericString(5)) },
+				{ testData.getProperty("api.existing.client.id") } };
+	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userTypeValue", description = "Get user roles by userType")
 	public void testUserRolesForUserType(String userType) throws IOException {
 		getUserRolesApiResponse = roleInfo.getUserRolesByUserType(userType);
@@ -39,13 +46,6 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
 		validation.verifyGetUserRolesResponseBody(getUserRolesApiResponse, userType);
-	}
-
-	@DataProvider(name = "userType")
-	public Object[][] getUserType() throws Exception {
-		return new Object[][] {
-				{ testData.getProperty("user.type.internal").concat(CCUtils.generateAlphaNumericString(5)) },
-				{ testData.getProperty("api.existing.client.id") } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userType", description = "Enter non existing user type and verify response status code")
