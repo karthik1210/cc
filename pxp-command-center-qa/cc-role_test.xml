@@ -10,8 +10,6 @@
 	</listeners>
 	<test name="CC Role Test">
 		<classes>
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
