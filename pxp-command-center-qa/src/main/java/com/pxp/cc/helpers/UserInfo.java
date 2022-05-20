@@ -3,6 +3,12 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import io.restassured.response.Response;
@@ -83,4 +89,48 @@ public class UserInfo extends BaseRest {
 				.queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
 	}
 
+	public Response createNewUser_DataLayer(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds) throws IOException {
+		Map<String, Object> createNewUserPayload = postCreateUser(authId, userType, firstName, lastName, userName,
+				email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		return given().spec(requestSpec).body(createNewUserPayload).when().post(ApiPath.USER_DL).then().extract()
+				.response();
+
+	}
+
+	public Response createNewUser_DataLayerUsingInvalidUrl(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds) throws IOException {
+		Map<String, Object> createNewUserPayload = postCreateUser(authId, userType, firstName, lastName, userName,
+				email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String invalidUrl = ApiPath.INVALID_PATH_USER_DL;
+		return given().spec(requestSpec).body(createNewUserPayload).when().post(invalidUrl).then().extract().response();
+	}
+
+	private Map<String, Object> postCreateUser(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds) {
+		Map<String, Object> createUsertMap = new HashMap<String, Object>();
+		createUsertMap.put("authId", authId);
+		createUsertMap.put("userType", userType);
+		createUsertMap.put("firstName", firstName);
+		createUsertMap.put("lastName", lastName);
+		createUsertMap.put("userName", userName);
+		createUsertMap.put("email", email);
+		createUsertMap.put("mobile", mobile);
+		createUsertMap.put("userStatus", userStatus);
+		createUsertMap.put("clientId", clientId);
+		createUsertMap.put("resellerId", resellerId);
+		createUsertMap.put("providerId", providerId);
+		createUsertMap.put("expiryDate", expiryDate);
+		createUsertMap.put("roleIds", roleIds);
+
+		return createUsertMap;
+	}
+
+	public Response getUserDetails_DL(int userId) {
+		String url = ApiPath.USER_DETAILS_DL + userId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

@@ -300,9 +300,9 @@ public class ApiPath {
 	public static String INVALID_PATH_VALIDATE_USER_DL() {
 		return SERVICE_USER_DL + "/v1/Usersss/validateUser";
 	}
-	
+
 	public static final String SERVICE_ROLE_BL = "/service/role-service";
-	
+
 	public static final String USER_ROLES_BY_USERTYPE_BL(String userType) {
 		return SERVICE_ROLE_BL + "/v1/usertypes/" + "{userType}" + "/roles";
 	}
@@ -311,4 +311,7 @@ public class ApiPath {
 		return SERVICE_ROLE_BL + "/v1/usertypes/" + "{userType}" + "/rolesss";
 	}
 
+	public static final String USER_DL = SERVICE_USER_DL + "/v1/users";
+	public static final String INVALID_PATH_USER_DL = SERVICE_USER_DL + "/v1/usersabc";
+	public static final String USER_DETAILS_DL = SERVICE_USER_DL + "/v1/users/";
 }
