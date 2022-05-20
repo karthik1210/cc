@@ -1786,6 +1786,72 @@ public class Validations {
 		}
 		Collections.sort(expectedValue);
 		CCUtils.assertEquals(actualValue, expectedValue);
+	}
+
+	public void verifyProductListForEcosystemPxp(Response response) throws IOException {
+		List<String> actualProductList = new ArrayList<String>();
+		actualProductList.add("Forms");
+		actualProductList.add("Pay");
+		actualProductList.add("Portal");
+		actualProductList.add("PSS");
+		actualProductList.add("Chat");
+		actualProductList.add("Engage");
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		CCUtils.assertTrue(actualProductList.size() == jsonArray.length(),
+				"Size of actual product list and expected product list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(actualProductList.get(i), jsonObject.getString("name"));
+		}
+	}
+
+	public void verifyProductListForEcosystemNgeAndTypePmehr(Response response) throws IOException {
+		List<String> actualProductList = new ArrayList<String>();
+		actualProductList.add("NextGen Enterprise");
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		CCUtils.assertTrue(actualProductList.size() == jsonArray.length(),
+				"Size of actual product list and expected product list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(actualProductList.get(i), jsonObject.getString("name"));
+		}
+	}
+
+	public void verifyProductListForEcosystemOtto(Response response) throws IOException {
+		List<String> actualProductList = new ArrayList<String>();
+		actualProductList.add("Virtual Visits");
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		CCUtils.assertTrue(actualProductList.size() == jsonArray.length(),
+				"Size of actual product list and expected product list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(actualProductList.get(i), jsonObject.getString("name"));
+		}
+	}
+
+	public void verifyProductListForTypePxp(Response response) throws IOException {
+		List<String> actualProductList = new ArrayList<String>();
+		actualProductList.add("Portal");
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		CCUtils.assertTrue(actualProductList.size() == jsonArray.length(),
+				"Size of actual product list and expected product list is not same");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(actualProductList.get(i), jsonObject.getString("name"));
+		}
+	}
+
+	public void verifyErrorMessageForBlankField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
