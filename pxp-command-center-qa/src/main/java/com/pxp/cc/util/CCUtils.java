@@ -9,6 +9,7 @@ import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.hamcrest.Matchers;
 import org.openqa.selenium.Keys;
@@ -64,21 +65,22 @@ public class CCUtils {
 		try {
 			Assert.assertEquals(actual, expected);
 			Log4jUtil.log(
-                    "Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - PASSED");
+					"Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - PASSED");
 		} catch (Exception e) {
 			Log4jUtil.log(
-                    "Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - FAILED");
+					"Expected value: " + expected.toString() + " Actual value: " + actual.toString() + " - FAILED");
 			throw new RuntimeException(e);
 		}
 	}
+
 	public static void assertEqualsNull(Object actual, Object expected) throws RuntimeException {
 		try {
 			Assert.assertEquals(actual, expected);
-			Log4jUtil.log(
-					"Expected value: " + (expected == null ? null : expected.toString() )+ " Actual value: " + (actual==null ? null : actual.toString()) + " - PASSED");
+			Log4jUtil.log("Expected value: " + (expected == null ? null : expected.toString()) + " Actual value: "
+					+ (actual == null ? null : actual.toString()) + " - PASSED");
 		} catch (Exception e) {
-			Log4jUtil.log(
-					"Expected value: " + (expected == null ? null : expected.toString() )+ " Actual value: " + (actual==null ? null : actual.toString()) + " - FAILED");
+			Log4jUtil.log("Expected value: " + (expected == null ? null : expected.toString()) + " Actual value: "
+					+ (actual == null ? null : actual.toString()) + " - FAILED");
 			throw new RuntimeException(e);
 		}
 	}
@@ -314,6 +316,16 @@ public class CCUtils {
 			robot.mouseMove(xcord + 6, ycord + 135);
 
 		}
+	}
+
+	public static Long generateinvalidMobileNumber() {
+		return (long) (Math.random() * 100000 + 33330000000L);
+	}
+
+	public static String generateAuthId() {
+
+		String authId = UUID.randomUUID().toString();
+		return authId;
 	}
 
 }

@@ -1717,6 +1717,77 @@ public class Validations {
 				"validateUserDetail.email: must be a well-formed email address");
 	}
 
+	public void verifyErrorMessageInResponseForInvalidFirstName(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String responseMsg = jsonpath.getString("message").toString();
+		String expectedResponse = "First name size maximum 100 characters, Only alphanumeric, ' and - are allowed";
+		String alternateExpectedResponse = "Only alphanumeric, ' and - are allowed, First name size maximum 100 characters";
+		if (responseMsg.equals(expectedResponse)) {
+			CCUtils.assertEquals(responseMsg, expectedResponse);
+		} else {
+			CCUtils.assertEquals(responseMsg, alternateExpectedResponse);
+		}
+
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidUserType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userdataservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userdataservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 246] (through reference chain: com.nextgen.pxp.cc.userdataservice.model.User[\"userType\"])");
+
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidMobile(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Mobile number should be 10 digits");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidUsername(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Username size maximum 100 characters");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForSpetialCharacterInFirstName(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Only alphanumeric, ' and - are allowed, Only alphanumeric, ' and - are allowed");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidClientId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid clientId");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidProviderId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid providerId");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyNullUserErrorMessageResponseBody(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Email cannot be empty or null, FirstName cannot be empty or null, LastName cannot be empty or null, UserName cannot be empty or null, must not be null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+	}
+
 	public void verifyProductListForEcosystemPxp(Response response) throws IOException {
 		List<String> actualProductList = new ArrayList<String>();
 		actualProductList.add("Forms");
