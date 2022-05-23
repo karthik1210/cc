@@ -67,7 +67,7 @@ public class UserInfo extends BaseRest {
 				.queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
 	}
 
-	public Response getUserDetails(String userId) {
+	public Response getUserDetails(int userId) {
 		String url = ApiPath.USER_DETAILS_BL + userId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
@@ -132,5 +132,27 @@ public class UserInfo extends BaseRest {
 	public Response getUserDetails_DL(int userId) {
 		String url = ApiPath.USER_DETAILS_DL + userId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response createNewUser_BusinessLayer(String ClientId, String PoolId, String authId, String userType,
+			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
+			Object clientId, Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds)
+			throws IOException {
+		Map<String, Object> createNewUserPayload = postCreateUser(authId, userType, firstName, lastName, userName,
+				email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.USER_BL;
+		return given().spec(requestSpec).header("ClientId", ClientId).header("PoolId", PoolId)
+				.body(createNewUserPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createNewUser_BusinessLayerUsingInvalidUrl(String ClientId, String PoolId, String authId,
+			String userType, String firstName, String lastName, String userName, String email, Long mobile,
+			String userStatus, Object clientId, Object resellerId, Object providerId, String expiryDate,
+			List<Integer> roleIds) throws IOException {
+		Map<String, Object> createNewUserPayload = postCreateUser(authId, userType, firstName, lastName, userName,
+				email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String invalidUrl = ApiPath.INVALID_PATH_USER_BL;
+		return given().spec(requestSpec).header("ClientId", ClientId).header("PoolId", PoolId)
+				.body(createNewUserPayload).when().post(invalidUrl).then().extract().response();
 	}
 }

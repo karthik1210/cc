@@ -1,0 +1,311 @@
+
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
+package com.pxp.nextgen.cc.business.layer.testcases.api;
+
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import org.testng.AssertJUnit;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.UserInfo;
+import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.Validations;
+import io.restassured.response.Response;
+
+public class CreateUsersApiTests_BusinessLayer extends BaseRest {
+	private UserInfo userInfo;
+	private Validations validation;
+	Response createUserApiResponse, fetchUserDetailsApiResponse;
+
+	@BeforeClass()
+	public void setBaseUri() throws Exception {
+		setupServiceRequestSpecificationBuilder();
+		userInfo = new UserInfo();
+		validation = new Validations();
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
+	public void testErrorMessagesForInvalidUrl() throws IOException {
+		logStep("Enter invalid url and validate error status code");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayerUsingInvalidUrl(
+				testData.getProperty("api.user.clientId"), testData.getProperty("api.user.poolId"), null, "Internal",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), testData.getProperty("api.clientId.id"),
+				null, null, null, roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		AssertJUnit.assertEquals(createUserApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields and validate error message")
+	public void testErrorMessagesForMandatoryFields() throws IOException {
+		logStep("Enter null value in mandatory fields and validate error message");
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal", null, null, null, null, null, null, null,
+				null, null, null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		AssertJUnit.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyNullUserErrorMessageResponseBody(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing username and validate error message ")
+	public void testErrorMessagesForExistingUsername() throws IOException {
+		logStep("Create user using existing username");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("existing.internalUser.userName");
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), testData.getProperty("api.clientId.id"), null, null, null,
+				roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseForExistingUsername(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing email and validate error message ")
+	public void testErrorMessagesForExistingEmail() throws IOException {
+		logStep("Create user using existing username");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.existing.email");
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseForDuplicateEmail(createUserApiResponse,
+				testData.getProperty("api.existing.email"));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 character in username field and validate error message ")
+	public void testErrorMessagesForInvalidUsername() throws IOException {
+		logStep("Create user using more than 100 character in username field");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.invalid.userName");
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidUsername(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 character in firstName field and validate error message ")
+	public void testErrorMessagesForInvalidFirstName() throws IOException {
+		logStep("Create user using more than 100 character in firstName field");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName");
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal",
+				testData.getProperty("api.invalid.internalUser.firstName"), testData.getProperty("api.user.lastName"),
+				userName, email, mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null,
+				roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidFirstName(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid user type and validate error message ")
+	public void testErrorMessagesForInvalidUserType() throws IOException {
+		logStep("Create user using invalid user type");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName");
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, testData.getProperty("api.nonexisting.user.type"),
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidUserTypeForBusinessLayer(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid mobile number and validate error message ")
+	public void testErrorMessagesForInvalidMobile() throws IOException {
+		logStep("Create user using invalid mobile number");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName");
+		Long mobileNumber = CCUtils.generateinvalidMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidMobile(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter only special character in firstName & lastName field and validate error message ")
+	public void testErrorMessagesForInvalidFirstAndLastName() throws IOException {
+		logStep("Create user using special character in firstName & lastName");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal",
+				testData.getProperty("api.invalid.firstName"), testData.getProperty("api.invalid.lastName"), userName,
+				email, mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForSpetialCharacterInFirstName(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid  clientId and validate error message ")
+	public void testErrorMessagesForInvalidClientId() throws IOException {
+		logStep("Create client user using invalid  clientId");
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), null, null, "4080", null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidClientId(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid providerId and validate error message ")
+	public void testErrorMessagesFor1() throws IOException {
+		logStep("Create client user using invalid providerId ");
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), testData.getProperty("api.clientId.id"), null, null, null,
+				null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidProviderId(createUserApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user  and fetch newly created internal user details using user id")
+	public void testCreateNewInternalUser() throws IOException {
+		logStep("Create internal user using valid details ");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		fetchUserDetailsApiResponse = userInfo.getUserDetails(id);
+		logStep("Validating response information");
+		String expiryDate = testData.getProperty("internalUser.status.msg").concat(CCUtils.dateformatter());
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse, null, "Internal",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber.toString(), testData.getProperty("api.user.userStatus"), expiryDate);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user  and fetch newly created client user details using user id")
+	public void testCreateNewClientUser() throws IOException {
+		logStep("Create client user using valid details ");
+		List<Integer> providerIds = new ArrayList<Integer>();
+		providerIds.add(Integer.parseInt(null));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), testData.getProperty("api.clientId.id"), null, providerIds,
+				null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		fetchUserDetailsApiResponse = userInfo.getUserDetails_DL(id);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyClientUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse, null, "Client",
+				testData.getProperty("api.client.firstName"), testData.getProperty("api.client.lastName"), userName,
+				email, mobileNumber.toString(), testData.getProperty("api.client.userStatus"),
+				testData.getProperty("api.client.id"), testData.getProperty("api.client.name"),
+				testData.getProperty("api.provider.id"), testData.getProperty("api.provider.name"),
+				testData.getProperty("api.status.msg"));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user  and fetch newly created Var/Reseller user details using user id")
+	public void testCreateNewVarResellerUser() throws IOException {
+		logStep("Create Var/Reseller user using valid details ");
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
+				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
+				null, null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		fetchUserDetailsApiResponse = userInfo.getUserDetails(id);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse, null, "VAReseller",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber.toString(), testData.getProperty("varReseller.user.userStatus"),
+				testData.getProperty("api.status.msg"));
+	}
+
+}
