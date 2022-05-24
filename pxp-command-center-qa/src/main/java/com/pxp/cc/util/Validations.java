@@ -1854,5 +1854,62 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	public void verifyClientUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType, String firstName,
+			String lastName, String userName, String email, String mobile, String userStatus, String clientId,
+			String clientName, String providerId, String providerName, String statusMsg) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
+		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"), null);
+		CCUtils.assertEquals(jsonpath.get("client.id").toString(), clientId);
+		CCUtils.assertEquals(jsonpath.get("client.name").toString(), clientName);
+		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
+		CCUtils.assertEquals(jsonpath.get("provider.id").toString(), providerId);
+		CCUtils.assertEquals(jsonpath.get("provider.name").toString(), providerName);
+		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
+		return;
+	}
+	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType, String firstName,
+			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg)
+			throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
+		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"), null);
+		CCUtils.assertEqualsNull(jsonpath.get("client"), null);
+		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
+		CCUtils.assertEqualsNull(jsonpath.get("provider"), null);
+		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
+
+	}
+	public void verifyErrorResponseForExistingUsername(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		String errormsg = "User account already exists";
+		if(jsonpath.get("message").toString().contains(errormsg)) {
+			CCUtils.assertTrue(true, "found expected error msg in response body which is : "+errormsg);
+		}else
+			CCUtils.assertTrue(false, "expected error msg not found : "+errormsg);
+	}
+
+	public void verifyErrorMessageInResponseForInvalidUserTypeForBusinessLayer(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 212] (through reference chain: com.nextgen.pxp.cc.userservice.model.User[\"userType\"])");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 }
