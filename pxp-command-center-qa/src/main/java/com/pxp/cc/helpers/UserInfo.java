@@ -129,10 +129,7 @@ public class UserInfo extends BaseRest {
 		return createUsertMap;
 	}
 
-	public Response getUserDetails_DL(int userId) {
-		String url = ApiPath.USER_DETAILS_DL + userId;
-		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}
+	
 
 	public Response createNewUser_BusinessLayer(String ClientId, String PoolId, String authId, String userType,
 			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
@@ -155,4 +152,20 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).header("ClientId", ClientId).header("PoolId", PoolId)
 				.body(createNewUserPayload).when().post(invalidUrl).then().extract().response();
 	}
+	
+	public static Response getUserDetails_DL(String userId) {
+		String url = ApiPath.USER_DETAILS_DL + userId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public static Response getUserDetailsInvalidUrl_DL(String userId) {
+		String url = ApiPath.INVALID_PATH_USER_DL + userId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public static Response invalidMethodCall_DL(String userId) {
+		String url = ApiPath.USER_DL;
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
 }
