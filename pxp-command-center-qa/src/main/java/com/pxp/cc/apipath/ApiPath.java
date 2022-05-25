@@ -41,12 +41,12 @@ public class ApiPath {
 	public static final String POST_AUDIT_LOG = "/service/cc/v1/audit/view";
 	public static final String PUT_APPLYTO_INHERITFROM = "/service/cc/v1/client-orgs/products";
 	public static final String GET_PRODUCTS = "/service/cc/v1/products";
-
+	
 	public static final String SERVICE_CLIENT_BL = "/service/client-service";
 	public static final String SERVICE_ORG_BL = "/service/org-service";
 	public static final String CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients";
 	public static final String INVALID_PATH_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clientsabc";
-
+	
 	public static final String CLIENT_DETAILS_BL(String clientId) {
 		return CLIENT_BL + "/" + "{clientId}";
 	}
@@ -311,26 +311,15 @@ public class ApiPath {
 		return SERVICE_ROLE_BL + "/v1/usertypes/" + "{userType}" + "/rolesss";
 	}
 
+	public static final String USER_DL = SERVICE_USER_DL + "/v1/users";
+	public static final String INVALID_PATH_USER_DL = SERVICE_USER_DL + "/v1/usersabc";
+	
+	public static final String USER_BL = SERVICE_USER_BL + "/v1/users";
+	public static final String INVALID_PATH_USER_BL = SERVICE_USER_BL + "/v1/usersabc";
+	
 	public static final String SERVICE_PRODUCT_BL = "/service/product-service";
 	public static final String PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/products";
 	public static final String INVALID_PATH_PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/productsssss";
-
-	public static final String USER_DL = SERVICE_USER_DL + "/v1/users";
-	public static final String INVALID_PATH_USER_DL = SERVICE_USER_DL + "/v1/usersabc";
-
-	public static final String USER_BL = SERVICE_USER_BL + "/v1/users";
-	public static final String INVALID_PATH_USER_BL = SERVICE_USER_BL + "/v1/usersabc";
-
+		
 	public static final String USER_DETAILS_DL = SERVICE_USER_DL + "/v1/users/";
-
-	public static final String ADD_ASSOCIATE_ENTITIES_BL(int userId) {
-		return SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
-	}
-
-	public static final String ADD_ASSOCIATE_ENTITIES_INVALID_URL_BL(int userId) {
-		return SERVICE_USER_BL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
-	}
-
-	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
-
 }
