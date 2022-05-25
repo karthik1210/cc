@@ -201,5 +201,8 @@ public class UserInfo extends BaseRest {
 		return OrgIDs;
 
 	}
-	
+	public Response getUserDetails_DL(int userId) {
+		String url = ApiPath.USER_DETAILS_DL + userId;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+		}
 }
