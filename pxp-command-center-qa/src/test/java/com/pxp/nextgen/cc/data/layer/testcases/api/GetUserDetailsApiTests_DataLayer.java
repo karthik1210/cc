@@ -3,16 +3,13 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class GetUserDetailsApiTests_DataLayer extends BaseRest {
@@ -71,7 +68,7 @@ public class GetUserDetailsApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch VAR/Reseller user detail using existing Internal user id in userId field")
-	public void fetchvarResellerUserDetails() throws NullPointerException {
+	public void fetchVarResellerUserDetails() throws NullPointerException {
 		logStep("Enter  existing var/reseller userid");
 		fetchUserDetailsApiResponse = UserInfo.getUserDetails_DL(testData.getProperty("existing.varReseller.userid"));
 		logStep("Validating response information");

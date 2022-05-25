@@ -2,12 +2,6 @@
 
 package com.pxp.cc.apipath;
 
-import static io.restassured.RestAssured.given;
-
-import java.io.IOException;
-
-import io.restassured.response.Response;
-
 public class ApiPath {
 
 	public static final String BEARER_TYPE = "Bearer ";
@@ -52,7 +46,6 @@ public class ApiPath {
 	public static final String SERVICE_ORG_BL = "/service/org-service";
 	public static final String CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clients";
 	public static final String INVALID_PATH_CLIENT_BL = SERVICE_CLIENT_BL + "/v1/clientsabc";
-
 	
 	public static final String CLIENT_DETAILS_BL(String clientId) {
 		return CLIENT_BL + "/" + "{clientId}";
@@ -329,6 +322,4 @@ public class ApiPath {
 	public static final String INVALID_PATH_PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/productsssss";
 		
 	public static final String USER_DETAILS_DL = SERVICE_USER_DL + "/v1/users/";
-
-	
 }
