@@ -5,6 +5,7 @@ package com.pxp.cc.helpers;
 import static io.restassured.RestAssured.given;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,4 +156,38 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).header("ClientId", ClientId).header("PoolId", PoolId)
 				.body(createNewUserPayload).when().post(invalidUrl).then().extract().response();
 	}
+
+	public Response getAssociateEntities(int userId) {
+		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
+		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
+	}
+
+	public Response addAssociateEntitiesInvalidUrl(int userId, ArrayList<Object> orgIDs) {
+		List<Object> associatedEntitiesPayload = postassociatedEntities(orgIDs);
+		String invalidurl = ApiPath.ADD_ASSOCIATE_ENTITIES_INVALID_URL_BL(userId);
+		return given().spec(requestSpec).pathParam("userId", userId).body(associatedEntitiesPayload).when()
+				.post(invalidurl).then().extract().response();
+	}
+
+	public Response invalidMethodCall(int userId, ArrayList<Object> orgIDs) {
+		List<Object> associatedEntitiesPayload = postassociatedEntities(orgIDs);
+		String url = ApiPath.ADD_ASSOCIATE_ENTITIES_BL(userId);
+		return given().spec(requestSpec).pathParam("userId", userId).body(associatedEntitiesPayload).when().put(url)
+				.then().extract().response();
+	}
+
+	public Response addAssociateEntities(int userId, ArrayList<Object> orgIDs) {
+		List<Object> associatedEntitiesPayload = postassociatedEntities(orgIDs);
+		String url = ApiPath.ADD_ASSOCIATE_ENTITIES_BL(userId);
+		return given().spec(requestSpec).pathParam("userId", userId).body(associatedEntitiesPayload).when().post(url)
+				.then().extract().response();
+	}
+
+	private List<Object> postassociatedEntities(ArrayList<Object> orgID) {
+		List<Object> OrgIDs = new ArrayList<Object>();
+		OrgIDs.addAll(orgID);
+		return OrgIDs;
+
+	}
+
 }
