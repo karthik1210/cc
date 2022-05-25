@@ -25,7 +25,6 @@ import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ResponseBody;
 
 public class Validations {
 	private static final String TIMEZONE = "TimeZone";
@@ -35,7 +34,6 @@ public class Validations {
 	private static final String FIELD = "field";
 	private static final String RESOURCE_ID = "resourceId";
 	private static final String TARGETDATA = "targetData";
-	private static final Long OrgID = null;
 
 	public void verifyCreateAndUpdateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
