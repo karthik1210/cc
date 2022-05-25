@@ -25,6 +25,7 @@ import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import io.restassured.response.ResponseBody;
 
 public class Validations {
 	private static final String TIMEZONE = "TimeZone";
@@ -34,6 +35,7 @@ public class Validations {
 	private static final String FIELD = "field";
 	private static final String RESOURCE_ID = "resourceId";
 	private static final String TARGETDATA = "targetData";
+	private static final Long OrgID = null;
 
 	public void verifyCreateAndUpdateClientResponseBody(Response response, String clientNameValue) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -1854,9 +1856,11 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	public void verifyClientUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String clientId,
-			String clientName, String providerId, String providerName, String statusMsg) throws NullPointerException {
+
+	public void verifyClientUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
+			String firstName, String lastName, String userName, String email, String mobile, String userStatus,
+			String clientId, String clientName, String providerId, String providerName, String statusMsg)
+			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1875,9 +1879,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
 		return;
 	}
-	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg)
-			throws NullPointerException {
+
+	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
+			String firstName, String lastName, String userName, String email, String mobile, String userStatus,
+			String statusMsg) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1894,19 +1899,19 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
 
 	}
+
 	public void verifyErrorResponseForExistingUsername(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		String errormsg = "User account already exists";
-		if(jsonpath.get("message").toString().contains(errormsg)) {
-			CCUtils.assertTrue(true, "found expected error msg in response body which is : "+errormsg);
-		}else
-			CCUtils.assertTrue(false, "expected error msg not found : "+errormsg);
+		if (jsonpath.get("message").toString().contains(errormsg)) {
+			CCUtils.assertTrue(true, "found expected error msg in response body which is : " + errormsg);
+		} else
+			CCUtils.assertTrue(false, "expected error msg not found : " + errormsg);
 	}
 
 	public void verifyErrorMessageInResponseForInvalidUserTypeForBusinessLayer(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
 				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 212] (through reference chain: com.nextgen.pxp.cc.userservice.model.User[\"userType\"])");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -1918,4 +1923,30 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PUT' not supported");
 	}
 
+	public void verifyErrorInResponseForNullValueForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"), "Invalid OrgId");
+	}
+
+	public void verifyErrorInResponseForNullValueForNonExistingUserId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"), "User not found for userId=123");
+	}
+
+	public void verifyErrorInResponseForInvalidValueForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"),
+				"JSON parse error: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value\n at [Source: (PushbackInputStream); line: 1, column: 2] (through reference chain: java.util.ArrayList[0])");
+	}
+
+	public void getAssociatedEntities(Response response, ArrayList<Object> orgId) throws IOException {
+		for (int i = 0; i < orgId.size(); i++) {
+			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + orgId.get(i));
+			}
+		}
+	}
 }
