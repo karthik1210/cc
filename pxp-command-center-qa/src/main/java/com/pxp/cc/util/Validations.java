@@ -1917,5 +1917,31 @@ public class Validations {
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Method Not Allowed");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PUT' not supported");
 	}
+	public void verifyErrorInResponseForNullValueForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"), "Invalid OrgId");
+	}
+
+	public void verifyErrorInResponseForNullValueForNonExistingUserId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"), "User not found for userId=123");
+	}
+
+	public void verifyErrorInResponseForInvalidValueForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"),
+				"JSON parse error: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value\n at [Source: (PushbackInputStream); line: 1, column: 2] (through reference chain: java.util.ArrayList[0])");
+	}
+
+	public void getAssociatedEntities(Response response, ArrayList<Object> orgId) throws IOException {
+		for (int i = 0; i < orgId.size(); i++) {
+			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + orgId.get(i));
+			}
+		}
+	}
 
 }

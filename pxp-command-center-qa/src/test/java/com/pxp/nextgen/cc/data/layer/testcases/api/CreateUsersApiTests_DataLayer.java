@@ -243,7 +243,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
 		String expiryDate = testData.getProperty("internalUser.status.msg").concat(CCUtils.dateformatter());
-		int id = createUserApiResponse.jsonPath().getInt("id");
+		String id = createUserApiResponse.jsonPath().getString("id");
 		fetchUserDetailsApiResponse = userInfo.getUserDetails_DL(id);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
@@ -268,7 +268,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
-		int id = createUserApiResponse.jsonPath().getInt("id");
+		String id = createUserApiResponse.jsonPath().getString("id");
 		fetchUserDetailsApiResponse = userInfo.getUserDetails_DL(id);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
@@ -296,7 +296,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
-		int id = createUserApiResponse.jsonPath().getInt("id");
+		String id = createUserApiResponse.jsonPath().getString("id");
 		fetchUserDetailsApiResponse = userInfo.getUserDetails_DL(id);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
