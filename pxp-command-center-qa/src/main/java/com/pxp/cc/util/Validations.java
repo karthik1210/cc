@@ -1911,5 +1911,11 @@ public class Validations {
 				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 212] (through reference chain: com.nextgen.pxp.cc.userservice.model.User[\"userType\"])");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyErrorInResponseForInvalidMethod(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Method Not Allowed");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PUT' not supported");
+	}
 
 }

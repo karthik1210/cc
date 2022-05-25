@@ -313,12 +313,18 @@ public class ApiPath {
 
 	public static final String USER_DL = SERVICE_USER_DL + "/v1/users";
 	public static final String INVALID_PATH_USER_DL = SERVICE_USER_DL + "/v1/usersabc";
-	public static final String USER_DETAILS_DL = SERVICE_USER_DL + "/v1/users/";
-	
+
 	public static final String USER_BL = SERVICE_USER_BL + "/v1/users";
 	public static final String INVALID_PATH_USER_BL = SERVICE_USER_BL + "/v1/usersabc";
-	
+
 	public static final String DATA_SHARED_DL = "/service/shared-data";
-	
+
 	public static final String SEARCH_LOCATIONS_DL = DATA_SHARED_DL + "/v1/locations";
+
+	public static final String SERVICE_PRODUCT_BL = "/service/product-service";
+	public static final String PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/products";
+	public static final String INVALID_PATH_PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/productsssss";
+
+	public static final String USER_DETAILS_DL = SERVICE_USER_DL + "/v1/users/";
+
 }
