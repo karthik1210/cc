@@ -153,6 +153,7 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).header("ClientId", ClientId).header("PoolId", PoolId)
 				.body(createNewUserPayload).when().post(invalidUrl).then().extract().response();
 	}
+
 	
 	public static Response getUserDetails_DL(String userId) {
 		String url = ApiPath.USER_DETAILS_DL + userId;
@@ -168,6 +169,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.USER_DL;
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
 
 	public Response getAssociateEntities(int userId) {
 		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
@@ -201,8 +203,10 @@ public class UserInfo extends BaseRest {
 		return OrgIDs;
 
 	}
+
 	public Response getUserDetails_DL(int userId) {
 		String url = ApiPath.USER_DETAILS_DL + userId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 		}
+
 }

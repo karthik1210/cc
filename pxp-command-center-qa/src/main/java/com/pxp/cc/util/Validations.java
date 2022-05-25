@@ -1854,9 +1854,11 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	public void verifyClientUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String clientId,
-			String clientName, String providerId, String providerName, String statusMsg) throws NullPointerException {
+
+	public void verifyClientUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
+			String firstName, String lastName, String userName, String email, String mobile, String userStatus,
+			String clientId, String clientName, String providerId, String providerName, String statusMsg)
+			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1875,9 +1877,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
 		return;
 	}
-	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg)
-			throws NullPointerException {
+
+	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
+			String firstName, String lastName, String userName, String email, String mobile, String userStatus,
+			String statusMsg) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1894,19 +1897,19 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
 
 	}
+
 	public void verifyErrorResponseForExistingUsername(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		String errormsg = "User account already exists";
-		if(jsonpath.get("message").toString().contains(errormsg)) {
-			CCUtils.assertTrue(true, "found expected error msg in response body which is : "+errormsg);
-		}else
-			CCUtils.assertTrue(false, "expected error msg not found : "+errormsg);
+		if (jsonpath.get("message").toString().contains(errormsg)) {
+			CCUtils.assertTrue(true, "found expected error msg in response body which is : " + errormsg);
+		} else
+			CCUtils.assertTrue(false, "expected error msg not found : " + errormsg);
 	}
 
 	public void verifyErrorMessageInResponseForInvalidUserTypeForBusinessLayer(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
 				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 212] (through reference chain: com.nextgen.pxp.cc.userservice.model.User[\"userType\"])");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -1943,5 +1946,4 @@ public class Validations {
 			}
 		}
 	}
-
 }

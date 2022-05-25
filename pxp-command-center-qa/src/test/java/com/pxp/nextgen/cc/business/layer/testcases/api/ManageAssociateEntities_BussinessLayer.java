@@ -118,3 +118,4 @@ public class ManageAssociateEntities_BussinessLayer extends BaseRest {
 
 	}
 }
+
