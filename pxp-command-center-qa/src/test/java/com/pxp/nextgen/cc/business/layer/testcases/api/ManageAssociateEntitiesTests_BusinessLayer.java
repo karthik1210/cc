@@ -14,7 +14,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class ManageAssociateEntities_BussinessLayer extends BaseRest {
+public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response addAssaciatedEntitiesResponse, fetchAssociateEntitiesApiResponse;
@@ -30,7 +30,7 @@ public class ManageAssociateEntities_BussinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageInvalidUrl() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		OrgIDs.add((long) 4140);
+		OrgIDs.add(4140);
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
 		addAssaciatedEntitiesResponse = userInfo.addAssociateEntitiesInvalidUrl(userId, OrgIDs);
 		logStep("Validating response information");
@@ -72,7 +72,6 @@ public class ManageAssociateEntities_BussinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
 		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 400);
 		validation.verifyErrorInResponseForNullValueForNonExistingUserId(addAssaciatedEntitiesResponse);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of POST")
