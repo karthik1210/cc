@@ -333,4 +333,8 @@ public class ApiPath {
 	}
 
 	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
+	
+	public static final String INTERNAL_USER_BL = SERVICE_USER_BL + "/v1/users/";
+	
+	public static final String INVALID_PATH_INTERNALUSER_BL = SERVICE_USER_BL + "/v1/usersabc123/";
 }
