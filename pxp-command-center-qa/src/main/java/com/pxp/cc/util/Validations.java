@@ -1946,4 +1946,10 @@ public class Validations {
 			}
 		}
 	}
+	
+	public void verifyErrorMessageInResponseForInvalidMethodCall(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+	}
+
 }
