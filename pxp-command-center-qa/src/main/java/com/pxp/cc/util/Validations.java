@@ -19,6 +19,7 @@ import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
+import com.pxp.cc.pojos.OrgHierarchyDetails;
 import com.pxp.cc.pojos.OrgNode;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
@@ -1914,12 +1915,13 @@ public class Validations {
 				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 212] (through reference chain: com.nextgen.pxp.cc.userservice.model.User[\"userType\"])");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorInResponseForInvalidMethod(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Method Not Allowed");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PUT' not supported");
 	}
+
 	public void verifyErrorInResponseForNullValueForOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
@@ -1946,10 +1948,29 @@ public class Validations {
 			}
 		}
 	}
-	
+
 	public void verifyErrorMessageInResponseForInvalidMethodCall(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+	}
+
+	public void verifyOrgHierarchyResponseBody(Response response, List<OrgHierarchyDetails> datalist)
+			throws IOException {
+		List<OrgHierarchyDetails> responseDataList = new ArrayList<OrgHierarchyDetails>();
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Org list is empty");
+		CCUtils.assertTrue(datalist.size() == responseBody.length(),
+				"Size of actual org list and expected org list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			if (jsonObject.isNull("parentId")) {
+				jsonObject.put("parentId", 0);
+			}
+			responseDataList.add(new OrgHierarchyDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"),
+					jsonObject.getString("type"), jsonObject.getBoolean("active"), jsonObject.getInt("parentId")));
+		}
+		CCUtils.assertEquals(responseDataList, datalist);
 	}
 
 }
