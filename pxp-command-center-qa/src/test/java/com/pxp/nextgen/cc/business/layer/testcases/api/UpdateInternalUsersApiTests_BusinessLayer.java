@@ -254,4 +254,25 @@ public class UpdateInternalUsersApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInternalUserInvalidMethod(updateInternalUserDetailsApiResponse);
 	}
 
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing created VAReseller user type with Client type using user id and validate error status code")
+	public void testCreateNewInternalUserAndUpdateExistingUserType() throws IOException {
+		logStep("Update existing VAReseller user type with Client user type");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		int id = Integer.parseInt(testData.getProperty("existing.user.id"));
+		logStep("Modify all the existing details of Internal user");
+		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_BusinessLayer(null, "Client",
+				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
+				email, mobileNumber, testData.getProperty("user.status.active"), null,
+				testData.getProperty("api.clientId.id"), null, null, roleIds, id);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
+		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInternalUserInvalidUserType(updateInternalUserDetailsApiResponse);
+	}
+
 }
