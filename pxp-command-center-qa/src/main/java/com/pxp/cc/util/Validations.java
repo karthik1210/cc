@@ -2046,11 +2046,16 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'POST' not supported");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
-	
+
 	public void verifyErrorMessageInResponseForInternalUserInvalidUserType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=400228");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidMethodCall(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
 
 }
