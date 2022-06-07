@@ -151,7 +151,7 @@ public class UpdateInternalUsersApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorResponseForDuplicateInternalUserMobileNumber(updateInternalUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and while updting enter Enter more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and while updating enter Enter more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
 	public void testErrorMessagesForInvalidInternalUserNameAndMaximumLength() throws IOException {
 		logStep("Create new internal user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
@@ -255,7 +255,7 @@ public class UpdateInternalUsersApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing created VAReseller user type with Client type using user id and validate error status code")
-	public void testCreateNewInternalUserAndUpdateExistingUserType() throws IOException {
+	public void testModifyExistingUserTypeWithDifferentUserType() throws IOException {
 		logStep("Update existing VAReseller user type with Client user type");
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
@@ -265,7 +265,7 @@ public class UpdateInternalUsersApiTests_BusinessLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		int id = Integer.parseInt(testData.getProperty("existing.user.id"));
 		logStep("Modify all the existing details of Internal user");
-		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_BusinessLayer(null, "Client",
+		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_BusinessLayer(null, "Internal",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
 				email, mobileNumber, testData.getProperty("user.status.active"), null,
 				testData.getProperty("api.clientId.id"), null, null, roleIds, id);
