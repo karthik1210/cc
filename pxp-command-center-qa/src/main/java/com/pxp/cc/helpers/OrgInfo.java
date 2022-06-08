@@ -485,4 +485,19 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
+	public Response getOrgHierarchyByOrgId_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.ORG_HIERARCHY_DL(orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getOrgHierarchyByOrgIdUsingInvalidUrl_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.INVALID_PATH_ORG_HIERARCHY_DL(orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCall_DataLayer(int orgId) throws IOException {
+		String url = ApiPath.ORG_HIERARCHY_DL(orgId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 }

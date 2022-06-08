@@ -20,6 +20,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrg_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrgHierarchyByOrgIdApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
