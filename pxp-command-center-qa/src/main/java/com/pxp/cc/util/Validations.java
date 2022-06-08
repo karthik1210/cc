@@ -2036,9 +2036,10 @@ public class Validations {
 	public void verifyErrorMessageInResponseForInternalInvalidUserTypeForBusinessLayer(Response response)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"JSON parse error: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller; nested exception is com.fasterxml.jackson.databind.exc.ValueInstantiationException: Cannot construct instance of `com.nextgen.pxp.cc.userservice.model.User$UserType`, problem: input value = reseller, but value must be one of Internal, Client, VAReseller\n at [Source: (PushbackInputStream); line: 1, column: 235] (through reference chain: com.nextgen.pxp.cc.userservice.model.User[\"userType\"])");
+		String responseString = jsonpath.get("message").toString();
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertTrue(responseString.contains("value must be one of Internal, Client, VAReseller"),
+				"When user entered incorrect user type then it display error message");
 	}
 
 	public void verifyErrorMessageInResponseForInternalUserInvalidMethod(Response response) throws IOException {
