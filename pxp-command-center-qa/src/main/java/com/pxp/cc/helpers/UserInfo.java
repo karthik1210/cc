@@ -171,7 +171,15 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
 		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
 	}
-
+	
+	public Response getAssociateEntitiesInvalidUrl(int userId) {
+		String url = ApiPath.ASSOCIATE_ENTITIES_INVALID_URL_BL;
+		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
+	}
+	public Response invalidMethodCallGetAssociateEntities(int userId) {
+		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
+		return given().spec(requestSpec).pathParam("userId", userId).when().put(url).then().extract().response();
+	}
 	public Response addAssociateEntitiesInvalidUrl(int userId, ArrayList<Object> orgIDs) {
 		List<Object> associatedEntitiesPayload = postassociatedEntities(orgIDs);
 		String invalidurl = ApiPath.ADD_ASSOCIATE_ENTITIES_INVALID_URL_BL(userId);
