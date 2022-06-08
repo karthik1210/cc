@@ -210,6 +210,7 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
 		textboxMobileNumber.clear();
 		textboxMobileNumber.sendKeys(input);
+		CCUtils.focusOnElement(radioButtonInactive, driver);
 		log("Entered input for mobile number : " + input);
 	}
 
@@ -506,6 +507,19 @@ public class CommonMethods extends CCMainPage {
 
 	public void verifyClientTypeDropdownValues() throws InterruptedException {
 		CCUtils.assertEquals(actualClientTypeValues, expectedClientTypes);
+	}
+
+	public void verifyUsernameGeneratedUsingBeginningOfEmail(String email) {
+		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
+		textboxEmail.sendKeys(email);
+		log("Entered text in email field is " + email);
+		String[] strList = email.split("@");
+		String username = strList[0];
+		log("Verifying username is generated using beginning of email address");
+		CCUtils.verifyAndWaitForElement(textboxUserName, driver);
+		textboxUserName.click();
+		CCUtils.assertEquals(textboxUserName.getAttribute("value").trim(), username);
+		log("Usename text is " + textboxUserName.getAttribute("value").trim());
 	}
 
 }
