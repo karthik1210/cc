@@ -17,7 +17,7 @@ import io.restassured.response.Response;
 public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	Response addAssaciatedEntitiesResponse, fetchAssociateEntitiesApiResponse;
+	Response addAssociatedEntitiesResponse, fetchAssociateEntitiesApiResponse;
 	int userId;;
 
 	@BeforeClass()
@@ -32,34 +32,34 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add(4140);
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.addAssociateEntitiesInvalidUrl(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.addAssociateEntitiesInvalidUrl(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(addAssaciatedEntitiesResponse);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for existing userId in userId field & null value in orgId")
 	public void testErrorMessageForNullValueForOrgIdField() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 400);
-		validation.verifyErrorInResponseForNullValueForOrgIdField(addAssaciatedEntitiesResponse);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 400);
+		validation.verifyErrorInResponseForNullValueForOrgIdField(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for existing userId in userId field & invalid value in orgId")
-	public void testErrorMessageForInvalidValueForOrgIdField1() throws IOException {
+	public void testErrorMessageForInvalidValueForOrgIdField() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add("abc#$%");
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 400);
-		validation.verifyErrorInResponseForInvalidValueForOrgIdField(addAssaciatedEntitiesResponse);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 400);
+		validation.verifyErrorInResponseForInvalidValueForOrgIdField(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for non existing userId in userId field")
@@ -67,11 +67,11 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add(4140);
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 400);
-		validation.verifyErrorInResponseForNullValueForNonExistingUserId(addAssaciatedEntitiesResponse);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 400);
+		validation.verifyErrorInResponseForNullValueForNonExistingUserId(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of POST")
@@ -79,11 +79,11 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add(4140);
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.invalidMethodCall(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.invalidMethodCall(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidMethod(addAssaciatedEntitiesResponse);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidMethod(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userID & nonexisting org id  and fetch user by using useId verify status code")
@@ -91,10 +91,10 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add(41);
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 200);
 		fetchAssociateEntitiesApiResponse = userInfo.getAssociateEntities(userId);
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
 		CCUtils.assertEquals(fetchAssociateEntitiesApiResponse.getStatusCode(), 204);
@@ -106,10 +106,10 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 		OrgIDs.add(4141);
 		OrgIDs.add(4142);
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
-		addAssaciatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
+		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addAssaciatedEntitiesResponse);
-		CCUtils.assertEquals(addAssaciatedEntitiesResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
+		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 200);
 		fetchAssociateEntitiesApiResponse = userInfo.getAssociateEntities(userId);
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
 		CCUtils.assertEquals(fetchAssociateEntitiesApiResponse.getStatusCode(), 200);
