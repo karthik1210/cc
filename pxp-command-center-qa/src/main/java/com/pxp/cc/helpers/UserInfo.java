@@ -130,8 +130,6 @@ public class UserInfo extends BaseRest {
 		return createUsertMap;
 	}
 
-	
-
 	public Response createNewUser_BusinessLayer(String ClientId, String PoolId, String authId, String userType,
 			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
 			Object clientId, Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds)
@@ -154,7 +152,6 @@ public class UserInfo extends BaseRest {
 				.body(createNewUserPayload).when().post(invalidUrl).then().extract().response();
 	}
 
-	
 	public static Response getUserDetails_DL(String userId) {
 		String url = ApiPath.USER_DETAILS_DL + userId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -164,12 +161,11 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_USER_DL + userId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public static Response invalidMethodCall_DL(String userId) {
 		String url = ApiPath.USER_DL;
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-
 
 	public Response getAssociateEntities(int userId) {
 		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
@@ -207,6 +203,57 @@ public class UserInfo extends BaseRest {
 	public Response getUserDetails_DL(int userId) {
 		String url = ApiPath.USER_DETAILS_DL + userId;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
-		}
+	}
+
+	public Response updateInternalUser_BusinessLayer(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.INTERNAL_USER_BL + id;
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateInternalUser_BusinessLayerUsingInvalidUrl(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String invalidUrl = ApiPath.INVALID_PATH_INTERNALUSER_BL + id;
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(invalidUrl).then().extract()
+				.response();
+	}
+
+	public Response updateInternalUser_BusinessLayerUsingInvalidMethodCall(String authId, String userType,
+			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
+			Object clientId, Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.INTERNAL_USER_BL + id;
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
+
+	private Map<String, Object> putUpdateInternalUser(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds) {
+		Map<String, Object> updateInternalUsertMap = new HashMap<String, Object>();
+		updateInternalUsertMap.put("authId", authId);
+		updateInternalUsertMap.put("userType", userType);
+		updateInternalUsertMap.put("firstName", firstName);
+		updateInternalUsertMap.put("lastName", lastName);
+		updateInternalUsertMap.put("userName", userName);
+		updateInternalUsertMap.put("email", email);
+		updateInternalUsertMap.put("mobile", mobile);
+		updateInternalUsertMap.put("userStatus", userStatus);
+		updateInternalUsertMap.put("clientId", clientId);
+		updateInternalUsertMap.put("resellerId", resellerId);
+		updateInternalUsertMap.put("providerId", providerId);
+		updateInternalUsertMap.put("expiryDate", expiryDate);
+		updateInternalUsertMap.put("roleIds", roleIds);
+
+		return updateInternalUsertMap;
+	}
 
 }
