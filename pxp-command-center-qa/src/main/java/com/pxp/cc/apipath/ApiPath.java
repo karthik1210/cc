@@ -332,7 +332,18 @@ public class ApiPath {
 	}
 
 	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
+	public static final String INTERNAL_USER_BL = SERVICE_USER_BL + "/v1/users/";
+	public static final String INVALID_PATH_INTERNALUSER_BL = SERVICE_USER_BL + "/v1/usersabc123/";
 	public static final String SERVICE_PRODUCT_DL = "/service/product-data";
 	public static final String PRODUCTS_DL = SERVICE_PRODUCT_DL + "/v1/products";
 	public static final String INVALID_PATH_PRODUCTS_DL = SERVICE_PRODUCT_DL + "/v1/productsssss";
+
+	public static final String ORG_HIERARCHY_DL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/org-hierarchy";
+	}
+
+	public static final String INVALID_PATH_ORG_HIERARCHY_DL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/org-hierarchysssss";
+	}
+
 }
