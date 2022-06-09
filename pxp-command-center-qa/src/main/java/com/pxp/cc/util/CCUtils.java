@@ -175,16 +175,22 @@ public class CCUtils {
 		String email = generateAlphaNumericString(n).concat("@nextgen.com");
 		String[] emailList = email.split("@");
 		int domainNameSize = emailList[1].length();
-		if (n <= 100 && n > domainNameSize) {
-			int size = email.length();
-			if (size <= n) {
+		if (emailList[0].length() <= 64 && domainNameSize <= 98) {
+			if (email.length() <= 100) {
 				return email;
 			} else {
-				int difference = size - n;
+				int difference = email.length() - 100;
 				return email.replaceAll(email.substring(0, difference), "").trim();
 			}
 		} else {
-			return email;
+			int difference = emailList[0].length() - 64;
+			String finalEmail = email.replaceAll(email.substring(0, difference), "").trim();
+			if (finalEmail.length() <= 100) {
+				return finalEmail;
+			} else {
+				int diff = finalEmail.length() - 100;
+				return finalEmail.replaceAll(finalEmail.substring(0, diff), "").trim();
+			}
 		}
 	}
 
@@ -326,6 +332,10 @@ public class CCUtils {
 
 		String authId = UUID.randomUUID().toString();
 		return authId;
+	}
+
+	public static void focusOnElement(WebElement element, WebDriver driver) {
+		new Actions(driver).moveToElement(element).click().perform();
 	}
 
 }

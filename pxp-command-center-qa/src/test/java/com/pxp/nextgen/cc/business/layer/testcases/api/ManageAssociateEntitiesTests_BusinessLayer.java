@@ -14,7 +14,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
+public class ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response addAssociatedEntitiesResponse, fetchAssociateEntitiesApiResponse;
@@ -30,7 +30,7 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageInvalidUrl() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		OrgIDs.add(4140);
+		OrgIDs.add(testData.getProperty("org.id.one"));
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntitiesInvalidUrl(userId, OrgIDs);
 		logStep("Validating response information");
@@ -65,7 +65,7 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for non existing userId in userId field")
 	public void testErrorMessageForNonExistingUserId() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		OrgIDs.add(4140);
+		OrgIDs.add(testData.getProperty("org.id.one"));
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
@@ -77,7 +77,7 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of POST")
 	public void testErrorForInvalidMethodCall() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		OrgIDs.add(4140);
+		OrgIDs.add(testData.getProperty("org.id.one"));
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
 		addAssociatedEntitiesResponse = userInfo.invalidMethodCall(userId, OrgIDs);
 		logStep("Validating response information");
@@ -89,7 +89,7 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userID & nonexisting org id  and fetch user by using useId verify status code")
 	public void testErrorMessageForExistingUserIdAndNonExistingOrgId() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		OrgIDs.add(41);
+		OrgIDs.add(testData.getProperty("non.existing.org.id"));
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
@@ -101,10 +101,10 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userID & existing OrgIDs  and fetch user by using useId verify status code")
-	public void testErrorMessageForExistingUserIdAndExistingOrgIDs() throws IOException {
+	public void testStatusCodeForExistingUserIdAndExistingOrgIDs() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		OrgIDs.add(4141);
-		OrgIDs.add(4142);
+		OrgIDs.add(testData.getProperty("org.id.two"));
+		OrgIDs.add(testData.getProperty("org.id.three"));
 		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
@@ -117,4 +117,3 @@ public class  ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 
 	}
 }
-
