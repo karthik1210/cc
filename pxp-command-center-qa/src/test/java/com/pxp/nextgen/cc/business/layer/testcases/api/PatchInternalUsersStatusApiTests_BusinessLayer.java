@@ -151,7 +151,7 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 				updateInternalUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from inactive to active using user id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user with invalid url")
 	public void testErrorMessagesForUpdateInternalUserStatusWithInvalidUrl() throws IOException {
 		logStep("Create new internal user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
@@ -174,7 +174,7 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(updateInternalUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from inactive to active using user id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status with invalid method call")
 	public void testErrorForInternalUserStatusInvalidMethodCall() throws IOException {
 		logStep("Create new internal user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
