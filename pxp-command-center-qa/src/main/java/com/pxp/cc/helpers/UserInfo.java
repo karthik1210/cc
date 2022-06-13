@@ -263,5 +263,29 @@ public class UserInfo extends BaseRest {
 
 		return updateInternalUsertMap;
 	}
+	
+	public Response patchInternalUser_BusinessLayer(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.INTERNAL_USER_SERVICE (id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response patchInternalUser_BusinessLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE (id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response patchInternalUser_BusinessLayerUsingInvalidMethodCall(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.INTERNAL_USER_SERVICE (id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
+	
+	private Map<String, Object> patchInternalUserStatus(String userStatus) {
+		Map<String, Object> updateInternalUsertMap = new HashMap<String, Object>();
+		updateInternalUsertMap.put("userStatus", userStatus);
+		return updateInternalUsertMap;
+	}
 
 }

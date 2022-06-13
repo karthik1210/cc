@@ -2078,5 +2078,23 @@ public class Validations {
 		}
 		CCUtils.assertEquals(responseDataList, datalist);
 	}
+	
+	public void verifyErrorMessageInResponseForInternalUserStatusAsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "The request is Invalid");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=908090");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageInResponseUpdateInvalidInternalUserStatus(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 }
