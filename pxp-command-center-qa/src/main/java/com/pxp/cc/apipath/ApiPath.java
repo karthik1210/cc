@@ -332,7 +332,8 @@ public class ApiPath {
 	}
 
 	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
-	public static final String ASSOCIATE_ENTITIES_INVALID_URL_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entitiesssss";
+	public static final String ASSOCIATE_ENTITIES_INVALID_URL_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}"
+			+ "/entitiesssss";
 	public static final String INTERNAL_USER_BL = SERVICE_USER_BL + "/v1/users/";
 	public static final String INVALID_PATH_INTERNALUSER_BL = SERVICE_USER_BL + "/v1/usersabc123/";
 	public static final String SERVICE_PRODUCT_DL = "/service/product-data";
@@ -346,13 +347,16 @@ public class ApiPath {
 	public static final String INVALID_PATH_ORG_HIERARCHY_DL(int orgId) {
 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/org-hierarchysssss";
 	}
-	
+
 	public static String INTERNAL_USER_SERVICE(int id) {
-	return INTERNAL_USER_BL + id;
+		return INTERNAL_USER_BL + id;
 	}
-	
+
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
-		}
+	}
 
+	public static final String ASSOCIATE_ENTITIES_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
+	public static final String ASSOCIATE_ENTITIES_INVALID_URL_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}"
+			+ "/entitiesssss";
 }
