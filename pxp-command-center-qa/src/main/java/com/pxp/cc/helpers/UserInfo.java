@@ -171,15 +171,17 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
 		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getAssociateEntitiesInvalidUrl(int userId) {
 		String url = ApiPath.ASSOCIATE_ENTITIES_INVALID_URL_BL;
 		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
 	}
+
 	public Response invalidMethodCallGetAssociateEntities(int userId) {
 		String url = ApiPath.ASSOCIATE_ENTITIES_BL;
 		return given().spec(requestSpec).pathParam("userId", userId).when().put(url).then().extract().response();
 	}
+
 	public Response addAssociateEntitiesInvalidUrl(int userId, ArrayList<Object> orgIDs) {
 		List<Object> associatedEntitiesPayload = postassociatedEntities(orgIDs);
 		String invalidurl = ApiPath.ADD_ASSOCIATE_ENTITIES_INVALID_URL_BL(userId);
@@ -263,29 +265,44 @@ public class UserInfo extends BaseRest {
 
 		return updateInternalUsertMap;
 	}
-	
+
 	public Response patchInternalUser_BusinessLayer(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
-		String url = ApiPath.INTERNAL_USER_SERVICE (id);
+		String url = ApiPath.INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
+
 	public Response patchInternalUser_BusinessLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
-		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE (id);
+		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
-	public Response patchInternalUser_BusinessLayerUsingInvalidMethodCall(String userStatus, Integer id) throws IOException {
+
+	public Response patchInternalUser_BusinessLayerUsingInvalidMethodCall(String userStatus, Integer id)
+			throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
-		String url = ApiPath.INTERNAL_USER_SERVICE (id);
+		String url = ApiPath.INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
 	}
-	
+
 	private Map<String, Object> patchInternalUserStatus(String userStatus) {
 		Map<String, Object> updateInternalUsertMap = new HashMap<String, Object>();
 		updateInternalUsertMap.put("userStatus", userStatus);
 		return updateInternalUsertMap;
 	}
 
+	public Response getAssociateEntitiesDL(int userId) {
+		String url = ApiPath.ASSOCIATE_ENTITIES_DL;
+		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
+	}
+
+	public Response getAssociateEntitiesInvalidUrlDL(int userId) {
+		String url = ApiPath.ASSOCIATE_ENTITIES_INVALID_URL_DL;
+		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetAssociateEntitiesDL(int userId) {
+		String url = ApiPath.ASSOCIATE_ENTITIES_DL;
+		return given().spec(requestSpec).pathParam("userId", userId).when().put(url).then().extract().response();
+	}
 }
