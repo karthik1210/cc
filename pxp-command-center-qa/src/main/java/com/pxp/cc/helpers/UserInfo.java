@@ -290,7 +290,37 @@ public class UserInfo extends BaseRest {
 		updateInternalUsertMap.put("userStatus", userStatus);
 		return updateInternalUsertMap;
 	}
+	
+	public Response updateInternalUser_DataLayer(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.INTERNAL_USER_DATA  (id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(url).then().extract().response();
+	}
 
+	public Response updateInternalUser_DataLayerUsingInvalidUrl(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String invalidUrl = ApiPath.INVALID_INTERNAL_USER_DATA (id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(invalidUrl).then().extract()
+				.response();
+	}
+	
+	public Response updateInternalUser_DataLayerUsingInvalidMethodCall(String authId, String userType,
+			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
+			Object clientId, Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.INTERNAL_USER_DATA  (id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
+	
 	public Response getAssociateEntitiesDL(int userId) {
 		String url = ApiPath.ASSOCIATE_ENTITIES_DL;
 		return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
