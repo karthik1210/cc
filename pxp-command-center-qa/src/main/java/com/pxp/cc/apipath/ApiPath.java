@@ -361,15 +361,20 @@ public class ApiPath {
 	public static final String ASSOCIATE_ENTITIES_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}"
 			+ "/entitiesssss";
-	
-	
-	
-	
+
 	public static final String INTERNAL_USER_DATA(int id) {
 		return INTERNAL_USER_DL + id;
-	}	
-	
+	}
+
 	public static final String INVALID_INTERNAL_USER_DATA(int id) {
 		return INVALID_INTERNAL_USER_DL + id;
-	}	
+	}
+
+	public static final String ADD_ASSOCIATE_ENTITIES_DL(int userId) {
+		return SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
+	}
+
+	public static final String ADD_ASSOCIATE_ENTITIES_INVALID_URL_DL(int userId) {
+		return SERVICE_USER_DL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
+	}
 }
