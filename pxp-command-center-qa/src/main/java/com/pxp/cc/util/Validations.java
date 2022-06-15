@@ -2096,5 +2096,4 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-
 }
