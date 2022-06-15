@@ -307,7 +307,7 @@ public class UserInfo extends BaseRest {
 	}
 	
 	public Response addAssociateEntities_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user) {
-		List<Object> associatedEntitiesPayload = postassociatedEntities_DL(orgIDs);
+		List<Object> associatedEntitiesPayload = associatedEntities_DL(orgIDs);
 		String url = ApiPath.ADD_ASSOCIATE_ENTITIES_DL(userId);
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId).body(associatedEntitiesPayload).when().post(url)
 				.then().extract().response();
@@ -318,7 +318,7 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId).when().get(url).then().extract().response();
 	}
 	
-	private List<Object> postassociatedEntities_DL(ArrayList<Object> orgID) {
+	private List<Object> associatedEntities_DL(ArrayList<Object> orgID) {
 		List<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.addAll(orgID);
 		return OrgIDs;
@@ -326,14 +326,14 @@ public class UserInfo extends BaseRest {
 	}
 	
 	public Response addAssociateEntitiesInvalidUrl_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user) {
-		List<Object> associatedEntitiesPayload = postassociatedEntities_DL(orgIDs);
+		List<Object> associatedEntitiesPayload = associatedEntities_DL(orgIDs);
 		String invalidurl = ApiPath.ADD_ASSOCIATE_ENTITIES_INVALID_URL_DL(userId);
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user). pathParam("userId", userId).body(associatedEntitiesPayload).when()
 				.post(invalidurl).then().extract().response();
 	}
 	
 	public Response invalidMethodCall_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user ) {
-		List<Object> associatedEntitiesPayload = postassociatedEntities_DL(orgIDs);
+		List<Object> associatedEntitiesPayload = associatedEntities_DL(orgIDs);
 		String url = ApiPath.ADD_ASSOCIATE_ENTITIES_DL(userId);
 		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user). pathParam("userId", userId).body(associatedEntitiesPayload).when().put(url)
 				.then().extract().response();
