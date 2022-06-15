@@ -4,16 +4,13 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class AddAssociateEntitiesApiTests_DataLayer extends BaseRest {
@@ -44,7 +41,6 @@ public class AddAssociateEntitiesApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
 		CCUtils.assertEquals(fetchAssociateEntitiesApiResponse.getStatusCode(), 200);
 		validation.getAssociatedEntities(fetchAssociateEntitiesApiResponse, OrgIDs);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId in userId field, pxp_cc_user in pxp-cc-user field & invalid value in orgId and verify error message for orgId field")
@@ -70,7 +66,8 @@ public class AddAssociateEntitiesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
 		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 400);
-		validation.verifyErrorInResponseForNullValueForNonExistingUserId(addAssociatedEntitiesResponse);
+		validation.verifyErrorResponseBodyForUserIdField(addAssociatedEntitiesResponse,
+				testData.getProperty("nonexisting.user.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
