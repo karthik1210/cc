@@ -2096,15 +2096,4 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-
-	public void verifyErrorInResponseForInvalidValueForOrgIdField_DL(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
-	}
-	
-	public static void verifyErrorInResponseForNullValueForNonExistingPxpccuserId(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
-		CCUtils.assertEquals(jsonpath.getString("message"), "PxpccUser not found for PxpccUserId=123456");
-	}
 }
