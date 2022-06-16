@@ -384,4 +384,33 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_BL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response activateDeactivateUsers_DL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_DL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response activateDeactivateUsersUsingInvalidMethod_DL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_DL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response activateDeactivateUsersUsingInvalidUrl_DL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_INVALID_URL_DL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> activateDeactivateUsers(String status, List<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersMap = new HashMap<String, Object>();
+		activateDeactivateUsersMap.put("status", status);
+		activateDeactivateUsersMap.put("userIds", userIds);
+		return activateDeactivateUsersMap;
+	}
+
 }

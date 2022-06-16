@@ -242,7 +242,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInternalUserInvalidMethod(updateInternalUserDetailsApiResponse);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateInternalUserDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing created VAReseller user type with Client type using user id and validate error status code")

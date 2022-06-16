@@ -378,6 +378,9 @@ public class ApiPath {
 		return SERVICE_USER_DL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
 	}
 
+	public static final String ACTIVATE_DEACTIVATE_USER_DL = SERVICE_USER_DL + "/v1/users/statuses";
+	public static final String ACTIVATE_DEACTIVATE_USER_INVALID_URL_DL = SERVICE_USER_DL + "/v1/userss/statusessss";
+
 	public static final String LOGIN_DETAIL_BL(int orgId) {
 		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/login";
 	}

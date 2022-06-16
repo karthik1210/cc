@@ -18,8 +18,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ValidateUserDetailsApiTests_DataLayer" />
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddAssociateEntitiesApiTests_DataLayer"/>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddAssociateEntitiesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

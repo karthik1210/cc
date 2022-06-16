@@ -24,6 +24,8 @@ import com.pxp.cc.pojos.OrgNode;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
+import com.pxp.cc.pojos.UserStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -2042,7 +2044,7 @@ public class Validations {
 				"When user entered incorrect user type then it display error message");
 	}
 
-	public void verifyErrorMessageInResponseForInternalUserInvalidMethod(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidPostMethodCall(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'POST' not supported");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
@@ -2091,9 +2093,47 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseUpdateInvalidInternalUserStatus(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidUserStatus(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyActivateDeactivateUserApiResponseBody(Response response, List<Integer> userIds, String status,
+			String message) throws IOException {
+		List<UserStatus> actualUserStatusList = new ArrayList<UserStatus>();
+		for (int i = 0; i < userIds.size(); i++) {
+			actualUserStatusList.add(new UserStatus(userIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "User list is empty");
+		CCUtils.assertTrue(actualUserStatusList.size() == responseBody.length(),
+				"Size of actual user list and expected user list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualUserStatusList.contains(new UserStatus(jsonObject.getInt("userId"),
+							jsonObject.getString("status"), jsonObject.getString("message"))),
+					"User Id " + jsonObject.getInt("userId") + " doesn't exist");
+		}
+	}
+
+	public void verifyErrorMessageInResponseForBlankUserIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "userIds cannot be empty or null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForBlankStatusField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "status cannot be empty or null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForNonExistingUserId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "userId doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
