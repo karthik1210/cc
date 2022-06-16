@@ -2138,4 +2138,17 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyErrorResponseBodyForNonexistingUserIdField(Response response, String userId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Audit not found for userId=" + userId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyResponseBodyForLoginDetail(Response response, String loginCount, String loginAttempts)
+			throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("loginCount").toString(), loginCount);
+		CCUtils.assertEquals(jsonpath.get("loginAttempts").toString(), loginAttempts);
+	}
 }

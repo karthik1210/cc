@@ -340,6 +340,21 @@ public class UserInfo extends BaseRest {
 				.body(associatedEntitiesPayload).when().put(url).then().extract().response();
 	}
 
+	public Response getUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_BL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getUserloginInvalidUrl(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_INVALID_URL_BL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_BL(userId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 	public Response activateDeactivateUsers_DL(String status, ArrayList<Integer> userIds) {
 		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
 		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_DL;
@@ -353,7 +368,7 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().post(url).then().extract()
 				.response();
 	}
-	
+
 	public Response activateDeactivateUsersUsingInvalidUrl_DL(String status, ArrayList<Integer> userIds) {
 		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
 		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_INVALID_URL_DL;
