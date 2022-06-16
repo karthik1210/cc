@@ -363,8 +363,11 @@ public class ApiPath {
 	public static final String ADD_ASSOCIATE_ENTITIES_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
 	}
-	
+
 	public static final String ADD_ASSOCIATE_ENTITIES_INVALID_URL_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
 	}
+
+	public static final String ACTIVATE_DEACTIVATE_USER_DL = SERVICE_USER_DL + "/v1/users/statuses";
+	public static final String ACTIVATE_DEACTIVATE_USER_INVALID_URL_DL = SERVICE_USER_DL + "/v1/userss/statusessss";
 }

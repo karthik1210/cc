@@ -194,7 +194,7 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInternalUserInvalidMethod(updateInternalUserDetailsApiResponse);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateInternalUserDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update invalid user status of newly created internal user using user id")
@@ -217,7 +217,7 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseUpdateInvalidInternalUserStatus(updateInternalUserDetailsApiResponse);
+		validation.verifyErrorMessageInResponseInvalidUserStatus(updateInternalUserDetailsApiResponse);
 	}
 
 }
