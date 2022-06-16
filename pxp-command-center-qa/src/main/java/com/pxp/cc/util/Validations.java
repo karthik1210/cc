@@ -2127,19 +2127,7 @@ public class Validations {
 
 	public void verifyErrorMessageInResponseForBlankStatusField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "must not be blank, status cannot be empty or null";
-		List<String> actualValue = new ArrayList<String>();
-		for (String val : Arrays.asList(actual.split(","))) {
-			actualValue.add(val.trim());
-		}
-		Collections.sort(actualValue);
-		String expected = jsonpath.get("message").toString();
-		List<String> expectedValue = new ArrayList<String>();
-		for (String val : Arrays.asList(expected.split(","))) {
-			expectedValue.add(val.trim());
-		}
-		Collections.sort(expectedValue);
-		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "status cannot be empty or null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
