@@ -335,37 +335,53 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.ASSOCIATE_ENTITIES_DL;
 		return given().spec(requestSpec).pathParam("userId", userId).when().put(url).then().extract().response();
 	}
-	
+
 	public Response addAssociateEntities_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user) {
 		List<Object> associatedEntitiesPayload = associatedEntities_DL(orgIDs);
 		String url = ApiPath.ADD_ASSOCIATE_ENTITIES_DL(userId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId).body(associatedEntitiesPayload).when().post(url)
-				.then().extract().response();
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId)
+				.body(associatedEntitiesPayload).when().post(url).then().extract().response();
 	}
 
 	public Response getAssociateEntities_DL(int userId, int pxp_cc_user) {
 		String url = ApiPath.ASSOCIATE_ENTITIES_DL;
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId).when().get(url).then().extract().response();
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId).when()
+				.get(url).then().extract().response();
 	}
-	
+
 	private List<Object> associatedEntities_DL(ArrayList<Object> orgID) {
 		List<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.addAll(orgID);
 		return OrgIDs;
 
 	}
-	
+
 	public Response addAssociateEntitiesInvalidUrl_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user) {
 		List<Object> associatedEntitiesPayload = associatedEntities_DL(orgIDs);
 		String invalidurl = ApiPath.ADD_ASSOCIATE_ENTITIES_INVALID_URL_DL(userId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user). pathParam("userId", userId).body(associatedEntitiesPayload).when()
-				.post(invalidurl).then().extract().response();
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId)
+				.body(associatedEntitiesPayload).when().post(invalidurl).then().extract().response();
 	}
-	
-	public Response invalidMethodCall_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user ) {
+
+	public Response invalidMethodCall_DL(int userId, ArrayList<Object> orgIDs, int pxp_cc_user) {
 		List<Object> associatedEntitiesPayload = associatedEntities_DL(orgIDs);
 		String url = ApiPath.ADD_ASSOCIATE_ENTITIES_DL(userId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user). pathParam("userId", userId).body(associatedEntitiesPayload).when().put(url)
-				.then().extract().response();
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, pxp_cc_user).pathParam("userId", userId)
+				.body(associatedEntitiesPayload).when().put(url).then().extract().response();
+	}
+
+	public Response getUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_BL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getUserloginInvalidUrl(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_INVALID_URL_BL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_BL(userId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }

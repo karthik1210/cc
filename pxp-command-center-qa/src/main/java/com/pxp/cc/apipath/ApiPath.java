@@ -377,4 +377,12 @@ public class ApiPath {
 	public static final String ADD_ASSOCIATE_ENTITIES_INVALID_URL_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
 	}
+
+	public static final String LOGIN_DETAIL_BL(int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/login";
+	}
+
+	public static final String LOGIN_DETAIL_INVALID_URL_BL(int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/loginabc";
+	}
 }
