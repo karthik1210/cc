@@ -81,7 +81,7 @@ public class ActivateDeactivateInternalUserApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(activateDeactivateUserApiResponse);
 		CCUtils.assertEquals(activateDeactivateUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseInvalidUserStatus(activateDeactivateUserApiResponse);
+		validation.verifyErrorMessageInResponseForInvalidUserStatus(activateDeactivateUserApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Do not enter user ids in the userIds field and verify response body")
@@ -93,7 +93,7 @@ public class ActivateDeactivateInternalUserApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(activateDeactivateUserApiResponse);
 		CCUtils.assertEquals(activateDeactivateUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseBlankUserIdField(activateDeactivateUserApiResponse);
+		validation.verifyErrorMessageInResponseForBlankUserIdField(activateDeactivateUserApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Do not enter status in the status field and verify response body")
@@ -105,7 +105,7 @@ public class ActivateDeactivateInternalUserApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(activateDeactivateUserApiResponse);
 		CCUtils.assertEquals(activateDeactivateUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseBlankStatusField(activateDeactivateUserApiResponse);
+		validation.verifyErrorMessageInResponseForBlankStatusField(activateDeactivateUserApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of PUT")
@@ -121,7 +121,7 @@ public class ActivateDeactivateInternalUserApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorMessageInvalidUrl() throws IOException {
+	public void testErrorMessageForInvalidUrl() throws IOException {
 		ArrayList<Integer> userIds = new ArrayList<Integer>();
 		userIds.add(Integer.parseInt(testData.getProperty("internal.user.id.one")));
 		activateDeactivateUserApiResponse = userInfo

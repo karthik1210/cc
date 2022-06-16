@@ -217,7 +217,7 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseInvalidUserStatus(updateInternalUserDetailsApiResponse);
+		validation.verifyErrorMessageInResponseForInvalidUserStatus(updateInternalUserDetailsApiResponse);
 	}
 
 }

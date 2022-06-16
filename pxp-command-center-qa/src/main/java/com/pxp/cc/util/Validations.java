@@ -2093,7 +2093,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseInvalidUserStatus(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidUserStatus(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -2119,15 +2119,27 @@ public class Validations {
 		}
 	}
 
-	public void verifyErrorMessageInResponseBlankUserIdField(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForBlankUserIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "userIds cannot be empty or null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseBlankStatusField(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForBlankStatusField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "must not be blank, status cannot be empty or null");
+		String actual = "must not be blank, status cannot be empty or null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
