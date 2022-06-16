@@ -2034,8 +2034,7 @@ public class Validations {
 		CCUtils.assertEquals(actualValue, expectedValue);
 	}
 
-	public void verifyErrorMessageInResponseForInternalInvalidUserTypeForBusinessLayer(Response response)
-			throws IOException {
+	public void verifyErrorMessageInResponseForInvalidInternalUserType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String responseString = jsonpath.get("message").toString();
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -2096,6 +2095,29 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyUpdateInternalResponseBody(Response response, int id) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getInt("id"), id);
+	}
+
+	public void verifyErrorResponseForDuplicateInternalUsernameInDataLayer(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=testUsername");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+	}
+
+	public void verifyErrorResponseForDuplicateInternalEmailIdInDataLayer(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate email=TestEmail@gmail.com");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+	}
+
+	public void verifyErrorResponseForDuplicateInternalMobileNumberInDataLayer(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=9867007898");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
 	}
 
 	public void verifyErrorResponseBodyForNonexistingUserIdField(Response response, String userId) throws IOException {
