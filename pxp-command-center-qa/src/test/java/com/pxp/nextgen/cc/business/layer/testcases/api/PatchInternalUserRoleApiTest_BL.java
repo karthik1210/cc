@@ -15,7 +15,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class PatchInternalUserRole_BL extends BaseRest {
+public class PatchInternalUserRoleApiTest_BL extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response apiRoleAssociationResponse, getUserRolesByUserApiResponse;
