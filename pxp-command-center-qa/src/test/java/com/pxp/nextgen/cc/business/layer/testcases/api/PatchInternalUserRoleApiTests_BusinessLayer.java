@@ -18,7 +18,7 @@ import io.restassured.response.Response;
 public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	Response RoleAssociationApiResponse, getUserRolesByUserApiResponse;
+	Response updateRoleAssociationApiResponse, getUserRolesByUserApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -32,11 +32,11 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
 				testData.getProperty("api.internal.roleId"), "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 200);
 		getUserRolesByUserApiResponse = userInfo.getUserRolesByUser(userId);
 		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
 		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
@@ -55,11 +55,11 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
 				testData.getProperty("api.internal.roleId"), "false");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 200);
 		getUserRolesByUserApiResponse = userInfo.getUserRolesByUser(userId);
 		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
 		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
@@ -78,11 +78,11 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId, null, null);
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId, null, null);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyNullRoleIdApiResponse(RoleAssociationApiResponse);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
+		validation.verifyNullRoleIdApiResponse(updateRoleAssociationApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid value for roleId and validate error message")
@@ -91,12 +91,12 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
 		String roleId = testData.getProperty("api.invalid.roleId");
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
 				testData.getProperty("api.invalid.roleId"), "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyInvalidRoleIdApiResponse(RoleAssociationApiResponse, orgId, roleId);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidRoleIdApiResponse(updateRoleAssociationApiResponse, orgId, roleId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
@@ -104,12 +104,12 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
-		RoleAssociationApiResponse = userInfo.patchInternalUserRoleInvalidUrl_BL(userId, orgId,
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRoleInvalidUrl_BL(userId, orgId,
 				testData.getProperty("api.internal.roleId"), "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(RoleAssociationApiResponse);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(updateRoleAssociationApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of PATCH")
@@ -117,12 +117,12 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
-		RoleAssociationApiResponse = userInfo.patchInternalUserRoleInvalidMethod_BL(userId, orgId,
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRoleInvalidMethod_BL(userId, orgId,
 				testData.getProperty("api.internal.roleId"), "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidMethod(RoleAssociationApiResponse);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidMethod(updateRoleAssociationApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid userId & valid orgId and validate error message")
@@ -130,12 +130,12 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
 				testData.getProperty("api.internal.roleId"), "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyInvalidUserIdApiResponse(RoleAssociationApiResponse);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidUserIdApiResponse(updateRoleAssociationApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid userId & invalid orgId and validate error message")
@@ -144,11 +144,11 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.nonexisting.orgid"));
 		String roleId = testData.getProperty("api.internal.roleId");
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId, roleId, "true");
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId, roleId, "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyInvalidRoleIdApiResponse(RoleAssociationApiResponse, orgId, roleId);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidRoleIdApiResponse(updateRoleAssociationApiResponse, orgId, roleId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid userId & invalid orgId and validate error message")
@@ -157,10 +157,10 @@ public class PatchInternalUserRoleApiTests_BusinessLayer extends BaseRest {
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		int orgId = Integer.parseInt(testData.getProperty("api.nonexisting.orgid"));
 		String roleId = testData.getProperty("api.internal.roleId");
-		RoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId, roleId, "true");
+		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId, roleId, "true");
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(RoleAssociationApiResponse);
-		CCUtils.assertEquals(RoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyInvalidUserIdApiResponse(RoleAssociationApiResponse);
+		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
+		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidUserIdApiResponse(updateRoleAssociationApiResponse);
 	}
 }
