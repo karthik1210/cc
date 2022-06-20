@@ -2173,4 +2173,24 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("loginCount").toString(), loginCount);
 		CCUtils.assertEquals(jsonpath.get("loginAttempts").toString(), loginAttempts);
 	}
+
+	public void verifyNullRoleIdApiResponse(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid role");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyInvalidRoleIdApiResponse(Response response, int userId, String roleId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Role Assignment not found for the combination of roleId=" + roleId + ", ordId=" + userId
+						+ " and staffId=4054 ");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyInvalidUserIdApiResponse(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=123");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
