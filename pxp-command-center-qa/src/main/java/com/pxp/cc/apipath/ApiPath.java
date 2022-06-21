@@ -393,4 +393,12 @@ public class ApiPath {
 	public static final String SHARED_DL = "/service/shared-data";
 	public static final String DUPLICATE_BRANDS_DL = SHARED_DL + "/v1/brands/";
 	public static final String INVALID_DUPLICATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
+
+	public static final String PATCH_INTERNAL_USER_ROLES_BL(int userId, int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/roles";
+	}
+
+	public static final String PATCH_INTERNAL_USER_ROLES_INVALID_URL_BL(int userId, int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
+	}
 }
