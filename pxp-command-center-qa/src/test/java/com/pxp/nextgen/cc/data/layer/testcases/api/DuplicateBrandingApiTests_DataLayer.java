@@ -63,7 +63,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter non-existing Brand Id when duplicating brand")
-	public void tesErrorMsgWhenEnterNonExistingBrandId() throws IOException {
+	public void testErrorMsgWhenEnterNonExistingBrandId() throws IOException {
 		logStep("Duplicating non-existing brand to org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
 				Integer.parseInt(testData.getProperty("non.existing.brand.id")),
@@ -76,7 +76,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter non-existing owner id when duplicating brand to Org")
-	public void tesErrorMsgWhenEnterNonExistingOwnerIdOfOrg() throws IOException {
+	public void testErrorMsgWhenEnterNonExistingOwnerIdOfOrg() throws IOException {
 		logStep("Duplicating brand to non-existing org id");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
 				Integer.parseInt(testData.getProperty("brand.id")),
@@ -90,7 +90,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter non-existing owner id when duplicating brand to Client")
-	public void tesErrorMsgWhenEnterNonExistingOwnerIdOfClient() throws IOException {
+	public void testErrorMsgWhenEnterNonExistingOwnerIdOfClient() throws IOException {
 		logStep("Duplicating brand to non-existing client id");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
 				Integer.parseInt(testData.getProperty("brand.id")),
@@ -103,7 +103,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter invalid owner type while duplicating brand")
-	public void tesErrorMsgWhenEnterInvalidownerType() throws IOException {
+	public void testErrorMsgWhenEnterInvalidownerType() throws IOException {
 		logStep("Duplicating brand to invalid owner type neither client nor org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
 				Integer.parseInt(testData.getProperty("brand.id.one")),
@@ -115,7 +115,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter null owner type while duplicating brand")
-	public void tesErrorMsgWhenEnterNullownerType() throws IOException {
+	public void testErrorMsgWhenEnterNullownerType() throws IOException {
 		logStep("Duplicating brand to owner type value as null");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
 				Integer.parseInt(testData.getProperty("brand.id.one")),
@@ -127,7 +127,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter null owner Id while duplicating brand")
-	public void tesErrorMsgWhenEnterNullownerId() throws IOException {
+	public void testErrorMsgWhenEnterNullownerId() throws IOException {
 		logStep("Duplicating brand to owner type value as either client or org but owner id as null");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
 				Integer.parseInt(testData.getProperty("brand.id.one")), 0, testData.getProperty("owner.type.org"));
@@ -138,7 +138,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when duplicating brand with invalid url")
-	public void tesErrorMsgForInvalidUrl() throws IOException {
+	public void testErrorMsgForInvalidUrl() throws IOException {
 		logStep("Duplicating brand to org with invalid url");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandInvalidUrl(
 				Integer.parseInt(testData.getProperty("brand.id.one")), 0, testData.getProperty("owner.type.org"));
@@ -149,7 +149,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when duplicating brand with incorrect HTTP method")
-	public void tesErrorMsgForInvalidMethodCall() throws IOException {
+	public void testErrorMsgForInvalidMethodCall() throws IOException {
 		logStep("Duplicating brand to org with invalid HTTP method call as PUT");
 		fetchDuplicateBrandApiResponse = brandInfo.duplicateBrandInvalidMethodCall(
 				Integer.parseInt(testData.getProperty("brand.id.one")),
