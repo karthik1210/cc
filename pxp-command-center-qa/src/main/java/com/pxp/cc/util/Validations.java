@@ -2173,7 +2173,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("loginCount").toString(), loginCount);
 		CCUtils.assertEquals(jsonpath.get("loginAttempts").toString(), loginAttempts);
 	}
-	
+
 	public void verifyNullUserErrorMessageResponseBodyForClientUser(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "UserName cannot be empty or null, LastName cannot be empty or null, FirstName cannot be empty or null, Email cannot be empty or null";
@@ -2196,7 +2196,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=testUsername");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
 	}
-	
+
 	public void verifyErrorResponseForDuplicateClientEmailId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate email=TestEmail@gmail.com");
@@ -2208,7 +2208,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=9867007898");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
 	}
-	
+
 	public void verifyErrorMessageInResponseForInvalidClientUserType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String responseString = jsonpath.get("message").toString();
@@ -2216,13 +2216,13 @@ public class Validations {
 		CCUtils.assertTrue(responseString.contains("value must be one of Internal, Client, VAReseller"),
 				"When user entered incorrect user type then it display error message");
 	}
-	
+
 	public void verifyErrorMessageInResponseForClientUserInvalidUserType(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=400228");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorResponseForClientUserMaximumLength(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "Only alphanumeric, ' and - are allowed, Last name size maximum 100 characters, Only alphanumeric, ' and - are allowed, Username size maximum 100 characters, First name size maximum 100 characters";
@@ -2238,5 +2238,25 @@ public class Validations {
 		}
 		Collections.sort(expectedValue);
 		CCUtils.assertEquals(actualValue, expectedValue);
+	}
+
+	public void verifyNullRoleIdApiResponse(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid role");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyInvalidRoleIdApiResponse(Response response, int userId, String roleId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Role Assignment not found for the combination of roleId=" + roleId + ", ordId=" + userId
+						+ " and staffId=4054 ");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyInvalidUserIdApiResponse(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=123");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }

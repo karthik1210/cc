@@ -396,4 +396,12 @@ public class ApiPath {
 	public static final String LOGIN_DETAIL_INVALID_URL_BL(int orgId) {
 		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
+
+	public static final String PATCH_INTERNAL_USER_ROLES_BL(int userId, int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/roles";
+	}
+
+	public static final String PATCH_INTERNAL_USER_ROLES_INVALID_URL_BL(int userId, int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
+	}
 }
