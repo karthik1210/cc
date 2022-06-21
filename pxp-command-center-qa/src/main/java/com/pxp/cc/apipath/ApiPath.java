@@ -388,4 +388,9 @@ public class ApiPath {
 	public static final String LOGIN_DETAIL_INVALID_URL_BL(int orgId) {
 		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
+	
+	public static final String SHARED_BL = "/service/shared-service";
+	public static final String SHARED_DL = "/service/shared-data";
+	public static final String DUPLICATE_BRANDS_DL = SHARED_DL + "/v1/brands/";
+	public static final String INVALID_DUPLICATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
 }
