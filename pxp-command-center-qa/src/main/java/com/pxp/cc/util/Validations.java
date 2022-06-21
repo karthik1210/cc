@@ -25,7 +25,6 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
