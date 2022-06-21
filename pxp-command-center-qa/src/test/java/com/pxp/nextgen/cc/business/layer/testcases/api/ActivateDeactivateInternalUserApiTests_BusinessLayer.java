@@ -105,6 +105,7 @@ public class ActivateDeactivateInternalUserApiTests_BusinessLayer extends BaseRe
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(activateDeactivateUserApiResponse);
 		CCUtils.assertEquals(activateDeactivateUserApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForBlankStatusField_BL(activateDeactivateUserApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of PUT")
