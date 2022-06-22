@@ -361,6 +361,14 @@ public class ApiPath {
 	public static String INVALID_PATH_CLIENT_BL(int id) {
 		return SERVICE_USER_BL + "/v1/usersssssss/" + id;
 	}
+	
+	public static String VAReseller_USER_SERVICE(int id) {
+		return SERVICE_USER_BL + "/v1/users/" + id;
+	}
+	
+	public static String INVALID_PATH_VAReseller_USER_SERVICE(int id) {
+		return INVALID_PATH_INTERNALUSER_BL + id;
+	}
 
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
