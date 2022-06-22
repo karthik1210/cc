@@ -518,4 +518,26 @@ public class UserInfo extends BaseRest {
 		updateroleAssociatioMap.put("active", active);
 		return updateroleAssociatioMap;
 	}
+	
+	public Response activateDeactivateUsers_BL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_BL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response activateDeactivateUsersUsingInvalidMethod_BL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_BL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response activateDeactivateUsersUsingInvalidUrl_BL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_INVALID_URL_BL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
+				.response();
+	}
+	
 }

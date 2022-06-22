@@ -2258,7 +2258,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=123");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-
+	
+	public void verifyErrorMessageInResponseForBlankStatusField_BL(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "status cannot be empty or null, must not be blank");
+	}
+	
 	public void verifyNullUserErrorMessageResponseBodyForVAResellerUser(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "UserName cannot be empty or null, LastName cannot be empty or null, FirstName cannot be empty or null, Email cannot be empty or null";
