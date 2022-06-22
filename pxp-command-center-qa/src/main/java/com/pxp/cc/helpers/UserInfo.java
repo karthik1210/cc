@@ -489,4 +489,20 @@ public class UserInfo extends BaseRest {
 		updateroleAssociatioMap.put("active", active);
 		return updateroleAssociatioMap;
 	}
+
+	public Response updateUserRoles(int userId, ArrayList<Integer> roleIds) {
+		String url = ApiPath.UPDATE_USER_ROLE_BL(userId);
+		return given().spec(requestSpec).body(roleIds).when().put(url).then().extract().response();
+	}
+
+	public Response updateUserRolesUsingInvalidMethodCall(int userId, ArrayList<Integer> roleIds) {
+		String url = ApiPath.UPDATE_USER_ROLE_BL(userId);
+		return given().spec(requestSpec).body(roleIds).when().post(url).then().extract().response();
+	}
+
+	public Response updateUserRolesUsingInvalidUrl(int userId, ArrayList<Integer> roleIds) {
+		String url = ApiPath.INVALID_PATH_UPDATE_USER_ROLE_BL(userId);
+		return given().spec(requestSpec).body(roleIds).when().put(url).then().extract().response();
+	}
+
 }

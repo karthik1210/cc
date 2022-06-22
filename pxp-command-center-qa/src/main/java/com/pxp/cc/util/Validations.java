@@ -2079,7 +2079,7 @@ public class Validations {
 		CCUtils.assertEquals(responseDataList, datalist);
 	}
 
-	public void verifyErrorMessageInResponseForInternalUserStatusAsNull(Response response) throws IOException {
+	public void verifyErrorMessageInResponseForInvalidInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "The request is Invalid");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
