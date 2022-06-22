@@ -25,7 +25,7 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for non existing userId")
-	public void testErrorMessageNonExistingUserId() throws IOException {
+	public void testErrorMessageForNonExistingUserId() throws IOException {
 		logStep("Enter non existing user id");
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		fetchUserLoginDetailsApiResponse = userInfo.getUserlogin(userId);
@@ -36,10 +36,10 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 				testData.getProperty("nonexisting.user.id"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code & responce body for existing VarReseller userId")
-	public void testErrorMessageExistingVarResellerUserIdForUserIdField() throws NullPointerException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code & response body for existing VarReseller userId")
+	public void testSuccessMessageForExistingVarResellerUserId() throws NullPointerException {
 		logStep("Enter  existing Internal userId");
-		int userId = Integer.parseInt(testData.getProperty("api.VarReseller.userId"));
+		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
 		fetchUserLoginDetailsApiResponse = userInfo.getUserlogin(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
@@ -49,9 +49,9 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorMassageForUserDetailsUsingInvalidUrl() throws IOException {
+	public void testErrorMassageForInvalidUrl() throws IOException {
 		logStep("Enter  existing user id");
-		int userId = Integer.parseInt(testData.getProperty("api.VarReseller.userId"));
+		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
 		fetchUserLoginDetailsApiResponse = userInfo.getUserloginInvalidUrl(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
@@ -60,9 +60,9 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
-	public void testErrorForInvalidMethodCall() throws IOException {
+	public void testErrorMassageForInvalidMethodCall() throws IOException {
 		logStep("Enter  existing user id");
-		int userId = Integer.parseInt(testData.getProperty("api.VarReseller.userId"));
+		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
 		fetchUserLoginDetailsApiResponse = userInfo.invalidMethodCallGetUserlogin(userId);
     	logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
