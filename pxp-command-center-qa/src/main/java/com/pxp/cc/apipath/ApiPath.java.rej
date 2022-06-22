@@ -1,0 +1,111 @@
+diff a/pxp-command-center-qa/src/main/java/com/pxp/cc/apipath/ApiPath.java b/pxp-command-center-qa/src/main/java/com/pxp/cc/apipath/ApiPath.java	(rejected hunks)
+@@ -291,101 +291,109 @@
+ 
+ 	public static String INVALID_PATH_MOVE_ORGANIZATION_NODE(int orgId) {
+ 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/client-orgssssss";
+ 	}
+ 
+ 	public static String VALIDATE_USER_DL() {
+ 		return SERVICE_USER_DL + "/v1/users/validate-user";
+ 	}
+ 
+ 	public static String INVALID_PATH_VALIDATE_USER_DL() {
+ 		return SERVICE_USER_DL + "/v1/Usersss/validateUser";
+ 	}
+ 
+ 	public static final String SERVICE_ROLE_BL = "/service/role-service";
+ 
+ 	public static final String USER_ROLES_BY_USERTYPE_BL(String userType) {
+ 		return SERVICE_ROLE_BL + "/v1/usertypes/" + "{userType}" + "/roles";
+ 	}
+ 
+ 	public static final String INVALID_PATH_USER_ROLES_BY_USERTYPE_BL(String userType) {
+ 		return SERVICE_ROLE_BL + "/v1/usertypes/" + "{userType}" + "/rolesss";
+ 	}
+ 
+ 	public static final String SERVICE_PRODUCT_BL = "/service/product-service";
+ 	public static final String PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/products";
+ 	public static final String INVALID_PATH_PRODUCTS_BL = SERVICE_PRODUCT_BL + "/v1/productsssss";
+ 
+ 	public static final String USER_DL = SERVICE_USER_DL + "/v1/users";
+ 	public static final String INVALID_PATH_USER_DL = SERVICE_USER_DL + "/v1/usersabc";
+ 
+ 	public static final String USER_BL = SERVICE_USER_BL + "/v1/users";
+ 	public static final String INVALID_PATH_USER_BL = SERVICE_USER_BL + "/v1/usersabc";
+ 
+ 	public static final String USER_DETAILS_DL = SERVICE_USER_DL + "/v1/users/";
+ 
+ 	public static final String ADD_ASSOCIATE_ENTITIES_BL(int userId) {
+ 		return SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
+ 	}
+ 
+ 	public static final String ADD_ASSOCIATE_ENTITIES_INVALID_URL_BL(int userId) {
+ 		return SERVICE_USER_BL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
+ 	}
+ 
+ 	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
+ 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}"
+ 			+ "/entitiesssss";
+ 	public static final String INTERNAL_USER_BL = SERVICE_USER_BL + "/v1/users/";
+ 	public static final String INTERNAL_USER_DL = SERVICE_USER_DL + "/v1/users/";
+ 	public static final String INVALID_INTERNAL_USER_DL = SERVICE_USER_DL + "/v1/usersssdsdss/";
+ 	public static final String INVALID_PATH_INTERNALUSER_BL = SERVICE_USER_BL + "/v1/usersabc123/";
+ 	public static final String SERVICE_PRODUCT_DL = "/service/product-data";
+ 	public static final String PRODUCTS_DL = SERVICE_PRODUCT_DL + "/v1/products";
+ 	public static final String INVALID_PATH_PRODUCTS_DL = SERVICE_PRODUCT_DL + "/v1/productsssss";
+ 
+ 	public static final String ORG_HIERARCHY_DL(int orgId) {
+ 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/org-hierarchy";
+ 	}
+ 
+ 	public static final String INVALID_PATH_ORG_HIERARCHY_DL(int orgId) {
+ 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/org-hierarchysssss";
+ 	}
+ 
+ 	public static String INTERNAL_USER_SERVICE(int id) {
+ 		return INTERNAL_USER_BL + id;
+ 	}
+ 
+ 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
+ 		return INVALID_PATH_INTERNALUSER_BL + id;
+ 	}
+ 
+ 	public static final String ASSOCIATE_ENTITIES_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
+ 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}"
+ 			+ "/entitiesssss";
+ 
+ 	public static final String INTERNAL_USER_DATA(int id) {
+ 		return INTERNAL_USER_DL + id;
+ 	}
+ 
+ 	public static final String INVALID_INTERNAL_USER_DATA(int id) {
+ 		return INVALID_INTERNAL_USER_DL + id;
+ 	}
+ 
+ 	public static final String ADD_ASSOCIATE_ENTITIES_DL(int userId) {
+ 		return SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
+ 	}
+ 
+ 	public static final String ADD_ASSOCIATE_ENTITIES_INVALID_URL_DL(int userId) {
+ 		return SERVICE_USER_DL + "/v1/usersss/" + "{userId}" + "/entitiesyz123";
+ 	}
+ 
+ 	public static final String ACTIVATE_DEACTIVATE_USER_DL = SERVICE_USER_DL + "/v1/users/statuses";
+ 	public static final String ACTIVATE_DEACTIVATE_USER_INVALID_URL_DL = SERVICE_USER_DL + "/v1/userss/statusessss";
+ 
+ 	public static final String LOGIN_DETAIL_BL(int orgId) {
+ 		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/login";
+ 	}
+ 
+ 	public static final String LOGIN_DETAIL_INVALID_URL_BL(int orgId) {
+ 		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/loginabc";
+ 	}
++
++	public static final String PATCH_INTERNAL_USER_ROLES_BL(int userId, int orgId) {
++		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/roles";
++	}
++
++	public static final String PATCH_INTERNAL_USER_ROLES_INVALID_URL_BL(int userId, int orgId) {
++		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
++	}
+ }

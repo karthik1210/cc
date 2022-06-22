@@ -1,0 +1,199 @@
+diff a/pxp-command-center-qa/src/main/java/com/pxp/cc/util/Validations.java b/pxp-command-center-qa/src/main/java/com/pxp/cc/util/Validations.java	(rejected hunks)
+@@ -1996,181 +1996,193 @@
+ 		String expected = jsonpath.get("message").toString();
+ 		List<String> expectedValue = new ArrayList<String>();
+ 		for (String val : Arrays.asList(expected.split(","))) {
+ 			expectedValue.add(val.trim());
+ 		}
+ 		Collections.sort(expectedValue);
+ 		CCUtils.assertEquals(actualValue, expectedValue);
+ 	}
+ 
+ 	public void verifyErrorResponseForDuplicateInternalUserMobileNumber(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		String actual = "Duplicate mobile no=9867007898";
+ 		List<String> actualValue = new ArrayList<String>();
+ 		for (String val : Arrays.asList(actual.split(","))) {
+ 			actualValue.add(val.trim());
+ 		}
+ 		Collections.sort(actualValue);
+ 		String expected = jsonpath.get("message").toString();
+ 		List<String> expectedValue = new ArrayList<String>();
+ 		for (String val : Arrays.asList(expected.split(","))) {
+ 			expectedValue.add(val.trim());
+ 		}
+ 		Collections.sort(expectedValue);
+ 		CCUtils.assertEquals(actualValue, expectedValue);
+ 	}
+ 
+ 	public void verifyErrorResponseForInternalUserMaximumLength(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		String actual = "Only alphanumeric, ' and - are allowed, Last name size maximum 100 characters, Only alphanumeric, ' and - are allowed, Username size maximum 100 characters, First name size maximum 100 characters";
+ 		List<String> actualValue = new ArrayList<String>();
+ 		for (String val : Arrays.asList(actual.split(","))) {
+ 			actualValue.add(val.trim());
+ 		}
+ 		Collections.sort(actualValue);
+ 		String expected = jsonpath.get("message").toString();
+ 		List<String> expectedValue = new ArrayList<String>();
+ 		for (String val : Arrays.asList(expected.split(","))) {
+ 			expectedValue.add(val.trim());
+ 		}
+ 		Collections.sort(expectedValue);
+ 		CCUtils.assertEquals(actualValue, expectedValue);
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseForInvalidInternalUserType(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		String responseString = jsonpath.get("message").toString();
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 		CCUtils.assertTrue(responseString.contains("value must be one of Internal, Client, VAReseller"),
+ 				"When user entered incorrect user type then it display error message");
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseForInvalidPostMethodCall(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'POST' not supported");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseForInternalUserInvalidUserType(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=400228");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseForInvalidMethodCall(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+ 	}
+ 
+ 	public void verifyOrgHierarchyResponseBody(Response response, List<OrgHierarchyDetails> datalist)
+ 			throws IOException {
+ 		List<OrgHierarchyDetails> responseDataList = new ArrayList<OrgHierarchyDetails>();
+ 		JSONArray responseBody = new JSONArray(response.getBody().asString());
+ 		JSONObject jsonObject;
+ 		CCUtils.assertTrue(responseBody.length() > 0, "Org list is empty");
+ 		CCUtils.assertTrue(datalist.size() == responseBody.length(),
+ 				"Size of actual org list and expected org list is not same");
+ 		for (int i = 0; i < responseBody.length(); i++) {
+ 			jsonObject = responseBody.getJSONObject(i);
+ 			if (jsonObject.isNull("parentId")) {
+ 				jsonObject.put("parentId", 0);
+ 			}
+ 			responseDataList.add(new OrgHierarchyDetails(jsonObject.getInt("orgId"), jsonObject.getString("name"),
+ 					jsonObject.getString("type"), jsonObject.getBoolean("active"), jsonObject.getInt("parentId")));
+ 		}
+ 		CCUtils.assertEquals(responseDataList, datalist);
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseForInternalUserStatusAsNull(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "The request is Invalid");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(Response response)
+ 			throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=908090");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+-	public void verifyErrorMessageInResponseInvalidUserStatus(Response response) throws IOException {
++	public void verifyErrorMessageInResponseForInvalidUserStatus(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid status");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+ 	public void verifyActivateDeactivateUserApiResponseBody(Response response, List<Integer> userIds, String status,
+ 			String message) throws IOException {
+ 		List<UserStatus> actualUserStatusList = new ArrayList<UserStatus>();
+ 		for (int i = 0; i < userIds.size(); i++) {
+ 			actualUserStatusList.add(new UserStatus(userIds.get(i), status, message));
+ 		}
+ 		JSONArray responseBody = new JSONArray(response.getBody().asString());
+ 		JSONObject jsonObject;
+ 		CCUtils.assertTrue(responseBody.length() > 0, "User list is empty");
+ 		CCUtils.assertTrue(actualUserStatusList.size() == responseBody.length(),
+ 				"Size of actual user list and expected user list is not same");
+ 		for (int i = 0; i < responseBody.length(); i++) {
+ 			jsonObject = responseBody.getJSONObject(i);
+ 			CCUtils.assertTrue(
+ 					actualUserStatusList.contains(new UserStatus(jsonObject.getInt("userId"),
+ 							jsonObject.getString("status"), jsonObject.getString("message"))),
+ 					"User Id " + jsonObject.getInt("userId") + " doesn't exist");
+ 		}
+ 	}
+ 
+-	public void verifyErrorMessageInResponseBlankUserIdField(Response response) throws IOException {
++	public void verifyErrorMessageInResponseForBlankUserIdField(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "userIds cannot be empty or null");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+-	public void verifyErrorMessageInResponseBlankStatusField(Response response) throws IOException {
++	public void verifyErrorMessageInResponseForBlankStatusField(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+-		CCUtils.assertEquals(jsonpath.get("message").toString(), "must not be blank, status cannot be empty or null");
++		String actual = "must not be blank, status cannot be empty or null";
++		List<String> actualValue = new ArrayList<String>();
++		for (String val : Arrays.asList(actual.split(","))) {
++			actualValue.add(val.trim());
++		}
++		Collections.sort(actualValue);
++		String expected = jsonpath.get("message").toString();
++		List<String> expectedValue = new ArrayList<String>();
++		for (String val : Arrays.asList(expected.split(","))) {
++			expectedValue.add(val.trim());
++		}
++		Collections.sort(expectedValue);
++		CCUtils.assertEquals(actualValue, expectedValue);
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+ 	public void verifyErrorMessageInResponseForNonExistingUserId(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "userId doesn't exist");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+ 	public void verifyUpdateInternalResponseBody(Response response, int id) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
+ 	}
+ 
+ 	public void verifyErrorResponseForDuplicateInternalUsernameInDataLayer(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=testUsername");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+ 	}
+ 
+ 	public void verifyErrorResponseForDuplicateInternalEmailIdInDataLayer(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate email=TestEmail@gmail.com");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+ 	}
+ 
+ 	public void verifyErrorResponseForDuplicateInternalMobileNumberInDataLayer(Response response) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=9867007898");
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+ 	}
+ 
+ 	public void verifyErrorResponseBodyForNonexistingUserIdField(Response response, String userId) throws IOException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Audit not found for userId=" + userId);
+ 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+ 	}
+ 
+ 	public void verifyResponseBodyForLoginDetail(Response response, String loginCount, String loginAttempts)
+ 			throws NullPointerException {
+ 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+ 		CCUtils.assertNotNull(jsonpath, "Response is null");
+ 		CCUtils.assertEquals(jsonpath.get("loginCount").toString(), loginCount);
+ 		CCUtils.assertEquals(jsonpath.get("loginAttempts").toString(), loginAttempts);
+ 	}
+ }
