@@ -2189,7 +2189,7 @@ public class Validations {
 		Collections.sort(expectedValue);
 		CCUtils.assertEquals(actualValue, expectedValue);
 	}
-	
+
 	public void verifyErrorResponseForDuplicateClientUsername(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=testUsername");
@@ -2256,6 +2256,72 @@ public class Validations {
 	public void verifyInvalidUserIdApiResponse(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=123");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyNullUserErrorMessageResponseBodyForVAResellerUser(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "UserName cannot be empty or null, LastName cannot be empty or null, FirstName cannot be empty or null, Email cannot be empty or null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+	}
+
+	public void verifyErrorResponseForDuplicateVAResellerUsername(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=testUsername");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+	}
+
+	public void verifyErrorResponseForDuplicateVAResellerEmailId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate email=TestEmail@gmail.com");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+	}
+
+	public void verifyErrorResponseForDuplicateVAResellerMobileNumber(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=9867007898");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Conflict");
+	}
+
+	public void verifyErrorResponseForVAResellerUserMaximumLength(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Only alphanumeric, ' and - are allowed, Last name size maximum 100 characters, Only alphanumeric, ' and - are allowed, Username size maximum 100 characters, First name size maximum 100 characters";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+	}
+
+	public void verifyErrorMessageInResponseForInvalidVAResellerUserType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String responseString = jsonpath.get("message").toString();
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertTrue(responseString.contains("value must be one of Internal, Client, VAReseller"),
+				"When user entered incorrect user type then it display error message");
+	}
+
+	public void verifyErrorMessageInResponseForVAResellerUserInvalidUserType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=400228");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }
