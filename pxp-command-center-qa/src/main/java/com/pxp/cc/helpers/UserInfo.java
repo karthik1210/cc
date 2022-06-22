@@ -556,4 +556,19 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
 				.response();
 	}
+	
+	public Response getInternalUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_DL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getInternalUserloginInvalidUrl(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_INVALID_URL_DL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetInternalUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_DL(userId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
