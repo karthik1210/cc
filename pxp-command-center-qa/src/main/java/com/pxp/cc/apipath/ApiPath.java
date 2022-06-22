@@ -362,6 +362,14 @@ public class ApiPath {
 		return SERVICE_USER_BL + "/v1/usersssssss/" + id;
 	}
 
+	public static String VAReseller_USER_SERVICE(int id) {
+		return SERVICE_USER_BL + "/v1/users/" + id;
+	}
+
+	public static String INVALID_PATH_VAReseller_USER_SERVICE(int id) {
+		return INVALID_PATH_INTERNALUSER_BL + id;
+	}
+
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
 	}
@@ -418,4 +426,6 @@ public class ApiPath {
 		return SERVICE_USER_BL + "/v1/users/" + userId + "/rolesssss";
 	}
 
+	public static final String ACTIVATE_DEACTIVATE_USER_BL = SERVICE_USER_BL + "/v1/users/statuses";
+	public static final String ACTIVATE_DEACTIVATE_USER_INVALID_URL_BL = SERVICE_USER_BL + "/v1/userss/statusessss";
 }
