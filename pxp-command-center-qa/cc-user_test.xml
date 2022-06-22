@@ -5,8 +5,10 @@
 		<listener
 			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
-		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
-		<listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+		<listener
+			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener
+			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
 	</listeners>
 	<test name="CC User Test">
 		<classes>
@@ -18,6 +20,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateUserRolesApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
