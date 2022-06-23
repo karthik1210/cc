@@ -354,6 +354,22 @@ public class ApiPath {
 		return INTERNAL_USER_BL + id;
 	}
 
+	public static String CLIENT_USER_SERVICE(int id) {
+		return SERVICE_USER_BL + "/v1/users/" + id;
+	}
+
+	public static String INVALID_PATH_CLIENT_BL(int id) {
+		return SERVICE_USER_BL + "/v1/usersssssss/" + id;
+	}
+
+	public static String VAReseller_USER_SERVICE(int id) {
+		return SERVICE_USER_BL + "/v1/users/" + id;
+	}
+
+	public static String INVALID_PATH_VAReseller_USER_SERVICE(int id) {
+		return INVALID_PATH_INTERNALUSER_BL + id;
+	}
+
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
 	}
@@ -388,7 +404,7 @@ public class ApiPath {
 	public static final String LOGIN_DETAIL_INVALID_URL_BL(int orgId) {
 		return SERVICE_USER_BL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
-	
+
 	public static final String SHARED_BL = "/service/shared-service";
 	public static final String SHARED_DL = "/service/shared-data";
 	public static final String DUPLICATE_BRANDS_DL = SHARED_DL + "/v1/brands/";
@@ -400,5 +416,24 @@ public class ApiPath {
 
 	public static final String PATCH_INTERNAL_USER_ROLES_INVALID_URL_BL(int userId, int orgId) {
 		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
+	}
+
+	public static final String UPDATE_USER_ROLE_BL(int userId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/roles";
+	}
+
+	public static final String INVALID_PATH_UPDATE_USER_ROLE_BL(int userId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/rolesssss";
+	}
+
+	public static final String ACTIVATE_DEACTIVATE_USER_BL = SERVICE_USER_BL + "/v1/users/statuses";
+	public static final String ACTIVATE_DEACTIVATE_USER_INVALID_URL_BL = SERVICE_USER_BL + "/v1/userss/statusessss";
+	
+	public static final String LOGIN_DETAIL_DL(int orgId) {
+		return SERVICE_USER_DL + "/v1/users/" + orgId + "/audit/login";
+	}
+
+	public static final String LOGIN_DETAIL_INVALID_URL_DL(int orgId) {
+		return SERVICE_USER_DL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
 }

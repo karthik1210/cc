@@ -266,6 +266,26 @@ public class UserInfo extends BaseRest {
 		return updateInternalUsertMap;
 	}
 
+	private Map<String, Object> putUpdateClientUser(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds) {
+		Map<String, Object> updateInternalUsertMap = new HashMap<String, Object>();
+		updateInternalUsertMap.put("authId", authId);
+		updateInternalUsertMap.put("userType", userType);
+		updateInternalUsertMap.put("firstName", firstName);
+		updateInternalUsertMap.put("lastName", lastName);
+		updateInternalUsertMap.put("userName", userName);
+		updateInternalUsertMap.put("email", email);
+		updateInternalUsertMap.put("mobile", mobile);
+		updateInternalUsertMap.put("userStatus", userStatus);
+		updateInternalUsertMap.put("clientId", clientId);
+		updateInternalUsertMap.put("resellerId", resellerId);
+		updateInternalUsertMap.put("providerId", providerId);
+		updateInternalUsertMap.put("expiryDate", expiryDate);
+		updateInternalUsertMap.put("roleIds", roleIds);
+		return updateInternalUsertMap;
+	}
+
 	public Response patchInternalUser_BusinessLayer(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.INTERNAL_USER_SERVICE(id);
@@ -318,6 +338,67 @@ public class UserInfo extends BaseRest {
 		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
 				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
 		String url = ApiPath.INTERNAL_USER_DATA(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
+
+	public Response updateClientUser_BusinessLayer(String authId, String userType, String firstName, String lastName,
+			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
+			Object providerId, String expiryDate, List<Integer> roleIds, Integer userId) throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateClientUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.CLIENT_USER_SERVICE(userId);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateClientUser_BusinessLayerUsingInvalidUrl(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer userId)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateClientUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_BL(userId);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(invalidUrl).then().extract()
+				.response();
+	}
+
+	public Response updateClientUser_BusinessLayerUsingInvalidMethodCall(String authId, String userType,
+			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
+			Object clientId, Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds,
+			Integer userId) throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateClientUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.CLIENT_USER_SERVICE(userId);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
+
+	public Response updateVAResellerUser_BusinessLayer(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.VAReseller_USER_SERVICE(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateVAResellerUser_BusinessLayerUsingInvalidUrl(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String invalidUrl = ApiPath.INVALID_PATH_VAReseller_USER_SERVICE(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().put(invalidUrl).then().extract()
+				.response();
+	}
+
+	public Response updateVAResellerUser_InvalidPostMethodCall(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer id)
+			throws IOException {
+		Map<String, Object> updateInternalUserPayload = putUpdateInternalUser(authId, userType, firstName, lastName,
+				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
+		String url = ApiPath.VAReseller_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
 	}
 
@@ -438,5 +519,56 @@ public class UserInfo extends BaseRest {
 		updateroleAssociatioMap.put("roleId", roleId);
 		updateroleAssociatioMap.put("active", active);
 		return updateroleAssociatioMap;
+	}
+
+	public Response updateUserRoles(int userId, ArrayList<Integer> roleIds) {
+		String url = ApiPath.UPDATE_USER_ROLE_BL(userId);
+		return given().spec(requestSpec).body(roleIds).when().put(url).then().extract().response();
+	}
+
+	public Response updateUserRolesUsingInvalidMethodCall(int userId, ArrayList<Integer> roleIds) {
+		String url = ApiPath.UPDATE_USER_ROLE_BL(userId);
+		return given().spec(requestSpec).body(roleIds).when().post(url).then().extract().response();
+	}
+
+	public Response updateUserRolesUsingInvalidUrl(int userId, ArrayList<Integer> roleIds) {
+		String url = ApiPath.INVALID_PATH_UPDATE_USER_ROLE_BL(userId);
+		return given().spec(requestSpec).body(roleIds).when().put(url).then().extract().response();
+	}
+
+	public Response activateDeactivateUsers_BL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_BL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response activateDeactivateUsersUsingInvalidMethod_BL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_BL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response activateDeactivateUsersUsingInvalidUrl_BL(String status, ArrayList<Integer> userIds) {
+		Map<String, Object> activateDeactivateUsersPayload = activateDeactivateUsers(status, userIds);
+		String url = ApiPath.ACTIVATE_DEACTIVATE_USER_INVALID_URL_BL;
+		return given().spec(requestSpec).body(activateDeactivateUsersPayload).when().put(url).then().extract()
+				.response();
+	}
+	
+	public Response getInternalUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_DL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getInternalUserloginInvalidUrl(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_INVALID_URL_DL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetInternalUserlogin(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_DL(userId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }
