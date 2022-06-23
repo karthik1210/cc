@@ -49,7 +49,7 @@ public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error message")
-	public void testErrorResponseForInvalidMethodCall() throws IOException {
+	public void testErrorResponseForInvalidUrl() throws IOException {
 		getBrandingDetailsApiResponse = sharedInfo
 				.getBrandDetailsUsingInvalidUrl(Integer.parseInt(testData.getProperty("brand.id.one")));
 		CCUtils.responseTimeValidation(getBrandingDetailsApiResponse);
