@@ -445,6 +445,9 @@ public class ApiPath {
 		return SERVICE_USER_DL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
 
+	public static final String DUPLICATE_BRANDS_BL = SERVICE_SHARED_BL + "/v1/brands/";
+	public static final String INVALID_DUPLICATE_BRANDS_BL = SERVICE_SHARED_BL + "/v1/brandsss/";
+
 	public static final String BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brands/" + brandId;
 	}
@@ -452,6 +455,4 @@ public class ApiPath {
 	public static final String INVALID_PATH_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
 	}
-
-
 }
