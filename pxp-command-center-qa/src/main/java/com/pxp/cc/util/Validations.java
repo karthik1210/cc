@@ -2258,12 +2258,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=123");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageInResponseForBlankStatusField_BL(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "status cannot be empty or null, must not be blank");
 	}
-	
+
 	public void verifyNullUserErrorMessageResponseBodyForVAResellerUser(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "UserName cannot be empty or null, LastName cannot be empty or null, FirstName cannot be empty or null, Email cannot be empty or null";
@@ -2329,7 +2329,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=400228");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyNullUserErrorMessageResponseBodyForVAResellerUserDataLayer(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "UserName cannot be empty or null, Email cannot be empty or null";
@@ -2346,9 +2346,39 @@ public class Validations {
 		Collections.sort(expectedValue);
 		CCUtils.assertEquals(actualValue, expectedValue);
 	}
-	
+
 	public void verifyUpdateVAResellerResponseBody(Response response, int id) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
+	}
+
+	public void verifyErrorMessageForInvalidBrandId(Response response, int brandId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Brand not found by id=" + brandId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
+			String color, int brandId, String logo, String favicon, String emailLogo, String active)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		if (Objects.isNull(jsonpath.get("orgId"))) {
+			Log4jUtil.log("orgId is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
+		}
+		if (Objects.isNull(jsonpath.get("orgType"))) {
+			Log4jUtil.log("orgType is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgType"), orgType);
+		}
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+		CCUtils.assertEquals(jsonpath.getInt("brandId"), brandId);
+		CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
+		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
+		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 	}
 }

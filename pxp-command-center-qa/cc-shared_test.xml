@@ -12,6 +12,8 @@
 	</listeners>
 	<test name="CC Shared Test">
 		<classes>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandDetailsApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
