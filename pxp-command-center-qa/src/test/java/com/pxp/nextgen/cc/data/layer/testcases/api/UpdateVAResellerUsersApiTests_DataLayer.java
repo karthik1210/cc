@@ -48,7 +48,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 		return id;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and updated newly created Var/Reseller user details using user id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Updated newly created Var/Reseller user details using user id")
 	public void testCreateNewVarResellerUser() throws IOException {
 		logStep("Modify all the existing details of VAReseller user");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "VAReseller",
@@ -61,7 +61,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyUpdateVAResellerResponseBody(updateVAResellerUserDetailsApiResponse, userId);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update null value in mandatory fields then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update null value in mandatory fields then validate error message")
 	public void testErrorMessagesForMandatoryFields() throws IOException {
 		logStep("Enter null value in mandatory fields and validate error message");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "VAReseller",
@@ -73,7 +73,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorResponseForNullUsernameAndEmailField(updateVAResellerUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user & update the existing username then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update the existing username then validate error message")
 	public void testErrorMessagesForDuplicateVAResellerUsername() throws IOException {
 		logStep("Enter existing username details of VAReseller user");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "VAReseller",
@@ -87,7 +87,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 				testData.getProperty("valid.username"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update existing email then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing email then validate error message")
 	public void testErrorMessagesForDuplicateVAResellerUserUserEmailId() throws IOException {
 		logStep("Enter existing email id details of VAReseller user while updating email id");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "VAReseller",
@@ -101,7 +101,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 				testData.getProperty("valid.user.email"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update existing mobile number then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing mobile number then validate error message")
 	public void testErrorMessagesForDuplicateVAResellerUserMobileNumber() throws IOException {
 		logStep("Modify existing mobile nuber details of VAReseller user");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "VAReseller",
@@ -116,7 +116,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 				(testData.getProperty("valid.user.mobile.number")));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
 	public void testErrorMessagesForInvalidVAResellerUserNameAndMaximumLength() throws IOException {
 		logStep("Enter more than 100 character in firstName lastName & UserName fields and validate error message");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "VAReseller",
@@ -132,7 +132,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 				updateVAResellerUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update invalid usertype then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update invalid usertype then validate error message")
 	public void testErrorMessagesForVAResellerInvalidUserType() throws IOException {
 		logStep("Modify invalid user type for VAReseller user");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null,
@@ -146,7 +146,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidVAResellerUserType(updateVAResellerUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update invalid url and validate error status code")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update invalid url and validate error status code")
 	public void testErrorMessagesForUpdateVAResellerUserWithInvalidUrl() throws IOException {
 		logStep("Enter invalid url and validate error status code");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayerUsingInvalidUrl(null,
@@ -160,7 +160,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(updateVAResellerUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update the details with invalid method call then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update the details with invalid method call then validate error message")
 	public void testErrorForVAResellerUserInvalidMethodCall() throws IOException {
 		logStep("Call api with invalid method type which is POST");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_InvalidPostMethodCallDataLayer(null,
@@ -174,7 +174,7 @@ public class UpdateVAResellerUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateVAResellerUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Created VAReseller user & update user type as Internal then validate error status code")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update user type as Internal then validate error status code")
 	public void testModifyExistingUserTypeWithDifferentUserType() throws IOException {
 		logStep("Modify existing user type from VAReseller to Internal user");
 		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_DataLayer(null, "Internal",
