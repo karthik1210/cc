@@ -1,10 +1,8 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
 import com.pxp.cc.helpers.ClientInfo;
@@ -12,7 +10,6 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.DuplicateBrandingValidations;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
