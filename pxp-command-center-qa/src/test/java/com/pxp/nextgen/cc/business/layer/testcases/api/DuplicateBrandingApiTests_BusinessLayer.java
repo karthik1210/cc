@@ -31,7 +31,7 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 		clientInfo = new ClientInfo();
 		duplicateBrandingValidations = new DuplicateBrandingValidations();
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another existing client")
 	public void testDuplicateBrandToClient() throws IOException {
 		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
