@@ -100,7 +100,8 @@ public class UpdateVAResellerUsersApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
 		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 409);
-		validation.verifyErrorResponseForDuplicateVAResellerUsername(updateVAResellerUserDetailsApiResponse);
+		validation.verifyErrorResponseForDuplicateVAResellerUsername(updateVAResellerUserDetailsApiResponse,
+				testData.getProperty("valid.username"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update existing email then validate error message")
@@ -126,7 +127,8 @@ public class UpdateVAResellerUsersApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
 		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 409);
-		validation.verifyErrorResponseForDuplicateVAResellerEmailId(updateVAResellerUserDetailsApiResponse);
+		validation.verifyErrorResponseForDuplicateVAResellerEmailId(updateVAResellerUserDetailsApiResponse,
+				testData.getProperty("valid.user.email"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update existing mobile number then validate error message")
@@ -153,7 +155,8 @@ public class UpdateVAResellerUsersApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
 		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 409);
-		validation.verifyErrorResponseForDuplicateVAResellerMobileNumber(updateVAResellerUserDetailsApiResponse);
+		validation.verifyErrorResponseForDuplicateVAResellerMobileNumber(updateVAResellerUserDetailsApiResponse,
+				(testData.getProperty("valid.user.mobile.number")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
@@ -181,7 +184,8 @@ public class UpdateVAResellerUsersApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
 		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForVAResellerUserMaximumLength(updateVAResellerUserDetailsApiResponse);
+		validation.verifyMaximumCharactersErrorResponseForFirstNameLastNameAndUsernameField(
+				updateVAResellerUserDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update invalid usertype then validate error message")
@@ -282,7 +286,7 @@ public class UpdateVAResellerUsersApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
 		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForVAResellerUserInvalidUserType(updateVAResellerUserDetailsApiResponse);
+		validation.verifyErrorResponseBodyForUserIdField(updateVAResellerUserDetailsApiResponse, String.valueOf(id));
 	}
 
 }
