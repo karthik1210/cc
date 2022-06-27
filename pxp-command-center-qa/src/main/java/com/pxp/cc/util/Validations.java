@@ -2329,4 +2329,26 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=400228");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyNullUserErrorMessageResponseBodyForVAResellerUserDataLayer(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "UserName cannot be empty or null, Email cannot be empty or null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+	}
+	
+	public void verifyUpdateVAResellerResponseBody(Response response, int id) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getInt("id"), id);
+	}
 }

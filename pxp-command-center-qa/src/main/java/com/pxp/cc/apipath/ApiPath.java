@@ -373,6 +373,14 @@ public class ApiPath {
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
 	}
+	
+	public static String VAReseller_USER_DATA_SERVICE(int id) {
+		return SERVICE_USER_DL + "/v1/users/" + id;
+	}
+	
+	public static String INVALID_PATH_VAReseller_USER_DATA_SERVICE(int id) {
+		return SERVICE_USER_DL + "/v1/userssssss/" + id;
+	}
 
 	public static final String ASSOCIATE_ENTITIES_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}"
