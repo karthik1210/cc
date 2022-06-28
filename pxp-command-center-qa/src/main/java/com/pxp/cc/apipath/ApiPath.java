@@ -460,4 +460,12 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resources";
 	}
+
+	public static final String PROVIDER_DETAILS_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId;
+	}
+
+	public static final String PROVIDER_DETAILS_INVALID_URL_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId;
+	}
 }
