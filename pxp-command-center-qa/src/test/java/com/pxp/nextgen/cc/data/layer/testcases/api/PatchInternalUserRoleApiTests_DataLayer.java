@@ -40,8 +40,13 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 		getUserRolesByUserApiResponse = userInfo.getUserRolesByUser_DataLayer(userId);
 		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
 		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
-		List<UserRoles> actualUserRolesListByUser = Arrays.asList(new UserRoles(
-				Integer.parseInt(testData.getProperty("role.id.three")), testData.getProperty("role.name.three")));
+				List<UserRoles> actualUserRolesListByUser = Arrays.asList(
+						new UserRoles(Integer.parseInt(testData.getProperty("role.id.three")),
+								testData.getProperty("role.name.three")),
+						new UserRoles(Integer.parseInt(testData.getProperty("var.reseller.role.id.one")),
+								testData.getProperty("api.role.name.one")),
+						new UserRoles(Integer.parseInt(testData.getProperty("client.user.role.id.one")),
+								testData.getProperty("api.role.name.two")));
 		validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse, actualUserRolesListByUser);
 	}
 
@@ -57,7 +62,13 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 200);
 		getUserRolesByUserApiResponse = userInfo.getUserRolesByUser_DataLayer(userId);
 		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
-		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 204);
+		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
+		List<UserRoles> actualUserRolesListByUser = Arrays.asList(
+				new UserRoles(Integer.parseInt(testData.getProperty("var.reseller.role.id.one")),
+						testData.getProperty("api.role.name.one")),
+				new UserRoles(Integer.parseInt(testData.getProperty("client.user.role.id.one")),
+						testData.getProperty("api.role.name.two")));
+		validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse, actualUserRolesListByUser);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value for roleId and validate error message")
