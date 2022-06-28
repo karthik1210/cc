@@ -46,7 +46,7 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForNonexistingproviderId(fetchProviderDetailsApiResponse);
+		validation.verifyErrorResponseBodyForNonexistingproviderId(fetchProviderDetailsApiResponse, providerId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")

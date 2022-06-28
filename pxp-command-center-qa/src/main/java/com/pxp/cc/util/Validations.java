@@ -2379,9 +2379,9 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 	}
 	
-	public void verifyErrorResponseBodyForNonexistingproviderId(Response response) throws IOException {
+	public void verifyErrorResponseBodyForNonexistingproviderId(Response response,  int providerId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Provider not found by id=4095");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Provider not found by id=" + providerId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 

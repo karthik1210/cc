@@ -456,11 +456,11 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
 	}
 	
-	public static final String PROVIDER_DETAIL_BL(int providerId) {
+	public static final String PROVIDER_DETAILS_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId;
 	}
 
-	public static final String PROVIDER_DETAIL_INVALID_URL_BL(int providerId) {
+	public static final String PROVIDER_DETAILS_INVALID_URL_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId;
 	}
 }
