@@ -455,4 +455,12 @@ public class ApiPath {
 	public static final String INVALID_PATH_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
 	}
+	
+	public static final String PROVIDER_DETAILS_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId;
+	}
+
+	public static final String PROVIDER_DETAILS_INVALID_URL_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId;
+	}
 }
