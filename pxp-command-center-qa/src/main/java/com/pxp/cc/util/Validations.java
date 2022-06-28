@@ -2378,4 +2378,21 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 	}
+	
+	public void verifyErrorResponseBodyForNonexistingproviderId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Provider not found by id=4095");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyResponseBodyForProviderDetails(Response response, String firstName, String lastName, 
+			String gender, String staffId, String status) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+	    CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
+	    CCUtils.assertEquals(jsonpath.getInt("staffId"), staffId);
+		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+    }
+
 }
