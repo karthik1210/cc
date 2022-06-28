@@ -19,17 +19,17 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response getProviderDetails(int providerId) {
-		String url = ApiPath.PROVIDER_DETAIL_BL(providerId);
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getProviderDetailsInvalidUrl(int providerId) {
-		String url = ApiPath.PROVIDER_DETAIL_INVALID_URL_BL(providerId);
+		String url = ApiPath.PROVIDER_DETAILS_INVALID_URL_BL(providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response invalidMethodCallGetProviderDetails(int providerId) {
-		String url = ApiPath.PROVIDER_DETAIL_BL(providerId);
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }
