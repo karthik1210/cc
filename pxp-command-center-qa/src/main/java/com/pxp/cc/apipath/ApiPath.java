@@ -426,11 +426,11 @@ public class ApiPath {
 		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
 	}
 
-	public static final String PATCH_INTERNAL_USER_ROLES_DL(int userId, int orgId) {
+	public static final String PATCH_USER_ROLES_DL(int userId, int orgId) {
 		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/" + orgId + "/roles";
 	}
 
-	public static final String PATCH_INTERNAL_USER_ROLES_INVALID_URL_DL(int userId, int orgId) {
+	public static final String PATCH_USER_ROLES_INVALID_URL_DL(int userId, int orgId) {
 		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
 	}
 

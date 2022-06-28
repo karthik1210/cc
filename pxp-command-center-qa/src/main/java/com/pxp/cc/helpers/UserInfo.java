@@ -546,21 +546,21 @@ public class UserInfo extends BaseRest {
 
 	public Response patchInternalUserRole_DL(int userId, int orgId, String roleId, String active) throws IOException {
 		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
-		String url = ApiPath.PATCH_INTERNAL_USER_ROLES_DL(userId, orgId);
+		String url = ApiPath.PATCH_USER_ROLES_DL(userId, orgId);
 		return given().spec(requestSpec).body(roleAssociationPayload).when().patch(url).then().extract().response();
 	}
 
 	public Response patchInternalUserRoleInvalidUrl_DL(int userId, int orgId, String roleId, String active)
 			throws IOException {
 		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
-		String url = ApiPath.PATCH_INTERNAL_USER_ROLES_INVALID_URL_DL(userId, orgId);
+		String url = ApiPath.PATCH_USER_ROLES_INVALID_URL_DL(userId, orgId);
 		return given().spec(requestSpec).body(roleAssociationPayload).when().patch(url).then().extract().response();
 	}
 
 	public Response patchInternalUserRoleInvalidMethod_DL(int userId, int orgId, String roleId, String active)
 			throws IOException {
 		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
-		String url = ApiPath.PATCH_INTERNAL_USER_ROLES_DL(userId, orgId);
+		String url = ApiPath.PATCH_USER_ROLES_DL(userId, orgId);
 		return given().spec(requestSpec).body(roleAssociationPayload).when().put(url).then().extract().response();
 	}
 

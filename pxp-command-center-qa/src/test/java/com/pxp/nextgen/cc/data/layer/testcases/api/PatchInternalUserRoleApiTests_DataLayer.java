@@ -27,7 +27,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId ,activate role & validate status code and response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId,activate role & validate status code and response body")
 	public void testActivateRoleForInternalUser() throws IOException {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
@@ -45,7 +45,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 		validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse, actualUserRolesListByUser);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId ,deactivate role & validate status code and response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId,deactivate role & validate status code and response body")
 	public void testDeactivateRoleForInternalUser() throws IOException {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
@@ -100,7 +100,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of PATCH")
-	public void testErrorForInvalidMethodCall() throws IOException {
+	public void testErrorMessageForInvalidMethodCall() throws IOException {
 		logStep("Enter existing userId & orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
@@ -114,7 +114,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid userId & valid orgId and validate error message")
 	public void testErrorMessagesForInvalidUserIdAndValidOrgId() throws IOException {
-		logStep("Enter existing userId & orgId");
+		logStep("Enter invalid userId & valid orgId");
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		int orgId = Integer.parseInt(testData.getProperty("api.internalUser.orgId"));
 		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_DL(userId, orgId,
@@ -127,7 +127,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid userId & invalid orgId and validate error message")
 	public void testErrorMessagesForValidUserIdAndInvalidOrgId() throws IOException {
-		logStep("Enter existing userId & orgId");
+		logStep("Enter valid userId & invalid orgId");
 		int userId = Integer.parseInt(testData.getProperty("api.internalUser.userId"));
 		int orgId = Integer.parseInt(testData.getProperty("api.nonexisting.orgid"));
 		String roleId = testData.getProperty("api.internal.roleId");
@@ -140,7 +140,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid userId & invalid orgId and validate error message")
 	public void testErrorMessagesForInvalidUserIdAndInvalidOrgId() throws IOException {
-		logStep("Enter existing userId & orgId");
+		logStep("Enter invalid userId & invalid orgId");
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		int orgId = Integer.parseInt(testData.getProperty("api.nonexisting.orgid"));
 		String roleId = testData.getProperty("api.internal.roleId");
