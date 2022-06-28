@@ -25,7 +25,7 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing providerId in providerId field and validate status code")
-	public void testSuccessResponseCodeForExistingInternalUserId() throws NullPointerException, IOException {
+	public void testSuccessResponseCodeForExistingProviderId() throws NullPointerException, IOException {
 		logStep("Enter existing providerId");
 		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
@@ -39,7 +39,7 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing providerId in providerId field and validate status code")
-	public void testErrorResponseCodeForNonExistingInternalUserId() throws IOException {
+	public void testErrorResponseCodeForNonExistingProviderId() throws IOException {
 		logStep("Enter non existing providerId");
 		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
