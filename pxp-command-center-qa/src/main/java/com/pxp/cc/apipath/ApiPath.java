@@ -373,11 +373,11 @@ public class ApiPath {
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
 	}
-	
+
 	public static String UPDATE_VARRESELLER_USER_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/users/" + userId;
 	}
-	
+
 	public static String INVALID_PATH_UPDATE_VARRESELLER_USER_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/userssssss/" + userId;
 	}
@@ -451,8 +451,13 @@ public class ApiPath {
 	public static final String BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brands/" + brandId;
 	}
-	
+
 	public static final String INVALID_PATH_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
+	}
+
+	public static final String ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId, int appointmentTypeId) {
+		return SERVICE_SHARED_BL + "v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/resources";
 	}
 }
