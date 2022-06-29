@@ -148,7 +148,7 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(
-				updateInternalUserDetailsApiResponse);
+				updateInternalUserDetailsApiResponse, testData.getProperty("non.existing.user.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user with invalid url")
