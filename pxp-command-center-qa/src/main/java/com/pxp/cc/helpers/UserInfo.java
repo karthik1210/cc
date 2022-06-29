@@ -291,10 +291,28 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
+	
+	public Response patchInternalUser_DataLayer(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response patchInternalUser_DataLayerUsingInvalidMethodCall(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
 
 	public Response patchInternalUser_BusinessLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response patchInternalUser_DataLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.INVALID_PATH_INTERNAL_USER_STATUS_DL(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
 

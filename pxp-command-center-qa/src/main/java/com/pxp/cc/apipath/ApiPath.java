@@ -354,6 +354,10 @@ public class ApiPath {
 		return INTERNAL_USER_BL + id;
 	}
 
+	public static String UPDATE_INTERNAL_USER_STATUS_DL(int id) {
+		return INTERNAL_USER_DL + id;
+	}
+
 	public static String CLIENT_USER_SERVICE(int id) {
 		return SERVICE_USER_BL + "/v1/users/" + id;
 	}
@@ -372,6 +376,10 @@ public class ApiPath {
 
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
+	}
+
+	public static String INVALID_PATH_INTERNAL_USER_STATUS_DL(int id) {
+		return SERVICE_USER_DL + "/v1/usersssss/" + id;
 	}
 
 	public static String UPDATE_VARRESELLER_USER_DL(int userId) {
