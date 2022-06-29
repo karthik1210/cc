@@ -2085,10 +2085,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(Response response, String userId )
+	public void verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(Response response, String userId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId="+userId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=" + userId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2378,10 +2378,27 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 	}
-	
+
 	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
 	}
+
+	public void verifyErrorResponseBodyForNonexistingproviderId(Response response, int providerId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Provider not found by id=" + providerId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyResponseBodyForProviderDetails(Response response, String firstName, String lastName,
+			String gender, String staffId, String status) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
+		CCUtils.assertEquals(jsonpath.getInt("staffId"), staffId);
+		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+	}
+
 }
