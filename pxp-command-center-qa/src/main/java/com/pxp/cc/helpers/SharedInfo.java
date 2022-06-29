@@ -3,15 +3,10 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.ResourceDetails;
-
 import io.restassured.response.Response;
 
 public class SharedInfo extends BaseRest {
