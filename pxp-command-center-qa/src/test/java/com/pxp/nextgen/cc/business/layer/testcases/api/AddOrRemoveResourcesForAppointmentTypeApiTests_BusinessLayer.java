@@ -111,7 +111,7 @@ public class AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer extend
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add/Remove multiple resource id for appointment type and verify response body")
-	public void testAddOrRemoveResourcesFunctionalityUsingMultipleResourcId() throws IOException {
+	public void testAddOrRemoveResourcesFunctionalityUsingMultipleResourceId() throws IOException {
 		logStep("Add valid resource ids for appointment type");
 		resourceList = Arrays.asList(
 				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true),
