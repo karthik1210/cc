@@ -291,10 +291,28 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
+	
+	public Response patchInternalUser_DataLayer(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response patchInternalUser_DataLayerUsingInvalidMethodCall(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
+	}
 
 	public Response patchInternalUser_BusinessLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE(id);
+		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response patchInternalUser_DataLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
+		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
+		String url = ApiPath.INVALID_PATH_INTERNAL_USER_STATUS_DL(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
 
@@ -541,6 +559,26 @@ public class UserInfo extends BaseRest {
 			throws IOException {
 		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
 		String url = ApiPath.PATCH_INTERNAL_USER_ROLES_BL(userId, orgId);
+		return given().spec(requestSpec).body(roleAssociationPayload).when().put(url).then().extract().response();
+	}
+
+	public Response patchInternalUserRole_DL(int userId, int orgId, String roleId, String active) throws IOException {
+		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
+		String url = ApiPath.PATCH_USER_ROLES_DL(userId, orgId);
+		return given().spec(requestSpec).body(roleAssociationPayload).when().patch(url).then().extract().response();
+	}
+
+	public Response patchInternalUserRoleInvalidUrl_DL(int userId, int orgId, String roleId, String active)
+			throws IOException {
+		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
+		String url = ApiPath.PATCH_USER_ROLES_INVALID_URL_DL(userId, orgId);
+		return given().spec(requestSpec).body(roleAssociationPayload).when().patch(url).then().extract().response();
+	}
+
+	public Response patchInternalUserRoleInvalidMethod_DL(int userId, int orgId, String roleId, String active)
+			throws IOException {
+		Map<String, Object> roleAssociationPayload = patchRoleAssociation(roleId, active);
+		String url = ApiPath.PATCH_USER_ROLES_DL(userId, orgId);
 		return given().spec(requestSpec).body(roleAssociationPayload).when().put(url).then().extract().response();
 	}
 

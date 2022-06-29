@@ -354,6 +354,10 @@ public class ApiPath {
 		return INTERNAL_USER_BL + id;
 	}
 
+	public static String UPDATE_INTERNAL_USER_STATUS_DL(int id) {
+		return INTERNAL_USER_DL + id;
+	}
+
 	public static String CLIENT_USER_SERVICE(int id) {
 		return SERVICE_USER_BL + "/v1/users/" + id;
 	}
@@ -372,6 +376,10 @@ public class ApiPath {
 
 	public static String INVALID_PATH_INTERNAL_USER_SERVICE(int id) {
 		return INVALID_PATH_INTERNALUSER_BL + id;
+	}
+
+	public static String INVALID_PATH_INTERNAL_USER_STATUS_DL(int id) {
+		return SERVICE_USER_DL + "/v1/usersssss/" + id;
 	}
 
 	public static String UPDATE_VARRESELLER_USER_DL(int userId) {
@@ -424,6 +432,14 @@ public class ApiPath {
 
 	public static final String PATCH_INTERNAL_USER_ROLES_INVALID_URL_BL(int userId, int orgId) {
 		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
+	}
+
+	public static final String PATCH_USER_ROLES_DL(int userId, int orgId) {
+		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/" + orgId + "/roles";
+	}
+
+	public static final String PATCH_USER_ROLES_INVALID_URL_DL(int userId, int orgId) {
+		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/" + orgId + "/rolesssss";
 	}
 
 	public static final String UPDATE_USER_ROLE_BL(int userId) {

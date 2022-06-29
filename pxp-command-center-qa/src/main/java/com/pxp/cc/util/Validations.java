@@ -2086,10 +2086,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(Response response)
+	public void verifyErrorMessageInResponseUpdateInternalUserStatusWithInvaliduserId(Response response, String userId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=908090");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=" + userId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2378,6 +2378,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
 		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
+	}
+
+	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
 	}
 
 	public void verifyErrorResponseBodyForNonexistingproviderId(Response response, int providerId) throws IOException {
