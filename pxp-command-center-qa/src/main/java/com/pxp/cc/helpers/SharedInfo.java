@@ -32,4 +32,19 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response getProviderDetails_DL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_DL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getProviderDetailsInvalidUrl_DL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_INVALID_URL_DL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetProviderDetails_DL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_DL(providerId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
