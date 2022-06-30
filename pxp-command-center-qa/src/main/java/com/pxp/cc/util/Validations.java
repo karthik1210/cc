@@ -1929,6 +1929,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
 		CCUtils.assertEquals(jsonpath.getString("message"), "Invalid OrgId");
 	}
+	
+	public void verifyErrorInResponseForNullValuesForOrgIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"), "Invalid input");
+	}
 
 	public void verifyErrorInResponseForNullValueForNonExistingUserId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
