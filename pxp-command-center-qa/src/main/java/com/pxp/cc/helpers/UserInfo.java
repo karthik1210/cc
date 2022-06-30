@@ -639,4 +639,19 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+	
+	public Response getUserlogin_DL(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_DL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getUserloginInvalidUrl_DL(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_INVALID_URL_DL(userId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetUserlogin_DL(int userId) {
+		String url = ApiPath.LOGIN_DETAIL_DL(userId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
