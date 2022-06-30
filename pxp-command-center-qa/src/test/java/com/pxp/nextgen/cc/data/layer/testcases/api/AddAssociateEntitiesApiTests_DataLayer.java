@@ -105,7 +105,7 @@ public class AddAssociateEntitiesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
 		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 400);
-		validation.verifyErrorInResponseForNullValueForOrgIdField(addAssociatedEntitiesResponse);
+		validation.verifyErrorInResponseForNullValuesForOrgIdField(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userID, pxp-cc-user & nonexisting org id and Verify error response for orgId field")
