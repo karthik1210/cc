@@ -21,6 +21,7 @@ import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.OrgHierarchyDetails;
 import com.pxp.cc.pojos.OrgNode;
+import com.pxp.cc.pojos.ResourceStatus;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
@@ -2405,6 +2406,26 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
 		CCUtils.assertEquals(jsonpath.getInt("staffId"), staffId);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+	}
+
+	public void verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(Response response,
+			List<Integer> resourceIds, String status, String message) throws IOException {
+		List<ResourceStatus> actualResourceStatusList = new ArrayList<ResourceStatus>();
+		for (int i = 0; i < resourceIds.size(); i++) {
+			actualResourceStatusList.add(new ResourceStatus(resourceIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "User list is empty");
+		CCUtils.assertTrue(actualResourceStatusList.size() == responseBody.length(),
+				"Size of actual resource list and expected user list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualResourceStatusList.contains(new ResourceStatus(jsonObject.getInt("resourceId"),
+							jsonObject.getString("status"), jsonObject.getString("message"))),
+					"Resource Id " + jsonObject.getInt("resourceId") + " doesn't exist");
+		}
 	}
 
 }

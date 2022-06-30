@@ -97,7 +97,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForLastNameField(), "Maximum characters reached");
 		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForUsernameField(), "Maximum characters reached");
-		commonMethods.enterEmail(CCUtils.generateNewEmail(101));
+		commonMethods.enterEmail(CCUtils.generateAlphaNumericString(101).concat("@gmail.com"));
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForEmailField(), "Maximum characters reached");
 	}
 
