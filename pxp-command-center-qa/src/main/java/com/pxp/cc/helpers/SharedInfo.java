@@ -5,8 +5,10 @@ package com.pxp.cc.helpers;
 import static io.restassured.RestAssured.given;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.ResourceDetails;
 import io.restassured.response.Response;
 
 public class SharedInfo extends BaseRest {
@@ -50,14 +52,15 @@ public class SharedInfo extends BaseRest {
 				externalId);
 		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
 	}
-	
-	public Response createProviderUsingInvalidMethod_DataLayer(int practiceId, String firstName, String lastName, String gender,
-			String externalId) {
+
+	public Response createProviderUsingInvalidMethod_DataLayer(int practiceId, String firstName, String lastName,
+			String gender, String externalId) {
 		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
 		return given().spec(requestSpec).body(createProviderPayload).when().put(url).then().extract().response();
 	}
+
 	private Map<String, Object> createProviderRequestPayload(String firstName, String lastName, String gender,
 			String externalId) {
 		Map<String, Object> createProviderMap = new HashMap<String, Object>();
@@ -68,4 +71,21 @@ public class SharedInfo extends BaseRest {
 		return createProviderMap;
 	}
 
+	public Response addOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
+			List<ResourceDetails> resourceList) {
+		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
+		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallForAddOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
+			List<ResourceDetails> resourceList) {
+		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
+		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
+	}
+
+	public Response addOrRemoveResourcesForAppoinmentTypeUsingInvalidUrl(int practiceId, int appointmentTypeId,
+			List<ResourceDetails> resourceList) {
+		String url = ApiPath.INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
+		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
+	}
 }

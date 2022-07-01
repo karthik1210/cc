@@ -22,6 +22,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddAssociateEntitiesApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetVarResellerUserLoginDetailsApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
