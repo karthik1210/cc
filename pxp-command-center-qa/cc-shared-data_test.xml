@@ -14,6 +14,8 @@
 		<classes>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" />
+		<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

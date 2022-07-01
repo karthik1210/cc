@@ -477,7 +477,8 @@ public class ApiPath {
 				+ "/resources";
 	}
 
-	public static final String INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId, int appointmentTypeId) {
+	public static final String INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId,
+			int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcessssss";
 	}
@@ -496,5 +497,13 @@ public class ApiPath {
 
 	public static final String INVALID_PATH_CREATE_PROVIDER_DL(int practiceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/providersssss";
+	}
+
+	public static final String PROVIDER_DETAILS_DL(int providerId) {
+		return SHARED_DL + "/v1/providers/" + providerId;
+	}
+
+	public static final String PROVIDER_DETAILS_INVALID_URL_DL(int providerId) {
+		return SHARED_DL + "/v1/providerssss/" + providerId;
 	}
 }
