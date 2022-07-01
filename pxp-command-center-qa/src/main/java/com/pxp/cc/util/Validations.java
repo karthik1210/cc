@@ -2411,8 +2411,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForInvalidGenderValue(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"JSON parse error: Cannot deserialize value of type `java.lang.Character` from String \"ABC\": Expected either Integer value code or 1-character String; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.lang.Character` from String \"ABC\": Expected either Integer value code or 1-character String\r\n"
-						+ " at [Source: (PushbackInputStream); line: 1, column: 60] (through reference chain: com.nextgen.pxp.cc.shareddataservice.model.ProviderData[\"gender\"])");
+				"JSON parse error: Cannot deserialize value of type `java.lang.Character` from String \"ABC\": Expected either Integer value code or 1-character String; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.lang.Character` from String \"ABC\": Expected either Integer value code or 1-character String\n at [Source: (PushbackInputStream); line: 1, column: 60] (through reference chain: com.nextgen.pxp.cc.shareddataservice.model.ProviderData[\"gender\"])");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 

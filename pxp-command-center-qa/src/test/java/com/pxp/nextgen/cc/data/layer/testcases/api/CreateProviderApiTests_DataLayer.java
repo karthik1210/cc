@@ -65,12 +65,10 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid value in gender field and verify response body")
 	public void testErrorMessageForInvalidGenderField() throws IOException {
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		String externalId = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProvider_DataLayer(
-				Integer.parseInt(testData.getProperty("valid.practice.id")), firstName, lastName,
-				testData.getProperty("invalid.gender"), externalId);
+				Integer.parseInt(testData.getProperty("valid.practice.id")), testData.getProperty("provider.firstname"),
+				testData.getProperty("provider.lastname"), testData.getProperty("invalid.gender"), externalId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createProviderApiResponse);
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 400);
@@ -79,11 +77,10 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing practice id in practice id field and verify response body")
 	public void testErrorResponseForInvalidPracticeId() throws IOException {
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		String externalId = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProvider_DataLayer(
-				Integer.parseInt(testData.getProperty("non.existing.practice.id")), firstName, lastName,
+				Integer.parseInt(testData.getProperty("non.existing.practice.id")),
+				testData.getProperty("provider.firstname"), testData.getProperty("provider.lastname"),
 				testData.getProperty("provider.gender"), externalId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createProviderApiResponse);
@@ -94,12 +91,10 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorResponseForInvalidUrl() throws IOException {
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		String externalId = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProviderUsingInvalidUrl_DataLayer(
-				Integer.parseInt(testData.getProperty("valid.practice.id")), firstName, lastName,
-				testData.getProperty("provider.gender"), externalId);
+				Integer.parseInt(testData.getProperty("valid.practice.id")), testData.getProperty("provider.firstname"),
+				testData.getProperty("provider.lastname"), testData.getProperty("provider.gender"), externalId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createProviderApiResponse);
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 404);
@@ -108,12 +103,10 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of POST")
 	public void testErrorForInvalidMethodCall() throws IOException {
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		String externalId = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProviderUsingInvalidMethod_DataLayer(
-				Integer.parseInt(testData.getProperty("valid.practice.id")), firstName, lastName,
-				testData.getProperty("provider.gender"), externalId);
+				Integer.parseInt(testData.getProperty("valid.practice.id")), testData.getProperty("provider.firstname"),
+				testData.getProperty("provider.lastname"), testData.getProperty("provider.gender"), externalId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createProviderApiResponse);
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 405);

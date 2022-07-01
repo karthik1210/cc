@@ -12,6 +12,8 @@
 	</listeners>
 	<test name="CC Shared Data Test">
 		<classes>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
