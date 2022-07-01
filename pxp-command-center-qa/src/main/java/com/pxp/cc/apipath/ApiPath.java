@@ -489,4 +489,12 @@ public class ApiPath {
 	public static final String PROVIDER_DETAILS_INVALID_URL_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId;
 	}
+
+	public static final String PROVIDER_DETAILS_DL(int providerId) {
+		return SHARED_DL + "/v1/providers/" + providerId;
+	}
+
+	public static final String PROVIDER_DETAILS_INVALID_URL_DL(int providerId) {
+		return SHARED_DL + "/v1/providerssss/" + providerId;
+	}
 }

@@ -35,6 +35,21 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
+	public Response getProviderDetails_DL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_DL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getProviderDetailsInvalidUrl_DL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_INVALID_URL_DL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallGetProviderDetails_DL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_DL(providerId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 	public Response addOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
 			List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
@@ -51,5 +66,6 @@ public class SharedInfo extends BaseRest {
 			List<ResourceDetails> resourceList) {
 		String url = ApiPath.INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
+
 	}
 }
