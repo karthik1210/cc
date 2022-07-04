@@ -540,5 +540,4 @@ public class ApiPath {
 	}
 	
 	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_NULL_VALUES_BL = SERVICE_SHARED_BL + "/v1/providers/null/practices";
-	
 }
