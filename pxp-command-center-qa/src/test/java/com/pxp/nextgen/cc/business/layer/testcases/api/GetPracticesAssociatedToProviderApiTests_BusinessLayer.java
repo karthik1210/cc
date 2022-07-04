@@ -17,6 +17,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	Response fetchProviderDetailsApiResponse;
+	int providerId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -26,10 +27,9 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check response for one provider associated with one practice")
-	public void testResponseCodeForOneProviderAssociatedWithOnePractice() throws NullPointerException, IOException {
+	public void testResponseCodeForOneProviderAssociatedWithOnePractice() throws IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
@@ -39,11 +39,9 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check response for one provider associated with multiple practices")
-	public void testResponseCodeForOneProviderAssociatedWithMultiplePractices()
-			throws NullPointerException, IOException {
+	public void testResponseCodeForOneProviderAssociatedWithMultiplePractices() throws IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
@@ -56,8 +54,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing providerId in providerId field and validate status code")
 	public void testErrorResponseCodeForNonExistingProviderId() throws IOException {
 		logStep("Enter non existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("non.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 400);
@@ -67,8 +64,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProviderInvalidUrl(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProviderInvalidUrl(Integer.parseInt(testData.getProperty("existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 404);
@@ -78,11 +74,19 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of GET")
 	public void testErrorForInvalidMethodCall() throws IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProviderInvalidMethodCall(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProviderInvalidMethodCall(Integer.parseInt(testData.getProperty("existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 405);
 		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(fetchProviderDetailsApiResponse);
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check response for null values in providerId field")
+	public void testErrorResponseCodeForNullValues() throws IOException {
+		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProvider_NullValues();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
+		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseBodyForNullValues(fetchProviderDetailsApiResponse);
 	}
 }

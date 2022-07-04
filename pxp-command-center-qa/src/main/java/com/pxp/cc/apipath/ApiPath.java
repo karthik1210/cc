@@ -514,4 +514,7 @@ public class ApiPath {
 	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_INVALID_URL_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId + "/practices";
 	}
+	
+	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_NULL_VALUES_BL = SERVICE_SHARED_BL + "/v1/providers/null/practices";
+	
 }

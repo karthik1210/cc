@@ -119,5 +119,12 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
-
+	
+	public Response getPracticesAssociatedToProvider_NullValues() {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_NULL_VALUES_BL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
 }
+
+
