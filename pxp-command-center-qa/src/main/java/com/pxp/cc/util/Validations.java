@@ -2441,4 +2441,12 @@ public class Validations {
 		}
 	}
 
+     public void verifyResponseBodyForProviderAssociatedToPractices(Response response, 
+			ArrayList<Integer> practiceIds) throws IOException {
+			for (int i = 0; i < practiceIds.size(); i++) {
+				if (response.asString().contains(String.valueOf(practiceIds.get(i)))) {
+					CCUtils.assertTrue(true, " : this value is present in response body" + practiceIds.get(i));
+				}
+			}
+		}
 }
