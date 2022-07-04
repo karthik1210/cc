@@ -507,6 +507,30 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providerssss/" + providerId;
 	}
 	
+	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL(int practiceId, int appointmentTypeId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_INVALID_URL(int practiceId,
+			int appointmentTypeId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/resourcesblabla";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL(int practiceId, int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_NULL_VALUES = SHARED_DL
+			+ "/v1/practices/null/appointment-types/null/resources";
+
+	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
+			int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/resourcesblabla";
+	}
+	
 	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices";
 	}
