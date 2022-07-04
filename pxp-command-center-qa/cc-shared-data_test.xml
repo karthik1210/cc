@@ -17,7 +17,7 @@
 		<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" />
 		<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLaye" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

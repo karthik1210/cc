@@ -2356,12 +2356,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
 
-	public void verifyErrorMessageForInvalidBrandId(Response response, int brandId) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Brand not found by id=" + brandId);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
 			String color, int brandId, String logo, String favicon, String emailLogo, String active)
 			throws IOException {
