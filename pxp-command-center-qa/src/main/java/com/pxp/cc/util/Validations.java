@@ -1929,7 +1929,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
 		CCUtils.assertEquals(jsonpath.getString("message"), "Invalid OrgId");
 	}
-	
+
 	public void verifyErrorInResponseForNullValuesForOrgIdField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
@@ -2406,6 +2406,19 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
 		CCUtils.assertEquals(jsonpath.getInt("staffId"), staffId);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+	}
+
+	public void verifyErrorMessageInResponseForInvalidGenderValue(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"JSON parse error: Cannot deserialize value of type `java.lang.Character` from String \"ABC\": Expected either Integer value code or 1-character String; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.lang.Character` from String \"ABC\": Expected either Integer value code or 1-character String\n at [Source: (PushbackInputStream); line: 1, column: 60] (through reference chain: com.nextgen.pxp.cc.shareddataservice.model.ProviderData[\"gender\"])");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForNonExistingPracticeId(Response response, int practiceId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice not found by id=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(Response response,
