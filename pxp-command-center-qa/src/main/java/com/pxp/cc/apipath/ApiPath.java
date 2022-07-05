@@ -506,4 +506,13 @@ public class ApiPath {
 	public static final String PROVIDER_DETAILS_INVALID_URL_DL(int providerId) {
 		return SHARED_DL + "/v1/providerssss/" + providerId;
 	}
+
+	public static final String UPDATE_ORG_SOLUTIONS_DL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutions";
+	}
+	
+	public static final String INVALID_PATH_UPDATE_ORG_SOLUTIONS_DL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutionsssss";
+	}
+
 }
