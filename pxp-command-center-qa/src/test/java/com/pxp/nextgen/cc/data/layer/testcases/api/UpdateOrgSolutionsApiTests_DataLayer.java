@@ -51,8 +51,8 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 		Response createPracticeApiResponse = orgInfo.createOrgNode_DataLayer(practiceName,
 				ccUser.getPracticeOrgTypeApi(), ccUser.getPracticeDisplayNameApi(), practiceSapNumber, active,
 				ccUser.getPracticeTimezoneIdApi(), parentId, parentType,
-				Integer.parseInt(testData.getProperty("ehridentifier")),
-				Integer.parseInt(testData.getProperty("pmidentifier")),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		return createPracticeApiResponse.jsonPath().getInt("orgId");
 	}
@@ -62,8 +62,8 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 				ccUser.getSystemOrgTypeApi(), ccUser.getSystemDisplayNameApi(),
 				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.active"),
 				ccUser.getSystemTimezoneIdApi(), clientId, testData.getProperty("api.parenttype"),
-				Integer.parseInt(testData.getProperty("ehridentifier")),
-				Integer.parseInt(testData.getProperty("pmidentifier")),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
@@ -71,8 +71,8 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.enterprise.name"), ccUser.getEnterpriseOrgTypeApi(),
 				ccUser.getEnterpriseDisplayNameApi(), testData.getProperty("api.enterprise.sapnumber"),
 				testData.getProperty("api.enterprise.active"), ccUser.getEnterpriseTimezoneIdApi(), systemId,
-				ccUser.getSystemOrgTypeApi(), Integer.parseInt(testData.getProperty("ehridentifier")),
-				Integer.parseInt(testData.getProperty("pmidentifier")),
+				ccUser.getSystemOrgTypeApi(), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 		return createPracticeNode(enterpriseId, active, testData.getProperty("api.enterprise.orgtype"));
