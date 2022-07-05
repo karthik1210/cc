@@ -2466,8 +2466,6 @@ public class Validations {
 								solutionsObjects.get("status").toString())),
 						"Product Id " + solutionsObjects.get("solutionId") + " doesn't exist");
 				CCUtils.assertNotNull(solutionsObjects.get("solutionName"), "solutionName was not in the response");
-				CCUtils.assertNotNull(solutionsObjects.get("date"), "date was not in the response");
-				CCUtils.assertNotNull(solutionsObjects.get("statusNotes"), "statusNotes was not in the response");
 			}
 		}
 	}
