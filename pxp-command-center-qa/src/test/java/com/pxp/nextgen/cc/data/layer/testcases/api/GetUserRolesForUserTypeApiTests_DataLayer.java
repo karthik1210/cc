@@ -38,7 +38,6 @@ public class GetUserRolesForUserTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
-		validation.verifyGetUserRolesResponseBody(getUserRolesApiResponse, userType);
 	}
 
 	@DataProvider(name = "userType")

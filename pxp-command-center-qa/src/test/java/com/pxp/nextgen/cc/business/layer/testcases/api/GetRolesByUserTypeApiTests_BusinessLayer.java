@@ -45,7 +45,6 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
-		validation.verifyGetUserRolesResponseBody(getUserRolesApiResponse, userType);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userType", description = "Enter non existing user type and verify response status code")
