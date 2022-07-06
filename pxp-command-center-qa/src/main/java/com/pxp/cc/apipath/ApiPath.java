@@ -530,4 +530,17 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
+	
+	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL(int practiceId, int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
+	}
+
+	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_NULL_VALUES = SHARED_DL
+			+ "/v1/practices/null/appointment-types/null/solutions";
+
+	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
+			int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/solutionsblabla";
+	}
 }
