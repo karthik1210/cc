@@ -21,6 +21,7 @@ import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.OrgHierarchyDetails;
 import com.pxp.cc.pojos.OrgNode;
+import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.ResourceStatus;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
@@ -2441,12 +2442,55 @@ public class Validations {
 		}
 	}
 
-     public void verifyResponseBodyForProviderAssociatedToPractices(Response response, 
-			ArrayList<Integer> practiceIds) throws IOException {
-			for (int i = 0; i < practiceIds.size(); i++) {
-				if (response.asString().contains(String.valueOf(practiceIds.get(i)))) {
-					CCUtils.assertTrue(true, " : this value is present in response body" + practiceIds.get(i));
-				}
+	public void verifyErrorResponseBodyForEmptyList(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid Solution statuses");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetOrgIdSolutionsResponseBody(Response response, int orgId, String practiceName,
+			List<OrgSolutions> productList) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject object = jsonArray.getJSONObject(i);
+			JSONObject org = object.getJSONObject("org");
+			CCUtils.assertEquals(org.getInt("orgId"), orgId);
+			CCUtils.assertEquals(org.get("name").toString(), practiceName);
+			JSONArray getSolutionsArray = object.getJSONArray("solutions");
+			CCUtils.assertTrue(getSolutionsArray.length() == productList.size(),
+					"Productlist size is not same as solution array size");
+			for (int j = 0; j < getSolutionsArray.length(); j++) {
+				JSONObject solutionsObjects = getSolutionsArray.getJSONObject(j);
+				CCUtils.assertTrue(
+						productList.contains(new OrgSolutions(solutionsObjects.get("solutionId").toString(),
+								solutionsObjects.get("status").toString())),
+						"Product Id " + solutionsObjects.get("solutionId") + " doesn't exist");
+				CCUtils.assertNotNull(solutionsObjects.get("solutionName"), "solutionName was not in the response");
 			}
 		}
-    }
+	}
+
+	public List<OrgSolutions> getSolutionsDetails(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		List<OrgSolutions> actualList = new ArrayList<OrgSolutions>();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject object = jsonArray.getJSONObject(i);
+			JSONArray getSolutionsArray = object.getJSONArray("solutions");
+			for (int j = 0; j < getSolutionsArray.length(); j++) {
+				JSONObject solutionsObjects = getSolutionsArray.getJSONObject(j);
+				actualList.add(new OrgSolutions(String.valueOf(solutionsObjects.getInt("solutionId")),
+						solutionsObjects.get("status").toString()));
+			}
+		}
+		return actualList;
+	}
+
+	public void verifyResponseBodyForProviderAssociatedToPractices(Response response, ArrayList<Integer> practiceIds)
+			throws IOException {
+		for (int i = 0; i < practiceIds.size(); i++) {
+			if (response.asString().contains(String.valueOf(practiceIds.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + practiceIds.get(i));
+			}
+		}
+	}
+}
