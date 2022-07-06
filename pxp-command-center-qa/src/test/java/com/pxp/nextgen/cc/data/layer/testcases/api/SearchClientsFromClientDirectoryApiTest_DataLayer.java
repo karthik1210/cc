@@ -174,4 +174,4 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 		clientDirectoryValidations.verifyClientOutputWithFilter(searchClientDirResultWithFilter,
 				clientDataWithFilter[0], clientDataWithFilter[4]);
 	}
-}
+}	
