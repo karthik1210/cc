@@ -530,7 +530,18 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
-	
+
+	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_NULL_VALUES_BL = SERVICE_SHARED_BL
+			+ "/v1/providers/null/practices";
+
+	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices";
+	}
+
+	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_INVALID_URL_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId + "/practices";
+	}
+
 	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL(int practiceId, int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
 	}
@@ -543,8 +554,9 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/solutionsblabla";
 	}
-	
-	public static final String SEARCH_LOCATIONS_DL = SHARED_DL+"/v1/locations";
-	
-	public static final String INVALIDURL_SEARCH_LOCATIONS_DL = SHARED_DL+"/v1/locationsdd";
+
+	public static final String SEARCH_LOCATIONS_DL = SHARED_DL + "/v1/locations";
+
+	public static final String INVALIDURL_SEARCH_LOCATIONS_DL = SHARED_DL + "/v1/locationsdd";
+
 }
