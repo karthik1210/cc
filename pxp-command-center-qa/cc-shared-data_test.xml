@@ -12,14 +12,13 @@
 	</listeners>
 	<test name="CC Shared Data Test">
 		<classes>
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" />
-		<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" />
-		<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" />
-		<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" />
+			<!-- Enable test suite once pipeline issue is addressed for for data services 
+				Jira # PXPP-16483 -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
+				/> -->
 		</classes>
 	</test>
 </suite>

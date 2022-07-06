@@ -12,8 +12,10 @@
 	</listeners>
 	<test name="CC Product Data Test">
 		<classes>
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProductListApiTests_DataLayer" />
+			<!-- Enable test suite once pipeline issue is addressed for for data services 
+				Jira # PXPP-16483 -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProductListApiTests_DataLayer" 
+				/> -->
 		</classes>
 	</test>
 </suite>
