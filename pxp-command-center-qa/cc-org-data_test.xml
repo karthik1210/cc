@@ -12,16 +12,14 @@
 	</listeners>
 	<test name="CC Org Data Test">
 		<classes>
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
+			<!-- Enable test suite once pipeline issue is addressed for for data services 
+				Jira # PXPP-16483 -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" 
+				/> -->
 		</classes>
 	</test>
 </suite>
