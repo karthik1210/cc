@@ -12,27 +12,21 @@
 	</listeners>
 	<test name="CC Client Data Test">
 		<classes>
-		<!-- PXPP-16482 :Workaround for data services build failure -->
-			<!-- <class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.FetchClientDetailsTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateClientApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientsFromClientDirectoryApiTest_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateClientApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByClientIdApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientTypesApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSapNumberApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientNameApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientAutoSuggestionApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientOrgHierarchyApiTests_DataLayer" /> -->
+			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
+				for Data Services -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.FetchClientDetailsTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateClientApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientsFromClientDirectoryApiTest_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateClientApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByClientIdApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientTypesApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSapNumberApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientNameApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientAutoSuggestionApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientOrgHierarchyApiTests_DataLayer" 
+				/> -->
+			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
+				for Data Services -->
 		</classes>
 	</test>
 </suite>

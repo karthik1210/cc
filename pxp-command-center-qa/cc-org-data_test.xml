@@ -12,17 +12,16 @@
 	</listeners>
 	<test name="CC Org Data Test">
 		<classes>
-		<!-- PXPP-16482 :Workaround for data services build failure -->
-			<!-- <class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" /> -->
+			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
+				for Data Services -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" 
+				/> -->
+			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
+				for Data Services -->
 		</classes>
 	</test>
 </suite>

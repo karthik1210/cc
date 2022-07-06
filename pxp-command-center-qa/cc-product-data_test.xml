@@ -12,9 +12,12 @@
 	</listeners>
 	<test name="CC Product Data Test">
 		<classes>
-		<!-- PXPP-16482 :Workaround for data services build failure -->
-			<!-- <class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProductListApiTests_DataLayer" /> -->
+			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
+				for Data Services -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProductListApiTests_DataLayer" 
+				/> -->
+			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
+				for Data Services -->
 		</classes>
 	</test>
 </suite>
