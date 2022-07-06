@@ -18,6 +18,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" />
+		    <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
