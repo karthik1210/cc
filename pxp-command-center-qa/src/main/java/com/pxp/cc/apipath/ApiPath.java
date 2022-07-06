@@ -507,6 +507,14 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providerssss/" + providerId;
 	}
 
+	public static final String UPDATE_ORG_SOLUTIONS_DL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutions";
+	}
+
+	public static final String INVALID_PATH_UPDATE_ORG_SOLUTIONS_DL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutionsssss";
+	}
+
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL(int practiceId, int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resources";

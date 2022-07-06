@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.OrgSolutions;
+import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
@@ -371,7 +373,7 @@ public class OrgInfo extends BaseRest {
 			String NewlyPurchased) {
 		List<Map<String, Object>> solutionsList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> solutionsMap = new HashMap<String, Object>();
-		solutionsMap.put("solutionId", 1101);
+		solutionsMap.put("solutionId", solutionId);
 		solutionsMap.put("status", NewlyPurchased);
 		solutionsList.add(solutionsMap);
 		return solutionsList;
@@ -498,6 +500,54 @@ public class OrgInfo extends BaseRest {
 	public Response invalidMethodCall_DataLayer(int orgId) throws IOException {
 		String url = ApiPath.ORG_HIERARCHY_DL(orgId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier,
+			int userId) throws IOException {
+
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
+				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
+				.post(ApiPath.ORG_DL).then().extract().response();
+	}
+
+	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId, int parentId, String parentType, int ehrIdentifier,
+			int pmIdentifier) {
+		Map<String, Object> orgMap = new HashMap<String, Object>();
+		orgMap.put("name", name);
+		orgMap.put("orgType", orgType);
+		orgMap.put("displayName", displayName);
+		orgMap.put("sapNumber", sapNumber);
+		orgMap.put("active", active);
+		orgMap.put("timezoneId", timezoneId);
+		orgMap.put("parentId", parentId);
+		orgMap.put("parentType", parentType);
+		orgMap.put("ehrIdentifier", ehrIdentifier);
+		orgMap.put("pmIdentifier", pmIdentifier);
+		return orgMap;
+	}
+
+	public Response updateOrgsSolutions_DataLayer(List<OrgSolutions> productList, int orgId, int userId)
+			throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(productList).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response updateOrgsSolutionsUsingInvalidUrl_DataLayer(List<OrgSolutions> productList, int orgId, int userId)
+			throws IOException {
+		String url = ApiPath.INVALID_PATH_UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(productList).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response updateOrgsSolutionsUsingInvalidMethod_DataLayer(List<OrgSolutions> productList, int orgId,
+			int userId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(productList).when().post(url).then()
+				.extract().response();
 	}
 
 }
