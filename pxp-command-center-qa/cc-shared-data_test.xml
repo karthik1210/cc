@@ -19,8 +19,6 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
 				/> -->
-			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
-				for Data Services -->
 		</classes>
 	</test>
 </suite>

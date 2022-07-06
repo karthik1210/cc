@@ -25,8 +25,6 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientAutoSuggestionApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetClientOrgHierarchyApiTests_DataLayer" 
 				/> -->
-			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
-				for Data Services -->
 		</classes>
 	</test>
 </suite>

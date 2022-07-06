@@ -12,11 +12,10 @@
 	</listeners>
 	<test name="CC Product Data Test">
 		<classes>
-			<!-- Enable test suite once pipeline issue is addressed for for data services Jira # PXPP-16483 -->
+			<!-- Enable test suite once pipeline issue is addressed for for data services 
+				Jira # PXPP-16483 -->
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProductListApiTests_DataLayer" 
 				/> -->
-			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
-				for Data Services -->
 		</classes>
 	</test>
 </suite>
