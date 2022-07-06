@@ -21,4 +21,15 @@ public class PracticeAppointmentTypeValidations {
 					+ jsonObject.get("resourceId"));
 		}
 	}
+
+	public void verifyNoOfSolutionsFetchedSolutionNameandId(Response response) {
+		jsonArray = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		Log4jUtil.log("Number of resources fetched is " + jsonArray.length());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			Log4jUtil.log("print the resource name : " + jsonObject.getString("name") + " and  resource Id : "
+					+ jsonObject.get("solutionId"));
+		}
+	}
 }
