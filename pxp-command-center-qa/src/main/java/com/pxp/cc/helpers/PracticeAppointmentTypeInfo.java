@@ -27,4 +27,24 @@ public class PracticeAppointmentTypeInfo extends BaseRest {
 		String url = ApiPath.FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getSolutionsForAppointmentType_DL(int practiceId, int appointmentTypeId) {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL(practiceId, appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getSolutionsForAppointmentType_DL_InvalidUrl(int practiceId, int appointmentTypeId) {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_INVALID_URL(practiceId, appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getSolutionsForAppointmentType_DL_InvalidMethodCall(int practiceId, int appointmentTypeId) {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL(practiceId, appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getSolutionsForAppointmentTypeDL_NullValues() {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
