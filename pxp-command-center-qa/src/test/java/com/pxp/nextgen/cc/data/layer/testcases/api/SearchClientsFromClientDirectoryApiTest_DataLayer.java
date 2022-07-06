@@ -27,12 +27,10 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		;
 		clientDirectory = new ClientDirectory();
 		new GeneralSettingsClientDropdown();
 		new ClientTopNavDropdownValidations();
 		clientDirectoryValidations = new ClientDirectoryValidations();
-
 	}
 
 	@DataProvider(name = "clientdatawithoutfilter")

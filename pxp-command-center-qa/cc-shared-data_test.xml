@@ -14,12 +14,15 @@
 		<classes>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" />
-		<class
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" />
-		<class
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" />
-		<class
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" />
+
 		</classes>
 	</test>
 </suite>
