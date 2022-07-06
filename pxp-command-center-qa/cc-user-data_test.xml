@@ -12,8 +12,8 @@
 	</listeners>
 	<test name="CC User Data Test">
 		<classes>
-			<!-- PXPP-16483 :QA | CICD | Enable Build Account to Private ALB Connectivity 
-				for Data Services -->
+			<!-- Enable test suite once pipeline issue is addressed for for data services 
+				Jira # PXPP-16483 -->
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.ValidateUserDetailsApiTests_DataLayer" 
