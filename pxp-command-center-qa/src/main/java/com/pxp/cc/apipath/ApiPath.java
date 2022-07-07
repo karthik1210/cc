@@ -563,4 +563,8 @@ public class ApiPath {
 				+ "/solutionsblabla";
 	}
 
+	public static final String SEARCH_LOCATIONS_DL = SHARED_DL + "/v1/locations";
+
+	public static final String INVALIDURL_SEARCH_LOCATIONS_DL = SHARED_DL + "/v1/locationsdd";
+
 }

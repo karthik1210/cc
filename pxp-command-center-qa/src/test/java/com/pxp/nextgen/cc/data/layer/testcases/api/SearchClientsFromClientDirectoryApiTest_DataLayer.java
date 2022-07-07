@@ -27,12 +27,10 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		;
 		clientDirectory = new ClientDirectory();
 		new GeneralSettingsClientDropdown();
 		new ClientTopNavDropdownValidations();
 		clientDirectoryValidations = new ClientDirectoryValidations();
-
 	}
 
 	@DataProvider(name = "clientdatawithoutfilter")
@@ -174,4 +172,4 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 		clientDirectoryValidations.verifyClientOutputWithFilter(searchClientDirResultWithFilter,
 				clientDataWithFilter[0], clientDataWithFilter[4]);
 	}
-}
+}	
