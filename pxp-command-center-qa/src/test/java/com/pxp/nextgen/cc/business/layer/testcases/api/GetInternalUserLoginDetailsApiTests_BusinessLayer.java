@@ -28,7 +28,7 @@ public class GetInternalUserLoginDetailsApiTests_BusinessLayer extends BaseRest 
 	public void testErrorMessageNonExistingUserId() throws IOException {
 		logStep("Enter non existing user id");
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
-		fetchUserLoginDetailsApiResponse = userInfo.getUserlogin(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.getUserLogin(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 400);
@@ -40,7 +40,7 @@ public class GetInternalUserLoginDetailsApiTests_BusinessLayer extends BaseRest 
 	public void testErrorMessageExistingInternalUserIdForUserIdField() throws NullPointerException {
 		logStep("Enter  existing Internal userId");
 		int userId = Integer.parseInt(testData.getProperty("existing.internal.userId"));
-		fetchUserLoginDetailsApiResponse = userInfo.getUserlogin(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.getUserLogin(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 200);
@@ -52,7 +52,7 @@ public class GetInternalUserLoginDetailsApiTests_BusinessLayer extends BaseRest 
 	public void testErrorMassageForUserDetailsUsingInvalidUrl() throws IOException {
 		logStep("Enter  existing user id");
 		int userId = Integer.parseInt(testData.getProperty("existing.internal.userId"));
-		fetchUserLoginDetailsApiResponse = userInfo.getUserloginInvalidUrl(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.getUserLoginInvalidUrl(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 404);
@@ -63,7 +63,7 @@ public class GetInternalUserLoginDetailsApiTests_BusinessLayer extends BaseRest 
 	public void testErrorForInvalidMethodCall() throws IOException {
 		logStep("Enter  existing user id");
 		int userId = Integer.parseInt(testData.getProperty("existing.internal.userId"));
-		fetchUserLoginDetailsApiResponse = userInfo.invalidMethodCallGetUserlogin(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.invalidMethodCallGetUserLogin(userId);
 
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);

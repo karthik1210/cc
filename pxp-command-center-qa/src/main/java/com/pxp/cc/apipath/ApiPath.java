@@ -460,6 +460,10 @@ public class ApiPath {
 	public static final String LOGIN_DETAIL_INVALID_URL_DL(int orgId) {
 		return SERVICE_USER_DL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
+	
+	public static final String LOGIN_DETAIL_NULL_VALUES_BL() {
+		return SERVICE_USER_BL + "/v1/users/" + null + "/audit/login";
+	}
 
 	public static final String DUPLICATE_BRANDS_BL = SERVICE_SHARED_BL + "/v1/brands/";
 	public static final String INVALID_DUPLICATE_BRANDS_BL = SERVICE_SHARED_BL + "/v1/brandsss/";
