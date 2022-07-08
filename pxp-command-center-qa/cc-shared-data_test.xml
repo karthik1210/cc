@@ -19,7 +19,8 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
 				/> -->
-				<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" 
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" 
 				/> -->
 		</classes>
 	</test>
