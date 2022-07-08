@@ -28,7 +28,7 @@ public class PracticeAppointmentTypeValidations {
 		Log4jUtil.log("Number of resources fetched is " + jsonArray.length());
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
-			Log4jUtil.log("print the resource name : " + jsonObject.getString("name") + " and  resource Id : "
+			Log4jUtil.log("print the solution name : " + jsonObject.getString("name") + " and solution Id : "
 					+ jsonObject.get("solutionId"));
 		}
 	}

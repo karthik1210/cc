@@ -567,4 +567,15 @@ public class ApiPath {
 
 	public static final String INVALIDURL_SEARCH_LOCATIONS_DL = SHARED_DL + "/v1/locationsdd";
 
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_DL_NULL_VALUES = SHARED_DL
+			+ "/v1/resources/null/practices/null/solutions";
+
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_DL_INVALID_URL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
+	}
+
 }
