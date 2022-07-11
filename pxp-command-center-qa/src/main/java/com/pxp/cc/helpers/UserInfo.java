@@ -499,19 +499,24 @@ public class UserInfo extends BaseRest {
 				.body(associatedEntitiesPayload).when().put(url).then().extract().response();
 	}
 
-	public Response getUserlogin(int userId) {
+	public Response getUserLogin(int userId) {
 		String url = ApiPath.LOGIN_DETAIL_BL(userId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getUserloginInvalidUrl(int userId) {
+	public Response getUserLoginInvalidUrl(int userId) {
 		String url = ApiPath.LOGIN_DETAIL_INVALID_URL_BL(userId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response invalidMethodCallGetUserlogin(int userId) {
+	public Response invalidMethodCallGetUserLogin(int userId) {
 		String url = ApiPath.LOGIN_DETAIL_BL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response getUserLogin_NullValues() {
+		String url = ApiPath.LOGIN_DETAIL_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response activateDeactivateUsers_DL(String status, ArrayList<Integer> userIds) {

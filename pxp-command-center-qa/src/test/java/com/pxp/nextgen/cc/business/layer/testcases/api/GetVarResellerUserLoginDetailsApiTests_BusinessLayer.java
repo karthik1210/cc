@@ -28,7 +28,7 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	public void testErrorMessageForNonExistingUserId() throws IOException {
 		logStep("Enter non existing user id");
 		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
-		fetchUserLoginDetailsApiResponse = userInfo.getUserlogin(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.getUserLogin(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 400);
@@ -40,19 +40,19 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	public void testSuccessMessageForExistingVarResellerUserId() throws NullPointerException {
 		logStep("Enter  existing Internal userId");
 		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
-		fetchUserLoginDetailsApiResponse = userInfo.getUserlogin(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.getUserLogin(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyResponseBodyForLoginDetail(fetchUserLoginDetailsApiResponse,
-				testData.getProperty("api.login.count"), testData.getProperty("api.login.attempts"));
+				testData.getProperty("varreseller.user.login.count"), testData.getProperty("varreseller.user.login.attempts"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMassageForInvalidUrl() throws IOException {
 		logStep("Enter  existing user id");
 		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
-		fetchUserLoginDetailsApiResponse = userInfo.getUserloginInvalidUrl(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.getUserLoginInvalidUrl(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 404);
@@ -63,7 +63,7 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	public void testErrorMassageForInvalidMethodCall() throws IOException {
 		logStep("Enter  existing user id");
 		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
-		fetchUserLoginDetailsApiResponse = userInfo.invalidMethodCallGetUserlogin(userId);
+		fetchUserLoginDetailsApiResponse = userInfo.invalidMethodCallGetUserLogin(userId);
     	logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 405);
