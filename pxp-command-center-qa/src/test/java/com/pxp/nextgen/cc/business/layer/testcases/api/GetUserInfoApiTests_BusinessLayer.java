@@ -98,7 +98,7 @@ public class GetUserInfoApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorMassageForGetUserInfoUsingInvalidUrl() throws IOException {
+	public void testErrorMessageForGetUserInfoUsingInvalidUrl() throws IOException {
 		fetchUserInfoApiResponse = userInfo.getUserInfoUsingInvalidUrl(testData.getProperty("internal.auth.id"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
