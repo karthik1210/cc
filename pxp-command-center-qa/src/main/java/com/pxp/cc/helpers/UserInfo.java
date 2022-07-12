@@ -291,14 +291,15 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
+
 	public Response patchInternalUser_DataLayer(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
-	public Response patchInternalUser_DataLayerUsingInvalidMethodCall(String userStatus, Integer id) throws IOException {
+
+	public Response patchInternalUser_DataLayerUsingInvalidMethodCall(String userStatus, Integer id)
+			throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
@@ -309,7 +310,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
+
 	public Response patchInternalUser_DataLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.INVALID_PATH_INTERNAL_USER_STATUS_DL(id);
@@ -513,7 +514,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_BL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getUserLogin_NullValues() {
 		String url = ApiPath.LOGIN_DETAIL_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -644,7 +645,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getUserlogin_DL(int userId) {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -659,4 +660,10 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response getUserInfo(String authId) {
+		String url = ApiPath.USER_INFO_BL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
+	}
+
 }
