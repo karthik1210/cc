@@ -2486,7 +2486,12 @@ public class Validations {
 		} else {
 			CCUtils.assertEquals(jsonpath.getInt("clientId"), Integer.valueOf(clientId));
 		}
+	}
 
+	public void verifyErrorResponseBodyForInvalidAuthId(Response response, String authId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for authId=" + authId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 }

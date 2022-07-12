@@ -583,5 +583,5 @@ public class ApiPath {
 	}
 
 	public static final String USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo";
-
+	public static final String INVALID_PATH_USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo/1234as";
 }

@@ -666,4 +666,14 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
 	}
 
+	public Response getUserInfoUsingInvalidUrl(String authId) {
+		String url = ApiPath.INVALID_PATH_USER_INFO_BL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
+	}
+
+	public Response getUserInfoUsingInvalidMethodCall(String authId) {
+		String url = ApiPath.USER_INFO_BL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().post(url).then().extract().response();
+	}
+
 }
