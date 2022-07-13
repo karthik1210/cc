@@ -250,7 +250,7 @@ public class UpdateClientUsersApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch existing client user details and  enter non existing userId & upadte Client user using valid data then validate error status code")
-	public void testErrorMessagesForNonExistingUserId() throws IOException {
+	public void testErrorMessageForNonExistingUserId() throws IOException {
 		logStep("Fetch existing client user details with existing client userid");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
@@ -275,7 +275,7 @@ public class UpdateClientUsersApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch existing client user details and update invalid mobile number then validate error message")
-	public void testErrorMessagesForinvalidClientUserMobileNumber() throws IOException {
+	public void testErrorMessageForInvalidClientUserMobileNumber() throws IOException {
 		logStep("Fetch existing client user details with existing client userid");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
@@ -297,9 +297,9 @@ public class UpdateClientUsersApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch existing client user details and update invalid email then validate error message")
-	public void testErrorMessagesForinvalidClientUserEmail() throws IOException {
+	public void testErrorMessageForinvalidClientUserEmail() throws IOException {
 		logStep("Fetch existing client user details with existing client userid");
-		String email = testData.getProperty("invalid.clientuser.emailid");
+		String email = testData.getProperty("invalid.clientuser.email.id");
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String firstName = testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(5));
