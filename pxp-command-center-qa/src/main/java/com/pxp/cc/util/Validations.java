@@ -2494,4 +2494,14 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyErrorResponseForInvalidClientEmailId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"must be a well-formed email address, Email address must be well formed");
+	}
+
+	public void verifyUpdateClientResponseBody(Response response, int id) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getInt("id"), id);
+	}
 }
