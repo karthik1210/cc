@@ -389,6 +389,7 @@ public class ApiPath {
 	public static String INVALID_PATH_UPDATE_VARRESELLER_USER_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/userssssss/" + userId;
 	}
+
 	public static String UPDATE_CLIENT_USER_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/users/" + userId;
 	}
@@ -467,7 +468,7 @@ public class ApiPath {
 	public static final String LOGIN_DETAIL_INVALID_URL_DL(int orgId) {
 		return SERVICE_USER_DL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
-	
+
 	public static final String LOGIN_DETAIL_NULL_VALUES_BL() {
 		return SERVICE_USER_BL + "/v1/users/" + null + "/audit/login";
 	}
@@ -588,5 +589,8 @@ public class ApiPath {
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_DL_INVALID_URL(int resourceId, int practiceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
 	}
+
+	public static final String USER_INFO_DL = SERVICE_USER_DL + "/v1/users/userinfo";
+	public static final String INVALID_PATH_USER_INFO_DL = SERVICE_USER_DL + "/v1/users/userinfo/1234aseds";
 
 }

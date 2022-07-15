@@ -291,14 +291,15 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
+
 	public Response patchInternalUser_DataLayer(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
-	public Response patchInternalUser_DataLayerUsingInvalidMethodCall(String userStatus, Integer id) throws IOException {
+
+	public Response patchInternalUser_DataLayerUsingInvalidMethodCall(String userStatus, Integer id)
+			throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.UPDATE_INTERNAL_USER_STATUS_DL(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
@@ -309,7 +310,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_INTERNAL_USER_SERVICE(id);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
-	
+
 	public Response patchInternalUser_DataLayerUsingInvalidUrl(String userStatus, Integer id) throws IOException {
 		Map<String, Object> updateInternalUserPayload = patchInternalUserStatus(userStatus);
 		String url = ApiPath.INVALID_PATH_INTERNAL_USER_STATUS_DL(id);
@@ -388,7 +389,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.CLIENT_USER_SERVICE(userId);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
 	}
-	
+
 	public Response updateClientUser_DataLayer(String authId, String userType, String firstName, String lastName,
 			String userName, String email, Long mobile, String userStatus, Object clientId, Object resellerId,
 			Object providerId, String expiryDate, List<Integer> roleIds, Integer userId) throws IOException {
@@ -409,16 +410,15 @@ public class UserInfo extends BaseRest {
 				.response();
 	}
 
-	public Response updateClientUser_DataLayerUsingInvalidMethodCall(String authId, String userType,
-			String firstName, String lastName, String userName, String email, Long mobile, String userStatus,
-			Object clientId, Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds,
-			Integer userId) throws IOException {
+	public Response updateClientUser_DataLayerUsingInvalidMethodCall(String authId, String userType, String firstName,
+			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
+			Object resellerId, Object providerId, String expiryDate, List<Integer> roleIds, Integer userId)
+			throws IOException {
 		Map<String, Object> updateInternalUserPayload = putUpdateClientUser(authId, userType, firstName, lastName,
 				userName, email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
 		String url = ApiPath.UPDATE_CLIENT_USER_DL(userId);
 		return given().spec(requestSpec).body(updateInternalUserPayload).when().post(url).then().extract().response();
 	}
-
 
 	public Response updateVAResellerUser_BusinessLayer(String authId, String userType, String firstName,
 			String lastName, String userName, String email, Long mobile, String userStatus, Object clientId,
@@ -544,7 +544,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_BL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getUserLogin_NullValues() {
 		String url = ApiPath.LOGIN_DETAIL_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -675,7 +675,7 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getUserlogin_DL(int userId) {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -690,4 +690,20 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.LOGIN_DETAIL_DL(userId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response getUserInfo_DataLayer(String authId) {
+		String url = ApiPath.USER_INFO_DL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
+	}
+
+	public Response getUserInfoUsingInvalidUrl_DataLayer(String authId) {
+		String url = ApiPath.INVALID_PATH_USER_INFO_DL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
+	}
+
+	public Response getUserInfoUsingInvalidMethodCall_DataLayer(String authId) {
+		String url = ApiPath.USER_INFO_DL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().post(url).then().extract().response();
+	}
+
 }
