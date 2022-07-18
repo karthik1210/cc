@@ -589,7 +589,7 @@ public class ApiPath {
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_DL_INVALID_URL(int resourceId, int practiceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
 	}
-	
+
 	public static final String PRACTICES_ASSOCIATED_TO_PROVIDER_DL(int providerId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
 	}
@@ -601,4 +601,6 @@ public class ApiPath {
 	public static final String USER_INFO_DL = SERVICE_USER_DL + "/v1/users/userinfo";
 	public static final String INVALID_PATH_USER_INFO_DL = SERVICE_USER_DL + "/v1/users/userinfo/1234aseds";
 
+	public static final String USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo";
+	public static final String INVALID_PATH_USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo/1234as";
 }

@@ -3,16 +3,14 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
-import io.restassured.response.Response;
 
 public class UserInfo extends BaseRest {
 
@@ -703,6 +701,21 @@ public class UserInfo extends BaseRest {
 
 	public Response getUserInfoUsingInvalidMethodCall_DataLayer(String authId) {
 		String url = ApiPath.USER_INFO_DL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().post(url).then().extract().response();
+	}
+
+	public Response getUserInfo(String authId) {
+		String url = ApiPath.USER_INFO_BL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
+	}
+
+	public Response getUserInfoUsingInvalidUrl(String authId) {
+		String url = ApiPath.INVALID_PATH_USER_INFO_BL;
+		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().get(url).then().extract().response();
+	}
+
+	public Response getUserInfoUsingInvalidMethodCall(String authId) {
+		String url = ApiPath.USER_INFO_BL;
 		return given().spec(requestSpec).headers("X-Auth-ID", authId).when().post(url).then().extract().response();
 	}
 
