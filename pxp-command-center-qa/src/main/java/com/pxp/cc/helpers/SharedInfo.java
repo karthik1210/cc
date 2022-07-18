@@ -139,7 +139,17 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
-	
+
+	public Response getBrandDetails_DL(int brandId) {
+		String url = ApiPath.BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getBrandDetailsUsingInvalidUrl_DL(int brandId) {
+		String url = ApiPath.INVALID_PATH_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }
 
 
