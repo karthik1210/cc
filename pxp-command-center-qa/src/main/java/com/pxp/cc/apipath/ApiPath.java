@@ -536,6 +536,9 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
+	
+	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_NULL_VALUES = SERVICE_SHARED_BL
+			+ "/v1/practices/null/appointment-types/null/resources";
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL(int practiceId, int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/resources";
