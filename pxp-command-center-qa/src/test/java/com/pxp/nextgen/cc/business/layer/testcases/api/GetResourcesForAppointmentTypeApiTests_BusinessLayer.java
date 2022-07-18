@@ -1,4 +1,5 @@
 //Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class GetResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching resource of existing practice Id and appointment Type Id but no resource is associated")
-	public void testResponseCodeForExistingPracticeIdandAppointmentTypeOfNoAssociatedResource() throws IOException {
+	public void testResponseCodeForExistingPracticeIdAndAppointmentTypeOfNoAssociatedResource() throws IOException {
 		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo.getResourcesForAppointmentType_BL(
 				Integer.parseInt(testData.getProperty("no.resources.practice.id")),
 				Integer.parseInt(testData.getProperty("no.resources.appointment.type.id")));
@@ -50,7 +51,7 @@ public class GetResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching resource of existing practice Id and non-existing appointment Type Id")
-	public void testErrorMessageForExistingPracticeIdandNonexistingAppointmentTypeId() throws IOException {
+	public void testErrorMessageForExistingPracticeIdAndNonexistingAppointmentTypeId() throws IOException {
 		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo.getResourcesForAppointmentType_BL(
 				Integer.parseInt(testData.getProperty("get.resources.practice.id")),
 				Integer.parseInt(testData.getProperty("non.existing.resources.appointment.type.id")));
@@ -60,7 +61,7 @@ public class GetResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching resource of non-existing practice Id and existing appointment Type Id")
-	public void testErrorMessageForNonExistingPracticeIdandExistingAppointmentTypeId() throws IOException {
+	public void testErrorMessageForNonExistingPracticeIdAndExistingAppointmentTypeId() throws IOException {
 		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo.getResourcesForAppointmentType_BL(
 				Integer.parseInt(testData.getProperty("non.existing.resources.practice.id")),
 				Integer.parseInt(testData.getProperty("get.resources.appointment.type.id")));
@@ -70,7 +71,7 @@ public class GetResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching resource of both non-existing practice Id and appointment Type Id")
-	public void testErrorMessageForBothNonExistingPracticeIdandAppointmentTypeId() throws IOException {
+	public void testErrorMessageForBothNonExistingPracticeIdAndAppointmentTypeId() throws IOException {
 		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo.getResourcesForAppointmentType_BL(
 				Integer.parseInt(testData.getProperty("non.existing.resources.practice.id")),
 				Integer.parseInt(testData.getProperty("non.existing.resources.appointment.type.id")));

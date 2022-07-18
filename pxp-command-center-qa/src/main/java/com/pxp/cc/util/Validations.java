@@ -2504,4 +2504,5 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
+
 }
