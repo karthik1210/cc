@@ -125,6 +125,21 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 	
+	public Response getPracticesAssociatedToProvider_DL(int providerId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticesAssociatedToProviderInvalidUrl_DL(int providerId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_INVALID_URL_DL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticesAssociatedToProviderInvalidMethodCall_DL(int providerId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+	
 }
 
 
