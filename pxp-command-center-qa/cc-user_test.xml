@@ -22,6 +22,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateUserRolesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserInfoApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

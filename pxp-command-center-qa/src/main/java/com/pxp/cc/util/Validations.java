@@ -2473,6 +2473,27 @@ public class Validations {
 		}
 	}
 
+	public void verifyUserInfoApiResponseBody(Response response, int userId, String firstName, String lastName,
+			String type, String clientId) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.getInt("userId"), userId);
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		if (Objects.isNull(jsonpath.get("clientId"))) {
+			Log4jUtil.log("client id is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("clientId"), Integer.valueOf(clientId));
+		}
+	}
+
+	public void verifyErrorResponseBodyForInvalidAuthId(Response response, String authId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for authId=" + authId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
 	public void verifyErrorResponseForInvalidClientEmailId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
