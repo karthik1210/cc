@@ -467,7 +467,7 @@ public class ApiPath {
 	public static final String LOGIN_DETAIL_INVALID_URL_DL(int orgId) {
 		return SERVICE_USER_DL + "/v1/users/" + orgId + "/audit/loginabc";
 	}
-	
+
 	public static final String LOGIN_DETAIL_NULL_VALUES_BL() {
 		return SERVICE_USER_BL + "/v1/users/" + null + "/audit/login";
 	}
@@ -600,4 +600,6 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providerssss/" + providerId + "/practices";
 	}
 
+	public static final String USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo";
+	public static final String INVALID_PATH_USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo/1234as";
 }
