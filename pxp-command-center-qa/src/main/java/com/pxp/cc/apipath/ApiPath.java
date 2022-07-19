@@ -614,4 +614,13 @@ public class ApiPath {
 	public static String INVALID_PATH_GET_USER_DL() {
 		return SERVICE_USER_DL + "/v1/Usersss";
 	}
+
+	public static final String BRAND_DETAILS_DL(int brandId) {
+		return SHARED_DL + "/v1/brands/" + brandId;
+	}
+
+	public static final String INVALID_PATH_BRAND_DETAILS_DL(int brandId) {
+		return SHARED_DL + "/v1/brandsssss/" + brandId;
+	}
+
 }

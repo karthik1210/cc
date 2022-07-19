@@ -2504,6 +2504,18 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
+	
+	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String showLogo,
+			String color, String logo, String favicon, String emailLogo)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+		CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
+		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
+		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
+	}
 
 	public void verifyInternalUserOutputWithValidInput(Response response, String getSearchUserDetails) {
 		JsonPath jsonPath = new JsonPath(response.asString());
