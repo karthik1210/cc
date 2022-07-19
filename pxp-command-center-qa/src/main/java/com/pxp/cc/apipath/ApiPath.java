@@ -537,7 +537,7 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
-	
+
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/practices/null/appointment-types/null/resources";
 
@@ -606,7 +606,7 @@ public class ApiPath {
 
 	public static final String USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo";
 	public static final String INVALID_PATH_USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo/1234as";
-	
+
 	public static final String BRAND_DETAILS_DL(int brandId) {
 		return SHARED_DL + "/v1/brands/" + brandId;
 	}
@@ -615,4 +615,11 @@ public class ApiPath {
 		return SHARED_DL + "/v1/brandsssss/" + brandId;
 	}
 
+	public static final String UPDATE_PROVIDER_DETAILS(int providerId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
+	}
+
+	public static final String UPDATE_PROVIDER_DETAILS_INVALID_URL(int providerId) {
+		return SHARED_DL + "/v1/providerssss/" + providerId + "/practices";
+	}
 }

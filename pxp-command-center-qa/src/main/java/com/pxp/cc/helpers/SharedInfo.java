@@ -104,7 +104,7 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
 
 	}
-	
+
 	public Response getPracticesAssociatedToProvider(int providerId) {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -119,12 +119,12 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
-	
+
 	public Response getPracticesAssociatedToProvider_NullValues() {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_NULL_VALUES_BL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getPracticesAssociatedToProvider_DL(int providerId) {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -150,6 +150,28 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response updateProviderDetails(int providerId, String practiceId, String active) {
+		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
+		String url = ApiPath.UPDATE_PROVIDER_DETAILS(providerId);
+		return given().spec(requestSpec).body(providerDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateProviderDetailsInvalidMethod(int providerId, String practiceId, String active) {
+		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
+		String url = ApiPath.UPDATE_PROVIDER_DETAILS(providerId);
+		return given().spec(requestSpec).body(providerDetailsPayload).when().post(url).then().extract().response();
+	}
+
+	public Response updateProviderDetailsInvalidUrl(int providerId, String practiceId, String active) {
+		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
+		String url = ApiPath.UPDATE_PROVIDER_DETAILS_INVALID_URL(providerId);
+		return given().spec(requestSpec).body(providerDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> updateProvider(String practiceId, String active) {
+		Map<String, Object> updateProviderDetailsMap = new HashMap<String, Object>();
+		updateProviderDetailsMap.put("practiceId", practiceId);
+		updateProviderDetailsMap.put("active", active);
+		return updateProviderDetailsMap;
+	}
 }
-
-
