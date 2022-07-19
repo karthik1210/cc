@@ -164,7 +164,7 @@ public class SharedInfo extends BaseRest {
 
 	public Response updateProviderDetailsInvalidUrl(int providerId, String practiceId, String active) {
 		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
-		String url = ApiPath.UPDATE_PROVIDER_DETAILS_INVALID_URL(providerId);
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_INVALID_URL_DL(providerId);
 		return given().spec(requestSpec).body(providerDetailsPayload).when().put(url).then().extract().response();
 	}
 

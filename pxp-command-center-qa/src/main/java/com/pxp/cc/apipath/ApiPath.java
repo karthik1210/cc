@@ -618,8 +618,4 @@ public class ApiPath {
 	public static final String UPDATE_PROVIDER_DETAILS(int providerId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
 	}
-
-	public static final String UPDATE_PROVIDER_DETAILS_INVALID_URL(int providerId) {
-		return SHARED_DL + "/v1/providerssss/" + providerId + "/practices";
-	}
 }
