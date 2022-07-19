@@ -607,11 +607,11 @@ public class ApiPath {
 	public static final String USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo";
 	public static final String INVALID_PATH_USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo/1234as";
 
-	public static String GET_USER_DL() {
+	public static String GET_USERS_DL() {
 		return SERVICE_USER_DL + "/v1/users";
 	}
 
-	public static String INVALID_PATH_GET_USER_DL() {
+	public static String GET_USERS_INVALID_PATH_DL() {
 		return SERVICE_USER_DL + "/v1/Usersss";
 	}
 

@@ -13,7 +13,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class SearchInternalUsersApiTest_DataLayer extends BaseRest {
+public class SearchInternalUsersApiTests_DataLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response searchInternalUserApiResponse;
@@ -27,7 +27,6 @@ public class SearchInternalUsersApiTest_DataLayer extends BaseRest {
 
 	@DataProvider(name = "userdatavalidusertype")
 	public Object[] searchUserDetailsWithoutFilter() {
-
 		Object[][] obj = new Object[][] { { testData.getProperty("user.type.internal").trim(), null, null, null, null,
 				null, null, null, null, (testData.getProperty("api.page.no").trim()),
 				(testData.getProperty("api.page.size").trim()) } };
@@ -80,9 +79,8 @@ public class SearchInternalUsersApiTest_DataLayer extends BaseRest {
 						(testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
 				{ testData.getProperty("user.type.internal").trim(), null, null,
 						testData.getProperty("api.partial.email.id").trim(), null, null, null, null, null,
-						(testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) }
-
-		};
+						(testData.getProperty("api.page.no").trim()),
+						(testData.getProperty("api.page.size").trim()) } };
 		return obj;
 	}
 
@@ -98,7 +96,7 @@ public class SearchInternalUsersApiTest_DataLayer extends BaseRest {
 		validation.verifyInternalUserOutputWithValidInput(searchInternalUserApiResponse, getSearchUserDetails[3]);
 	}
 
-	@DataProvider(name = "userdatavalidemobileinput")
+	@DataProvider(name = "userdatavalidmobileinput")
 	public Object[] searchUserDetailsWithValidMobileNumberInput() {
 		Object[][] obj = new Object[][] {
 				{ testData.getProperty("user.type.internal").trim(), null, null, null, null,
@@ -111,7 +109,7 @@ public class SearchInternalUsersApiTest_DataLayer extends BaseRest {
 		return obj;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userdatavalidemobileinput", description = "Search Internal user with full/partial  mobile number by keeping page 0 and page size 10")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userdatavalidmobileinput", description = "Search Internal user with full/partial  mobile number by keeping page 0 and page size 10")
 	public void testSearchUserDetailsWithValidMobileNumberInput(String[] getSearchUserDetails)
 			throws NullPointerException {
 		searchInternalUserApiResponse = userInfo.getUsers_DL(getSearchUserDetails[0], getSearchUserDetails[1],

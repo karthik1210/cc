@@ -722,7 +722,7 @@ public class UserInfo extends BaseRest {
 	public Response getUsers_DL(String type, String firstname, String lastname, String email, String username,
 			String mobileNumber, String clientname, String resellername, String sortdir, String pageno,
 			String pagesize) {
-		String url = ApiPath.GET_USER_DL();
+		String url = ApiPath.GET_USERS_DL();
 		return given().spec(requestSpec).queryParam("type", type).queryParam("firstname", firstname)
 				.queryParam("lastname", lastname).queryParam("email", email).queryParam("username", username)
 				.queryParam("mobile", mobileNumber).queryParam("clientname", clientname)
@@ -733,7 +733,7 @@ public class UserInfo extends BaseRest {
 	public Response getUsersInvalidUrl_DL(String type, String firstname, String lastname, String email, String username,
 			String mobileNumber, String clientname, String resellername, String sortdir, String pageno,
 			String pagesize) {
-		String url = ApiPath.INVALID_PATH_GET_USER_DL();
+		String url = ApiPath.GET_USERS_INVALID_PATH_DL();
 		return given().spec(requestSpec).queryParam("type", type).queryParam("firstname", firstname)
 				.queryParam("lastname", lastname).queryParam("email", email).queryParam("username", username)
 				.queryParam("mobile", mobileNumber).queryParam("clientname", clientname)
@@ -744,7 +744,7 @@ public class UserInfo extends BaseRest {
 	public Response invalidMethodCallGetUsers_DL(String type, String firstname, String lastname, String email,
 			String username, String mobileNumber, String clientname, String resellername, String sortdir, String pageno,
 			String pagesize) {
-		String url = ApiPath.GET_USER_DL();
+		String url = ApiPath.GET_USERS_DL();
 		return given().spec(requestSpec).queryParam("type", type).queryParam("firstname", firstname)
 				.queryParam("lastname", lastname).queryParam("email", email).queryParam("username", username)
 				.queryParam("mobile", mobileNumber).queryParam("clientname", clientname)
