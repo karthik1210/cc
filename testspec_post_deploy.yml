@@ -9,16 +9,18 @@ phases:
       - |
         if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then
            echo "$APPLICATION_NAME is a UI Application. Starting Downloading supported web browser driver";
+           export google_chrome_version="99.0.4844.82-1"
+           export chrome_driver_version="99.0.4844.51"
            yum update -y
            yum install GConf2 liberation-fonts-common gtk3 libappindicator-gtk3 yum-utils libXScrnSaver redhat-lsb-core alsa-lib-devel dbus-x11 ImageMagick Xvfb net-tools -y
-           curl -O https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-93.0.4577.82-1.x86_64.rpm
+           curl -O https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-${google_chrome_version}.x86_64.rpm
            ls -l /usr/bin
-           rpm -Uvh --nodeps google-chrome-stable-93.0.4577.82-1.x86_64.rpm
+           rpm -Uvh --nodeps google-chrome-stable-${google_chrome_version}.x86_64.rpm
            mv /usr/bin/google-chrome-stable /usr/bin/google-chrome
            ls -l /usr/bin
            google-chrome -version
            which google-chrome
-           curl -O https://chromedriver.storage.googleapis.com/92.0.4515.107/chromedriver_linux64.zip
+           curl -O https://chromedriver.storage.googleapis.com/${chrome_driver_version}/chromedriver_linux64.zip
            unzip -x -o chromedriver_linux64.zip -d /usr/bin/
            chmod +x /usr/bin/chromedriver
         else
@@ -26,16 +28,42 @@ phases:
         fi
   build:
     commands:
-      - cd pxp-command-center-qa
-      - REPLACE_STRING="${ENVIRONMENT}-"
-      - testSuiteName=$(echo $APPLICATION_NAME | sed "s/$REPLACE_STRING/ /")
-      - testSuiteName=`echo $testSuiteName | sed 's/ *$//g'`
-      - testSuiteFileName="${testSuiteName}_test.xml"
-      - echo "Starting Maven Execution For Test Suite $testSuiteFileName";
-      - |
-        if [ -f "$testSuiteFileName" ]; then   
-           echo "$testSuiteFileName exists";
-           mvn -U clean integration-test -Dsuite.xml=${testSuiteFileName} -Dtest.environment=${ENVIRONMENT} -Dexecution.mode=headless 
-        else     
-           echo "$testSuiteFileName Not exists in automation project"; 
-        fi
+        - cd pxp-command-center-qa
+        - echo "${APPLICATION_NAME}"
+        - echo "${ENVIRONMENT}"
+        - REPLACE_STRING="${ENVIRONMENT}-"
+        - testSuiteName=$(echo $APPLICATION_NAME | sed "s/$REPLACE_STRING/ /")
+        - testSuiteName=`echo $testSuiteName | sed 's/ *$//g'`
+        - testSuiteFileName="${testSuiteName}_test.xml"
+        #- envsubst '${ENVIRONMENT}' < ./testConfig.properties > ./testConfig.properties
+        - echo "Starting the test execution.."
+        - |
+          if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then   ####### Checking If it is a UI Build ###############
+             echo "$APPLICATION_NAME is a UI Application..";
+             echo "Running Smoke............";
+             mvn -ntp -U clean test -Dsuite.xml=cc-ui_smoke_test.xml -Dtest.environment=${ENVIRONMENT} -Dselenium.browser="*chrome" -Dexecution.mode=headless
+          else                                                       ####### if not UI Build Run Build Specific Automation###############
+             echo "$APPLICATION_NAME is not UI.";
+             echo "Running Build Specific Test Suite in $ENVIRONMENT environment ";
+             if [ -f "$testSuiteFileName" ]; then     ####### Checkin Test Suite XML is Available ###############
+                echo "$testSuiteFileName exists - Running Test Suite...";
+                mvn -ntp -U clean test -Dsuite.xml=${testSuiteFileName} -Dtest.environment=${ENVIRONMENT} -Dexecution.mode=headless
+             else
+                echo "$testSuiteFileName Not exists......"; 
+             fi  ####### Checking Test Suite File Exist Logic END HERE ###############
+          fi     ####### Checkin Application IS [UI Build or Not] Logic END Here ##############
+        - echo "Starting Regression test Process.."
+        - |
+          if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then   ####### Checking If it is a UI Build ###############
+           echo "$APPLICATION_NAME is a UI Application..";
+           echo "Running Regression Test............";
+           ## To DO : Command to trigger the Regression Run shell script 
+          fi
+  post_build:
+    commands:
+      - echo "Starting Post Build.."
+reports:
+  ${APPLICATION_NAME}-Test-Report:
+    files:
+      - pxp-command-center-qa/target/surefire-reports/testng-results.xml
+    file-format: "TestNGXML"
