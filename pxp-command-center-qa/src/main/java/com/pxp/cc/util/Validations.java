@@ -2504,10 +2504,9 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
-	
+
 	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String showLogo,
-			String color, String logo, String favicon, String emailLogo)
-			throws IOException {
+			String color, String logo, String favicon, String emailLogo) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
@@ -2540,5 +2539,18 @@ public class Validations {
 						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
 			}
 		}
+	}
+
+	public void verifyErrorMessageForInvalidInput(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForActiveStatusAsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Active cannot be null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
 	}
 }

@@ -334,7 +334,7 @@ public class ApiPath {
 	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}"
 			+ "/entitiesssss";
-	
+
 	public static final String INVALID_INTERNAL_USER_DL = SERVICE_USER_DL + "/v1/usersssdsdss/";
 	public static final String INVALID_PATH_INTERNALUSER_BL = SERVICE_USER_BL + "/v1/usersabc123/";
 	public static final String SERVICE_PRODUCT_DL = "/service/product-data";
@@ -594,4 +594,7 @@ public class ApiPath {
 		return SHARED_DL + "/v1/brandsssss/" + brandId;
 	}
 
+	public static final String UPDATE_PROVIDER_DETAILS(int providerId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
+	}
 }
