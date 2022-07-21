@@ -334,8 +334,7 @@ public class ApiPath {
 	public static final String ASSOCIATE_ENTITIES_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}" + "/entities";
 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_BL = SERVICE_USER_BL + "/v1/users/" + "{userId}"
 			+ "/entitiesssss";
-	public static final String INTERNAL_USER_BL = SERVICE_USER_BL + "/v1/users/";
-	public static final String INTERNAL_USER_DL = SERVICE_USER_DL + "/v1/users/";
+
 	public static final String INVALID_INTERNAL_USER_DL = SERVICE_USER_DL + "/v1/usersssdsdss/";
 	public static final String INVALID_PATH_INTERNALUSER_BL = SERVICE_USER_BL + "/v1/usersabc123/";
 	public static final String SERVICE_PRODUCT_DL = "/service/product-data";
@@ -350,24 +349,12 @@ public class ApiPath {
 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/org-hierarchysssss";
 	}
 
-	public static String INTERNAL_USER_SERVICE(int id) {
-		return INTERNAL_USER_BL + id;
+	public static String ADD_USER_BL(int userId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId;
 	}
 
-	public static String UPDATE_INTERNAL_USER_STATUS_DL(int id) {
-		return INTERNAL_USER_DL + id;
-	}
-
-	public static String CLIENT_USER_SERVICE(int id) {
-		return SERVICE_USER_BL + "/v1/users/" + id;
-	}
-
-	public static String INVALID_PATH_CLIENT_BL(int id) {
+	public static String INVALID_PATH_ADD_USER_BL(int id) {
 		return SERVICE_USER_BL + "/v1/usersssssss/" + id;
-	}
-
-	public static String VAReseller_USER_SERVICE(int id) {
-		return SERVICE_USER_BL + "/v1/users/" + id;
 	}
 
 	public static String INVALID_PATH_VAReseller_USER_SERVICE(int id) {
@@ -378,33 +365,17 @@ public class ApiPath {
 		return INVALID_PATH_INTERNALUSER_BL + id;
 	}
 
-	public static String INVALID_PATH_INTERNAL_USER_STATUS_DL(int id) {
-		return SERVICE_USER_DL + "/v1/usersssss/" + id;
-	}
-
-	public static String UPDATE_VARRESELLER_USER_DL(int userId) {
+	public static String UPDATE_USER_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/users/" + userId;
 	}
 
-	public static String INVALID_PATH_UPDATE_VARRESELLER_USER_DL(int userId) {
-		return SERVICE_USER_DL + "/v1/userssssss/" + userId;
-	}
-
-	public static String UPDATE_CLIENT_USER_DL(int userId) {
-		return SERVICE_USER_DL + "/v1/users/" + userId;
-	}
-
-	public static String INVALID_PATH_UPDATE_CLIENT_USER_DL(int userId) {
+	public static String INVALID_PATH_UPDATE_USER_DL(int userId) {
 		return SERVICE_USER_DL + "/v1/userssssss/" + userId;
 	}
 
 	public static final String ASSOCIATE_ENTITIES_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}" + "/entities";
 	public static final String ASSOCIATE_ENTITIES_INVALID_URL_DL = SERVICE_USER_DL + "/v1/users/" + "{userId}"
 			+ "/entitiesssss";
-
-	public static final String INTERNAL_USER_DATA(int id) {
-		return INTERNAL_USER_DL + id;
-	}
 
 	public static final String INVALID_INTERNAL_USER_DATA(int id) {
 		return INVALID_INTERNAL_USER_DL + id;
@@ -606,6 +577,14 @@ public class ApiPath {
 
 	public static final String USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo";
 	public static final String INVALID_PATH_USER_INFO_BL = SERVICE_USER_BL + "/v1/users/userinfo/1234as";
+
+	public static String GET_USERS_DL() {
+		return SERVICE_USER_DL + "/v1/users";
+	}
+
+	public static String GET_USERS_INVALID_PATH_DL() {
+		return SERVICE_USER_DL + "/v1/Usersss";
+	}
 
 	public static final String BRAND_DETAILS_DL(int brandId) {
 		return SHARED_DL + "/v1/brands/" + brandId;
