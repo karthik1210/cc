@@ -2504,10 +2504,9 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
-	
+
 	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String showLogo,
-			String color, String logo, String favicon, String emailLogo)
-			throws IOException {
+			String color, String logo, String favicon, String emailLogo) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
@@ -2517,4 +2516,41 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
 	}
 
+	public void verifyInternalUserOutputWithValidInput(Response response, String getSearchUserDetails) {
+		JsonPath jsonPath = new JsonPath(response.asString());
+		Log4jUtil.log("Display total count of locations in response body : " + jsonPath.get("totalCount"));
+		Log4jUtil.log("Display list of clients in response body : " + jsonPath.get("data"));
+		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
+		Log4jUtil.log("Page Number : " + jsonPath.getInt("pageNo"));
+		Log4jUtil.log("Items(Clients) per Page : " + jsonPath.getInt("pageSize"));
+		Log4jUtil.log("Comparing Searched Items names/ids with user data received in Response body.");
+		for (int dataArrayIteration = 0; dataArrayIteration < jsonPath.getInt("data.size()"); dataArrayIteration++) {
+			String userIteratePerData = jsonPath.get("data[" + dataArrayIteration + "].firstName");
+			Log4jUtil.log("Print Value : " + userIteratePerData);
+			if (userIteratePerData.contains(getSearchUserDetails)) {
+				Log4jUtil.log("searched value :" + getSearchUserDetails + "present within response body's value"
+						+ userIteratePerData);
+				CCUtils.assertTrue(true,
+						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
+			} else if (userIteratePerData.contains(getSearchUserDetails)) {
+				Log4jUtil.log("searched value :" + getSearchUserDetails + "present within response body's value"
+						+ userIteratePerData);
+				CCUtils.assertTrue(true,
+						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
+			}
+		}
+	}
+
+	public void verifyErrorMessageForInvalidInput(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageForActiveStatusAsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Active cannot be null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
 }
