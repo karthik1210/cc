@@ -17,7 +17,7 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		clientDirectoryPage = new ClientDirectoryPage(driver, ccuser.getUrl());
+		clientDirectoryPage = new ClientDirectoryPage(driver);
 	}
 
 	public List<String> listOfFavClients() throws Exception {
@@ -41,18 +41,17 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 		clientDirectoryPage.FavoriteAClient();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
-	public void testMoreThanClientFavoritedToolTipError() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite more than 5 client from client directory")
+	public void testMoreThanFiveClientFavoritedError() throws Exception {
 		logStep("Verfying whether favorited client count is equal or less than five");
 		int noOfFavClients = clientDirectoryPage.getSizeListOfFavClients();
 		log("Print no of Fav clients : " + noOfFavClients);
 		clientDirectoryPage.validateFavClientsAndUnFavThem(noOfFavClients);
 		List<String> listOfFavoritingClient = listOfFavClients();
 		clientDirectoryPage.listOfFavoritingClients(listOfFavoritingClient);
-
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to unfavorite a client from client directory")
 	public void testUnFavoriteClient() throws Exception {
 		logStep("Verfying whether favorited client count is equal or less than five");
 		int noOfFavClients = clientDirectoryPage.getSizeListOfFavClients();

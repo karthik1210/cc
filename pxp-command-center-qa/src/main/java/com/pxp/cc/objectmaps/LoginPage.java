@@ -20,7 +20,7 @@ public class LoginPage extends CCMainPage {
 	@FindBy(xpath = "//p[@class='sign']")
 	private WebElement errorMsgInvalidUsernameOrPassword;
 
-	@FindBy(xpath = "//button[@class='primary']")
+	@FindBy(id = "loginButton")
 	private WebElement loginButton;
 
 	@FindBy(xpath = "//span[contains(text(),'SHOW')]")
