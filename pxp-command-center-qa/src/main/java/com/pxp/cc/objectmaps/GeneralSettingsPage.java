@@ -197,6 +197,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-tree-node[@aria-level='1']")
 	private WebElement treeClientNode;
+	
+	@FindBy(id = "treeNodeName")
+	private List<WebElement> treeNode;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -864,5 +867,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Clicked on Search icon");
 		
 	}	
+	
+	public void verifynodesPresentInClientGeneralSettings(String orgNode) {
+		for(WebElement ele : treeNode) {
+			if(ele.equals(orgNode)) {
+				log("tree node :"+ele+" is equal to provided org node "+orgNode);
+			}
+		}
+	}
 
 }
