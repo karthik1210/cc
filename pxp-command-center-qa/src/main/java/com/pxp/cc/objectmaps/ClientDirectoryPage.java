@@ -14,7 +14,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
-
 import com.pxp.cc.util.CCUtils;
 
 public class ClientDirectoryPage extends CCMainPage {
@@ -25,7 +24,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(how = How.XPATH, using = "//mat-icon[normalize-space()='link']")
 	private WebElement ssoLinks;
 
-	@FindBy(how = How.XPATH, using = "//button[@class='mat-focus-indicator mat-menu-trigger mat-mini-fab mat-button-base mat-accent']")
+	@FindBy(id = "headerBtn")
 	private WebElement userIcon;
 
 	@FindBy(how = How.XPATH, using = "//h1[@class='.page-title']")
@@ -49,13 +48,13 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "directoryToggleIcon")
 	private WebElement buttonSearchClientDirectory;
 
-	@FindBy(xpath = "//input[@type='text']")
+	@FindBy(id = "directoryTypeInput")
 	private WebElement dropdownClientFilter;
 
 	@FindBy(id = "directoryClearButton")
 	private WebElement buttonClearClientFilter;
 
-	@FindBy(id = "directoryApplyButton")
+	@FindBy(className = "confirmbutton")
 	private WebElement buttonApplyClientFilter;
 
 	@FindBy(xpath = "//div[@class='tableborder']")
@@ -85,7 +84,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "cmdCircleIcon")
 	private WebElement iconCommandCenterUsers;
 
-	@FindBy(xpath = "//span[@class='ng-tns-c112-6 ng-star-inserted']")
+	@FindBy(id = "mat-select-0")
 	private WebElement defaultItemsPerPage;
 
 	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
@@ -147,10 +146,6 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public ClientDirectoryPage(WebDriver driver) {
 		super(driver);
-	}
-
-	public ClientDirectoryPage(WebDriver driver, String url) {
-		super(driver, url);
 	}
 
 	public void clickSSO() {
@@ -327,7 +322,6 @@ public class ClientDirectoryPage extends CCMainPage {
 	public List<String> getClientNodeinGeneralSetting() {
 		CCUtils.verifyAndWaitForElement(nodeNameInGeneralSetting.get(0), driver);
 		log("number of nodes under Client is " + nodeNameInGeneralSetting.size());
-
 		for (int i = 0; i < nodeNameInGeneralSetting.size(); i++) {
 			nodeUnderClientInGeneralSetting.add(nodeNameInGeneralSetting.get(i).getText());
 			log("Nodes present in Client is :" + nodeNameInGeneralSetting.get(i).getText());
@@ -364,8 +358,10 @@ public class ClientDirectoryPage extends CCMainPage {
 				log("Clicked to Favorite star icon");
 				CCUtils.performMoveCursor(unFavoritedStarIcon, driver);
 				CCUtils.hover(unFavoritedStarIcon, driver);
-				String text = tooltipMsg.getText();
-				log("print the error msg : " + text);
+				String color = fetchWebElementColor(unFavoritedStarIcon);
+				log("print value of color since it is not favourited it should be : " + color);
+				log("comparing color of fav icon to : " + color);
+				CCUtils.assertEquals(color, "rgba(0, 0, 0, 0.6)");
 			} else {
 				textboxSearchClientDirectory.clear();
 				searchNode(list.get(i).trim());
@@ -434,8 +430,13 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public String getLHSPagination() throws AWTException {
 		String data = getDefaultPagination();
-		String noOfRowsPagination = data.substring(0, 2);
-		return noOfRowsPagination.trim();
+		String[] words = data.split("–", 2);
+		for (String w : words) {
+			data = w.trim();
+			break;
+		}
+		log("Print the value of LHS Pagination : " + data.trim());
+		return data.trim();
 	}
 
 	public String getRHSPagination() throws AWTException {
@@ -444,7 +445,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		for (String w : words) {
 			data = w.trim();
 		}
-		log("Print the value of default Pagination : " + data.trim());
+		log("Print the value of RHS Pagination : " + data.trim());
 		return data.trim();
 	}
 
@@ -465,40 +466,6 @@ public class ClientDirectoryPage extends CCMainPage {
 		return itemsPerPage;
 	}
 
-	public void getListOfItemsPerPagee() throws InterruptedException, AWTException {
-		int getTotalNoOfClients = Integer.valueOf(getTotalNoOfClients());
-		log("Total number of clients is : " + getTotalNoOfClients);
-		clickItemsPerPageDropdown();
-		for (int i = 0; i < listOfItemsPerPage.size(); i++) {
-			CCUtils.scrollPageToEnd();
-			CCUtils.verifyAndWaitForElement(listOfItemsPerPage.get(i), driver);
-			log("Print the value of items per page : " + listOfItemsPerPage.get(i).getText().toString());
-			javascriptClick(listOfItemsPerPage.get(i));
-			int itemData = Integer.parseInt(listOfItemsPerPage.get(i).getText().toString());
-			if (itemData >= getTotalNoOfClients) {
-				logStep("since no. of clients : " + getTotalNoOfClients + " is less than items per page : " + itemData
-						+ " Rows effected in Client Web Table is equal to number of Clients.");
-				logStep("Comparing No of Rows effected which is : " + getNoOfRowsInClientTable()
-						+ " in Client Table with No of clients : " + getTotalNoOfClients);
-				CCUtils.assertEquals(getNoOfRowsInClientTable(), getTotalNoOfClients);
-				logStep("Comparing No of Rows Pagination value which is : " + itemData
-						+ " in Client Table with No of clients : " + getTotalNoOfClients);
-				CCUtils.assertEquals(Integer.parseInt(getNoOfRowsPagination()), getTotalNoOfClients);
-				clickItemsPerPageDropdown();
-			} else {
-				logStep("since no. of clients : " + getTotalNoOfClients + " is more than items per page : " + itemData
-						+ " Rows effected in Client Web Table is equal to Items Per Page value : " + itemData);
-				logStep("Comparing No of Rows effected which is : " + getNoOfRowsInClientTable()
-						+ " in Client Table with Items Per Page Value : " + itemData);
-				CCUtils.assertEquals(getNoOfRowsInClientTable(), itemData);
-				logStep("Comparing No of Rows Pagination value which is : " + Integer.parseInt(getNoOfRowsPagination())
-						+ " in Client Table with Items Per Page value : " + itemData);
-				CCUtils.assertEquals(Integer.parseInt(getNoOfRowsPagination()), itemData);
-				clickItemsPerPageDropdown();
-			}
-		}
-	}
-
 	public int getNoOfRowsInClientTable() throws AWTException {
 		CCUtils.scrollPageToEnd();
 		for (int i = 0; i < listOfRowsClientTable.size(); i++) {
@@ -514,10 +481,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public boolean isNextPageButtonDisabled() {
-		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
-		log("Verifying the visiblity of Next Page Button.");
-		boolean buttonStatus = buttonNextPage.isEnabled();
-		log("Print the value of Next Page Button visibility status : " + buttonStatus);
+		boolean buttonStatus = CCUtils.isPaginationButtonDisabled(buttonNextPage, driver);
 		return buttonStatus;
 	}
 
@@ -528,10 +492,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public boolean isLastPageButtonDisabled() {
-		CCUtils.verifyAndWaitForElement(buttonLastPage, driver);
-		log("Verifying the visiblity of Last Page Button.");
-		boolean buttonStatus = buttonLastPage.isEnabled();
-		log("Print the value of Last Page Button visibility status : " + buttonStatus);
+		boolean buttonStatus = CCUtils.isPaginationButtonDisabled(buttonLastPage, driver);
 		return buttonStatus;
 	}
 
@@ -542,10 +503,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public boolean isPreviousPageButtonDisabled() {
-		CCUtils.verifyAndWaitForElement(buttonPreviousPage, driver);
-		log("Verifying the visiblity of Previous Page Button.");
-		boolean buttonStatus = buttonPreviousPage.isEnabled();
-		log("Print the value of Previous Page Button visibility status : " + buttonStatus);
+		boolean buttonStatus = CCUtils.isPaginationButtonDisabled(buttonPreviousPage, driver);
 		return buttonStatus;
 	}
 
@@ -556,10 +514,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public boolean isFirstPageButtonDisabled() {
-		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
-		log("Verifying the visiblity of First Page Button.");
-		boolean buttonStatus = buttonFirstPage.isEnabled();
-		log("Print the value of First Page Button visibility status : " + buttonStatus);
+		boolean buttonStatus = CCUtils.isPaginationButtonDisabled(buttonFirstPage, driver);
 		return buttonStatus;
 	}
 
@@ -801,6 +756,8 @@ public class ClientDirectoryPage extends CCMainPage {
 			deselectFavClientInClientDirectory();
 		} else
 			log("Already deselected all clients");
+	}
 
+	public void gettoolTipMessage() {
 	}
 }

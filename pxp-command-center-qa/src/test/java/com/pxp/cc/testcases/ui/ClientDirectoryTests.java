@@ -12,8 +12,8 @@ import com.pxp.cc.util.CCUtils;
 
 public class ClientDirectoryTests extends CommandCenterGenericTest {
 
-	ClientDirectoryPage clientDirectoryPage;
-	
+	private ClientDirectoryPage clientDirectoryPage;
+
 	@BeforeMethod
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
@@ -23,16 +23,23 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
 	public void testClientNameSearch() throws Exception {
-		clientDirectoryPage = new ClientDirectoryPage(driver, ccuser.getUrl());
 		logStep("Searching a client in client directory");
-		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
+		clientDirectoryPage.searchNode(testData.getProperty("search.client.in.client.directory"));
 		clientDirectoryPage.clickSearchButton();
 		logStep("Verifying results for searched client");
-		clientDirectoryPage.verfiySearchResult(ccuser.searchClientInClientDirectory);
+		clientDirectoryPage.verfiySearchResult(testData.getProperty("search.client.in.client.directory"));
+		logStep("logout from application");
+		clientDirectoryPage.clickUserIcon();
+		clientDirectoryPage.clickLogout();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check No results found is displayed if client name not present")
 	public void testToCheckNoResultsFound() throws Exception {
+		logStep("Searching a non-existing client in client directory");
+		clientDirectoryPage.searchNode(testData.getProperty("search.non.existing.client"));
+		clientDirectoryPage.selectClientTypeDropDown();
+		clientDirectoryPage.selectClientType(testData.getProperty("api.client.thirteen.type"));
+		clientDirectoryPage.applyClientTypeFilter();
 		clientDirectoryPage.clickSearchButton();
 		logStep("Verifying no result found scenario");
 		boolean result = clientDirectoryPage.testToCheckNoResultsFound();
@@ -70,7 +77,6 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		logStep("Verifying result in general setting screen");
 		List<String> allNodesInClient = clientDirectoryPage.getClientNodeinGeneralSetting();
 		for (int i = 0; i <= allNodesInClient.size(); i++) {
-
 			String actualResultNode = allNodesInClient.get(i).toLowerCase();
 			if (actualResultNode.contains(ccuser.searchSystemInClientDirectory.toLowerCase())) {
 				logStep("Test case Pass, Node present under client is '" + allNodesInClient.get(i)
@@ -101,15 +107,6 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickUserIcon();
 		clientDirectoryPage.clickLogout();
 
-	}
-
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
-	public void testItemsPerPageDropdownChangesEffectClientWebTableRows() throws InterruptedException, AWTException {
-		int noOfClients = Integer.valueOf(clientDirectoryPage.getTotalNoOfClients());
-		clientDirectoryPage.clickItemsPerPageDropdown();
-		logStep("Get the Total No of Clients : " + noOfClients);
-		clientDirectoryPage.getListOfItemsPerPagee();
 	}
 
 	@Test(enabled = true, groups = {
@@ -184,6 +181,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickItemsPerPageDropdown();
 		String itemsPerPage = clientDirectoryPage.clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "20");
+		log("get default pagination : " + clientDirectoryPage.getDefaultPagination());
 		log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
 		clientDirectoryPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}

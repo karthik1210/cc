@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 import org.hamcrest.Matchers;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
@@ -21,10 +20,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
-
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 
@@ -336,6 +333,82 @@ public class CCUtils {
 
 	public static void focusOnElement(WebElement element, WebDriver driver) {
 		new Actions(driver).moveToElement(element).click().perform();
+	}
+
+
+	public String getDefaultItemsPerPageOfWebPage(WebElement ele, WebDriver driver) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(ele, driver);
+		return ele.getText().toString();
+	}
+
+	public static String getDefaultPaginationOfWebPage(WebElement ele, WebDriver driver) {
+		String s1 = ele.getText().toString();
+		String[] words = s1.split("of", 0);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+			Log4jUtil.log("Print the value of default Pagination : " + w.trim());
+			break;
+		}
+		return data.trim();
+	}
+
+	public static String getTotalNoOfClientsFromPaginationSection(WebElement ele, WebDriver driver) {
+		String s1 = ele.getText().toString();
+		String[] words = s1.split("of", 0);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+			Log4jUtil.log("Print the value of default Pagination : " + w.trim());
+		}
+		return data.trim();
+	}
+
+	public String splitingPagination(WebElement ele, WebDriver driver) {
+		CCUtils.verifyAndWaitForElement(ele, driver);
+		String s1 = ele.getText().toString();
+		String[] words = s1.split("\\s", 3);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+		}
+		Log4jUtil.log("Print the value of default Pagination : " + data.trim());
+		return data.trim();
+	}
+
+	public String getNoOfRowsPagination(WebElement ele, WebDriver driver) {
+		String data = splitingPagination(ele,driver);
+		String noOfRowsPagination = data.substring(0, 2).trim();
+		return noOfRowsPagination.trim();
+	}
+
+	public String getLHSPaginationOfWebPage(WebElement ele, WebDriver driver) throws AWTException {
+		String data = getDefaultPaginationOfWebPage(ele,driver);
+		String[] words = data.split("–", 2);
+		for (String w : words) {
+			data = w.trim();
+			break;
+		}
+		Log4jUtil.log("Print the value of LHS Pagination : " + data.trim());
+		return data.trim();
+	}
+
+	public static String getRHSPaginationOfWebPage(WebElement ele, WebDriver driver) throws AWTException {
+		String data = getDefaultPaginationOfWebPage(ele,driver);
+		String[] words = data.split("–", 0);
+		for (String w : words) {
+			data = w.trim();
+		}
+		Log4jUtil.log("Print the value of RHS Pagination : " + data.trim());
+		return data.trim();
+	}
+	
+	public static boolean isPaginationButtonDisabled(WebElement ele, WebDriver driver) {
+		CCUtils.verifyAndWaitForElement(ele, driver);
+		Log4jUtil.log("Verifying the visiblity of "+ele.getAttribute("aria-label")+" Button.");
+		boolean buttonStatus = ele.isEnabled();
+		Log4jUtil.log("Print the value of "+ele.getAttribute("aria-label")+"Button visibility status : " + buttonStatus);
+		return buttonStatus;
 	}
 
 }
