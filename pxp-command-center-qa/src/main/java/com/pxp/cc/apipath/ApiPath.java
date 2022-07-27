@@ -597,4 +597,8 @@ public class ApiPath {
 	public static final String UPDATE_PROVIDER_DETAILS(int providerId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
 	}
+
+	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
+		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
+	}
 }
