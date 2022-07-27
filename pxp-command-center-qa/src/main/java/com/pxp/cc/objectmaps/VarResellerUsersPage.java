@@ -19,10 +19,10 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
 	private WebElement buttonSendEnrollment;
 
-	@FindBy(xpath = "//button[text()=' SEARCH OPTIONS ']")
+	@FindBy(className = "mat-button-toggle-label-content")
 	private WebElement buttonSearchOption;
 
-	@FindBy(xpath = "//span[@class='label']")
+	@FindBy(xpath = "//span[@class='configure']")
 	private List<WebElement> labelSelectedSearchOptions;
 
 	@FindBy(id = "firstName")
@@ -58,6 +58,9 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(id = "newButton")
 	private WebElement buttonNew;
 
+	@FindBy(xpath = "//td[@id='no-result']")
+	private WebElement errorMessage;
+
 	public VarResellerUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -84,6 +87,12 @@ public class VarResellerUsersPage extends CCMainPage {
 		log("VAR/Reseller users page title is displayed");
 	}
 
+	public void verifyErrorMessageOnVarResellerUsersPage() {
+		CCUtils.verifyAndWaitForElement(errorMessage, driver);
+		CCUtils.assertTrue(errorMessage.isDisplayed(), "No results found");
+		log("No results found error message is displayed");
+	}
+
 	public void verifySearchOptionsButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonSearchOption, driver);
 		CCUtils.assertTrue(buttonSearchOption.isDisplayed(),
@@ -104,9 +113,8 @@ public class VarResellerUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
 		CCUtils.assertTrue(buttonClearAll.isDisplayed(),
 				"Clear All button is not displayed on var/reseller users page");
-		CCUtils.assertEquals(buttonSearchOption.getText().trim(), "Clear All");
-		CCUtils.assertTrue(buttonSearchOption.isEnabled(),
-				"Clear All button is not enabled on var/reseller users page");
+		CCUtils.assertEquals(buttonClearAll.getText().trim(), "CLEAR ALL");
+		CCUtils.assertTrue(buttonClearAll.isEnabled(), "Clear All button is not enabled on var/reseller users page");
 	}
 
 	public void clickOnClearAllButton() {

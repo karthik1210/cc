@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.hamcrest.Matchers;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -410,5 +411,8 @@ public class CCUtils {
 		Log4jUtil.log("Print the value of "+ele.getAttribute("aria-label")+"Button visibility status : " + buttonStatus);
 		return buttonStatus;
 	}
-
+	public static void scrollPageViaElement(WebDriver driver, WebElement element) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("arguments[0].scrollIntoView();", element);
+	}
 }

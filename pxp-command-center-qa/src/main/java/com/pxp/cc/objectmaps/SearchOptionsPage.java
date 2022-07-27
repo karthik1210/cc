@@ -58,31 +58,31 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//input[@formcontrolname='mobileNumber']")
 	private WebElement textboxMobileNumber;
 
-	@FindBy(xpath = "//div[contains(text(),'User Status')]")
+	@FindBy(xpath = "//div[@class='col-sm-4 col-lg-4 col-xs-4 userStatus']")
 	private WebElement labelUserStatus;
 
-	@FindBy(xpath = "//div[contains(text(),'User Status')]//following::span[@class='mat-checkbox-label']")
+	@FindBy(xpath = "//div[@class='row mt-4 pl-2 mr-2 ng-star-inserted']//following::span[@class='mat-checkbox-label']")
 	private List<WebElement> labelUserStatusList;
 
-	@FindBy(xpath = "//div[contains(text(),'User Status')]//following::input[@type='checkbox']")
+	@FindBy(xpath = "//div[@class='row mt-4 pl-2 mr-2 ng-star-inserted']//following::input[@type='checkbox']")
 	private List<WebElement> checkboxUserStatus;
 
 	@FindBy(xpath = "//div[contains(text(),'User Status')]//following::div[@class='mat-checkbox-inner-container']")
 	private WebElement checkboxUserStatusSingle;
 
-	@FindBy(xpath = "//div[contains(text(),'Enrollment Status')]")
+	@FindBy(xpath = "//div[@class='col-sm-4 col-lg-4 col-xs-4 enrStatus']")
 	private WebElement labelEnrollmentStatus;
 
-	@FindBy(xpath = "//div[contains(text(),'User Status')]//preceding::span[@class='mat-checkbox-label']")
+	@FindBy(xpath = "//div[@class='row mt-3 pl-3']//preceding::span[@class='mat-checkbox-label']")
 	private List<WebElement> labelEnrollmentStatusList;
 
 	@FindBy(xpath = "//div[@class='mat-checkbox-inner-container']")
 	private List<WebElement> checkboxEnrollmentAndUserStatusList;
 
-	@FindBy(xpath = "//div[contains(text(),'User Status')]//preceding::input[@type='checkbox']")
+	@FindBy(xpath = "//div[contains(text(),'Enrollment Status')]//following::input[@type='checkbox']")
 	private List<WebElement> checkboxEnrollmentStatus;
 
-	@FindBy(xpath = "//div[contains(text(),'User Status')]//preceding::div[@class='mat-checkbox-inner-container']")
+	@FindBy(xpath = "//div[contains(text(),'EnrollmentStatus')]//following::div[@class='mat-checkbox-inner-container']")
 	private WebElement checkboxEnrollmentStatusSingle;
 
 	@FindBy(id = "filterClearBtn")
@@ -194,8 +194,9 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyUsernameLabelTextAndTextboxDefaultValue();
 		verifyEmailLabelTextAndTextboxDefaultValue();
 		verifyMobileNumberLabelTextAndTextboxDefaultValue();
-		verifyUserStatusLabelTextAndCheckboxes();
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		verifyEnrollmentStatusLabelTextAndCheckboxes();
+		verifyUserStatusLabelTextAndCheckboxes();
 		verifyClearButtonIsDisplayed();
 		verifySearchButtonIsDisplayed();
 	}
@@ -293,7 +294,6 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void verifyUserStatusLabelTextAndCheckboxes() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(labelUserStatus, driver);
-		CCUtils.scrollPageToEnd();
 		if (labelUserStatus.isDisplayed() == true) {
 			log("Verifying status label text");
 			CCUtils.assertEquals(labelUserStatus.getText().trim(), "User Status");
@@ -321,7 +321,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void verifyUserStatusCheckboxesAreNotByDefaultSelected() throws InterruptedException {
 		for (int i = 0; i < checkboxUserStatus.size(); i++) {
-			CCUtils.assertTrue(!checkboxUserStatus.get(i).isSelected(), "User role checkboxes are already selected");
+			CCUtils.assertTrue(!checkboxUserStatus.get(i).isSelected(), "User role checkboxes are not selected");
 		}
 	}
 
@@ -408,7 +408,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void clickOnSearchButton() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		scrollAndWait(0, 500, 8000);
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		javascriptClick(buttonSearch);
 	}
 
@@ -419,6 +419,7 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void verifySearchButtonIsDisplayed() {
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
 		log("Verifying search button is displayed on search options popup");
 		if (buttonSearch.isDisplayed() == true) {
@@ -436,8 +437,8 @@ public class SearchOptionsPage extends CCMainPage {
 		if (labelEnrollmentStatus.isDisplayed()) {
 			log("Verifying status label text");
 			CCUtils.assertEquals(labelEnrollmentStatus.getText().trim(), "Enrollment Status");
-			log("User Status label text is " + labelEnrollmentStatus.getText().trim());
-			log("Verifying User status label are displayed on search internal user page");
+			log("Enrollment Status label text is " + labelEnrollmentStatus.getText().trim());
+			log("Verifying Enrollment status label are displayed on search  user page");
 			verifyEnrollmentStatusValues();
 			log("Verifying user role checkboxes are not selected");
 			verifyUserStatusCheckboxesAreNotByDefaultSelected();
@@ -481,13 +482,10 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
+		verifySearchButtonIsDisplayed();
 		clickToSearchButton();
-		scrollAndWait(0, 500, 200);
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
 		log("Error message displayed for empty search field " + errorSearchOptionsPage.getText().trim());
-		CCUtils.verifyAndWaitForElement(buttonHideSearchOptions, driver);
-		buttonHideSearchOptions.click();
-		log("search button closed " + buttonHideSearchOptions);
 
 	}
 
@@ -595,43 +593,28 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
 		textboxFirstName.sendKeys(invalidFirstName);
 		log("Entered text in first name field is " + invalidFirstName);
-		CCUtils.verifyAndWaitForElement(errorValidFirstName, driver);
-		CCUtils.assertEquals(errorValidFirstName.getText().trim(), "Please enter valid first name");
-		log("Error message displayed for first name field is " + errorValidFirstName.getText().trim());
 
 		log("Enter invalid last name in first name textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
 		textboxLastName.sendKeys(invalidLastName);
 		log("Entered text in last name field is " + invalidLastName);
-		CCUtils.verifyAndWaitForElement(errorValidLastName, driver);
-		CCUtils.assertEquals(errorValidLastName.getText().trim(), "Please enter valid last name");
-		log("Error message displayed for last name field is " + errorValidLastName.getText().trim());
 
 		log("Enter invalid email in email textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
 		textboxEmail.sendKeys(invalidEmail);
 		log("Entered text in email field is " + invalidEmail);
-		textboxUsername.click();
-		CCUtils.verifyAndWaitForElement(errorValidEmail, driver);
-		CCUtils.assertEquals(errorValidEmail.getText().trim(), "Please enter valid email address");
-		log("Error message displayed for email field is " + errorValidEmail.getText().trim());
 
 		log("Enter invalid username in username textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
 		textboxUsername.clear();
 		textboxUsername.sendKeys(invalidUsername);
 		log("Entered text in username field is " + invalidUsername);
-		CCUtils.verifyAndWaitForElement(errorValidUsername, driver);
-		CCUtils.assertEquals(errorValidUsername.getText().trim(), "Please enter valid username");
-		log("Error message displayed for username field is " + errorValidUsername.getText().trim());
 
 		log("Enter invalid mobile in mobile number textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
 		textboxMobileNumber.sendKeys(invalidMobileNumber);
 		log("Entered text in mobile number field is " + invalidMobileNumber);
-		CCUtils.verifyAndWaitForElement(errorValidMobileNumber, driver);
-		CCUtils.assertEquals(errorValidMobileNumber.getText().trim(), "Please enter valid mobile number");
-		log("Error message displayed for mobile number field is " + errorValidMobileNumber.getText().trim());
+
 	}
 
 	public void selectSingleCheckboxOfUserStatus() throws InterruptedException {
