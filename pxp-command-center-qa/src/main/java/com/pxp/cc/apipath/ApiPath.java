@@ -611,4 +611,18 @@ public class ApiPath {
 	}
 	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/locations/null/practices/null/providers";
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId){
+		return SERVICE_SHARED_BL+"/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(int providerId, int practiceId){
+		return SERVICE_SHARED_BL+"/v1/providersssss/"+providerId+"/practices/"+practiceId+"/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(String providerId, String practiceId){
+		return SERVICE_SHARED_BL + "/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+	}
 }
+
+
