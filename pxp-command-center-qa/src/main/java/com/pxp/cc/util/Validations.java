@@ -2553,4 +2553,17 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
+
+	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
+	{
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(response.getStatusCode(),400);
+		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
+	}
+
+	public void verifyResponseForEmptyOrMisFormatData(Response response)throws IOException{
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("message").toString(),"input value =  , but value must be one of Internal, Client, VAReseller");
+		CCUtils.assertEquals(jsonPath.get("error").toString(),"Bad Request");
+	}
 }

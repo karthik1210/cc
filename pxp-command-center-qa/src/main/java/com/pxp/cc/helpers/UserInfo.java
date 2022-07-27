@@ -751,4 +751,23 @@ public class UserInfo extends BaseRest {
 				.queryParam("resellername", resellername).queryParam("sortdir", sortdir).queryParam("pageno", pageno)
 				.queryParam("pagesize", pagesize).when().put(url).then().extract().response();
 	}
+
+	//designed by karthik for PXPP-17554 on 26th July 2022
+	public Response getSearchUser(String type,String urlType){
+		String url = ApiPath.USER_DETAILS_BL;
+		String invalidUrl = ApiPath.INVALID_PATH_USER_DETAILS_BL;
+		if(urlType.equalsIgnoreCase("Valid"))
+			return given().spec(requestSpec).queryParam("type",type).when().get(url).then().extract().response();
+		else
+			return given().spec(requestSpec).queryParam("type",type).when().get(invalidUrl).then().extract().response();
+	}
+
+
+	public Response verifyResponseForValidUserIncorrectData(String type, String firstName, String lastName, String email, String clientName){
+		String url = ApiPath.USER_DETAILS_BL;
+		return given().spec(requestSpec).queryParam("type",type).queryParam("firstName",firstName)
+				.queryParams("lastName",lastName).queryParam("email",email).queryParam("clientName",clientName)
+				.when().get(url).then().extract().response();
+	}
 }
+
