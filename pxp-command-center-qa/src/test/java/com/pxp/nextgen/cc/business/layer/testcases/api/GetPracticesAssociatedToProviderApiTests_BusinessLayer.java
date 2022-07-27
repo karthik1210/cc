@@ -60,8 +60,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 				.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("non.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
-		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForNonexistingproviderId(fetchProviderDetailsApiResponse, providerId);
+		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 204);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
