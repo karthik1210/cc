@@ -48,8 +48,8 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
 		ArrayList<Integer> practiceIds = new ArrayList<Integer>();
-		practiceIds.add(Integer.parseInt(testData.getProperty("practice.id.one")),
-				Integer.parseInt(testData.getProperty("practice.id.two")));
+		practiceIds.add(Integer.parseInt(testData.getProperty("practice.id.one")));
+        practiceIds.add(Integer.parseInt(testData.getProperty("practice.id.two")));
 		validation.verifyResponseBodyForProviderAssociatedToPractices(fetchProviderDetailsApiResponse, practiceIds);
 	}
 

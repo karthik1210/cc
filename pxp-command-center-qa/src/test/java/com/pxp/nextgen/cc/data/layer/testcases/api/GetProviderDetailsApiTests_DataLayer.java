@@ -34,7 +34,7 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyResponseBodyForProviderDetails(fetchProviderDetailsApiResponse,
 				testData.getProperty("provider.firstname"), testData.getProperty("provider.lastname"),
-				testData.getProperty("provider.gender"),Integer.parseInt(testData.getProperty("provider.staffId")),
+				testData.getProperty("provider.gender"),
 				testData.getProperty("provider.status"));
 	}
 

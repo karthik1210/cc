@@ -2377,12 +2377,11 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForProviderDetails(Response response, String firstName, String lastName,
-			String gender, int staffId, String status) throws NullPointerException, IOException {
+			String gender, String status) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
-		CCUtils.assertEquals(jsonpath.get("staffId"), staffId);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
 		
 	}
