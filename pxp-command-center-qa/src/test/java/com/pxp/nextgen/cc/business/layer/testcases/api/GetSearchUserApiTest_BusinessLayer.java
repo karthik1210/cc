@@ -1,3 +1,12 @@
+/*
+JIRA Id: PXPP-17559
+Objective: QA: API Automation : Command Center User - Search Users (Internal, client user, Var/Reseller user) [BL]
+Functionality: Search Users (Internal, client user, Var/Reseller user) [BL]
+Covered Response Codes: 200,400,404,204
+Designer: Karthikeyan Natarajan
+Phase: Command Center Phase 1
+ */
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -12,7 +21,7 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-//17554
+//17559
 
 public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
 

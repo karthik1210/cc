@@ -2554,6 +2554,7 @@ public class Validations {
 
 	}
 
+	//added by karthik for WI 17559
 	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
 	{
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
