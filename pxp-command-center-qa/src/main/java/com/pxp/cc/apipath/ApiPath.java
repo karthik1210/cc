@@ -461,7 +461,7 @@ public class ApiPath {
 	}
 
 	public static final String INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId,
-			int appointmentTypeId) {
+																						 int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcessssss";
 	}
@@ -504,7 +504,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -520,7 +520,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/resources";
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -544,7 +544,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/solutions";
 
 	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/solutionsblabla";
 	}
@@ -597,32 +597,43 @@ public class ApiPath {
 	public static final String UPDATE_PROVIDER_DETAILS(int providerId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
 	}
-	
-	
-	public static final String GET_PROVIDER_FOR_LOCATION_BL(int locationId,
-			int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId
-				+ "/providers";
+
+	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
+		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
 	}
-	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId,
-			int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId
-				+ "/providers12abc";
+
+	public static final String GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
+
+	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers12abc";
+	}
+
 	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/locations/null/practices/null/providers";
 
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId){
-		return SERVICE_SHARED_BL+"/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutions";
 	}
 
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(int providerId, int practiceId){
-		return SERVICE_SHARED_BL+"/v1/providersssss/"+providerId+"/practices/"+practiceId+"/resources";
-	}
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_NULL_VALUES = SERVICE_SHARED_BL
+			+ "/v1/resources/null/practices/null/solutions";
 
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId){
-		return SERVICE_SHARED_BL + "/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
+
+		public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId){
+			return SERVICE_SHARED_BL+"/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+		}
+
+		public static final String FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(int providerId, int practiceId){
+			return SERVICE_SHARED_BL+"/v1/providersssss/"+providerId+"/practices/"+practiceId+"/resources";
+		}
+
+		public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId){
+			return SERVICE_SHARED_BL + "/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+		}
 	}
-}
 
 

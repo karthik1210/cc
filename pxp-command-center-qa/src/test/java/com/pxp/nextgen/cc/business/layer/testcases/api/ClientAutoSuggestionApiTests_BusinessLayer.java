@@ -28,7 +28,7 @@ public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
 
 	@DataProvider(name = "searchData")
 	public Object[] searchData() {
-		Object[] obj = new Object[] {"Client","client1","4051","Client@12"};
+		Object[] obj = new Object[] { "Client", "client1", testData.getProperty("favoriting.client.one"), "Client@12" };
 		return obj;
 	}
 
@@ -36,10 +36,9 @@ public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
 	public void testGetSearchSuggestedClientsList(String searchData) throws IOException {
 		getSearchedClientDetailsApiResponse = clientData.getAutoSuggestionClient_BL(searchData);
 		logStep("Validating response information");
-		CCUtils.assertEquals(getSearchedClientDetailsApiResponse.getStatusCode(),200);
+		CCUtils.assertEquals(getSearchedClientDetailsApiResponse.getStatusCode(), 200);
 		CCUtils.responseTimeValidation(getSearchedClientDetailsApiResponse);
-		validation.verifyGetSearchedAutosuggestionsClientResponses(getSearchedClientDetailsApiResponse,
-				searchData);
+		validation.verifyGetSearchedAutosuggestionsClientResponses(getSearchedClientDetailsApiResponse, searchData);
 	}
 
 	@DataProvider(name = "minthreecharacterdata")

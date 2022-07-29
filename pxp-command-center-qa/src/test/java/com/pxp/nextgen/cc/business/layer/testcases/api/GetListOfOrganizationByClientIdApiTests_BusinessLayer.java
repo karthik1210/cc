@@ -49,9 +49,12 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 
 	public int createOrgNode(String status, String name, int parentId, String orgType, String parentType)
 			throws Exception {
-		createOrgNodeApiResponse = orgInfo.createOrg(status, testData.getProperty("api.system.displayname"), name,
-				orgType, parentId, parentType, testData.getProperty("api.system.sapnumber"),
-				testData.getProperty("api.system.timezoneid"));
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType,
+				testData.getProperty("api.system.displayname"), "", status,
+				testData.getProperty("api.system.timezoneid"), parentId, parentType,
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 
@@ -144,8 +147,8 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 	public Object[][] getInvalidOrgType() throws Exception {
 		return new Object[][] { { " " + testData.getProperty("api.system.orgtype") },
 				{ " " + testData.getProperty("api.enterprise.orgtype") },
-				{ "   " + testData.getProperty("api.practice.orgtype") }, { testData.getProperty("api.parenttype") },
-				{ "null" }, { "abcdfefd" } };
+				{ "   " + testData.getProperty("api.practice.orgtype") },
+				{ "abc" + testData.getProperty("api.parenttype") }, { "null" }, { "abcdfefd" } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidOrgType", description = "Enter invalid org type in type field and verify error response")
@@ -163,12 +166,12 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 	public void testErrorResponseForInvalidOrgTypeAndClientId() throws Exception {
 		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(
 				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")),
-				testData.getProperty("api.parenttype"));
+				"xyz12" + testData.getProperty("api.parenttype"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForOrgTypeField(getOrganizationListApiResponse,
-				testData.getProperty("api.parenttype"));
+				"xyz12" + testData.getProperty("api.parenttype"));
 
 	}
 
