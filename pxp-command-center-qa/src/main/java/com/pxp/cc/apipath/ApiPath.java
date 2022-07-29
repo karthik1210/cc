@@ -622,6 +622,7 @@ public class ApiPath {
 
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(int resourceId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
+	}
 
 		public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId){
 			return SERVICE_SHARED_BL+"/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
@@ -634,6 +635,6 @@ public class ApiPath {
 		public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId){
 			return SERVICE_SHARED_BL + "/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
 		}
-	}
+}
 
 
