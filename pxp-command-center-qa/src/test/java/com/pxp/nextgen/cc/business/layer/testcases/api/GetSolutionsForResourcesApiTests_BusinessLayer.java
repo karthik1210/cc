@@ -11,10 +11,9 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.PracticeAppointmentTypeValidations;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
-public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest{
+public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest {
 
 	private OrgResourceInfo orgResourceInfo;
 	private Validations validations;
@@ -28,7 +27,7 @@ public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest{
 		orgResourceInfo = new OrgResourceInfo();
 		practiceAppointmentTypeValidations = new PracticeAppointmentTypeValidations();
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch all the solutions of a resource of a practice")
 	public void testGetSolutionsForResources() throws IOException {
 		fetchSolutionsForResources = orgResourceInfo.getSolutionsForResources_BL(
