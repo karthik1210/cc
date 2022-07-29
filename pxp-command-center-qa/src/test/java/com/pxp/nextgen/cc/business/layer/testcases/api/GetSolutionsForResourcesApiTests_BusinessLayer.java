@@ -41,7 +41,7 @@ public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest{
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching solutions of existing a resource Id and practice Id but no solution is associated")
-	public void testResponseCodeForExistingResourceIdandPracticeIdOfNoAssociatedSolution() throws IOException {
+	public void testResponseCodeForExistingResourceIdAndPracticeIdOfNoAssociatedSolution() throws IOException {
 		fetchSolutionsForResources = orgResourceInfo.getSolutionsForResources_BL(
 				Integer.parseInt(testData.getProperty("no.solu.resources.resource.id").trim()),
 				Integer.parseInt(testData.getProperty("no.solu.resources.prac.id").trim()));
@@ -51,7 +51,7 @@ public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest{
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching solutions of existing resource Id and non-existing practice Id")
-	public void testErrorMessageForExistingResourceIdandNonexistingPracticeId() throws IOException {
+	public void testErrorMessageForExistingResourceIdAndNonexistingPracticeId() throws IOException {
 		fetchSolutionsForResources = orgResourceInfo.getSolutionsForResources_BL(
 				Integer.parseInt(testData.getProperty("get.solu.resources.resource.id").trim()),
 				Integer.parseInt(testData.getProperty("non.existing.solu.resources.prac.id").trim()));
@@ -60,8 +60,8 @@ public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest{
 		CCUtils.assertEquals(fetchSolutionsForResources.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching resource of non-existing practice Id and existing appointment Type Id")
-	public void testErrorMessageForNonExistingResourceIdandExistingPracticeId() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching resource of existing practice Id and non-existing resource Id")
+	public void testErrorMessageForNonExistingResourceIdAndExistingPracticeId() throws IOException {
 		fetchSolutionsForResources = orgResourceInfo.getSolutionsForResources_BL(
 				Integer.parseInt(testData.getProperty("non.existing.solu.resources.resource.id").trim()),
 				Integer.parseInt(testData.getProperty("get.solu.resources.prac.id").trim()));
@@ -71,7 +71,7 @@ public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest{
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validating status code when fetching solutions of both non-existing resource Id and practice Id")
-	public void testErrorMessageForBothNonExistingResourceIdandPracticeId() throws IOException {
+	public void testErrorMessageForBothNonExistingResourceIdAndPracticeId() throws IOException {
 		fetchSolutionsForResources = orgResourceInfo.getSolutionsForResources_BL(
 				Integer.parseInt(testData.getProperty("non.existing.solu.resources.resource.id").trim()),
 				Integer.parseInt(testData.getProperty("non.existing.solu.resources.prac.id").trim()));
