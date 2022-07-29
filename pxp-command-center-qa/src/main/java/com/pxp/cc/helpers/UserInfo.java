@@ -769,5 +769,19 @@ public class UserInfo extends BaseRest {
 				.queryParams("lastName",lastName).queryParam("email",email).queryParam("clientName",clientName)
 				.when().get(url).then().extract().response();
 	}
+
+	public Response getSearchUserDetailsForGivenType(String type, String firstName, String lastName, String email, String userName, String mobileNo, String clientName,
+													 String resellerName, String sortColumn, String sortDir, String pageNo, String pageSize) {
+		String url = ApiPath.USER_DETAILS_BL;
+		return given().spec(requestSpec).queryParam("type",type).queryParam("firstName",firstName).queryParam("lastName",lastName)
+				.queryParam("email",email).queryParam("userName",userName).queryParam("mobileNo",mobileNo)
+				.queryParam("clientName",clientName).queryParam("resellerName",resellerName).queryParam("sortColumn",sortColumn)
+				.queryParam("sortDir",sortDir).queryParam("pageNo",pageNo).queryParam("pageSize",pageSize).when().get(url).then().extract().response();
+	}
+
+	public Response getSearchUserDetailsWithInvalidPut(String type) {
+		String url = ApiPath.USER_DETAILS_BL;
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
 

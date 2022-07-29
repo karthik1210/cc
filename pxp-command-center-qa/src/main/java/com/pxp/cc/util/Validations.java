@@ -2531,6 +2531,7 @@ public class Validations {
 						+ userIteratePerData);
 				CCUtils.assertTrue(true,
 						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
+
 			} else if (userIteratePerData.contains(getSearchUserDetails)) {
 				Log4jUtil.log("searched value :" + getSearchUserDetails + "present within response body's value"
 						+ userIteratePerData);
@@ -2565,5 +2566,25 @@ public class Validations {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("message").toString(),"input value =  , but value must be one of Internal, Client, VAReseller");
 		CCUtils.assertEquals(jsonPath.get("error").toString(),"Bad Request");
+	}
+
+	public void verifyUserOutputWithValidInput(Response response, String getSearchUserDetails) {
+		JsonPath jsonPath = new JsonPath(response.asString());
+		Log4jUtil.log("Display total count of locations in response body : " + jsonPath.get("totalCount"));
+		Log4jUtil.log("Display list of clients in response body : " + jsonPath.get("data"));
+		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
+		Log4jUtil.log("Page Number : " + jsonPath.getInt("pageNo"));
+		Log4jUtil.log("Items(Clients) per Page : " + jsonPath.getInt("pageSize"));
+		Log4jUtil.log("Comparing Searched Items names/ids with user data received in Response body.");
+		for (int dataArrayIteration = 0; dataArrayIteration < jsonPath.getInt("data.size()"); dataArrayIteration++) {
+			String userIteratePerData = jsonPath.get("data[" + dataArrayIteration + "].firstName");
+			Log4jUtil.log("Print Value : " + userIteratePerData);
+			if (userIteratePerData.contains(getSearchUserDetails)) {
+				Log4jUtil.log("searched value :" + getSearchUserDetails + "present within response body's value"
+						+ userIteratePerData);
+				CCUtils.assertTrue(true,
+						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
+			}
+		}
 	}
 }
