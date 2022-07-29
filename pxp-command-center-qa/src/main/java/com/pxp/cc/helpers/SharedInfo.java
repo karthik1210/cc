@@ -32,11 +32,6 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response invalidMethodCallGetProviderDetails(int providerId) {
-		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
-		return given().spec(requestSpec).when().put(url).then().extract().response();
-	}
-
 	public Response createProvider_DataLayer(int practiceId, String firstName, String lastName, String gender,
 			String externalId) {
 		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);

@@ -2554,6 +2554,33 @@ public class Validations {
 
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//added by karthik for 17605 WI
+
 	public void verifyResponseBodyForGetResourceForProvider(Response response) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
@@ -2565,10 +2592,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"),true);
 	}
 
-
-
-
-	//added by karthik for 17605 WI
 	public void verifyResponseForEmptyOrNULLOrMisFormatData(Response response)throws IOException{
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
