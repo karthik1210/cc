@@ -619,4 +619,20 @@ public class ApiPath {
 
 	public static final String GET_PROVIDERS_FOR_LOCATION_DL_NULL_VALUES = SHARED_DL
 			+ "/v1/locations/null/practices/null/providers";
+
+	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
+		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
+	}
+
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_NULL_VALUES = SERVICE_SHARED_BL
+			+ "/v1/resources/null/practices/null/solutions";
+
+	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
+	}
+
 }
