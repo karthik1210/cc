@@ -4,15 +4,10 @@ package com.pxp.cc.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.helpers.ClientDirectory;
-import com.pxp.cc.pojos.SearchClientData;
-import com.pxp.cc.pojos.Solutions;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -41,20 +36,21 @@ public class ClientDirectoryValidations {
 	}
 
 	public List<Integer> verifyFavoriteClientOutputWithoutFilter(Response response, String getSearchClientDetails) {
-		jsonPath = new JsonPath(response.asString());
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("response body : " + response.getBody().asString());
 		List<Integer> listOfClientIds = new ArrayList<Integer>();
 		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
-		JSONArray jsonArray = new JSONArray(response.jsonPath().getList("data"));
+		JSONArray jsonArray = new JSONArray(jsonPath.getList("data"));
 		Log4jUtil.log("Display list of clients in response body : " + jsonArray.toString());
-		JSONObject jsonObject;
 		if (jsonPath.getInt("data.size()") == jsonArray.length()) {
 			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				SearchClientData searchClientData = new SearchClientData(jsonObject.getInt("clientId"),
-						jsonObject.get("name").toString(), jsonObject.get("type").toString(),
-						jsonObject.getBoolean("favorite"));
-				if (searchClientData.isFavorite()) {
-					listOfClientIds.add(searchClientData.getClientId());
+				JSONObject jsonObject = jsonArray.getJSONObject(i);
+				if (jsonObject.has("favorite") == true) {
+					if (jsonObject.getBoolean("favorite") == true) {
+						listOfClientIds.add(jsonObject.getInt("clientId"));
+					} else {
+						Log4jUtil.log("Favorite key is not present in jsonArray");
+					}
 				} else if (jsonArray.length() == 0) {
 					Log4jUtil.log("client data list is empty");
 				} else {

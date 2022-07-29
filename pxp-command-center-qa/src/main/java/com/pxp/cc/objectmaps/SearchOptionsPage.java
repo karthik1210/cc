@@ -854,5 +854,4 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.assertTrue(dropdownSearchVarReseller.getText().trim().length() == 0,
 				"Text is present in var/reseller textbox field");
 	}
-
 }
