@@ -611,4 +611,11 @@ public class ApiPath {
 	}
 	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/locations/null/practices/null/providers";
+	// Added by Sarada Burugula for PXPP-17480
+	public static final String UPDATE_BRAND_DL(int BrandId) {
+		return SHARED_DL + "/v1/brands/" + BrandId;
+	}
+	public static final String Invalid_UPDATE_BRAND_DL(int BrandId) { return SHARED_DL + "/v1/brandsssss/" + BrandId;}
+	// Completed Sarada Burugula's addition
 }
+

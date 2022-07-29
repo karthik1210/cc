@@ -72,4 +72,50 @@ public class BrandsInfo extends BaseRest {
 		duplicateBrandMap.put("ownerType", ownerType);
 		return duplicateBrandMap;
 	}
+	//Added By Sarada Burugula as part of PXPP-17497 on 25/07/2022
+	private Map<String, Object> postCreateBrandPayload(int orgId, String brandname) {
+		Map<String, Object> CreateBrandMap = new HashMap<String, Object>();
+		CreateBrandMap.put("orgId", orgId);
+		CreateBrandMap.put("name", brandname);
+		CreateBrandMap.put("showLogo", true);
+		CreateBrandMap.put("color", "#aabbcc");
+		return CreateBrandMap;
+	}
+	private Map<String, Object> errorpostCreateBrandPayload(Integer orgId, String brandname,Boolean showLogo,String color) {
+		Map<String, Object> CreateBrandMap = new HashMap<String, Object>();
+		CreateBrandMap.put("orgId", orgId);
+		CreateBrandMap.put("name", brandname);
+		CreateBrandMap.put("showLogo", showLogo);
+		CreateBrandMap.put("color", color);
+		return CreateBrandMap;
+	}
+	//Added By Sarada Burugula as part of PXPP-17480 on 26/07/2022
+
+	public Response putUpdateBrand(int BrandId,int orgId, String brandname) {
+		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
+		Map<String, Object> putUpdateBrandPayload = postCreateBrandPayload(orgId,brandname);
+		return given().spec(requestSpec).body(putUpdateBrandPayload).when().put(url)
+				.then().extract().response();
+
+	}
+	public Response putUpdateAllBranddetails( int BrandId,Integer orgId, String brandname,Boolean showLogo,String color) {
+		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
+		Map<String, Object> putUpdateBrandPayload = errorpostCreateBrandPayload(orgId, brandname,showLogo,color);
+		return given().spec(requestSpec).body(putUpdateBrandPayload).when().put(url)
+				.then().extract().response();
+
+	}
+	public Response errorPutUpateBrand( int BrandId,Integer orgId, String brandname,Boolean showLogo,String color) {
+		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
+		Map<String, Object> errorPutUpdateBrandPayload = errorpostCreateBrandPayload(orgId, brandname,showLogo,color);
+		return given().spec(requestSpec).body(errorPutUpdateBrandPayload).when().put(url).then().extract().response();
+	}
+	public Response InvalidPutUpateBrand( int BrandId,int orgId, String brandname) {
+		String url = ApiPath.Invalid_UPDATE_BRAND_DL(BrandId);
+		Map<String, Object> putUpdateBrandPayload = postCreateBrandPayload(orgId,brandname);
+		return given().spec(requestSpec).body(putUpdateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+// Completed Sarada Burugula's addition
 }
+
