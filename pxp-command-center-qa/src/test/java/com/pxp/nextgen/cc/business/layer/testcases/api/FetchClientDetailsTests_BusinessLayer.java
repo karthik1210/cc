@@ -23,7 +23,7 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 	private OrgInfo orgInfo;
 	private Validations validation;
 	Response createClientApiResponse, fetchClientDetailsApiResponse, createPracticeApiResponse,
-			fetchPracticeApiResponse;
+			fetchPracticeApiResponse, fetchOrgSolutionDetailsApiResponse, addOrgSolutionsApiResponse;
 	List<Integer> solutionList = null;
 	Map<String, Object> solutionMap = new HashMap<String, Object>();
 
@@ -35,14 +35,15 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	public Response createAgnosticPractice(String clientId, List<Map<String, Object>> solutionLists,
-			String activeStatus) throws NumberFormatException, IOException {
+	public Response createAgnosticPractice(String clientId, String activeStatus)
+			throws NumberFormatException, IOException {
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
-		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
-		createPracticeApiResponse = orgInfo.createAgnosticPracticeNode(practiceName, ccUser.getPracticeDisplayNameApi(),
-				practiceSapNumber, activeStatus, ccUser.getPracticeTimezoneIdApi(), solutionLists,
-				ccUser.getPracticeOrgTypeApi(), Integer.parseInt(clientId), ccUser.getParentTypeApi());
+		createPracticeApiResponse = orgInfo.createOrgNode_BL(practiceName, testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.displayname"), "", activeStatus,
+				testData.getProperty("api.practice.timezoneid"), Integer.parseInt(clientId), "CLIENT",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createPracticeApiResponse;
 	}
 
@@ -83,6 +84,7 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create new active practice nodes with solutions and verify solution details are displayed in the client details")
 	public void testClientDetailsRepresentActivePracticesWithActiveSolutions() throws IOException {
+
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
@@ -90,34 +92,51 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 
-		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
-		solutionMap.put("solutionId", testData.getProperty("Portal.id"));
-		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
-		solutionLists.add(solutionMap);
+		Map<String, Object> solutionMapOne = new HashMap<String, Object>();
+		List<Map<String, Object>> solutionListsOne = new ArrayList<Map<String, Object>>();
+		solutionMapOne.put("solutionId", testData.getProperty("Portal.id"));
+		solutionMapOne.put("status", testData.getProperty("status.newly.purchased"));
+		solutionListsOne.add(solutionMapOne);
+
 		logStep("create an active practice node with solutions");
-		createPracticeApiResponse = createAgnosticPractice(clientId, solutionLists, "true");
-
+		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
-
+		addOrgSolutionsApiResponse = orgInfo.updateOrgSolutions(solutionListsOne, practiceId);
 		fetchPracticeApiResponse = orgInfo.getOrgId(practiceId);
-		List<Response> practiceResponse = new ArrayList<Response>();
-		practiceResponse.add(fetchPracticeApiResponse);
 
+		Map<String, Object> solutionMapTwo = new HashMap<String, Object>();
 		List<Map<String, Object>> solutionListsPracTwo = new ArrayList<Map<String, Object>>();
-		solutionMap.put("solutionId", testData.getProperty("Portal.id"));
-		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
-		solutionListsPracTwo.add(solutionMap);
+		solutionMapTwo.put("solutionId", testData.getProperty("Portal.id"));
+		solutionMapTwo.put("status", testData.getProperty("status.newly.purchased"));
+		solutionListsPracTwo.add(solutionMapTwo);
 
 		logStep("create another active practice node with solutions");
-		createPracticeApiResponse = createAgnosticPractice(clientId, solutionListsPracTwo, "true");
+		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
 		int practiceId_two = createPracticeApiResponse.jsonPath().get("orgId");
-		fetchPracticeApiResponse = orgInfo.getOrgId(practiceId_two);
-		practiceResponse.add(fetchPracticeApiResponse);
+		addOrgSolutionsApiResponse = orgInfo.updateOrgSolutions(solutionListsPracTwo, practiceId_two);
+
+		logStep("Default Solution list");
+		List<Map<String, Object>> defaultSolutionOneList = new ArrayList<Map<String, Object>>();
+		solutionMap.put("solutionId", testData.getProperty("ehr.identifier"));
+		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
+		defaultSolutionOneList.add(solutionMap);
+		List<Map<String, Object>> defaultSolutionTwoList = new ArrayList<Map<String, Object>>();
+		solutionMap.put("solutionId", testData.getProperty("pm.identifier"));
+		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
+		defaultSolutionTwoList.add(solutionMap);
+
 		logStep("validate both practice response body that they are created as active status with solutions");
-		int pracCount = validation.validateActiveandSolutionStatusInGetPracticeDetails(practiceResponse);
 		List<Map<String, Object>> finalSolutionLists = new ArrayList<Map<String, Object>>();
-		finalSolutionLists.addAll(solutionLists);
+		finalSolutionLists.addAll(defaultSolutionOneList);
+		finalSolutionLists.addAll(defaultSolutionTwoList);
+		finalSolutionLists.addAll(solutionListsOne);
+		finalSolutionLists.addAll(defaultSolutionOneList);
+		finalSolutionLists.addAll(defaultSolutionTwoList);
 		finalSolutionLists.addAll(solutionListsPracTwo);
+		for (int i = 0; i < finalSolutionLists.size(); i++) {
+			System.out.println(finalSolutionLists.get(i));
+
+		}
 
 		logStep("Verify client details represent active solutions");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
@@ -126,10 +145,11 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
-				ccUser.getTimezoneId(), ccUser.getDisplayName(), pracCount, finalSolutionLists);
+				ccUser.getTimezoneId(), ccUser.getDisplayName(), 2, finalSolutionLists);
+
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create new practice node without solutions and verify the practice count is zero and solutions details is null")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create new practice node without solutions and verify the practice count is one and default solutions details are displayed in client details page")
 	public void testClientDetailsDonotRepresentActivePracticesWithoutSolutions() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
@@ -137,27 +157,33 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
 				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
-		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
 		logStep("create another active practice node without solutions");
-		createPracticeApiResponse = createAgnosticPractice(clientId, solutionLists, "true");
+		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 		fetchPracticeApiResponse = orgInfo.getOrgId(practiceId);
 		List<Response> practiceResponse = new ArrayList<Response>();
 		practiceResponse.add(fetchPracticeApiResponse);
-		logStep("validate practice response body that it is created as active status without solutions");
-		int pracCount = validation.validateActiveandSolutionStatusInGetPracticeDetails(practiceResponse);
+		List<Map<String, Object>> defaultSolutionOne = new ArrayList<Map<String, Object>>();
+		solutionMap.put("solutionId", testData.getProperty("ehr.identifier"));
+		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
+		defaultSolutionOne.add(solutionMap);
+		List<Map<String, Object>> defaultSolutionTwo = new ArrayList<Map<String, Object>>();
+		solutionMap.put("solutionId", testData.getProperty("pm.identifier"));
+		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
+		defaultSolutionTwo.add(solutionMap);
 		List<Map<String, Object>> finalSolutionLists = new ArrayList<Map<String, Object>>();
-		finalSolutionLists.addAll(solutionLists);
+		finalSolutionLists.addAll(defaultSolutionOne);
+		finalSolutionLists.addAll(defaultSolutionTwo);
 
-		logStep("Verify client details not represent any solutions and practice count as zero");
+		logStep("Verify client details represent default solutions and practice count as one");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
-				ccUser.getTimezoneId(), ccUser.getDisplayName(), pracCount, finalSolutionLists);
+				ccUser.getTimezoneId(), ccUser.getDisplayName(), 1, finalSolutionLists);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create new Inactive practice node and verify the practice count is zero and solutions details is null")
@@ -171,7 +197,7 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
 
 		logStep("create an inactive practice node");
-		createPracticeApiResponse = createAgnosticPractice(clientId, solutionLists, "false");
+		createPracticeApiResponse = createAgnosticPractice(clientId, "false");
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 		fetchPracticeApiResponse = orgInfo.getOrgId(practiceId);
 		List<Response> practiceResponse = new ArrayList<Response>();

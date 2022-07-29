@@ -14,7 +14,6 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRest {
-
 	private PracticeAppointmentTypeInfo practiceAppointmentTypeInfo;
 	private Validations validations;
 	private PracticeAppointmentTypeValidations practiceAppointmentTypeValidations;
