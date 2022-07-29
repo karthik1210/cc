@@ -2379,12 +2379,11 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForProviderDetails(Response response, String firstName, String lastName,
-			String gender, String staffId, String status) throws IOException {
+			String gender, String status) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
-		CCUtils.assertEquals(jsonpath.getInt("staffId"), staffId);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
 	}
 
@@ -2553,33 +2552,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//added by karthik for 17605 WI
 
 	public void verifyResponseBodyForGetResourceForProvider(Response response) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
