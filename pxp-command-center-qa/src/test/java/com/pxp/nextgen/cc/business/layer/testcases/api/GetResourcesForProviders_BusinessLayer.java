@@ -1,3 +1,12 @@
+/*
+JIRA Id: PXPP-17605
+Objective: QA: API Automation : Shared Data | [Provider] Get Resources for the Provider [BL]
+Functionality: Get Resources for the Provider [BL]
+Covered Response Codes: 200, 400, 404, 204, 500, 405
+Designer: Karthikeyan Natarajan
+Phase: Command Center Phase 1
+ */
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;

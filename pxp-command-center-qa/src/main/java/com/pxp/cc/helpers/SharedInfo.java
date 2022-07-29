@@ -175,7 +175,7 @@ public class SharedInfo extends BaseRest {
 		return updateProviderDetailsMap;
 	}
 
-	//Designed by karthik for 17595 on July 2022
+	//Designed by karthik for 17595 on 28th July 2022
 	public Response getResourcesForProviderWithValidInputs(int providerId,int practiceId,String urlType){
 		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(providerId,practiceId);
 		String invalidUrl = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(providerId,practiceId);
