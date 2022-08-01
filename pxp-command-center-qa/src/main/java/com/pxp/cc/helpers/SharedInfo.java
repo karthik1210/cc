@@ -174,4 +174,22 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
+
+	public Response getPracticeForLocationWithExistingOrNonExistingInput(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+
+	}
+
+	public Response getPracticeForLocationWithInvalidInput(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+
+	public Response getPracticeForLocationWithValidInputForPost(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
 }
+
