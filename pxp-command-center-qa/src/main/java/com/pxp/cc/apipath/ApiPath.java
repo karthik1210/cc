@@ -623,4 +623,12 @@ public class ApiPath {
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(int resourceId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
 	}
+	
+	public static final String GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
+		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId;
+	}
+
+	public static final String INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
+		return SHARED_DL + "/v1/appointment-typessss/" + appointmentTypeId;
+	}
 }
