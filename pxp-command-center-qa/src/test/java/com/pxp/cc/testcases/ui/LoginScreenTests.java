@@ -3,7 +3,6 @@
 package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.LoginPage;
@@ -84,18 +83,23 @@ public class LoginScreenTests extends CommandCenterGenericTest {
 			log("Password is NOT displayed");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class)
-	public void verifyLockoutUser() throws Exception {
-		log("Test to verify user will be Locked out after 6 login attempts with wrong password.");
-		log("Login to CC portal. url=" + ccuser.getUrl() + " and username=" + ccuser.getLockoutUsername()
-				+ " and password=" + ccuser.getInvalidPassword());
-		log("Launching of Command Center URL");
-		LoginPage commandcenterloginpage = new LoginPage(driver, ccuser.getUrl());
-		log("Attempting 6 times login to Command Center Portal");
-		commandcenterloginpage.sixAttemptsLoginViaInvalidPwd(ccuser.getLockoutUsername(), ccuser.getInvalidPassword(),
-				ccuser.getLoginAttempts());
-		CCUtils.assertEquals(commandcenterloginpage.getLockOutErrMsg().trim(),
-				commandcenterloginpage.lockoutErrorMsg.trim());
-	}
+	// TODO: BE tasks with respect to PRE and POST Authentication via Cognito is
+	// still in progress - JIRA ID : PXPP-17806
+
+	/*
+	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class) public void
+	 * verifyLockoutUser() throws Exception {
+	 * log("Test to verify user will be Locked out after 6 login attempts with wrong password."
+	 * ); log("Login to CC portal. url=" + ccuser.getUrl() + " and username=" +
+	 * ccuser.getLockoutUsername() + " and password=" +
+	 * ccuser.getInvalidPassword()); log("Launching of Command Center URL");
+	 * LoginPage commandcenterloginpage = new LoginPage(driver, ccuser.getUrl());
+	 * log("Attempting 6 times login to Command Center Portal");
+	 * commandcenterloginpage.sixAttemptsLoginViaInvalidPwd(ccuser.
+	 * getLockoutUsername(), ccuser.getInvalidPassword(),
+	 * ccuser.getLoginAttempts());
+	 * CCUtils.assertEquals(commandcenterloginpage.getLockOutErrMsg().trim(),
+	 * commandcenterloginpage.lockoutErrorMsg.trim()); }
+	 */
 
 }

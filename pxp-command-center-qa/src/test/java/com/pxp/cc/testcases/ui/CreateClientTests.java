@@ -4,7 +4,6 @@ package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
@@ -28,7 +27,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Create a new active client using valid client details and verify success toaster message")
-	public void testNewClientCreation() throws Exception {
+	public void testNewActiveClientCreation() throws Exception {
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
@@ -65,7 +64,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Create a new inactive test client and verify success toaster message")
-	public void testCreateInactiveTestClient() throws Exception {
+	public void testNewInactiveClientCreation() throws Exception {
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(6));
