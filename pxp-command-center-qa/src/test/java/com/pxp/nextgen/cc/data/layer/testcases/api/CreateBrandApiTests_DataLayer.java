@@ -24,20 +24,20 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     private BrandsInfo brandInfo;
     private ClientInfo clientInfo;
     private OrgInfo orgInfo;
-    private Validations BrandingValidation;
+    private Validations brandingValidation;
     private String sql;
-    Response CreateBrandApiResponse,createClientApiResponse,GetBrandApiResponse;
+    Response createBrandApiResponse,createClientApiResponse;
     int brand_id;
     String brandname;
-    int org_id;
-    String Namepayload;
+    int org_Id;
+    String namePayLoad;
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
         setupServiceRequestSpecificationBuilderForDataLayer();
         brandInfo = new BrandsInfo();
         clientInfo = new ClientInfo();
-        BrandingValidation=new Validations();
+        brandingValidation=new Validations();
     }
     //PXPP-17669 - Create Brand for Client
     @Test(priority =1 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17669_Create Brand for Client")
@@ -56,59 +56,59 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         int clientId = createClientApiResponse.jsonPath().getInt("clientId");
         logStep("New client created with client id : " + clientId);
         logStep("Create a brand for a client");
-        Namepayload = "AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.postCreateBrand(clientId, Namepayload);
+        namePayLoad = "AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.postCreateBrand(clientId, namePayLoad);
         logStep("Validating response Code");
-        CCUtils.responseTimeValidation(CreateBrandApiResponse);
-        CCUtils.assertEquals(CreateBrandApiResponse.getStatusCode(), 200);
+        CCUtils.responseTimeValidation(createBrandApiResponse);
+        CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
     }
 
     //PXPP-17654_Create Brand with Payload of NullValues"
     @Test(priority =5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17654_Create Brand with Payload of NullV alues")
     public void orgidNullValidation() throws IOException,NullPointerException  {
-        logStep("TC 002_Verify the Response code as 400, when user provided empty values in payload and null value to org_id,name for POST method of Branding [DL]");
-        logStep("when org_id is null");
-        Integer norg_id = null;
+        logStep("TC 002_Verify the Response code as 400, when user provided empty values in payload and null value to org_Id,name for POST method of Branding [DL]");
+        logStep("when org_Id is null");
+        Integer norg_Id = null;
         Boolean showlogo=true;
         String Color="#EEEEEE";
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.errorPostCreateBrand(norg_id,Namepayload,showlogo,Color);
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(norg_Id,namePayLoad,showlogo,Color);
         logStep("Validating response information");
-        BrandingValidation.verifyInvalidRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
         showlogo=true;
         Color="#BBBBBB";
-        Namepayload=null;
-        CreateBrandApiResponse = brandInfo.errorPostCreateBrand(org_id,Namepayload,showlogo,Color);
+        namePayLoad=null;
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
         logStep("Validating response information");
-        BrandingValidation.verifyInvalidRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
     }
     //PXPP-17672_Create Brand with Payload of null (Show Logo) or duplicate values(name)
     @Test(priority =7, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17672_Create Brand with Payload of null (Show Logo) or duplicate values(name)")
     public void incorrectPayloadCreateBandValidation() throws IOException,NullPointerException  {
         logStep("TC 003_Verify the Response code as 400, when user provided null (Show Logo) or duplicate values(name) in payload for POST method of Branding [DL]");
-        Integer org_id=Integer.parseInt(testData.getProperty("api.org.id"));
-        String Namepayloaddb=testData.getProperty("api.name.db");
+        Integer org_Id=Integer.parseInt(testData.getProperty("api.org.id"));
+        String namePayLoaddb=testData.getProperty("api.name.db");
         Boolean showlogo=null;
         String Color="#BBBBBB";
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.errorPostCreateBrand(org_id,Namepayload,showlogo,Color);
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
         logStep("Validating response information");
-        BrandingValidation.verifyInvalidRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
         showlogo=true;
-        CreateBrandApiResponse = brandInfo.errorPostCreateBrand(org_id,Namepayloaddb,showlogo,Color);
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoaddb,showlogo,Color);
         logStep("Validating response information");
-        BrandingValidation.verifyInvalidRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
 
     }
     //PXPP-17690_Create Brand with incorrect URI
     @Test(priority =8, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17690_Create Brand with incorrect URI")
     public void invalidPostCreateBandValidation() throws IOException,NullPointerException  {
         logStep("TC 004_Verify the Response code as 404, when user provided incorrect URI for POST method of Branding [DL]");
-        int org_id=Integer.parseInt(testData.getProperty("api.org.id"));
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.InvalidPostCreateBrand(org_id,Namepayload);
+        int org_Id=Integer.parseInt(testData.getProperty("api.org.id"));
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.InvalidPostCreateBrand(org_Id,namePayLoad);
         logStep("Validating response information");
-        BrandingValidation.verifynotfoundRequestRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifynotfoundRequestRequestValidation(createBrandApiResponse);
     }
 
     //PXPP-17691_Create Brand for System"
@@ -119,11 +119,11 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         logStep("Getting Input system id from org table");
         int system_id=Integer.parseInt(testData.getProperty("api.system.org.id"));
         logStep("Create a brand for a system");
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.postCreateBrand(system_id,Namepayload );
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.postCreateBrand(system_id,namePayLoad );
         logStep("Validating response Code");
-        CCUtils.responseTimeValidation(CreateBrandApiResponse);
-        CCUtils.assertEquals(CreateBrandApiResponse.getStatusCode(), 200);
+        CCUtils.responseTimeValidation(createBrandApiResponse);
+        CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
     }
     //PXPP-17692_Create Brand for Practice"
     @Test(priority =4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17692_Create Brand for Practice")
@@ -133,11 +133,11 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         logStep("Getting Input Practice id from org table");
         int Practice_id=Integer.parseInt(testData.getProperty("api.practice.org.id"));
         logStep("Create a brand for a Practice");
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.postCreateBrand(Practice_id,Namepayload );
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.postCreateBrand(Practice_id,namePayLoad );
         logStep("Validating response Code");
-        CCUtils.responseTimeValidation(CreateBrandApiResponse);
-        CCUtils.assertEquals(CreateBrandApiResponse.getStatusCode(), 200);
+        CCUtils.responseTimeValidation(createBrandApiResponse);
+        CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
     }
     //PXPP-17693_Create Brand for Enterprise"
     @Test(priority =3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17693_Create Brand for Enterprise")
@@ -147,44 +147,44 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         logStep("Getting Input Enterprise id from org table");
         int Enterprise_id=Integer.parseInt(testData.getProperty("api.enterprise.org.id"));
         logStep("Create a brand for a Enterprise");
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.postCreateBrand(Enterprise_id,Namepayload );
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.postCreateBrand(Enterprise_id,namePayLoad );
         logStep("Validating response Code");
-        CCUtils.responseTimeValidation(CreateBrandApiResponse);
-        CCUtils.assertEquals(CreateBrandApiResponse.getStatusCode(), 200);
+        CCUtils.responseTimeValidation(createBrandApiResponse);
+        CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
     }
 
     //PXPP-17740_Create Brand with Payload of invalid orgId"
     @Test(priority =6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17740_Create Brand with Payload of invalid orgId")
     public void incorrectOrgIdValidation() throws IOException,NullPointerException  {
         logStep("TC 008_Verify the Response code as 400, when user provided invalid orgid in payload for POST method of Branding [DL]");
-        logStep("when org_id is incorrect");
-       Integer org_id=Integer.parseInt(testData.getProperty("api.org.id"))+1000000;
+        logStep("when org_Id is incorrect");
+       Integer org_Id=Integer.parseInt(testData.getProperty("api.org.id"))+1000000;
          Boolean showlogo=true;
         String Color="#EEEEEE";
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        CreateBrandApiResponse = brandInfo.errorPostCreateBrand(org_id,Namepayload,showlogo,Color);
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
         logStep("Validating response information");
-        BrandingValidation.verifyInvalidRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
     }
     //PXPP-17966_Version Name length validation"
     @Test(priority =9, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17966_Version Name length validation")
     public void nameFieldLengthValidation() throws IOException,NullPointerException  {
         logStep("TC 009_Verify the Response codes, when user provided Name attribute Values are =50 char and greater than 50 char payload for POST method of Branding [DL]");
-        Integer org_id=Integer.parseInt(testData.getProperty("api.org.id"));
+        Integer org_Id=Integer.parseInt(testData.getProperty("api.org.id"));
         Boolean showlogo=true;
         String Color="#EEEEEE";
         logStep("Version Name length validation with 50 charecters");
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(41));
-        CreateBrandApiResponse = brandInfo.postCreateBrand(org_id,Namepayload );
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(41));
+        createBrandApiResponse = brandInfo.postCreateBrand(org_Id,namePayLoad );
         logStep("Validating response Code");
-        CCUtils.responseTimeValidation(CreateBrandApiResponse);
-        CCUtils.assertEquals(CreateBrandApiResponse.getStatusCode(), 200);
+        CCUtils.responseTimeValidation(createBrandApiResponse);
+        CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
         logStep("Version Name length validation with 51 charecters");
-        Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(51));
-        CreateBrandApiResponse = brandInfo.errorPostCreateBrand(org_id,Namepayload,showlogo,Color);
+        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(51));
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
         logStep("Validating response information");
-        BrandingValidation.verifyInvalidRequestValidation(CreateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
     }
 
 }
