@@ -550,4 +550,19 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
+	public Response createOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+			throws IOException {
+
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
+				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
+				.response();
+	}
+
+	public Response updateOrgSolutions(List<Map<String, Object>> productList, int orgId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+
 }

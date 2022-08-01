@@ -51,6 +51,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
 				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
 		targetClientId = createClientApiResponse.jsonPath().getInt("clientId");
+
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing clientId and verify error message for client id field")
@@ -64,7 +65,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing orgId and verify error message ")
 	public void testErrorMessageForInvalidOrgId() throws IOException {
-		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(4176, 0, true);
+		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, 0, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 400);
@@ -74,9 +75,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move inactive/active  system node from one client to another client with inherit.")
 	public void testMoveActiveAndInactiveSystemNodeToAnotherClientWithInherit() throws Exception {
 		logStep("Create an inactive system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
-				null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_1", testData.getProperty("api.system.orgtype"),
+				"", "", "false", "", clientId, testData.getProperty("api.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an system node from one client to another client with inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemId, true);
@@ -90,10 +92,11 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 
 		logStep("Create an active system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_2", testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_2", testData.getProperty("api.system.orgtype"),
+				"System1", testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.active"),
+				"US/Central", clientId, testData.getProperty("api.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an system node from one client to another client with inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemIdOne,
@@ -111,9 +114,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to move active/inactive system node to active/inactive client with do not inherit. Verify error message is displayed when user move active/inactive system node to inactive target client node")
 	public void testMoveInactiveAndActiveSystemNodeActiveInactiveTargetClientNodeWithDoNotInherit() throws Exception {
 		logStep("Create an inactive system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "", "System_name_1",
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
-				null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_1", testData.getProperty("api.system.orgtype"),
+				"", "", "false", "", clientId, testData.getProperty("api.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an system node from one client to another client with do not inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemId, false);
@@ -127,10 +131,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Create an active system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_2", testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_2", testData.getProperty("api.system.orgtype"),
+				"System1", "", testData.getProperty("api.system.active"), "US/Central", clientId,
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an active system node from one client to another client with do not inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, sourceSystemIdOne,
@@ -140,8 +144,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemIdOne);
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemIdOne, "System_name_2",
-				"true", testData.getProperty("api.targetclient.type"), testData.getProperty("api.system.sapnumber"),
-				"US/Central");
+				"true", testData.getProperty("api.targetclient.type"), clientSapNumber, "US/Central");
 
 		logStep("Move an inactive system node an inactive client and verify error message");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(
@@ -164,8 +167,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	public void testMoveMoveInactiveAndActiveAgnosticPracticeNodeToClientWithInherit()
 			throws NullPointerException, Exception {
 		logStep("Create an inactive agnostic practice node  below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", " ", "Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "", null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_1",
+				testData.getProperty("api.practice.orgtype"), "", "", "false", "", clientId, "CLIENT",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an agnostic practice node from one client to another client with inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId, true);
@@ -179,9 +184,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 
 		logStep("Create an active agnostic practice below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
-				"Agnostic_Practice_Name_1", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "",
-				null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_1",
+				testData.getProperty("api.practice.orgtype"), "", "", testData.getProperty("api.practice.active"), "",
+				clientId, "CLIENT", Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an agnostic practice node from one client to another client with inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceIdOne, true);
@@ -200,8 +206,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	public void testMoveInactiveAndactiveAgnosticPracticeNodeToClientWithDoNotInherit()
 			throws NullPointerException, Exception {
 		logStep("Create an inactive agnostic practice node");
-		createOrgNodeApiResponse = orgInfo.createOrgNode("false", " ", "Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "", "", null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_1",
+				testData.getProperty("api.practice.orgtype"), "", "", "false", "", clientId, "CLIENT",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an inactive agnostic practice node from one client to another client with do not inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceId, false);
@@ -215,9 +223,10 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Create an active agnostic practice below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), " ",
-				"Agnostic_Practice_Name_2", testData.getProperty("api.practice.orgtype"), clientId, "CLIENT", "PRA@001",
-				"US/Alaska", null);
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_2",
+				testData.getProperty("api.practice.orgtype"), " ", "", testData.getProperty("api.practice.active"),
+				"US/Alaska", clientId, "CLIENT", Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an active agnostic practice node from one client to another client with do not inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(targetClientId, practiceIdOne, false);
@@ -226,7 +235,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceIdOne);
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceIdOne,
-				"Agnostic_Practice_Name_2", "true", testData.getProperty("api.targetclient.type"), "PRA@001",
+				"Agnostic_Practice_Name_2", "true", testData.getProperty("api.targetclient.type"), clientSapNumber,
 				"US/Alaska");
 
 		logStep("Move an inactive agnostic practice node an inactive client and verify error message");
@@ -248,15 +257,9 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and verify error response body")
 	public void testErrorResponseForInvalidUrl() throws Exception {
-		logStep("Create an active system node below client");
-		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.system.active"), "System1",
-				"System_name_2", testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), testData.getProperty("api.system.sapnumber"), "US/Central",
-				null);
-		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an system node from one client to another client with inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNodeUsingInvalidUrl(targetClientId,
-				sourceSystemId, true);
+				Integer.parseInt(testData.getProperty("active.system.id.different.client")), true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(transferBusinessUnitsApiResponse);
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 404);
