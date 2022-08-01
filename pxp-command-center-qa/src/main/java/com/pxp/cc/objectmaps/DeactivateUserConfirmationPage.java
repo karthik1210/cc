@@ -13,7 +13,7 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 		super(driver);
 	}
 
-	@FindBy(xpath = "//span[@class='cid']")
+	@FindBy(xpath = "//span[@class='cid ng-star-inserted']")
 	private WebElement labelConfirmationQuestion;
 
 	@FindBy(id = "applyCancel")
@@ -21,16 +21,16 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 
 	@FindBy(id = "applyClearIcon")
 	private WebElement closeWindowIcon;
-	
+
 	@FindBy(id = "applyBtn")
 	private WebElement buttonYesDeactivate;
 
 	public void verifyConfirmationTextForSingleUser(String userName) {
 		CCUtils.verifyAndWaitForElement(labelConfirmationQuestion, driver);
-		if (labelConfirmationQuestion.isDisplayed()==true) {
+		if (labelConfirmationQuestion.isDisplayed() == true) {
 			CCUtils.assertEquals(labelConfirmationQuestion.getText().trim(),
-					"Are you sure you would like to Deactivate User the selected user " + userName + "?");
-			log("Deactivate User confirmation text is " + labelConfirmationQuestion.getText().trim());
+					"Are you sure you would like to deactivate the selected user " + userName + "?");
+			log("Deactivate User confirmation text is = " + labelConfirmationQuestion.getText().trim());
 		} else {
 			log("Deactivate User confirmation text is not displayed");
 		}

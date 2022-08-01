@@ -2,7 +2,6 @@
 
 package com.pxp.cc.testcases.ui;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -29,7 +28,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		commandCenterUsersPage=clientDirectoryPage.clickOnCommandCenterUsersIcon();
+		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 	}
@@ -38,16 +37,14 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public void testDeactivateConfirmationPopupForInternalUser() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnActiveCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		String userName = internalUserDetailsPage.getUserName();
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		deactivateUserConfirmationPage = internalUserDetailsPage.clickOnDeactivateUserButton();
@@ -59,16 +56,14 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public void testDeactivateUserOptionIsPresentForActiveInternalUser() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnActiveCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify deactivate button is displayed in kebab menu for active user");
 		internalUserDetailsPage.verifyDeactivateUserButtonIsDisplayed();
@@ -78,73 +73,66 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public void testDeactivateUserOptionIsPresentForNoRolesAssignedInternalUser() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select no roles assigned user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnNoRolesAssignedCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify deactivate user button is displayed in kebab menu for no roles assigned user");
 		internalUserDetailsPage.verifyDeactivateUserButtonIsDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user button is not displayed in kebab menu for inactive user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify activate user button is displayed in kebab menu for inactive user")
 	public void testDeactivateUserOptionIsNotPresentForInactiveInternalUser() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select inactive user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.inactive"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnInactiveCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		logStep("Verify deactivate user button is not displayed in kebab menu for inactive user");
-		internalUserDetailsPage.verifyDeactivateUsertButtonIsNotDisplayed();
+		internalUserDetailsPage.verifyActivateUserButtonIsDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user button is not displayed in kebab menu for locked user")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user button is displayed but not enabled in kebab menu for locked user")
 	public void testDeactivateUserOptionIsNotPresentForLockedInternalUser() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select locked user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.lockedout"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnLockedCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		internalUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify deactivate user button is not displayed in kebab menu for locked user");
+		logStep("Verify deactivate user button is displayed but not enabled in kebab menu for locked user");
 		internalUserDetailsPage.verifyDeactivateUsertButtonIsNotDisplayed();
+		internalUserDetailsPage.verifyDeactivateUsertButtonIsNotEnabled();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality for deactivate user button popup")
 	public void testCancelAndCrossIconFunctionalityOnDeactivateInternalUserButton() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnActiveCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		deactivateUserConfirmationPage = internalUserDetailsPage.clickOnDeactivateUserButton();
 		logStep("Verify after clicking on cancel button, user redirected to internal user details page");
@@ -161,16 +149,14 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public void testInternalUserDeactivateFunctionality() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.selectUserStatus(userStatusList);
+		internalUsersPage.clickOnActiveCheckbox();
 		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
+		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
+		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		String userName = internalUserDetailsPage.getUserName();
 		internalUserDetailsPage.clickOnKebabMenuButton();
 		deactivateUserConfirmationPage = internalUserDetailsPage.clickOnDeactivateUserButton();
@@ -179,7 +165,6 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 		deactivateUserConfirmationPage.clickOnYesDeactivateButton();
 		logStep("verify success toaster message");
 		commonMethods = new CommonMethods(driver);
-		commonMethods.verifyToasterMessage("Deactivation email sent to users successfully");
+		commonMethods.verifyToasterMessage("Success! User status has been successfully deactivated");
 	}
-
 }
