@@ -623,4 +623,13 @@ public class ApiPath {
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(int resourceId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
 	}
+	
+	public static final String DELETE_BRAND_DETAILS_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId;
+	}
+
+	public static final String INVALID_PATH_DELETE_BRAND_DETAILS_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
+	}
+
 }
