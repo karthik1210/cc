@@ -16,7 +16,6 @@ import io.restassured.path.json.JsonPath;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.*;
 import io.restassured.response.Response;
-import java.sql.*;
 import java.lang.*;
 import java.io.*;
 
@@ -42,7 +41,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     }
     //PXPP-17669 - Create Brand for Client
     @Test(priority =1 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17669_Create Brand for Client")
-    public void createBrandforClientSuccess() throws IOException,SQLException {
+    public void createBrandforClientSuccess() throws IOException  {
         logStep(" initiating....TC 001_Verify the Response code as 200, when user provided all requested fields with valid values for a client in payload for POST method of Branding [DL]");
         String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
                 .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(8))));
@@ -66,7 +65,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 
     //PXPP-17654_Create Brand with Payload of NullValues"
     @Test(priority =5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17654_Create Brand with Payload of NullV alues")
-    public void orgidNullValidation() throws IOException,NullPointerException,SQLException {
+    public void orgidNullValidation() throws IOException,NullPointerException  {
         logStep("TC 002_Verify the Response code as 400, when user provided empty values in payload and null value to org_id,name for POST method of Branding [DL]");
         logStep("when org_id is null");
         Integer norg_id = null;
@@ -85,7 +84,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     }
     //PXPP-17672_Create Brand with Payload of null (Show Logo) or duplicate values(name)
     @Test(priority =7, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17672_Create Brand with Payload of null (Show Logo) or duplicate values(name)")
-    public void incorrectPayloadCreateBandValidation() throws IOException,NullPointerException,SQLException {
+    public void incorrectPayloadCreateBandValidation() throws IOException,NullPointerException  {
         logStep("TC 003_Verify the Response code as 400, when user provided null (Show Logo) or duplicate values(name) in payload for POST method of Branding [DL]");
         Integer org_id=Integer.parseInt(testData.getProperty("api.org.id"));
         String Namepayloaddb=testData.getProperty("api.name.db");
@@ -103,7 +102,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     }
     //PXPP-17690_Create Brand with incorrect URI
     @Test(priority =8, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17690_Create Brand with incorrect URI")
-    public void invalidPostCreateBandValidation() throws IOException,NullPointerException,SQLException {
+    public void invalidPostCreateBandValidation() throws IOException,NullPointerException  {
         logStep("TC 004_Verify the Response code as 404, when user provided incorrect URI for POST method of Branding [DL]");
         int org_id=Integer.parseInt(testData.getProperty("api.org.id"));
         Namepayload="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
@@ -114,7 +113,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 
     //PXPP-17691_Create Brand for System"
     @Test(priority =2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17691_Create Brand for System")
-    public void createBrandforSystemSuccess() throws IOException,SQLException
+    public void createBrandforSystemSuccess() throws IOException 
     {
         logStep("TC 005_Verify the Response code as 200, when user provided all requested fields with valid values for a system in payload for POST method of Branding [DL]");
         logStep("Getting Input system id from org table");
@@ -128,7 +127,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     }
     //PXPP-17692_Create Brand for Practice"
     @Test(priority =4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17692_Create Brand for Practice")
-    public void createBrandforPracticeSuccess() throws IOException,SQLException
+    public void createBrandforPracticeSuccess() throws IOException 
     {
         logStep("TC 006_Verify the Response code as 200, when user provided all requested fields with valid values for an Practice in payload for POST method of Branding [DL]");
         logStep("Getting Input Practice id from org table");
@@ -142,7 +141,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     }
     //PXPP-17693_Create Brand for Enterprise"
     @Test(priority =3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17693_Create Brand for Enterprise")
-    public void createBrandforEnterpriseSuccess() throws IOException,SQLException
+    public void createBrandforEnterpriseSuccess() throws IOException 
     {
         logStep("TC 007_Verify the Response code as 200, when user provided all requested fields with valid values for an Enterprise in payload for POST method of Branding [DL]");
         logStep("Getting Input Enterprise id from org table");
@@ -157,7 +156,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 
     //PXPP-17740_Create Brand with Payload of invalid orgId"
     @Test(priority =6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17740_Create Brand with Payload of invalid orgId")
-    public void incorrectOrgIdValidation() throws IOException,NullPointerException,SQLException {
+    public void incorrectOrgIdValidation() throws IOException,NullPointerException  {
         logStep("TC 008_Verify the Response code as 400, when user provided invalid orgid in payload for POST method of Branding [DL]");
         logStep("when org_id is incorrect");
        Integer org_id=Integer.parseInt(testData.getProperty("api.org.id"))+1000000;
@@ -170,7 +169,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     }
     //PXPP-17966_Version Name length validation"
     @Test(priority =9, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17966_Version Name length validation")
-    public void nameFieldLengthValidation() throws IOException,NullPointerException,SQLException {
+    public void nameFieldLengthValidation() throws IOException,NullPointerException  {
         logStep("TC 009_Verify the Response codes, when user provided Name attribute Values are =50 char and greater than 50 char payload for POST method of Branding [DL]");
         Integer org_id=Integer.parseInt(testData.getProperty("api.org.id"));
         Boolean showlogo=true;
