@@ -2553,7 +2553,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	//Added By Sarada Burugula as part of PXPP-17497 and PXPP-17480
+	//Added by Sarada Burugula as part of Branding (PXPP-17492 && PXPP-17475)
 	public void verifyInvalidRequestValidation(Response CreateBrandApiResponse)throws IOException {
 		CCUtils.responseTimeValidation(CreateBrandApiResponse);
 		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
