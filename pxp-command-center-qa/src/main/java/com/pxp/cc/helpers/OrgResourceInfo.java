@@ -30,4 +30,24 @@ public class OrgResourceInfo extends BaseRest{
 		String url = ApiPath.FETCH_SOLUTIONS_FOR_RESOURCES_DL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getSolutionsForResources_BL(int resourceId, int practiceId) {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_RESOURCES_BL(resourceId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getSolutionsForResources_BL_InvalidUrl(int resourceId, int practiceId) {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(resourceId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getSolutionsForResources_BL_InvalidMethodCall(int resourceId, int practiceId) {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_RESOURCES_BL(resourceId, practiceId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getSolutionsForResources_BL_NullValues() {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_RESOURCES_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
