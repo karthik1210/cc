@@ -2563,7 +2563,7 @@ public class Validations {
 	public void verifyServerRequestRequestValidation(Response CreateBrandApiResponse)throws IOException {
 		CCUtils.responseTimeValidation(CreateBrandApiResponse);
 		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("status"), 500);
+		CCUtils.assertEquals(jsonpath.get("status"), 500);git checkout feature/PXPP-17480
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
 
 	}
