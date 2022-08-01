@@ -4,6 +4,7 @@ package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
@@ -26,13 +27,13 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Create a new active client using valid client details and verify success toaster message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Create a new active client using valid client details and verify success toaster message")
 	public void testNewClientCreation() throws Exception {
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(91));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		String clientSapNumber = testData.getProperty("new.client.sap")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(40));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
 				testData.getProperty("new.client.timezone"));
 		logStep("Verify active radio button is by default selected on the create client popup");
@@ -44,8 +45,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
 	}
 
-	@Test(enabled = true, groups = { "AcceptanceTests",
-			"SmokeTest" }, retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Verify error messages on create client popup")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error messages on create client popup")
 	public void testErrorMessagesOnCreateClientPopUp() throws Exception {
 		logStep("Enter already existing client name and sap id in client name and sap id field and verify error message");
 		createClientPage.verifyClientNameAndSapUnique(testData.getProperty("duplicate.client.name"),
@@ -64,8 +64,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 				testData.getProperty("new.client.timezone").concat(CCUtils.generateAlphaNumericString(4)));
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Create a new inactive test client and verify success toaster message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Create a new inactive test client and verify success toaster message")
 	public void testCreateInactiveTestClient() throws Exception {
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
@@ -73,7 +72,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		String clientSapNumber = testData.getProperty("new.client.sap")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(6));
 		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
-				"Select");
+				"Pacific Standard Time");
 		logStep("Select inactive radio button and click on test checkbox on the create client pop-up");
 		createClientPage.selectInactiveRadiobutton();
 		createClientPage.selectTestClient();
@@ -84,8 +83,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Verify create client popup")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify create client popup")
 	public void testCreateClientPopUp() throws Exception {
 		logStep("Verify create client popup");
 		createClientPage.verifyCreateClientPageTitle();
@@ -93,11 +91,11 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		createClientPage.verifyClientNameLabelTextAndTextboxDefaultValue();
 		createClientPage.verifySapIdLabelTextAndTextboxDefaultValue();
 		createClientPage.verifyClientTypeLabelTextAndDropDownDefaultValue();
+		commonMethods.getClientTypeDropdownValue();
+		commonMethods.verifyClientTypeDropdownValues(testData.getProperty("qa.data.layer.service.base.url"));
 		createClientPage.verifyTimezoneLabelTextAndDropDownDefaultValue();
 		commonMethods.getTimezoneDropdownValue();
 		commonMethods.verifyTimezoneDropdownValues();
-		commonMethods.getClientTypeDropdownValue();
-		commonMethods.verifyClientTypeDropdownValues();
 		createClientPage.verifyStatusLabelTextAndRadioButtons();
 		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
 		createClientPage.verifyTestLabelTextAndCheckboxDefaultValue();
