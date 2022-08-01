@@ -166,5 +166,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 		logStep("verify success toaster message");
 		commonMethods = new CommonMethods(driver);
 		commonMethods.verifyToasterMessage("Success! User status has been successfully deactivated");
+		logStep("Verify internal user status is changed from active to inactive on internal user details page");
+		internalUserDetailsPage.checkInactiveStatus();
 	}
 }

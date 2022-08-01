@@ -181,6 +181,9 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
 	private WebElement buttonDeactivateUser;
+	
+	@FindBy(xpath = "//span[@class='pl-3']")
+	private WebElement inactiveStatus;
 
 	public InternalUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -191,6 +194,10 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void clickOnKebabMenuButton() {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
 		javascriptClick(buttonKebabMenu);
+	}
+	
+	public void checkInactiveStatus() {
+		CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
 	}
 
 	public void verifySendEnrollmentButtonIsNotDisplayed() {
