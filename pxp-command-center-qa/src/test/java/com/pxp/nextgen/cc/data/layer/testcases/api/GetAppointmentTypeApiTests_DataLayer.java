@@ -3,8 +3,6 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -34,10 +32,13 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 	public void testGetAppointmentTypeFunctionalityUsingAppointmentTypeId() throws IOException {
 		logStep("Add valid resource id for appointment type");
 		getAppointmentTypeApiResponse = sharedInfo
-				.getAppointmentType_DL(Integer.parseInt(testData.getProperty("valid.appointment.type.id")));
+				.getAppointmentType_DL(Integer.parseInt(testData.getProperty("api.valid.appointment.type.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getAppointmentTypeApiResponse);
 		CCUtils.assertEquals(getAppointmentTypeApiResponse.getStatusCode(), 200);
+		validation.verifyGetAppointmentResponseBody(getAppointmentTypeApiResponse, testData.getProperty("api.appointment.name"),
+				testData.getProperty("api.appointment.externalId"), (Integer.parseInt(testData.getProperty("api.appointment.duration"))),
+				testData.getProperty("api.appointment.durationUnit"), testData.getProperty("api.appointment.status"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get the Appointment type details with the Invalid AppointmentypeId and verify response body")
@@ -47,6 +48,8 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getAppointmentTypeApiResponse);
 		CCUtils.assertEquals(getAppointmentTypeApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseBodyForInvalidAppointmentTypeId(getAppointmentTypeApiResponse, testData.getProperty("non.existing.appointment.type.id"));
+		
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Make a POST call instead of PUT and verify response body")
