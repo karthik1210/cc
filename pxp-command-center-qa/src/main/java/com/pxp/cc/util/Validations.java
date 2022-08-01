@@ -2551,5 +2551,101 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	public void verifyResponseBodyForGetResourceForProvider_DL(Response response) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			System.out.println(jsonObject);
+		}
+		CCUtils.assertEquals(jsonObject.getString("type"), "PROVIDER");
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"),true);
+	}
+
+	public void verifyResponseForEmptyOrNULLOrMisFormatData_DL(Response response)throws IOException{
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
+		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"),true);
+	}
+
+	public void verifyResponseForEmptyData_DL(Response response) throws IOException{
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("error"),"Internal Server Error");
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 }
