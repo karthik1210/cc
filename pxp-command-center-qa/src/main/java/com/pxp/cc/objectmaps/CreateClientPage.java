@@ -162,12 +162,15 @@ public class CreateClientPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
 		textboxClientName.sendKeys(newClientName);
 		log("Entered text in client name field : " + newClientName);
+		CCUtils.verifyAndWaitForElement(textboxSapId, driver);
 		textboxSapId.sendKeys(newSAPID);
 		log("Entered text in SAP ID field : " + newSAPID);
-		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
+		CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
+		log("click to dropdown of client type");
 		dropdownClientType.click();
 		selectClientType(clientType);
 		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
+		log("click to dropdown of Timezone");
 		dropdownTimezone.click();
 		selectTimeZone(newTimezone);
 	}
@@ -303,7 +306,7 @@ public class CreateClientPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelTimezone, driver);
 		log("Verifying timezone label text");
 		CCUtils.assertTrue(labelTimezone.isDisplayed(), "Timezone label is not displayed on create client popup");
-		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone");
+		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone*");
 		log("Timezone label text is " + labelTimezone.getText().trim());
 		CCUtils.verifyAndWaitForElement(dropdownTextboxTimezone, driver);
 		log("Verifying select placeholder is displayed for client timezone dropdown field");
