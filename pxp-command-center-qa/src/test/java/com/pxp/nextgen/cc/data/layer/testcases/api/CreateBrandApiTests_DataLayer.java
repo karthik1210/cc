@@ -27,8 +27,6 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     private Validations brandingValidation;
     private String sql;
     Response createBrandApiResponse,createClientApiResponse;
-    int brand_id;
-    String brandname;
     int org_Id;
     String namePayLoad;
 
@@ -69,16 +67,16 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         logStep("TC 002_Verify the Response code as 400, when user provided empty values in payload and null value to org_Id,name for POST method of Branding [DL]");
         logStep("when org_Id is null");
         Integer norg_Id = null;
-        Boolean showlogo=true;
-        String Color="#EEEEEE";
+        Boolean showLogo=true;
+        String color="#EEEEEE";
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        createBrandApiResponse = brandInfo.errorPostCreateBrand(norg_Id,namePayLoad,showlogo,Color);
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(norg_Id,namePayLoad,showLogo,color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
-        showlogo=true;
-        Color="#BBBBBB";
+        showLogo=true;
+        color="#BBBBBB";
         namePayLoad=null;
-        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showLogo,color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
     }
@@ -88,14 +86,14 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         logStep("TC 003_Verify the Response code as 400, when user provided null (Show Logo) or duplicate values(name) in payload for POST method of Branding [DL]");
         Integer org_Id=Integer.parseInt(testData.getProperty("api.org.id"));
         String namePayLoaddb=testData.getProperty("api.name.db");
-        Boolean showlogo=null;
-        String Color="#BBBBBB";
+        Boolean showLogo=null;
+        String color="#BBBBBB";
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showLogo,color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
-        showlogo=true;
-        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoaddb,showlogo,Color);
+        showLogo=true;
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoaddb,showLogo,color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
 
@@ -160,10 +158,10 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         logStep("TC 008_Verify the Response code as 400, when user provided invalid orgid in payload for POST method of Branding [DL]");
         logStep("when org_Id is incorrect");
        Integer org_Id=Integer.parseInt(testData.getProperty("api.org.id"))+1000000;
-         Boolean showlogo=true;
-        String Color="#EEEEEE";
+         Boolean showLogo=true;
+        String color="#EEEEEE";
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showLogo,color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
     }
@@ -172,8 +170,8 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
     public void nameFieldLengthValidation() throws IOException,NullPointerException  {
         logStep("TC 009_Verify the Response codes, when user provided Name attribute Values are =50 char and greater than 50 char payload for POST method of Branding [DL]");
         Integer org_Id=Integer.parseInt(testData.getProperty("api.org.id"));
-        Boolean showlogo=true;
-        String Color="#EEEEEE";
+        Boolean showLogo=true;
+        String color="#EEEEEE";
         logStep("Version Name length validation with 50 charecters");
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(41));
         createBrandApiResponse = brandInfo.postCreateBrand(org_Id,namePayLoad );
@@ -182,7 +180,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
         logStep("Version Name length validation with 51 charecters");
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(51));
-        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showlogo,Color);
+        createBrandApiResponse = brandInfo.errorPostCreateBrand(org_Id,namePayLoad,showLogo,color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(createBrandApiResponse);
     }
