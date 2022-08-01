@@ -169,4 +169,15 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
+	public Response deleteBrandDetails_DL(int brandId) {
+		String url = ApiPath.DELETE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deleteBrandDetailsUsingInvalidUrl_DL(int brandId) {
+		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+
 }
