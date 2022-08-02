@@ -1,13 +1,9 @@
+//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 /*
 JIRA Id: PXPP-17605
-Objective: QA: API Automation : Shared Data | [Provider] Get Resources for the Provider [BL]
-Functionality: Get Resources for the Provider [BL]
-Covered Response Codes: 200, 400, 404, 204, 500, 405
 Designer: Karthikeyan Natarajan
-Phase: Command Center Phase 1
  */
-
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
