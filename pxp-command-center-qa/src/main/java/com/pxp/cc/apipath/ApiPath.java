@@ -601,7 +601,6 @@ public class ApiPath {
 	public static final String GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
-<<<<<<< HEAD
 	
 	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId,
 			int practiceId) {
