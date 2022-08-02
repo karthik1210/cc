@@ -2606,7 +2606,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("status"), 404);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Not Found");
 	}
-<<<<<<< HEAD
 
 	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
 	{
@@ -2640,9 +2639,4 @@ public class Validations {
 			}
 		}
 	}
-	
-=======
-	// Completed Sarada Burugula's addition
-
->>>>>>> 6d91ed1d733e032f2c7f409091acc767afd42238
 }
