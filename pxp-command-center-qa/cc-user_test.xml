@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="CCUserTestSuite">
+<<<<<<< HEAD
     <listeners>
         <listener
                 class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener"/>
@@ -28,4 +29,32 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchUserApiTest_BusinessLayer"/>
         </classes>
     </test>
+=======
+	<listeners>
+		<listener
+			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener
+			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener
+			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+	</listeners>
+	<test name="CC User Test">
+		<classes>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserDetailsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserRolesForUserTypeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
+			<!-- Enable test class once below issue is resolved. Jira # PXPP-15243 -->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateUserRolesApiTests_BusinessLayer" 
+				/> -->
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserInfoApiTests_BusinessLayer" />
+		</classes>
+	</test>
+>>>>>>> 6d91ed1d733e032f2c7f409091acc767afd42238
 </suite>
