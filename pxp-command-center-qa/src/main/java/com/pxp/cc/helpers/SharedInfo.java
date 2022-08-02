@@ -169,23 +169,19 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
-
-	public Response getResourcesForProviderWithValidInputs(int providerId,int practiceId,String urlType){
-		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(providerId,practiceId);
-		String invalidUrl = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(providerId,practiceId);
-		if(urlType.equalsIgnoreCase("valid"))
-			return given().spec(requestSpec).when().get(url).then().extract().response();
-		else
-			return given().spec(requestSpec).when().get(invalidUrl).then().extract().response();
+	
+	public Response getAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getResourceForProviderWithInvalidPOSTRequest(int providerId,int practiceId,String urlType) {
-		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(providerId,practiceId);
+	public Response invalidMethodCallForGetAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
-	public Response getResourcesForProviderWithInvalidDataType(String providerId, String practiceId, String urlType) {
-		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(providerId,practiceId);
-		return given().spec(requestSpec).when().get(url).then().extract().response();
+	public Response getAppointmentTypeUsingInvalidUrl_DL(int appointmentTypeId) {
+		String url = ApiPath.INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 }

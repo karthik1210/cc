@@ -57,7 +57,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 		getValidateUserApiResponse = userInfo.validateUserDetails(getDetails[0], getDetails[1], getDetails[2]);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
-		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
+		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 409);
 		validation.verifyErrorResponseForDuplicateEmail(getValidateUserApiResponse, getDetails[0]);
 	}
 
@@ -99,7 +99,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 				getUserDetails[2]);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
-		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
+		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 409);
 		validation.verifyErrorResponseForDuplicateUsername(getValidateUserApiResponse, getUserDetails[1]);
 	}
 
@@ -121,7 +121,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 				getCommandCenterUserDetails[1], getCommandCenterUserDetails[2]);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
-		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 400);
+		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 409);
 		validation.verifyErrorResponseForDuplicateMobile(getValidateUserApiResponse, getCommandCenterUserDetails[2]);
 	}
 
