@@ -601,11 +601,13 @@ public class ApiPath {
 	public static final String GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
-
-	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers12abc";
+	
+	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId,
+			int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId
+				+ "/providers12abc";
 	}
-
+	
 	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/locations/null/practices/null/providers";
 
@@ -620,14 +622,10 @@ public class ApiPath {
 	public static final String GET_PROVIDERS_FOR_LOCATION_DL_NULL_VALUES = SHARED_DL
 			+ "/v1/locations/null/practices/null/providers";
 
-	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
-		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
-	}
-
+	
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL(int resourceId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutions";
 	}
-
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/resources/null/practices/null/solutions";
 
@@ -635,4 +633,15 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
 	}
 
+	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
+		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
+	}
+	
+	// Added by Sarada Burugula for PXPP-17497
+	public static final String CREATEBRANDS_DL = SHARED_DL + "/v1/brands/";
+	public static final String INVALID_CREATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
+
+	// Completed Sarada Burugula's addition
+	public static final String GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
+		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId;}
 }
