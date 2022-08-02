@@ -180,4 +180,19 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 
+	public Response getAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallForGetAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypeUsingInvalidUrl_DL(int appointmentTypeId) {
+		String url = ApiPath.INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
 }

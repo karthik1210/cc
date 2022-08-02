@@ -2551,5 +2551,44 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
+
+	public void verifyErrorResponseBodyForInvalidAppointmentTypeId(Response response, String AppointmentTypeId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"AppointmentType not found for ID=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetAppointmentResponseBody(Response response,String name,String externalId,int duration,String durationUnit,String status) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
+		CCUtils.assertEquals(jsonpath.getInt("duration"), duration);
+		CCUtils.assertEquals(jsonpath.get("durationUnit").toString(), durationUnit);
+		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+	}
+	//Added by Sarada Burugula as part of Branding (PXPP-17492 && PXPP-17475)
+	public void verifyInvalidRequestValidation(Response CreateBrandApiResponse)throws IOException {
+		CCUtils.responseTimeValidation(CreateBrandApiResponse);
+		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("status"), 400);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	public void verifyServerRequestRequestValidation(Response CreateBrandApiResponse)throws IOException {
+		CCUtils.responseTimeValidation(CreateBrandApiResponse);
+		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("status"), 500);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
+
+	}
+	public void verifynotfoundRequestRequestValidation(Response CreateBrandApiResponse)throws IOException {
+		CCUtils.responseTimeValidation(CreateBrandApiResponse);
+		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("status"), 404);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Not Found");
+	}
+	// Completed Sarada Burugula's addition
 	
 }
