@@ -634,14 +634,9 @@ public class ApiPath {
 	}
 
 	public static final String INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
-<<<<<<< HEAD
 		return SHARED_DL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
 
-=======
-		return SHARED_DL + "/v1/appointment-typessss/" + appointmentTypeId;
-	}
->>>>>>> 6d91ed1d733e032f2c7f409091acc767afd42238
 }
 
 
