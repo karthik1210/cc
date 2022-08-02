@@ -77,6 +77,24 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(id = "userStatus")
 	private List<WebElement> listInternalUserStatus;
 
+	@FindBy(xpath = "//span[contains(text(),'Active')]")
+	private WebElement activeCheckbox;
+
+	@FindBy(id = "filterSearchBtn")
+	private WebElement searchButton;
+
+	@FindBy(xpath = "//span[contains(text(),'No roles assigned')]")
+	private WebElement noRolesAssignedCheckbox;
+
+	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
+	private WebElement inactiveCheckbox;
+
+	@FindBy(xpath = "//span[contains(text(),'Locked out')]")
+	private WebElement lockedCheckbox;
+
+	@FindBy(xpath = "//td[@class='mat-cell cdk-cell cdk-column-firstName mat-column-firstName ng-star-inserted'][1]")
+	private WebElement selectInternalUser;
+
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -92,6 +110,39 @@ public class InternalUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Internal Users");
 		log("Internal Users page title is displayed");
+	}
+
+	public void clickOnActiveCheckbox() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(activeCheckbox, driver);
+		activeCheckbox.click();
+		log("Clicked on active User Status checkbox on Search Options popup");
+	}
+
+	public void clickOnNoRolesAssignedCheckbox() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(noRolesAssignedCheckbox, driver);
+		noRolesAssignedCheckbox.click();
+		log("Clicked on no roles assigned User Status checkbox on Search Options popup");
+	}
+
+	public void clickOnInactiveCheckbox() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(inactiveCheckbox, driver);
+		inactiveCheckbox.click();
+		log("Clicked on inactive User Status checkbox on Search Options popup");
+	}
+
+	public void clickOnLockedCheckbox() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(lockedCheckbox, driver);
+		lockedCheckbox.click();
+		log("Clicked on inactive User Status checkbox on Search Options popup");
+	}
+
+	public void selectInternalUser() throws InterruptedException {
+		selectInternalUser.click();
+		log("Clicked on first internal user");
 	}
 
 	public void selectUser() throws InterruptedException {
@@ -221,5 +272,4 @@ public class InternalUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(listInternalUserStatus.get(0), driver);
 		return listInternalUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
 	}
-
 }
