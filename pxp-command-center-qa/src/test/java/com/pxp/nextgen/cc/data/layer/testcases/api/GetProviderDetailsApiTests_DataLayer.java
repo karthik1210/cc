@@ -34,7 +34,7 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyResponseBodyForProviderDetails(fetchProviderDetailsApiResponse,
 				testData.getProperty("provider.firstname"), testData.getProperty("provider.lastname"),
-				testData.getProperty("provider.gender"),testData.getProperty("provider.staffId"),testData.getProperty("provider.status"));
+				testData.getProperty("provider.gender"),testData.getProperty("provider.status"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing providerId in providerId field and validate status code")

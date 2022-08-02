@@ -9,6 +9,7 @@ import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import io.restassured.response.Response;
 
+
 public class BrandsInfo extends BaseRest {
 
 	public Response postDuplicateBrand(int brandId, int ownerId, String ownerType) {
@@ -91,7 +92,25 @@ public class BrandsInfo extends BaseRest {
 		CreateBrandMap.put("color", color);
 		return CreateBrandMap;
 	}
-	//Added By Sarada Burugula as part of PXPP-17480 on 26/07/2022
+	public Response postCreateBrand( int orgId, String brandname) {
+		String url = ApiPath.CREATEBRANDS_DL;
+		Map<String, Object> postCreateBrandPayload = postCreateBrandPayload(orgId,brandname);
+		return given().spec(requestSpec).body(postCreateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+	public Response errorPostCreateBrand( Integer orgId, String brandname,Boolean showLogo,String color) {
+		String url = ApiPath.CREATEBRANDS_DL;
+		Map<String, Object> errorPostCreateBrand = errorpostCreateBrandPayload(orgId, brandname,showLogo,color);
+		return given().spec(requestSpec).body(errorPostCreateBrand).when().post(url).then().extract()
+				.response();
+	}
+	public Response InvalidPostCreateBrand( int orgId, String brandname) {
+		String url = ApiPath.INVALID_CREATE_BRANDS_DL;
+		Map<String, Object> postCreateBrandPayload = postCreateBrandPayload(orgId,brandname);
+		return given().spec(requestSpec).body(postCreateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+//Added By Sarada Burugula as part of PXPP-17480 on 26/07/2022
 
 	public Response putUpdateBrand(int BrandId,int orgId, String brandname) {
 		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
@@ -120,4 +139,3 @@ public class BrandsInfo extends BaseRest {
 	}
 // Completed Sarada Burugula's addition
 }
-
