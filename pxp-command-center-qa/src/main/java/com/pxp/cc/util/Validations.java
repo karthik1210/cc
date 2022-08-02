@@ -2556,7 +2556,7 @@ public class Validations {
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"AppointmentType not found for ID=" + AppointmentTypeId);
+				"Appointment not found for OrgId=" + AppointmentTypeId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
