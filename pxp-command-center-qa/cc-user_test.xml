@@ -28,5 +28,4 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchUserApiTest_BusinessLayer"/>
         </classes>
     </test>
-
 </suite>
