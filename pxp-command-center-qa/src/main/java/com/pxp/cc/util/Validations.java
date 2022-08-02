@@ -2645,8 +2645,7 @@ public class Validations {
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
-			System.out.println(jsonObject);
-		}
+			}
 		CCUtils.assertEquals(jsonObject.getString("type"), "PROVIDER");
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"),true);
 	}
