@@ -90,7 +90,7 @@ public class InternalUsersPage extends CCMainPage {
 	private WebElement inactiveCheckbox;
 
 	@FindBy(xpath = "//span[contains(text(),'Locked out')]")
-	private WebElement LockedCheckbox;
+	private WebElement lockedCheckbox;
 
 	@FindBy(xpath = "//td[@class='mat-cell cdk-cell cdk-column-firstName mat-column-firstName ng-star-inserted'][1]")
 	private WebElement selectInternalUser;
@@ -114,29 +114,29 @@ public class InternalUsersPage extends CCMainPage {
 
 	public void clickOnActiveCheckbox() throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, searchButton);
-		Thread.sleep(10000);
+		CCUtils.verifyAndWaitForElement(activeCheckbox, driver);
 		activeCheckbox.click();
 		log("Clicked on active User Status checkbox on Search Options popup");
 	}
 
 	public void clickOnNoRolesAssignedCheckbox() throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, searchButton);
-		Thread.sleep(10000);
+		CCUtils.verifyAndWaitForElement(noRolesAssignedCheckbox, driver);
 		noRolesAssignedCheckbox.click();
 		log("Clicked on no roles assigned User Status checkbox on Search Options popup");
 	}
 
 	public void clickOnInactiveCheckbox() throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, searchButton);
-		Thread.sleep(10000);
+		CCUtils.verifyAndWaitForElement(inactiveCheckbox, driver);
 		inactiveCheckbox.click();
 		log("Clicked on inactive User Status checkbox on Search Options popup");
 	}
 
 	public void clickOnLockedCheckbox() throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, searchButton);
-		Thread.sleep(10000);
-		LockedCheckbox.click();
+		CCUtils.verifyAndWaitForElement(lockedCheckbox, driver);
+		lockedCheckbox.click();
 		log("Clicked on inactive User Status checkbox on Search Options popup");
 	}
 
