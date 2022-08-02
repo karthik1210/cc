@@ -628,4 +628,7 @@ public class ApiPath {
 	public static final String INVALID_CREATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
 
 	// Completed Sarada Burugula's addition
+	public static final String GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
+		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId;}
+
 }
