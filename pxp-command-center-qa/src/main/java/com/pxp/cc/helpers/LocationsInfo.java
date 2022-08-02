@@ -1,4 +1,5 @@
 //Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.helpers;
 
 import com.pxp.cc.model.BaseRest;
@@ -71,22 +72,51 @@ public class LocationsInfo extends BaseRest {
 
 	public Response getProvidersForLocation_BL(int locationId, int practiceId, int page, int pageSize, String name) {
 		String url = ApiPath.GET_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
-		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize).queryParam("name", name).when()
-				.get(url).then().extract().response();
-	}
-	public Response getProvidersForLocationInvalidUrl_BL(int locationId, int practiceId, int page, int pageSize, String name) {
-		String url = ApiPath.INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
-		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize).queryParam("name", name).when()
-				.get(url).then().extract().response();
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().get(url).then().extract().response();
 	}
 
-	public Response getProvidersForLocationInvalidMethodCall_BL(int locationId, int practiceId, int page, int pageSize, String name) {
-		String url = ApiPath.GET_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
-		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize).queryParam("name", name).when()
-				.put(url).then().extract().response();
+	public Response getProvidersForLocationInvalidUrl_BL(int locationId, int practiceId, int page, int pageSize,
+			String name) {
+		String url = ApiPath.INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().get(url).then().extract().response();
 	}
+
+	public Response getProvidersForLocationInvalidMethodCall_BL(int locationId, int practiceId, int page, int pageSize,
+			String name) {
+		String url = ApiPath.GET_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().put(url).then().extract().response();
+	}
+
 	public Response getProvidersForLocation_BL_NullValues() {
 		String url = ApiPath.GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getProvidersForLocationInvalidUrl_DL(int locationId, int practiceId, int page, int pageSize,
+			String name) {
+		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_INVALID_PATH_DL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response getProvidersForLocationInvalidMethodCall_DL(int locationId, int practiceId, int page, int pageSize,
+			String name) {
+		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().put(url).then().extract().response();
+	}
+
+	public Response getProvidersForLocation_DL_NullValues() {
+		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_DL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getProvidersForLocation_DL(int locationId, int practiceId, int page, int pageSize, String name) {
+		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().get(url).then().extract().response();
 	}
 }
