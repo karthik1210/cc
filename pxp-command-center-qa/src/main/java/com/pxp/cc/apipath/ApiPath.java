@@ -644,11 +644,11 @@ public class ApiPath {
 	// Completed Sarada Burugula's addition
 	public static final String GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
 		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId;
-		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId;
 	}
 
 	public static final String INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
-		return SHARED_DL + "/v1/appointment-typessss/" + appointmentTypeId;
+		return SHARED_DL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
+
 }
 
