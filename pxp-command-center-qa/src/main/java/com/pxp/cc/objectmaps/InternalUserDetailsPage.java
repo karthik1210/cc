@@ -14,7 +14,7 @@ import com.pxp.cc.util.CCUtils;
 
 public class InternalUserDetailsPage extends CCMainPage {
 
-	@FindBy(id = "kebabMenu")
+	@FindBy(xpath = "//button[@class='mat-menu-trigger menu-button']")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(id = "enrollBtn")
@@ -26,7 +26,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(id = "userStatus")
 	private WebElement labelUserStatusValue;
 
-	@FindBy(xpath = "//mat-card-title[@id='userName']")
+	@FindBy(xpath = "//mat-card-title[@class='mat-card-title pt-1 text-oneline']")
 	private WebElement labelUsernameValue;
 
 	@FindBy(xpath = "//mat-card-title[@class='mat-card-title pt-1 text-oneline']")
@@ -173,14 +173,17 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='arrowDiv']")
 	private WebElement labelPageTitle;
 
-	@FindBy(id = "userStatus")
+	@FindBy(xpath = "//div[@class='ml-auto']")
 	private WebElement labelInternalUserStatusValue;
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
 	private WebElement buttonLockUser;
-	
-	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
+
+	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
 	private WebElement buttonDeactivateUser;
+	
+	@FindBy(xpath = "//span[@class='pl-3']")
+	private WebElement inactiveStatus;
 
 	public InternalUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -191,6 +194,10 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void clickOnKebabMenuButton() {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
 		javascriptClick(buttonKebabMenu);
+	}
+	
+	public void checkInactiveStatus() {
+		CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
 	}
 
 	public void verifySendEnrollmentButtonIsNotDisplayed() {
@@ -632,21 +639,14 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	public void verifyInternalUserDetailsPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		if (labelPageTitle.isDisplayed()) {
-			String title = labelPageTitle.getText().trim().replace("arrow_back", "");
-			CCUtils.assertEquals(title.trim(), "Internal User Details");
-		} else {
-			log("Internal user details page title is not displayed on screen");
-		}
+		CCUtils.assertEquals(labelPageTitle.isDisplayed(), true);
+		log("Internal user details page title is displayed on screen");
 	}
 
-	public void verifySelectedUserStatusIsSameOnInternalUserDetailsPage(String userStatus) {
+	public void verifySelectedUserStatusIsSameOnInternalUserDetailsPage() {
 		CCUtils.verifyAndWaitForElement(labelInternalUserStatusValue, driver);
-		if (labelInternalUserStatusValue.isDisplayed()) {
-			CCUtils.assertEquals(labelInternalUserStatusValue.getText().trim(), userStatus);
-		} else {
-			log("User status value is not present on internal user details page");
-		}
+		CCUtils.assertEquals(labelInternalUserStatusValue.isDisplayed(), true);
+		log("User status value is present on internal user details page");
 	}
 
 	public void verifyLockUserButtonIsDisplayed() {
@@ -670,16 +670,35 @@ public class InternalUserDetailsPage extends CCMainPage {
 		log("Verifying deactivate user button is displayed in kebab menu");
 		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
 	}
-	
-	public void verifyDeactivateUsertButtonIsNotDisplayed() {
-		log("Verifying deactivate user button is not displayed in kebab menu");
-		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), false);
+
+	public void verifyActivateUserButtonIsDisplayed() {
+		log("Verifying activate user button is displayed in kebab menu");
+		CCUtils.assertEquals(kebabActiveUserOption.isDisplayed(), true);
 	}
-	
+
+	public void verifyDeactivateUsertButtonIsNotDisplayed() {
+		log("Verifying deactivate user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
+	}
+
+	public void verifyDeactivateUsertButtonIsNotEnabled() {
+		log("Verifying deactivate user button is enabled in kebab menu");
+		CCUtils.assertEquals(!buttonDeactivateUser.isEnabled(), false);
+	}
+
 	public DeactivateUserConfirmationPage clickOnDeactivateUserButton() {
 		CCUtils.verifyAndWaitForElement(buttonDeactivateUser, driver);
 		log("Click on deactivate user button");
 		javascriptClick(buttonDeactivateUser);
 		return PageFactory.initElements(driver, DeactivateUserConfirmationPage.class);
+	}
+
+	public void verifySelectedUserStatusIsSameOnInternalUserDetailsPage(String userStatus) {
+		CCUtils.verifyAndWaitForElement(labelInternalUserStatusValue, driver);
+		if (labelInternalUserStatusValue.isDisplayed()) {
+			CCUtils.assertEquals(labelInternalUserStatusValue.getText().trim(), userStatus);
+		} else {
+			log("User status value is not present on internal user details page");
+		}
 	}
 }

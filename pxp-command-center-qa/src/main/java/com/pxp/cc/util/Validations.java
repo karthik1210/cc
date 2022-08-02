@@ -2342,29 +2342,27 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
-			String color, int brandId, String logo, String favicon, String emailLogo, String active)
-			throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		if (Objects.isNull(jsonpath.get("orgId"))) {
-			Log4jUtil.log("orgId is null");
-		} else {
-			CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
-		}
-		if (Objects.isNull(jsonpath.get("orgType"))) {
-			Log4jUtil.log("orgType is null");
-		} else {
-			CCUtils.assertEquals(jsonpath.get("orgType"), orgType);
-		}
-		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
-		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
-		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
-		CCUtils.assertEquals(jsonpath.getInt("brandId"), brandId);
-		CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
-		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
-		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
-		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
-	}
+	 public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
+	            String color, int brandId, String logo, String favicon, String emailLogo, String active)
+	            throws IOException {
+	        JsonPath jsonpath = new JsonPath(response.getBody().asString());
+	        if (Objects.isNull(jsonpath.get("orgId"))) {
+	            Log4jUtil.log("orgId is null");
+	        } else {
+	            CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+	        }
+	        if (Objects.isNull(jsonpath.get("orgType"))) {
+	            Log4jUtil.log("orgType is null");
+	        } else {
+	            CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+	        }
+	        CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+	        CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+	        CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+	        CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
+	        CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
+	        CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
+	    }
 
 	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -2379,12 +2377,13 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForProviderDetails(Response response, String firstName, String lastName,
-			String gender, String status) throws IOException {
+			String gender, String status) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+		
 	}
 
 	public void verifyErrorMessageInResponseForInvalidGenderValue(Response response) throws IOException {
@@ -2531,7 +2530,6 @@ public class Validations {
 						+ userIteratePerData);
 				CCUtils.assertTrue(true,
 						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
-
 			} else if (userIteratePerData.contains(getSearchUserDetails)) {
 				Log4jUtil.log("searched value :" + getSearchUserDetails + "present within response body's value"
 						+ userIteratePerData);
@@ -2554,37 +2552,43 @@ public class Validations {
 
 	}
 
-	//added by karthik for WI 17559
-	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
-	{
-		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(response.getStatusCode(),400);
-		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
+	public void verifyErrorResponseBodyForInvalidAppointmentTypeId(Response response, String AppointmentTypeId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"AppointmentType not found for ID=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyResponseForEmptyOrMisFormatData(Response response)throws IOException{
-		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("message").toString(),"input value =  , but value must be one of Internal, Client, VAReseller");
-		CCUtils.assertEquals(jsonPath.get("error").toString(),"Bad Request");
+	public void verifyGetAppointmentResponseBody(Response response,String name,String externalId,int duration,String durationUnit,String status) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
+		CCUtils.assertEquals(jsonpath.getInt("duration"), duration);
+		CCUtils.assertEquals(jsonpath.get("durationUnit").toString(), durationUnit);
+		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
 	}
+	//Added by Sarada Burugula as part of Branding (PXPP-17492 && PXPP-17475)
+	public void verifyInvalidRequestValidation(Response CreateBrandApiResponse)throws IOException {
+		CCUtils.responseTimeValidation(CreateBrandApiResponse);
+		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("status"), 400);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	public void verifyServerRequestRequestValidation(Response CreateBrandApiResponse)throws IOException {
+		CCUtils.responseTimeValidation(CreateBrandApiResponse);
+		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("status"), 500);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
 
-	public void verifyUserOutputWithValidInput(Response response, String getSearchUserDetails) {
-		JsonPath jsonPath = new JsonPath(response.asString());
-		Log4jUtil.log("Display total count of locations in response body : " + jsonPath.get("totalCount"));
-		Log4jUtil.log("Display list of clients in response body : " + jsonPath.get("data"));
-		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
-		Log4jUtil.log("Page Number : " + jsonPath.getInt("pageNo"));
-		Log4jUtil.log("Items(Clients) per Page : " + jsonPath.getInt("pageSize"));
-		Log4jUtil.log("Comparing Searched Items names/ids with user data received in Response body.");
-		for (int dataArrayIteration = 0; dataArrayIteration < jsonPath.getInt("data.size()"); dataArrayIteration++) {
-			String userIteratePerData = jsonPath.get("data[" + dataArrayIteration + "].firstName");
-			Log4jUtil.log("Print Value : " + userIteratePerData);
-			if (userIteratePerData.contains(getSearchUserDetails)) {
-				Log4jUtil.log("searched value :" + getSearchUserDetails + "present within response body's value"
-						+ userIteratePerData);
-				CCUtils.assertTrue(true,
-						"Found data " + userIteratePerData + " is present in expected data" + getSearchUserDetails);
-			}
-		}
 	}
+	public void verifynotfoundRequestRequestValidation(Response CreateBrandApiResponse)throws IOException {
+		CCUtils.responseTimeValidation(CreateBrandApiResponse);
+		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("status"), 404);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Not Found");
+	}
+	// Completed Sarada Burugula's addition
+	
 }
