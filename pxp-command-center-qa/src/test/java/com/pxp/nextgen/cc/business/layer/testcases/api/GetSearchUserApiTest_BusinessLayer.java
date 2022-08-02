@@ -1,13 +1,9 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 /*
 JIRA Id: PXPP-17559
-Objective: QA: API Automation : Command Center User - Search Users (Internal, client user, Var/Reseller user) [BL]
-Functionality: Search Users (Internal, client user, Var/Reseller user) [BL]
-Covered Response Codes: 200,400,404,204
 Designer: Karthikeyan Natarajan
-Phase: Command Center Phase 1
  */
-
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
