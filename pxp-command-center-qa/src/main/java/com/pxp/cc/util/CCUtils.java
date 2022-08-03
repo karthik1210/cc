@@ -17,6 +17,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -336,7 +337,6 @@ public class CCUtils {
 		new Actions(driver).moveToElement(element).click().perform();
 	}
 
-
 	public String getDefaultItemsPerPageOfWebPage(WebElement ele, WebDriver driver) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(ele, driver);
 		return ele.getText().toString();
@@ -378,13 +378,13 @@ public class CCUtils {
 	}
 
 	public String getNoOfRowsPagination(WebElement ele, WebDriver driver) {
-		String data = splitingPagination(ele,driver);
+		String data = splitingPagination(ele, driver);
 		String noOfRowsPagination = data.substring(0, 2).trim();
 		return noOfRowsPagination.trim();
 	}
 
 	public String getLHSPaginationOfWebPage(WebElement ele, WebDriver driver) throws AWTException {
-		String data = getDefaultPaginationOfWebPage(ele,driver);
+		String data = getDefaultPaginationOfWebPage(ele, driver);
 		String[] words = data.split("–", 2);
 		for (String w : words) {
 			data = w.trim();
@@ -395,7 +395,7 @@ public class CCUtils {
 	}
 
 	public static String getRHSPaginationOfWebPage(WebElement ele, WebDriver driver) throws AWTException {
-		String data = getDefaultPaginationOfWebPage(ele,driver);
+		String data = getDefaultPaginationOfWebPage(ele, driver);
 		String[] words = data.split("–", 0);
 		for (String w : words) {
 			data = w.trim();
@@ -403,16 +403,29 @@ public class CCUtils {
 		Log4jUtil.log("Print the value of RHS Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public static boolean isPaginationButtonDisabled(WebElement ele, WebDriver driver) {
 		CCUtils.verifyAndWaitForElement(ele, driver);
-		Log4jUtil.log("Verifying the visiblity of "+ele.getAttribute("aria-label")+" Button.");
+		Log4jUtil.log("Verifying the visiblity of " + ele.getAttribute("aria-label") + " Button.");
 		boolean buttonStatus = ele.isEnabled();
-		Log4jUtil.log("Print the value of "+ele.getAttribute("aria-label")+"Button visibility status : " + buttonStatus);
+		Log4jUtil.log(
+				"Print the value of " + ele.getAttribute("aria-label") + "Button visibility status : " + buttonStatus);
 		return buttonStatus;
 	}
+
 	public static void scrollPageViaElement(WebDriver driver, WebElement element) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
+
+	public static void verifyForElementToBeClickable(WebElement we, WebDriver driver) {
+		WebDriverWait wait = new WebDriverWait(driver, 10);
+		wait.until(ExpectedConditions.elementToBeClickable(we));
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
