@@ -751,4 +751,37 @@ public class UserInfo extends BaseRest {
 				.queryParam("resellername", resellername).queryParam("sortdir", sortdir).queryParam("pageno", pageno)
 				.queryParam("pagesize", pagesize).when().put(url).then().extract().response();
 	}
+
+	//designed by karthik for PXPP-17554 on 26th July 2022
+	public Response getSearchUser(String type,String urlType){
+		String url = ApiPath.USER_DETAILS_BL;
+		String invalidUrl = ApiPath.INVALID_PATH_USER_DETAILS_BL;
+		if(urlType.equalsIgnoreCase("Valid"))
+			return given().spec(requestSpec).queryParam("type",type).when().get(url).then().extract().response();
+		else
+			return given().spec(requestSpec).queryParam("type",type).when().get(invalidUrl).then().extract().response();
+	}
+
+
+	public Response verifyResponseForValidUserIncorrectData(String type, String firstName, String lastName, String email, String clientName){
+		String url = ApiPath.USER_DETAILS_BL;
+		return given().spec(requestSpec).queryParam("type",type).queryParam("firstName",firstName)
+				.queryParams("lastName",lastName).queryParam("email",email).queryParam("clientName",clientName)
+				.when().get(url).then().extract().response();
+	}
+
+	public Response getSearchUserDetailsForGivenType(String type, String firstName, String lastName, String email, String userName, String mobileNo, String clientName,
+													 String resellerName, String sortColumn, String sortDir, String pageNo, String pageSize) {
+		String url = ApiPath.USER_DETAILS_BL;
+		return given().spec(requestSpec).queryParam("type",type).queryParam("firstName",firstName).queryParam("lastName",lastName)
+				.queryParam("email",email).queryParam("userName",userName).queryParam("mobileNo",mobileNo)
+				.queryParam("clientName",clientName).queryParam("resellerName",resellerName).queryParam("sortColumn",sortColumn)
+				.queryParam("sortDir",sortDir).queryParam("pageNo",pageNo).queryParam("pageSize",pageSize).when().get(url).then().extract().response();
+	}
+
+	public Response getSearchUserDetailsWithInvalidPut(String type) {
+		String url = ApiPath.USER_DETAILS_BL;
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
+
