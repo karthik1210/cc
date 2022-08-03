@@ -56,7 +56,7 @@ public class LocationsValidations {
 		String Role_Name=jsonPath.getString("name");
 		if(Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName))
 		{
-			System.out.println("Validation Successful");
+			Log4jUtil.log("Validation Successful");
 		}
 	}
 }
