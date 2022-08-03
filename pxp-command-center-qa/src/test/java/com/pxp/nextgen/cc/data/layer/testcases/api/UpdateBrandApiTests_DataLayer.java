@@ -22,8 +22,8 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
     private ClientInfo clientInfo;
     private OrgInfo orgInfo;
     Response updateBrandApiResponse;
-    int brand_Id;
-    int org_id;
+    int brandId;
+    int orgId;
     String namePayLoad;
 
     @BeforeClass()
@@ -58,46 +58,46 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
     @Test(priority =5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17695_Update Brand with Payload of NullValues")
     public void putorgIdNullValidation() throws IOException,NullPointerException {
         logStep("TC 002_Verify the Response code as 400, when user provided null values in payload for PUT method of Branding [DL]");
-        logStep("when org_id is null");
-        int brand_Id=1;
-        Integer norg_id = null;
+        logStep("when orgId is null");
+        int brandId=1;
+        Integer norgId = null;
         Boolean showlogo=true;
         String color="#EEEEEE";
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brand_Id, norg_id, namePayLoad, showlogo, color);
+        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, norgId, namePayLoad, showlogo, color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
-        org_id=101;
+        orgId=101;
         showlogo=true;
         color="#BBBBBB";
         namePayLoad=null;
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brand_Id, org_id, namePayLoad, showlogo, color);
+        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoad, showlogo, color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
     }
 
     @Test(priority =7, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17696_Update Brand with Payload of null (Show Logo)")
     public void incorrectPayloadUpdateBandValidation() throws IOException,NullPointerException {
-        logStep("TC 003_Verify the Response code as 500, when user provided Null values to showlogo in payload for PUT method of Branding [DL]");
-        Integer brand_Id=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        Integer org_id= Integer.parseInt(testData.getProperty("api.org.id"));
+        logStep("TC 003_Verify the Response code as 400, when user provided Null values to showlogo in payload for PUT method of Branding [DL]");
+        Integer brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
+        Integer orgId= Integer.parseInt(testData.getProperty("api.org.id"));
         String namePayLoaddb=testData.getProperty("api.org.brand.name");
         Boolean showlogo=null;
         String color="#BBBBBB";
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brand_Id, org_id, namePayLoaddb, showlogo, color);
+        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoaddb, showlogo, color);
         logStep("Validating response information");
-        brandingValidation.verifyServerRequestRequestValidation(updateBrandApiResponse);
+        brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
     }
 
     @Test(priority =8, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17697_Update Brand with incorrect URI")
     public void invalidURIUpateBandValidation() throws IOException,NullPointerException {
         logStep("TC 004_Verify the Response code as 404, when user provided incorrect URI for PUT method of Branding [DL]");
-        Integer brand_Id=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        Integer org_id= Integer.parseInt(testData.getProperty("api.org.id"));
+        Integer brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
+        Integer orgId= Integer.parseInt(testData.getProperty("api.org.id"));
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        updateBrandApiResponse = brandInfo.InvalidPutUpateBrand(brand_Id, org_id, namePayLoad);
+        updateBrandApiResponse = brandInfo.InvalidPutUpateBrand(brandId, orgId, namePayLoad);
         logStep("Validating response information");
-        brandingValidation.verifynotfoundRequestRequestValidation(updateBrandApiResponse);
+        brandingValidation.verifyErrorInResponseForInvalidUrl(updateBrandApiResponse);
     }
 
     @Test(priority =2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17727_Update Brand for System")
@@ -169,14 +169,14 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 
     @Test(priority =6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17730_Update Brand with Payload of other orgId")
     public void otherorgIdupdatebrandValidation() throws IOException,NullPointerException {
-        logStep("TC 008_Verify the Response code , when user trying to update the org_id which is associated with the brand_Id for a client in payload for PUT method of Branding [DL]");
-        logStep("when other org_id is going to update for given brand id");
-        Integer brand_Id=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        Integer org_id= Integer.parseInt(testData.getProperty("api.practice.id"));
+        logStep("TC 008_Verify the Response code , when user trying to update the orgId which is associated with the brandId for a client in payload for PUT method of Branding [DL]");
+        logStep("when other orgId is going to update for given brand id");
+        Integer brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
+        Integer orgId= Integer.parseInt(testData.getProperty("api.practice.id"));
         Boolean showlogo=true;
         String color="#EEEEEE";
         namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brand_Id, org_id, namePayLoad, showlogo, color);
+        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoad, showlogo, color);
         logStep("Validating response information");
         brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
     }
