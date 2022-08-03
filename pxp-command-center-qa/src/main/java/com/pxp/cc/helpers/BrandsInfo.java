@@ -128,7 +128,7 @@ public class BrandsInfo extends BaseRest {
 	}
 	public Response errorPutUpateBrand( int BrandId,Integer orgId, String brandname,Boolean showLogo,String color) {
 		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
-		Map<String, Object> errorPutUpdateBrandPayload = errorpostCreateBrandPayload(orgId, brandname,showLogo,color);
+		Map<String, Object> errorPutUpdateBrandPayload = errorpostCreateBrandPayload(orgId, brandname, showLogo, color);
 		return given().spec(requestSpec).body(errorPutUpdateBrandPayload).when().put(url).then().extract().response();
 	}
 	public Response InvalidPutUpateBrand( int BrandId,int orgId, String brandname) {
