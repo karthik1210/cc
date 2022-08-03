@@ -104,13 +104,13 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(id = "mobileInput")
 	private WebElement textboxMobileNumber;
 
-	@FindBy(xpath = "//span[contains(text(),'Password')]")
+	@FindBy(id = "passwordInput")
 	private WebElement labelPassword;
 
-	@FindBy(xpath = "//span[contains(text(),'CANCEL')]")
+	@FindBy(id = "cancelUser")
 	private WebElement buttonCancel;
 
-	@FindBy(xpath = "//button[contains(text(),'SAVE')]")
+	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
 	@FindBy(xpath = "//mat-icon[contains(text(),'arrow_back')]")
@@ -178,7 +178,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
 	private WebElement buttonLockUser;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
 	private WebElement buttonDeactivateUser;
 
@@ -444,7 +444,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	public void verifyPasswordUneditable() {
 		CCUtils.verifyAndWaitForElement(labelPassword, driver);
-		labelPassword.getAttribute("readonly").equals(true);
+		CCUtils.assertEquals(labelPassword.getAttribute("disabled"), "true");
 		log("Password is not editable");
 	}
 
@@ -670,12 +670,12 @@ public class InternalUserDetailsPage extends CCMainPage {
 		log("Verifying deactivate user button is displayed in kebab menu");
 		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
 	}
-	
+
 	public void verifyDeactivateUsertButtonIsNotDisplayed() {
 		log("Verifying deactivate user button is not displayed in kebab menu");
 		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), false);
 	}
-	
+
 	public DeactivateUserConfirmationPage clickOnDeactivateUserButton() {
 		CCUtils.verifyAndWaitForElement(buttonDeactivateUser, driver);
 		log("Click on deactivate user button");

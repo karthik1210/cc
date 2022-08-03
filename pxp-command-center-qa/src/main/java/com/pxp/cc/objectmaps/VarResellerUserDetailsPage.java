@@ -11,19 +11,19 @@ import com.pxp.cc.util.CCUtils;
 
 public class VarResellerUserDetailsPage extends CCMainPage {
 
-	@FindBy(id = "detailHeader")
+	@FindBy(xpath = "//span[text()='VAR/Reseller Users']")
 	private WebElement labelPageTitle;
 
 	@FindBy(id = "backBtn")
 	private WebElement backButton;
 
-	@FindBy(id = "editDetailsBtn")
+	@FindBy(id = "editUser")
 	private WebElement buttonEditVarResellerUser;
 
-	@FindBy(id = "cancelEdit")
+	@FindBy(id = "cancelUser")
 	private WebElement buttonCancel;
 
-	@FindBy(id = "saveDetail")
+	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
 	@FindBy(id = "kebabMenu")
@@ -46,8 +46,8 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertTrue(labelPageTitle.isDisplayed(),
 				"VAR/Reseller user details page title is not displayed on screen");
-		String title = labelPageTitle.getText().trim().replace("arrow_back", "");
-		CCUtils.assertEquals(title.trim(), "VAR/Reseller User Details");
+		String title = labelPageTitle.getText().trim();
+		CCUtils.assertEquals(title.trim(), "User Details");
 	}
 
 	public void clickEditInVarResellerUser() throws InterruptedException {
@@ -71,13 +71,13 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	public void clickCancel() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		buttonCancel.click();
+		javascriptClick(buttonCancel);
 		log("Clicked on cancel button");
 	}
 
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
-		buttonSave.click();
+		javascriptClick(buttonSave);
 		logStep("Clicked on save button");
 	}
 
