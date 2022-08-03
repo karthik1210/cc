@@ -110,7 +110,6 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).body(postCreateBrandPayload).when().post(url).then().extract()
 				.response();
 	}
-//Added By Sarada Burugula as part of PXPP-17480 on 26/07/2022
 
 	public Response putUpdateBrand(int BrandId,int orgId, String brandname) {
 		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
