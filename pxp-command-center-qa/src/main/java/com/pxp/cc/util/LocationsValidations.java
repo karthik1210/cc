@@ -49,4 +49,15 @@ public class LocationsValidations {
 			}
 		}
 	}
+
+	public void verifyGetCCRoleLocationsValidInput(Response response, String roleId, String roleName) {
+		JsonPath jsonPath = response.jsonPath();
+		String Role_Id=jsonPath.getString("roleId");
+		String Role_Name=jsonPath.getString("name");
+		if(Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName))
+		{
+			Log4jUtil.log("Validation Successful");
+		}
+	}
 }
+

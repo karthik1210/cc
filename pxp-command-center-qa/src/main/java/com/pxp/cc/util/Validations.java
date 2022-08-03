@@ -2584,7 +2584,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
 	}
 
-	// Added by Sarada Burugula as part of Branding (PXPP-17492 && PXPP-17475)
 	public void verifyInvalidRequestValidation(Response CreateBrandApiResponse) throws IOException {
 		CCUtils.responseTimeValidation(CreateBrandApiResponse);
 		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
@@ -2600,18 +2599,11 @@ public class Validations {
 
 	}
 
-	public void verifynotfoundRequestRequestValidation(Response CreateBrandApiResponse) throws IOException {
-		CCUtils.responseTimeValidation(CreateBrandApiResponse);
-		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("status"), 404);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Not Found");
-	}
-
 	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
 	{
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(response.getStatusCode(),400);
-		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
+		CCUtils.assertEquals(jsonPath.get("error"), "Bad Request");
 	}
 
 	public void verifyResponseForEmptyOrMisFormatData(Response response)throws IOException{
