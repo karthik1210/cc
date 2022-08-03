@@ -2599,18 +2599,11 @@ public class Validations {
 
 	}
 
-	public void verifynotfoundRequestRequestValidation(Response CreateBrandApiResponse) throws IOException {
-		CCUtils.responseTimeValidation(CreateBrandApiResponse);
-		JsonPath jsonpath = new JsonPath(CreateBrandApiResponse.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("status"), 404);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Not Found");
-	}
-
 	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
 	{
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(response.getStatusCode(),400);
-		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
+		CCUtils.assertEquals(jsonPath.get("error"), "Bad Request");
 	}
 
 	public void verifyResponseForEmptyOrMisFormatData(Response response)throws IOException{

@@ -119,4 +119,30 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
 				.queryParam("name", name).when().get(url).then().extract().response();
 	}
+
+	public Response getCCUserRoleForLocations(int ccUserId, int orgId) {
+		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL(ccUserId, orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getCCUserRoleForLocationsNullValues() {
+		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getCCUserRoleForLocationsAlphaNumValues() {
+		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL_ALPHANUM_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getCCUserRoleForLocationsInvaliMethodCall(int ccUserId, int orgId) {
+		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL(ccUserId, orgId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getCCUserRoleForLocationsInvalid() {
+		String url = ApiPath.INVALID_GET_LOCATIONLIST_ROLE_BL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }

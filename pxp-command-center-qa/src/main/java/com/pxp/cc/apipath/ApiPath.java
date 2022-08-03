@@ -662,4 +662,13 @@ public class ApiPath {
 	public static final String INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
 		return SHARED_DL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
+
+	public static final String GET_LOCATIONLIST_ROLE_BL(int UserId, int OrgId) {
+		return SERVICE_USER_BL + "/v1/users/"+UserId+"/orgs/"+OrgId;
+	}
+
+	public static final String INVALID_GET_LOCATIONLIST_ROLE_BL=SERVICE_USER_BL+ "/v1/users/4003807/orgsss/4677";
+	public static final String GET_LOCATIONLIST_ROLE_BL_NULL_VALUES = SERVICE_USER_BL+ "/v1/users/null/orgs/null";
+	public static final String GET_LOCATIONLIST_ROLE_BL_ALPHANUM_VALUES = SERVICE_USER_BL+ "/v1/users/4003807@#ASD/orgs/4677";
+
 }
