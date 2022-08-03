@@ -120,8 +120,8 @@ public class LocationsInfo extends BaseRest {
 				.queryParam("name", name).when().get(url).then().extract().response();
 	}
 
-	public Response getCCUserRoleForLocations(int CCUser_Id, int Org_id) {
-		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL(CCUser_Id, Org_id);
+	public Response getCCUserRoleForLocations(int ccUserId, int orgId) {
+		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL(ccUserId, orgId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -135,8 +135,8 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getCCUserRoleForLocationsInvaliMethodCall(int CCUser_Id, int Org_id) {
-		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL(CCUser_Id, Org_id);
+	public Response getCCUserRoleForLocationsInvaliMethodCall(int ccUserId, int orgId) {
+		String url = ApiPath.GET_LOCATIONLIST_ROLE_BL(ccUserId, orgId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 

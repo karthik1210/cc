@@ -31,9 +31,9 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ccuserid , orgid to get list of locations and verify status code and response body")
     public void testGetListLocationForCCUserRole() throws IOException {
         logStep("Enter ccuserId , orgId");
-        int CCUser_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
+        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
         int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
-        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(CCUser_Id, Org_Id);
+        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
         CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 200);
@@ -44,9 +44,9 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ccuserid , orgid which are not available in system and verify status code and response body")
     public void testGetLocationListFornonExistingUserIdandOrgId() throws IOException {
         logStep("Enter ccuserid , orgid which are not available in system");
-        int CCUser_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.nonuserid"));
+        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.nonuserid"));
         int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.nonorgid"));
-        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(CCUser_Id, Org_Id);
+        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
         CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 204);
@@ -55,9 +55,9 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ccuserid which is not available and orgid is available in system and verify status code and response body")
     public void testGetLocationListFornonExistingUserIdandExistsOrgId() throws IOException {
         logStep("Enter ccuserid which is not available and orgid is available in system");
-        int CCUser_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.nonuserid"));
+        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.nonuserid"));
         int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
-        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(CCUser_Id, Org_Id);
+        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
         CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 204);
@@ -66,9 +66,9 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter orgid which is not available and ccuserid is available in system and verify status code and response body")
     public void testGetLocationListForExistingUserIdandnonExistsOrgId() throws IOException {
         logStep("Enter orgid which is not available and ccuserid is available in system");
-        int CCUser_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
+        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
         int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.nonorgid"));
-        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(CCUser_Id, Org_Id);
+        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
         CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 204);
@@ -95,9 +95,9 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
      @Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
     public void testErrorForInvalidMethodCall() throws IOException {
         logStep("Enter existing Userid and orgid");
-         int CCUser_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
-         int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
-         GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocationsInvaliMethodCall(CCUser_Id, Org_Id);
+         int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
+         int orgId= Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
+         GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocationsInvaliMethodCall(ccUserId, orgId);
          logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
         CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 405);
@@ -109,7 +109,7 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
         GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocationsInvalid();
         logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
-        validation.verifynotfoundRequestRequestValidation(GetLocationListCCRoleResponse);
+        validation.verifyErrorInResponseForInvalidUrl(GetLocationListCCRoleResponse);
     }
 
 
