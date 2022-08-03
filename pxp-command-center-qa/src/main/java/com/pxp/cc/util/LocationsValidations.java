@@ -50,14 +50,14 @@ public class LocationsValidations {
 		}
 	}
 
-	public void verifyGetCCRoleLocationsValidInput(Response response, String roleid, String rolename) {
+	public void verifyGetCCRoleLocationsValidInput(Response response, String roleId, String roleName) {
 		JsonPath JS = response.jsonPath();
 		String Role_Id=JS.getString("roleId");
 		String Role_Name=JS.getString("name");
-		if(Role_Id.equals(roleid) && Role_Name.equalsIgnoreCase(rolename))
+		if(Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName))
 		{
 			System.out.println("Validation Successful");
 		}
-}
 	}
+}
 

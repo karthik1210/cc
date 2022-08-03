@@ -169,4 +169,30 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
+	
+	public Response deleteBrandDetails(int brandId) {
+		String url = ApiPath.DELETE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deleteBrandDetailsUsingInvalidUrl(int brandId) {
+		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallForGetAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypeUsingInvalidUrl_DL(int appointmentTypeId) {
+		String url = ApiPath.INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
 }
