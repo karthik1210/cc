@@ -113,7 +113,7 @@ public class BrandsInfo extends BaseRest {
 
 	public Response putUpdateBrand(int BrandId,int orgId, String brandname) {
 		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
-		Map<String, Object> putUpdateBrandPayload = postCreateBrandPayload(orgId,brandname);
+		Map<String, Object> putUpdateBrandPayload = postCreateBrandPayload(orgId, brandname);
 		return given().spec(requestSpec).body(putUpdateBrandPayload).when().put(url)
 				.then().extract().response();
 
