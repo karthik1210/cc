@@ -664,4 +664,16 @@ public class ApiPath {
 	public static final String GET_LOCATIONLIST_ROLE_BL_NULL_VALUES = SERVICE_USER_BL+ "/v1/users/null/orgs/null";
 	public static final String GET_LOCATIONLIST_ROLE_BL_ALPHANUM_VALUES = SERVICE_USER_BL+ "/v1/users/4003807@#ASD/orgs/4677";
 
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providersssss/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
 }
