@@ -647,6 +647,13 @@ public class ApiPath {
 
 	public static final String CREATEBRANDS_DL = SHARED_DL + "/v1/brands/";
 	public static final String INVALID_CREATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
+	public static final String UPDATE_BRAND_DL(int BrandId) {
+		return SHARED_DL + "/v1/brands/" + BrandId;
+	}
+
+	public static final String Invalid_UPDATE_BRAND_DL(int BrandId) {
+		return SHARED_DL + "/v1/brandsssss/" + BrandId;
+	}
 
 	public static final String GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
 		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId;
