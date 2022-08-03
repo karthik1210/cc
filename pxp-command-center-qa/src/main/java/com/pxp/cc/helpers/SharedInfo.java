@@ -214,4 +214,23 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getResourcesForProviderWithValidInputs_DL(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		String invalidUrl = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_INVALID_URL_DL(providerId, practiceId);
+		if (urlType.equalsIgnoreCase("valid"))
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		else
+			return given().spec(requestSpec).when().get(invalidUrl).then().extract().response();
+	}
+
+	public Response getResourceForProviderWithInvalidPOSTRequest_DL(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithValidInputs_DL(String providerId, String practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }

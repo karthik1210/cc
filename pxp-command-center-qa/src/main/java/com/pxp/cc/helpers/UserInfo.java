@@ -752,7 +752,6 @@ public class UserInfo extends BaseRest {
 				.queryParam("pagesize", pagesize).when().put(url).then().extract().response();
 	}
 
-	//designed by karthik for PXPP-17554 on 26th July 2022
 	public Response getSearchUser(String type,String urlType){
 		String url = ApiPath.USER_DETAILS_BL;
 		String invalidUrl = ApiPath.INVALID_PATH_USER_DETAILS_BL;

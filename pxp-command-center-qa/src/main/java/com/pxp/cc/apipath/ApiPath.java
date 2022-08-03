@@ -683,4 +683,16 @@ public class ApiPath {
 	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
+
+	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCE_FOR_PROVIDER_INVALID_URL_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providersssss" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(String providerId, String practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
 }
