@@ -657,4 +657,16 @@ public class ApiPath {
 	public static final String INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
 		return SHARED_DL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providersssss/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
 }
