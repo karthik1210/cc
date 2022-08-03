@@ -601,12 +601,25 @@ public class ApiPath {
 	public static final String GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
+	
+	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId,
+			int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId
+				+ "/providers12abc";
+	}
+	
+	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
+			+ "/v1/locations/null/practices/null/providers";
 
-	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers12abc";
+	public static final String GET_PROVIDERS_FOR_LOCATION_DL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
 
-	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
+	public static final String GET_PROVIDERS_FOR_LOCATION_INVALID_PATH_DL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers12abc";
+	}
+
+	public static final String GET_PROVIDERS_FOR_LOCATION_DL_NULL_VALUES = SHARED_DL
 			+ "/v1/locations/null/practices/null/providers";
 
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL(int resourceId, int practiceId) {
@@ -618,6 +631,14 @@ public class ApiPath {
 
 	public static final String FETCH_SOLUTIONS_FOR_RESOURCES_BL_INVALID_URL(int resourceId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
+	}
+
+	public static final String DELETE_BRAND_DETAILS_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId;
+	}
+
+	public static final String INVALID_PATH_DELETE_BRAND_DETAILS_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
 	}
 
 	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
@@ -636,19 +657,4 @@ public class ApiPath {
 	public static final String INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(int appointmentTypeId) {
 		return SHARED_DL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
-
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
-	}
-
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(int providerId, int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/providersssss/" + providerId + "/practices/" + practiceId + "/resources";
-	}
-
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId) {
-		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
-	}
-
 }
-
-
