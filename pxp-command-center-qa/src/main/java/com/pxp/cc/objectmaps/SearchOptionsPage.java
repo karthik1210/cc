@@ -31,7 +31,7 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),'Email')]")
 	private WebElement labelEmail;
 
-	@FindBy(xpath = "//div[contains(text(),'Username')]")
+	@FindBy(xpath = "//span[contains(text(),'Username')]")
 	private WebElement labelUsername;
 
 	@FindBy(xpath = "//div[contains(text(),' Mobile Number ')]")
@@ -139,7 +139,7 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()=' Enrollment Status ']//following::span[@class='mat-checkbox-label']")
 	private List<WebElement> listEnrollmentStatusLabel;
 
-	@FindBy(xpath = "//div[text()='VAR/Reseller']")
+	@FindBy(xpath = "//span[text()='VAR/Reseller']")
 	private WebElement labelVarReseller;
 
 	@FindBy(xpath = "//input[@formcontrolname='resellerName']")
@@ -480,7 +480,7 @@ public class SearchOptionsPage extends CCMainPage {
 		log("search button clicked");
 
 	}
-
+	
 	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
 		verifySearchButtonIsDisplayed();
 		clickToSearchButton();
