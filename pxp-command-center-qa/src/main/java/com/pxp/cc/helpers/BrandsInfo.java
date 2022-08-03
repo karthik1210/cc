@@ -136,5 +136,4 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).body(putUpdateBrandPayload).when().put(url).then().extract()
 				.response();
 	}
-// Completed Sarada Burugula's addition
 }
