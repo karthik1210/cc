@@ -22,6 +22,8 @@
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" 
 				/> -->
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

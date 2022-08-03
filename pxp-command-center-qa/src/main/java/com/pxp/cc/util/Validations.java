@@ -2560,41 +2560,17 @@ public class Validations {
 			System.out.println(jsonObject);
 		}
 		CCUtils.assertEquals(jsonObject.getString("type"), "PROVIDER");
-		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"),true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
 	}
 
-	public void verifyResponseForEmptyOrNULLOrMisFormatData_DL(Response response)throws IOException{
+	public void verifyResponseForEmptyOrNULLOrMisFormatData_DL(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
-		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"),true);
+		CCUtils.assertEquals(jsonPath.get("error"), "Bad Request");
+		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"), true);
 	}
 
-	public void verifyResponseForEmptyData_DL(Response response) throws IOException{
+	public void verifyResponseForEmptyData_DL(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("error"),"Internal Server Error");
+		CCUtils.assertEquals(jsonPath.get("error"), "Internal Server Error");
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 }
