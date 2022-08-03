@@ -5,11 +5,18 @@ package com.pxp.cc.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.objectmaps.CCMainPage;
+import static io.restassured.RestAssured.given;
+import io.restassured.response.Response;
 
 public class CommonMethods extends CCMainPage {
 
@@ -136,13 +143,13 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(id = "timezoneSelect")
 	private WebElement dropdownTimezone;
 
-	@FindBy(id = "clientTypeSelect")
+	@FindBy(xpath = "//div[@role='combobox']//following::span[@class='ng-arrow-wrapper'][last()-1]")
 	private WebElement dropdownClientType;
 
 	@FindBy(xpath = "//div[@role='option']")
 	private List<WebElement> listOfOptions;
 
-	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//following::div[@role='option']")
+	@FindBy(xpath = "//ng-dropdown-panel[@role='listbox']//following::div[@role='option']//span")
 	private List<WebElement> listOfClientTypeOptions;
 
 	List<String> actualtimezoneValues = new ArrayList<String>();
@@ -490,7 +497,7 @@ public class CommonMethods extends CCMainPage {
 			actualtimezoneValues.add(listOfOptions.get(i).getText().trim());
 		}
 		log("Timezone values present for user are :" + actualtimezoneValues);
-
+		dropdownTimezone.click();
 	}
 
 	public void verifyTimezoneDropdownValues() throws InterruptedException {
@@ -502,16 +509,28 @@ public class CommonMethods extends CCMainPage {
 			"Health Prime International", "Newport Medical Group", "New Stork Healthdata Management");
 
 	public void getClientTypeDropdownValue() {
-		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
+		CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
 		dropdownClientType.click();
 		for (int i = 0; i < listOfClientTypeOptions.size(); i++) {
 			actualClientTypeValues.add(listOfClientTypeOptions.get(i).getText().trim());
 		}
 		log("Client type values present for user are :" + actualClientTypeValues);
-
+		dropdownClientType.click();
 	}
 
-	public void verifyClientTypeDropdownValues() throws InterruptedException {
+	public void verifyClientTypeDropdownValues(String baseUrl) throws InterruptedException {
+		 List<String> expectedClientTypes = new ArrayList<String>();
+		String url = baseUrl + ApiPath.CLIENT_TYPES_DL;
+		Response fetchClientType = given().when().get(url).then().extract().response();
+		JSONArray jsonArray = new JSONArray(fetchClientType.getBody().asString());
+		JSONObject jsonObject;
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			expectedClientTypes.add(jsonObject.getString("name"));
+			log("print json object"+jsonObject);
+		}
+		log("print the value of list : "+expectedClientTypes);
+		log("print the value of list : "+actualClientTypeValues);
 		CCUtils.assertEquals(actualClientTypeValues, expectedClientTypes);
 	}
 

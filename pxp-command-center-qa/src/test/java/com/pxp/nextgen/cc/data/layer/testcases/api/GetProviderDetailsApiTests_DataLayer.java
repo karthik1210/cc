@@ -34,8 +34,7 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyResponseBodyForProviderDetails(fetchProviderDetailsApiResponse,
 				testData.getProperty("provider.firstname"), testData.getProperty("provider.lastname"),
-				testData.getProperty("provider.gender"), testData.getProperty("provider.staffId"),
-				testData.getProperty("provider.status"));
+				testData.getProperty("provider.gender"),testData.getProperty("provider.status"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing providerId in providerId field and validate status code")
@@ -58,16 +57,5 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(fetchProviderDetailsApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
-	public void testErrorForInvalidMethodCall() throws IOException {
-		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.invalidMethodCallGetProviderDetails_DL(providerId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
-		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidMethod(fetchProviderDetailsApiResponse);
 	}
 }
