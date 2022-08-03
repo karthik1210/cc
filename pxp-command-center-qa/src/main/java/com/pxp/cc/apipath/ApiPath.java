@@ -624,7 +624,6 @@ public class ApiPath {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
 	}
 
-	// Added by Sarada Burugula for PXPP-17497 and PXPP-17480
 	public static final String CREATEBRANDS_DL = SHARED_DL + "/v1/brands/";
 	public static final String INVALID_CREATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
 	public static final String UPDATE_BRAND_DL(int BrandId) {
