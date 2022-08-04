@@ -104,13 +104,13 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(id = "mobileInput")
 	private WebElement textboxMobileNumber;
 
-	@FindBy(xpath = "//span[contains(text(),'Password')]")
+	@FindBy(id = "passwordInput")
 	private WebElement labelPassword;
 
-	@FindBy(xpath = "//span[contains(text(),'CANCEL')]")
+	@FindBy(id = "cancelUser")
 	private WebElement buttonCancel;
 
-	@FindBy(xpath = "//button[contains(text(),'SAVE')]")
+	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
 	@FindBy(xpath = "//mat-icon[contains(text(),'arrow_back')]")
@@ -181,7 +181,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
 	private WebElement buttonDeactivateUser;
-	
+
 	@FindBy(xpath = "//span[@class='pl-3']")
 	private WebElement inactiveStatus;
 
@@ -195,7 +195,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
 		javascriptClick(buttonKebabMenu);
 	}
-	
+
 	public void checkInactiveStatus() {
 		CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
 	}
@@ -451,7 +451,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	public void verifyPasswordUneditable() {
 		CCUtils.verifyAndWaitForElement(labelPassword, driver);
-		labelPassword.getAttribute("readonly").equals(true);
+		CCUtils.assertEquals(labelPassword.getAttribute("disabled"), "true");
 		log("Password is not editable");
 	}
 
