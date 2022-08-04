@@ -78,10 +78,9 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
 
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in  field and verify response body")
     public void testCreatePracticesUsingINVALID_DATATYPE() throws IOException {
-        createPracticeApiResponse = sharedInfo.savePracticeResourceWithINValidDATATYPE (Integer.parseInt(testData.getProperty("valid.practice.id"))," ", testData.getProperty("api.en"), testData.getProperty("api.es"));
+        createPracticeApiResponse = sharedInfo.savePracticeResourceWithINValidDATATYPE (" "," ", testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
         CCUtils.responseTimeValidation(createPracticeApiResponse);
         CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 404);
-        validation.verifyInvalidRequestValidation(createPracticeApiResponse);
     }
     }
