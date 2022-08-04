@@ -58,19 +58,19 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//input[@formcontrolname='mobileNumber']")
 	private WebElement textboxMobileNumber;
 
-	@FindBy(xpath = "//div[@class='col-sm-4 col-lg-4 col-xs-4 userStatus']")
+	@FindBy(xpath = "//div[contains(@class, 'userStatus')]")
 	private WebElement labelUserStatus;
 
-	@FindBy(xpath = "//div[@class='row mt-4 pl-2 mr-2 ng-star-inserted']//following::span[@class='mat-checkbox-label']")
+	@FindBy(xpath = "//div[contains(@class, 'userStatus')]//following::span[@class='mat-checkbox-label']")
 	private List<WebElement> labelUserStatusList;
 
-	@FindBy(xpath = "//div[@class='row mt-4 pl-2 mr-2 ng-star-inserted']//following::input[@type='checkbox']")
+	@FindBy(xpath = "//div[contains(@class, 'userStatus')]//following::input[@type='checkbox']")
 	private List<WebElement> checkboxUserStatus;
 
 	@FindBy(xpath = "//div[contains(text(),'User Status')]//following::div[@class='mat-checkbox-inner-container']")
 	private WebElement checkboxUserStatusSingle;
-
-	@FindBy(xpath = "//div[@class='col-sm-4 col-lg-4 col-xs-4 enrStatus']")
+	
+	 @FindBy(xpath = "//div[contains(@class, 'enrStatus')]")
 	private WebElement labelEnrollmentStatus;
 
 	@FindBy(xpath = "//div[@class='row mt-3 pl-3']//preceding::span[@class='mat-checkbox-label']")
