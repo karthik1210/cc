@@ -169,6 +169,16 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
+
+	public Response deleteBrandDetails_DL(int brandId) {
+		String url = ApiPath.DELETE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deleteBrandDetailsUsingInvalidUrl_DL(int brandId) {
+		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
 	
 	public Response deleteBrandDetails(int brandId) {
 		String url = ApiPath.DELETE_BRAND_DETAILS_BL(brandId);
@@ -211,6 +221,25 @@ public class SharedInfo extends BaseRest {
 
 	public Response getResourcesForProviderWithInvalidDataType(String providerId, String practiceId, String urlType) {
 		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithValidInputs_DL(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		String invalidUrl = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_INVALID_URL_DL(providerId, practiceId);
+		if (urlType.equalsIgnoreCase("valid"))
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		else
+			return given().spec(requestSpec).when().get(invalidUrl).then().extract().response();
+	}
+
+	public Response getResourceForProviderWithInvalidPOSTRequest_DL(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithValidInputs_DL_Invalid_DataType(String providerId, String practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
