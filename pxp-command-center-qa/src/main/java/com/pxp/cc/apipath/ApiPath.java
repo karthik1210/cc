@@ -633,6 +633,14 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsqw";
 	}
 
+	public static final String DELETE_BRAND_DETAILS_DL(int brandId) {
+		return SHARED_DL + "/v1/brands/" + brandId;
+	}
+
+	public static final String INVALID_PATH_DELETE_BRAND_DETAILS_DL(int brandId) {
+		return SHARED_DL + "/v1/brandsssss/" + brandId;
+	}
+	
 	public static final String DELETE_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brands/" + brandId;
 	}
