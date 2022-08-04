@@ -23,6 +23,7 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" 
 				/>
 				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer"/>-->
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreatePracticeResourceApiTests_DataLayer"/>
 		</classes>
 	</test>
 </suite>

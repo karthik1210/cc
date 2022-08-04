@@ -33,7 +33,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createProvider_DataLayer(int practiceId, String firstName, String lastName, String gender,
-			String externalId) {
+											 String externalId) {
 		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
@@ -41,7 +41,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createProviderUsingInvalidUrl_DataLayer(int practiceId, String firstName, String lastName,
-			String gender, String externalId) {
+															String gender, String externalId) {
 		String url = ApiPath.INVALID_PATH_CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
@@ -49,7 +49,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createProviderUsingInvalidMethod_DataLayer(int practiceId, String firstName, String lastName,
-			String gender, String externalId) {
+															   String gender, String externalId) {
 		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
@@ -57,7 +57,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	private Map<String, Object> createProviderRequestPayload(String firstName, String lastName, String gender,
-			String externalId) {
+															 String externalId) {
 		Map<String, Object> createProviderMap = new HashMap<String, Object>();
 		createProviderMap.put("firstName", firstName);
 		createProviderMap.put("lastName", lastName);
@@ -82,19 +82,19 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response addOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
-			List<ResourceDetails> resourceList) {
+														  List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
 	}
 
 	public Response invalidMethodCallForAddOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
-			List<ResourceDetails> resourceList) {
+																			  List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
 	}
 
 	public Response addOrRemoveResourcesForAppoinmentTypeUsingInvalidUrl(int practiceId, int appointmentTypeId,
-			List<ResourceDetails> resourceList) {
+																		 List<ResourceDetails> resourceList) {
 		String url = ApiPath.INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
 
@@ -169,7 +169,7 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
-	
+
 	public Response getAppointmentType_DL(int appointmentTypeId) {
 		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -180,8 +180,42 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
-	public Response getAppointmentTypeUsingInvalidUrl_DL(int appointmentTypeId) {
-		String url = ApiPath.INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
-		return given().spec(requestSpec).when().post(url).then().extract().response();
+	//	public Response getAppointmentTypeUsingInvalidUrl_DL(int appointmentTypeId) {
+//		String url = ApiPath.INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+//		return given().spec(requestSpec).when().post(url).then().extract().response();
+//	}
+	private Map<String, Object> createPracticeresourceRequestPayload(String en, String es) {
+		Map<String, Object> createPracticesMap = new HashMap<String, Object>();
+		createPracticesMap.put("en", en);
+		createPracticesMap.put("es", es);
+		return createPracticesMap;
 	}
+
+	public Response savePracticeResourceWithValidInputs(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithInValidInputs(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithInValidMethodcall(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithINValidDATATYPE(int practiceId, String resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+
 }
+
+
