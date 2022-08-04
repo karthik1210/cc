@@ -31,6 +31,8 @@
 
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForResourcesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForProviders_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
