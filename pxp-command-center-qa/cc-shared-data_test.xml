@@ -27,6 +27,8 @@
 				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"/>-->
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer"/>
 		</classes>
 	</test>
 </suite>
