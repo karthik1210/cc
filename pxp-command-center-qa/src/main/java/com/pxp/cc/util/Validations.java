@@ -2673,4 +2673,22 @@ public class Validations {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("error"), "Internal Server Error");
 	}
+	
+	public void verifyUpdateBrandingDetails(Response response, String brandId, String name) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("brandId").toString(), brandId);
+	}
+	
+	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, String orgId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for OrgId=" + orgId);
+	}
+	
+	public void verifyErrorMessageForOrgIdAsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "OrgId cannot be empty or null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
