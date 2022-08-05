@@ -1,4 +1,5 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.model;
 
 import static io.restassured.RestAssured.given;
@@ -20,7 +21,6 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
 public class BaseRest extends BaseTestNG {
-
 	public static RequestSpecification requestSpec;
 	public static ResponseSpecification responseSpec;
 	public JsonPath jsonPath;
@@ -68,6 +68,12 @@ public class BaseRest extends BaseTestNG {
 
 	public void setupServiceRequestSpecificationBuilder() throws IOException {
 		RestAssured.baseURI = testData.getProperty("service.base.url");
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
+				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
+	}
+
+	public void setupQaServiceRequestSpecificationBuilder() throws IOException {
+		RestAssured.baseURI = testData.getProperty("qa.service.base.url");
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
