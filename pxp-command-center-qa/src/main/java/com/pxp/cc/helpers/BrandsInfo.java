@@ -169,4 +169,23 @@ public class BrandsInfo extends BaseRest {
 		updateBrandDetailsMap.put("color", color);
 		return updateBrandDetailsMap;
 	}
+	
+	public Response createBrandingTemplate(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+        String url = ApiPath.CREATE_BRAND_BL;
+	    return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract()
+					.response();
+	}
+			
+	public Response createBrandingTemplateInvalidUrl_BL(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+        String url = ApiPath.INVALID_DUPLICATE_BRANDS_BL;
+		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createBrandingTemplateInvalidMethodCall_BL(String orgId, String name, String showLogo, String color) {
+		String url = ApiPath.CREATE_BRAND_BL;
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+		return given().spec(requestSpec).body(createBrandPayload).when().put(url).then().extract().response();
+	}
 }

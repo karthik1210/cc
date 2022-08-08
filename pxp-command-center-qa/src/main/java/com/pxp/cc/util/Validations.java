@@ -2691,4 +2691,24 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "OrgId cannot be empty or null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyErrorMessageForNameFieldAsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Name cannot be empty or null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorMessageForNullValuesInPayload(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String responseMsg = jsonpath.getString("message").toString();
+		String expectedResponse = "OrgId cannot be empty or null, Name cannot be empty or null";
+		String alternateExpectedResponse = "Name cannot be empty or null, OrgId cannot be empty or null";
+		if (responseMsg.equals(expectedResponse)) {
+			CCUtils.assertEquals(responseMsg, expectedResponse);
+		} else {
+			CCUtils.assertEquals(responseMsg, alternateExpectedResponse);
+		}
+
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
