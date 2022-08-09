@@ -14,7 +14,7 @@ import java.io.*;
 public class CreateBrandingTemplateApiTests_BusinessLayer extends BaseRest {
 	private BrandsInfo brandInfo;
 	private Validations validation;
-	Response createBrandApiResponse, fetchBrandingDetailsApiResponse;
+	Response createBrandApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -155,5 +155,24 @@ public class CreateBrandingTemplateApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createBrandApiResponse);
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 405);
 		validation.verifyErrorMessageInResponseForInvalidMethod(createBrandApiResponse);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check Version Name length validation and validate response code")
+	public void testNameFieldLengthValidation() throws IOException, NullPointerException {
+		logStep("Enter valid values in request payload to create branding template");
+		String orgId = testData.getProperty("client.org.id");
+		String color = testData.getProperty("client.brand.color");
+		logStep("Version Name length validation with 50 characters");
+		String name = "AutoBrand".concat(CCUtils.generateAlphaNumericString(41));
+		createBrandApiResponse = brandInfo.createBrandingTemplate(orgId, name, "true", color);
+		logStep("Validating response Code");
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		logStep("Version Name length validation with 51 characters");
+		name = "AutoBrand".concat(CCUtils.generateAlphaNumericString(51));
+		createBrandApiResponse = brandInfo.createBrandingTemplate(orgId, name, "true", color);
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidRequestValidation(createBrandApiResponse);
 	}
 }
