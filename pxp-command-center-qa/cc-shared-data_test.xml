@@ -21,14 +21,14 @@
 				/> -->
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" 
-				/>
-				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer"/>
-				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandDetailsApiTests_DataLayer"/>
-				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"/>-->
-			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer"/>
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer"/> 
+				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandDetailsApiTests_DataLayer"/> 
+				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer"/> 
+				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"/> 
+				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
+				/> -->
 		</classes>
 	</test>
 </suite>

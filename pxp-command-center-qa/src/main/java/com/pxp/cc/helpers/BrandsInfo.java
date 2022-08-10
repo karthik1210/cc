@@ -142,6 +142,18 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(ApiPath.FETCH_LIST_OF_BRANDS_DL(orgId)).then().extract()
 				.response();
 	}
+	
+	public Response updateBrandDetails(String brandId, String orgId, String name, String showLogo, String color) {
+		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.UPDATE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateBrandDetailsInvalidMethod(String brandId, String orgId, String name, String showLogo, String color) {
+		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.UPDATE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).body(brandDetailsPayload).when().post(url).then().extract().response();
+	}
 
 	public Response fetchListOfBrandsInvalidOrgId_DL(int orgId) {
 		return given().spec(requestSpec).when().get(ApiPath.FETCH_LIST_OF_BRANDS_DL_INVALID_ORG(orgId)).then().extract()
@@ -157,5 +169,19 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(ApiPath.FETCH_LIST_OF_BRANDS_INVALID_URL_DL(orgId)).then().extract()
 				.response();
 	}
-	
+
+	public Response updateBrandDetailsInvalidUrl(int brandId, String orgId, String name, String showLogo, String color) {
+		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> updateBrands(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> updateBrandDetailsMap = new HashMap<String, Object>();
+		updateBrandDetailsMap.put("orgId", orgId);
+		updateBrandDetailsMap.put("name", name);
+		updateBrandDetailsMap.put("showLogo", showLogo);
+		updateBrandDetailsMap.put("color", color);
+		return updateBrandDetailsMap;
+	}
 }

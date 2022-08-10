@@ -715,4 +715,8 @@ public class ApiPath {
 	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_DL(int orgId) {
 		return SHARED_DL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
 	}
+	
+	public static final String UPDATE_BRAND_DETAILS_BL(String BrandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + BrandId;
+	}
 }
