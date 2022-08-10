@@ -713,4 +713,9 @@ public class ApiPath {
 		return SHARED_DL + "/v1/orgs/" + orgId + "/brandsssss";
 	}
 
+	public static final String UPDATE_BRAND_DETAILS_BL(String BrandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + BrandId;
+	}
+
+	public static final String CREATE_BRAND_BL = SERVICE_SHARED_BL + "/v1/brands/";
 }

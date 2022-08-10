@@ -37,43 +37,55 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),' Mobile Number ')]")
 	private WebElement labelMobileNumber;
 
-	@FindBy(xpath = "//input[@formcontrolname='firstName']")
+	@FindBy(id = "searchFirstNameInput")
 	private WebElement textboxFirstName;
 
-	@FindBy(xpath = "//input[@formcontrolname='lastName']")
+	@FindBy(id = "searchLastNameInput")
 	private WebElement textboxLastName;
 
-	@FindBy(xpath = "//input[@formcontrolname='userName']")
+	@FindBy(id = "searchUserNameInput")
 	private WebElement textboxUsername;
 
-	@FindBy(xpath = "//input[@formcontrolname='clientName']")
-	private WebElement dropdownSearchClient;
+	@FindBy(id = "searchclientNameInput")
+	private WebElement clientName;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
-	@FindBy(xpath = "//input[@formcontrolname='email']")
+	@FindBy(id = "searchEmailInput")
 	private WebElement textboxEmail;
 
-	@FindBy(xpath = "//input[@formcontrolname='mobileNumber']")
+	@FindBy(id = "searchMobileInput")
 	private WebElement textboxMobileNumber;
 
 	@FindBy(xpath = "//div[contains(@class, 'userStatus')]")
 	private WebElement labelUserStatus;
 
-	@FindBy(xpath = "//div[contains(@class, 'userStatus')]//following::span[@class='mat-checkbox-label']")
-	private List<WebElement> labelUserStatusList;
+	@FindBy(id = "searchUserStatus")
+	private WebElement labelUserStatusList;
 
 	@FindBy(xpath = "//div[contains(@class, 'userStatus')]//following::input[@type='checkbox']")
 	private List<WebElement> checkboxUserStatus;
 
 	@FindBy(xpath = "//div[contains(text(),'User Status')]//following::div[@class='mat-checkbox-inner-container']")
 	private WebElement checkboxUserStatusSingle;
-	
-	 @FindBy(xpath = "//div[contains(@class, 'enrStatus')]")
+
+	@FindBy(xpath = "//span[contains(text(),'Active')]")
+	private WebElement userStatusActive;
+
+	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
+	private WebElement userStatusInactive;
+
+	@FindBy(xpath = "//span[contains(text(),'Locked out')]")
+	private WebElement userStatusLockedOut;
+
+	@FindBy(xpath = "//span[contains(text(),'No roles assigned')]")
+	private WebElement userStatusNoRolesAssigned;
+
+	@FindBy(xpath = "//div[contains(@class, 'enrStatus')]")
 	private WebElement labelEnrollmentStatus;
 
-	@FindBy(xpath = "//div[@class='row mt-3 pl-3']//preceding::span[@class='mat-checkbox-label']")
+	@FindBy(id = "searchEnrollmentStatus")
 	private List<WebElement> labelEnrollmentStatusList;
 
 	@FindBy(xpath = "//div[@class='mat-checkbox-inner-container']")
@@ -84,6 +96,24 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'EnrollmentStatus')]//following::div[@class='mat-checkbox-inner-container']")
 	private WebElement checkboxEnrollmentStatusSingle;
+
+	@FindBy(xpath = "//span[contains(text(),'Confirmed')]")
+	private WebElement enrollmentStatusConfirmed;
+
+	@FindBy(xpath = "//span[contains(text(),'Delivered')]")
+	private WebElement enrollmentStatusDelivered;
+
+	@FindBy(xpath = "//span[contains(text(),'Pending')]")
+	private WebElement enrollmentStatusPending;
+
+	@FindBy(xpath = "//span[contains(text(),'Email Issue')]")
+	private WebElement enrollmentStatusEmailIssue;
+
+	@FindBy(xpath = "//span[contains(text(),'Expired')]")
+	private WebElement enrollmentStatusExpired;
+
+	@FindBy(xpath = "//span[contains(text(),'Not Sent')]")
+	private WebElement enrollmentStatusNotSent;
 
 	@FindBy(id = "filterClearBtn")
 	private WebElement buttonClear;
@@ -97,16 +127,16 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//label[contains(text(),'Please enter or select to search')]")
 	private WebElement errorSearchOptionsPage;
 
-	@FindBy(xpath = "//div[contains(text(),'First Name')]//following::div[text()=' Maximum characters reached '][1]")
+	@FindBy(id = "maxFirstNameError")
 	private WebElement errorMaximumCharacterFirstName;
 
-	@FindBy(xpath = "//div[contains(text(),'Last Name')]//following::div[text()=' Maximum characters reached '][1]")
+	@FindBy(id = "maxLastNameError")
 	private WebElement errorMaximumCharacterLastName;
 
-	@FindBy(xpath = "//div[contains(text(),'Username')]//following::div[text()=' Maximum characters reached '][1]")
+	@FindBy(id = "maxUserNameError")
 	private WebElement errorMaximumCharacterUsername;
 
-	@FindBy(xpath = "//input[@formcontrolname='email']//following::div[text()=' Maximum characters reached '][1]")
+	@FindBy(id = "maxEmailError")
 	private WebElement errorMaximumCharacterEmail;
 
 	@FindBy(xpath = "//input[@formcontrolname='mobileNumber']//following::div[text()=' Maximum characters reached '][1]")
@@ -145,6 +175,9 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//input[@formcontrolname='resellerName']")
 	private WebElement dropdownSearchVarReseller;
 
+	@FindBy(xpath = "//span[contains(text(),'No roles assigned')]")
+	private WebElement noRolesAssignedCheckbox;
+
 	List<String> actualUserStatusValues = new ArrayList<String>();
 	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
 
@@ -180,6 +213,7 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyUsernameLabelTextAndTextboxDefaultValue();
 		verifyEmailLabelTextAndTextboxDefaultValue();
 		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		verifyUserStatusLabelTextAndCheckboxes();
 		verifyEnrollmentStatusLabelTextAndCheckboxes();
 		verifyClearButtonIsDisplayed();
@@ -233,17 +267,13 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public void verifyClientLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelClient, driver);
-		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
-		if (labelClient.isDisplayed() == true && dropdownSearchClient.isDisplayed() == true) {
-			log("Verifying client label text");
-			CCUtils.assertEquals(labelClient.getText().trim(), "Client");
-			log("Client label text is " + labelClient.getText().trim());
-			log("Verifying Search/Select placeholder is displayed for client textbox field");
-			CCUtils.assertEquals(dropdownSearchClient.getAttribute("placeholder").trim(), "Search/Select");
-			log("Box text for client textbox field is " + dropdownSearchClient.getAttribute("placeholder").trim());
-		} else {
-			log("Client label and Search/Select dropdown are not displayed on search options popup");
-		}
+		CCUtils.verifyAndWaitForElement(clientName, driver);
+		log("Verifying client label text");
+		CCUtils.assertEquals(labelClient.getText().trim(), "Client");
+		log("Client label text is " + labelClient.getText().trim());
+		log("Verifying Input Text placeholder is displayed for client textbox field");
+		CCUtils.assertEquals(clientName.getAttribute("placeholder").trim(), "Input Text");
+		log("Box text for client textbox field is " + clientName.getAttribute("placeholder").trim());
 	}
 
 	public void verifyUsernameLabelTextAndTextboxDefaultValue() {
@@ -307,16 +337,27 @@ public class SearchOptionsPage extends CCMainPage {
 		}
 	}
 
-	public void getUserStatusValues() throws InterruptedException {
-		for (int i = 0; i < labelUserStatusList.size(); i++) {
-			actualUserStatusValues.add(labelUserStatusList.get(i).getText().trim());
-		}
-		log("User status available for internal user are :" + actualUserStatusValues);
-	}
-
 	public void verifyUserStatusValues() throws InterruptedException {
-		getUserStatusValues();
-		CCUtils.assertEquals(actualUserStatusValues, expectedUserStatusValues);
+		log("Verifying userStatus Active");
+		CCUtils.verifyAndWaitForElement(userStatusActive, driver);
+		CCUtils.assertEquals(userStatusActive.getText().trim(), "Active");
+		log("Active user status label text is " + userStatusActive.getText().trim());
+
+		log("Verifying userStatus Inactive");
+		CCUtils.verifyAndWaitForElement(userStatusInactive, driver);
+		CCUtils.assertEquals(userStatusInactive.getText().trim(), "Inactive");
+		log("Active user status label text is " + userStatusInactive.getText().trim());
+
+		log("Verifying userStatus Locked out");
+		CCUtils.verifyAndWaitForElement(userStatusLockedOut, driver);
+		CCUtils.assertEquals(userStatusLockedOut.getText().trim(), "Locked out");
+		log("Active user status label text is " + userStatusLockedOut.getText().trim());
+
+		log("Verifying userStatus No roles assigned");
+		CCUtils.verifyAndWaitForElement(userStatusNoRolesAssigned, driver);
+		CCUtils.assertEquals(userStatusNoRolesAssigned.getText().trim(), "No roles assigned");
+		log("Active user status label text is " + userStatusNoRolesAssigned.getText().trim());
+
 	}
 
 	public void verifyUserStatusCheckboxesAreNotByDefaultSelected() throws InterruptedException {
@@ -387,10 +428,6 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
 		textboxLastName.sendKeys(lastName);
 		log("Entered text in last name field is " + lastName);
-
-		clearSearchTextInClientSearchBox();
-		searchNode(clientName);
-		log("Entered text in client field is " + clientName);
 
 		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
 		textboxEmail.sendKeys(email);
@@ -463,8 +500,36 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void verifyEnrollmentStatusValues() throws InterruptedException {
-		getEnrollmentStatusValues();
-		CCUtils.assertEquals(actualEnrollmentStatusValues, expectedEnrollmentStatusValues);
+		log("Verifying enrollmentStatus Confirmed");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusConfirmed, driver);
+		CCUtils.assertEquals(enrollmentStatusConfirmed.getText().trim(), "Confirmed");
+		log("Confirmed  enrollment status label text is " + enrollmentStatusConfirmed.getText().trim());
+
+		log("Verifying enrollmentStatus Delivered");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusDelivered, driver);
+		CCUtils.assertEquals(enrollmentStatusDelivered.getText().trim(), "Delivered");
+		log("Delivered  enrollment status label text is " + enrollmentStatusDelivered.getText().trim());
+
+		log("Verifying enrollmentStatus Pending");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusPending, driver);
+		CCUtils.assertEquals(enrollmentStatusPending.getText().trim(), "Pending");
+		log("Pending  enrollment status label text is " + enrollmentStatusPending.getText().trim());
+
+		log("Verifying enrollmentStatus Email Issue");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusEmailIssue, driver);
+		CCUtils.assertEquals(enrollmentStatusEmailIssue.getText().trim(), "Email Issue");
+		log("Email Issue enrollment status label text is " + enrollmentStatusEmailIssue.getText().trim());
+
+		log("Verifying enrollmentStatus Expired");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusExpired, driver);
+		CCUtils.assertEquals(enrollmentStatusExpired.getText().trim(), "Expired");
+		log("Expired enrollment status label text is " + enrollmentStatusExpired.getText().trim());
+
+		log("Verifying enrollmentStatus Not Sent");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusNotSent, driver);
+		CCUtils.assertEquals(enrollmentStatusNotSent.getText().trim(), "Not Sent");
+		log("Not Sent  enrollment status label text is " + enrollmentStatusNotSent.getText().trim());
+
 	}
 
 	public void verifyEnrollmentStatusCheckboxesAreNotByDefaultSelected() throws InterruptedException {
@@ -480,7 +545,7 @@ public class SearchOptionsPage extends CCMainPage {
 		log("search button clicked");
 
 	}
-	
+
 	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
 		verifySearchButtonIsDisplayed();
 		clickToSearchButton();
@@ -572,10 +637,6 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
 		textboxEmail.sendKeys(email);
 		log("Entered text in email field is " + email);
-
-		clearSearchTextInClientSearchBox();
-		searchNode(clientName);
-		log("Entered text in client field is " + clientName);
 
 		CCUtils.verifyAndWaitForElement(textboxUsername, driver);
 		textboxUsername.clear();
@@ -777,21 +838,9 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clearSearchTextInClientSearchBox() {
-		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
-		dropdownSearchClient.clear();
+		CCUtils.verifyAndWaitForElement(clientName, driver);
+		clientName.clear();
 		log("text in client search box is cleared");
-	}
-
-	public void searchNode(String clientName) {
-		enterSearchText(clientName);
-		clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
-	}
-
-	public void enterSearchText(String nodeName) {
-		CCUtils.verifyAndWaitForElement(dropdownSearchClient, driver);
-		dropdownSearchClient.sendKeys(nodeName);
-		log("Entered text in search :" + nodeName);
 	}
 
 	public void clickFirstInAutoSuggestion() {
@@ -853,5 +902,18 @@ public class SearchOptionsPage extends CCMainPage {
 		log("Verifying text is not present in var/reseller field");
 		CCUtils.assertTrue(dropdownSearchVarReseller.getText().trim().length() == 0,
 				"Text is present in var/reseller textbox field");
+	}
+
+	public void enterSeachTextInClientNameField(String ClientName) {
+		CCUtils.verifyAndWaitForElement(clientName, driver);
+		clientName.sendKeys(ClientName);
+		log("Entered text in clientName field is " + ClientName);
+	}
+
+	public void clickOnNoRolesAssignedCheckbox() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
+		CCUtils.verifyAndWaitForElement(noRolesAssignedCheckbox, driver);
+		noRolesAssignedCheckbox.click();
+		log("Clicked on no roles assigned User Status checkbox on Search Options popup");
 	}
 }
