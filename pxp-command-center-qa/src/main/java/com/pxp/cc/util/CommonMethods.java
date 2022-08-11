@@ -2,20 +2,18 @@
 
 package com.pxp.cc.util;
 
+import static io.restassured.RestAssured.given;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.objectmaps.CCMainPage;
-import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
 
 public class CommonMethods extends CCMainPage {

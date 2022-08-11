@@ -13,7 +13,7 @@ public class VarResellerUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='tab-name']")
 	private WebElement labelPageTitle;
-	
+
 	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
 	private WebElement buttonSendEnrollment;
 
@@ -44,7 +44,7 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(id = "enrollStatus")
 	private List<WebElement> labelSelectedEnrollmentStatus;
 
-	@FindBy(id = "userStatus")
+	@FindBy(xpath = "//div[text()='User Status']//following::mat-icon")
 	private List<WebElement> labelSelectedUserStatus;
 
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
@@ -195,7 +195,7 @@ public class VarResellerUsersPage extends CCMainPage {
 
 	public String getVarResellerUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelSelectedUserStatus.get(0), driver);
-		return labelSelectedUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
+		return labelSelectedUserStatus.get(0).getText().toString().trim();
 	}
 
 	public AddNewVarResellerUserPage clickOnNewButton() {

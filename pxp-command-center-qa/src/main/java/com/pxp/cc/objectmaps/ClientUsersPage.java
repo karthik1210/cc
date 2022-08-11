@@ -20,21 +20,21 @@ public class ClientUsersPage extends CCMainPage {
 	@FindBy(id = "firstName")
 	private List<WebElement> selectUser;
 
-	@FindBy(id = "clientProductIcon")
+	@FindBy(xpath = "//div[text()='User Status']//following::mat-icon")
 	private List<WebElement> listClientUserStatus;
 
 	@FindBy(id = "newButton")
 	private WebElement buttonNew;
-	
+
 	@FindBy(id = "IconContainer")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(xpath = "//td[@id='no-result']")
 	private WebElement errorMessage;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
 	private WebElement buttonClearAll;
-	
+
 	@FindBy(xpath = "//span[@class='configure']")
 	private List<WebElement> labelSelectedSearchOptions;
 
@@ -62,7 +62,6 @@ public class ClientUsersPage extends CCMainPage {
 	@FindBy(id = "userStatus")
 	private List<WebElement> labelSelectedUserStatus;
 
-	
 	public ClientUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -86,10 +85,10 @@ public class ClientUsersPage extends CCMainPage {
 		log("Clicked on first client user");
 		return PageFactory.initElements(driver, ClientUserDetailsPage.class);
 	}
-	
+
 	public String getClientUserStatus() {
 		CCUtils.verifyAndWaitForElement(listClientUserStatus.get(0), driver);
-		return listClientUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
+		return listClientUserStatus.get(0).getText().trim();
 	}
 
 	public AddNewClientUserPage clickOnNewButton() {
@@ -98,7 +97,7 @@ public class ClientUsersPage extends CCMainPage {
 		log("Clicked on new button in client users page");
 		return PageFactory.initElements(driver, AddNewClientUserPage.class);
 	}
-	
+
 	public void clickOnKebabMenuButton() {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
 		javascriptClick(buttonKebabMenu);
@@ -109,7 +108,7 @@ public class ClientUsersPage extends CCMainPage {
 		CCUtils.assertTrue(errorMessage.isDisplayed(), "No results found");
 		log("No results found error message is displayed");
 	}
-	
+
 	public void verifyClearAllButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
 		CCUtils.assertTrue(buttonClearAll.isDisplayed(),
@@ -117,13 +116,14 @@ public class ClientUsersPage extends CCMainPage {
 		CCUtils.assertEquals(buttonClearAll.getText().trim(), "CLEAR ALL");
 		CCUtils.assertTrue(buttonClearAll.isEnabled(), "Clear All button is not enabled on var/reseller users page");
 	}
+
 	public void clickOnClearAllButton() {
 		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
 		javascriptClick(buttonClearAll);
 	}
-	
+
 	public void verifySelectedSearchOptions(List<String> enrollmentStatus, List<String> userStatus, String firstName,
-			String lastName,  String email, String username, String mobileNumber) {
+			String lastName, String email, String username, String mobileNumber) {
 
 		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
 			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");

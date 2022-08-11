@@ -32,7 +32,7 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']")
 	private List<WebElement> tableRowsData;
 
-	@FindBy(id = "userStatus")
+	@FindBy(xpath = "//div[text()='User Status']//following::mat-icon")
 	private List<WebElement> listInternalUserStatus;
 
 	@FindBy(xpath = "//span[contains(text(),'Active')]")
@@ -138,6 +138,6 @@ public class InternalUsersPage extends CCMainPage {
 
 	public String getInternalUserStatus() {
 		CCUtils.verifyAndWaitForElement(listInternalUserStatus.get(0), driver);
-		return listInternalUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
+		return listInternalUserStatus.get(0).getText().toString().trim();
 	}
 }
