@@ -199,6 +199,7 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyUsernameLabelTextAndTextboxDefaultValue();
 		verifyEmailLabelTextAndTextboxDefaultValue();
 		verifyMobileNumberLabelTextAndTextboxDefaultValue();
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		verifyUserStatusLabelTextAndCheckboxes();
 		verifyEnrollmentStatusLabelTextAndCheckboxes();
 		verifyClearButtonIsDisplayed();
@@ -411,12 +412,12 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
 		textboxMobileNumber.sendKeys(mobileNumber);
 		log("Entered text in email field is " + mobileNumber);
-
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		clickEnrollmentStatusCheckboxes();
 
 		clickOnSearchButton();
-		scrollAndWait(0, 500, 8000);
-		clickOnClearAllSearchData();
+
+		// clickOnClearAllSearchData();
 	}
 
 	public void verifyClearAllButtonFunctionalityWithAllFields(String firstName, String lastName, String clientName,
@@ -916,4 +917,5 @@ public class SearchOptionsPage extends CCMainPage {
 		noRolesAssignedCheckbox.click();
 		log("Clicked on no roles assigned User Status checkbox on Search Options popup");
 	}
+
 }
