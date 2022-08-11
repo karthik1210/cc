@@ -1,3 +1,5 @@
+//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.util;
 
 import java.io.IOException;
@@ -5,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
