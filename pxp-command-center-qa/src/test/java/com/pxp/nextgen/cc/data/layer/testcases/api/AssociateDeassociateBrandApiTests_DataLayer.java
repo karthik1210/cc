@@ -37,6 +37,15 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		return obj;
 	}
 
+	@DataProvider(name = "orgIdValue")
+	public Object[] getOrgIdDetails() {
+		Object[] obj = new Object[] { Integer.parseInt(testData.getProperty("org.client.one.id")),
+				Integer.parseInt(testData.getProperty("org.system.one.id")),
+				Integer.parseInt(testData.getProperty("org.enterprise.one.id")),
+				Integer.parseInt(testData.getProperty("org.practice.one.id")) };
+		return obj;
+	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgId", description = "Verify user able to activate/deactivate branding template")
 	public void testAssociateDeassociateBrandingTemplateFunctionalityAtOrgLevel(Integer orgId) throws Exception {
 		logStep("Get branding list");
@@ -122,15 +131,6 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(associateDeassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDeassociateBrandApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(associateDeassociateBrandApiResponse);
-	}
-
-	@DataProvider(name = "orgIdValue")
-	public Object[] getOrgIdDetails() {
-		Object[] obj = new Object[] { Integer.parseInt(testData.getProperty("org.client.one.id")),
-				Integer.parseInt(testData.getProperty("org.system.one.id")),
-				Integer.parseInt(testData.getProperty("org.enterprise.one.id")),
-				Integer.parseInt(testData.getProperty("org.practice.one.id")) };
-		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgIdValue", description = "Verify user able to activate/deactivate in use branding template status from inactive to active")
