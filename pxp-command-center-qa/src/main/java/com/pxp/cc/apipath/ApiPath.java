@@ -601,13 +601,11 @@ public class ApiPath {
 	public static final String GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
-	
-	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId,
-			int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId
-				+ "/providers12abc";
+
+	public static final String INVALID_PATH_GET_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers12abc";
 	}
-	
+
 	public static final String GET_PROVIDER_FOR_LOCATION_BL_NULL_VALUES = SERVICE_SHARED_BL
 			+ "/v1/locations/null/practices/null/providers";
 
@@ -640,7 +638,7 @@ public class ApiPath {
 	public static final String INVALID_PATH_DELETE_BRAND_DETAILS_DL(int brandId) {
 		return SHARED_DL + "/v1/brandsssss/" + brandId;
 	}
-	
+
 	public static final String DELETE_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brands/" + brandId;
 	}
@@ -655,6 +653,7 @@ public class ApiPath {
 
 	public static final String CREATEBRANDS_DL = SHARED_DL + "/v1/brands/";
 	public static final String INVALID_CREATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
+
 	public static final String UPDATE_BRAND_DL(int BrandId) {
 		return SHARED_DL + "/v1/brands/" + BrandId;
 	}
@@ -672,13 +671,13 @@ public class ApiPath {
 	}
 
 	public static final String GET_LOCATIONLIST_ROLE_BL(int UserId, int OrgId) {
-		return SERVICE_USER_BL + "/v1/users/"+UserId+"/orgs/"+OrgId;
+		return SERVICE_USER_BL + "/v1/users/" + UserId + "/orgs/" + OrgId;
 	}
 
-	public static final String INVALID_GET_LOCATIONLIST_ROLE_BL=SERVICE_USER_BL+ "/v1/users/4003807/orgsss/4677";
-	public static final String GET_LOCATIONLIST_ROLE_BL_NULL_VALUES = SERVICE_USER_BL+ "/v1/users/null/orgs/null";
-	public static final String GET_LOCATIONLIST_ROLE_BL_ALPHANUM_VALUES = SERVICE_USER_BL+ "/v1/users/4003807@#ASD/orgs/4677";
-
+	public static final String INVALID_GET_LOCATIONLIST_ROLE_BL = SERVICE_USER_BL + "/v1/users/4003807/orgsss/4677";
+	public static final String GET_LOCATIONLIST_ROLE_BL_NULL_VALUES = SERVICE_USER_BL + "/v1/users/null/orgs/null";
+	public static final String GET_LOCATIONLIST_ROLE_BL_ALPHANUM_VALUES = SERVICE_USER_BL
+			+ "/v1/users/4003807@#ASD/orgs/4677";
 
 	public static final String FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(int providerId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
@@ -688,7 +687,8 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/providersssss/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
-	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId, String practiceId) {
+	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId,
+			String practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
@@ -700,13 +700,22 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providersssss" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
-	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(String providerId, String practiceId) {
+	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(String providerId,
+			String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
-	
+
+	public static final String BRAND_LIST_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brands";
+	}
+
+	public static final String INVALID_PATH_BRAND_LIST_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brandsssss";
+	}
+
 	public static final String UPDATE_BRAND_DETAILS_BL(String BrandId) {
 		return SERVICE_SHARED_BL + "/v1/brands/" + BrandId;
 	}
-	
+
 	public static final String CREATE_BRAND_BL = SERVICE_SHARED_BL + "/v1/brands/";
 }
