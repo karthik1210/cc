@@ -377,7 +377,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	public CommandCenterUsersPage clickOnCommandCenterUsersIcon() {
 		CCUtils.verifyAndWaitForElement(iconCommandCenterUsers, driver);
 		iconCommandCenterUsers.click();
-		log("Clicked on command center users icon in left navigation panel");
+		log("Clicked on command center users icon");
 		return PageFactory.initElements(driver, CommandCenterUsersPage.class);
 	}
 
