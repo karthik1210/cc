@@ -414,10 +414,7 @@ public class SearchOptionsPage extends CCMainPage {
 		log("Entered text in email field is " + mobileNumber);
 		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		clickEnrollmentStatusCheckboxes();
-
 		clickOnSearchButton();
-
-		// clickOnClearAllSearchData();
 	}
 
 	public void verifyClearAllButtonFunctionalityWithAllFields(String firstName, String lastName, String clientName,
