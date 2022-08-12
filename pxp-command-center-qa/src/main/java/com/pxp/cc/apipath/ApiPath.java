@@ -718,7 +718,7 @@ public class ApiPath {
 	}
 
 	public static final String CREATE_BRAND_BL = SERVICE_SHARED_BL + "/v1/brands/";
-	
+
 	public static final String GET_APPOINTMENT_TYPES_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/" + appointmentTypeId;
 	}
@@ -726,6 +726,18 @@ public class ApiPath {
 	public static final String GET_APPOINTMENT_TYPES_INVALID_PATH_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
-	
-	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL+ "/v1/appointment-types/null";
+
+	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL + "/v1/appointment-types/null";
+
+	public static final String GET_RESOURCE_DETAILS_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId;
+	}
+
+	public static final String RESOURCE_IMAGE_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/images";
+	}
+
+	public static final String INVALID_PATH_RESOURCE_IMAGE_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/imagessss";
+	}
 }
