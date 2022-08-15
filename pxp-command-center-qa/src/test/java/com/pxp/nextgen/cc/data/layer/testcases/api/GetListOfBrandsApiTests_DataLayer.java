@@ -21,7 +21,7 @@ public class GetListOfBrandsApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilderForDataLayer();
+		setupQaServiceRequestSpecificationBuilderForDataLayer();
 		brandsInfo = new BrandsInfo();
 		brandValidations = new BrandsValidations();
 		validations = new Validations();
@@ -41,7 +41,9 @@ public class GetListOfBrandsApiTests_DataLayer extends BaseRest {
 		getListofBrandsResponse = brandsInfo
 				.fetchListOfBrands_DL(Integer.parseInt(testData.getProperty("get.list.non.existing.org.brands")));
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
-		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 204);
+		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 400);
+		brandValidations.verifyOrgNotFoundErrorMessage(getListofBrandsResponse,
+				Integer.parseInt(testData.getProperty("get.list.non.existing.org.brands")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 400 for fetching brands for invalid org id")
@@ -70,7 +72,7 @@ public class GetListOfBrandsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 405);
 		validations.verifyErrorMessageInResponseForInvalidPostMethodCall(getListofBrandsResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 405 for fetching brands for existing org id for invalid url")
 	public void testErrorResponseCodeForGetListOfBrandsForInvalidUrl() throws IOException {
 		getListofBrandsResponse = brandsInfo

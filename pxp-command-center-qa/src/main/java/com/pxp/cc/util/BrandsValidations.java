@@ -22,4 +22,9 @@ public class BrandsValidations {
 			Log4jUtil.log("Brand Id is : " + brandId);
 		}
 	}
+	
+	public void verifyOrgNotFoundErrorMessage(Response response, int orgId) {
+		jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("message").toString().trim(), "Org not found by id="+orgId);
+	}
 }
