@@ -704,6 +704,18 @@ public class ApiPath {
 			String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
+	
+	public static final String FETCH_LIST_OF_BRANDS_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/"+orgId+"/brands";
+	}
+	
+	public static final String FETCH_LIST_OF_BRANDS_DL_INVALID_ORG(int orgId) {
+		return SHARED_DL + "/v1/orgs/"+orgId+"!3w/brands";
+	}
+	
+	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
+	}
 
 	public static final String BRAND_LIST_DL(int orgId) {
 		return SHARED_DL + "/v1/orgs/" + orgId + "/brands";
