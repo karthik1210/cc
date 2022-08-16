@@ -2637,19 +2637,19 @@ public class Validations {
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
-			}
+		}
 		CCUtils.assertEquals(jsonObject.getString("type"), "PROVIDER");
-		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"),true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
 	}
 
-	public void verifyResponseForEmptyOrNULLOrMisFormatData(Response response)throws IOException{
+	public void verifyResponseForEmptyOrNULLOrMisFormatData(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
-		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"),true);
+		CCUtils.assertEquals(jsonPath.get("error"), "Bad Request");
+		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"), true);
 	}
 
-	public void verifyResponseForEmptyData(Response response) throws IOException{
+	public void verifyResponseForEmptyData(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("error"),"Internal Server Error");
+		CCUtils.assertEquals(jsonPath.get("error"), "Internal Server Error");
 	}
 }

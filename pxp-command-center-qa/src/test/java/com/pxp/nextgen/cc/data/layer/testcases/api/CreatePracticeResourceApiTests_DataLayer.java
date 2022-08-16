@@ -1,10 +1,5 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
-/*
-JIRA Id: PXPP-17590
-Designer: PallaviB
- */
-
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -23,7 +18,6 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
     private Validations validation;
     Response createPracticeApiResponse;
 
-
     @BeforeClass()
     public void setBaseUri() throws Exception {
         setupServiceRequestSpecificationBuilderForDataLayer();
@@ -31,7 +25,7 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         validation = new Validations();
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in  field and verify response body")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in practice id and verify response body")
     public void testCreatePracticesUsingValidDetails() throws IOException {
         createPracticeApiResponse = sharedInfo.savePracticeResourceWithValidInputs(Integer.parseInt(testData.getProperty("valid.practice.id")), Integer.parseInt(testData.getProperty("owner.id")), testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
@@ -39,7 +33,7 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in  field and verify response body")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid details in practice id and verify response body")
     public void testCreatePracticesUsingINValidDetails() throws IOException {
         createPracticeApiResponse = sharedInfo.savePracticeResourceWithValidInputs(Integer.parseInt(testData.getProperty("non.existing.practice.id")), Integer.parseInt(testData.getProperty("non.existing.resource.id")), testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
@@ -49,7 +43,7 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         validation.verifyInvalidRequestValidation(createPracticeApiResponse);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in  field and verify response body")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Invalid details in resource id and verify response body")
     public void testCreatePracticesUsingINValidResource() throws IOException {
         createPracticeApiResponse = sharedInfo.savePracticeResourceWithValidInputs(Integer.parseInt(testData.getProperty("valid.practice.id")), Integer.parseInt(testData.getProperty("non.existing.resource.id")), testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
@@ -58,7 +52,7 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         validation.verifyInvalidRequestValidation(createPracticeApiResponse);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in  field and verify response body")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in practice id  and verify response body")
     public void testCreatePracticesUsingINValidpractice() throws IOException {
         createPracticeApiResponse = sharedInfo.savePracticeResourceWithValidInputs(Integer.parseInt(testData.getProperty("non.existing.practice.id")), Integer.parseInt(testData.getProperty("valid.resource.id.one")), testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
@@ -67,7 +61,7 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         validation.verifyInvalidRequestValidation(createPracticeApiResponse);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in  field and verify response body")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid inputs on practice id and resource id with Invalid GET Request")
     public void testCreatePracticesUsingINValidMethodCallGET() throws IOException {
         createPracticeApiResponse = sharedInfo.savePracticeResourceWithInValidMethodcall(Integer.parseInt(testData.getProperty("valid.practice.id")), Integer.parseInt(testData.getProperty("valid.resource.id.one")), testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
@@ -76,11 +70,12 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         validation.verifyErrorMessageInResponseForInvalidMethodCall(createPracticeApiResponse);
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter IN valid details in  field and verify response body")
+    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Empty values on practice id and resource id and verify response body")
     public void testCreatePracticesUsingINVALID_DATATYPE() throws IOException {
-        createPracticeApiResponse = sharedInfo.savePracticeResourceWithINValidDATATYPE (" "," ", testData.getProperty("api.en"), testData.getProperty("api.es"));
+        createPracticeApiResponse = sharedInfo.savePracticeResourceWithINValidDATATYPE(" ", " ", testData.getProperty("api.en"), testData.getProperty("api.es"));
         log("Validating Response code for API");
         CCUtils.responseTimeValidation(createPracticeApiResponse);
         CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 404);
+        validation.verifyErrorInResponseForInvalidUrl(createPracticeApiResponse);
     }
-    }
+}
