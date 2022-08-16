@@ -179,7 +179,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_DL(brandId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
-	
+
 	public Response deleteBrandDetails(int brandId) {
 		String url = ApiPath.DELETE_BRAND_DETAILS_BL(brandId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
@@ -238,9 +238,69 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
-	public Response getResourcesForProviderWithValidInputs_DL_Invalid_DataType(String providerId, String practiceId, String urlType) {
+	public Response getResourcesForProviderWithValidInputs_DL_Invalid_DataType(String providerId, String practiceId,
+			String urlType) {
 		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getBrandList_DL(int orgId) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociateBrand_DL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> associateDeassociateBrandTemplate(Integer brandId, Boolean active) {
+		Map<String, Object> associateDeassociateBrandMap = new HashMap<String, Object>();
+		associateDeassociateBrandMap.put("brandId", brandId);
+		associateDeassociateBrandMap.put("active", active);
+		return associateDeassociateBrandMap;
+	}
+
+	public Response associateDeassociateBrandUsingEmptyPayload_DL(int orgId) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingInvalidMethodCall_DL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingInvalidUrl_DL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.INVALID_PATH_BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+	
+	public Response getAppointmentTypes_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypesInvalidMethodCall_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypesInvalidUrl_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_INVALID_PATH_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getAppointmentTypes_NullValues() {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

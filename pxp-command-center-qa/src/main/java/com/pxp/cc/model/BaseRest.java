@@ -42,15 +42,12 @@ public class BaseRest extends BaseTestNG {
 	}
 
 	public String getTokenValue() throws IOException {
-
 		RestAssured.baseURI = ccUser.getAuthBaseUrl();
 		Response response = given().auth().preemptive()
 				.basic(ccUser.getCommandCenterUser(), ccUser.getCommandCenterPassword()).when()
 				.post(ApiPath.POST_SIGNIN).then().log().all().extract().response();
-
 		String token = response.jsonPath().get("token").toString();
 		return token;
-
 	}
 
 	public void setupServiceRequestSpecBuilder() throws IOException {
@@ -83,4 +80,11 @@ public class BaseRest extends BaseTestNG {
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
+
+	public void setupQaServiceRequestSpecificationBuilderForDataLayer() throws IOException {
+		RestAssured.baseURI = testData.getProperty("qa.data.layer.service.base.url");
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
+				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
+	}
+
 }

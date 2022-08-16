@@ -54,6 +54,18 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//td[@class='mat-cell cdk-cell cdk-column-firstName mat-column-firstName ng-star-inserted'][1]")
 	private WebElement selectInternalUser;
 
+	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
+	private WebElement buttonClearAll;
+
+	@FindBy(xpath = "//span[contains(text(),'number of results found, please refine search further')]")
+	private WebElement errorToasterMessage;
+
+	@FindBy(id = "searchFirstNameInput")
+	private WebElement textboxFirstName;
+
+	@FindBy(id = "no-result")
+	private WebElement noResultsFound;
+
 	@FindBy(id = "mat-select-2")
 	private WebElement defaultItemsPerPage;
 
@@ -372,5 +384,37 @@ public class InternalUsersPage extends CCMainPage {
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
 			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
 		}
+	}
+
+	public void verifyClearAllButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
+		CCUtils.assertTrue(buttonClearAll.isDisplayed(),
+				"Clear All button is not displayed on var/reseller users page");
+		CCUtils.assertEquals(buttonClearAll.getText().trim(), "CLEAR ALL");
+		CCUtils.assertTrue(buttonClearAll.isEnabled(), "Clear All button is not enabled on var/reseller users page");
+	}
+
+	public void clickOnClearAllButton() {
+		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
+		javascriptClick(buttonClearAll);
+	}
+
+	public void verifyErrorMessageWhenNonExistingDataIsEntered(String firstName)
+			throws AWTException, InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(firstName);
+		log("Entered text in first name field is " + firstName);
+	}
+
+	public void verifyNoResultsFoundErrorMessageIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(noResultsFound, driver);
+		CCUtils.assertEquals(noResultsFound.getText().trim(), "No results found");
+		log("No results found error message is displayed");
+	}
+
+	public void verifyToasterMessageIsDisplayedIfMoreThanFiftyMatchesReturn() {
+		CCUtils.verifyAndWaitForElement(errorToasterMessage, driver);
+		CCUtils.assertEquals(errorToasterMessage.isDisplayed(), true);
+		log("number of results found, please refine search further error message is displayed");
 	}
 }
