@@ -2707,4 +2707,24 @@ public class Validations {
 
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-}
+	
+	public void verifyErrorResponseMessageForNonExistingAppointmentTypeId(Response response, String AppointmentTypeId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Appointment not found for id=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response) {
+		JsonPath jsonPath = new JsonPath(response.asString());
+		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("name"));
+		Log4jUtil.log("AppointmentType externalId in response body : " + jsonPath.get("externalId"));
+		Log4jUtil.log("AppointmentType duration in response body : " + jsonPath.get("duration"));
+		Log4jUtil.log("AppointmentType durationUnit in response body : " + jsonPath.get("durationUnit"));
+		Log4jUtil.log("AppointmentType status in response body : " + jsonPath.get("status"));
+		Log4jUtil.log("Categories in response body : " + jsonPath.get("categories"));
+		}
+	}
+	
+	
