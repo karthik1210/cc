@@ -740,4 +740,17 @@ public class ApiPath {
 	}
 	
 	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL+ "/v1/appointment-types/null";
+	
+	public static final String FETCH_LIST_OF_BRANDS_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brands";
+	}
+	
+	public static final String FETCH_LIST_OF_BRANDS_BL_INVALID_ORG(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"!3w/brands";
+	}
+	
+	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
+	}
+
 }
