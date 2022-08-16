@@ -204,22 +204,22 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).body(createBrandPayload).when().put(url).then().extract().response();
 	}
 	
-	public Response fetchListOfBrands_DL(int orgId) {
+	public Response fetchListOfBrands_BL(int orgId) {
 		return given().spec(requestSpec).when().get(ApiPath.FETCH_LIST_OF_BRANDS_BL(orgId)).then().extract()
 				.response();
 	}
 	
-	public Response fetchListOfBrandsInvalidOrgId_DL(int orgId) {
+	public Response fetchListOfBrandsInvalidOrgId_BL(int orgId) {
 		return given().spec(requestSpec).when().get(ApiPath.FETCH_LIST_OF_BRANDS_BL_INVALID_ORG(orgId)).then().extract()
 				.response();
 	}
 	
-	public Response fetchListOfBrandsInvalidHTTPMethod_DL(int orgId) {
+	public Response fetchListOfBrandsInvalidHTTPMethod_BL(int orgId) {
 		return given().spec(requestSpec).when().post(ApiPath.FETCH_LIST_OF_BRANDS_BL(orgId)).then().extract()
 				.response();
 	}
 	
-	public Response fetchListOfBrandsInvalidUrl_DL(int orgId) {
+	public Response fetchListOfBrandsInvalidUrl_BL(int orgId) {
 		return given().spec(requestSpec).when().get(ApiPath.FETCH_LIST_OF_BRANDS_INVALID_URL_BL(orgId)).then().extract()
 				.response();
 	}
