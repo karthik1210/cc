@@ -37,7 +37,7 @@ public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 		brandValidations.verifyNoOfBrandsInResponseForExistingOrgId(getListofBrandsResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 204 for fetching brands for non-existing org id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 400 and error message for fetching brands for non-existing org id")
 	public void tesResponseCodeForGetListOfBrandsForNonExistingOrgId() throws IOException {
 		getListofBrandsResponse = brandsInfo
 				.fetchListOfBrands_BL(Integer.parseInt(testData.getProperty("get.list.non.existing.org.brands")));
@@ -74,7 +74,7 @@ public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 		validations.verifyErrorMessageInResponseForInvalidPostMethodCall(getListofBrandsResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 405 for fetching brands for existing org id for invalid url")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 404 for fetching brands for existing org id for invalid url")
 	public void testErrorResponseCodeForGetListOfBrandsForInvalidUrl() throws IOException {
 		getListofBrandsResponse = brandsInfo
 				.fetchListOfBrandsInvalidUrl_BL(Integer.parseInt(testData.getProperty("get.list.org.brands")));
