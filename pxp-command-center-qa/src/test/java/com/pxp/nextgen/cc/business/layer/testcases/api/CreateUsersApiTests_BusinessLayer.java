@@ -23,7 +23,7 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -229,27 +229,26 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 	public void testCreateNewInternalUser() throws IOException {
 		logStep("Create internal user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internal.roleId.qa")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(null, null, null, "Internal",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(id);
 		logStep("Validating response information");
-		String expiryDate = testData.getProperty("internalUser.status.msg").concat(CCUtils.dateformatter());
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse, null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber.toString(), testData.getProperty("api.user.userStatus"), expiryDate);
+				mobileNumber.toString());
+
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user  and fetch newly created client user details using user id")
@@ -289,10 +288,10 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer(null,
+				null, null, "VAReseller", testData.getProperty("api.user.firstName"),
 				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
+				testData.getProperty("varReseller.user.userStatus"), null,null,
 				null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
@@ -304,8 +303,7 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse, null, "VAReseller",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber.toString(), testData.getProperty("varReseller.user.userStatus"),
-				testData.getProperty("api.status.msg"));
+				mobileNumber.toString());
 	}
 
 }

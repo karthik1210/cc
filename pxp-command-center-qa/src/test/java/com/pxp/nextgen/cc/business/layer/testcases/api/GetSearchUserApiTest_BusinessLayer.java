@@ -27,7 +27,7 @@ public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
-        setupServiceRequestSpecificationBuilder();
+    	setupQaServiceRequestSpecificationBuilder();
         userInfo = new UserInfo();
         validation = new Validations();
     }
@@ -178,45 +178,56 @@ public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
     public Object[] searchUserDetailsWithValidEmailInput() {
         Object[][] obj = new Object[][] {
                 { testData.getProperty("user.type.Internal").trim(), null, null,
-                        testData.getProperty("api.full.email.id").trim(), null, null, null, null, null,null,
+                        testData.getProperty("api.full.email.id.qa").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.Internal").trim(), null, null,
                         testData.getProperty("api.partial.email.id").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.Internal").trim(), null, null,null,null,
                 testData.getProperty("api.full.mobile.number").trim(), null, null, null, null,
                 (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
+                
         { testData.getProperty("user.type.Internal").trim(), null, null,null,null,
                 testData.getProperty("api.partial.mobile.number").trim(), null, null, null, null,
                 (testData.getProperty("api.page.no").trim()),
                 (testData.getProperty("api.page.size").trim()) },
+        
                 { testData.getProperty("user.type.Client").trim(), null, null,
-                testData.getProperty("api.full.client.emailId").trim(), null, null, null, null, null,null,
+                testData.getProperty("api.full.client.emailId.qa").trim(), null, null, null, null, null,null,
                 (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
+                
     { testData.getProperty("user.type.Client").trim(), null, null,
-            testData.getProperty("api.partial.client.emailId").trim(), null, null, null, null, null,null,
+            testData.getProperty("api.partial.client.emailId.qa").trim(), null, null, null, null, null,null,
             (testData.getProperty("api.page.no").trim()),
             (testData.getProperty("api.page.size").trim()) },
+    
                 { testData.getProperty("user.type.Client").trim(), null, null,null,null,
-                        testData.getProperty("api.full.client.mobilenumber").trim(), null, null, null, null,
+                        testData.getProperty("api.full.client.mobilenumber.qa").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.Client").trim(), null, null,null,null,
-                        testData.getProperty("api.partial.client.mobilenumber").trim(), null, null, null, null,
+                        testData.getProperty("api.partial.client.mobilenumber.qa").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,
-                        testData.getProperty("api.full.vareseller.email").trim(), null, null, null, null, null,null,
+                        testData.getProperty("api.full.vareseller.email.qa").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,
-                        testData.getProperty("api.partial.vareseller.email").trim(), null, null, null, null, null,null,
+                        testData.getProperty("api.partial.vareseller.email.qa").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,null,null,
-                        testData.getProperty("api.full.VAResller.mobile").trim(), null, null, null, null,
+                        testData.getProperty("api.full.VAResller.mobile.qa").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
+                
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,null,null,
-                        testData.getProperty("api.partial.varesellser.mobile").trim(), null, null, null, null,
+                        testData.getProperty("api.partial.varesellser.mobile.qa").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) }
         };
