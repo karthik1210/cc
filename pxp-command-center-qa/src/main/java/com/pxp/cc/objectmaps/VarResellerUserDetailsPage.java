@@ -13,13 +13,13 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	@FindBy(id = "backBtn")
 	private WebElement backButton;
 
-	@FindBy(id = "editDetailsBtn")
+	@FindBy(id = "editUser")
 	private WebElement buttonEditVarResellerUser;
 
-	@FindBy(id = "cancelEdit")
+	@FindBy(id = "cancelUser")
 	private WebElement buttonCancel;
 
-	@FindBy(id = "saveDetail")
+	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
 	@FindBy(xpath = "//button[@class='mat-menu-trigger menu-button']")
@@ -58,6 +58,10 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	public void verifyVarResellerUserDetailsPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
+		CCUtils.assertTrue(labelPageTitle.isDisplayed(),
+				"VAR/Reseller user details page title is not displayed on screen");
+		String title = labelPageTitle.getText().trim();
+		CCUtils.assertEquals(title.trim(), "User Details");
 		CCUtils.assertEquals(labelPageTitle.isDisplayed(), true);
 		log("VarReseller user details page title is displayed on screen");
 	}
@@ -83,13 +87,13 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	public void clickCancel() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		buttonCancel.click();
+		javascriptClick(buttonCancel);
 		log("Clicked on cancel button");
 	}
 
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
-		buttonSave.click();
+		javascriptClick(buttonSave);
 		logStep("Clicked on save button");
 	}
 
