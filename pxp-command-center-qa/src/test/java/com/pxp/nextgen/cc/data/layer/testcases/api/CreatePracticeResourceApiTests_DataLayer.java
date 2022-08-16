@@ -78,4 +78,5 @@ public class CreatePracticeResourceApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 404);
         validation.verifyErrorInResponseForInvalidUrl(createPracticeApiResponse);
     }
+
 }

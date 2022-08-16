@@ -753,4 +753,15 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
 	}
 
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_URL(int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resourcess/" + resourceId;
+	}
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(String practiceId, String resourceId){
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+
+	}
+
 }
