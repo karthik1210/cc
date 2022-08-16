@@ -20,7 +20,7 @@ public class ActivateDeactivateInternalUserApiTests_BusinessLayer extends BaseRe
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -28,7 +28,7 @@ public class ActivateDeactivateInternalUserApiTests_BusinessLayer extends BaseRe
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Modify the status of single internal user from active to inactive and inactive to active and verify response body")
 	public void testActivateDeactivateSingleInternalUser() throws IOException {
 		ArrayList<Integer> userIds = new ArrayList<Integer>();
-		userIds.add(Integer.parseInt(testData.getProperty("internal.user.id.one")));
+		userIds.add(Integer.parseInt(testData.getProperty("internal.user.id.one.qa")));
 		logStep("Modify the status of internal user from active to inactive");
 		activateDeactivateUserApiResponse = userInfo.activateDeactivateUsers_BL(testData.getProperty("status.inactive"),
 				userIds);
