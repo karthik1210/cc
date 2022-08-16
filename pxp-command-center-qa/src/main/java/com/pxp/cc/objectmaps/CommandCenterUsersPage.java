@@ -54,6 +54,16 @@ public class CommandCenterUsersPage extends CCMainPage {
 		else
 			log("Internal users tab is not displayed on command center users page");
 	}
+	
+	public InternalUsersPage verifyInternalUsersTabByDefaultSelectedInCCUsers() {
+		log("Verifying internal users tab is by default selected in command center user page");
+		CCUtils.verifyAndWaitForElement(tabTitleInternalUsers, driver);
+		if (tabInternalUsers.isDisplayed() == true && tabTitleInternalUsers.getText().trim().equals("INTERNAL USERS"))
+			CCUtils.assertEquals(tabInternalUsers.getAttribute("aria-selected"), "true");
+		else
+			log("Internal users tab is not displayed on command center users page");
+		return PageFactory.initElements(driver, InternalUsersPage.class);
+	}
 
 	public ClientUsersPage clickOnClientUsersTab() {
 		CCUtils.verifyAndWaitForElement(tabClientUsers, driver);
@@ -67,7 +77,6 @@ public class CommandCenterUsersPage extends CCMainPage {
 		tabVarResellerUsers.click();
 		log("Clicked on var/reseller users tab");
 		return PageFactory.initElements(driver, VarResellerUsersPage.class);
-
 	}
 
 }
