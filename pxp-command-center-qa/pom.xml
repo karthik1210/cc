@@ -67,10 +67,10 @@
 			<version>20201115</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
-			
+
 			<!-- Suire Fire Test Running Plugin !!! -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -82,7 +82,7 @@
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 

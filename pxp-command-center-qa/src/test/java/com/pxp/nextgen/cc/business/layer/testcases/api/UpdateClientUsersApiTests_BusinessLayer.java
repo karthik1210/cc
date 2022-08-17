@@ -37,24 +37,27 @@ public class UpdateClientUsersApiTests_BusinessLayer extends BaseRest {
 		String firstName = testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		int userId = Integer.parseInt(testData.getProperty("existing.client.userid"));
+		int userId = Integer.parseInt(testData.getProperty("existing.client.userid.one.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("api.clientUser.roleId")));
 		logStep("Modify all the existing details of Client user");
 		updateClientUserDetailsApiResponse = userInfo.updateClientUser_BusinessLayer(null, "Client", firstName,
-				lastName, userName, email, mobileNumber, testData.getProperty("user.status.active"),
-				testData.getProperty("api.clientId.id"), null, testData.getProperty("api.provider.id"), null, roleIds,
-				userId);
+				lastName, userName, email, mobileNumber, testData.getProperty("user.status.no.roles.assigned"),
+				testData.getProperty("api.clientId.id"), null, null, null, roleIds, userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientUserDetailsApiResponse);
 		CCUtils.assertEquals(updateClientUserDetailsApiResponse.getStatusCode(), 200);
+		logStep("Verify existing Client user updated");
+		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch existing client user details and update null value in mandatory fields then validate error message")
 	public void testErrorMessagesForMandatoryClientFields() throws IOException {
 		logStep("Fetch existing client user details with existing client userid");
-		int userId = Integer.parseInt(testData.getProperty("existing.client.userid"));
+		int userId = Integer.parseInt(testData.getProperty("existing.client.userid.one.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("api.clientUser.roleId")));
@@ -74,7 +77,7 @@ public class UpdateClientUsersApiTests_BusinessLayer extends BaseRest {
 		String firstName = testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		int userId = Integer.parseInt(testData.getProperty("existing.client.userid"));
+		int userId = Integer.parseInt(testData.getProperty("existing.client.userid.one.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("api.clientUser.roleId")));
@@ -102,9 +105,9 @@ public class UpdateClientUsersApiTests_BusinessLayer extends BaseRest {
 		roleIds.add(Integer.parseInt(testData.getProperty("api.clientUser.roleId")));
 		logStep("Enter existing email id details of Client user while updating email id");
 		updateClientUserDetailsApiResponse = userInfo.updateClientUser_BusinessLayer(null, "Client", firstName,
-				lastName, userName, testData.getProperty("valid.user.email"), mobileNumber,
-				testData.getProperty("user.status.active"), testData.getProperty("api.clientId.id"), null,
-				testData.getProperty("api.provider.id"), null, roleIds, userId);
+				lastName, userName, testData.getProperty("valid.user.email.qa"), mobileNumber,
+				testData.getProperty("user.status.no.roles.assigned"), testData.getProperty("api.clientId.id"), null,
+				null, null, roleIds, userId);
 		logStep("Validating response information");
 		CCUtils.assertEquals(updateClientUserDetailsApiResponse.getStatusCode(), 409);
 		validation.verifyErrorResponseForDuplicateClientEmailId(updateClientUserDetailsApiResponse);
@@ -118,7 +121,8 @@ public class UpdateClientUsersApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String firstName = testData.getProperty("valid.user.first.name").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("valid.user.last.name").concat(CCUtils.generateAlphaNumericString(5));
-		int userId = Integer.parseInt(testData.getProperty("existing.client.userid"));
+		
+		int userId = Integer.parseInt(testData.getProperty("existing.client.userid.one.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("api.clientUser.roleId")));
@@ -137,7 +141,7 @@ public class UpdateClientUsersApiTests_BusinessLayer extends BaseRest {
 		logStep("Fetch existing client user details with existing client userid");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		int userId = Integer.parseInt(testData.getProperty("existing.client.userid"));
+		int userId = Integer.parseInt(testData.getProperty("existing.client.userid.one.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("api.clientUser.roleId")));

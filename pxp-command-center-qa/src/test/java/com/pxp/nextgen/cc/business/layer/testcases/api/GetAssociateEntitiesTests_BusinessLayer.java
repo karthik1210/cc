@@ -20,7 +20,7 @@ public class GetAssociateEntitiesTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -57,7 +57,7 @@ public class GetAssociateEntitiesTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code for existing userId where associate entities are not added")
 	public void testMessageForExistingUserIdAWithoutAssociatedEntities() throws IOException {
-		int userId = Integer.parseInt(testData.getProperty("api.user.id"));
+		int userId = Integer.parseInt(testData.getProperty("api.user.id.qa"));
 		fetchAssociateEntitiesApiResponse = userInfo.getAssociateEntities(userId);
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
 		CCUtils.assertEquals(fetchAssociateEntitiesApiResponse.getStatusCode(), 204);
@@ -66,7 +66,7 @@ public class GetAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code for existing userId where associate entities are added")
 	public void testMessageForExistingUserIdWithAssociatedEntities() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
+		int userId = Integer.parseInt(testData.getProperty("existing.user.id.qa"));
 		fetchAssociateEntitiesApiResponse = userInfo.getAssociateEntities(userId);
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
 		CCUtils.assertEquals(fetchAssociateEntitiesApiResponse.getStatusCode(), 200);
