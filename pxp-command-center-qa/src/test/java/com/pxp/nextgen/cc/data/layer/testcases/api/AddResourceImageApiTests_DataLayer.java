@@ -30,21 +30,23 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add resource Url functionality")
 	public void testAddImageUrlFunctionality() throws Exception {
 		logStep("Get resource ImageUrl Details");
-		getResourceDetailsApiResponse = sharedInfo.getResourceDetails_DL(Integer.parseInt("valid.resource.id.two"));
+		getResourceDetailsApiResponse = sharedInfo
+				.getResourceDetails_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
 		logStep("Verify imageurl is not present for selected resource");
 		Boolean value = sharedServiceApiValidations.validateInageUrlValueIsNull(getResourceDetailsApiResponse);
 		if (value.equals(false)) {
 			logStep("delete resource imageurl");
 			deleteResourceImageApiResponse = sharedInfo
-					.deleteResourceImage_DL(Integer.parseInt("valid.resource.id.two"));
+					.deleteResourceImage_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
 			logStep("Resource image url is deleted");
-			getResourceDetailsApiResponse = sharedInfo.getResourceDetails_DL(Integer.parseInt("valid.resource.id.two"));
+			getResourceDetailsApiResponse = sharedInfo
+					.getResourceDetails_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
 			CCUtils.assertTrue(sharedServiceApiValidations.validateInageUrlValueIsNull(getResourceDetailsApiResponse),
 					"imageUrl is present");
 		}
 		logStep("Add Resouce image url");
-		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(Integer.parseInt("valid.resource.id.two"),
-				testData.getProperty("imageurl"));
+		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(
+				Integer.parseInt(testData.getProperty("valid.resource.id.two")), testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 200);
@@ -53,18 +55,20 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid resourceId and verify response body ")
 	public void testErrorResponseForInvalidResourceId() throws Exception {
 		logStep("Enter invalid resource id");
-		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(Integer.parseInt("non.existing.resource.id"),
-				testData.getProperty("imageurl"));
+		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(
+				Integer.parseInt(testData.getProperty("non.existing.resource.id")), testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 400);
-		sharedServiceApiValidations.verifyErrorResponseForInvalidResourceId(addResourceImageUrlApiResponse, 40100);
+		sharedServiceApiValidations.verifyErrorResponseForInvalidResourceId(addResourceImageUrlApiResponse,
+				Integer.parseInt(testData.getProperty("non.existing.resource.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in image url and verify response body ")
 	public void testErrorResponseForBlankSpace() throws Exception {
 		logStep("Enter blank value in imageUrl field");
-		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(Integer.parseInt("valid.resource.id.two"), "");
+		addResourceImageUrlApiResponse = sharedInfo
+				.addResourceImage_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 400);
@@ -75,7 +79,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseForEmptyPayload() throws Exception {
 		logStep("Enter empty payload");
 		addResourceImageUrlApiResponse = sharedInfo
-				.addResourceImageWithEmptyPayload_DL(Integer.parseInt("valid.resource.id.two"));
+				.addResourceImageWithEmptyPayload_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 400);
@@ -85,7 +89,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of PATCH")
 	public void testErrorForInvalidMethodCall() throws IOException {
 		addResourceImageUrlApiResponse = sharedInfo.addResourceImageUsingInvalidMethodCall_DL(
-				Integer.parseInt("valid.resource.id.two"), testData.getProperty("imageurl"));
+				Integer.parseInt(testData.getProperty("valid.resource.id.two")), testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 405);
@@ -95,7 +99,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorForInvalidUrl() throws IOException {
 		addResourceImageUrlApiResponse = sharedInfo.addResourceImageUsingInvalidUrl_DL(
-				Integer.parseInt("valid.resource.id.two"), testData.getProperty("imageurl"));
+				Integer.parseInt(testData.getProperty("valid.resource.id.two")), testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 404);
