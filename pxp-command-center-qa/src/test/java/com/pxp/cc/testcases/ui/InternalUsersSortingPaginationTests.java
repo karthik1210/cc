@@ -25,7 +25,7 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 		commandCenterUsersPage = clientDirectoryPage.clickOnCommandCenterUsersIcon();
 		logStep("Verify user redirected to command center users page");
 		commandCenterUsersPage.verifyUserRedirectedToCommandCenterPage();
-		logStep("Verify internal users tab is by default selected");
+		logStep("Verify internal users tab should be selected by default");
 		internalUsersPage = commandCenterUsersPage.verifyInternalUsersTabByDefaultSelectedInCCUsers();
 		internalUsersPage = new InternalUsersPage(driver);
 	}

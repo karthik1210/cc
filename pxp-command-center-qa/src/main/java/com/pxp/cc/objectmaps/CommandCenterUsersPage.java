@@ -47,7 +47,7 @@ public class CommandCenterUsersPage extends CCMainPage {
 	}
 
 	public void verifyInternalUsersTabByDefaultSelected() {
-		log("Verifying internal users tab is by default selected in command center user page");
+		log("Verify 'Internal User Tab' should be selected by default on command center user page");
 		CCUtils.verifyAndWaitForElement(tabTitleInternalUsers, driver);
 		if (tabInternalUsers.isDisplayed() == true && tabTitleInternalUsers.getText().trim().equals("INTERNAL USERS"))
 			CCUtils.assertEquals(tabInternalUsers.getAttribute("aria-selected"), "true");
@@ -56,7 +56,7 @@ public class CommandCenterUsersPage extends CCMainPage {
 	}
 	
 	public InternalUsersPage verifyInternalUsersTabByDefaultSelectedInCCUsers() {
-		log("Verifying internal users tab is by default selected in command center user page");
+		log("Verify 'Internal User Tab' should be selected by default on command center user page");
 		CCUtils.verifyAndWaitForElement(tabTitleInternalUsers, driver);
 		if (tabInternalUsers.isDisplayed() == true && tabTitleInternalUsers.getText().trim().equals("INTERNAL USERS"))
 			CCUtils.assertEquals(tabInternalUsers.getAttribute("aria-selected"), "true");
