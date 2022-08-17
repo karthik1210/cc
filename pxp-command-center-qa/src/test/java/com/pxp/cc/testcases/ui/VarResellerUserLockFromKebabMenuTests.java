@@ -134,26 +134,4 @@ public class VarResellerUserLockFromKebabMenuTests extends CommandCenterGenericT
 		varResellerUserDetailsPage.verifyLockUserButtonIsNotDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock user button")
-	public void testVarResellerUserLockButton() throws Exception {
-		logStep("Search and select active user");
-		searchOptionsPage = varResellerUsersPage.clickOnSearchOptionsButton();
-		List<String> userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.selectUserStatus(userStatusList);
-		searchOptionsPage.clickToSearchButton();
-		String userStatus = varResellerUsersPage.getVarResellerUserStatus();
-		varResellerUsersPage.selectUser();
-		varResellerUserDetailsPage = new VarResellerUserDetailsPage(driver);
-		varResellerUserDetailsPage.verifyVarResellerUserDetailsPageTitle();
-		logStep("Verify selected VarReseller user status is same on VarReseller user details page");
-		varResellerUserDetailsPage.verifySelectedUserStatusIsSameOnVarResellerUserDetailsPage(userStatus);
-		varResellerUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Click on the lock user button in the kebab menu");
-		varResellerUserDetailsPage.clickOnLockUserButton();
-		commonMethods = new CommonMethods(driver);
-		commonMethods.verifyToasterMessage("Success! User status has been successfully locked");
-		commonMethods.closeToasterMessage();
-	}
-
 }
