@@ -50,7 +50,7 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change as per 'Items Per Page value")
 	public void testAllPaginationButtonsClickable() throws InterruptedException, AWTException {
 		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
 		CCUtils.assertEquals(internalUsersPage.getDefaultItemsPerPage(), "10");
