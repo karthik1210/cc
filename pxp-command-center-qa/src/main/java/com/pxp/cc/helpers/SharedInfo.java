@@ -283,5 +283,24 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
 				.response();
 	}
+	
+	public Response getAppointmentTypes_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
+	public Response getAppointmentTypesInvalidMethodCall_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypesInvalidUrl_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_INVALID_PATH_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getAppointmentTypes_NullValues() {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

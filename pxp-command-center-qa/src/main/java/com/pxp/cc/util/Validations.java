@@ -1863,8 +1863,7 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
-			String firstName, String lastName, String userName, String email, String mobile, String userStatus,
-			String statusMsg) throws NullPointerException {
+			String firstName, String lastName, String userName, String email, String mobile) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1873,13 +1872,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
-		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
-		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("client"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("provider"), null);
-		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
-
+		
 	}
 
 	public void verifyErrorResponseForExistingUsername(Response response) throws IOException {
@@ -1929,7 +1922,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getString("message"),
 				"JSON parse error: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value\n at [Source: (PushbackInputStream); line: 1, column: 2] (through reference chain: java.util.ArrayList[0])");
 	}
-
+	public void verifyNonExistingAssociatedEntities(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
+		CCUtils.assertEquals(jsonpath.getString("message"), "Entities not found");
+	}
+	
 	public void getAssociatedEntities(Response response, ArrayList<Object> orgId) throws IOException {
 		for (int i = 0; i < orgId.size(); i++) {
 			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
@@ -2233,11 +2231,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyInvalidRoleIdApiResponse(Response response, int userId, String roleId) throws IOException {
+	public void verifyInvalidRoleIdApiResponse(Response response, int userId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Role Assignment not found for the combination of roleId=" + roleId + ", ordId=" + userId
-						+ " and staffId=4054 ");
+				"User not found for userId=" + userId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2617,7 +2614,6 @@ public class Validations {
 		Log4jUtil.log("Display total count of locations in response body : " + jsonPath.get("totalCount"));
 		Log4jUtil.log("Display list of clients in response body : " + jsonPath.get("data"));
 		Log4jUtil.log("Get the size of clients in response body : " + jsonPath.getInt("data.size()"));
-		Log4jUtil.log("Page Number : " + jsonPath.getInt("pageNo"));
 		Log4jUtil.log("Items(Clients) per Page : " + jsonPath.getInt("pageSize"));
 		Log4jUtil.log("Comparing Searched Items names/ids with user data received in Response body.");
 		for (int dataArrayIteration = 0; dataArrayIteration < jsonPath.getInt("data.size()"); dataArrayIteration++) {
@@ -2711,4 +2707,24 @@ public class Validations {
 
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-}
+	
+	public void verifyErrorResponseMessageForNonExistingAppointmentTypeId(Response response, String AppointmentTypeId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Appointment not found for id=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response) {
+		JsonPath jsonPath = new JsonPath(response.asString());
+		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("name"));
+		Log4jUtil.log("AppointmentType externalId in response body : " + jsonPath.get("externalId"));
+		Log4jUtil.log("AppointmentType duration in response body : " + jsonPath.get("duration"));
+		Log4jUtil.log("AppointmentType durationUnit in response body : " + jsonPath.get("durationUnit"));
+		Log4jUtil.log("AppointmentType status in response body : " + jsonPath.get("status"));
+		Log4jUtil.log("Categories in response body : " + jsonPath.get("categories"));
+		}
+	}
+	
+	
