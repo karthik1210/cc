@@ -135,8 +135,7 @@ public class UserInfo extends BaseRest {
 		Map<String, Object> createNewUserPayload = postCreateUser(authId, userType, firstName, lastName, userName,
 				email, mobile, userStatus, clientId, resellerId, providerId, expiryDate, roleIds);
 		String url = ApiPath.USER_BL;
-		return given().spec(requestSpec).header("ClientId", ClientId).header("PoolId", PoolId)
-				.body(createNewUserPayload).when().post(url).then().extract().response();
+		return given().spec(requestSpec).body(createNewUserPayload).when().post(url).then().extract().response();
 	}
 
 	public Response createNewUser_BusinessLayerUsingInvalidUrl(String ClientId, String PoolId, String authId,

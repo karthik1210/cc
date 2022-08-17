@@ -705,6 +705,18 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
+	public static final String FETCH_LIST_OF_BRANDS_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brands";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_DL_INVALID_ORG(int orgId) {
+		return SHARED_DL + "/v1/orgs/" + orgId + "!3w/brands";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brandsinvalidurl";
+	}
+
 	public static final String BRAND_LIST_DL(int orgId) {
 		return SHARED_DL + "/v1/orgs/" + orgId + "/brands";
 	}
@@ -740,4 +752,17 @@ public class ApiPath {
 	public static final String INVALID_PATH_RESOURCE_IMAGE_DL(int resourceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId + "/imagessss";
 	}
+
+	public static final String FETCH_LIST_OF_BRANDS_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brands";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_BL_INVALID_ORG(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "!3w/brands";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brandsinvalidurl";
+	}
+
 }

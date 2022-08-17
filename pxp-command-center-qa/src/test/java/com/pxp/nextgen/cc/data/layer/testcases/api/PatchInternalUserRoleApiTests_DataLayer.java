@@ -94,7 +94,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
 		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyInvalidRoleIdApiResponse(updateRoleAssociationApiResponse, orgId, roleId);
+		validation.verifyInvalidRoleIdApiResponse(updateRoleAssociationApiResponse, userId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
@@ -146,7 +146,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
 		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 400);
-		validation.verifyInvalidRoleIdApiResponse(updateRoleAssociationApiResponse, orgId, roleId);
+		validation.verifyInvalidRoleIdApiResponse(updateRoleAssociationApiResponse, userId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid userId & invalid orgId and validate error message")
