@@ -20,7 +20,7 @@ public class GetUserDetailsApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -50,49 +50,47 @@ public class GetUserDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch internal user detail using existing internal user id in userId field ")
 	public void fetchInternalUserDetails() throws NullPointerException {
 		logStep("Enter  existing internal userid");
-		int userId= Integer. parseInt(testData.getProperty("existing.internal.userid"));
+		int userId= Integer. parseInt(testData.getProperty("existing.internal.userid.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse,
-				testData.getProperty("api.internal.authId"), "Internal", testData.getProperty("api.internal.firstName"),
-				testData.getProperty("api.internal.lastName"), testData.getProperty("api.internal.userName"),
-				testData.getProperty("api.internal.email"), testData.getProperty("api.internal.mobile"),
-				testData.getProperty("api.internal.userStatus"), "User created on 05/09/2022");
+		  validation.verifyUserDetailsResponseBodyForBusinessLayer(
+		  fetchUserDetailsApiResponse, testData.getProperty("api.internal.authId.qa"),
+		  "Internal", testData.getProperty("api.internal.firstName.qa"),
+		  testData.getProperty("api.internal.lastName.qa"),
+		  testData.getProperty("api.internal.userName.qa"),
+		  testData.getProperty("api.internal.email.qa"),
+		  testData.getProperty("api.internal.mobile.qa"));  
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch client user detail using existing client user id in userId field")
 	public void fetchClientUserDetails() throws NullPointerException {
 		logStep("Enter  existing client userid");
-		int userId= Integer. parseInt(testData.getProperty("existing.client.userid"));
-		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
-		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyClientUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse,
-				testData.getProperty("api.client.authId"), "Client", testData.getProperty("api.client.firstName"),
-				testData.getProperty("api.client.lastName"), testData.getProperty("api.client.userName"),
-				testData.getProperty("api.client.email"), testData.getProperty("api.client.mobile"),
-				testData.getProperty("api.client.userStatus"), testData.getProperty("api.client.id"),
-				testData.getProperty("api.client.name"), testData.getProperty("api.provider.id"),
-				testData.getProperty("api.provider.name"), "Role must be assigned for user to enroll");
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch var/reseller user detail using existing internal user id in userId field ")
-	public void fetchvarResellerUserDetails() throws NullPointerException {
-		logStep("Enter  existing var/reseller userid");
-		int userId= Integer. parseInt(testData.getProperty("existing.varReseller.userid"));
+		int userId= Integer. parseInt(testData.getProperty("existing.client.userid.qa"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse,
-				testData.getProperty("api.varReseller.authId"), "VAReseller",
-				testData.getProperty("api.varReseller.firstName"), testData.getProperty("api.varReseller.lastName"),
-				testData.getProperty("api.varReseller.userName"), testData.getProperty("api.varReseller.email"),
-				testData.getProperty("api.varReseller.mobile"), testData.getProperty("api.varReseller.userStatus"),
-				"Role must be assigned for user to enroll");
+				testData.getProperty("api.client.authId.qa"), "Client", testData.getProperty("api.client.firstName.qa"),
+				testData.getProperty("api.client.lastName.qa"), testData.getProperty("api.client.userName.qa"),
+				testData.getProperty("api.client.email.qa"), testData.getProperty("api.client.mobile.qa"));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch var/reseller user detail using existing internal user id in userId field ")
+	public void fetchvarResellerUserDetails() throws NullPointerException {
+		logStep("Enter  existing var/reseller userid");
+		int userId= Integer. parseInt(testData.getProperty("existing.varReseller.userid.qa"));
+		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse,
+				testData.getProperty("api.varReseller.authId.qa"), "VAReseller",
+				testData.getProperty("api.varReseller.firstName.qa"), testData.getProperty("api.varReseller.lastName.qa"),
+				testData.getProperty("api.varReseller.userName.qa"), testData.getProperty("api.varReseller.email.qa"),
+				testData.getProperty("api.varReseller.mobile.qa"));
 	}
 
 }

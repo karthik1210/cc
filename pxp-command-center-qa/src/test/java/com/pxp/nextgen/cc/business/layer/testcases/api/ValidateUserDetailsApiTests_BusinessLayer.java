@@ -20,7 +20,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -28,26 +28,26 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 	@DataProvider(name = "getDuplicateEmailDetails")
 	public Object[] getDetails() {
 		Object[][] obj = new Object[][] {
-				{ testData.getProperty("existing.internal.user.email").trim(), "xyz.xyz.abc@1234", "1000000001" },
-				{ testData.getProperty("existing.internal.user.email").trim().toLowerCase(), "xyz.xyz.abc@1234",
+				{ testData.getProperty("existing.internal.user.email.qa").trim(), "xyz.xyz.abc@1234", "1000000001" },
+				{ testData.getProperty("existing.internal.user.email.qa").trim().toLowerCase(), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ testData.getProperty("existing.internal.user.email").trim().toUpperCase(), "xyz.xyz.abc@1234",
+				{ testData.getProperty("existing.internal.user.email.qa").trim().toUpperCase(), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ CCUtils.reverseCase(testData.getProperty("existing.internal.user.email").trim()), "xyz.xyz.abc@1234",
+				{ CCUtils.reverseCase(testData.getProperty("existing.internal.user.email.qa").trim()), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ testData.getProperty("existing.client.user.email").trim(), "xyz.xyz.abc@1234", "1000000001" },
-				{ testData.getProperty("existing.client.user.email").trim().toLowerCase(), "xyz.xyz.abc@1234",
+				{ testData.getProperty("existing.client.user.email.qa").trim(), "xyz.xyz.abc@1234", "1000000001" },
+				{ testData.getProperty("existing.client.user.email.qa").trim().toLowerCase(), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ testData.getProperty("existing.client.user.email").trim().toUpperCase(), "xyz.xyz.abc@1234",
+				{ testData.getProperty("existing.client.user.email.qa").trim().toUpperCase(), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ CCUtils.reverseCase(testData.getProperty("existing.client.user.email").trim()), "xyz.xyz.abc@1234",
+				{ CCUtils.reverseCase(testData.getProperty("existing.client.user.email.qa").trim()), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ testData.getProperty("existing.reseller.user.email").trim(), "xyz.xyz.abc@1234", "1000000001" },
-				{ testData.getProperty("existing.reseller.user.email").trim().toLowerCase(), "xyz.xyz.abc@1234",
+				{ testData.getProperty("existing.reseller.user.email.qa").trim(), "xyz.xyz.abc@1234", "1000000001" },
+				{ testData.getProperty("existing.reseller.user.email.qa").trim().toLowerCase(), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ testData.getProperty("existing.reseller.user.email").trim().toUpperCase(), "xyz.xyz.abc@1234",
+				{ testData.getProperty("existing.reseller.user.email.qa").trim().toUpperCase(), "xyz.xyz.abc@1234",
 						"1000000001" },
-				{ CCUtils.reverseCase(testData.getProperty("existing.reseller.user.email").trim()), "xyz.xyz.abc@1234",
+				{ CCUtils.reverseCase(testData.getProperty("existing.reseller.user.email.qa").trim()), "xyz.xyz.abc@1234",
 						"1000000001" } };
 		return obj;
 	}
@@ -64,31 +64,31 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 	@DataProvider(name = "getDuplicateUserNameDetails")
 	public Object[] getUserDetails() {
 		Object[][] obj = new Object[][] {
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.internal.user.username").trim(),
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.internal.user.username.qa").trim(),
 						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.internal.user.username").trim().toLowerCase(),
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.internal.user.username.qa").trim().toLowerCase(),
 						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.internal.user.username").trim().toUpperCase(),
-						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com",
-						CCUtils.reverseCase(testData.getProperty("existing.internal.user.username").trim()),
-						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.client.user.username").trim(), "1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.client.user.username").trim().toLowerCase(),
-						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.client.user.username").trim().toUpperCase(),
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.internal.user.username.qa").trim().toUpperCase(),
 						"1000000001" },
 				{ "xyz.xyz.abc@gmail.com",
-						CCUtils.reverseCase(testData.getProperty("existing.client.user.username").trim()),
+						CCUtils.reverseCase(testData.getProperty("existing.internal.user.username.qa").trim()),
 						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.reseller.user.username").trim(),
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.client.user.username.qa").trim(), "1000000001" },
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.client.user.username.qa").trim().toLowerCase(),
 						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.reseller.user.username").trim().toLowerCase(),
-						"1000000001" },
-				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.reseller.user.username").trim().toUpperCase(),
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.client.user.username.qa").trim().toUpperCase(),
 						"1000000001" },
 				{ "xyz.xyz.abc@gmail.com",
-						CCUtils.reverseCase(testData.getProperty("existing.reseller.user.username").trim()),
+						CCUtils.reverseCase(testData.getProperty("existing.client.user.username.qa").trim()),
+						"1000000001" },
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.reseller.user.username.qa").trim(),
+						"1000000001" },
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.reseller.user.username.qa").trim().toLowerCase(),
+						"1000000001" },
+				{ "xyz.xyz.abc@gmail.com", testData.getProperty("existing.reseller.user.username.qa").trim().toUpperCase(),
+						"1000000001" },
+				{ "xyz.xyz.abc@gmail.com",
+						CCUtils.reverseCase(testData.getProperty("existing.reseller.user.username.qa").trim()),
 						"1000000001" } };
 		return obj;
 	}
@@ -107,11 +107,11 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 	public Object[] getCommandCenterUserDetails() {
 		Object[][] obj = new Object[][] {
 				{ "xyz.xyz.abc@gmail.com", "xyz.xyz.abc@1234",
-						testData.getProperty("existing.internal.user.mobile.number").trim() },
+						testData.getProperty("existing.internal.user.mobile.number.qa").trim() },
 				{ "xyz.xyz.abc@gmail.com", "xyz.xyz.abc@1234",
-						testData.getProperty("existing.client.user.mobile.number").trim() },
+						testData.getProperty("existing.client.user.mobile.number.qa").trim() },
 				{ "xyz.xyz.abc@gmail.com", "xyz.xyz.abc@1234",
-						testData.getProperty("existing.reseller.user.mobile.number").trim() } };
+						testData.getProperty("existing.reseller.user.mobile.number.qa").trim() } };
 		return obj;
 	}
 
@@ -137,9 +137,9 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testDuplicateUserDetailsUsingInvalidUrl() throws IOException {
 		getValidateUserApiResponse = userInfo.validateUserDetailsUsingInvalidUrl(
-				testData.getProperty("existing.internal.user.email").trim(),
-				testData.getProperty("existing.internal.user.username").trim(),
-				testData.getProperty("existing.internal.user.mobile.number").trim());
+				testData.getProperty("existing.internal.user.email.qa").trim(),
+				testData.getProperty("existing.internal.user.username.qa").trim(),
+				testData.getProperty("existing.internal.user.mobile.number.qa").trim());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
 		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 404);

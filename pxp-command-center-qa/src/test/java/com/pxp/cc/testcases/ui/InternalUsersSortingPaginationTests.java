@@ -110,7 +110,6 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 	public void testLastPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
 		String defaultItemsPerPage = internalUsersPage.getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
-		// log("Print the RHS Pagination : " + internalUsersPage.getRHSPagination());
 		internalUsersPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 	}
 
@@ -122,7 +121,6 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 		String itemsPerPage = internalUsersPage.clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "20");
 		log("get default pagination : " + internalUsersPage.getDefaultPagination());
-		// log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
 		internalUsersPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
@@ -131,7 +129,6 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 		internalUsersPage.clickItemsPerPageDropdown();
 		String itemsPerPage = internalUsersPage.clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "50");
-		// log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
 		internalUsersPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
@@ -140,7 +137,6 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 		internalUsersPage.clickItemsPerPageDropdown();
 		String itemsPerPage = internalUsersPage.clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "100");
-		// log("Print the RHS Pagination : " + clientDirectoryPage.getRHSPagination());
 		internalUsersPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
@@ -149,7 +145,6 @@ public class InternalUsersSortingPaginationTests extends CommandCenterGenericTes
 		internalUsersPage.clickItemsPerPageDropdown();
 		String itemsPerPage = internalUsersPage.clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "200");
-		// log("Print the RHS Pagination : " + internalUsersPage.getRHSPagination());
 		internalUsersPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
