@@ -763,5 +763,19 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
 
 	}
+	public static final String UPDATE_BRAND_IMAGE_DL(int brandId ) {
+		return SHARED_DL + "/v1/brands/" + brandId  + "/logo";
+	}
+	
+	public static final String DETETE_BRAND_IMAGE_DL(int brandId,String id ) {
+		return SHARED_DL + "/v1/brands/"+ brandId + "/images/" + id;
+	}
+	
+	public static final String  DETETE_BRAND_IMAGE_INVALID_URL_DL(int brandId, String id ) {
+		return SHARED_DL + "/v1/brands/"+ brandId + "/imagesssss/" + id;
+	}
 
+	public static final String DETETE_BRAND_IMAGE_NullValue_DL() {
+		return SHARED_DL + "/v1/brands/brandId/images/id";
+	}
 }
