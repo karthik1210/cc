@@ -23,13 +23,16 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 
 	@DataProvider(name = "invalidTestData")
 	public Object[] getInvalidTestData() {
-		Object[][] obj = new Object[][] { { testData.getProperty("invalid.user.first.name.one"),
-				testData.getProperty("invalid.user.last.name.one"), testData.getProperty("invalid.user.email.one"),
-				testData.getProperty("invalid.username.one"), testData.getProperty("invalid.user.mobile.number.one") },
+		Object[][] obj = new Object[][] {
+				{ testData.getProperty("invalid.user.first.name.one"),
+						testData.getProperty("invalid.user.last.name.one"),
+						testData.getProperty("invalid.user.email.one"), testData.getProperty("invalid.username.one"),
+						testData.getProperty("invalid.user.mobile.number.three") },
+
 				{ testData.getProperty("invalid.user.first.name.two"),
 						testData.getProperty("invalid.user.last.name.two"),
 						testData.getProperty("invalid.user.email.two"), testData.getProperty("invalid.username.two"),
-						testData.getProperty("invalid.user.mobile.number.two") },
+						testData.getProperty("invalid.user.mobile.number.three") },
 				{ testData.getProperty("invalid.user.first.name.three"),
 						testData.getProperty("invalid.user.last.name.three"),
 						testData.getProperty("invalid.user.email.three"),
@@ -53,6 +56,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search VAR/Reseller user popup")
 	public void testSearchVarResellerUserPopup() throws Exception {
+
 		logStep("Verify search VAR/Reseller user popup");
 		searchOptionsPage.verifySearchVarResellerUserPopup();
 	}
@@ -70,7 +74,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		logStep("Verify maximum character reached error message for firstname, last name,username, email field");
 		searchOptionsPage.verifyMaximumCharactersErrorMessage(CCUtils.generateAlphaNumericString(101),
 				CCUtils.generateAlphaNumericString(101), CCUtils.generateAlphaNumericStringIncludingSpecialChar(101),
-				CCUtils.generateNewEmail(101));
+				CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
@@ -78,6 +82,11 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		logStep("Enter invalid data in first name, last name, email, username and mobile number field and verify error message");
 		searchOptionsPage.verifyFieldErrorMessageWithInvalidData(getTestData[0], getTestData[1], getTestData[2],
 				getTestData[3], getTestData[4]);
+		searchOptionsPage.clickOnSearchButton();
+		varResellerUsersPage = new VarResellerUsersPage(driver);
+		logStep("Verify after clicking on search button  popup, user redirected to Var/Reseller users page");
+		varResellerUsersPage.verifyVarResellerUsersPageTitle();
+		varResellerUsersPage.verifyErrorMessageOnVarResellerUsersPage();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of clear button on search options popup")
@@ -108,9 +117,9 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search options when only single status checkbox is selected")
 	public void testSearchOptionsWithSingleCheckboxOfStatus() throws Exception {
 		List<String> userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.Active"));
+		userStatusList.add(testData.getProperty("user.status.active"));
 		List<String> enrollmentStatusList = new ArrayList<String>();
-		enrollmentStatusList.add(testData.getProperty("enrollment.status.Confirmed"));
+		enrollmentStatusList.add(testData.getProperty("enrollment.status.notsent"));
 		searchOptionsPage.selectEnrollmentStatusValues(enrollmentStatusList);
 		searchOptionsPage.selectUserStatus(userStatusList);
 		logStep("Click on search buton");
@@ -121,7 +130,6 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 				enrollmentStatusList);
 		logStep("Verify clear all button is displayed");
 		varResellerUsersPage.verifyClearAllButtonIsDisplayed();
-
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled ")
@@ -131,10 +139,10 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		enrollmentStatusList.add(testData.getProperty("enrollment.status.notsent"));
 		List<String> userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
-		searchOptionsPage.enterSearchTextInSearchFields(testData.getProperty("valid.user.first.name"),
-				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username"), testData.getProperty("valid.user.mobile.number"));
-		searchOptionsPage.enterSeachTextInVarResellerField(testData.getProperty("valid.user.var.reseller.name"));
+		searchOptionsPage.enterSearchTextInSearchFields(testData.getProperty("varreseller.user.first.name"),
+				testData.getProperty("varreseller.user.last.name"), testData.getProperty("varreseller.user.email"),
+				testData.getProperty("varreseller.username"), testData.getProperty("varreseller.user.mobile.number"));
+		searchOptionsPage.enterSeachTextInVarResellerField(testData.getProperty("valid.var.reseller.name"));
 		searchOptionsPage.selectEnrollmentStatusValues(enrollmentStatusList);
 		searchOptionsPage.selectUserStatus(userStatusList);
 		logStep("Click on search button on the search options popup");
@@ -144,16 +152,12 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		varResellerUsersPage.verifyVarResellerUsersPageTitle();
 		logStep("Verify selected search options are displayed on VAR/Reseller users page.");
 		varResellerUsersPage.verifySelectedSearchOptions(enrollmentStatusList, userStatusList,
-				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"),
-				testData.getProperty("valid.user.var.reseller.name"), testData.getProperty("valid.user.email"),
-				testData.getProperty("valid.username"), testData.getProperty("valid.user.mobile.number"));
+				testData.getProperty("varreseller.user.first.name"), testData.getProperty("varreseller.user.last.name"),
+				null, testData.getProperty("varreseller.user.email"), testData.getProperty("varreseller.username"),
+				testData.getProperty("varreseller.user.mobile.number"));
 		logStep("Verify clear all button is displayed");
 		varResellerUsersPage.verifyClearAllButtonIsDisplayed();
 		logStep("Click on clear all button");
 		varResellerUsersPage.clickOnClearAllButton();
-		logStep("Verify all search options are cleared after clicking the Clear All button.");
-		varResellerUsersPage.verifyAllOptionsGotCleared();
-
 	}
-
 }

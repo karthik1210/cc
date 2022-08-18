@@ -107,6 +107,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 		logStep("Enter existing value in username, email and mobile number fields and verify error message");
 		commonMethods.enterMobileNumber(testData.getProperty("internal.user.existing.mobile.number"));
+		commonMethods.focusOnInactiveRadioButton();
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
 		commonMethods.enterEmail(testData.getProperty("internal.user.existing.email"));
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForEmailField(), "Email already in use");
@@ -127,6 +128,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		commonMethods.enterUserName(getTestData[3]);
 		CCUtils.assertEquals(commonMethods.getValidErrorForUsernameField(), "Please enter valid username");
 		commonMethods.enterMobileNumber(getTestData[4]);
+		commonMethods.focusOnInactiveRadioButton();
 		CCUtils.assertEquals(commonMethods.getValidErrorForMobileNumberField(), "Please enter valid mobile number");
 	}
 

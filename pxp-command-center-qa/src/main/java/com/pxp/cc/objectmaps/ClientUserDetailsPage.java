@@ -31,16 +31,16 @@ public class ClientUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-card-title[@id='userName']")
 	private WebElement labelUsernameValue;
 
-	@FindBy(id = "clientEdit")
+	@FindBy(id = "editUser")
 	private WebElement buttonEditClientUser;
 
-	@FindBy(id = "editCancel")
+	@FindBy(id = "cancelUser")
 	private WebElement buttonCancel;
 
-	@FindBy(id = "saveClient")
+	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
-	@FindBy(id = "password")
+	@FindBy(id = "passwordInput")
 	private WebElement labelPassword;
 
 	@FindBy(xpath = "//mat-list-item[@role='listitem']")
@@ -144,22 +144,22 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(id = "non-connected")
 	private WebElement buttonNoneConnect;
-	
+
 	@FindBy(xpath = "//mat-card-title[@class='mat-card-title pt-1 text-oneline']")
 	private WebElement userFirstLastName;
-	
+
 	@FindBy(xpath = "//mat-card-subtitle[@class='mat-card-subtitle text-oneline mb-0']")
 	private WebElement clientNameOfUser;
-	
+
 	@FindBy(id = "non-connected")
 	private WebElement textFirstName;
-	
+
 	@FindBy(id = "non-connected")
 	private WebElement textLastName;
-	
+
 	@FindBy(id = "non-connected")
 	private WebElement textEmailId;
-	
+
 	public ClientUserDetailsPage(WebDriver driver) {
 		super(driver);
 	}
@@ -229,7 +229,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
-		buttonSave.click();
+		javascriptClick(buttonSave);
 	}
 
 	public void verifyCancelButtonIsDisplayed() {
@@ -560,57 +560,57 @@ public class ClientUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonNoneConnect, driver);
 		buttonNoneConnect.click();
 		log("clicked on None-connect button");
-		return  PageFactory.initElements(driver, ClientUserNoneConnectPage.class);
+		return PageFactory.initElements(driver, ClientUserNoneConnectPage.class);
 	}
-	
+
 	public String getClientName() {
 		CCUtils.verifyAndWaitForElement(clientNameOfUser, driver);
 		return clientNameOfUser.getText().toString().trim();
 	}
-	
+
 	public void verifyClientFirstNameOverridden(String searchData) {
 		CCUtils.verifyAndWaitForElement(textFirstName, driver);
-		if(searchData.contains(textFirstName.getText().toString().trim()) == true) {
+		if (searchData.contains(textFirstName.getText().toString().trim()) == true) {
 			CCUtils.assertTrue(true, "Verifying the connected resource first name is overridden");
 			log("connected resource's first name is overridden in client user's first name field");
 		}
 	}
-	
+
 	public void verifyClientLastNameOverridden(String searchData) {
 		CCUtils.verifyAndWaitForElement(textLastName, driver);
-		if(searchData.contains(textLastName.getText().toString().trim()) == true) {
+		if (searchData.contains(textLastName.getText().toString().trim()) == true) {
 			CCUtils.assertTrue(true, "Verifying the connected resource last name is overridden");
 			log("connected resource's last name is overridden in client user's last name field");
 		}
 	}
-	
+
 	public void verifyClientEmailIdOverridden(String searchData) {
 		CCUtils.verifyAndWaitForElement(textEmailId, driver);
-		if(searchData.contains(textEmailId.getText().toString().trim()) == true) {
+		if (searchData.contains(textEmailId.getText().toString().trim()) == true) {
 			CCUtils.assertTrue(true, "Verifying the connected resource email Id is overridden");
 			log("connected resource's email id is overridden in client user's email id field");
 		}
 	}
-	
+
 	public void verifyClientFirstNameNotOverridden(String searchData) {
 		CCUtils.verifyAndWaitForElement(textFirstName, driver);
-		if(searchData.contains(textFirstName.getText().toString().trim()) == false) {
+		if (searchData.contains(textFirstName.getText().toString().trim()) == false) {
 			CCUtils.assertTrue(true, "Verifying the connected resource first name is not overridden");
 			log("connected resource's first name is not overridden in client user's first name field");
 		}
 	}
-	
+
 	public void verifyClientLastNameNotOverridden(String searchData) {
 		CCUtils.verifyAndWaitForElement(textLastName, driver);
-		if(searchData.contains(textLastName.getText().toString().trim()) == false) {
+		if (searchData.contains(textLastName.getText().toString().trim()) == false) {
 			CCUtils.assertTrue(true, "Verifying the connected resource last name is not overridden");
 			log("connected resource's last name is not overridden in client user's last name field");
 		}
 	}
-	
+
 	public void verifyClientEmailIdNotOverridden(String searchData) {
 		CCUtils.verifyAndWaitForElement(textEmailId, driver);
-		if(searchData.contains(textEmailId.getText().toString().trim()) == false) {
+		if (searchData.contains(textEmailId.getText().toString().trim()) == false) {
 			CCUtils.assertTrue(true, "Verifying the connected resource email Id is not overridden");
 			log("connected resource's email id is not overridden in client user's email id field");
 		}

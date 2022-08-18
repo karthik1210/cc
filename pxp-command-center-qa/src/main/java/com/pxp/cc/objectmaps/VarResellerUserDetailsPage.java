@@ -6,27 +6,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 
 public class VarResellerUserDetailsPage extends CCMainPage {
 
-	@FindBy(id = "detailHeader")
-	private WebElement labelPageTitle;
-
 	@FindBy(id = "backBtn")
 	private WebElement backButton;
 
-	@FindBy(id = "editDetailsBtn")
+	@FindBy(id = "editUser")
 	private WebElement buttonEditVarResellerUser;
 
-	@FindBy(id = "cancelEdit")
+	@FindBy(id = "cancelUser")
 	private WebElement buttonCancel;
 
-	@FindBy(id = "saveDetail")
+	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
-	@FindBy(id = "kebabMenu")
+	@FindBy(xpath = "//button[@class='mat-menu-trigger menu-button']")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
@@ -35,8 +31,26 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	@FindBy(id = "detailSaveBtn")
 	private WebElement buttonUnlockUser;
 
-	@FindBy(id = "userStatus")
+	@FindBy(xpath = "//div[@class='ml-auto']")
 	private WebElement labelSelectedUserStatus;
+
+	@FindBy(xpath = "//span[@class='pl-3']")
+	private WebElement inactiveStatus;
+
+	@FindBy(xpath = "//span[@class='m-2']")
+	private WebElement labelPageTitle;
+
+	@FindBy(xpath = "//button[contains(text(),' Deactivate User ')]")
+	private WebElement buttonDeactivateUser;
+
+	@FindBy(xpath = "//mat-card-title[@class='mat-card-title pt-1 text-oneline']")
+	private WebElement labelUsernameValue;
+
+	@FindBy(xpath = "//div[@class='ml-auto']")
+	private WebElement labelVarResellerUserStatusValue;
+
+	@FindBy(xpath = "//button[contains(text(),'Activate User')]")
+	private WebElement kebabActiveUserOption;
 
 	public VarResellerUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -46,8 +60,10 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertTrue(labelPageTitle.isDisplayed(),
 				"VAR/Reseller user details page title is not displayed on screen");
-		String title = labelPageTitle.getText().trim().replace("arrow_back", "");
-		CCUtils.assertEquals(title.trim(), "VAR/Reseller User Details");
+		String title = labelPageTitle.getText().trim();
+		CCUtils.assertEquals(title.trim(), "User Details");
+		CCUtils.assertEquals(labelPageTitle.isDisplayed(), true);
+		log("VarReseller user details page title is displayed on screen");
 	}
 
 	public void clickEditInVarResellerUser() throws InterruptedException {
@@ -71,13 +87,13 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	public void clickCancel() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		buttonCancel.click();
+		javascriptClick(buttonCancel);
 		log("Clicked on cancel button");
 	}
 
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
-		buttonSave.click();
+		javascriptClick(buttonSave);
 		logStep("Clicked on save button");
 	}
 
@@ -122,6 +138,53 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 		} else {
 			log("User status value is not present on  user details page");
 		}
+	}
 
+	public String getUserName() {
+		CCUtils.verifyAndWaitForElement(labelUsernameValue, driver);
+		return labelUsernameValue.getText().trim();
+	}
+
+	public DeactivateUserConfirmationPage clickOnDeactivateUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonDeactivateUser, driver);
+		log("Click on deactivate user button");
+		javascriptClick(buttonDeactivateUser);
+		return PageFactory.initElements(driver, DeactivateUserConfirmationPage.class);
+	}
+
+	public void verifyDeactivateUsertButtonIsNotDisplayed() {
+		log("Verifying deactivate user button is not displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
+	}
+
+	public void verifyDeactivateUserButtonIsDisplayed() {
+		log("Verifying deactivate user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
+	}
+
+	public void checkInactiveStatus() {
+		CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
+	}
+
+	public void verifyVarResellerUsersPageTitle() {
+		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
+		CCUtils.assertEquals(labelPageTitle.isDisplayed(), true);
+		log("VarReseller user details page title is displayed on screen");
+	}
+
+	public void verifySelectedUserStatusIsSameOnVarResellerUserDetailsPage() {
+		CCUtils.verifyAndWaitForElement(labelVarResellerUserStatusValue, driver);
+		CCUtils.assertEquals(labelVarResellerUserStatusValue.isDisplayed(), true);
+		log("User status value is present on VarReseller user details page");
+	}
+
+	public void verifyDeactivateUsertButtonIsNotEnabled() {
+		log("Verifying deactivate user button is enabled in kebab menu");
+		CCUtils.assertEquals(!buttonDeactivateUser.isEnabled(), false);
+	}
+
+	public void verifyActivateUserButtonIsDisplayed() {
+		log("Verifying activate user button is displayed in kebab menu");
+		CCUtils.assertEquals(kebabActiveUserOption.isDisplayed(), true);
 	}
 }

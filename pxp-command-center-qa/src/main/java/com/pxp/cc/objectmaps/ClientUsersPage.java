@@ -25,7 +25,44 @@ public class ClientUsersPage extends CCMainPage {
 
 	@FindBy(id = "newButton")
 	private WebElement buttonNew;
+	
+	@FindBy(id = "IconContainer")
+	private WebElement buttonKebabMenu;
 
+	@FindBy(xpath = "//td[@id='no-result']")
+	private WebElement errorMessage;
+	
+	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
+	private WebElement buttonClearAll;
+	
+	@FindBy(xpath = "//span[@class='configure']")
+	private List<WebElement> labelSelectedSearchOptions;
+
+	@FindBy(id = "firstName")
+	private WebElement labelSelectedFirstName;
+
+	@FindBy(id = "lastName")
+	private WebElement labelSelectedLastName;
+
+	@FindBy(id = "email")
+	private WebElement labelSelectedEmail;
+
+	@FindBy(id = "resellerName")
+	private WebElement labelSelectedVarResellerName;
+
+	@FindBy(id = "userName")
+	private WebElement labelSelectedUserName;
+
+	@FindBy(id = "mobileNumber")
+	private WebElement labelSelectedMobileNumber;
+
+	@FindBy(id = "enrollStatus")
+	private List<WebElement> labelSelectedEnrollmentStatus;
+
+	@FindBy(id = "userStatus")
+	private List<WebElement> labelSelectedUserStatus;
+
+	
 	public ClientUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -61,5 +98,51 @@ public class ClientUsersPage extends CCMainPage {
 		log("Clicked on new button in client users page");
 		return PageFactory.initElements(driver, AddNewClientUserPage.class);
 	}
+	
+	public void clickOnKebabMenuButton() {
+		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
+		javascriptClick(buttonKebabMenu);
+	}
 
+	public void verifyErrorMessageOnClientUserPage() {
+		CCUtils.verifyAndWaitForElement(errorMessage, driver);
+		CCUtils.assertTrue(errorMessage.isDisplayed(), "No results found");
+		log("No results found error message is displayed");
+	}
+	
+	public void verifyClearAllButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
+		CCUtils.assertTrue(buttonClearAll.isDisplayed(),
+				"Clear All button is not displayed on var/reseller users page");
+		CCUtils.assertEquals(buttonClearAll.getText().trim(), "CLEAR ALL");
+		CCUtils.assertTrue(buttonClearAll.isEnabled(), "Clear All button is not enabled on var/reseller users page");
+	}
+	public void clickOnClearAllButton() {
+		CCUtils.verifyAndWaitForElement(buttonClearAll, driver);
+		javascriptClick(buttonClearAll);
+	}
+	
+	public void verifySelectedSearchOptions(List<String> enrollmentStatus, List<String> userStatus, String firstName,
+			String lastName,  String email, String username, String mobileNumber) {
+
+		for (int i = 0; i < labelSelectedSearchOptions.size(); i++) {
+			String fieldId = labelSelectedSearchOptions.get(i).getAttribute("id");
+			String fieldValue = labelSelectedSearchOptions.get(i).getText().trim();
+			if (fieldId.equals("firstName")) {
+				CCUtils.assertEquals(labelSelectedFirstName.getText().trim(), firstName);
+			} else if (fieldId.equals("lastName")) {
+				CCUtils.assertEquals(labelSelectedLastName.getText().trim(), lastName);
+			} else if (fieldId.equals("userName")) {
+				CCUtils.assertEquals(labelSelectedUserName.getText().trim(), username);
+			} else if (fieldId.equals("email")) {
+				CCUtils.assertEquals(labelSelectedEmail.getText().trim(), email);
+			} else if (fieldId.equals("mobileNumber")) {
+				CCUtils.assertEquals(labelSelectedMobileNumber.getText().trim(), mobileNumber);
+			} else if (fieldId.equals("enrollStatus")) {
+				CCUtils.assertTrue(enrollmentStatus.contains(fieldValue), "Enrollment status is not present");
+			} else if (fieldId.equals("userStatus")) {
+				CCUtils.assertTrue(userStatus.contains(fieldValue), "User status is not present");
+			}
+		}
+	}
 }

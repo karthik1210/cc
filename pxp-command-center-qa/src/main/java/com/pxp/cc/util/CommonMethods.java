@@ -5,18 +5,25 @@ package com.pxp.cc.util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.objectmaps.CCMainPage;
+import static io.restassured.RestAssured.given;
+import io.restassured.response.Response;
 
 public class CommonMethods extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
 
-	@FindBy(id = "loginUsernameInput")
+	@FindBy(id = "usernameValidationMsg")
 	private WebElement loginUserName;
 
 	@FindBy(id = "snackCloseBtn")
@@ -25,19 +32,19 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(xpath = "//div[@class='flex']/span//following::a")
 	private WebElement linkClientName;
 
-	@FindBy(id = "addFirstNameInput")
+	@FindBy(id = "FirstNameInput")
 	private WebElement textboxFirstName;
 
-	@FindBy(id = "addLastNameInput")
+	@FindBy(id = "LastNameInput")
 	private WebElement textboxLastName;
 
-	@FindBy(id = "addEmailInput")
+	@FindBy(xpath = "//input[@id='addEmailInput'] | //input[@id='EmailInput']")
 	private WebElement textboxEmail;
 
-	@FindBy(id = "addUserNameInput")
+	@FindBy(id = "loginUsernameInput")
 	private WebElement textboxUserName;
 
-	@FindBy(xpath = "//input[@id='addMobileInput'] | //input[@id='mobileInput']")
+	@FindBy(xpath = "//input[@id='addMobileInput'] | //input[@id='mobileInput'] | //input[@id='MobileNumberInput']")
 	private WebElement textboxMobileNumber;
 
 	@FindBy(id = "maxFirstNameError")
@@ -130,19 +137,19 @@ public class CommonMethods extends CCMainPage {
 	@FindBy(id = "MobileNumberInput")
 	private WebElement labelMobileNumberValue;
 
-	@FindBy(id = "usernameValidationMsg")
+	@FindBy(xpath = "//div[@class='icon suffix-icon']/span")
 	private WebElement iconUsernameValidationError;
 
 	@FindBy(id = "timezoneSelect")
 	private WebElement dropdownTimezone;
 
-	@FindBy(id = "clientTypeSelect")
+	@FindBy(xpath = "//div[@role='combobox']//following::span[@class='ng-arrow-wrapper'][last()-1]")
 	private WebElement dropdownClientType;
 
 	@FindBy(xpath = "//div[@role='option']")
 	private List<WebElement> listOfOptions;
 
-	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//following::div[@role='option']")
+	@FindBy(xpath = "//ng-dropdown-panel[@role='listbox']//following::div[@role='option']//span")
 	private List<WebElement> listOfClientTypeOptions;
 
 	List<String> actualtimezoneValues = new ArrayList<String>();
@@ -180,6 +187,7 @@ public class CommonMethods extends CCMainPage {
 	public void enterFirstName(String input) {
 		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
 		textboxFirstName.clear();
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
 		textboxFirstName.sendKeys(input);
 		log("Entered input for Firstname : " + input);
 	}
@@ -187,6 +195,7 @@ public class CommonMethods extends CCMainPage {
 	public void enterLastName(String input) {
 		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
 		textboxLastName.clear();
+		CCUtils.verifyAndWaitForElement(textboxLastName, driver);
 		textboxLastName.sendKeys(input);
 		log("Entered input for Last name : " + input);
 	}
@@ -202,6 +211,7 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxEmail, driver);
 		textboxEmail.clear();
 		textboxEmail.sendKeys(input);
+		CCUtils.verifyAndWaitForElement(textboxUserName, driver);
 		textboxUserName.click();
 		log("Entered input for email : " + input);
 	}
@@ -210,8 +220,11 @@ public class CommonMethods extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
 		textboxMobileNumber.clear();
 		textboxMobileNumber.sendKeys(input);
-		CCUtils.focusOnElement(radioButtonInactive, driver);
 		log("Entered input for mobile number : " + input);
+	}
+
+	public void focusOnInactiveRadioButton() {
+		CCUtils.focusOnElement(radioButtonInactive, driver);
 	}
 
 	public String getMaximumCharacterErrorForFirstNameField() {
@@ -428,27 +441,27 @@ public class CommonMethods extends CCMainPage {
 
 	public String getUserName() {
 		CCUtils.verifyAndWaitForElement(loginUserName, driver);
-		return loginUserName.getAttribute("value").trim();
+		return loginUserName.getText().trim();
 	}
 
 	public String getFirstName() {
 		CCUtils.verifyAndWaitForElement(labelFirstNameValue, driver);
-		return labelFirstNameValue.getAttribute("value").trim();
+		return labelFirstNameValue.getText().trim();
 	}
 
 	public String getLastName() {
 		CCUtils.verifyAndWaitForElement(labelLastNameValue, driver);
-		return labelLastNameValue.getAttribute("value").trim();
+		return labelLastNameValue.getText().trim();
 	}
 
 	public String getEmailAddress() {
 		CCUtils.verifyAndWaitForElement(labelEmailValue, driver);
-		return labelEmailValue.getAttribute("value").trim();
+		return labelEmailValue.getText().trim();
 	}
 
 	public String getMobileNumber() {
 		CCUtils.verifyAndWaitForElement(labelMobileNumberValue, driver);
-		return labelMobileNumberValue.getAttribute("value").trim();
+		return labelMobileNumberValue.getText().trim();
 	}
 
 	public String getTooltipTextForUsernameField() {
@@ -484,7 +497,7 @@ public class CommonMethods extends CCMainPage {
 			actualtimezoneValues.add(listOfOptions.get(i).getText().trim());
 		}
 		log("Timezone values present for user are :" + actualtimezoneValues);
-
+		dropdownTimezone.click();
 	}
 
 	public void verifyTimezoneDropdownValues() throws InterruptedException {
@@ -496,16 +509,28 @@ public class CommonMethods extends CCMainPage {
 			"Health Prime International", "Newport Medical Group", "New Stork Healthdata Management");
 
 	public void getClientTypeDropdownValue() {
-		CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
+		CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
 		dropdownClientType.click();
 		for (int i = 0; i < listOfClientTypeOptions.size(); i++) {
 			actualClientTypeValues.add(listOfClientTypeOptions.get(i).getText().trim());
 		}
 		log("Client type values present for user are :" + actualClientTypeValues);
-
+		dropdownClientType.click();
 	}
 
-	public void verifyClientTypeDropdownValues() throws InterruptedException {
+	public void verifyClientTypeDropdownValues(String baseUrl) throws InterruptedException {
+		 List<String> expectedClientTypes = new ArrayList<String>();
+		String url = baseUrl + ApiPath.CLIENT_TYPES_DL;
+		Response fetchClientType = given().when().get(url).then().extract().response();
+		JSONArray jsonArray = new JSONArray(fetchClientType.getBody().asString());
+		JSONObject jsonObject;
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			expectedClientTypes.add(jsonObject.getString("name"));
+			log("print json object"+jsonObject);
+		}
+		log("print the value of list : "+expectedClientTypes);
+		log("print the value of list : "+actualClientTypeValues);
 		CCUtils.assertEquals(actualClientTypeValues, expectedClientTypes);
 	}
 
@@ -520,6 +545,14 @@ public class CommonMethods extends CCMainPage {
 		textboxUserName.click();
 		CCUtils.assertEquals(textboxUserName.getAttribute("value").trim(), username);
 		log("Usename text is " + textboxUserName.getAttribute("value").trim());
+	}
+
+	public void focusOnUserNameField() {
+		CCUtils.focusOnElement(textboxUserName, driver);
+	}
+
+	public void focusOnEmailField() {
+		CCUtils.focusOnElement(textboxEmail, driver);
 	}
 
 }
