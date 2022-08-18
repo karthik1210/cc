@@ -26,7 +26,7 @@ public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		clientDirectory = new ClientDirectory();
 		clientDirectoryValidations = new ClientDirectoryValidations();
 		validation = new Validations();
