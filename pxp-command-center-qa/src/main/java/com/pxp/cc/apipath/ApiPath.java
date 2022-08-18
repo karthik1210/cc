@@ -633,4 +633,8 @@ public class ApiPath {
 
 	}
 
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_URL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/solutions";
+	}
+
 }

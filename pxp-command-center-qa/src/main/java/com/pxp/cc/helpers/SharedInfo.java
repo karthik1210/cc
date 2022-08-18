@@ -12,6 +12,8 @@ import com.pxp.cc.pojos.ResourceDetails;
 import io.restassured.response.Response;
 
 public class SharedInfo extends BaseRest {
+	private Map<String, Object> updatePractice;
+
 	public Response getBrandDetails(int brandId) {
 		String url = ApiPath.BRAND_DETAILS_BL(brandId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -33,7 +35,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createProvider_DataLayer(int practiceId, String firstName, String lastName, String gender,
-			String externalId) {
+											 String externalId) {
 		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
@@ -41,7 +43,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createProviderUsingInvalidUrl_DataLayer(int practiceId, String firstName, String lastName,
-			String gender, String externalId) {
+															String gender, String externalId) {
 		String url = ApiPath.INVALID_PATH_CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
@@ -49,7 +51,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createProviderUsingInvalidMethod_DataLayer(int practiceId, String firstName, String lastName,
-			String gender, String externalId) {
+															   String gender, String externalId) {
 		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
@@ -57,7 +59,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	private Map<String, Object> createProviderRequestPayload(String firstName, String lastName, String gender,
-			String externalId) {
+															 String externalId) {
 		Map<String, Object> createProviderMap = new HashMap<String, Object>();
 		createProviderMap.put("firstName", firstName);
 		createProviderMap.put("lastName", lastName);
@@ -82,19 +84,19 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response addOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
-			List<ResourceDetails> resourceList) {
+														  List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
 	}
 
 	public Response invalidMethodCallForAddOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
-			List<ResourceDetails> resourceList) {
+																			  List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
 	}
 
 	public Response addOrRemoveResourcesForAppoinmentTypeUsingInvalidUrl(int practiceId, int appointmentTypeId,
-			List<ResourceDetails> resourceList) {
+																		 List<ResourceDetails> resourceList) {
 		String url = ApiPath.INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().post(url).then().extract().response();
 
@@ -180,7 +182,6 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
 
 	public Response getPracticeForLocationWithValidInputForPost(int locationId) {
 		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
