@@ -770,5 +770,13 @@ public class ApiPath {
 	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(int locationId) {
 		return SHARED_DL + "/v1/locationsss/" + locationId + "/practices";
 	}
+	
+	public static final String BRAND_LIST_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brands";
+	}
+	public static final String INVALID_PATH_BRAND_LIST_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brandsssss";
+	}
+
 
 }
