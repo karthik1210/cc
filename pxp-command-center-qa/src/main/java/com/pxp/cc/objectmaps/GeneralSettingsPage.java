@@ -144,10 +144,11 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-
-	@FindBy(className = "info")
+	
+	@FindBy(xpath = "//div[@class='card-heading mx-4 ng-star-inserted']")
 	private WebElement labelNodeNameRightPanel;
 
+	
 	@FindBy(className = "mat-option-text")
 	private List<WebElement> listOfSuggestions;
 
