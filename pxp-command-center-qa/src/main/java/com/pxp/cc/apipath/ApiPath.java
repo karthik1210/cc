@@ -761,7 +761,14 @@ public class ApiPath {
 	}
 	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(String practiceId, String resourceId){
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
 
+	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
+	}
+
+	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(int locationId) {
+		return SHARED_DL + "/v1/locationsss/" + locationId + "/practices";
 	}
 	public static final String UPDATE_BRAND_IMAGE_DL(int brandId ) {
 		return SHARED_DL + "/v1/brands/" + brandId  + "/logo";
