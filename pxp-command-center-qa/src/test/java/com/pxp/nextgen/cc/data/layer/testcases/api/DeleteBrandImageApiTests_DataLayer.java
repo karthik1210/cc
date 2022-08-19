@@ -55,7 +55,7 @@ public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing brandId & non-existing imageId  and verify error message")
 	public void testErrorMessageForNonExistingImageId() throws IOException {
-		log("Enter existing brand Id non-existing imageid");
+    	log("Enter existing brand & Id non-existing imageid");
 		int brandId = Integer.parseInt(testData.getProperty("api.brand.id.qa"));
 		String href = testData.getProperty("api.invalid.href.qa");
 		deleteBrandImageApiResponse = brandsInfo.deteteBrandImage_DL(brandId, href);
@@ -66,7 +66,7 @@ public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brandId & existing imageId  and verify error message")
 	public void testErrorMessageForNonExistingBrandId() throws IOException {
-		log("Enter non-existing brand Id existing imageid");
+		log("Enter non-existing brand & Id existing imageid");
 		int brandId = Integer.parseInt(testData.getProperty("api.nonexisting.brand.id.qa"));
 		String href = testData.getProperty("api.href.qa");
 		deleteBrandImageApiResponse = brandsInfo.deteteBrandImage_DL(brandId, href);
@@ -77,7 +77,7 @@ public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brandId & non-existing imageId  and verify error message")
 	public void testErrorMessageForNonExistingBrandIdAndImageId() throws IOException {
-		log("Enter non-existing brand Id non-existing imageid");
+		log("Enter non-existing brand & Id non-existing imageid");
 		int brandId = Integer.parseInt(testData.getProperty("api.nonexisting.brand.id.qa"));
 		String href = testData.getProperty("api.invalid.href.qa");
 		deleteBrandImageApiResponse = brandsInfo.deteteBrandImage_DL(brandId, href);
