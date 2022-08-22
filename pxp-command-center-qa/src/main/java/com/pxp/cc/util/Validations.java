@@ -1378,7 +1378,7 @@ public class Validations {
 
 	public void verifyErrorMessageInResponseForParentTypeField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid type");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid parent type");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2342,27 +2342,27 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	 public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
-	            String color, int brandId, String logo, String favicon, String emailLogo, String active)
-	            throws IOException {
-	        JsonPath jsonpath = new JsonPath(response.getBody().asString());
-	        if (Objects.isNull(jsonpath.get("orgId"))) {
-	            Log4jUtil.log("orgId is null");
-	        } else {
-	            CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
-	        }
-	        if (Objects.isNull(jsonpath.get("orgType"))) {
-	            Log4jUtil.log("orgType is null");
-	        } else {
-	            CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
-	        }
-	        CCUtils.assertEquals(jsonpath.get("name").toString(), name);
-	        CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
-	        CCUtils.assertEquals(jsonpath.get("color").toString(), color);
-	        CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
-	        CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
-	        CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
-	    }
+	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
+			String color, int brandId, String logo, String favicon, String emailLogo, String active)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		if (Objects.isNull(jsonpath.get("orgId"))) {
+			Log4jUtil.log("orgId is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+		}
+		if (Objects.isNull(jsonpath.get("orgType"))) {
+			Log4jUtil.log("orgType is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+		}
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+		CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
+		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
+		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
+	}
 
 	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -2383,7 +2383,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
-		
+
 	}
 
 	public void verifyErrorMessageInResponseForInvalidGenderValue(Response response) throws IOException {
@@ -2551,5 +2551,34 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}
-	
+
+	public void verifyErrorResponseBodyWhenUserEnterClientIdInOrgIdField(Response response, int clientId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for orgId=" + clientId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyMaximumCharacterErrorMessageInResponseBodyForNameAndSolutionsDisplayField(Response response)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Name size maximum 100 character, Display name size maximum 100 character";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
+
 }
