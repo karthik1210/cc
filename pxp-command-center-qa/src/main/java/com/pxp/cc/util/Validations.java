@@ -2742,6 +2742,21 @@ public class Validations {
 		} else {
 			CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
 		}
+		if (Objects.isNull(jsonpath.get("logo"))) {
+			Log4jUtil.log("logo is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("logo"), logo);
+		}
+		if (Objects.isNull(jsonpath.get("favicon"))) {
+			Log4jUtil.log("favicon logo is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("favicon"), favicon);
+		}
+		if (Objects.isNull(jsonpath.get("emailLogo"))) {
+			Log4jUtil.log("emailLogo is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("emailLogo"), emailLogo);
+		}
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
 		CCUtils.assertEquals(jsonpath.get("color").toString(), color);

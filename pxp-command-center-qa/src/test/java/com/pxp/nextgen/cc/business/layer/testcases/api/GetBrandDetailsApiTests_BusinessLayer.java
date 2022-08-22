@@ -6,6 +6,7 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.BrandsInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -15,13 +16,15 @@ import io.restassured.response.Response;
 public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	Response getBrandingDetailsApiResponse;
+	Response getBrandingDetailsApiResponse, createBrandApiResponse;
+	private BrandsInfo brandInfo;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupQaServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		brandInfo = new BrandsInfo();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brandId in brand id field and verify error response")
@@ -36,16 +39,21 @@ public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing brandId in brand id field and verify response body")
 	public void testGetBrandDetailsApi() throws IOException {
-		getBrandingDetailsApiResponse = sharedInfo
-				.getBrandDetails(Integer.parseInt(testData.getProperty("brand.id.one")));
+		logStep("Enter valid values in request payload to create branding template at client level");
+		String orgId = testData.getProperty("client.org.id");
+		String name = testData.getProperty("client.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = testData.getProperty("client.brand.color");
+		createBrandApiResponse = brandInfo.createBrandingTemplate(orgId, name, "true", color);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		String brandId = createBrandApiResponse.jsonPath().getString("brandId");
+		getBrandingDetailsApiResponse = sharedInfo.getBrandDetails(Integer.parseInt(brandId));
 		CCUtils.responseTimeValidation(getBrandingDetailsApiResponse);
 		CCUtils.assertEquals(getBrandingDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyBrandingDetails(getBrandingDetailsApiResponse, testData.getProperty("brand.id.one.orgId"),
-				testData.getProperty("brand.id.one.org.type"), testData.getProperty("brand.id.one.name"),
-				testData.getProperty("brand.id.one.showLogo"), testData.getProperty("brand.id.one.color"),
-				Integer.parseInt(testData.getProperty("brand.id.one")), testData.getProperty("brand.id.one.logo"),
-				testData.getProperty("brand.id.one.favicon"), testData.getProperty("brand.id.one.emailLogo"),
-				testData.getProperty("brand.id.one.active"));
+		validation.verifyBrandingDetails_BL(getBrandingDetailsApiResponse, Integer.parseInt(orgId),
+				testData.getProperty("brand.id.one.org.type"), name, testData.getProperty("brand.id.one.showLogo"),
+				color, testData.getProperty("brand.id.one.logo"), testData.getProperty("brand.id.one.favicon"),
+				testData.getProperty("brand.id.one.emailLogo"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error message")
