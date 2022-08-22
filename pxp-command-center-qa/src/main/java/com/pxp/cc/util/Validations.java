@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -29,7 +27,6 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -567,7 +564,7 @@ public class Validations {
 
 	public void verifyMaximumCharacterErrorMessageInResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
+		String actual = "Name size maximum 100 character, Display name size maximum 100 character";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -599,7 +596,7 @@ public class Validations {
 
 	public void verifyInactiveClientErrorResponsForPractice(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as Client is Inactive");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as System is Inactive");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 

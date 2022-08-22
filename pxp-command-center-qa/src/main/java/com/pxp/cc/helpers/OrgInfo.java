@@ -3,6 +3,7 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
-import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
@@ -566,13 +566,45 @@ public class OrgInfo extends BaseRest {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
 				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
-		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then().extract()
-				.response();
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
+				.extract().response();
 	}
 
 	public Response updateOrgSolutions(List<Map<String, Object>> productList, int orgId) throws IOException {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+
+	public static Map<String, Object> updateOrgNodeDetailsMap(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId, int ehrIdentifier, int pmIdentifier) {
+		Map<String, Object> updateOrgNodeValueMap = new HashMap<String, Object>();
+		updateOrgNodeValueMap.put("name", name);
+		updateOrgNodeValueMap.put("orgType", orgType);
+		updateOrgNodeValueMap.put("displayName", displayName);
+		updateOrgNodeValueMap.put("sapNumber", sapNumber);
+		updateOrgNodeValueMap.put("active", active);
+		updateOrgNodeValueMap.put("timezoneId", timezoneId);
+		updateOrgNodeValueMap.put("ehrIdentifier", ehrIdentifier);
+		updateOrgNodeValueMap.put("pmIdentifier", pmIdentifier);
+		return updateOrgNodeValueMap;
+	}
+
+	public Response updateOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
+			String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response updateOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
+		String url = ApiPath.INVALID_PATH_UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
 	}
 
 }
