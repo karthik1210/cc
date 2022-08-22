@@ -1509,7 +1509,7 @@ public class Validations {
 
 	public void verifyErrorMessageResponseBodyForMandatoryFields(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Parent Id cannot be null, Status cannot be null, Name cannot be null";
+		String actual = "Status cannot be null, Name cannot be null";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
