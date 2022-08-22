@@ -303,4 +303,50 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_APPOINTMENT_TYPES_BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	private Map<String, Object> createPracticeresourceRequestPayload(String en, String es) {
+		Map<String, Object> createPracticesMap = new HashMap<String, Object>();
+		createPracticesMap.put("en", en);
+		createPracticesMap.put("es", es);
+		return createPracticesMap;
+	}
+
+	public Response savePracticeResourceWithValidInputs(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithInValidInputs(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithInValidMethodcall(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithINValidDATATYPE(String practiceId, String resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response getPracticeForLocationWithExistingOrNonExistingInput(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeForLocationWithInvalidInput(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeForLocationWithValidInputForPost(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
 }

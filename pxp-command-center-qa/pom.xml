@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pxp.cc</groupId>
 	<artifactId>pxp-command-center-qa</artifactId>
-	<version>1.73.0</version>
+	<version>1.75.0</version>
 	<packaging>jar</packaging>
 	<repositories>
 		<repository>
@@ -67,10 +67,10 @@
 			<version>20201115</version>
 		</dependency>
 	</dependencies>
-
+	
 	<build>
 		<plugins>
-
+			
 			<!-- Suire Fire Test Running Plugin !!! -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -83,7 +83,7 @@
 				</configuration>
 			</plugin>
 
-		</plugins>
+        </plugins>
 	</build>
 
 </project>
