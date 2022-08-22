@@ -220,7 +220,19 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 				createOrgNodeApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter invalid timezone id in timezone field and verify error response body")
+	@DataProvider(name = "getOrgDetailsInfo")
+	public Object[] getOrgParentTypesAndParentIdInfo() {
+		Object[][] obj = new Object[][] {
+				{ testData.getProperty("api.practice.orgtype"), testData.getProperty("api.system.orgtype"),
+						testData.getProperty("api.enterprise.parentid") },
+				{ testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.parenttype"),
+						testData.getProperty("api.enterprise.parentid") },
+				{ testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.parenttype"),
+						testData.getProperty("api.practice.parentid") } };
+		return obj;
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetailsInfo", description = "Enter invalid timezone id in timezone field and verify error response body")
 	public void testErrorResponseForInvalidTimezoneId(String[] getOrgParentTypesAndParentId) throws Exception {
 		logStep("Enter invalid timezone id in timezone field");
 		String invalidTimezoneId = testData.getProperty("api.system.timezoneid").concat("abcdef@12");
