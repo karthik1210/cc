@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -24,7 +24,7 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		brandInfo = new BrandsInfo();
 		validation = new Validations();
 		clientInfo = new ClientInfo();

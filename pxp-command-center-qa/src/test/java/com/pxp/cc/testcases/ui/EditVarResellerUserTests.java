@@ -72,7 +72,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getLastName(), lastNameValueInEditMode.trim());
 		CCUtils.assertEquals(commonMethods.getUserName(), userNameValueInEditMode.trim());
 		CCUtils.assertEquals(commonMethods.getEmailAddress(), emailValueInEditMode.trim());
-		CCUtils.assertEquals(commonMethods.getMobileNumber(), mobileNumberValueInEditMode.trim());
+		CCUtils.assertEquals(commonMethods.getMobileNumber().replaceAll("-", ""), mobileNumberValueInEditMode.trim());
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in edit mode")
@@ -100,7 +100,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(101));
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForUsernameField(), "Maximum characters reached");
 		logStep("Enter more than 100 characters in email field and verify maximum characters error message");
-		commonMethods.enterEmail(CCUtils.generateNewEmail(101));
+		commonMethods.enterEmail(CCUtils.generateAlphaNumericString(101).concat("@gmail.com"));
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForEmailField(), "Maximum characters reached");
 	}
 
@@ -130,21 +130,25 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getValidErrorForLastNameField(), "Please enter valid last name");
 		commonMethods.enterEmail(getTestData[2]);
 		CCUtils.assertEquals(commonMethods.getValidErrorForEmailField(), "Please enter valid email address");
+		commonMethods.enterMobileNumber(getTestData[4]);
+		commonMethods.focusOnUserNameField();
+		CCUtils.assertEquals(commonMethods.getValidErrorForMobileNumberField(), "Please enter valid mobile number");
 		commonMethods.enterUserName(getTestData[3]);
 		CCUtils.assertEquals(commonMethods.getValidErrorForUsernameField(), "Please enter valid username");
-		commonMethods.enterMobileNumber(getTestData[4]);
-		CCUtils.assertEquals(commonMethods.getValidErrorForMobileNumberField(), "Please enter valid mobile number");
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
 	public void testUniqueErrorMssageInEditMode() throws Exception {
 		logStep("Enter existing value in username, email and mobile number fields and verify error message");
-		commonMethods.enterMobileNumber(testData.getProperty("client.user.existing.mobile.number"));
+		commonMethods.enterMobileNumber(testData.getProperty("var.reseller.user.existing.mobile.number"));
+		commonMethods.focusOnUserNameField();
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
-		commonMethods.enterEmail(testData.getProperty("client.user.existing.email"));
-		CCUtils.assertEquals(commonMethods.getDuplicateErrorForEmailField(), "Email already in use");
-		commonMethods.enterUserName(testData.getProperty("client.user.existing.username"));
+		commonMethods.enterUserName(testData.getProperty("var.reseller.user.existing.username"));
+		commonMethods.focusOnEmailField();
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForUsernameField(), "Username already in use");
+		commonMethods.enterEmail(testData.getProperty("var.reseller.user.existing.email"));
+		CCUtils.assertEquals(commonMethods.getDuplicateErrorForEmailField(), "Email already in use");
+
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in username field and verify error and tooltip text for username field")

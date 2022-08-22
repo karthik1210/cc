@@ -169,4 +169,184 @@ public class SharedInfo extends BaseRest {
 		updateProviderDetailsMap.put("active", active);
 		return updateProviderDetailsMap;
 	}
+
+	public Response deleteBrandDetails_DL(int brandId) {
+		String url = ApiPath.DELETE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deleteBrandDetailsUsingInvalidUrl_DL(int brandId) {
+		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deleteBrandDetails(int brandId) {
+		String url = ApiPath.DELETE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deleteBrandDetailsUsingInvalidUrl(int brandId) {
+		String url = ApiPath.INVALID_PATH_DELETE_BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallForGetAppointmentType_DL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypeUsingInvalidUrl_DL(int appointmentTypeId) {
+		String url = ApiPath.INVALID_PATH_FOR_GET_APPOINTMENT_TYPE_DL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithValidInputs(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(providerId, practiceId);
+		String invalidUrl = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_INVALID_URL(providerId, practiceId);
+		if (urlType.equalsIgnoreCase("valid"))
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		else
+			return given().spec(requestSpec).when().get(invalidUrl).then().extract().response();
+	}
+
+	public Response getResourceForProviderWithInvalidPOSTRequest(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_VALID_URL(providerId, practiceId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithInvalidDataType(String providerId, String practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithValidInputs_DL(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		String invalidUrl = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_INVALID_URL_DL(providerId, practiceId);
+		if (urlType.equalsIgnoreCase("valid"))
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		else
+			return given().spec(requestSpec).when().get(invalidUrl).then().extract().response();
+	}
+
+	public Response getResourceForProviderWithInvalidPOSTRequest_DL(int providerId, int practiceId, String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL(providerId, practiceId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderWithValidInputs_DL_Invalid_DataType(String providerId, String practiceId,
+			String urlType) {
+		String url = ApiPath.FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getBrandList_DL(int orgId) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociateBrand_DL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> associateDeassociateBrandTemplate(Integer brandId, Boolean active) {
+		Map<String, Object> associateDeassociateBrandMap = new HashMap<String, Object>();
+		associateDeassociateBrandMap.put("brandId", brandId);
+		associateDeassociateBrandMap.put("active", active);
+		return associateDeassociateBrandMap;
+	}
+
+	public Response associateDeassociateBrandUsingEmptyPayload_DL(int orgId) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingInvalidMethodCall_DL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingInvalidUrl_DL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.INVALID_PATH_BRAND_LIST_DL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+	
+	public Response getAppointmentTypes_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypesInvalidMethodCall_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getAppointmentTypesInvalidUrl_BL(int appointmentTypeId) {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_INVALID_PATH_BL(appointmentTypeId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getAppointmentTypes_NullValues() {
+		String url = ApiPath.GET_APPOINTMENT_TYPES_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	private Map<String, Object> createPracticeresourceRequestPayload(String en, String es) {
+		Map<String, Object> createPracticesMap = new HashMap<String, Object>();
+		createPracticesMap.put("en", en);
+		createPracticesMap.put("es", es);
+		return createPracticesMap;
+	}
+
+	public Response savePracticeResourceWithValidInputs(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithInValidInputs(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithInValidMethodcall(int practiceId, int resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response savePracticeResourceWithINValidDATATYPE(String practiceId, String resourceId, String en, String es) {
+		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(practiceId, resourceId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+
+	public Response getPracticeForLocationWithExistingOrNonExistingInput(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeForLocationWithInvalidInput(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeForLocationWithValidInputForPost(int locationId) {
+		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
 }
