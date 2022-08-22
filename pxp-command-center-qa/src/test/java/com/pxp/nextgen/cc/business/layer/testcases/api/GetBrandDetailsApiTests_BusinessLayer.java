@@ -19,7 +19,7 @@ public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 	}
@@ -41,7 +41,7 @@ public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getBrandingDetailsApiResponse);
 		CCUtils.assertEquals(getBrandingDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyBrandingDetails(getBrandingDetailsApiResponse, testData.getProperty("brand.id.one.orgId"),
-				testData.getProperty("brand.id.one.orgType"), testData.getProperty("brand.id.one.name"),
+				testData.getProperty("brand.id.one.org.type"), testData.getProperty("brand.id.one.name"),
 				testData.getProperty("brand.id.one.showLogo"), testData.getProperty("brand.id.one.color"),
 				Integer.parseInt(testData.getProperty("brand.id.one")), testData.getProperty("brand.id.one.logo"),
 				testData.getProperty("brand.id.one.favicon"), testData.getProperty("brand.id.one.emailLogo"),

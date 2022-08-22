@@ -26,7 +26,7 @@ public class GetResourcesForProviders_BusinessLayer extends BaseRest {
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
-        setupServiceRequestSpecificationBuilder();
+        setupQaServiceRequestSpecificationBuilder();
         sharedInfo = new SharedInfo();
         validation = new Validations();
     }
