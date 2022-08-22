@@ -8,7 +8,7 @@ phases:
     commands:
       - |
         if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then
-           echo "$APPLICATION_NAME is a UI Application. Starting Downloading supported web browser driver";
+           echo "Downloading supported web browser driver for $APPLICATION_NAME";
            export google_chrome_version="99.0.4844.82-1"
            export chrome_driver_version="99.0.4844.51"
            yum update -y
@@ -23,14 +23,10 @@ phases:
            curl -O https://chromedriver.storage.googleapis.com/${chrome_driver_version}/chromedriver_linux64.zip
            unzip -x -o chromedriver_linux64.zip -d /usr/bin/
            chmod +x /usr/bin/chromedriver
-        else
-           echo "$APPLICATION_NAME is not a UI Application. Skipping Downloading supported web browser driver";
         fi
   build:
     commands:
         - cd pxp-command-center-qa
-        - echo "${APPLICATION_NAME}"
-        - echo "${ENVIRONMENT}"
         - REPLACE_STRING="${ENVIRONMENT}-"
         - testSuiteName=$(echo $APPLICATION_NAME | sed "s/$REPLACE_STRING/ /")
         - testSuiteName=`echo $testSuiteName | sed 's/ *$//g'`
@@ -38,26 +34,16 @@ phases:
         #- envsubst '${ENVIRONMENT}' < ./testConfig.properties > ./testConfig.properties
         - echo "Starting the test execution.."
         - |
-          if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then   ####### Checking If it is a UI Build ###############
-             echo "$APPLICATION_NAME is a UI Application..";
-             echo "Running Smoke............";
-             mvn -ntp -U clean test -Dsuite.xml=cc-ui_smoke_test.xml -Dtest.environment=${ENVIRONMENT} -Dselenium.browser="*chrome" -Dexecution.mode=headless
-          else                                                       ####### if not UI Build Run Build Specific Automation###############
-             echo "$APPLICATION_NAME is not UI.";
-             echo "Running Build Specific Test Suite in $ENVIRONMENT environment ";
-             if [ -f "$testSuiteFileName" ]; then     ####### Checkin Test Suite XML is Available ###############
-                echo "$testSuiteFileName exists - Running Test Suite...";
+          if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then
+             echo "Running Smoke Test for $APPLICATION_NAME on $ENVIRONMENT";
+             mvn -ntp -U clean test -Dsuite.xml=cc-ui_smoke_test.xml -Dtest.environment=${ENVIRONMENT} -Dselenium.browser="*chrome" -Dexecution.mode=headless             
+          else                                                       
+             if [ -f "$testSuiteFileName" ]; then
+                echo "Running Test Suite for $APPLICATION_NAME in $ENVIRONMENT";
                 mvn -ntp -U clean test -Dsuite.xml=${testSuiteFileName} -Dtest.environment=${ENVIRONMENT} -Dexecution.mode=headless
              else
-                echo "$testSuiteFileName Not exists......"; 
-             fi  ####### Checking Test Suite File Exist Logic END HERE ###############
-          fi     ####### Checkin Application IS [UI Build or Not] Logic END Here ##############
-        - echo "Starting Regression test Process.."
-        - |
-          if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then   ####### Checking If it is a UI Build ###############
-           echo "$APPLICATION_NAME is a UI Application..";
-           echo "Running Regression Test............";
-           ## To DO : Command to trigger the Regression Run shell script 
+                echo "Test Suite run failed for $APPLICATION_NAME in $ENVIRONMENT. Unable to find $testSuiteFileName in the path.";
+             fi
           fi
   post_build:
     commands:
