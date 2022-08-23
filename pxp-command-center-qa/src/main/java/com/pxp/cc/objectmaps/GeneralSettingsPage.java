@@ -654,6 +654,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
 	private WebElement clientTab;
+	
+	@FindBy(xpath = "//div[@class='card-heading mx-4 ng-star-inserted']")
+	private WebElement clientNodeTitle;
 
 	public void clickClientDirectory() {
 		CCUtils.verifyAndWaitForElement(clientTab, driver);
@@ -874,6 +877,11 @@ public class GeneralSettingsPage extends CCMainPage {
 				log("tree node :"+ele+" is equal to provided org node "+orgNode);
 			}
 		}
+	}
+	public void verifyClientNodeIsSelected() {
+		CCUtils.verifyAndWaitForElement(clientNodeTitle, driver);
+		CCUtils.assertEquals(clientNodeTitle.isDisplayed(), true);
+		log("Client node title is displayed");	
 	}
 
 }
