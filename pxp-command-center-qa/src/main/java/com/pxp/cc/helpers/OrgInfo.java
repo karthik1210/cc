@@ -335,18 +335,19 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createAgnosticPracticeNodeDataLayer(String name, String displayName, String sapNumber,
-			String active, String timezoneId, String orgType, int parentId, String parentType, int userId)
-			throws IOException {
+			String active, String timezoneId, String orgType, int parentId, String parentType, String ehrIdentifier,
+			String pmIdentifier) throws IOException {
 
 		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNodeDataLayer(name, displayName, sapNumber,
-				active, timezoneId, orgType, parentId, parentType);
+				active, timezoneId, orgType, parentId, parentType, ehrIdentifier, pmIdentifier);
 
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewPracticeNodePayload).when()
-				.post(ApiPath.ORG_DL).then().extract().response();
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.ORG_DL).then().extract()
+				.response();
 	}
 
 	public static Map<String, Object> postCreatePracticeNodeDataLayer(String name, String displayName, String sapNumber,
-			String active, String timezoneId, String orgType, int parentId, String parentType) {
+			String active, String timezoneId, String orgType, int parentId, String parentType, String ehrIdentifier,
+			String pmIdentifier) {
 		Map<String, Object> practiceMap = new HashMap<String, Object>();
 		practiceMap.put("name", name);
 		practiceMap.put("displayName", displayName);
@@ -356,16 +357,18 @@ public class OrgInfo extends BaseRest {
 		practiceMap.put("orgType", orgType);
 		practiceMap.put("parentId", parentId);
 		practiceMap.put("parentType", parentType);
+		practiceMap.put("ehrIdentifier", ehrIdentifier);
+		practiceMap.put("pmIdentifier", pmIdentifier);
 		return practiceMap;
 	}
 
-	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId, int userId)
+	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId)
 			throws IOException {
 		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
 				status);
 
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(updateOrgsSolutionPayload).when()
+		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when()
 				.put(url).then().extract().response();
 	}
 

@@ -19,7 +19,7 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilderForDataLayer();
+		setupQaServiceRequestSpecificationBuilderForDataLayer();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
@@ -33,19 +33,17 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Edit Client Details");
 		String newClientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(40))));
 		String newClientSapNumber = CCUtils
 				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
-		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, "false", newClientName,
+						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25))));
+		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, false, newClientName,
 				newClientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.forteen.type"), testData.getProperty("new.timezone"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.forteen.type"), testData.getProperty("new.timezone"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
@@ -68,14 +66,12 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Update client status from inactive to active and update timezone from not null value to null value");
-		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, testData.getProperty("api.client.active"),
+		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, Boolean.parseBoolean(testData.getProperty("api.client.active")),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.forteen.type"), null,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.forteen.type"), null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
@@ -97,10 +93,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		logStep("Enter non existing client id in clientId field and verify error message");
 		int nonExistingClientId = Integer.parseInt(testData.getProperty("api.nonexisting.client.id"));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(nonExistingClientId,
-				testData.getProperty("api.client.active"), clientName, clientSapNumber,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.forteen.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -111,9 +106,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 	public void testErrorMessagesForMandatoryFields() throws IOException {
 		logStep("Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message");
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
-		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId, null, null, null,
-				testData.getProperty("api.client.testclient"), null, testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId, Boolean.parseBoolean(null), null, null,
+				testData.getProperty("api.client.testclient"), null, testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -122,20 +116,38 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and validate error message")
 	public void testErrorResponseForClientNameField() throws IOException {
-		logStep("Enter already existing value in client name field and validate error message");
-		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber")
+		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), testData.getProperty("api.existing.client.name"),
-				clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.forteen.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		String clientSapNumberNew = testData.getProperty("api.client.sapnumber")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumberNew,
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"));
+		logStep("Enter already existing value in client name field and validate error message");
+		fetchClientDetailsApiResponse = clientInfo
+				.getClientDetails_DataLayer(Integer.parseInt(testData.getProperty("api.existing.client.id")));
+		String type = fetchClientDetailsApiResponse.jsonPath().get("type");
+		Boolean activeStatus = fetchClientDetailsApiResponse.jsonPath().getBoolean("active");
+		String sapNum = fetchClientDetailsApiResponse.jsonPath().get("sapNumber");
+		String testClient = fetchClientDetailsApiResponse.jsonPath().get("testClient");
+		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
+		String timezoneId = fetchClientDetailsApiResponse.jsonPath().get("timezone.id");
+		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId, activeStatus, clientName, sapNum,
+				testClient, type, timezoneId);
+
+		/*
+		 * updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
+		 * testData.getProperty("api.client.active"),
+		 * testData.getProperty("api.existing.client.name"), clientSapNumber,
+		 * testData.getProperty("api.client.testclient"),
+		 * testData.getProperty("api.client.forteen.type"),
+		 * testData.getProperty("api.client.timezoneid"));
+		 */
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForClientName(updateClientApiResponse,
-				testData.getProperty("api.existing.client.name"));
+				clientName);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in sap number field and validate error message")
@@ -145,10 +157,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), clientName,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), clientName,
 				testData.getProperty("api.existing.client.sapnumber"), testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.forteen.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.forteen.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -164,10 +175,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), clientName, clientSapNumber,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), nonExistingClientType,
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -183,9 +193,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), clientName, clientSapNumber,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				nonExistingTimezoneId, Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				nonExistingTimezoneId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -199,10 +209,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(4));
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), clientName,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), clientName,
 				testData.getProperty("api.invalid.client.sapnumber"), testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -216,10 +225,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(4));
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), testData.getProperty("api.invalid.client.name"),
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), testData.getProperty("api.invalid.client.name"),
 				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -230,9 +238,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 	public void testErrorMessagesForBlankFields() throws IOException {
 		logStep("Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message");
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
-		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId, " ", " ", " ",
-				testData.getProperty("api.client.testclient"), " ", testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId, Boolean.parseBoolean(" "), " ", " ",
+				testData.getProperty("api.client.testclient"), " ", testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
@@ -248,10 +255,9 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		updateClientApiResponse = clientInfo.UpdateClientIsingInvalidUrl_DataLayer(existingClientId,
-				testData.getProperty("api.client.active"), clientName, clientSapNumber,
+				Boolean.parseBoolean(testData.getProperty("api.client.active")), clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.forteen.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 404);
