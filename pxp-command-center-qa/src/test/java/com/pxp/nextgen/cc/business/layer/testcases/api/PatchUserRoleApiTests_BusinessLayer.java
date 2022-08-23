@@ -22,7 +22,7 @@ public class PatchUserRoleApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -30,10 +30,10 @@ public class PatchUserRoleApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId ,activate role & validate status code and response body")
 	public void testActivateRoleForInternalUser() throws IOException {
 		logStep("Enter existing userId & orgId");
-		int userId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid.qa"));
-		int orgId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid.qa"));
+		int userId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
+		int orgId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
 		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
-				testData.getProperty("pxpp.17575.cc.roleid.qa"), "true");
+				testData.getProperty("pxpp.17575.cc.roleid"), "true");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
 		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 200);
@@ -43,21 +43,20 @@ public class PatchUserRoleApiTests_BusinessLayer extends BaseRest {
 		  CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
 			
 			  List<UserRoles> actualUserRolesListByUser = Arrays.asList( new
-			  UserRoles(Integer.parseInt(testData.getProperty("pxpp.17575.cc.roleid.qa")),
-			  testData.getProperty("role.name.one.qa")));
+			  UserRoles(Integer.parseInt(testData.getProperty("pxpp.17575.cc.roleid")),
+			  testData.getProperty("role.name.one")));
 			  validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse,
 			  actualUserRolesListByUser);
 			 
-		 
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId ,deactivate role & validate status code and response body")
 	public void testDeactivateRoleForInternalUser() throws IOException {
 		logStep("Enter existing userId & orgId");
-		int userId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid.qa"));
-		int orgId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid.qa"));
+		int userId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
+		int orgId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
 		updateRoleAssociationApiResponse = userInfo.patchInternalUserRole_BL(userId, orgId,
-				testData.getProperty("pxpp.17575.cc.roleid.qa"), "false");
+				testData.getProperty("pxpp.17575.cc.roleid"), "false");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateRoleAssociationApiResponse);
 		CCUtils.assertEquals(updateRoleAssociationApiResponse.getStatusCode(), 200);
@@ -65,8 +64,8 @@ public class PatchUserRoleApiTests_BusinessLayer extends BaseRest {
 		  CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
 		  CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
 			  List<UserRoles> actualUserRolesListByUser = Arrays.asList( new
-			  UserRoles(Integer.parseInt(testData.getProperty("pxpp.17575.cc.roleid.qa")),
-			  testData.getProperty("role.name.one.qa")));
+			  UserRoles(Integer.parseInt(testData.getProperty("pxpp.17575.cc.roleid")),
+			  testData.getProperty("role.name.one")));
 			  validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse,
 			  actualUserRolesListByUser);
 			 

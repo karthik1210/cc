@@ -19,7 +19,7 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -39,13 +39,13 @@ public class GetVarResellerUserLoginDetailsApiTests_BusinessLayer extends BaseRe
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code & response body for existing VarReseller userId")
 	public void testSuccessMessageForExistingVarResellerUserId() throws NullPointerException {
 		logStep("Enter  existing Internal userId");
-		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid.qa"));
+		int userId = Integer.parseInt(testData.getProperty("api.var.reseller.userid"));
 		fetchUserLoginDetailsApiResponse = userInfo.getUserLogin(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserLoginDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserLoginDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyResponseBodyForLoginDetail(fetchUserLoginDetailsApiResponse,
-				testData.getProperty("varreseller.user.login.count.qa"), testData.getProperty("varreseller.user.login.attempts.qa"));
+				testData.getProperty("varreseller.user.login.count"), testData.getProperty("varreseller.user.login.attempts"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")

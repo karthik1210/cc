@@ -22,7 +22,7 @@ public class GetRolesByUserApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -30,7 +30,7 @@ public class GetRolesByUserApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get user roles of existing user using user id and verify response body")
 	public void testGetUserRolesByUserFunctionality() throws IOException {
 		getUserRolesByUserApiResponse = userInfo
-				.getUserRolesByUser(Integer.parseInt(testData.getProperty("existing.user.id.with.user.roles.qa")));
+				.getUserRolesByUser(Integer.parseInt(testData.getProperty("existing.user.id.with.user.roles")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
 		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
