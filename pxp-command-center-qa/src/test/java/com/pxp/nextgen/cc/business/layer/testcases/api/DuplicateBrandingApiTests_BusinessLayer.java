@@ -24,7 +24,7 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		brandInfo = new BrandsInfo();
 		validation = new Validations();
 		clientInfo = new ClientInfo();
