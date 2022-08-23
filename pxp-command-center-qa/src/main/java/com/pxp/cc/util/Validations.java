@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -29,7 +27,6 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -585,7 +582,7 @@ public class Validations {
 
 	public void verifyMaximumCharacterErrorMessageInResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name size maximum 100 character, Sap number size maximum 50 character, Display name size maximum 100 character";
+		String actual = "Name size maximum 100 character, Display name size maximum 100 character";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -617,7 +614,7 @@ public class Validations {
 
 	public void verifyInactiveClientErrorResponsForPractice(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as Client is Inactive");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as System is Inactive");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1400,7 +1397,7 @@ public class Validations {
 
 	public void verifyErrorMessageInResponseForParentTypeField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid type");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid parent type");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -1527,7 +1524,7 @@ public class Validations {
 
 	public void verifyErrorMessageResponseBodyForMandatoryFields(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Parent Id cannot be null, Status cannot be null, Name cannot be null";
+		String actual = "Status cannot be null, Name cannot be null";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -2580,6 +2577,35 @@ public class Validations {
 	public void verifyErrorMessageForActiveStatusAsNull(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Active cannot be null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+
+	}
+
+	public void verifyErrorResponseBodyWhenUserEnterClientIdInOrgIdField(Response response, int clientId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for orgId=" + clientId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyMaximumCharacterErrorMessageInResponseBodyForNameAndSolutionsDisplayField(Response response)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Name size maximum 100 character, Display name size maximum 100 character";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+
+		CCUtils.assertEquals(actualValue, expectedValue);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 
 	}

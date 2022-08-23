@@ -22,7 +22,7 @@ public class GetProvidersForLocationApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		locationsInfo = new LocationsInfo();
 		locationsValidations = new LocationsValidations();
 		validation = new Validations();
