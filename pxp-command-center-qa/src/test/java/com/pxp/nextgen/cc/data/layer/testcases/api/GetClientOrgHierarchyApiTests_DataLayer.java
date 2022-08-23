@@ -73,7 +73,8 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
 				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.sapnumber"),
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty(""
+						+ "api.enterprise.sapnumber"),
 				testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
