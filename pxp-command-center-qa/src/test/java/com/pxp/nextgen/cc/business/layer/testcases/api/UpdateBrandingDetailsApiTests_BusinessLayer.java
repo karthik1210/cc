@@ -29,28 +29,36 @@ public class UpdateBrandingDetailsApiTests_BusinessLayer extends BaseRest {
 	public Object[] getDetails() {
 		Object[][] obj = new Object[][] {
 				{ testData.getProperty("client.brand.id").trim(), testData.getProperty("client.org.id").trim(),
-						testData.getProperty("client.org.brand.name").trim(),
+						testData.getProperty("client.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.true").trim(), testData.getProperty("client.brand.color") },
 				{ testData.getProperty("client.brand.id").trim(), testData.getProperty("client.org.id").trim(),
-						testData.getProperty("client.org.brand.name").trim(),
+						testData.getProperty("client.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.false").trim(), testData.getProperty("client.brand.color") },
 				{ testData.getProperty("system.brand.id").trim(), testData.getProperty("system.org.id").trim(),
-						testData.getProperty("system.org.brand.name").trim(),
+						testData.getProperty("system.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.true").trim(), testData.getProperty("system.brand.color") },
 				{ testData.getProperty("system.brand.id").trim(), testData.getProperty("system.org.id").trim(),
-						testData.getProperty("system.org.brand.name").trim(),
+						testData.getProperty("system.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.false").trim(), testData.getProperty("system.brand.color") },
 				{ testData.getProperty("enterprise.brand.id").trim(), testData.getProperty("enterprise.org.id").trim(),
-						testData.getProperty("enterprise.org.brand.name").trim(),
+						testData.getProperty("enterprise.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.true").trim(), testData.getProperty("enterprise.brand.color") },
 				{ testData.getProperty("enterprise.brand.id").trim(), testData.getProperty("enterprise.org.id").trim(),
-						testData.getProperty("enterprise.org.brand.name").trim(),
+						testData.getProperty("enterprise.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.false").trim(), testData.getProperty("enterprise.brand.color") },
 				{ testData.getProperty("practice.brand.id").trim(), testData.getProperty("practice.org.id").trim(),
-						testData.getProperty("practice.org.brand.name").trim(),
+						testData.getProperty("practice.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.true").trim(), testData.getProperty("practice.brand.color") },
 				{ testData.getProperty("practice.brand.id").trim(), testData.getProperty("practice.org.id").trim(),
-						testData.getProperty("practice.org.brand.name").trim(),
+						testData.getProperty("practice.org.brand.name").trim().concat(
+								CCUtils.generateAlphaNumericString(3)),
 						testData.getProperty("showlogo.false").trim(),
 						testData.getProperty("practice.brand.color") }, };
 		return obj;
