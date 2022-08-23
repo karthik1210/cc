@@ -20,7 +20,7 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		roleInfo = new RoleInfo();
 		validation = new Validations();
 	}

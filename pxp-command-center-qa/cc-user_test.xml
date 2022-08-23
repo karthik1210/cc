@@ -12,8 +12,9 @@
 	</listeners>
 	<test name="CC User Test">
 		<classes>
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserDetailsApiTests_BusinessLayer" />
+	    	<!-- Enable test class once below issue is resolved. Jira # PXPP-17801 -->
+			<!-- <class
+			     name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserDetailsApiTests_BusinessLayer" /> -->
 
 			<!-- Enable test class once below issue is resolved. Jira # PXPP-15356 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateInternalUserApiTests_BusinessLayer" /> -->
@@ -44,10 +45,10 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetVarResellerUserLoginDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
-
-			<class
+            <!-- Enable test class once below issue is resolved. Jira # PXPP-17801 -->
+			<!-- <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserInfoApiTests_BusinessLayer" />
-
+               -->
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
 			<class

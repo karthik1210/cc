@@ -18,7 +18,7 @@ public class CreateBrandingTemplateApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		brandInfo = new BrandsInfo();
 		new SharedInfo();
 		validation = new Validations();
