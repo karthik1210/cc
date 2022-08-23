@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -27,6 +29,7 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -1881,7 +1884,8 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
-			String firstName, String lastName, String userName, String email, String mobile) throws NullPointerException {
+			String firstName, String lastName, String userName, String email, String mobile)
+			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1890,7 +1894,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
-		
+
 	}
 
 	public void verifyErrorResponseForExistingUsername(Response response) throws IOException {
@@ -1940,12 +1944,13 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getString("message"),
 				"JSON parse error: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `long` from String \"abc#$%\": not a valid `long` value\n at [Source: (PushbackInputStream); line: 1, column: 2] (through reference chain: java.util.ArrayList[0])");
 	}
+
 	public void verifyNonExistingAssociatedEntities(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
 		CCUtils.assertEquals(jsonpath.getString("message"), "Entities not found");
 	}
-	
+
 	public void getAssociatedEntities(Response response, ArrayList<Object> orgId) throws IOException {
 		for (int i = 0; i < orgId.size(); i++) {
 			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
@@ -2251,8 +2256,7 @@ public class Validations {
 
 	public void verifyInvalidRoleIdApiResponse(Response response, int userId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"User not found for userId=" + userId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User not found for userId=" + userId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2614,17 +2618,17 @@ public class Validations {
 
 	}
 
-	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException
-	{
+	public void verifyResponseCodeForNonExistingUserType(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(response.getStatusCode(),400);
+		CCUtils.assertEquals(response.getStatusCode(), 400);
 		CCUtils.assertEquals(jsonPath.get("error"), "Bad Request");
 	}
 
-	public void verifyResponseForEmptyOrMisFormatData(Response response)throws IOException{
+	public void verifyResponseForEmptyOrMisFormatData(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("message").toString(),"input value =  , but value must be one of Internal, Client, VAReseller");
-		CCUtils.assertEquals(jsonPath.get("error").toString(),"Bad Request");
+		CCUtils.assertEquals(jsonPath.get("message").toString(),
+				"input value =  , but value must be one of Internal, Client, VAReseller");
+		CCUtils.assertEquals(jsonPath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyUserOutputWithValidInput(Response response, String getSearchUserDetails) {
@@ -2651,20 +2655,20 @@ public class Validations {
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
-			}
+		}
 		CCUtils.assertEquals(jsonObject.getString("type"), "PROVIDER");
-		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"),true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
 	}
 
-	public void verifyResponseForEmptyOrNULLOrMisFormatData(Response response)throws IOException{
+	public void verifyResponseForEmptyOrNULLOrMisFormatData(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("error"),"Bad Request");
-		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"),true);
+		CCUtils.assertEquals(jsonPath.get("error"), "Bad Request");
+		CCUtils.assertEquals(jsonPath.get("message").toString().contains("NumberFormatException"), true);
 	}
 
-	public void verifyResponseForEmptyData(Response response) throws IOException{
+	public void verifyResponseForEmptyData(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("error"),"Internal Server Error");
+		CCUtils.assertEquals(jsonPath.get("error"), "Internal Server Error");
 	}
 
 	public void verifyResponseBodyForGetResourceForProvider_DL(Response response) throws IOException {
@@ -2687,31 +2691,31 @@ public class Validations {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("error"), "Internal Server Error");
 	}
-	
+
 	public void verifyUpdateBrandingDetails(Response response, String brandId, String name) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 		CCUtils.assertEquals(jsonpath.get("brandId").toString(), brandId);
 	}
-	
+
 	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, String orgId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for OrgId=" + orgId);
 	}
-	
+
 	public void verifyErrorMessageForOrgIdAsNull(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "OrgId cannot be empty or null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageForNameFieldAsNull(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Name cannot be empty or null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorMessageForNullValuesInPayload(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String responseMsg = jsonpath.getString("message").toString();
@@ -2725,15 +2729,14 @@ public class Validations {
 
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyErrorResponseMessageForNonExistingAppointmentTypeId(Response response, String AppointmentTypeId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Appointment not found for id=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Appointment not found for id=" + AppointmentTypeId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response) {
 		JsonPath jsonPath = new JsonPath(response.asString());
 		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("name"));
@@ -2742,7 +2745,46 @@ public class Validations {
 		Log4jUtil.log("AppointmentType durationUnit in response body : " + jsonPath.get("durationUnit"));
 		Log4jUtil.log("AppointmentType status in response body : " + jsonPath.get("status"));
 		Log4jUtil.log("Categories in response body : " + jsonPath.get("categories"));
-		}
 	}
-	
-	
+
+	public void verifyBrandingDetails_BL(Response response, int orgId, String orgType, String name, String showLogo,
+			String color, String logo, String favicon, String emailLogo) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		if (Objects.isNull(jsonpath.get("orgId"))) {
+			Log4jUtil.log("orgId is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
+		}
+		if (Objects.isNull(jsonpath.get("orgType"))) {
+			Log4jUtil.log("orgType is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+		}
+		if (Objects.isNull(jsonpath.get("logo"))) {
+			Log4jUtil.log("logo is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("logo"), logo);
+		}
+		if (Objects.isNull(jsonpath.get("favicon"))) {
+			Log4jUtil.log("favicon logo is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("favicon"), favicon);
+		}
+		if (Objects.isNull(jsonpath.get("emailLogo"))) {
+			Log4jUtil.log("emailLogo is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.getInt("emailLogo"), emailLogo);
+		}
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+	}
+
+	public void verifyResponseBodyForProviderDetails_BL(Response response, String firstName, String lastName,
+			String gender, String status) throws NullPointerException, IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
+	}
+}
