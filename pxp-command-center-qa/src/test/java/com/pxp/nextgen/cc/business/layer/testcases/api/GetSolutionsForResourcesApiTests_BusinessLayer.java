@@ -22,7 +22,7 @@ public class GetSolutionsForResourcesApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		validations = new Validations();
 		orgResourceInfo = new OrgResourceInfo();
 		practiceAppointmentTypeValidations = new PracticeAppointmentTypeValidations();

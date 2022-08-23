@@ -21,7 +21,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 	}

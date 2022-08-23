@@ -21,7 +21,7 @@ public class DeleteBrandingTemplateApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		brandInfo = new BrandsInfo();
 		validation = new Validations();

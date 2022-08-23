@@ -21,7 +21,7 @@ public class GetResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRe
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		practiceAppointmentTypeInfo = new PracticeAppointmentTypeInfo();
 		validations = new Validations();
 		practiceAppointmentTypeValidations = new PracticeAppointmentTypeValidations();

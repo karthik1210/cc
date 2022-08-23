@@ -24,7 +24,7 @@ public class AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer extend
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 	}
