@@ -12,19 +12,19 @@
 	</listeners>
 	<test name="CC User Test">
 		<classes>
-	    	<!-- Enable test class once below issue is resolved. Jira # PXPP-17801 -->
-			<!-- <class
-			     name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserDetailsApiTests_BusinessLayer" /> -->
+			<!-- Enable test class once below issue is resolved. Jira # PXPP-PXPP-20773 -->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserDetailsApiTests_BusinessLayer" 
+				/> -->
 
 			<!-- Enable test class once below issue is resolved. Jira # PXPP-15356 -->
-			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateInternalUserApiTests_BusinessLayer" /> -->
-			
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateInternalUserApiTests_BusinessLayer" 
+				/> -->
+
 			<!-- Enable test class once below issue is resolved. Jira # PXPP-17801 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateInternalUsersApiTests_BusinessLayer"/> 
 				<class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateClientUsersApiTests_BusinessLayer" 
-				/> <class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchUserRoleApiTests_BusinessLayer" />
-				<class <class name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateUsersApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchUserRoleApiTests_BusinessLayer" 
+				/> <class <class name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateUsersApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateVAResellerUsersApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchInternalUsersStatusApiTests_BusinessLayer" 
 				/> -->
@@ -33,9 +33,11 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchUserApiTest_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAssociateEntitiesTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ManageAssociateEntitiesTests_BusinessLayer" />
-			
+				<!-- Enable test class once below issue is resolved. -->
+			<!-- Jira PXPP-20816 -->
+			<!-- <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ManageAssociateEntitiesTests_BusinessLayer" /> -->
+
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListRoleLocationsApiTests_BusinessLayer" />
 			<class
@@ -44,12 +46,17 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientUserLoginDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetVarResellerUserLoginDetailsApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
-            <!-- Enable test class once below issue is resolved. Jira # PXPP-17801 -->
-			<!-- <class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserInfoApiTests_BusinessLayer" />
-               -->
+
+
+			<!-- Enable test class once below issue is resolved. -->
+			<!-- Jira PXPP-20816 -->
+
+			<!-- <class -->
+			<!-- name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" 
+				/> -->
+			<!-- Enable test class once below issue is resolved. Jira # PXPP-PXPP-20773 -->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserInfoApiTests_BusinessLayer" 
+				/> -->
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
 			<class

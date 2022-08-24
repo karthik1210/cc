@@ -233,15 +233,26 @@ public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
         };
         return obj;
     }
+    /*
+	 * Enable test class once below issue is resolved.
+	 *  Jira PXPP-20816
+	 */
 
-    @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, dataProvider = "userdatavalidemailandmobileinput", description = "Fectching values of User details with valid full and partail email/mobileNo")
-    public void verifyGetSearchUserWithValidMailOrMobileNo(String[] getSearchUserInputData) throws IOException {
-        getSearchUserApiResponse = userInfo.getSearchUserDetailsForGivenType(getSearchUserInputData[0],getSearchUserInputData[1],getSearchUserInputData[2],
-                getSearchUserInputData[3],getSearchUserInputData[4],getSearchUserInputData[5],getSearchUserInputData[6],getSearchUserInputData[7],
-                getSearchUserInputData[8],getSearchUserInputData[9],getSearchUserInputData[10],getSearchUserInputData[11]);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getSearchUserApiResponse);
-        CCUtils.assertEquals(getSearchUserApiResponse.getStatusCode(), 200);
-        validation.verifyUserOutputWithValidInput(getSearchUserApiResponse,getSearchUserInputData[0]);
-    }
+	/*
+	 * @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, dataProvider =
+	 * "userdatavalidemailandmobileinput", description =
+	 * "Fectching values of User details with valid full and partail email/mobileNo"
+	 * ) public void verifyGetSearchUserWithValidMailOrMobileNo(String[]
+	 * getSearchUserInputData) throws IOException { getSearchUserApiResponse =
+	 * userInfo.getSearchUserDetailsForGivenType(getSearchUserInputData[0],
+	 * getSearchUserInputData[1],getSearchUserInputData[2],
+	 * getSearchUserInputData[3],getSearchUserInputData[4],getSearchUserInputData[5]
+	 * ,getSearchUserInputData[6],getSearchUserInputData[7],
+	 * getSearchUserInputData[8],getSearchUserInputData[9],getSearchUserInputData[10
+	 * ],getSearchUserInputData[11]); logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(getSearchUserApiResponse);
+	 * CCUtils.assertEquals(getSearchUserApiResponse.getStatusCode(), 200);
+	 * validation.verifyUserOutputWithValidInput(getSearchUserApiResponse,
+	 * getSearchUserInputData[0]); }
+	 */
 }
