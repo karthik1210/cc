@@ -137,7 +137,6 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyWhenUserEnterClientIdInOrgIdField(fetchOrgDetailsApiResponse, orgId);
 	}
 
 }

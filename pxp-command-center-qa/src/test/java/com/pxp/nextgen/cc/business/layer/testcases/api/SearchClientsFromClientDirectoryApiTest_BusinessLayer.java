@@ -26,7 +26,7 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientDirectory = new ClientDirectory();
 		new GeneralSettingsClientDropdown();
 		new ClientTopNavDropdownValidations();
