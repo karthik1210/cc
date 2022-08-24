@@ -69,22 +69,9 @@ public class BaseRest extends BaseTestNG {
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
 
-	public void setupQaServiceRequestSpecificationBuilder() throws IOException {
-		RestAssured.baseURI = testData.getProperty("qa.service.base.url");
-		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
-				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
-	}
-
 	public void setupServiceRequestSpecificationBuilderForDataLayer() throws IOException {
 		RestAssured.baseURI = testData.getProperty("data.layer.service.base.url");
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
-
-	public void setupQaServiceRequestSpecificationBuilderForDataLayer() throws IOException {
-		RestAssured.baseURI = testData.getProperty("qa.data.layer.service.base.url");
-		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
-				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
-	}
-
 }

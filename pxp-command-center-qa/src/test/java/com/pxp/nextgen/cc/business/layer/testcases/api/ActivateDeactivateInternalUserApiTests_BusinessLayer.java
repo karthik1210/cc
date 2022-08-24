@@ -20,7 +20,7 @@ public class ActivateDeactivateInternalUserApiTests_BusinessLayer extends BaseRe
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}

@@ -20,7 +20,7 @@ public class GetClientTypesApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
