@@ -22,7 +22,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		brandInfo = new BrandsInfo();
 		validation = new Validations();
 		duplicateBrandingValidations = new DuplicateBrandingValidations();
