@@ -27,7 +27,7 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing providerId in providerId field and validate status code")
 	public void testSuccessResponseCodeForExistingProviderId() throws NullPointerException, IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
+		int providerId = Integer.parseInt(testData.getProperty("provider.id"));
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);

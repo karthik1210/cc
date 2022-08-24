@@ -22,7 +22,7 @@ public class ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -42,7 +42,7 @@ public class ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for existing userId in userId field & null value in orgId")
 	public void testErrorMessageForNullValueForOrgIdField() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
-		int userId = Integer.parseInt(testData.getProperty("api.user.id.qa"));
+		int userId = Integer.parseInt(testData.getProperty("api.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
@@ -54,7 +54,7 @@ public class ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForInvalidValueForOrgIdField() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add("abc#$%");
-		int userId = Integer.parseInt(testData.getProperty("api.user.id.qa"));
+		int userId = Integer.parseInt(testData.getProperty("api.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
@@ -90,7 +90,7 @@ public class ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForExistingUserIdAndNonExistingOrgId() throws IOException {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add(testData.getProperty("non.existing.org.id"));
-		int userId = Integer.parseInt(testData.getProperty("api.user.id.qa"));
+		int userId = Integer.parseInt(testData.getProperty("api.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
@@ -103,7 +103,7 @@ public class ManageAssociateEntitiesTests_BusinessLayer extends BaseRest {
 		ArrayList<Object> OrgIDs = new ArrayList<Object>();
 		OrgIDs.add(testData.getProperty("org.id.two"));
 		OrgIDs.add(testData.getProperty("org.id.three"));
-		int userId = Integer.parseInt(testData.getProperty("existing.user.id.qa"));
+		int userId = Integer.parseInt(testData.getProperty("existing.user.id"));
 		addAssociatedEntitiesResponse = userInfo.addAssociateEntities(userId, OrgIDs);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);

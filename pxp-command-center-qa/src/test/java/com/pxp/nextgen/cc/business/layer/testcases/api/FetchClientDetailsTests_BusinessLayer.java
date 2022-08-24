@@ -23,13 +23,14 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 	private OrgInfo orgInfo;
 	private Validations validation;
 	Response createClientApiResponse, fetchClientDetailsApiResponse, createPracticeApiResponse,
-			fetchPracticeApiResponse, fetchOrgSolutionDetailsApiResponse, addOrgSolutionsApiResponse;
+			fetchPracticeApiResponse, fetchOrgSolutionDetailsApiResponse, addOrgSolutionsApiResponse,
+			createSystemApiResponse;
 	List<Integer> solutionList = null;
 	Map<String, Object> solutionMap = new HashMap<String, Object>();
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupQaServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
@@ -37,11 +38,18 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 
 	public Response createAgnosticPractice(String clientId, String activeStatus)
 			throws NumberFormatException, IOException {
+		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
+		logStep("create an active practice node with solutions");
+		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"),
+				testData.getProperty("api.system.displayname"), "", activeStatus, "", Integer.parseInt(clientId),
+				"CLIENT", Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(practiceName, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.displayname"), "", activeStatus,
-				testData.getProperty("api.practice.timezoneid"), Integer.parseInt(clientId), "CLIENT",
+				testData.getProperty("api.practice.timezoneid"), systemId, "SYSTEM",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createPracticeApiResponse;
@@ -102,6 +110,7 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 		addOrgSolutionsApiResponse = orgInfo.updateOrgSolutions(solutionListsOne, practiceId);
+		CCUtils.assertEquals(addOrgSolutionsApiResponse.getStatusCode(), 200);
 		fetchPracticeApiResponse = orgInfo.getOrgId(practiceId);
 
 		Map<String, Object> solutionMapTwo = new HashMap<String, Object>();
@@ -114,16 +123,18 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
 		int practiceId_two = createPracticeApiResponse.jsonPath().get("orgId");
 		addOrgSolutionsApiResponse = orgInfo.updateOrgSolutions(solutionListsPracTwo, practiceId_two);
+		CCUtils.assertEquals(addOrgSolutionsApiResponse.getStatusCode(), 200);
 
 		logStep("Default Solution list");
 		List<Map<String, Object>> defaultSolutionOneList = new ArrayList<Map<String, Object>>();
 		solutionMap.put("solutionId", testData.getProperty("ehr.identifier"));
 		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
 		defaultSolutionOneList.add(solutionMap);
+		Map<String, Object> solutionMapThree = new HashMap<String, Object>();
 		List<Map<String, Object>> defaultSolutionTwoList = new ArrayList<Map<String, Object>>();
-		solutionMap.put("solutionId", testData.getProperty("pm.identifier"));
-		solutionMap.put("status", testData.getProperty("status.newly.purchased"));
-		defaultSolutionTwoList.add(solutionMap);
+		solutionMapThree.put("solutionId", testData.getProperty("pm.identifier"));
+		solutionMapThree.put("status", testData.getProperty("status.newly.purchased"));
+		defaultSolutionTwoList.add(solutionMapThree);
 
 		logStep("validate both practice response body that they are created as active status with solutions");
 		List<Map<String, Object>> finalSolutionLists = new ArrayList<Map<String, Object>>();
@@ -133,10 +144,6 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		finalSolutionLists.addAll(defaultSolutionOneList);
 		finalSolutionLists.addAll(defaultSolutionTwoList);
 		finalSolutionLists.addAll(solutionListsPracTwo);
-		for (int i = 0; i < finalSolutionLists.size(); i++) {
-			System.out.println(finalSolutionLists.get(i));
-
-		}
 
 		logStep("Verify client details represent active solutions");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);

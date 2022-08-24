@@ -22,7 +22,7 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
-    	setupQaServiceRequestSpecificationBuilder();
+    	setupServiceRequestSpecificationBuilder();
         locationsInfo = new LocationsInfo();
         locationsValidations = new LocationsValidations();
         validation = new Validations();
@@ -31,8 +31,8 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ccuserid , orgid to get list of locations and verify status code and response body")
     public void testGetListLocationForCCUserRole() throws IOException {
         logStep("Enter ccuserId , orgId");
-        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid.qa"));
-        int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid.qa"));
+        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid"));
+        int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
         GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
