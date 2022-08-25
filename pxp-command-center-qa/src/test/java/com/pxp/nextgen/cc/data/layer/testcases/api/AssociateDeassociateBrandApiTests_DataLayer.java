@@ -22,7 +22,7 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		brandingValidations = new DuplicateBrandingValidations();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();

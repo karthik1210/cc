@@ -27,7 +27,7 @@ public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
-    	setupQaServiceRequestSpecificationBuilder();
+    	setupServiceRequestSpecificationBuilder();
         userInfo = new UserInfo();
         validation = new Validations();
     }
@@ -178,7 +178,7 @@ public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
     public Object[] searchUserDetailsWithValidEmailInput() {
         Object[][] obj = new Object[][] {
                 { testData.getProperty("user.type.Internal").trim(), null, null,
-                        testData.getProperty("api.full.email.id.qa").trim(), null, null, null, null, null,null,
+                        testData.getProperty("api.full.email.id").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
                 
                 { testData.getProperty("user.type.Internal").trim(), null, null,
@@ -196,52 +196,63 @@ public class GetSearchUserApiTest_BusinessLayer extends BaseRest {
                 (testData.getProperty("api.page.size").trim()) },
         
                 { testData.getProperty("user.type.Client").trim(), null, null,
-                testData.getProperty("api.full.client.emailId.qa").trim(), null, null, null, null, null,null,
+                testData.getProperty("api.full.client.emailId").trim(), null, null, null, null, null,null,
                 (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
                 
     { testData.getProperty("user.type.Client").trim(), null, null,
-            testData.getProperty("api.partial.client.emailId.qa").trim(), null, null, null, null, null,null,
+            testData.getProperty("api.partial.client.emailId").trim(), null, null, null, null, null,null,
             (testData.getProperty("api.page.no").trim()),
             (testData.getProperty("api.page.size").trim()) },
     
                 { testData.getProperty("user.type.Client").trim(), null, null,null,null,
-                        testData.getProperty("api.full.client.mobilenumber.qa").trim(), null, null, null, null,
+                        testData.getProperty("api.full.client.mobilenumber").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
                 
                 { testData.getProperty("user.type.Client").trim(), null, null,null,null,
-                        testData.getProperty("api.partial.client.mobilenumber.qa").trim(), null, null, null, null,
+                        testData.getProperty("api.partial.client.mobilenumber").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) },
                 
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,
-                        testData.getProperty("api.full.vareseller.email.qa").trim(), null, null, null, null, null,null,
+                        testData.getProperty("api.full.vareseller.email").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
                 
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,
-                        testData.getProperty("api.partial.vareseller.email.qa").trim(), null, null, null, null, null,null,
+                        testData.getProperty("api.partial.vareseller.email").trim(), null, null, null, null, null,null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) },
                 
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,null,null,
-                        testData.getProperty("api.full.VAResller.mobile.qa").trim(), null, null, null, null,
+                        testData.getProperty("api.full.VAResller.mobile").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()), (testData.getProperty("api.page.size").trim()) },
                 
                 { testData.getProperty("user.type.VAReseller").trim(), null, null,null,null,
-                        testData.getProperty("api.partial.varesellser.mobile.qa").trim(), null, null, null, null,
+                        testData.getProperty("api.partial.varesellser.mobile").trim(), null, null, null, null,
                         (testData.getProperty("api.page.no").trim()),
                         (testData.getProperty("api.page.size").trim()) }
         };
         return obj;
     }
+    /*
+	 * Enable test class once below issue is resolved.
+	 *  Jira PXPP-20816
+	 */
 
-    @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, dataProvider = "userdatavalidemailandmobileinput", description = "Fectching values of User details with valid full and partail email/mobileNo")
-    public void verifyGetSearchUserWithValidMailOrMobileNo(String[] getSearchUserInputData) throws IOException {
-        getSearchUserApiResponse = userInfo.getSearchUserDetailsForGivenType(getSearchUserInputData[0],getSearchUserInputData[1],getSearchUserInputData[2],
-                getSearchUserInputData[3],getSearchUserInputData[4],getSearchUserInputData[5],getSearchUserInputData[6],getSearchUserInputData[7],
-                getSearchUserInputData[8],getSearchUserInputData[9],getSearchUserInputData[10],getSearchUserInputData[11]);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getSearchUserApiResponse);
-        CCUtils.assertEquals(getSearchUserApiResponse.getStatusCode(), 200);
-        validation.verifyUserOutputWithValidInput(getSearchUserApiResponse,getSearchUserInputData[0]);
-    }
+	/*
+	 * @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, dataProvider =
+	 * "userdatavalidemailandmobileinput", description =
+	 * "Fectching values of User details with valid full and partail email/mobileNo"
+	 * ) public void verifyGetSearchUserWithValidMailOrMobileNo(String[]
+	 * getSearchUserInputData) throws IOException { getSearchUserApiResponse =
+	 * userInfo.getSearchUserDetailsForGivenType(getSearchUserInputData[0],
+	 * getSearchUserInputData[1],getSearchUserInputData[2],
+	 * getSearchUserInputData[3],getSearchUserInputData[4],getSearchUserInputData[5]
+	 * ,getSearchUserInputData[6],getSearchUserInputData[7],
+	 * getSearchUserInputData[8],getSearchUserInputData[9],getSearchUserInputData[10
+	 * ],getSearchUserInputData[11]); logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(getSearchUserApiResponse);
+	 * CCUtils.assertEquals(getSearchUserApiResponse.getStatusCode(), 200);
+	 * validation.verifyUserOutputWithValidInput(getSearchUserApiResponse,
+	 * getSearchUserInputData[0]); }
+	 */
 }
