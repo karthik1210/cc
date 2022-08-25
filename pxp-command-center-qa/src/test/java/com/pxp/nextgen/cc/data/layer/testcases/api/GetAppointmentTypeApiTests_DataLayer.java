@@ -49,7 +49,7 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getAppointmentTypeApiResponse);
 		CCUtils.assertEquals(getAppointmentTypeApiResponse.getStatusCode(), 400);
 		validation.verifyErrorResponseBodyForInvalidAppointmentTypeId(getAppointmentTypeApiResponse, testData.getProperty("non.existing.appointment.type.id"));
-		
+
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Make a POST call instead of PUT and verify response body")
