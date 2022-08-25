@@ -21,7 +21,7 @@ public class GetListOfBrandsApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		brandsInfo = new BrandsInfo();
 		brandValidations = new BrandsValidations();
 		validations = new Validations();

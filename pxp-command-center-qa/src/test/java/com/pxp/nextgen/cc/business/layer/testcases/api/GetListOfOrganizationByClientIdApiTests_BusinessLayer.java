@@ -24,7 +24,7 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();

@@ -26,7 +26,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();

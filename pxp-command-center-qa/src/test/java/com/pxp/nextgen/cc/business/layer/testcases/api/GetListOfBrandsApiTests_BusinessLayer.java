@@ -22,7 +22,7 @@ public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		brandsInfo = new BrandsInfo();
 		brandValidations = new BrandsValidations();
 		validations = new Validations();

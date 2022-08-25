@@ -26,23 +26,31 @@ public class GetRolesByUserApiTests_BusinessLayer extends BaseRest {
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
+	/*
+	 * Enable test class once below issue is resolved.
+	 *  Jira PXPP-20816
+	 */
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get user roles of existing user using user id and verify response body")
-	public void testGetUserRolesByUserFunctionality() throws IOException {
-		getUserRolesByUserApiResponse = userInfo
-				.getUserRolesByUser(Integer.parseInt(testData.getProperty("existing.user.id.with.user.roles")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
-		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
-		List<UserRoles> actualUserRolesListByUser = Arrays.asList(
-				new UserRoles(Integer.parseInt(testData.getProperty("role.id.one")),
-						testData.getProperty("role.name.one")),
-				new UserRoles(Integer.parseInt(testData.getProperty("role.id.two")),
-						testData.getProperty("role.name.two")),
-				new UserRoles(Integer.parseInt(testData.getProperty("role.id.three")),
-						testData.getProperty("role.name.three")));
-		validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse, actualUserRolesListByUser);
-	}
+	/*
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Get user roles of existing user using user id and verify response body")
+	 * public void testGetUserRolesByUserFunctionality() throws IOException {
+	 * getUserRolesByUserApiResponse = userInfo
+	 * .getUserRolesByUser(Integer.parseInt(testData.getProperty(
+	 * "existing.user.id.with.user.roles")));
+	 * logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
+	 * CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 200);
+	 * List<UserRoles> actualUserRolesListByUser = Arrays.asList( new
+	 * UserRoles(Integer.parseInt(testData.getProperty("role.id.one")),
+	 * testData.getProperty("role.name.one")), new
+	 * UserRoles(Integer.parseInt(testData.getProperty("role.id.two")),
+	 * testData.getProperty("role.name.two")), new
+	 * UserRoles(Integer.parseInt(testData.getProperty("role.id.three")),
+	 * testData.getProperty("role.name.three")));
+	 * validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse,
+	 * actualUserRolesListByUser); }
+	 */
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing user id in user id field and verify response status code")
 	public void testResponseStatuscodeForNonExistingUserId() throws IOException {

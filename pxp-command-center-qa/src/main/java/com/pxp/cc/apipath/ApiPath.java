@@ -704,17 +704,17 @@ public class ApiPath {
 			String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_DL(int orgId) {
-		return SHARED_DL + "/v1/orgs/"+orgId+"/brands";
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brands";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_DL_INVALID_ORG(int orgId) {
-		return SHARED_DL + "/v1/orgs/"+orgId+"!3w/brands";
+		return SHARED_DL + "/v1/orgs/" + orgId + "!3w/brands";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_DL(int orgId) {
-		return SHARED_DL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brandsinvalidurl";
 	}
 
 	public static final String BRAND_LIST_DL(int orgId) {
@@ -730,7 +730,7 @@ public class ApiPath {
 	}
 
 	public static final String CREATE_BRAND_BL = SERVICE_SHARED_BL + "/v1/brands/";
-	
+
 	public static final String GET_APPOINTMENT_TYPES_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/" + appointmentTypeId;
 	}
@@ -738,28 +738,30 @@ public class ApiPath {
 	public static final String GET_APPOINTMENT_TYPES_INVALID_PATH_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
-	
-	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL+ "/v1/appointment-types/null";
-	
+
+	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL + "/v1/appointment-types/null";
+
 	public static final String FETCH_LIST_OF_BRANDS_BL(int orgId) {
-		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brands";
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brands";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_BL_INVALID_ORG(int orgId) {
-		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"!3w/brands";
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "!3w/brands";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_BL(int orgId) {
-		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brandsinvalidurl";
 	}
 
 	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_URL(int practiceId, int resourceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resourcess/" + resourceId;
 	}
+
 	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(int practiceId, int resourceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
 	}
-	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(String practiceId, String resourceId){
+
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(String practiceId, String resourceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
 	}
 
@@ -784,5 +786,9 @@ public class ApiPath {
 
 	public static final String DETETE_BRAND_IMAGE_NullValue_DL() {
 		return SHARED_DL + "/v1/brands/brandId/images/id";
+	}
+	public static final String CREATE_PROVIDER_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
+
 	}
 }
