@@ -31,6 +31,7 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
 				/> -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer"></class>

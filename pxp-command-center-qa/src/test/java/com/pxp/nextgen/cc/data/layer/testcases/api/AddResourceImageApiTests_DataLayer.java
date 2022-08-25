@@ -21,7 +21,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		sharedServiceApiValidations = new SharedServiceApiValidations();

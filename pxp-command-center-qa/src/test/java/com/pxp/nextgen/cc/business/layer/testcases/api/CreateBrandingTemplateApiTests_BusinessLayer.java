@@ -84,7 +84,7 @@ public class CreateBrandingTemplateApiTests_BusinessLayer extends BaseRest {
 		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
-				testData.getProperty("api.practice.parenttype"),
+				testData.getProperty("api.system.orgtype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createAgnosticPracticeApiResponse.jsonPath().get("orgId");
