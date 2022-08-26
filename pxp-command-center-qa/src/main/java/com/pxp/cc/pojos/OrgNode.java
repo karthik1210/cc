@@ -13,5 +13,4 @@ public class OrgNode {
 	private String type;
 	private String name;
 	private boolean active;
-	private Integer id;
 }

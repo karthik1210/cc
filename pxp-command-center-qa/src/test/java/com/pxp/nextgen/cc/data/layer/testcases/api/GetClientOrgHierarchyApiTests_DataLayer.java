@@ -56,7 +56,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		List<OrgNode> datalist = new ArrayList();
+		List<OrgNode> datalist = new ArrayList<OrgNode>();
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new system below client.");
@@ -69,7 +69,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(systemId, null, testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.system.name"),
-				Boolean.parseBoolean(testData.getProperty("api.system.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
@@ -82,7 +82,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(enterpriseId, systemId, testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.enterprise.name"),
-				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active"))));
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
@@ -96,7 +96,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(practiceId, enterpriseId, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId,
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
@@ -121,7 +121,6 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		List<OrgNode> datalist = new ArrayList();
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId,
@@ -156,7 +155,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		List<OrgNode> datalist = new ArrayList();
+		List<OrgNode> datalist = new ArrayList<OrgNode>();
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
 		logStep("Create a new practice below client.");
@@ -170,7 +169,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(practiceId, null, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
@@ -182,7 +181,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(systemId, null, testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.system.name"),
-				Boolean.parseBoolean(testData.getProperty("api.system.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
@@ -195,7 +194,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(enterpriseId, systemId, testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.enterprise.name"),
-				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active"))));
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
@@ -209,7 +208,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 
 		datalist.add(new OrgNode(ngePracticeId, enterpriseId, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId,
 				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));

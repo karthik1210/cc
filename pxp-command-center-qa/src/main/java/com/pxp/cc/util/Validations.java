@@ -1312,10 +1312,11 @@ public class Validations {
 		for (int i = 0; i < responseBody.length(); i++) {
 			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"),
 					responseBody.getJSONObject(i).getInt("parentId"), responseBody.getJSONObject(i).getString("type"),
-					responseBody.getJSONObject(i).getString("name"), responseBody.getJSONObject(i).getBoolean("active"),
-					responseBody.getJSONObject(i).getInt("id")));
+					responseBody.getJSONObject(i).getString("name"),
+					responseBody.getJSONObject(i).getBoolean("active")));
 		}
-		CCUtils.assertEquals(responseDatalist, datalist);
+
+		CCUtils.assertTrue(responseDatalist.containsAll(datalist), "data list is not matching with response data list");
 	}
 
 	public void verifySearchClientOrgHierarchyResponseBodyDataLayer(Response response, List<OrgNode> datalist)
@@ -1329,7 +1330,7 @@ public class Validations {
 			}
 			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"), parentId,
 					responseBody.getJSONObject(i).getString("type"), responseBody.getJSONObject(i).getString("name"),
-					responseBody.getJSONObject(i).getBoolean("active"), null));
+					responseBody.getJSONObject(i).getBoolean("active")));
 		}
 		CCUtils.assertEquals(responseDatalist, datalist);
 	}

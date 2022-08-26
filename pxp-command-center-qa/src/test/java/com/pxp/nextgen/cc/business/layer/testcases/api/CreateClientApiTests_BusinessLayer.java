@@ -19,6 +19,7 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 	private Validations validation;
 	Response createClientApiResponse, fetchClientDetailsApiResponse;
 	List<Integer> solutionList = null;
+	String clientName, clientSapNumber;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -27,12 +28,12 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new active test client and fetch newly created client details using client id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Create a new active test client and fetch newly created client details using client id")
 	public void testCreateNewActiveTestClient() throws IOException {
 		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
+		clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
-		String clientSapNumber = CCUtils
+		clientSapNumber = CCUtils
 				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
@@ -69,30 +70,27 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and validate error message")
 	public void testErrorResponseForClientNameField() throws IOException {
 		logStep("Enter already existing value in client name field and validate error message");
-		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
-				testData.getProperty("api.existing.client.name"), clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
+		String clientSapNumberOne = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
+				clientSapNumberOne, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForClientName(createClientApiResponse,
-				testData.getProperty("api.existing.client.name"));
+		validation.verifyErrorMessageInResponseForClientName(createClientApiResponse, clientName);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in sap number field and validate error message")
 	public void testErrorResponseForSapNumberField() throws IOException {
 		logStep("Enter already existing value in sap number field and validate error message");
-		String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				testData.getProperty("api.existing.client.sapnumber"), testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+		String clientNameOne = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientNameOne,
+				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForClientSapNumber(createClientApiResponse,
-				testData.getProperty("api.existing.client.sapnumber"));
+		validation.verifyErrorMessageInResponseForClientSapNumber(createClientApiResponse, clientSapNumber);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client type and validate error message")
