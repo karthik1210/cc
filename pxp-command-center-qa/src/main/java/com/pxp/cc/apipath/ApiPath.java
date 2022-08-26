@@ -784,8 +784,23 @@ public class ApiPath {
 	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(int locationId) {
 		return SHARED_DL + "/v1/locationsss/" + locationId + "/practices";
 	}
+	public static final String UPDATE_BRAND_IMAGE_DL(int brandId ) {
+		return SHARED_DL + "/v1/brands/" + brandId  + "/logo";
+	}
+	
+	public static final String DETETE_BRAND_IMAGE_DL(int brandId,String id ) {
+		return SHARED_DL + "/v1/brands/"+ brandId + "/images/" + id;
+	}
+	
+	public static final String  DETETE_BRAND_IMAGE_INVALID_URL_DL(int brandId, String id ) {
+		return SHARED_DL + "/v1/brands/"+ brandId + "/imagesssss/" + id;
+	}
 
+	public static final String DETETE_BRAND_IMAGE_NullValue_DL() {
+		return SHARED_DL + "/v1/brands/brandId/images/id";
+	}
 	public static final String CREATE_PROVIDER_BL(int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
+
 	}
 }
