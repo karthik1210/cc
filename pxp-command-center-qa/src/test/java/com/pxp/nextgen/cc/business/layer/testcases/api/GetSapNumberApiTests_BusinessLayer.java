@@ -26,26 +26,26 @@ public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
-		clientId = createClient();
+		clientName = ccUser.getClientName().trim().concat(CCUtils.generateRandomString()).trim();
+		clientSapNumber = "SAP_01_number_".trim().concat(CCUtils.generateAlphaNumericString(5)).trim();
+		clientId = createClient(clientName, clientSapNumber);
 	}
 
-	public int createClient() throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+	public int createClient(String name, String sapNumber) throws Exception {
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), name, sapNumber, "false",
 				ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, name);
 		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	@DataProvider(name = "clientSapNumber")
 	public Object[][] getClientSapNumber() throws Exception {
-		return new Object[][] { { clientSapNumber }, { clientSapNumber.toLowerCase() },
-				{ clientSapNumber.toUpperCase() }, { CCUtils.reverseCase(clientSapNumber) } };
+		return new Object[][] { { clientSapNumber.trim() }, { clientSapNumber.toLowerCase().trim() },
+				{ clientSapNumber.toUpperCase().trim() }, { CCUtils.reverseCase(clientSapNumber).trim() } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientSapNumber", description = "Enter already existing client SapNumber and verify client name and client id details displayed in response body")

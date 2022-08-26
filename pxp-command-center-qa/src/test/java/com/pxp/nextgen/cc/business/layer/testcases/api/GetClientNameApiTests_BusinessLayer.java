@@ -25,26 +25,26 @@ public class GetClientNameApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
-		clientId = createClient();
+		clientNameData = "New_" + ccUser.getClientName().trim().concat(CCUtils.generateAlphaNumericString(5)).trim();
+		clientSapNumber = ccUser.getClientSapNumber().trim().concat(CCUtils.generateRandomString()).trim();
+		clientId = createClient(clientNameData, clientSapNumber);
 	}
 
-	public int createClient() throws Exception {
-		clientNameData = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+	public int createClient(String name, String sapNumber) throws Exception {
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientNameData, clientSapNumber,
-				"false", ccUser.getClientType(), ccUser.getTimezoneId());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), name, sapNumber, "false",
+				ccUser.getClientType(), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientNameData);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, name);
 		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	@DataProvider(name = "clientName")
 	public Object[][] getClientName() throws Exception {
-		return new Object[][] { { clientNameData }, { clientNameData.toLowerCase() }, { clientNameData.toUpperCase() },
-				{ CCUtils.reverseCase(clientNameData) } };
+		return new Object[][] { { clientNameData.trim() }, { clientNameData.toLowerCase().trim() },
+				{ clientNameData.toUpperCase().trim() }, { CCUtils.reverseCase(clientNameData).trim() } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientName", description = "Enter already existing client name and verify client name and client id details displayed in response body")

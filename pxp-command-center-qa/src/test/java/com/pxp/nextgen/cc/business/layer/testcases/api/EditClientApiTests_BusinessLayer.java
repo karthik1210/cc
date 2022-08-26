@@ -199,8 +199,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client and enter existing client sap number and verify error message for sap number field")
 	public void testUpdateExistingSapNumberInClientSapNumberField() throws IOException {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		String newSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, "SAPII",
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, newSapNumber,
 				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("Edit client and enter existing client sap number and verify error message for sap number field");
@@ -216,7 +217,7 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 	public void testUpdateNullDataInMandatoryFields() throws IOException {
 		logStep("Edit client and enter null values in mandatory field");
 		updateClientApiResponse = clientInfo.updateClient(null, newClientId, null, null, ccUser.getTestClient(), null,
-				ccUser.getTimezoneId());
+				null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);

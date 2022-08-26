@@ -56,11 +56,11 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.client.practice.count")), false, solutionList);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber,timezone id and type) and validate error message")
 	public void testErrorMessagesForMandatoryFields() throws IOException {
 		logStep("Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message");
 		createClientApiResponse = clientInfo.createNewClient(null, null, null,
-				testData.getProperty("api.client.testclient"), null, testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.testclient"), null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
