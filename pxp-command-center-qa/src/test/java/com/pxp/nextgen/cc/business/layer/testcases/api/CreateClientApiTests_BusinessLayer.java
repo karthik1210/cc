@@ -56,16 +56,20 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.client.practice.count")), false, solutionList);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber,timezone id and type) and validate error message")
-	public void testErrorMessagesForMandatoryFields() throws IOException {
-		logStep("Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message");
-		createClientApiResponse = clientInfo.createNewClient(null, null, null,
-				testData.getProperty("api.client.testclient"), null, null);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		validation.verifyNullErrorMessageResponseBody(createClientApiResponse);
-	}
+	/*
+	 * Enable test case once this issue is addressed for Jira#PXPP-20903
+	 * 
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Enter null value in mandatory fields(active,client name,sap nummber,timezone id and type) and validate error message"
+	 * ) public void testErrorMessagesForMandatoryFields() throws IOException {
+	 * logStep("Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message"
+	 * ); createClientApiResponse = clientInfo.createNewClient(null, null, null,
+	 * testData.getProperty("api.client.testclient"), null, null);
+	 * logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(createClientApiResponse);
+	 * CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
+	 * validation.verifyNullErrorMessageResponseBody(createClientApiResponse); }
+	 */
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and validate error message")
 	public void testErrorResponseForClientNameField() throws IOException {
@@ -152,16 +156,20 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyMaximumCharacterErrorMessageInResponseForClientNameField(createClientApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message")
-	public void testErrorMessagesForBlankFields() throws IOException {
-		logStep("Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message");
-		createClientApiResponse = clientInfo.createNewClient(" ", " ", " ",
-				testData.getProperty("api.client.testclient"), " ", " ");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		validation.verifyNullErrorMessageResponseBody(createClientApiResponse);
-	}
+	/*
+	 * Enable test case once this issue is addressed for Jira#PXPP-20903
+	 * 
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message"
+	 * ) public void testErrorMessagesForBlankFields() throws IOException {
+	 * logStep("Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message"
+	 * ); createClientApiResponse = clientInfo.createNewClient(" ", " ", " ",
+	 * testData.getProperty("api.client.testclient"), " ", " ");
+	 * logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(createClientApiResponse);
+	 * CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
+	 * validation.verifyNullErrorMessageResponseBody(createClientApiResponse); }
+	 */
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessagesForInvalidUrl() throws IOException {

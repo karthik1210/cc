@@ -213,14 +213,19 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForClientSapNumber(updateClientApiResponse, clientSapNumber);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client and enter null values in mandatory field and verify error message")
-	public void testUpdateNullDataInMandatoryFields() throws IOException {
-		logStep("Edit client and enter null values in mandatory field");
-		updateClientApiResponse = clientInfo.updateClient(null, newClientId, null, null, ccUser.getTestClient(), null,
-				null);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateClientApiResponse);
-		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
-		validation.verifyNullErrorMessageResponseBody(updateClientApiResponse);
-	}
+	/*
+	 * Enable test case once this issue is addressed for Jira#PXPP-20903
+	 * 
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Edit client and enter null values in mandatory field and verify error message"
+	 * ) public void testUpdateNullDataInMandatoryFields() throws IOException {
+	 * logStep("Edit client and enter null values in mandatory field");
+	 * updateClientApiResponse = clientInfo.updateClient(null, newClientId, null,
+	 * null, ccUser.getTestClient(), null, null);
+	 * logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(updateClientApiResponse);
+	 * CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
+	 * validation.verifyNullErrorMessageResponseBody(updateClientApiResponse); }
+	 */
+
 }
