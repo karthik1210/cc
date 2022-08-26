@@ -1,37 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="CCSharedDataTestSuite">
-    <listeners>
-        <listener
-                class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener"/>
-        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
-        <listener
-                class-name="org.uncommons.reportng.JUnitXMLReporter"/>
-        <listener
-                class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
-    </listeners>
-    <test name="CC Shared Data Test">
-        <classes>
-            <!-- Enable test suite once pipeline issue is addressed for for data services
-                Jira # PXPP-16483 -->
-            <!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandDetailsApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateBrandApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreatePracticeResourceApiTests_DataLayer"/> -->
-            <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer"></class>
-        </classes>
-    </test>
+	<listeners>
+		<listener
+			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener
+			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener
+			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+	</listeners>
+	<test name="CC Shared Data Test">
+		<classes>
+			<!-- Enable test suite once pipeline issue is addressed for for data services 
+				Jira # PXPP-16483 -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandDetailsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateBrandApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
+				/> -->
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer"></class>
+		</classes>
+	</test>
+
 </suite>
