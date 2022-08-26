@@ -228,16 +228,14 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getClientOrgHierarchyDetails_DataLayer(int clientId, int userId) {
+	public Response getClientOrgHierarchyDetails_DataLayer(int clientId) {
 		String url = ApiPath.CLIENT_ORG_HIERARCHY_DL(clientId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).when().get(url).then().extract()
-				.response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getClientOrgHierarchyUsingInvalidUrl_DataLayer(int clientId, int userId) {
+	public Response getClientOrgHierarchyUsingInvalidUrl_DataLayer(int clientId) {
 		String url = ApiPath.INVALID_PATH_CLIENT_ORG_HIERARCHY_DL(clientId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).when().get(url).then().extract()
-				.response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getAutoSuggestionClient_DL(String searchData) {

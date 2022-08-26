@@ -24,23 +24,23 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrg(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId) throws IOException {
+			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier)
+			throws IOException {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId);
+				parentType, timezoneId, ehrIdentifier, pmIdentifier);
 
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
 	public Response createOrg_DataLayer(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId, int userId) throws IOException {
-
+			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier)
+			throws IOException {
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId);
-
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
-				.post(ApiPath.ORG_DL).then().extract().response();
+				parentType, timezoneId, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
+				.response();
 	}
 
 	public Response getOrgId_DataLayer(int orgId) throws IOException {
@@ -189,16 +189,17 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public static Map<String, Object> postCreateOrg(String active, String displayName, String name, String orgType,
-			int parentId, String parentType, String sapNumber, String timezoneId) {
+			int parentId, String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> orgMap = new HashMap<String, Object>();
-		orgMap.put("active", active);
-		orgMap.put("displayName", displayName);
 		orgMap.put("name", name);
 		orgMap.put("orgType", orgType);
-		orgMap.put("parentId", parentId);
-		orgMap.put("parentType", parentType);
-		orgMap.put("sapNumber", sapNumber);
+		orgMap.put("displayName", displayName);
+		orgMap.put("active", active);
 		orgMap.put("timezoneId", timezoneId);
+		orgMap.put("parentId", parentId);
+		orgMap.put("parentType", parentType);		
+		orgMap.put("ehrIdentifier", ehrIdentifier);
+		orgMap.put("pmIdentifier", pmIdentifier);
 		return orgMap;
 	}
 
@@ -362,14 +363,12 @@ public class OrgInfo extends BaseRest {
 		return practiceMap;
 	}
 
-	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId)
-			throws IOException {
+	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId) throws IOException {
 		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
 				status);
 
-		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when()
-				.put(url).then().extract().response();
+		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
 	}
 
 	public static List<Map<String, Object>> putUpdateOrgsSolutionsDetails_DataLayer(int solutionId,

@@ -117,7 +117,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 	public int createOrgNode(String status, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws Exception {
 		createOrgNodeApiResponse = orgInfo.createOrg_DataLayer(status, displayName, name, orgType, parentId, parentType,
-				sapNumber, timezoneId, Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				timezoneId, Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 

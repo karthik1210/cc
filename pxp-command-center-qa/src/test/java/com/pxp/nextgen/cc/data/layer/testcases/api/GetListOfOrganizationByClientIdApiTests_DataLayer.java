@@ -51,9 +51,9 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 	public int createOrgNode(String status, String name, int parentId, String orgType, String parentType)
 			throws Exception {
 		createOrgNodeApiResponse = orgInfo.createOrg_DataLayer(status, testData.getProperty("api.system.displayname"),
-				name, orgType, parentId, parentType, testData.getProperty("api.system.sapnumber"),
-				testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				name, orgType, parentId, parentType, testData.getProperty("api.system.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 

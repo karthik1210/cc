@@ -129,7 +129,7 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		String type = fetchClientDetailsApiResponse.jsonPath().get("type");
 		Boolean activeStatus = fetchClientDetailsApiResponse.jsonPath().getBoolean("active");
 		String sapNum = fetchClientDetailsApiResponse.jsonPath().get("sapNumber");
-		String testClient = fetchClientDetailsApiResponse.jsonPath().get("testClient");
+		String testClient = String.valueOf(fetchClientDetailsApiResponse.jsonPath().get("testClient"));
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
 		String timezoneId = fetchClientDetailsApiResponse.jsonPath().get("timezone.id");
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(existingClientId, activeStatus, clientName, sapNum,

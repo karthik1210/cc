@@ -23,7 +23,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
@@ -46,7 +46,9 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		int orgId = Integer.parseInt(testData.getProperty("api.existing.orgid"));
 		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(orgId);
 		logStep("Validating response information");
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
+		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
+		validation.verifyErrorResponseBodyForClientIdSolutionsField(fetchClientDetailsApiResponse, orgId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client without practice node & verify status code and response error message for clientId solutions field")
@@ -139,8 +141,6 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientIdSolutionsResponseBody(fetchClientDetailsApiResponse, practiceId, practiceName,
-				1101, "Newly purchased");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create inactive client with inactive practice having solution verify response & status code in clientId solutions field")
@@ -155,13 +155,24 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
+
+		logStep("create an active system node");
+		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
+		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
+		createSystemApiResponse = orgInfo.createAgnosticPracticeNodeDataLayer(systemName, systemName, systemSapNumber,
+				"true", ccUser.getPracticeTimezoneIdApi(), ccUser.getSystemOrgTypeApi(), clientId,
+				ccUser.getParentTypeApi(), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
+
+		int systemId = createSystemApiResponse.jsonPath().get("orgId");
+
 		logStep("create an inactive practice node");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
 		createPracticeApiResponse = orgInfo.createAgnosticPracticeNodeDataLayer(practiceName,
 				ccUser.getPracticeDisplayNameApi(), practiceSapNumber, "false", ccUser.getPracticeTimezoneIdApi(),
-				ccUser.getPracticeOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getPracticeOrgTypeApi(), systemId, ccUser.getParentTypeApi(),
 				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
@@ -190,13 +201,24 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
+
+		logStep("create an active system node");
+		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
+		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
+		createSystemApiResponse = orgInfo.createAgnosticPracticeNodeDataLayer(systemName, systemName, systemSapNumber,
+				"true", ccUser.getPracticeTimezoneIdApi(), ccUser.getSystemOrgTypeApi(), clientId,
+				ccUser.getParentTypeApi(), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
+
+		int systemId = createSystemApiResponse.jsonPath().get("orgId");
+
 		logStep("create an inactive practice node");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
 		createPracticeApiResponse = orgInfo.createAgnosticPracticeNodeDataLayer(practiceName,
 				ccUser.getPracticeDisplayNameApi(), practiceSapNumber, "false", ccUser.getPracticeTimezoneIdApi(),
-				ccUser.getPracticeOrgTypeApi(), clientId, ccUser.getParentTypeApi(),
+				ccUser.getPracticeOrgTypeApi(), systemId, ccUser.getParentTypeApi(),
 				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
@@ -229,21 +251,23 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), ccUser.getSystemNameApi(),
 				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				ccUser.getSystemSapNumberApi(), testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 		logStep("Create a new active enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(ccUser.getEnterpriseActiveApi(),
 				ccUser.getEnterpriseDisplayNameApi(), ccUser.getEnterpriseNameApi(), ccUser.getEnterpriseOrgTypeApi(),
-				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseSapNumberApi(),
-				ccUser.getEnterpriseTimezoneIdApi(), Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				systemId, ccUser.getEnterpriseParentTypeApi(), ccUser.getEnterpriseTimezoneIdApi(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 		logStep("Create a new active practice below enterprise.");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(ccUser.getPracticeActiveApi(),
 				ccUser.getPracticeDisplayNameApi(), practiceName, ccUser.getPracticeOrgTypeApi(), enterpriseId,
-				ccUser.getPracticeParentTypeApi(), ccUser.getPracticeSapNumberApi(), ccUser.getPracticeTimezoneIdApi(),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				ccUser.getPracticeParentTypeApi(), ccUser.getPracticeTimezoneIdApi(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		int practiceId = createPracticeApiResponse.jsonPath().getInt("orgId");
 		logStep("Purchase solution for inactive practice node");
@@ -257,8 +281,6 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientIdSolutionsResponseBody(fetchClientDetailsApiResponse, practiceId, practiceName,
-				1101, "Newly purchased");
 	}
 
 }
