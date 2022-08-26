@@ -42,13 +42,33 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing org id in clientId solutions field and verify error message for client id field")
 	public void testErrorMessageWhenSearchOrgIdInClientIdField() throws IOException {
+		log("create a new client");
+		String clientName = testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientSapNumber = testData.getProperty("api.client.sapnumber")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+
+		int clientId = createClientApiResponse.jsonPath().get("clientId");
+		
+		logStep("create an active system node");
+		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
+		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
+		createSystemApiResponse = orgInfo.createAgnosticPracticeNodeDataLayer(systemName, systemName, systemSapNumber,
+				"true", ccUser.getPracticeTimezoneIdApi(), ccUser.getSystemOrgTypeApi(), clientId,
+				ccUser.getParentTypeApi(), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
+
+		int systemId = createSystemApiResponse.jsonPath().get("orgId");
+		
 		logStep("Enter orgId instead of client id in clientId field and validate error message");
-		int orgId = Integer.parseInt(testData.getProperty("api.existing.orgid"));
-		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(orgId);
+		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(systemId);
 		logStep("Validating response information");
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		validation.verifyErrorResponseBodyForClientIdSolutionsField(fetchClientDetailsApiResponse, orgId);
+		validation.verifyErrorResponseBodyForClientIdSolutionsField(fetchClientDetailsApiResponse, systemId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client without practice node & verify status code and response error message for clientId solutions field")

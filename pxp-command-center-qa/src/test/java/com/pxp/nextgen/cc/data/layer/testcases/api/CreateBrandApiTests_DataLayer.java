@@ -29,7 +29,7 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		brandInfo = new BrandsInfo();
 		clientInfo = new ClientInfo();
 		brandingValidation = new Validations();

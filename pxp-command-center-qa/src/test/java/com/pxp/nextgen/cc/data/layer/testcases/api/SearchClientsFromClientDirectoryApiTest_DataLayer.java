@@ -26,7 +26,7 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientDirectory = new ClientDirectory();
 		new GeneralSettingsClientDropdown();
 		new ClientTopNavDropdownValidations();

@@ -21,7 +21,7 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientData = new ClientInfo();
 		validation = new Validations();
 	}

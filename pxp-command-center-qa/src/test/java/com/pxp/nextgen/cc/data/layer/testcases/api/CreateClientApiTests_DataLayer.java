@@ -19,7 +19,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilderForDataLayer();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 	}
