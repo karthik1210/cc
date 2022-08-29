@@ -2795,4 +2795,13 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("status").toString(), status);
 	}
+
+	public void verifyOutputFromValidInput(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
+	}
 }
