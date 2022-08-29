@@ -156,10 +156,10 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClient_DataLayer(String active, String clientName, String sapNumber, String testClient,
-			String type, String timezoneId, int userId) throws IOException {
+			String type, String timezoneId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewClientPayload).when()
+		return given().spec(requestSpec).body(createNewClientPayload).when()
 				.post(ApiPath.CLIENT_DL).then().extract().response();
 
 	}
