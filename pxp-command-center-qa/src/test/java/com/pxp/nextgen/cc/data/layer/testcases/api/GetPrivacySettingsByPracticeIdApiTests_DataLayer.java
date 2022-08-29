@@ -32,7 +32,7 @@ public class GetPrivacySettingsByPracticeIdApiTests_DataLayer extends BaseRest {
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingsApiResponse);
         CCUtils.assertEquals(getPrivacySettingsApiResponse.getStatusCode(), 200);
-        validations.verifyOutputFromValidInput_DL(getPrivacySettingsApiResponse);
+        validations.verifyOutputFromValidInput(getPrivacySettingsApiResponse);
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Fetching list of privacy settings for a practice with practice Id and invalid touType")

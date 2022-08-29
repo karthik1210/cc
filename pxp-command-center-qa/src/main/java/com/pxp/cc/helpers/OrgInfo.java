@@ -643,4 +643,39 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_BL();
 		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
 	}
+
+	public Response getListOfTouForAPractice_DL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidRequest_DL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().put(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidURI_DL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(String practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(int practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(String practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url.replace("%2F%2F", "")).then().extract().response();
+	}
+
+	public Response getListOfTouForPracticeWithoutPracticeId_DL(String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_DL();
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
 }
