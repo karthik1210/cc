@@ -41,8 +41,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("New client created with client id : " + clientId);
 		logStep("Duplicating Brand to created client");

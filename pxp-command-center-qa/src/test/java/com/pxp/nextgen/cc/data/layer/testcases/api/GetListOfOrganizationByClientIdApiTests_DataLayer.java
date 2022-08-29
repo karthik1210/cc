@@ -44,17 +44,16 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
 	public int createOrgNode(String status, String name, int parentId, String orgType, String parentType)
 			throws Exception {
 		createOrgNodeApiResponse = orgInfo.createOrg_DataLayer(status, testData.getProperty("api.system.displayname"),
-				name, orgType, parentId, parentType, testData.getProperty("api.system.sapnumber"),
-				testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				name, orgType, parentId, parentType, testData.getProperty("api.system.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 

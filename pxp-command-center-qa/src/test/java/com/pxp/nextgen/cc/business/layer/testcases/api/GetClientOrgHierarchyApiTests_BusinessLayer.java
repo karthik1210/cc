@@ -161,6 +161,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
 		List<OrgNode> datalist = new ArrayList<OrgNode>();
+
 		int clientIdTwo = createClientApiResponse.jsonPath().get("clientId");
 
 		datalist.add(new OrgNode(clientIdTwo, 0, "CLIENT", clientName,
@@ -178,7 +179,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("api.system.name"),
 				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
-		logStep("Create a new agnostic practice below system.");
+		logStep("Create a new practice below system.");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),

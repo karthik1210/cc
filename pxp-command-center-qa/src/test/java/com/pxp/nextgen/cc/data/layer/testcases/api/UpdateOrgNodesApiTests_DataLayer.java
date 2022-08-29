@@ -110,15 +110,15 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
 	public int createOrgNode(String status, String displayName, String name, String orgType, int parentId,
 			String parentType, String sapNumber, String timezoneId) throws Exception {
 		createOrgNodeApiResponse = orgInfo.createOrg_DataLayer(status, displayName, name, orgType, parentId, parentType,
-				sapNumber, timezoneId, Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				timezoneId, Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 
