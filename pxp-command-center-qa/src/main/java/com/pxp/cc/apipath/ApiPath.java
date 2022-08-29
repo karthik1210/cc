@@ -730,6 +730,8 @@ public class ApiPath {
 	}
 
 	public static final String CREATE_BRAND_BL = SERVICE_SHARED_BL + "/v1/brands/";
+	
+	public static final String CREATE_BRAND_DL = SHARED_DL + "/v1/brands/";
 
 	public static final String GET_APPOINTMENT_TYPES_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/" + appointmentTypeId;

@@ -44,10 +44,10 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 
 	public int createClient() throws NullPointerException, IOException {
 		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(30))));
 		String clientSapNumber = CCUtils
 				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
+						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25))));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
@@ -55,7 +55,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createSystem(int clientId) throws NumberFormatException, NullPointerException, IOException {
-		createSystemNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
+		createSystemNodeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), testData.getProperty("api.system.displayname"), "", "false",
 				"", clientId, testData.getProperty("api.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
@@ -64,7 +64,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createEnterprise(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createEnterpriseNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
+		createEnterpriseNodeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.displayname"), "",
 				testData.getProperty("api.enterprise.active"), testData.getProperty("api.enterprise.timezoneid"),
 				systemId, testData.getProperty("api.enterprise.parenttype"),
@@ -74,7 +74,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createNGPractice(int enterpriseId) throws NumberFormatException, NullPointerException, IOException {
-		createNgPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
+		createNgPracticeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
 				enterpriseId, testData.getProperty("api.practice.parenttype"),
@@ -84,7 +84,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createAgnosticPractice(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
+		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
 				testData.getProperty("api.practice.parenttype"),
@@ -97,19 +97,60 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 		String name = testData.getProperty("client.org.brand.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String color = testData.getProperty("client.brand.color");
-		createBrandApiResponse = brandInfo.createBrandingTemplate(String.valueOf(orgId), name, "true", color);
+		createBrandApiResponse = brandInfo.createBrandingTemplateDL(String.valueOf(orgId), name, "true", color);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createBrandApiResponse);
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
 		return createBrandApiResponse.jsonPath().getInt("brandId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another existing Org")
-	public void testDuplicateBrandToOrg() throws IOException {
-		logStep("Duplicating Brand to existing Org");
-		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
-				Integer.parseInt(testData.getProperty("brand.id")),
-				Integer.parseInt(testData.getProperty("owner.id.org")));
+	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created client Org")
+	public void testDuplicateBrandToClientOrg() throws IOException {
+		clientID = createClient();
+		brandId = createBrand(clientID);
+		logStep("Duplicating Brand to newly created client org");
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(brandId, clientID);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
+		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);
+	}
+
+	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created system Org")
+	public void testDuplicateBrandToSystemOrg() throws IOException {
+		systemId = createSystem(clientID);
+		brandId = createBrand(clientID);
+		logStep("Duplicating Brand to newly created system org");
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(brandId, systemId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
+		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);
+	}
+
+	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created enterprise Org")
+	public void testDuplicateBrandToEnterpriseOrg() throws IOException {
+		enterpriseId = createEnterprise(systemId);
+		logStep("Duplicating Brand to newly created enterprise org");
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(brandId, enterpriseId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
+		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);
+	}
+
+	@Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created ng practice Org")
+	public void testDuplicateBrandToNgPracticeOrg() throws IOException {
+		ngPracticeId = createNGPractice(enterpriseId);
+		logStep("Duplicating Brand to newly created Ng practice org");
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(brandId, ngPracticeId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
+		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);
+	}
+
+	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created ng practice Org")
+	public void testDuplicateBrandToAgnosticPracticeOrg() throws IOException {
+		agnosticPracticeId = createAgnosticPractice(systemId);
+		logStep("Duplicating Brand to newly created agnostic practice org");
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(brandId, agnosticPracticeId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
 		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);

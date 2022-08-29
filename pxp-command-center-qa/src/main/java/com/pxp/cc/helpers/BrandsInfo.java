@@ -189,6 +189,13 @@ public class BrandsInfo extends BaseRest {
 		String url = ApiPath.CREATE_BRAND_BL;
 		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
 	}
+	
+	public Response createBrandingTemplateDL(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.CREATE_BRAND_DL;
+		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
+	}
+
 
 	public Response createBrandingTemplateInvalidUrl_BL(String orgId, String name, String showLogo, String color) {
 		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
