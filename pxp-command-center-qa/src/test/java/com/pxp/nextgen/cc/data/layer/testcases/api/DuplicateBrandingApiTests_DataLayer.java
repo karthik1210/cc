@@ -172,8 +172,9 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter non-existing owner id when duplicating brand to Org")
 	public void testErrorMsgWhenEnterNonExistingOwnerIdOfOrg() throws IOException {
 		logStep("Duplicating brand to non-existing org id");
-		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(
-				Integer.parseInt(testData.getProperty("brand.id")),
+		clientID = createClient();
+		brandId = createBrand(clientID);
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrand(brandId,
 				Integer.parseInt(testData.getProperty("non.existing.owner.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
