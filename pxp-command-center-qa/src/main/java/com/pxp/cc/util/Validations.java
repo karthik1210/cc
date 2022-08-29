@@ -1145,7 +1145,7 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
 		if (jsonpath.get("message").toString().contains(
-				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))
+				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))	
 			CCUtils.assertTrue(true, "Message : " + jsonpath.get("message").toString() + " is not verified");
 	}
 
@@ -1330,9 +1330,11 @@ public class Validations {
 		for (int i = 0; i < responseBody.length(); i++) {
 			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"),
 					responseBody.getJSONObject(i).getInt("parentId"), responseBody.getJSONObject(i).getString("type"),
-					responseBody.getJSONObject(i).getString("name"), responseBody.getJSONObject(i).getBoolean("active")));
+					responseBody.getJSONObject(i).getString("name"),
+					responseBody.getJSONObject(i).getBoolean("active")));
 		}
-		CCUtils.assertEquals(responseDatalist, datalist);
+
+		CCUtils.assertTrue(responseDatalist.containsAll(datalist), "data list is not matching with response data list");
 	}
 
 	public void verifySearchClientOrgHierarchyResponseBodyDataLayer(Response response, List<OrgNode> datalist)
@@ -1347,10 +1349,9 @@ public class Validations {
 			responseDatalist.add(new OrgNode(responseBody.getJSONObject(i).getInt("orgId"), parentId,
 					responseBody.getJSONObject(i).getString("type"), responseBody.getJSONObject(i).getString("name"),
 					responseBody.getJSONObject(i).getBoolean("active")));
-		}
-		//CCUtils.assertEquals(responseDatalist, datalist);
-		if(responseDatalist.contains(datalist)) {
-			CCUtils.assertTrue(true, "verifying response body");
+			if (responseDatalist.contains(datalist)) {
+				CCUtils.assertTrue(true, "verifying response body");
+			}
 		}
 	}
 
