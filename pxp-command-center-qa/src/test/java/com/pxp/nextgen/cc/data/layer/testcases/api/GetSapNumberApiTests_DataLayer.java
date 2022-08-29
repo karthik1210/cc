@@ -17,7 +17,11 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
-	Response getSapNumberApiResponse;
+	Response getSapNumberApiResponse, createClientApiResponse;
+	public String sapNumberClientA;
+	public String sapNumberClientB;
+	public String sapNumberClientC;
+	public String sapNumberClientD;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -26,12 +30,25 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 	}
 
+	public String createClient() throws NullPointerException, IOException {
+		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(16))));
+		String clientSapNumber = CCUtils
+				.getSapNumber(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+		return clientSapNumber;
+	}
+
 	@DataProvider(name = "clientSapNumber")
 	public Object[][] getClientSapNumber() throws Exception {
-		return new Object[][] { { testData.getProperty("api.existing.client.sapnumber").trim() },
-				{ testData.getProperty("api.existing.client.sapnumber").trim().toLowerCase() },
-				{ testData.getProperty("api.existing.client.sapnumber").trim().toUpperCase() },
-				{ CCUtils.reverseCase(testData.getProperty("api.existing.client.sapnumber").trim()) } };
+		sapNumberClientA = createClient();
+		sapNumberClientB = createClient();
+		sapNumberClientC = createClient();
+		sapNumberClientD = createClient();
+		return new Object[][] { { sapNumberClientA.trim() }, { sapNumberClientB.trim().toLowerCase() },
+				{ sapNumberClientC.trim().toUpperCase() }, { CCUtils.reverseCase(sapNumberClientD.trim()) } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientSapNumber", description = "Enter already existing client SapNumber and verify client name and client id details displayed in response body")
@@ -54,15 +71,14 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse, clientSapNumber);
 	}
 
-
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in client SapNumber field and validate error message")
 	public void testErrorMessageForBlankSapNumberField() throws IOException {
 		getSapNumberApiResponse = clientInfo.getClientSapNumber_DataLayer(" ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse," ");}
+		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse, " ");
+	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
@@ -73,7 +89,5 @@ public class GetSapNumberApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(getSapNumberApiResponse);
 	}
-
-	
 
 }
