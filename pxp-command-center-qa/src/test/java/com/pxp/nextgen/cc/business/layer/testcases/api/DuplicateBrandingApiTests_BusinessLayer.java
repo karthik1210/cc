@@ -156,7 +156,7 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);
 	}
 
-	@Test(priority = 5,retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter non-existing Brand Id when duplicating brand to org")
+	@Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when we enter non-existing Brand Id when duplicating brand to org")
 	public void testErrorMsgWhenEnterNonExistingBrandId() throws IOException {
 		logStep("Duplicating non-existing brand to org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(

@@ -61,7 +61,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
 		datalist.add(new OrgNode(clientId, 0, "CLIENT", clientName,
-				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
+				Boolean.parseBoolean(testData.getProperty("api.client.active"))));
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
@@ -73,7 +73,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(systemId, 1, testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.system.name"),
-				Boolean.parseBoolean(testData.getProperty("api.system.active")), 2));
+				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
@@ -86,7 +86,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(enterpriseId, 2, testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.enterprise.name"),
-				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), 3));
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active"))));
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
@@ -99,7 +99,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(practiceId, 3, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 4));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
 		logStep("Validating response information");
@@ -126,7 +126,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
 		datalist.add(new OrgNode(clientId, 0, "CLIENT", clientName,
-				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
+				Boolean.parseBoolean(testData.getProperty("api.client.active"))));
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
 		logStep("Validating response information");
@@ -164,7 +164,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
 		datalist.add(new OrgNode(clientId, 0, "CLIENT", clientName,
-				Boolean.parseBoolean(testData.getProperty("api.client.active")), 1));
+				Boolean.parseBoolean(testData.getProperty("api.client.active"))));
 
 		logStep("Create a new practice below client.");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
@@ -176,7 +176,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(practiceId, 1, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 2));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
@@ -188,7 +188,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(systemId, 1, testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.system.name"),
-				Boolean.parseBoolean(testData.getProperty("api.system.active")), 3));
+				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
@@ -201,7 +201,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(enterpriseId, 3, testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.enterprise.name"),
-				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), 4));
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active"))));
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
@@ -215,7 +215,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		datalist.add(new OrgNode(ngePracticeId, 4, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), 5));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails(clientId);
 		logStep("Validating response information");

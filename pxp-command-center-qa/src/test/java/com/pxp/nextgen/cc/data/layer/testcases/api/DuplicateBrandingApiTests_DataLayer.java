@@ -48,9 +48,9 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = CCUtils
 				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -103,7 +103,7 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
 		return createBrandApiResponse.jsonPath().getInt("brandId");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another existing Org")
 	public void testDuplicateBrandToOrg() throws IOException {
 		logStep("Duplicating Brand to existing Org");

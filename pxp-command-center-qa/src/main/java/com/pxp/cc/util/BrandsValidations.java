@@ -13,8 +13,7 @@ public class BrandsValidations {
 
 	JsonPath jsonPath;
 
-	public void verifyNoOfBrandsInResponseForExistingOrgId(Response response)
-			throws IOException {
+	public void verifyNoOfBrandsInResponseForExistingOrgId(Response response) throws IOException {
 		jsonPath = new JsonPath(response.getBody().asString());
 		Log4jUtil.log("Total no of brands : " + jsonPath.getInt("brands.size()"));
 		for (int brandData = 0; brandData < jsonPath.getInt("brands.size()"); brandData++) {
@@ -22,9 +21,22 @@ public class BrandsValidations {
 			Log4jUtil.log("Brand Id is : " + brandId);
 		}
 	}
-	
+
 	public void verifyOrgNotFoundErrorMessage(Response response, int orgId) {
 		jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("message").toString().trim(), "Org not found by id="+orgId);
+		CCUtils.assertEquals(jsonPath.get("message").toString().trim(), "Org not found by id=" + orgId);
+	}
+
+	public void verifyBrandNotFoundErrorMessage(Response response, int brandId, String href) {
+		jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("message").toString().trim(),
+				"Brand not found by brandId=" + brandId + " and href=" + href);
+	}
+
+	public void verifyErrorMessageIfBrandIdIsNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message"),
+				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"brandId\"");
 	}
 }
