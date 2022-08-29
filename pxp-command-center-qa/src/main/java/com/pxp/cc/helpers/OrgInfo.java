@@ -609,4 +609,38 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
+	public Response getListOfTouForAPractice_BL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidRequest_BL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().put(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidURI_BL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(String practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(int practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(String practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForPracticeWithoutPracticeId_BL(String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_BL();
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
 }
