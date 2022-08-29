@@ -41,19 +41,16 @@ public class ClientDirectory extends BaseRest {
 	}
 
 	public Response getClientFromClientDirectoryWithFilter_DL(String searchData, String page, String pageSize,
-			String pxp_cc_user, Object types) {
+			Object types) {
 
 		return given().spec(requestSpec).queryParam("query", searchData).queryParams("type", types)
-				.queryParam("page", page).queryParam("pageSize", pageSize).header(ApiPath.PXP_CC_USER, pxp_cc_user)
-				.when().get(ApiPath.CLIENT_DIRECTORY_DL).then().extract().response();
+				.queryParam("page", page).queryParam("pageSize", pageSize).when().get(ApiPath.CLIENT_DIRECTORY_DL)
+				.then().extract().response();
 	}
 
-	public Response getClientFromClientDirectoryWithoutFilter_DL(String searchData, String page, String pageSize,
-			String pxp_cc_user) {
-
+	public Response getClientFromClientDirectoryWithoutFilter_DL(String searchData, String page, String pageSize) {
 		return given().spec(requestSpec).queryParam("query", searchData).queryParam("type", "").queryParam("page", page)
-				.queryParam("pageSize", pageSize).header(ApiPath.PXP_CC_USER, pxp_cc_user).when()
-				.get(ApiPath.CLIENT_DIRECTORY_DL).then().extract().response();
+				.queryParam("pageSize", pageSize).when().get(ApiPath.CLIENT_DIRECTORY_DL).then().extract().response();
 	}
 
 	public Response selectClientFavorite(String clientId) {
