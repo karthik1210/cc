@@ -803,4 +803,20 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
 
 	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesssss/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_DL() {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous";
+	}
 }
