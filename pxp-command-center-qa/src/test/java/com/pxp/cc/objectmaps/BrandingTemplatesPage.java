@@ -56,7 +56,6 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void VerifyBrandingTemplatesIsDisplayed() throws InterruptedException, AWTException {
-
 		CCUtils.scrollPageViaElement(driver, brandingTemplatesLabel);
 		CCUtils.verifyAndWaitForElement(brandingTemplatesLabel, driver);
 		log("Verifying Inactive status text");
@@ -67,21 +66,18 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(versionButton, driver);
 		log("Verifying +VERSION is displayed");
 		CCUtils.assertEquals(versionButton.getText().trim(), "+ VERSION");
-
 		CCUtils.verifyAndWaitForElement(versionButton, driver);
 		javascriptClick(versionButton);
 		log("Clicked on +VERSION");
 	}
 
 	public void VerifyBrandingNameIsActive() throws InterruptedException, AWTException {
-
 		CCUtils.verifyAndWaitForElement(activeStatus, driver);
 		log("Verifying Inactive status text");
 		CCUtils.assertEquals(activeStatus.getText().trim(), "ACTIVE");
 	}
 
 	public void VerifyBrandingNameIsInactive() throws InterruptedException, AWTException {
-
 		CCUtils.verifyAndWaitForElement(inactiveStatus, driver);
 		log("Verifying Inactive status text");
 		CCUtils.assertEquals(inactiveStatus.getText().trim(), "INACTIVE");
@@ -116,7 +112,6 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		log("Verifying SAVE is displayed");
 		CCUtils.assertEquals(saveButton.getText().trim(), "Save");
-
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		javascriptClick(saveButton);
 		log("Clicked on SAVE");
@@ -128,7 +123,6 @@ public class BrandingTemplatesPage extends CCMainPage {
 		String projectpath = System.getProperty("user.dir");
 		browseSolLogo.sendKeys(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
 		log("Verifying Image uploaded");
-
 	}
 
 	public void enterAltText(String altText) throws InterruptedException {
@@ -154,5 +148,4 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Verifying inUseStatus text");
 		CCUtils.assertEquals(inUseStatus.getText().trim(), "IN USE");
 	}
-
 }
