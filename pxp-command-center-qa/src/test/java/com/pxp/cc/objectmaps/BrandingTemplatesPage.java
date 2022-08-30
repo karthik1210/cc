@@ -1,0 +1,151 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+
+package com.pxp.cc.objectmaps;
+
+import java.awt.AWTException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import com.pxp.cc.util.CCUtils;
+
+public class BrandingTemplatesPage extends CCMainPage {
+	@FindBy(xpath = "//span[contains( text(),'+ VERSION')]")
+	private WebElement versionButton;
+
+	@FindBy(xpath = "//input[@id='version-input']")
+	private WebElement textboxVersion;
+
+	@FindBy(id = "createBrandButton")
+	private WebElement saveButton;
+
+	@FindBy(xpath = "(//input[@type='file'])[2]")
+	private WebElement browseSolLogo;
+
+	@FindBy(id = "uploadText1")
+	private WebElement altTextBox;
+
+	@FindBy(id = "removeImageButton")
+	private WebElement removeImageButton;
+
+	@FindBy(xpath = "//div[contains(text(),'Branding Templates')]")
+	private WebElement brandingTemplatesLabel;
+
+	@FindBy(xpath = "(//span[contains(text(),' ACTIVE ')])[1]")
+	private WebElement activeStatus;
+
+	@FindBy(xpath = "(//span[contains(text(),' INACTIVE ')])[1]")
+	private WebElement inactiveStatus;
+
+	@FindBy(xpath = "(//mat-icon[@role='img'][contains(text(),'more_vert')])[1]")
+	private WebElement kebabMenuForActiveStatus;
+
+	@FindBy(xpath = "(//mat-icon[@role='img'][contains(text(),'more_vert')])[1]")
+	private WebElement kebabMenu;
+
+	@FindBy(id = "duplicate")
+	private WebElement duplicateButton;
+
+	@FindBy(xpath = "//span[contains(text(), 'IN USE')]")
+	private WebElement inUseStatus;
+
+	@FindBy(xpath = "//div[@class='mat-tree-node-click noclass']")
+	private WebElement clientNode;
+
+	public BrandingTemplatesPage(WebDriver driver) {
+		super(driver);
+	}
+
+	public void VerifyBrandingTemplatesIsDisplayed() throws InterruptedException, AWTException {
+		CCUtils.scrollPageViaElement(driver, brandingTemplatesLabel);
+		CCUtils.verifyAndWaitForElement(brandingTemplatesLabel, driver);
+		log("Verifying Inactive status text");
+		CCUtils.assertEquals(brandingTemplatesLabel.getText().trim(), "Branding Templates");
+	}
+
+	public void VerifyAndClickVersionButton() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(versionButton, driver);
+		log("Verifying +VERSION is displayed");
+		CCUtils.assertEquals(versionButton.getText().trim(), "+ VERSION");
+		CCUtils.verifyAndWaitForElement(versionButton, driver);
+		javascriptClick(versionButton);
+		log("Clicked on +VERSION");
+	}
+
+	public void VerifyBrandingNameIsActive() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(activeStatus, driver);
+		log("Verifying Inactive status text");
+		CCUtils.assertEquals(activeStatus.getText().trim(), "ACTIVE");
+	}
+
+	public void VerifyBrandingNameIsInactive() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(inactiveStatus, driver);
+		log("Verifying Inactive status text");
+		CCUtils.assertEquals(inactiveStatus.getText().trim(), "INACTIVE");
+	}
+
+	public void clickOnKebabMenu() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(kebabMenu, driver);
+		javascriptClick(kebabMenu);
+		log("Clicked on kebabMenu");
+	}
+
+	public void clickOnkebabMenuForActiveStatus() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(kebabMenuForActiveStatus, driver);
+		javascriptClick(kebabMenuForActiveStatus);
+		log("Clicked on kebabMenu");
+	}
+
+	public void clickOnDuplicate() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(duplicateButton, driver);
+		javascriptClick(duplicateButton);
+		log("Clicked on duplicate");
+	}
+
+	public void createNewBrand(String newVersion) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxVersion, driver);
+		textboxVersion.sendKeys(newVersion);
+		log("Entered text in Version name field : " + newVersion);
+
+	}
+
+	public void verifyAndClickSaveButton() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(saveButton, driver);
+		log("Verifying SAVE is displayed");
+		CCUtils.assertEquals(saveButton.getText().trim(), "Save");
+		CCUtils.verifyAndWaitForElement(saveButton, driver);
+		javascriptClick(saveButton);
+		log("Clicked on SAVE");
+	}
+
+	public void uploadSolutionLogoImage() throws InterruptedException, AWTException {
+		javascriptClick(browseSolLogo);
+		log("Clicked on BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseSolLogo.sendKeys(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		log("Verifying Image uploaded");
+	}
+
+	public void enterAltText(String altText) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextBox, driver);
+		altTextBox.sendKeys(altText);
+		log("Entered text in Version name field : " + altText);
+	}
+
+	public void verifyRemoveButton() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(removeImageButton, driver);
+		log("Verifying REMOVE is displayed");
+		CCUtils.assertEquals(removeImageButton.getText().trim(), "REMOVE");
+	}
+
+	public void clickOnClientNode() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(clientNode, driver);
+		javascriptClick(clientNode);
+		log("Clicked on clientNode");
+	}
+
+	public void VerifyInUseStatus(String newVersion) throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(inUseStatus, driver);
+		log("Verifying inUseStatus text");
+		CCUtils.assertEquals(inUseStatus.getText().trim(), "IN USE");
+	}
+}
