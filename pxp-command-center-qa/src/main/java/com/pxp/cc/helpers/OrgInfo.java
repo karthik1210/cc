@@ -675,4 +675,44 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_DL();
 		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
 	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(String practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(int practiceId, String touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(String practiceId, String touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouIdWithInvalidRequest_BL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().patch(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouIdWithInvalidURI_BL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingWithoutPracticeIdAndValidTouId_BL(int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_BL(touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingWithoutPracticeIdAndTouId_BL() {
+		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
