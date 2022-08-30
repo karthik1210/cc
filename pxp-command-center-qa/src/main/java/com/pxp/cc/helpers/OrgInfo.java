@@ -755,4 +755,46 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	public static Map<String, Object> deletePrivacySetting(String deleteStatus) {
+		Map<String, Object> deletePrivacySetting = new HashMap<String, Object>();
+		deletePrivacySetting.put("deleted", deleteStatus);
+		return deletePrivacySetting;
+	}
+
+	public Response deletePrivacySettingByPracticeIdAndTouId_BL(int practiceId, int touId, String deleteStatus) {
+		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
+	}
+
+	public Response deletePrivacySettingByPracticeIdAndTouId_BL(String practiceId, int touId,String deleteStatus) {
+		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
+	}
+
+	public Response deletePrivacySettingByPracticeIdAndTouId_BL(int practiceId, String touId, String deleteStatus) {
+		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
+	}
+
+	public Response deletePrivacySettingByPracticeIdAndTouId_BL(String practiceId, String touId, String deleteStatus) {
+		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
+	}
+
+	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_BL(int practiceId, int touId, String deleteStatus) {
+		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().patch(url).then().extract().response();
+	}
+
+	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_BL(int practiceId, int touId, String deleteStatus) {
+		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(practiceId, touId);
+		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
+	}
 }
