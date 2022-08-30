@@ -20,6 +20,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer" />
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
