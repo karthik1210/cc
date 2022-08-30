@@ -925,4 +925,24 @@ public class ApiPath {
 	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, int touId) {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
 	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, String touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, String touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
 }
