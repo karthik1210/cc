@@ -3,9 +3,7 @@
 package com.pxp.cc.util;
 
 import java.io.IOException;
-
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
