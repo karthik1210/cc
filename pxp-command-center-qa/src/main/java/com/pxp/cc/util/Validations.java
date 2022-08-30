@@ -2825,4 +2825,9 @@ public class Validations {
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
 	}
+
+	public void verifyOutputForPrivacySettingFromInput_DL(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
+	}
 }
