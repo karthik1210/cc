@@ -201,7 +201,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> treeNode;
 	
-	@FindBy(xpath = "//div[@class='card-heading mx-4 ng-star-inserted']")
+	@FindBy(id = "displayClientName")
 	private WebElement clientNodeTitle;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
