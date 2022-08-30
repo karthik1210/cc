@@ -17,8 +17,7 @@ public class GetResourceDetailsApiTests_BusinessLayer extends BaseRest {
 	private ResourceInfo resourceInfo;
 	private ResourceValidations resourceValidation;
 	private Validations validations;
-	Response getResourceDetailsApiResponse, createClientApiResponse, createSystemNodeApiResponse,
-			createEnterpriseNodeApiResponse, createNgPracticeApiResponse;
+	Response getResourceDetailsApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
