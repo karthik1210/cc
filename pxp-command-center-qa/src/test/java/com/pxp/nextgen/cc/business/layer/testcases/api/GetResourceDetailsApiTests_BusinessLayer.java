@@ -14,7 +14,6 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetResourceDetailsApiTests_BusinessLayer extends BaseRest {
-
 	private ResourceInfo resourceInfo;
 	private ResourceValidations resourceValidation;
 	private Validations validations;
