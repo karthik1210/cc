@@ -42,12 +42,13 @@ public class GetResourceDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get resource details error message by entering non-existing resource id")
 	public void testGetResourceDetailsForNonExistingResourceId() throws IOException {
 		logStep("fetch resource details error message via non-existing resource id");
-		getResourceDetailsApiResponse = resourceInfo.getResourceDetails_BL(56723);
+		getResourceDetailsApiResponse = resourceInfo
+				.getResourceDetails_BL(Integer.parseInt(testData.getProperty("non.existing.resource.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getResourceDetailsApiResponse);
 		CCUtils.assertEquals(getResourceDetailsApiResponse.getStatusCode(), 400);
 		resourceValidation.verifyErrorMessageInResponseBodyForNonExistingResourceId(getResourceDetailsApiResponse,
-				56723);
+				Integer.parseInt(testData.getProperty("non.existing.resource.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get resource details error message by entering null resource id")
