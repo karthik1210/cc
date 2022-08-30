@@ -283,7 +283,7 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
 				.response();
 	}
-	
+
 	public Response getAppointmentTypes_BL(int appointmentTypeId) {
 		String url = ApiPath.GET_APPOINTMENT_TYPES_BL(appointmentTypeId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -298,10 +298,50 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_APPOINTMENT_TYPES_INVALID_PATH_BL(appointmentTypeId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getAppointmentTypes_NullValues() {
 		String url = ApiPath.GET_APPOINTMENT_TYPES_BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getResourceDetails_DL(int resourceId) {
+		String url = ApiPath.GET_RESOURCE_DETAILS_DL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response deleteResourceImage_DL(int resourceId) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response addResourceImage_DL(int resourceId, String imageUrl) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> addImageUrlPayload(String imageUrl) {
+		Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
+		addImageUrlMap.put("href", imageUrl);
+		return addImageUrlMap;
+	}
+
+	public Response addResourceImageWithEmptyPayload_DL(int resourceId) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(addImageUrlMap).when().patch(url).then().extract().response();
+	}
+
+	public Response addResourceImageUsingInvalidMethodCall_DL(int resourceId, String imageUrl) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response addResourceImageUsingInvalidUrl_DL(int resourceId, String imageUrl) {
+		String url = ApiPath.INVALID_PATH_RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
+				.response();
 	}
 
 	private Map<String, Object> createPracticeresourceRequestPayload(String en, String es) {
@@ -314,13 +354,15 @@ public class SharedInfo extends BaseRest {
 	public Response savePracticeResourceWithValidInputs(int practiceId, int resourceId, String en, String es) {
 		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
 		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
-		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
+				.response();
 	}
 
 	public Response savePracticeResourceWithInValidInputs(int practiceId, int resourceId, String en, String es) {
 		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(practiceId, resourceId);
 		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
-		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
+				.response();
 	}
 
 	public Response savePracticeResourceWithInValidMethodcall(int practiceId, int resourceId, String en, String es) {
@@ -329,10 +371,12 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response savePracticeResourceWithINValidDATATYPE(String practiceId, String resourceId, String en, String es) {
+	public Response savePracticeResourceWithINValidDATATYPE(String practiceId, String resourceId, String en,
+			String es) {
 		String url = ApiPath.UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(practiceId, resourceId);
 		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
-		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
+				.response();
 	}
 
 	public Response getPracticeForLocationWithExistingOrNonExistingInput(int locationId) {
@@ -381,5 +425,13 @@ public class SharedInfo extends BaseRest {
 	public Response getBrandList_BL(int orgId) {
 		String url = ApiPath.BRAND_LIST_BL(orgId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response createProvider_BL(int practiceId, String firstName, String lastName, String gender,
+			String externalId) {
+		String url = ApiPath.CREATE_PROVIDER_BL(practiceId);
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId);
+		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
 	}
 }

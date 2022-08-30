@@ -36,8 +36,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 	public void testErrorMessageForClientIdField() throws IOException {
 		logStep("Enter non existing client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(
-				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
@@ -51,55 +50,53 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		List<OrgNode> datalist = new ArrayList();
+		List<OrgNode> datalist = new ArrayList<OrgNode>();
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
-		datalist.add(new OrgNode(systemId, null, testData.getProperty("api.system.orgtype"),
+		datalist.add(new OrgNode(systemId, clientId, testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.system.name"),
-				Boolean.parseBoolean(testData.getProperty("api.system.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
 				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.sapnumber"),
-				testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 
 		datalist.add(new OrgNode(enterpriseId, systemId, testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.enterprise.name"),
-				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active"))));
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.sapnumber"),
-				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 
 		datalist.add(new OrgNode(practiceId, enterpriseId, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
-		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
@@ -116,16 +113,13 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		List<OrgNode> datalist = new ArrayList();
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
-		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
@@ -135,8 +129,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseForInvalidUrl() throws Exception {
 		logStep("Enter invalid url and validate error status code");
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyUsingInvalidUrl_DataLayer(
-				Integer.parseInt(testData.getProperty("api.existing.client.id")),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("api.existing.client.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 404);
@@ -151,73 +144,70 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		List<OrgNode> datalist = new ArrayList();
+		List<OrgNode> datalist = new ArrayList<OrgNode>();
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
-
-		logStep("Create a new practice below client.");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), clientId, "CLIENT",
-				testData.getProperty("api.practice.sapnumber"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-
-		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
-
-		datalist.add(new OrgNode(practiceId, null, testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), null));
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
-		datalist.add(new OrgNode(systemId, null, testData.getProperty("api.system.orgtype"),
+		datalist.add(new OrgNode(systemId, clientId, testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.system.name"),
-				Boolean.parseBoolean(testData.getProperty("api.system.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.system.active"))));
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
 				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.sapnumber"),
-				testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 
 		datalist.add(new OrgNode(enterpriseId, systemId, testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.enterprise.name"),
-				Boolean.parseBoolean(testData.getProperty("api.enterprise.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.enterprise.active"))));
+
+		logStep("Create a new practice below system.");
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), systemId, "SYSTEM",
+				testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+
+		datalist.add(new OrgNode(practiceId, systemId, testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.name"),
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.sapnumber"),
-				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		int ngePracticeId = createPracticeApiResponse.jsonPath().get("orgId");
 
 		datalist.add(new OrgNode(ngePracticeId, enterpriseId, testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.practice.name"),
-				Boolean.parseBoolean(testData.getProperty("api.practice.active")), null));
+				Boolean.parseBoolean(testData.getProperty("api.practice.active"))));
 
-		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		logStep("Validating error message of response body");
-
 		validation.verifySearchClientOrgHierarchyResponseBodyDataLayer(fetchClientDetailsApiResponse, datalist);
 	}
 

@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientDirectory;
+import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.ClientDirectoryValidations;
@@ -17,29 +18,52 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
-
+	private ClientInfo clientInfo;
 	private ClientDirectory clientDirectory;
 	private ClientDirectoryValidations clientDirectoryValidations;
 	private Validations validation;
 	JsonPath jsonPath;
 	List<String> list = null;
+	int clientIdOne, clientIdTwo, clientIdThree, clientIdFour, clientIdFive, clientIdSix;
+	String clientName, clientSapNumber;
+	Response createClientApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		clientDirectory = new ClientDirectory();
+		clientInfo = new ClientInfo();
 		clientDirectoryValidations = new ClientDirectoryValidations();
 		validation = new Validations();
+		clientIdOne = createClient();
+		clientIdTwo = createClient();
+		clientIdThree = createClient();
+		clientIdFour = createClient();
+		clientIdFive = createClient();
+		clientIdSix = createClient();
+	}
+
+	public int createClient() throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
+				ccUser.getClientType(), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	public List<String> listOfFavoritingClients() throws Exception {
 		list = new ArrayList<String>();
-		list.add(testData.getProperty("favoriting.client.one"));
-		list.add(testData.getProperty("favoriting.client.two"));
-		list.add(testData.getProperty("favoriting.client.three"));
-		list.add(testData.getProperty("favoriting.client.four"));
-		list.add(testData.getProperty("favoriting.client.five"));
-		list.add(testData.getProperty("favoriting.client.six"));
+		list.add(String.valueOf(clientIdOne));
+		list.add(String.valueOf(clientIdTwo));
+		list.add(String.valueOf(clientIdThree));
+		list.add(String.valueOf(clientIdFour));
+		list.add(String.valueOf(clientIdFive));
+		list.add(String.valueOf(clientIdSix));
 		return list;
 	}
 
@@ -82,7 +106,7 @@ public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 				"");
 		logStep("Print the list of favorite clients" + list);
 		clientDirectoryValidations.verifyExistingFavClientsIsFive(list);
-		Response selectFavClient = clientDirectory.selectClientFavorite(testData.getProperty("favoriting.client.one"));
+		Response selectFavClient = clientDirectory.selectClientFavorite(String.valueOf(clientIdOne));
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(selectFavClient);
 		CCUtils.assertEquals(selectFavClient.getStatusCode(), 200);
@@ -96,9 +120,8 @@ public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 				"");
 		logStep("Print the list of favorite clients" + list);
 		if (list == null) {
-			clientDirectory.selectClientFavorite(testData.getProperty("favoriting.client.one"));
-			Response deselectFavClient = clientDirectory
-					.deleteFavoriteClient(Integer.parseInt(testData.getProperty("favoriting.client.one")));
+			clientDirectory.selectClientFavorite(String.valueOf(clientIdOne));
+			Response deselectFavClient = clientDirectory.deleteFavoriteClient(clientIdOne);
 			logStep("Validating Response Time");
 			CCUtils.responseTimeValidation(deselectFavClient);
 			logStep("Validating Response Code");
@@ -116,8 +139,7 @@ public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
-		Response selectFavClient = clientDirectory
-				.selectClientFavoriteWithInvalidUrl(testData.getProperty("favoriting.client.one"));
+		Response selectFavClient = clientDirectory.selectClientFavoriteWithInvalidUrl(String.valueOf(clientIdOne));
 		logStep("Validating Response Time");
 		CCUtils.responseTimeValidation(selectFavClient);
 		logStep("Validating Response Information");

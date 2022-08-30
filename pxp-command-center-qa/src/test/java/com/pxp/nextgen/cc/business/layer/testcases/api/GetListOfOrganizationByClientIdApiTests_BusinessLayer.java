@@ -21,6 +21,7 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 	private OrgInfo orgInfo;
 	private Validations validation;
 	Response createClientApiResponse, getOrganizationListApiResponse, createOrgNodeApiResponse;
+	int clientId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -61,18 +62,18 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgType", description = "Verify 204 status code in response when user enter client id which does not contains subsequent child nodes")
 	public void testResponseCodeForSingleClientNode(String orgType) throws Exception {
 		logStep("Create new inactive client node");
-		int clientId = createClient("false");
+		int clientIdOne = createClient("false");
 		logStep("Get list of organization by client id");
-		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(clientId, orgType);
+		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(clientIdOne, orgType);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client with subsequent child nodes and verify user able get list of organization by client id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Create a new client with subsequent child nodes and verify user able get list of organization by client id")
 	public void testGetOrganizationListByClientIdFunctionality() throws Exception {
 		logStep("Create new active client");
-		int clientId = createClient(testData.getProperty("api.client.active"));
+		clientId = createClient(testData.getProperty("api.client.active"));
 		logStep("Create active and inactive system below client");
 		int systemIdOne = createOrgNode(testData.getProperty("api.system.active"), "System_name_1", clientId,
 				testData.getProperty("api.system.orgtype"), testData.getProperty("api.parenttype"));
@@ -109,9 +110,9 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 		int ngePracticeTwo = createOrgNode("false", "Practice_name_2", enterpriseIdTwo,
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.parenttype"));
 		int agnosticPracticeOne = createOrgNode(testData.getProperty("api.practice.active"), "agnostic_practice_name_1",
-				clientId, testData.getProperty("api.practice.orgtype"), testData.getProperty("api.parenttype"));
-		int agnosticPracticeTwo = createOrgNode("false", "agnostic_practice_name_2", clientId,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.parenttype"));
+				systemIdOne, testData.getProperty("api.practice.orgtype"), testData.getProperty("api.system.orgtype"));
+		int agnosticPracticeTwo = createOrgNode("false", "agnostic_practice_name_2", systemIdOne,
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.system.orgtype"));
 		logStep("Get list of organization by client id and org type practice");
 		List<OrgDetails> practiceList = Arrays.asList(new OrgDetails(ngePracticeOne, "Practice_name_1"),
 				new OrgDetails(ngePracticeTwo, "Practice_name_2"),
@@ -154,8 +155,7 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidOrgType", description = "Enter invalid org type in type field and verify error response")
 	public void testErrorResponseForInvalidOrgType(String invalidOrgType) throws Exception {
 		logStep("Get list of organization using valid client id and invalid org type");
-		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(
-				Integer.parseInt(testData.getProperty("api.existing.client.id")), invalidOrgType);
+		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(clientId, invalidOrgType);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
 		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
@@ -164,8 +164,7 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid client id ,type in clientId and type field and verify error response")
 	public void testErrorResponseForInvalidOrgTypeAndClientId() throws Exception {
-		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(
-				Integer.parseInt(testData.getProperty("api.nonexisting.client.id")),
+		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientId(clientId,
 				"xyz12" + testData.getProperty("api.parenttype"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
@@ -178,8 +177,7 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error response for invalid url")
 	public void testErrorResponseForInvalidUrl() throws Exception {
 		logStep("Enter invalid url and validate error status code");
-		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientIdUsingInvalidUrl(
-				Integer.parseInt(testData.getProperty("api.existing.client.id")),
+		getOrganizationListApiResponse = clientInfo.getOrganizationListByClientIdUsingInvalidUrl(clientId,
 				testData.getProperty("api.system.orgtype"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);

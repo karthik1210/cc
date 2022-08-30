@@ -3,6 +3,7 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +12,6 @@ import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
-import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
@@ -24,23 +24,21 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrg(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId) throws IOException {
+			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier) throws IOException {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId);
+				parentType, timezoneId, ehrIdentifier, pmIdentifier);
 
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
 	public Response createOrg_DataLayer(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId, int userId) throws IOException {
-
+			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier) throws IOException {
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId);
-
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
-				.post(ApiPath.ORG_DL).then().extract().response();
+				parentType, timezoneId, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
+				.response();
 	}
 
 	public Response getOrgId_DataLayer(int orgId) throws IOException {
@@ -189,16 +187,17 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public static Map<String, Object> postCreateOrg(String active, String displayName, String name, String orgType,
-			int parentId, String parentType, String sapNumber, String timezoneId) {
+			int parentId, String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> orgMap = new HashMap<String, Object>();
-		orgMap.put("active", active);
-		orgMap.put("displayName", displayName);
 		orgMap.put("name", name);
 		orgMap.put("orgType", orgType);
+		orgMap.put("displayName", displayName);
+		orgMap.put("active", active);
+		orgMap.put("timezoneId", timezoneId);
 		orgMap.put("parentId", parentId);
 		orgMap.put("parentType", parentType);
-		orgMap.put("sapNumber", sapNumber);
-		orgMap.put("timezoneId", timezoneId);
+		orgMap.put("ehrIdentifier", ehrIdentifier);
+		orgMap.put("pmIdentifier", pmIdentifier);
 		return orgMap;
 	}
 
@@ -335,18 +334,19 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createAgnosticPracticeNodeDataLayer(String name, String displayName, String sapNumber,
-			String active, String timezoneId, String orgType, int parentId, String parentType, int userId)
-			throws IOException {
+			String active, String timezoneId, String orgType, int parentId, String parentType, String ehrIdentifier,
+			String pmIdentifier) throws IOException {
 
 		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNodeDataLayer(name, displayName, sapNumber,
-				active, timezoneId, orgType, parentId, parentType);
+				active, timezoneId, orgType, parentId, parentType, ehrIdentifier, pmIdentifier);
 
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewPracticeNodePayload).when()
-				.post(ApiPath.ORG_DL).then().extract().response();
+		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.ORG_DL).then().extract()
+				.response();
 	}
 
 	public static Map<String, Object> postCreatePracticeNodeDataLayer(String name, String displayName, String sapNumber,
-			String active, String timezoneId, String orgType, int parentId, String parentType) {
+			String active, String timezoneId, String orgType, int parentId, String parentType, String ehrIdentifier,
+			String pmIdentifier) {
 		Map<String, Object> practiceMap = new HashMap<String, Object>();
 		practiceMap.put("name", name);
 		practiceMap.put("displayName", displayName);
@@ -356,17 +356,17 @@ public class OrgInfo extends BaseRest {
 		practiceMap.put("orgType", orgType);
 		practiceMap.put("parentId", parentId);
 		practiceMap.put("parentType", parentType);
+		practiceMap.put("ehrIdentifier", ehrIdentifier);
+		practiceMap.put("pmIdentifier", pmIdentifier);
 		return practiceMap;
 	}
 
-	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId, int userId)
-			throws IOException {
+	public Response updateOrgsSolutionsDetails_DataLayer(int solutionId, String status, int orgId) throws IOException {
 		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
 				status);
 
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(updateOrgsSolutionPayload).when()
-				.put(url).then().extract().response();
+		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
 	}
 
 	public static List<Map<String, Object>> putUpdateOrgsSolutionsDetails_DataLayer(int solutionId,
@@ -503,13 +503,12 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier,
-			int userId) throws IOException {
-
+			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+			throws IOException {
 		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
 				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
-				.post(ApiPath.ORG_DL).then().extract().response();
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
+				.response();
 	}
 
 	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName,
@@ -560,9 +559,200 @@ public class OrgInfo extends BaseRest {
 				.response();
 	}
 
+	public Response createOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+			throws IOException {
+
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
+				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
+				.extract().response();
+	}
+
 	public Response updateOrgSolutions(List<Map<String, Object>> productList, int orgId) throws IOException {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
 
+	public static Map<String, Object> updateOrgNodeDetailsMap(String name, String orgType, String displayName,
+			String sapNumber, String active, String timezoneId, int ehrIdentifier, int pmIdentifier) {
+		Map<String, Object> updateOrgNodeValueMap = new HashMap<String, Object>();
+		updateOrgNodeValueMap.put("name", name);
+		updateOrgNodeValueMap.put("orgType", orgType);
+		updateOrgNodeValueMap.put("displayName", displayName);
+		updateOrgNodeValueMap.put("sapNumber", sapNumber);
+		updateOrgNodeValueMap.put("active", active);
+		updateOrgNodeValueMap.put("timezoneId", timezoneId);
+		updateOrgNodeValueMap.put("ehrIdentifier", ehrIdentifier);
+		updateOrgNodeValueMap.put("pmIdentifier", pmIdentifier);
+		return updateOrgNodeValueMap;
+	}
+
+	public Response updateOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
+			String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response updateOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
+			String active, String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
+		String url = ApiPath.INVALID_PATH_UPDATE_ORG_BL(orgId);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
+				active, timezoneId, ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidRequest_BL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().put(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidURI_BL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(String practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(int practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_BL(String practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForPracticeWithoutPracticeId_BL(String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_BL();
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidRequest_DL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().put(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPracticeWithInvalidURI_DL(int practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(String practiceId, String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(int practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getListOfTouForAPractice_DL(String practiceId, int type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url.replace("%2F%2F", "")).then().extract().response();
+	}
+
+	public Response getListOfTouForPracticeWithoutPracticeId_DL(String type) {
+		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_DL();
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(String practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(int practiceId, String touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_BL(String practiceId, String touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouIdWithInvalidRequest_BL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
+		return given().spec(requestSpec).when().patch(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouIdWithInvalidURI_BL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingWithoutPracticeIdAndValidTouId_BL(int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_BL(touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingWithoutPracticeIdAndTouId_BL() {
+		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_DL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_DL(String practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_DL(int practiceId, String touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouId_DL(String practiceId, String touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
+		return given().spec(requestSpec).when().patch(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(int practiceId, int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingWithoutPracticeIdAndValidTouId_DL(int touId) {
+		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_DL(touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPrivacySettingWithoutPracticeIdAndTouId_DL() {
+		String url = ApiPath.FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

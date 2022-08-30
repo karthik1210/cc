@@ -21,7 +21,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 
 	@BeforeClass
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		brandingValidations = new DuplicateBrandingValidations();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
@@ -56,7 +56,6 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
-
 		logStep("Get Branding List");
 		getBrandListApiResponse = sharedInfo.getBrandList_BL(orgId);
 		logStep("Verify Branding template status changed from Active to Inactive");

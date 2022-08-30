@@ -19,7 +19,7 @@ public class GetUserInfoApiTests_BusinessLayer extends BaseRest {
 	
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
 	}
@@ -27,39 +27,45 @@ public class GetUserInfoApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing internal user auth id in x-auth-id field and verify response body")
 	public void testUserInfoDetailsForInternalUser() throws IOException {
 		logStep("Enter internal user auth id in auth id field");
-		fetchUserInfoApiResponse = userInfo.getUserInfo(testData.getProperty("internal.auth.id.qa"));
+		fetchUserInfoApiResponse = userInfo.getUserInfo(testData.getProperty("internal.auth.id"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
 		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse,
-				Integer.parseInt(testData.getProperty("internal.user.id.qa")),
-				testData.getProperty("internal.user.first.name.qa"), testData.getProperty("internal.user.last.name.qa"),
+				Integer.parseInt(testData.getProperty("internal.user.id")),
+				testData.getProperty("internal.user.first.name"), testData.getProperty("internal.user.last.name"),
 				testData.getProperty("user.type.internal"), null);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing client user auth id in x-auth-id field and verify response body")
-	public void testUserInfoDetailsForClientUser() throws IOException {
-		logStep("Enter client user auth id in auth id field");
-		fetchUserInfoApiResponse = userInfo.getUserInfo(testData.getProperty("client.auth.id.qa"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
-		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
-		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse,
-				Integer.parseInt(testData.getProperty("client.user.id.qa")),
-				testData.getProperty("client.user.first.name.qa"), testData.getProperty("client.user.last.name.qa"),
-				testData.getProperty("user.type.client"), testData.getProperty("client.user.client.id.qa"));
-	}
+	/*//Enable test  once below issue is resolved. 
+	 * Jira # PXPP-20773 -
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Enter existing client user auth id in x-auth-id field and verify response body"
+	 * ) public void testUserInfoDetailsForClientUser() throws IOException {
+	 * logStep("Enter client user auth id in auth id field");
+	 * fetchUserInfoApiResponse =
+	 * userInfo.getUserInfo(testData.getProperty("client.auth.id"));
+	 * logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
+	 * CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
+	 * validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse,
+	 * Integer.parseInt(testData.getProperty("client.user.id")),
+	 * testData.getProperty("client.user.first.name"),
+	 * testData.getProperty("client.user.last.name"),
+	 * testData.getProperty("user.type.client"),
+	 * testData.getProperty("client.user.client.id")); }
+	 */
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing var/reseller user auth id in x-auth-id field and verify response body")
 	public void testUserInfoDetailsForVarResellerUser() throws IOException {
 		logStep("Enter var/reseller user auth id in auth id field");
-		fetchUserInfoApiResponse = userInfo.getUserInfo(testData.getProperty("reseller.auth.id.qa"));
+		fetchUserInfoApiResponse = userInfo.getUserInfo(testData.getProperty("reseller.auth.id"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
 		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse,
-				Integer.parseInt(testData.getProperty("reseller.user.id.qa")),
-				testData.getProperty("reseller.user.first.name.qa"), testData.getProperty("reseller.user.last.name.qa"),
+				Integer.parseInt(testData.getProperty("reseller.user.id")),
+				testData.getProperty("reseller.user.first.name"), testData.getProperty("reseller.user.last.name"),
 				testData.getProperty("user.type.varreseller"), null);
 	}
 

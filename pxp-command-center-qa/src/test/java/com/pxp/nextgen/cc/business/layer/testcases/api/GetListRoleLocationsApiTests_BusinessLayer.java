@@ -22,24 +22,34 @@ public class GetListRoleLocationsApiTests_BusinessLayer extends BaseRest {
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
-    	setupQaServiceRequestSpecificationBuilder();
+    	setupServiceRequestSpecificationBuilder();
         locationsInfo = new LocationsInfo();
         locationsValidations = new LocationsValidations();
         validation = new Validations();
     }
 
-    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ccuserid , orgid to get list of locations and verify status code and response body")
-    public void testGetListLocationForCCUserRole() throws IOException {
-        logStep("Enter ccuserId , orgId");
-        int ccUserId = Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid.qa"));
-        int Org_Id = Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid.qa"));
-        GetLocationListCCRoleResponse = locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
-        CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 200);
-        locationsValidations.verifyGetCCRoleLocationsValidInput(GetLocationListCCRoleResponse,testData.getProperty("pxpp.17575.cc.roleid"),testData.getProperty("pxpp.17575.cc.name"));
-
-    }
+    /*
+	 * Enable test class once below issue is resolved.
+	 *  Jira PXPP-20816
+	 */
+	/*
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Enter ccuserid , orgid to get list of locations and verify status code and response body"
+	 * ) public void testGetListLocationForCCUserRole() throws IOException {
+	 * logStep("Enter ccuserId , orgId"); int ccUserId =
+	 * Integer.parseInt(testData.getProperty("pxpp.17575.cc.userid")); int Org_Id =
+	 * Integer.parseInt(testData.getProperty("pxpp.17575.cc.orgid"));
+	 * GetLocationListCCRoleResponse =
+	 * locationsInfo.getCCUserRoleForLocations(ccUserId, Org_Id);
+	 * logStep("Validating response information");
+	 * CCUtils.responseTimeValidation(GetLocationListCCRoleResponse);
+	 * CCUtils.assertEquals(GetLocationListCCRoleResponse.getStatusCode(), 200);
+	 * locationsValidations.verifyGetCCRoleLocationsValidInput(
+	 * GetLocationListCCRoleResponse,testData.getProperty("pxpp.17575.cc.roleid"),
+	 * testData.getProperty("pxpp.17575.cc.name"));
+	 * 
+	 * }
+	 */
 
     @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ccuserid , orgid which are not available in system and verify status code and response body")
     public void testGetLocationListFornonExistingUserIdandOrgId() throws IOException {
