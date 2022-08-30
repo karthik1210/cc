@@ -161,7 +161,6 @@ public class ClientInfo extends BaseRest {
 				timezoneId);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.CLIENT_DL).then().extract()
 				.response();
-
 	}
 
 	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientName, String sapNumber,

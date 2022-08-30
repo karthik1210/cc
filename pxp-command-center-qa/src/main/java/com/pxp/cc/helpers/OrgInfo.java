@@ -24,8 +24,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrg(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier)
-			throws IOException {
+			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier) throws IOException {
 
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
 				parentType, timezoneId, ehrIdentifier, pmIdentifier);
@@ -35,8 +34,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrg_DataLayer(String active, String displayName, String name, String orgType, int parentId,
-			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier)
-			throws IOException {
+			String parentType, String timezoneId, int ehrIdentifier, int pmIdentifier) throws IOException {
 		Map<String, Object> createNewOrgPayload = postCreateOrg(active, displayName, name, orgType, parentId,
 				parentType, timezoneId, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
@@ -197,7 +195,7 @@ public class OrgInfo extends BaseRest {
 		orgMap.put("active", active);
 		orgMap.put("timezoneId", timezoneId);
 		orgMap.put("parentId", parentId);
-		orgMap.put("parentType", parentType);		
+		orgMap.put("parentType", parentType);
 		orgMap.put("ehrIdentifier", ehrIdentifier);
 		orgMap.put("pmIdentifier", pmIdentifier);
 		return orgMap;
@@ -505,13 +503,12 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier,
-			int userId) throws IOException {
-
+			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+			throws IOException {
 		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
 				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).body(createNewOrgPayload).when()
-				.post(ApiPath.ORG_DL).then().extract().response();
+		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
+				.response();
 	}
 
 	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName,
