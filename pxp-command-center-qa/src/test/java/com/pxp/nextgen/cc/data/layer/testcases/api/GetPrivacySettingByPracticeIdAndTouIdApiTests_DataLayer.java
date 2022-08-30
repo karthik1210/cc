@@ -1,3 +1,5 @@
+//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -30,7 +32,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 200);
-        validations.verifyOutputForPrivacySettingFromInput_DL(getPrivacySettingApiResponse);
+        validations.verifyOutputForPrivacySettingFromInput(getPrivacySettingApiResponse);
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and inactive tou id")
@@ -39,7 +41,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 200);
-        validations.verifyOutputForPrivacySettingFromInput_DL(getPrivacySettingApiResponse);
+        validations.verifyOutputForPrivacySettingFromInput(getPrivacySettingApiResponse);
     }
 
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, active tou id and invalid uri")
