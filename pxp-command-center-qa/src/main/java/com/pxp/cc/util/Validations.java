@@ -3,6 +3,7 @@
 package com.pxp.cc.util;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -2826,8 +2827,8 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
 	}
 
-	public void verifyOutputForPrivacySettingFromInput_DL(Response response) {
+	public void verifyOutputForPrivacySettingFromInput(Response response) {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
+		CCUtils.assertEquals(jsonPath.get("touType"),"NPP");
 	}
 }
