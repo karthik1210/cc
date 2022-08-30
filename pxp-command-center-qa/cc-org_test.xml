@@ -22,6 +22,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePrivacySettingApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
