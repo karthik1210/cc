@@ -33,15 +33,14 @@ public class PatchInternalUsersStatusApiTests_DataLayer extends BaseRest {
 
 	public int createUser() throws NullPointerException, IOException {
 		logStep("Create new internal user using valid details ");
-		roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		
 		email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		return id;
 	}
@@ -144,7 +143,7 @@ public class PatchInternalUsersStatusApiTests_DataLayer extends BaseRest {
 		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_DataLayer(null, id);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
-		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 500);
+		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForNullInput(updateInternalUserDetailsApiResponse);
 	}
 

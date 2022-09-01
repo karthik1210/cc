@@ -781,5 +781,20 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.USER_DETAILS_BL;
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+	public Response putUserRole_DataLayer(int userId,  int pxp_cc_user,ArrayList<Object> roles) {
+		List<Object> putRolesPayload = putRoles_DL(roles);
+		String url = ApiPath.USER_ROLES_BY_USER_DL(userId);
+		return given().spec(requestSpec).pathParam("userId", userId).header(ApiPath.PXP_CC_USER, pxp_cc_user)
+				.body(putRolesPayload).when().put(url).then().extract().response();
+	}
+
+
+	private List<Object> putRoles_DL(ArrayList<Object> roles) {
+		List<Object> Roles = new ArrayList<Object>();
+		Roles.addAll(roles);
+		return Roles;
+
+	}
+
 }
 

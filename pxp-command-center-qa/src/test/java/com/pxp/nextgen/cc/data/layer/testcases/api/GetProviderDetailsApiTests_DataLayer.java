@@ -6,6 +6,8 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -15,13 +17,19 @@ import io.restassured.response.Response;
 public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	Response fetchProviderDetailsApiResponse;
-
+	private ClientInfo clientInfo;
+	private OrgInfo orgInfo;
+	Response fetchProviderDetailsApiResponse,createClientApiResponse, createOrgNodeApiResponse,
+	createProviderApiResponse;
+	int clientId, systemId, enterpriseId, practiceId;
+	String clientName, clientSapNumber;
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		clientInfo = new ClientInfo();
+		orgInfo = new OrgInfo();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing providerId in providerId field and validate status code")
