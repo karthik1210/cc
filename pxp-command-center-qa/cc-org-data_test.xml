@@ -19,9 +19,10 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer"
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer"
 				/> -->
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer"/>
+
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer"/>
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePrivacySettingApiTests_DataLayer"/>
 		</classes>
