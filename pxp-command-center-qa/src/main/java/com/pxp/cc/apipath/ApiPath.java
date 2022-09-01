@@ -945,4 +945,13 @@ public class ApiPath {
 	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
 	}
+	public static final String GET_LOCATION_FOR_RESOURCE_DL(int resourceId , int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId  + "/practices/" + practiceId + "/locations";
+	}
+	public static final String GET_LOCATION_FOR_RESOURCE_INVALID_URL_DL(int resourceId , int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId  + "/practices/" + practiceId + "/locationssss";
+	}
+	public static final String GET_LOCATION_FOR_RESOURCE_DL_NULL_VALUES() {
+		return SHARED_DL + "/v1/resources/null/practices/null/locations";
+	}
 }

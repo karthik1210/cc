@@ -1,6 +1,9 @@
 //Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.cc.util;
 
+import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -39,25 +42,33 @@ public class LocationsValidations {
 			if (providerIteratePerData.contains(getProvidersForLocation)) {
 				Log4jUtil.log("searched value :" + getProvidersForLocation + "present within response body's value"
 						+ providerIteratePerData);
-				CCUtils.assertTrue(true,
-						"Found data " + providerIteratePerData + " is present in expected data" + getProvidersForLocation);
+				CCUtils.assertTrue(true, "Found data " + providerIteratePerData + " is present in expected data"
+						+ getProvidersForLocation);
 			} else if (providerIteratePerData.contains(getProvidersForLocation)) {
 				Log4jUtil.log("searched value :" + getProvidersForLocation + "present within response body's value"
 						+ providerIteratePerData);
-				CCUtils.assertTrue(true,
-						"Found data " + providerIteratePerData + " is present in expected data" + getProvidersForLocation);
+				CCUtils.assertTrue(true, "Found data " + providerIteratePerData + " is present in expected data"
+						+ getProvidersForLocation);
 			}
 		}
 	}
 
 	public void verifyGetCCRoleLocationsValidInput(Response response, String roleId, String roleName) {
 		JsonPath jsonPath = response.jsonPath();
-		String Role_Id=jsonPath.getString("roleId");
-		String Role_Name=jsonPath.getString("name");
-		if(Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName))
-		{
+		String Role_Id = jsonPath.getString("roleId");
+		String Role_Name = jsonPath.getString("name");
+		if (Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName)) {
 			Log4jUtil.log("Validation Successful");
 		}
 	}
-}
 
+	public void verifyResponseBodyForLocationAssociatedWithResourses(Response response, String locationId)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
+	}
+}
