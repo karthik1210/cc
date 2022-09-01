@@ -50,13 +50,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		String actualTitle = generalSettingsPage.returnGeneralSettingTitle();
-		if (actualTitle.contains(ccuser.searchSymbolInGeneralSetting)) {
-			log("Test Case pass");
-			CCUtils.assertTrue(true, "node selected");
-		} else {
-			log("Test case Failed");
-			CCUtils.assertTrue(false, "Test Failed");
-		}
+		generalSettingsPage.verifySearchResult(actualTitle, ccuser.searchClientInClientDirectory);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
@@ -65,14 +59,8 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.enterSearchText(ccuser.searchNumberInGeneralSetting);
 		generalSettingsPage.clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		String actualTitleForNumSearch = generalSettingsPage.returnGeneralSettingTitle();
-		if (actualTitleForNumSearch.contains(ccuser.searchNumberInGeneralSetting)) {
-			log("Test Case pass, Numbers searched in general setting is succesfull");
-			CCUtils.assertTrue(true, "node selected");
-		} else {
-			log("Test case Failed");
-			CCUtils.assertTrue(false, "Test Failed");
-		}
+		String actualTitle = generalSettingsPage.returnGeneralSettingTitle();
+		generalSettingsPage.verifySearchResult(actualTitle, ccuser.searchClientInClientDirectory);
 	}
 
 	@Test(enabled = true, groups = {
@@ -83,11 +71,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		List<String> nodesInClient = clientDirectoryPage.getClientNodeinGeneralSetting();
-		if (nodesInClient.contains(ccuser.searchNodeInGeneralSetting)) {
-			log("Node present in client's general setting page");
-		} else {
-			log("Test Case failed, node not present under client");
-		}
+		generalSettingsPage.verifySearchResultFunctionality(nodesInClient, ccuser.searchClientInClientDirectory);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
@@ -96,12 +80,6 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
 		CCUtils.pressEnterKey();
 		String actualTitle = generalSettingsPage.returnGeneralSettingTitle();
-		if (actualTitle.equals(ccuser.searchClientInClientDirectory)) {
-			log("Test Case pass");
-			CCUtils.assertTrue(true, "No node present so client node selected");
-		} else {
-			log("Test case Failed");
-			CCUtils.assertTrue(false, "Test Failed, node present under client. check with invalid node name");
-		}
+		generalSettingsPage.verifySearchResult(actualTitle, ccuser.searchClientInClientDirectory);
 	}
 }

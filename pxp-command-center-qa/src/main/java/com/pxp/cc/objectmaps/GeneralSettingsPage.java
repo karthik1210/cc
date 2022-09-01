@@ -885,4 +885,23 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Client node title is displayed");
 	}
 
+	public void verifySearchResult(String actualTitle, String expectedTitle) {
+		if (actualTitle.contains(expectedTitle)) {
+			log("Test Case pass");
+			CCUtils.assertTrue(true, "node selected");
+		} else {
+			log("Test case Failed");
+			CCUtils.assertTrue(false, "Test Failed");
+		}
+	}
+	
+	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
+		if (nodesInClient.contains(expectedTitle)) {
+			log("Node present in client's general setting page");
+		} else {
+			log("Test Case failed, node not present under client");
+		}
+	}
 }
+
+
