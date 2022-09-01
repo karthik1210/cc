@@ -886,13 +886,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void verifySearchResult(String actualTitle, String expectedTitle) {
-		if (actualTitle.contains(expectedTitle)) {
-			log("Test Case pass");
-			CCUtils.assertTrue(true, "Searched node selected, title displayed");
-		} else {
-			log("Test case Failed");
-			CCUtils.assertTrue(false, "Test Case Failed, searched node is not selected");
-		}
+		CCUtils.assertTrue(actualTitle.contains(expectedTitle), "Searched node not selected. Title not found");
 	}
 	
 	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
