@@ -945,4 +945,12 @@ public class ApiPath {
 	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
 	}
+	
+	public static final String ADD_RESOURCE_IMAGE(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/images";
+	}
+
+	public static final String ADD_RESOURCE_IMAGE_INVALID_URL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources123/" + resourceId + "/imagesss";
+	}
 }
