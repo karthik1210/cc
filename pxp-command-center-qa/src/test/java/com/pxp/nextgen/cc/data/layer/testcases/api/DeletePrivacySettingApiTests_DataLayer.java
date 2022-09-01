@@ -151,4 +151,12 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
         validations.verifyInvalidRequestValidation(deletePrivacySettingApiResponse);
     }
 
+    @Test(priority = 15, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and inactive tou id with delete false")
+    public void getPrivacySettingWithPracticeIdAndInactiveTouIdWithDeleteFalse() throws IOException {
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.false"));
+        logStep("Validating response information");
+        CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
+        CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 200);
+    }
+
 }
