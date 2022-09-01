@@ -304,6 +304,46 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getResourceDetails_DL(int resourceId) {
+		String url = ApiPath.GET_RESOURCE_DETAILS_DL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response deleteResourceImage_DL(int resourceId) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response addResourceImage_DL(int resourceId, String imageUrl) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> addImageUrlPayload(String imageUrl) {
+		Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
+		addImageUrlMap.put("href", imageUrl);
+		return addImageUrlMap;
+	}
+
+	public Response addResourceImageWithEmptyPayload_DL(int resourceId) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(addImageUrlMap).when().patch(url).then().extract().response();
+	}
+
+	public Response addResourceImageUsingInvalidMethodCall_DL(int resourceId, String imageUrl) {
+		String url = ApiPath.RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response addResourceImageUsingInvalidUrl_DL(int resourceId, String imageUrl) {
+		String url = ApiPath.INVALID_PATH_RESOURCE_IMAGE_DL(resourceId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
+				.response();
+	}
+
 	private Map<String, Object> createPracticeresourceRequestPayload(String en, String es) {
 		Map<String, Object> createPracticesMap = new HashMap<String, Object>();
 		createPracticesMap.put("en", en);

@@ -34,8 +34,8 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), systemName, testData.getProperty("api.system.orgtype"),
 				Integer.parseInt(testData.getProperty("api.parentid")), testData.getProperty("api.parenttype"),
-				systemSapNumber, testData.getProperty("api.system.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		int orgId = createSystemApiResponse.jsonPath().get("orgId");
 		logStep("Fetch newly created system details using system id");
@@ -59,9 +59,9 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.enterprise.displayname"), enterpriseName,
 				testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("api.enterprise.parentid")),
-				testData.getProperty("api.enterprise.parenttype"), enterpriseSapNumber,
-				testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		int orgId = createEnterpriseApiResponse.jsonPath().get("orgId");
 		logStep("Fetch newly created enterprise details using enterprise id");
@@ -85,9 +85,9 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.practice.displayname"), practiceName,
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("api.practice.parentid")),
-				testData.getProperty("api.practice.parenttype"), practiceSapNumber,
-				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
 		logStep("Fetching Practice Id Response body");
