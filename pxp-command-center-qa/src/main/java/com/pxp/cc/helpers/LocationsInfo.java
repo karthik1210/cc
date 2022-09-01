@@ -159,5 +159,9 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_DL_NULL_VALUES();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	public Response getLocationsForResourceForInvalidMethod_DL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_DL(resourceId, practiceId);
+		return given().spec(requestSpec).post(url).then().extract().response();
+	}
 
 }

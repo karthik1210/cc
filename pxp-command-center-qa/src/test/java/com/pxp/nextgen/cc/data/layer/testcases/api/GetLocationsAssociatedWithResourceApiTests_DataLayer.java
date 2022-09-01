@@ -91,4 +91,14 @@ public class GetLocationsAssociatedWithResourceApiTests_DataLayer extends BaseRe
 		CCUtils.assertEquals(getLocationsForResourseResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageIfClientIdIsNull(getLocationsForResourseResponse);
 	}
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 405  for invalid HTTP Method")
+	public void testErrorResponseCodeForGetListOfBrandsForInvalidMethodCall() throws IOException {
+		int resourceId = Integer.parseInt(testData.getProperty("api.resource.id"));
+		int practiceId = Integer.parseInt(testData.getProperty("exiting.practice.id"));
+		getLocationsForResourseResponse = locationInfo.getLocationsForResourceForInvalidMethod_DL(resourceId, practiceId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getLocationsForResourseResponse);
+		CCUtils.assertEquals(getLocationsForResourseResponse.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(getLocationsForResourseResponse);
+	}
 }
