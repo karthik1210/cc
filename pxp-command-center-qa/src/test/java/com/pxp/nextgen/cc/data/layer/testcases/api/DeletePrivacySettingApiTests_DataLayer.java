@@ -28,7 +28,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and inactive tou id")
     public void getPrivacySettingWithPracticeIdAndInactiveTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 200);
@@ -36,7 +36,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, inactive tou id and Invalid URI")
     public void getPrivacySettingWithPracticeIdAndInactiveTouIdAlongWithInvalidURI() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 404);
@@ -45,7 +45,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, inactive tou id and Invalid Request")
     public void getPrivacySettingWithPracticeIdAndInactiveTouIdAlongWithInvalidRequest() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 405);
@@ -54,7 +54,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a non existing practice id, inactive tou id")
     public void getPrivacySettingWithNonExistingPracticeIdAndInactiveTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("Non.existing.practice.id")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.Non.existing.practice.id")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -63,7 +63,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, non-existing tou id")
     public void getPrivacySettingWithValidPracticeIdAndNonExistingTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("Non.existing.tou.id")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.Non.existing.tou.id")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -72,7 +72,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a non-existing practice id, non-existing tou id")
     public void getPrivacySettingWithNonExistingPracticeIdAndNonExistingTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("Non.existing.practice.id")), Integer.parseInt(testData.getProperty("Non.existing.tou.id")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.Non.existing.practice.id")), Integer.parseInt(testData.getProperty("api.Non.existing.tou.id")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -81,7 +81,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a Invalid datatype on practice id, inactive tou id")
     public void getPrivacySettingWithInvalidDataTypeOnPracticeIdAndInactiveTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("invalid.practice.id.tou"), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("api.invalid.practice.id.tou"), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -90,7 +90,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, invalid datatype on tou id")
     public void getPrivacySettingWithValidPracticeIdAndInvalidDataTypeOnTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), testData.getProperty("invalid.datatype.tou.id"),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), testData.getProperty("api.invalid.datatype.tou.id"),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -99,7 +99,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a invalid datatype on both practice id and tou id")
     public void getPrivacySettingWithInvalidDataTypeOnBothPracticeIdAndTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("invalid.practice.id.tou"), testData.getProperty("invalid.datatype.tou.id"),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("api.invalid.practice.id.tou"), testData.getProperty("api.invalid.datatype.tou.id"),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -108,7 +108,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a null on practice id, inactive tou id")
     public void getPrivacySettingWithNullOnPracticeIdAndInactiveTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(null, Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(null, Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -117,7 +117,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, null on tou id")
     public void getPrivacySettingWithValidPracticeIdAndNullOnTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), null,testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), null,testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -126,7 +126,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 12, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a null on both practice id and tou id")
     public void getPrivacySettingWithNullOnBothPracticeIdAndTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(null, null,testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(null, null,testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -135,7 +135,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 13, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and active tou id")
     public void getPrivacySettingWithPracticeIdAndActiveTouId() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.active")),testData.getProperty("delete.true"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.active")),testData.getProperty("api.delete.true"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -144,7 +144,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 14, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and active tou id along with invalid payload")
     public void getPrivacySettingWithPracticeIdAndInactiveTouIdAlongWithInvalidPayload() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.invalid"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.invalid"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 400);
@@ -153,7 +153,7 @@ public class DeletePrivacySettingApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 15, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and inactive tou id with delete false")
     public void getPrivacySettingWithPracticeIdAndInactiveTouIdWithDeleteFalse() throws IOException {
-        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")),testData.getProperty("delete.false"));
+        deletePrivacySettingApiResponse = orgInfo.deletePrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")),testData.getProperty("api.delete.false"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePrivacySettingApiResponse);
         CCUtils.assertEquals(deletePrivacySettingApiResponse.getStatusCode(), 200);
