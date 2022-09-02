@@ -3,7 +3,6 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -198,5 +197,4 @@ public class PatchInternalUsersStatusApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForInvalidUserStatus(updateInternalUserDetailsApiResponse);
 	}
-
 }

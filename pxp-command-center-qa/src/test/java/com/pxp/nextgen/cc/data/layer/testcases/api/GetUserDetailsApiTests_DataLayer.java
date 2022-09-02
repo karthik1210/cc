@@ -5,7 +5,6 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;

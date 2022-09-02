@@ -14,13 +14,12 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.response.Response;
 
 public class GetRolesByUserApiTests_DataLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	Response getUserRolesByUserApiResponse,createUserApiResponse,putUserRolesApiResponse;
+	Response getUserRolesByUserApiResponse, createUserApiResponse, putUserRolesApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -45,7 +44,6 @@ public class GetRolesByUserApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
-		
 		logStep("Update  user roles for new user ");
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		int pxp_cc_user = Integer.parseInt(testData.getProperty("pxpp.cc.user.id"));
@@ -53,12 +51,11 @@ public class GetRolesByUserApiTests_DataLayer extends BaseRest {
 		Roles.add(testData.getProperty("role.id.one"));
 		Roles.add(testData.getProperty("role.id.two"));
 		Roles.add(testData.getProperty("role.id.three"));
-		putUserRolesApiResponse=userInfo.putUserRole_DataLayer(id,pxp_cc_user,Roles);
+		putUserRolesApiResponse = userInfo.putUserRole_DataLayer(id, pxp_cc_user, Roles);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(putUserRolesApiResponse);
-		CCUtils.assertEquals(putUserRolesApiResponse.getStatusCode(), 200);		
-
-		logStep("Get user roles of new user ");	
+		CCUtils.assertEquals(putUserRolesApiResponse.getStatusCode(), 200);
+		logStep("Get user roles of new user ");
 		getUserRolesByUserApiResponse = userInfo.getUserRolesByUser_DataLayer(id);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesByUserApiResponse);
@@ -75,7 +72,6 @@ public class GetRolesByUserApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing user id in user id field and verify response status code")
 	public void testResponseStatuscodeForNonExistingUserId() throws IOException {
-		
 		getUserRolesByUserApiResponse = userInfo
 				.getUserRolesByUser_DataLayer(Integer.parseInt(testData.getProperty("non.existing.user.id")));
 		logStep("Validating response information");
@@ -115,5 +111,4 @@ public class GetRolesByUserApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(getUserRolesByUserApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(getUserRolesByUserApiResponse);
 	}
-
 }

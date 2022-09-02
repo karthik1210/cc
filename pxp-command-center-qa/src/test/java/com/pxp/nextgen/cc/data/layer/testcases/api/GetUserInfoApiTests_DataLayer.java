@@ -5,7 +5,6 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -50,9 +49,7 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-
 		String authId = fetchUserDetailsApiResponse.jsonPath().getString("authId");
-
 		logStep("Enter internal user auth id in auth id field");
 		fetchUserInfoApiResponse = userInfo.getUserInfo_DataLayer(authId);
 		logStep("Validating response information");
@@ -60,7 +57,6 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
 		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse, id, firstName, lastName,
 				testData.getProperty("user.type.internal"), null);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing client user auth id in x-auth-id field and verify response body")
@@ -117,7 +113,6 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 400);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
@@ -139,5 +134,4 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 405);
 		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(fetchUserInfoApiResponse);
 	}
-
 }

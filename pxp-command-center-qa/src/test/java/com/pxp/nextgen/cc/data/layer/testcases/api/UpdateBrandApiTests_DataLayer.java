@@ -9,13 +9,11 @@ import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import java.util.*;
 import java.io.IOException;
 
 public class UpdateBrandApiTests_DataLayer extends BaseRest {
@@ -129,6 +127,7 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 						testData.getProperty("showlogo.false").trim(), testData.getProperty("practice.brand.color") } };
 		return obj;
 	}
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "updateBrandingValidDetails", description = "Enter existing BrandID, orgId to update brand at CLIENT, SYSTEM, ENTERPRISE, PRACTICE level")
 	public void testSuccessResponseCodeForExistingBrandIdOrgIdToUpdateBranding(String[] getDetails)
 			throws NullPointerException, IOException {
@@ -155,6 +154,7 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageForInvalidBrandId(updateBrandDetailsApiResponse,
 				Integer.parseInt(testData.getProperty("non.existing.brand.id")));
 	}
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing BrandID, orgId as null and validate error response code")
 	public void testErrorResponseCodeForExistingBrandIdAndOrgIdAsNull() throws NullPointerException, IOException {
 		logStep("Enter existing brandId, orgId as null ");
@@ -218,5 +218,4 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
 		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(updateBrandDetailsApiResponse);
-	}
-	}
+	}}

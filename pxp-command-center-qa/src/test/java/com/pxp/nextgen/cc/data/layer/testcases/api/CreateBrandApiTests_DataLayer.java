@@ -16,7 +16,6 @@ import java.io.*;
 public class CreateBrandApiTests_DataLayer extends BaseRest {
 	private BrandsInfo brandInfo;
 	private Validations validation;
-	
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
 			createAgnosticPracticeApiResponse, createClientApiResponse, createBrandApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId;
@@ -34,11 +33,8 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 		orgInfo = new OrgInfo();
 		clientId = createClient();
 		systemId = createSystemNode(clientId);
-
 		enterpriseId = createEnterpriseNode(systemId);
 		practiceId = createPracticeNode(enterpriseId);
-	
-
 	}
 
 	public int createClient() throws Exception {
@@ -81,7 +77,6 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createPracticeApiResponse.jsonPath().get("orgId");
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create Branding Template at Client Level and fetch newly created brand details using brandId")
@@ -160,7 +155,6 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createBrandApiResponse);
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 400);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create Branding Template with null values in name field and verify error response code")
@@ -171,7 +165,6 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createBrandApiResponse);
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 400);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create Branding Template with null values in orgId field and verify error response code")
@@ -182,7 +175,6 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createBrandApiResponse);
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 400);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check error response code for invalid Url")

@@ -29,7 +29,6 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
-
 		logStep("Create nge practice below the client with valid details");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -38,7 +37,6 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
 				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
@@ -46,7 +44,6 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
 				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
@@ -55,7 +52,6 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
@@ -110,15 +106,13 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid value in gender field and verify response body")
 	public void testErrorMessageForInvalidGenderField() throws IOException {
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
-
 		String externalId = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProvider_DataLayer(practiceId,
 				testData.getProperty("provider.firstname"), testData.getProperty("provider.lastname"),
 				testData.getProperty("invalid.gender"), externalId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createProviderApiResponse);
-		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 400);
-		
+		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 400);	
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing practice id in practice id field and verify response body")
@@ -158,5 +152,4 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 405);
 		validation.verifyErrorMessageInResponseForInvalidMethod(createProviderApiResponse);
 	}
-
 }
