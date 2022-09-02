@@ -233,7 +233,7 @@ public class BrandsInfo extends BaseRest {
 			String mimeType) {
 		String url = ApiPath.UPDATE_BRAND_IMAGE_DL(brandId);
 		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
-		return given().spec(requestSpec).body(createBrandImagePayload).when().put(url).then().extract().response();
+		return given().spec(requestSpec).body(createBrandImagePayload).when().post(url).then().extract().response();
 	}
 
 	private Map<String, Object> updateBrandImage(String logoType, String altText, String href, String name,

@@ -57,8 +57,12 @@ public class LocationsValidations {
 		JsonPath jsonPath = response.jsonPath();
 		String Role_Id = jsonPath.getString("roleId");
 		String Role_Name = jsonPath.getString("name");
-		if (Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName)) {
-			Log4jUtil.log("Validation Successful");
+		Log4jUtil.log("Verifying if role id is null or not");
+		if (Role_Id != null) {
+			Log4jUtil.log("Role Id is not NULL verified");
+			if (Role_Id.equals(roleId) && Role_Name.equalsIgnoreCase(roleName)) {
+				Log4jUtil.log("Validation Successful");
+			}
 		}
 	}
 
