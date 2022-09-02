@@ -2826,12 +2826,15 @@ public class Validations {
 		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
 	}
 
-	public void verifyOutputFromValidInputForPracticeWebsites(Response response) {
-		JSONArray jsonArray = new JSONArray(response.getBody().asString());
-		JSONObject jsonObject = new JSONObject();
-		for (int i = 0; i < jsonArray.length(); i++) {
-			jsonObject = jsonArray.getJSONObject(i);
-		}
-		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
+	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice not found for orgId=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForInvalidSolTou(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Solution not found for practice");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }
