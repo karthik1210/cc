@@ -29,25 +29,16 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.ValidateUserDetailsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetVarResellerUserLoginDetailsApiTests_DataLayer" 
 				/> -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUsersStatusApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserInfoApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserDetailsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUsersApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateInternalUsersApiTests_DataLayer" 
+				/> -->
 
-		<!-- 	<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUsersStatusApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserInfoApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserDetailsApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUsersApiTests_DataLayer" />
-
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateInternalUsersApiTests_DataLayer" /> -->
-
-
+				
 		</classes>
 	</test>
-
 </suite>
