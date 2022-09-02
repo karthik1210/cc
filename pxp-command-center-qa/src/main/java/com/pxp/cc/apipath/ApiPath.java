@@ -956,5 +956,14 @@ public class ApiPath {
 	public static final String UPDATE_BRAND_DETAILS_INVALID_URL_DL(String BrandId) {
 		return SHARED_DL + "/v1/brandssssss/" + BrandId;
 	}
+
 	public static final String CREATE_BRANDS_INVALID_URL_DL = SHARED_DL + "/v1/brandsss/";
+
+	public static final String ADD_RESOURCE_IMAGE(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/images";
+	}
+
+	public static final String ADD_RESOURCE_IMAGE_INVALID_URL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources123/" + resourceId + "/imagesss";
+	}
 }
