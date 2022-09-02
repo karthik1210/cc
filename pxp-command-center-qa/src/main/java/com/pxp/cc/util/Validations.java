@@ -1146,7 +1146,7 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
 		if (jsonpath.get("message").toString().contains(
-				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))	
+				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))
 			CCUtils.assertTrue(true, "Message : " + jsonpath.get("message").toString() + " is not verified");
 	}
 
@@ -1662,7 +1662,7 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg)
+			String lastName, String userName, String email, String mobile, String userStatus)
 			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -1674,12 +1674,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
 		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
-		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("client"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("provider"), null);
-		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
-
 	}
 
 	public void verifyErrorMessageForInactiveTargetOrgNode(Response response) throws IOException {
@@ -2400,7 +2394,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorResponseBodyForNonexistingproviderId(Response response, int providerId) throws IOException {
@@ -2829,6 +2823,6 @@ public class Validations {
 
 	public void verifyOutputForPrivacySettingFromInput(Response response) {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("touType"),"NPP");
+		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
 	}
 }

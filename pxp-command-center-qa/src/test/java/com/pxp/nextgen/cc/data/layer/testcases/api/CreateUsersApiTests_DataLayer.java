@@ -63,14 +63,12 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 	public void testErrorMessagesForExistingUsername() throws IOException {
 		logStep("Create user using existing username");
 		String authId = CCUtils.generateAuthId();
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("existing.internalUser.userName");
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(authId, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -82,15 +80,13 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 	public void testErrorMessagesForExistingEmail() throws IOException {
 		logStep("Create user using existing email");
 		String authId = CCUtils.generateAuthId();
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
 		String email = testData.getProperty("api.existing.email");
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(authId, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -108,9 +104,8 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.invalid.userName");
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(authId, "Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), 
-				userName, email, mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null,
-				roleIds);
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -228,29 +223,29 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user  and fetch newly created internal user details using user id")
 	public void testCreateNewInternalUser() throws IOException {
-		logStep("Create internal user using valid details ");
-		String authId = CCUtils.generateAuthId();
+		logStep("Create  user using valid details ");
+		String authIdOne = CCUtils.generateAuthId();
 		List<Integer> roleIds = new ArrayList<Integer>();
+		String firstName = testData.getProperty("api.user.firstName");
+		String lastName = testData.getProperty("api.user.lastName");
 		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer(authId, "Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+		createUserApiResponse = userInfo.createNewUser_DataLayer(authIdOne, "Internal", firstName, lastName, userName,
+				email, mobileNumber, testData.getProperty("user.userStatus"), null, null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
-		String expiryDate = testData.getProperty("internalUser.status.msg").concat(CCUtils.dateformatter());
 		int id = createUserApiResponse.jsonPath().getInt("id");
-		fetchUserDetailsApiResponse = userInfo.getUserDetails_DL(id);
+		logStep("Enter  new internal userid");
+		fetchUserDetailsApiResponse = UserInfo.getUserDetails_DL(String.valueOf(id));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, authId, "Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber.toString(), testData.getProperty("api.user.userStatus"), expiryDate);
+		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, authIdOne, "Internal", firstName,
+				lastName, userName, email, Long.toString(mobileNumber), testData.getProperty("user.userStatus"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user  and fetch newly created client user details using user id")
@@ -303,7 +298,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, authId, "VAReseller",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber.toString(), testData.getProperty("varReseller.user.userStatus"),
-				testData.getProperty("api.status.msg"));
+				mobileNumber.toString(), testData.getProperty("varReseller.user.userStatus"));
 	}
+
 }

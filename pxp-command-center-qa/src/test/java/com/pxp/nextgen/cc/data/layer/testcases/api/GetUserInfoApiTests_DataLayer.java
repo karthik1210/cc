@@ -3,6 +3,8 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -15,7 +17,7 @@ import io.restassured.response.Response;
 public class GetUserInfoApiTests_DataLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	Response fetchUserInfoApiResponse;
+	Response fetchUserInfoApiResponse, fetchUserDetailsApiResponse, createUserApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -24,16 +26,36 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing internal user auth id in x-auth-id field and verify response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create internal user fetch user & usingauth id in x-auth-id field and verify response body")
 	public void testUserInfoDetailsForInternalUser() throws IOException {
+		logStep("Create  user using valid details ");
+		String authIdOne = CCUtils.generateAuthId();
+		List<Integer> roleIds = new ArrayList<Integer>();
+		String firstName = testData.getProperty("api.user.firstName");
+		String lastName = testData.getProperty("api.user.lastName");
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_DataLayer(authIdOne, "Internal", firstName, lastName, userName,
+				email, mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		logStep("Enter  new internal userid");
+		fetchUserDetailsApiResponse = UserInfo.getUserDetails_DL(String.valueOf(id));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
+		String authId = fetchUserDetailsApiResponse.jsonPath().getString("authId");
 		logStep("Enter internal user auth id in auth id field");
-		fetchUserInfoApiResponse = userInfo.getUserInfo_DataLayer(testData.getProperty("internal.auth.id"));
+		fetchUserInfoApiResponse = userInfo.getUserInfo_DataLayer(authId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
-		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse,
-				Integer.parseInt(testData.getProperty("internal.user.id")),
-				testData.getProperty("internal.user.first.name"), testData.getProperty("internal.user.last.name"),
+		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse, id, firstName, lastName,
 				testData.getProperty("user.type.internal"), null);
 	}
 
@@ -90,11 +112,7 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		fetchUserInfoApiResponse = userInfo.getUserInfo_DataLayer("");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserInfoApiResponse);
-		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 200);
-		validation.verifyUserInfoApiResponseBody(fetchUserInfoApiResponse,
-				Integer.parseInt(testData.getProperty("default.user.id")),
-				testData.getProperty("default.user.first.name"), testData.getProperty("default.user.last.name"),
-				testData.getProperty("user.type.internal"), null);
+		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 400);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
@@ -116,5 +134,4 @@ public class GetUserInfoApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchUserInfoApiResponse.getStatusCode(), 405);
 		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(fetchUserInfoApiResponse);
 	}
-
 }
