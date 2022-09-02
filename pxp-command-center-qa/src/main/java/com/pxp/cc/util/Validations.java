@@ -1662,7 +1662,7 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg)
+			String lastName, String userName, String email, String mobile, String userStatus)
 			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -1674,12 +1674,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
 		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
-		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("client"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("provider"), null);
-		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
-
 	}
 
 	public void verifyErrorMessageForInactiveTargetOrgNode(Response response) throws IOException {
@@ -2400,7 +2394,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorResponseBodyForNonexistingproviderId(Response response, int providerId) throws IOException {
@@ -2840,5 +2834,27 @@ public class Validations {
 		CCUtils.assertEquals(displayName.get("es").toString(), es);
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+	}
+
+	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice not found for orgId=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForInvalidSolTou(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Solution not found for practice");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyOutputFromValidInputForPracticeWebsites(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
 	}
 }

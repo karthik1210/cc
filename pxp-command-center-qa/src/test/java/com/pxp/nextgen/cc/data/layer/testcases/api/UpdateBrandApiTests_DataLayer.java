@@ -6,199 +6,216 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
+import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import java.util.*;
 import java.io.IOException;
 
 public class UpdateBrandApiTests_DataLayer extends BaseRest {
-    private BrandsInfo brandInfo;
-    private Validations brandingValidation;
-    private ClientInfo clientInfo;
-    private OrgInfo orgInfo;
-    Response updateBrandApiResponse;
-    int brandId;
-    int orgId;
-    String namePayLoad;
+	private BrandsInfo brandInfo;
+	private Validations validation;
+	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
+			createAgnosticPracticeApiResponse, createClientApiResponse, createBrandApiResponse,updateBrandDetailsApiResponse;
+	int clientId, systemId, enterpriseId, practiceId,   clientBrandId, systemBrandId,enterpriseBrandId,practiceBrandId;
+	String clientName, clientSapNumber;
+	private ClientInfo clientInfo;
+	private OrgInfo orgInfo;
 
-    @BeforeClass()
-    public void setBaseUri() throws Exception {
-        setupServiceRequestSpecificationBuilderForDataLayer();
-        brandInfo = new BrandsInfo();
-        clientInfo = new ClientInfo();
-        brandingValidation = new Validations();
-    }
-    
-    @Test(priority =1 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17694_Update Brand for Client")
-    public void updateBrandforClientSuccess() throws IOException {
-        logStep(" initiating....TC 001_Verify the Response code as 200, when user provided all requested fields with valid values for a client in payload for PUT method of Branding [DL]");
-        logStep("Fetching Brand details Test Data file");
-        int brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        int orgId= Integer.parseInt(testData.getProperty("api.org.id"));
-        namePayLoad = "AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        logStep("Sending Request for Name Update and getting Response");
-        updateBrandApiResponse = brandInfo.putUpdateBrand(brandId, orgId, namePayLoad);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-        logStep("Sending Request for Show Logo and color Update and getting Response");
-        Boolean showlogo=false;
-        String color="#HHHHHH";
-        updateBrandApiResponse = brandInfo.putUpdateAllBranddetails(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-    }
+	@BeforeClass()
+	public void setBaseUri() throws Exception {
+		setupServiceRequestSpecificationBuilderForDataLayer();
+		brandInfo = new BrandsInfo();
+		new SharedInfo();
+		validation = new Validations();
+		clientInfo = new ClientInfo();
+		orgInfo = new OrgInfo();
+		clientId = createClient();
+		systemId = createSystemNode(clientId);
 
-    @Test(priority =5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17695_Update Brand with Payload of NullValues")
-    public void putorgIdNullValidation() throws IOException,NullPointerException {
-        logStep("TC 002_Verify the Response code as 400, when user provided null values in payload for PUT method of Branding [DL]");
-        logStep("when orgId is null");
-        int brandId=1;
-        Integer norgId = null;
-        Boolean showlogo=true;
-        String color="#EEEEEE";
-        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, norgId, namePayLoad, showlogo, color);
-        logStep("Validating response information");
-        brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
-        orgId=101;
-        showlogo=true;
-        color="#BBBBBB";
-        namePayLoad=null;
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response information");
-        brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
-    }
+		enterpriseId = createEnterpriseNode(systemId);
+		practiceId = createPracticeNode(enterpriseId);
+	}
 
-    @Test(priority =7, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17696_Update Brand with Payload of null (Show Logo)")
-    public void incorrectPayloadUpdateBandValidation() throws IOException,NullPointerException {
-        logStep("TC 003_Verify the Response code as 400, when user provided Null values to showlogo in payload for PUT method of Branding [DL]");
-        Integer brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        Integer orgId= Integer.parseInt(testData.getProperty("api.org.id"));
-        String namePayLoaddb=testData.getProperty("api.org.brand.name");
-        Boolean showlogo=null;
-        String color="#BBBBBB";
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoaddb, showlogo, color);
-        logStep("Validating response information");
-        brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
-    }
+	public int createClient() throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
+				"true", ccUser.getClientType(), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
+	}
 
-    @Test(priority =8, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17697_Update Brand with incorrect URI")
-    public void invalidURIUpateBandValidation() throws IOException,NullPointerException {
-        logStep("TC 004_Verify the Response code as 404, when user provided incorrect URI for PUT method of Branding [DL]");
-        Integer brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        Integer orgId= Integer.parseInt(testData.getProperty("api.org.id"));
-        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        updateBrandApiResponse = brandInfo.InvalidPutUpateBrand(brandId, orgId, namePayLoad);
-        logStep("Validating response information");
-        brandingValidation.verifyErrorInResponseForInvalidUrl(updateBrandApiResponse);
-    }
+	public int createSystemNode(int clientId) throws Exception {
+		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
+				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
+				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createSystemApiResponse.jsonPath().get("orgId");
+	}
 
-    @Test(priority =2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17727_Update Brand for System")
-    public void updateBrandforSystemSuccess() throws IOException
-    {
-        logStep(" initiating....TC 005_Verify the Response code as 200, when user provided all requested fields with valid values for a System in payload for PUT method of Branding [DL]");
-        logStep("Fetching Brand details from database");
-        int brandId=Integer.parseInt(testData.getProperty("api.system.brand.id"));
-        int orgId= Integer.parseInt(testData.getProperty("api.system.id"));
-        namePayLoad = "AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        logStep("Sending Request for Name Update and getting Response");
-        updateBrandApiResponse = brandInfo.putUpdateBrand(brandId, orgId, namePayLoad);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-        logStep("Sending Request for Show Logo and color Update and getting Response");
-        Boolean showlogo=false;
-        String color="#FFFFFF";
-        updateBrandApiResponse = brandInfo.putUpdateAllBranddetails(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
+	public int createEnterpriseNode(int SystemId) throws Exception {
+		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), SystemId,
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createEnterpriseApiResponse.jsonPath().get("orgId");
+	}
 
-    }
+	public int createPracticeNode(int enterpriseId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
 
-    @Test(priority =3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17728_Update Brand for Enterprise")
-    public void updateBrandforEnterpriseSuccess() throws IOException
-    {
-        logStep("TC 006_Verify the Response code as 200, when user provided all requested fields with valid values for a Enterprise in payload for PUT method of Branding [DL]");
-        logStep("Fetching Brand details from database");
-        int brandId=Integer.parseInt(testData.getProperty("api.Enterprise.brand.id"));
-        int orgId= Integer.parseInt(testData.getProperty("api.Enterprise.id"));
-        namePayLoad = "AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        logStep("Sending Request for Name Update and getting Response");
-        updateBrandApiResponse = brandInfo.putUpdateBrand(brandId, orgId, namePayLoad);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-        logStep("Sending Request for Show Logo and color Update and getting Response");
-        Boolean showlogo=false;
-        String color="#FFFFFF";
-        updateBrandApiResponse = brandInfo.putUpdateAllBranddetails(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-    }
+	}
+	public int createBrand(int orgId) {
+		logStep("Enter valid values in request payload to create branding template at client level");
+		String name = "New_Node".concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = "#ffffff";
+		createBrandApiResponse =brandInfo.createBrandingTemplate_DL(String.valueOf(orgId), name, "true", color);
+		return createBrandApiResponse.jsonPath().getInt("brandId");
+	}
+	@DataProvider(name = "updateBrandingValidDetails")
+	public Object[] getDetails() {
+		Object[][] obj = new Object[][] {
+				{ String.valueOf(clientBrandId), String.valueOf(clientId),
+						testData.getProperty("client.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.true").trim(), testData.getProperty("client.brand.color") },
+				{ String.valueOf(clientBrandId), String.valueOf(clientId),
+						testData.getProperty("client.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.false").trim(), testData.getProperty("client.brand.color") },
+				{ String.valueOf(systemBrandId), String.valueOf(systemId),
+						testData.getProperty("system.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.true").trim(), testData.getProperty("system.brand.color") },
+				{ String.valueOf(systemBrandId), String.valueOf(systemId),
+						testData.getProperty("system.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.false").trim(), testData.getProperty("system.brand.color") },
+				{ String.valueOf(enterpriseBrandId), String.valueOf(enterpriseId),
+						testData.getProperty("enterprise.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.true").trim(), testData.getProperty("enterprise.brand.color") },
+				{ String.valueOf(enterpriseBrandId), String.valueOf(enterpriseId),
+						testData.getProperty("enterprise.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.false").trim(), testData.getProperty("enterprise.brand.color") },
+				{ String.valueOf(practiceBrandId), String.valueOf(practiceId),
+						testData.getProperty("practice.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.true").trim(), testData.getProperty("practice.brand.color") },
+				{ String.valueOf(practiceBrandId), String.valueOf(practiceId),
+						testData.getProperty("practice.org.brand.name").trim()
+								.concat(CCUtils.generateAlphaNumericString(3)),
+						testData.getProperty("showlogo.false").trim(), testData.getProperty("practice.brand.color") } };
+		return obj;
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "updateBrandingValidDetails", description = "Enter existing BrandID, orgId to update brand at CLIENT, SYSTEM, ENTERPRISE, PRACTICE level")
+	public void testSuccessResponseCodeForExistingBrandIdOrgIdToUpdateBranding(String[] getDetails)
+			throws NullPointerException, IOException {
+		logStep("Enter existing brandId, orgId");
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(getDetails[0], getDetails[1], getDetails[2],
+				getDetails[3], getDetails[4]);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyUpdateBrandingDetails(updateBrandDetailsApiResponse, getDetails[0], getDetails[2]);
+	}
+   
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing BrandID, existing orgId and validate error response code")
+	public void testErrorResponseCodeForNonExistingBrandIdExistingOrgId() throws NullPointerException, IOException {
+		logStep("Enter non-existing BrandID, existing orgId");
+		String brandName = testData.getProperty("practice.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericString(5));
+		String brandId = testData.getProperty("non.existing.brand.id");
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(brandId, String.valueOf(clientId), brandName,
+				"true", testData.getProperty("client.brand.color"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForInvalidBrandId(updateBrandDetailsApiResponse,
+				Integer.parseInt(testData.getProperty("non.existing.brand.id")));
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing BrandID, orgId as null and validate error response code")
+	public void testErrorResponseCodeForExistingBrandIdAndOrgIdAsNull() throws NullPointerException, IOException {
+		logStep("Enter existing brandId, orgId as null ");
+		String brandName = testData.getProperty("client.org.brand.name").concat(CCUtils.generateAlphaNumericString(5));
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(String.valueOf(clientBrandId), null, brandName,
+				"true", testData.getProperty("client.brand.color"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForOrgIdAsNull(updateBrandDetailsApiResponse);
+	}
 
-    @Test(priority =4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17729_Update Brand for Practice")
-    public void updateBrandforPracticeSuccess() throws IOException
-    {
-        logStep("TC 007_Verify the Response code as 200, when user provided all requested fields with valid values for a Practice in payload for PUT method of Branding [DL]");
-        logStep("Fetching Brand details from database");
-        int brandId=Integer.parseInt(testData.getProperty("api.practice.brand.id"));
-        int orgId= Integer.parseInt(testData.getProperty("api.practice.id"));
-        namePayLoad = "AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        logStep("Sending Request for Name Update and getting Response");
-        updateBrandApiResponse = brandInfo.putUpdateBrand(brandId, orgId, namePayLoad);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-        logStep("Sending Request for Show Logo and color Update and getting Response");
-        Boolean showlogo=false;
-        String color="#FFFFFF";
-        updateBrandApiResponse = brandInfo.putUpdateAllBranddetails(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-        }
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing orgId, BrandID as null and validate error response code")
+	public void testErrorResponseCodeForExistingOrgIdAndBrandIdAsNull() throws NullPointerException, IOException {
+		logStep("Enter existing orgId, BrandID as null");
+		String brandName = testData.getProperty("client.org.brand.name").concat(CCUtils.generateAlphaNumericString(5));
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(null, String.valueOf(clientId), brandName, "true",
+				testData.getProperty("client.brand.color"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidRequestValidation(updateBrandDetailsApiResponse);
+	}
 
-    @Test(priority =6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17730_Update Brand with Payload of other orgId")
-    public void otherorgIdupdatebrandValidation() throws IOException,NullPointerException {
-        logStep("TC 008_Verify the Response code , when user trying to update the orgId which is associated with the brandId for a client in payload for PUT method of Branding [DL]");
-        logStep("when other orgId is going to update for given brand id");
-        Integer brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        Integer orgId= Integer.parseInt(testData.getProperty("api.practice.id"));
-        Boolean showlogo=true;
-        String color="#EEEEEE";
-        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(8));
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response information");
-        brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
-    }
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing BrandID and request payload as null and validate error response code")
+	public void testErrorResponseCodeForRequestPayloadAsNull() throws NullPointerException, IOException {
+		logStep("Enter existing BrandID and request payload as null");
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(String.valueOf(clientBrandId), null, null, null,
+				null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidRequestValidation(updateBrandDetailsApiResponse);
+	}
 
-    @Test(priority =9, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17965_Version Name length validation")
-    public void nameFieldLengthUpdateValidation() throws IOException,NullPointerException {
-        logStep("TC 009_Verify the Response codes, when user provided Name attribute Values are =50 char and greater than 50 char payload for PUT method of Branding [DL]");
-        int brandId=Integer.parseInt(testData.getProperty("api.org.brand.id"));
-        int orgId= Integer.parseInt(testData.getProperty("api.org.id"));
-        Boolean showlogo=true;
-        String color="#EEEEEE";
-        logStep("Version Name length validation with 50 charecters");
-        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(41));
-        updateBrandApiResponse = brandInfo.putUpdateBrand(brandId, orgId, namePayLoad);;
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(updateBrandApiResponse);
-        CCUtils.assertEquals(updateBrandApiResponse.getStatusCode(), 200);
-        logStep("Version Name length validation with 51 charecters");
-        namePayLoad="AutoBrand".concat(CCUtils.generateAlphaNumericString(51));
-        updateBrandApiResponse = brandInfo.errorPutUpateBrand(brandId, orgId, namePayLoad, showlogo, color);
-        logStep("Validating response information");
-        brandingValidation.verifyInvalidRequestValidation(updateBrandApiResponse);
-    }
+	@Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Check Version Name length validation and validate response code")
+	public void versionNameFieldLengthValidation() throws IOException, NullPointerException {
+		logStep("Version Name length validation with 50 charecters");
+		String brandName = "AutoBrand".concat(CCUtils.generateAlphaNumericString(41));
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(String.valueOf(clientBrandId),
+				String.valueOf(clientId), brandName, "true", testData.getProperty("client.brand.color"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 200);
+		logStep("Version Name length validation with 51 charecters");
+		brandName = "AutoBrand".concat(CCUtils.generateAlphaNumericString(51));
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(String.valueOf(clientBrandId),
+				String.valueOf(clientId), brandName, "true", testData.getProperty("client.brand.color"));
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyInvalidRequestValidation(updateBrandDetailsApiResponse);
+	}
 
-}
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check error response code for invalid Url")
+	public void testErrorResponseCodeForInvalidUrl() throws NullPointerException, IOException {
+		logStep("Enter existing brandId");
+		String brandName = testData.getProperty("practice.org.brand.name");
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetailsInvalidUrl_DL(String.valueOf(practiceBrandId),
+				String.valueOf(practiceId), brandName, "true", testData.getProperty("practice.brand.color"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
+		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(updateBrandDetailsApiResponse);
+	}}
