@@ -26,7 +26,7 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with valid practice id which has websites")
-    public void getPracticeWebsiteWithValidPracticeIdHasWebsites_BL() throws IOException {
+    public void getPracticeWebsiteWithValidPracticeIdHasWebsites() throws IOException {
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithValidPracticeIdHasWebsites_BL(Integer.parseInt(testData.getProperty("api.valid.practice.id.websites")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
@@ -35,7 +35,7 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with valid practice id which has not websites")
-    public void getPracticeWebsiteWithValidPracticeIdHasNotWebsites_BL() throws IOException {
+    public void getPracticeWebsiteWithValidPracticeIdHasNotWebsites() throws IOException {
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithValidPracticeIdHasNotWebsites_BL(Integer.parseInt(testData.getProperty("api.notactive.practice.id.websites")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
@@ -43,7 +43,7 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with Non existing practice id")
-    public void getPracticeWebsiteWithNonExistingPracticeId_BL() throws IOException {
+    public void getPracticeWebsiteWithNonExistingPracticeId() throws IOException {
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithNonExistingPracticeId_BL(Integer.parseInt(testData.getProperty("Non.existing.practice.id")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
@@ -51,8 +51,8 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with invalid datatype on practice id")
-    public void getPracticeWebsiteWithInvalidDataTypePracticeId_BL() throws IOException {
-        getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId(testData.getProperty("api.invalidDatatype.practice.id"));
+    public void getPracticeWebsiteWithInvalidDataTypePracticeId() throws IOException {
+        getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_BL(testData.getProperty("api.invalidDatatype.practice.id"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
         CCUtils.assertEquals(getPracticeWebsitesApiResponse.getStatusCode(), 400);
@@ -60,8 +60,8 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with Null on practice id")
-    public void getPracticeWebsiteWithNullPracticeId_BL() throws IOException {
-        getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId(null);
+    public void getPracticeWebsiteWithNullPracticeId() throws IOException {
+        getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_BL(null);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
         CCUtils.assertEquals(getPracticeWebsitesApiResponse.getStatusCode(), 400);
@@ -69,7 +69,7 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with Empty on practice id")
-    public void getPracticeWebsiteWithEmptyPracticeId_BL() throws IOException {
+    public void getPracticeWebsiteWithEmptyPracticeId() throws IOException {
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithEmptyOnPracticeId_BL();
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
@@ -78,7 +78,7 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with valid practice id which has websites with invalid URI")
-    public void getPracticeWebsiteWithValidPracticeIdHasWebsitesWithInvalidURI_BL() throws IOException {
+    public void getPracticeWebsiteWithValidPracticeIdHasWebsitesWithInvalidURI() throws IOException {
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithValidPracticeIdWithInvalidURI_BL(Integer.parseInt(testData.getProperty("api.valid.practice.id.websites")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);
@@ -87,7 +87,7 @@ public class GetPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     }
 
     @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Get practice websites with valid practice id which has websites with invalid Request")
-    public void getPracticeWebsiteWithValidPracticeIdHasWebsitesWithInvalidRequest_BL() throws IOException {
+    public void getPracticeWebsiteWithValidPracticeIdHasWebsitesWithInvalidRequest() throws IOException {
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithValidPracticeIdWithInvalidRequest_BL(Integer.parseInt(testData.getProperty("api.valid.practice.id.websites")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPracticeWebsitesApiResponse);

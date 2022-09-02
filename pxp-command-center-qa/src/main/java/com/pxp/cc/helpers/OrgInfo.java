@@ -854,7 +854,7 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().patch(url).then().extract().response();
 	}
 
-	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId(String practiceId) {
+	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_BL(String practiceId) {
 		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
