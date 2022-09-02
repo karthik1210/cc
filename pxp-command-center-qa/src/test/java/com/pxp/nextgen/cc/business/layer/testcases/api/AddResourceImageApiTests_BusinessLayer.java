@@ -45,16 +45,22 @@ public class AddResourceImageApiTests_BusinessLayer extends BaseRest {
 		resourceValidation.verifyResponseBodyForExistingResourceId(getResourceDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid resourceid with invalid image format to add resource image and verify response code")
-	public void testResponseCodeToAddResourceImageWithInvalidImageFormat() throws IOException {
-		log("Enter valid resourceid with invalid image format");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\Upload.pdf");
-		int resourceId = Integer.parseInt(testData.getProperty("resource.id.one"));
-		addResourceImageApiResponse = resourceInfo.addResourceImage_BL(resourceId, file);
-		CCUtils.responseTimeValidation(addResourceImageApiResponse);
-		CCUtils.assertEquals(addResourceImageApiResponse.getStatusCode(), 400);
-	}
+	/*
+	 * Enable test case once issue is addressed for shared service Jira # PXPP-20911
+	 */ 
+	/*
+	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
+	 * "Enter valid resourceid with invalid image format to add resource image and verify response code"
+	 * ) public void testResponseCodeToAddResourceImageWithInvalidImageFormat()
+	 * throws IOException { log("Enter valid resourceid with invalid image format");
+	 * String projectpath = System.getProperty("user.dir"); File file = new
+	 * File(projectpath +
+	 * "\\src\\test\\resources\\data-driven\\images\\Upload.pdf"); int resourceId =
+	 * Integer.parseInt(testData.getProperty("resource.id.one"));
+	 * addResourceImageApiResponse = resourceInfo.addResourceImage_BL(resourceId,
+	 * file); CCUtils.responseTimeValidation(addResourceImageApiResponse);
+	 * CCUtils.assertEquals(addResourceImageApiResponse.getStatusCode(), 400); }
+	 */
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing resourceid with valid image format to add resource image and verify response code")
 	public void testResponseCodeToAddResourceImageWithNonExistingResourceId() throws IOException {
