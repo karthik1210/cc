@@ -58,25 +58,6 @@ public class ClientDirectoryValidations {
 				}
 			}
 		}
-
-		/*
-		 * Log4jUtil.log("Display list of clients in response body : " +
-		 * jsonPath.get("data"));
-		 * Log4jUtil.log("Get the size of clients in response body : " +
-		 * jsonPath.getInt("data.size()")); Log4jUtil.log("Page Number : " +
-		 * jsonPath.getInt("pageNo")); Log4jUtil.log("Items(Clients) per Page : " +
-		 * jsonPath.getInt("pageSize")); Log4jUtil.
-		 * log("Comparing Searched Items names/ids with client data received in Response body."
-		 * ); for (int dataArrayIteration = 0; dataArrayIteration <
-		 * jsonPath.getInt("data.size()"); dataArrayIteration++) { String
-		 * clientIteratePerData = jsonPath.get("data[" + dataArrayIteration +
-		 * "].favorite"); Log4jUtil.log("Print Value : " + clientIteratePerData); if
-		 * (((CharSequence) jsonPath.get("data[" + dataArrayIteration + "].favorite"))!=
-		 * null) { Log4jUtil.log("searched client : " + jsonPath.get("data[" +
-		 * dataArrayIteration + "].name") + "is favorited client with client id : ");
-		 * listOfClientIds.add((Integer) jsonPath.get("data[" + dataArrayIteration +
-		 * "].clientId)")); } } return listOfClientIds;
-		 */
 		return listOfClientIds;
 	}
 

@@ -200,6 +200,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> treeNode;
+	
+	@FindBy(id = "displayClientName")
+	private WebElement clientNodeTitle;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -874,6 +877,12 @@ public class GeneralSettingsPage extends CCMainPage {
 				log("tree node :"+ele+" is equal to provided org node "+orgNode);
 			}
 		}
+	}
+	
+	public void verifyClientNodeIsSelected() {
+		CCUtils.verifyAndWaitForElement(clientNodeTitle, driver);
+		CCUtils.assertEquals(clientNodeTitle.isDisplayed(), true);
+		log("Client node title is displayed");
 	}
 
 }

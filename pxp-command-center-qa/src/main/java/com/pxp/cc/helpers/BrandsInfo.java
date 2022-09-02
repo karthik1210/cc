@@ -11,67 +11,65 @@ import io.restassured.response.Response;
 
 public class BrandsInfo extends BaseRest {
 
-	public Response postDuplicateBrand(int brandId, int ownerId, String ownerType) {
+	public Response postDuplicateBrand(int brandId, int ownerId) {
 		String url = ApiPath.DUPLICATE_BRANDS_DL + brandId;
 		if (ownerId > 0) {
-			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId, ownerType);
+			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId);
 			return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract()
 					.response();
 		} else {
-			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerType);
+			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand();
 			return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract()
 					.response();
 		}
 	}
 
-	public Response postDuplicateBrandInvalidUrl(int brandId, int ownerId, String ownerType) {
+	public Response postDuplicateBrandInvalidUrl(int brandId, int ownerId) {
 		String url = ApiPath.INVALID_DUPLICATE_BRANDS_DL + brandId;
-		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId, ownerType);
+		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId);
 		return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract().response();
 	}
 
-	public Response duplicateBrandInvalidMethodCall(int brandId, int ownerId, String ownerType) {
+	public Response duplicateBrandInvalidMethodCall(int brandId, int ownerId) {
 		String url = ApiPath.DUPLICATE_BRANDS_DL + brandId;
-		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId, ownerType);
-		return given().spec(requestSpec).body(postDuplicateBrandPayload).when().put(url).then().extract().response();
-	}
-
-	private Map<String, Object> postDuplicateBrand(String ownerType) {
-		Map<String, Object> duplicateBrandMap = new HashMap<String, Object>();
-		duplicateBrandMap.put("ownerId", null);
-		duplicateBrandMap.put("ownerType", ownerType);
-		return duplicateBrandMap;
-	}
-
-	public Response postDuplicateBrandBL(int brandId, int ownerId, String ownerType) {
-		String url = ApiPath.DUPLICATE_BRANDS_BL + brandId;
-		if (ownerId > 0) {
-			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId, ownerType);
-			return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract()
-					.response();
-		} else {
-			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerType);
-			return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract()
-					.response();
-		}
-	}
-
-	public Response postDuplicateBrandInvalidUrlBL(int brandId, int ownerId, String ownerType) {
-		String url = ApiPath.INVALID_DUPLICATE_BRANDS_BL + brandId;
-		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId, ownerType);
-		return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract().response();
-	}
-
-	public Response duplicateBrandInvalidMethodCallBL(int brandId, int ownerId, String ownerType) {
-		String url = ApiPath.DUPLICATE_BRANDS_BL + brandId;
-		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId, ownerType);
+		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId);
 		return given().spec(requestSpec).body(postDuplicateBrandPayload).when().patch(url).then().extract().response();
 	}
 
-	private Map<String, Object> postDuplicateBrand(int ownerId, String ownerType) {
+	private Map<String, Object> postDuplicateBrand() {
+		Map<String, Object> duplicateBrandMap = new HashMap<String, Object>();
+		duplicateBrandMap.put("ownerId", null);
+		return duplicateBrandMap;
+	}
+
+	public Response postDuplicateBrandBL(int brandId, int ownerId) {
+		String url = ApiPath.DUPLICATE_BRANDS_BL + brandId;
+		if (ownerId > 0) {
+			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId);
+			return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract()
+					.response();
+		} else {
+			Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand();
+			return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract()
+					.response();
+		}
+	}
+
+	public Response postDuplicateBrandInvalidUrlBL(int brandId, int ownerId) {
+		String url = ApiPath.INVALID_DUPLICATE_BRANDS_BL + brandId;
+		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId);
+		return given().spec(requestSpec).body(postDuplicateBrandPayload).when().post(url).then().extract().response();
+	}
+
+	public Response duplicateBrandInvalidMethodCallBL(int brandId, int ownerId) {
+		String url = ApiPath.DUPLICATE_BRANDS_BL + brandId;
+		Map<String, Object> postDuplicateBrandPayload = postDuplicateBrand(ownerId);
+		return given().spec(requestSpec).body(postDuplicateBrandPayload).when().patch(url).then().extract().response();
+	}
+
+	private Map<String, Object> postDuplicateBrand(int ownerId) {
 		Map<String, Object> duplicateBrandMap = new HashMap<String, Object>();
 		duplicateBrandMap.put("ownerId", ownerId);
-		duplicateBrandMap.put("ownerType", ownerType);
 		return duplicateBrandMap;
 	}
 
@@ -192,6 +190,12 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
 	}
 
+	public Response createBrandingTemplateDL(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.CREATE_BRAND_DL;
+		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
+	}
+
 	public Response createBrandingTemplateInvalidUrl_BL(String orgId, String name, String showLogo, String color) {
 		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
 		String url = ApiPath.INVALID_DUPLICATE_BRANDS_BL;
@@ -228,7 +232,7 @@ public class BrandsInfo extends BaseRest {
 			String mimeType) {
 		String url = ApiPath.UPDATE_BRAND_IMAGE_DL(brandId);
 		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
-		return given().spec(requestSpec).body(createBrandImagePayload).when().put(url).then().extract().response();
+		return given().spec(requestSpec).body(createBrandImagePayload).when().post(url).then().extract().response();
 	}
 
 	private Map<String, Object> updateBrandImage(String logoType, String altText, String href, String name,
@@ -260,5 +264,44 @@ public class BrandsInfo extends BaseRest {
 	public Response deteteBrandImage_NullValue_DL() {
 		String url = ApiPath.DETETE_BRAND_IMAGE_NullValue_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response createBrandingTemplate_DL(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.CREATE_BRAND_DL;
+		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createBrandingTemplateInvalidUrl_DL(String orgId, String name, String showLogo, String color) {
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.CREATE_BRANDS_INVALID_URL_DL;
+		return given().spec(requestSpec).body(createBrandPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createBrandingTemplateInvalidMethodCall_DL(String orgId, String name, String showLogo,
+			String color) {
+		String url = ApiPath.CREATE_BRAND_DL;
+		Map<String, Object> createBrandPayload = updateBrands(orgId, name, showLogo, color);
+		return given().spec(requestSpec).body(createBrandPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateBrandDetails_DL(String brandId, String orgId, String name, String showLogo, String color) {
+		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.UPDATE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateBrandDetailsInvalidMethod_DL(String brandId, String orgId, String name, String showLogo,
+			String color) {
+		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.UPDATE_BRAND_DETAILS_DL(brandId);
+		return given().spec(requestSpec).body(brandDetailsPayload).when().post(url).then().extract().response();
+	}
+
+	public Response updateBrandDetailsInvalidUrl_DL(String brandId, String orgId, String name, String showLogo,
+			String color) {
+		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
+		String url = ApiPath.UPDATE_BRAND_DETAILS_INVALID_URL_DL(brandId);
+		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
 	}
 }

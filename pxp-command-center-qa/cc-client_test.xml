@@ -12,30 +12,20 @@
 	</listeners>
 	<test name="CC Client Test">
 		<classes>
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.FetchClientDetailsTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.EditClientApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.MoveSystemAndAgnosticPracticeNode_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.FavoriteUnFavoriteClientApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientsFromClientDirectoryApiTest_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateClientApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientOrgHierarchyApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientTypesApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSapNumberApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientNameApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ClientAutoSuggestionApiTests_BusinessLayer" />
+			<!-- Enable test suite once issue is addressed for client service Jira 
+				# PXPP-20296 -->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.FetchClientDetailsTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.EditClientApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.FavoriteUnFavoriteClientApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientsFromClientDirectoryApiTest_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateClientApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientOrgHierarchyApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientTypesApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSapNumberApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientNameApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.ClientAutoSuggestionApiTests_BusinessLayer" 
+				/> -->
 		</classes>
 	</test>
 </suite>
