@@ -949,6 +949,18 @@ public class ApiPath {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
 	}
 
+	public static final String GET_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATION_FOR_RESOURCE_INVALID_URL_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locationssss";
+	}
+
+	public static final String GET_LOCATION_FOR_RESOURCE_DL_NULL_VALUES() {
+		return SHARED_DL + "/v1/resources/null/practices/null/locations";
+	}
+
 	public static final String UPDATE_BRAND_DETAILS_DL(String BrandId) {
 		return SHARED_DL + "/v1/brands/" + BrandId;
 	}
@@ -965,5 +977,6 @@ public class ApiPath {
 
 	public static final String ADD_RESOURCE_IMAGE_INVALID_URL(int resourceId) {
 		return SERVICE_SHARED_BL + "/v1/resources123/" + resourceId + "/imagesss";
+
 	}
 }
