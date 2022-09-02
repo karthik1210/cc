@@ -979,4 +979,20 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/resources123/" + resourceId + "/imagesss";
 
 	}
+	public static final String ADDTOU_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String INVALIDURI_ADDTOU_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous";
+	}
+
+	public static final String INVALID_DATATYPE_ADDTOU_BL(String practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String NULL_PRACTICEID_ADDTOU_BL() {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous";
+	}
+
 }
