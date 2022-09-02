@@ -2825,4 +2825,13 @@ public class Validations {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
 	}
+
+	public void verifyOutputFromValidInputForPracticeWebsites(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
+	}
 }

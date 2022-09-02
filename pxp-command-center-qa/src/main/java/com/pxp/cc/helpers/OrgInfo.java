@@ -833,4 +833,39 @@ public class OrgInfo extends BaseRest {
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
 	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdHasWebsites_BL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdHasNotWebsites_BL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidURI_BL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_BL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidRequest_BL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		return given().spec(requestSpec).when().patch(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId(String practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithEmptyOnPracticeId_BL() {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithNonExistingPracticeId_BL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
