@@ -15,13 +15,15 @@ import io.restassured.response.Response;
 public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	Response fetchProviderDetailsApiResponse;
-
+	Response fetchProviderDetailsApiResponse,createClientApiResponse, createOrgNodeApiResponse,
+	createProviderApiResponse;
+	int clientId, systemId, enterpriseId, practiceId;
+	String clientName, clientSapNumber;
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
-		validation = new Validations();
+		validation = new Validations();		
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing providerId in providerId field and validate status code")
