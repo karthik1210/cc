@@ -457,7 +457,7 @@ public class ApiPath {
 	}
 
 	public static final String INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId,
-			int appointmentTypeId) {
+																						 int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcessssss";
 	}
@@ -500,7 +500,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -516,7 +516,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/resources";
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -540,7 +540,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/solutions";
 
 	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/solutionsblabla";
 	}
@@ -684,7 +684,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId,
-			String practiceId) {
+																				   String practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
@@ -697,7 +697,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(String providerId,
-			String practiceId) {
+																						 String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
@@ -840,7 +840,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(int practiceId,
-			int touId) {
+																								int touId) {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
 	}
 
@@ -883,7 +883,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId,
-			int touId) {
+																								int touId) {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
 	}
 
@@ -912,7 +912,7 @@ public class ApiPath {
 	}
 
 	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(int practiceId,
-			int touId) {
+																								 int touId) {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
 	}
 
@@ -933,7 +933,7 @@ public class ApiPath {
 	}
 
 	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId,
-			int touId) {
+																								 int touId) {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
 	}
 
@@ -979,20 +979,20 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/resources123/" + resourceId + "/imagesss";
 	}
 
-	public static final String GET_PRACTICE_WEBSITES_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	public static final String GET_PRACTICE_WEBSITES_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
 	}
 
-	public static final String GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_DL() {
-		return SERVICE_ORG_DL + "/v1/practice-website/practices/sites";
+	public static final String GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_BL() {
+		return SERVICE_ORG_BL + "/v1/practice-website/practices/sites";
 	}
 
-	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(String practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
 	}
 
-	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
+	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 	}
 	public static final String ADDTOU_BL(int practiceId) {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
@@ -1011,3 +1011,5 @@ public class ApiPath {
 	}
 
 }
+
+
