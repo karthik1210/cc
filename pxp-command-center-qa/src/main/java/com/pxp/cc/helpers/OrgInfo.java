@@ -918,6 +918,41 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdHasWebsites_DL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_DL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdHasNotWebsites_DL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_DL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidURI_DL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_DL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidRequest_DL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_DL(practiceId);
+		return given().spec(requestSpec).when().patch(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_DL(String practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_DL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithEmptyOnPracticeId_DL() {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithNonExistingPracticeId_DL(int practiceId) {
+		String url = ApiPath.GET_PRACTICE_WEBSITES_DL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 	public Response addTou_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
 							  Map<String, Object> addTouContMap, String touType) throws IOException {
 		String url = ApiPath.ADDTOU_DL(practiceId);
