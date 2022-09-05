@@ -1025,6 +1025,21 @@ public class ApiPath {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
 	}
 
+	public static final String GET_PRACTICE_WEBSITES_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	}
+
+	public static final String GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_DL() {
+		return SERVICE_ORG_DL + "/v1/practice-website/practices/sites";
+	}
+
+	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	}
+
+	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
+	}
 }
 
 
