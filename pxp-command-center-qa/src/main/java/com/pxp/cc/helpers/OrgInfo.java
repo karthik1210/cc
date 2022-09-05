@@ -918,4 +918,43 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	public Response addTou_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
+							  Map<String, Object> addTouContMap, String touType) throws IOException {
+		String url = ApiPath.ADDTOU_DL(practiceId);
+		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
+				.extract().response();
+	}
+
+	public Response addTouInvalidURI_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
+										Map<String, Object> addTouContMap, String touType) throws IOException {
+		String url = ApiPath.INVALIDURI_ADDTOU_DL(practiceId);
+		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
+				.extract().response();
+	}
+
+	public Response addTouAlphaNumericPracticeId_DL(String practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
+													Map<String, Object> addTouContMap, String touType) throws IOException {
+		String url = ApiPath.INVALID_DATATYPE_ADDTOU_DL(practiceId);
+		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
+				.extract().response();
+	}
+
+	public Response addTouInvalidMethod_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
+										   Map<String, Object> addTouContMap, String touType) throws IOException {
+		String url = ApiPath.ADDTOU_DL(practiceId);
+		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
+		return given().spec(requestSpec).body(addTouMapPayload).when().patch(url).then()
+				.extract().response();
+	}
+
+	public Response addTouToNullPractice_DL(String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
+											Map<String, Object> addTouContMap, String touType) throws IOException {
+		String url = ApiPath.NULL_PRACTICEID_ADDTOU_DL();
+		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
+				.extract().response();
+	}
 }

@@ -1009,6 +1009,21 @@ public class ApiPath {
 	public static final String NULL_PRACTICEID_ADDTOU_BL() {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous";
 	}
+	public static final String ADDTOU_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String INVALIDURI_ADDTOU_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous";
+	}
+
+	public static final String INVALID_DATATYPE_ADDTOU_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String NULL_PRACTICEID_ADDTOU_DL() {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
+	}
 
 }
 
