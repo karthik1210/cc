@@ -901,7 +901,7 @@ public class OrgInfo extends BaseRest {
 
 	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidRequest_BL(int practiceId) {
 		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
-		return given().spec(requestSpec).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_BL(String practiceId) {
@@ -918,6 +918,7 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
 	public Response addTou_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
 							  Map<String, Object> addTouContMap, String touType) throws IOException {
 		String url = ApiPath.ADDTOU_DL(practiceId);
