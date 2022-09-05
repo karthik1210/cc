@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class SavePracticeProvideApiTests_BusinessLayer extends BaseRest {
+public class SavePracticeProviderApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	Response savePracticeProviderApiResponse, fetchPracticeProviderApiResponse;
@@ -24,7 +24,7 @@ public class SavePracticeProvideApiTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all field , valid practice id ,valid provider id and verify response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all field, valid practice id, valid provider id and verify response body")
 	public void testSavePracticeProviderFunctionality() throws IOException {
 		String enDisplayName = testData.getProperty("api.en").concat(CCUtils.generateAlphaNumericString(5));
 		String esDisplayName = testData.getProperty("api.es").concat(CCUtils.generateAlphaNumericString(5));
@@ -47,7 +47,7 @@ public class SavePracticeProvideApiTests_BusinessLayer extends BaseRest {
 				esDisplayName, email, mobile);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all field , valid practice id and invalid provider id and verify response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all field, valid practice id and invalid provider id and verify response body")
 	public void testInvalidProviderId() throws IOException {
 		String email = CCUtils.generateNewEmail(10);
 		String mobile = String.valueOf(CCUtils.generateMobileNumber());
@@ -62,7 +62,7 @@ public class SavePracticeProvideApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageForBlankField(savePracticeProviderApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all field , invalid practice id and valid provider id and verify response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all field, invalid practice id and valid provider id and verify response body")
 	public void testInvalidPracticeId() throws IOException {
 		String email = CCUtils.generateNewEmail(10);
 		String mobile = String.valueOf(CCUtils.generateMobileNumber());
@@ -92,7 +92,7 @@ public class SavePracticeProvideApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Make Post Call instead of GET and verify error message")
-	public void testErrorMessageForInvalidMetthodCall() throws IOException {
+	public void testErrorMessageForInvalidMethodCall() throws IOException {
 		String email = CCUtils.generateNewEmail(10);
 		String mobile = String.valueOf(CCUtils.generateMobileNumber());
 		savePracticeProviderApiResponse = sharedInfo.savePracticeProviderUsingInvalidMethod_BL(
@@ -105,7 +105,7 @@ public class SavePracticeProvideApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(savePracticeProviderApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter provider id which is not associated with enter practice id and Verify response id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter provider id which is not associated with practice id and Verify response id")
 	public void testErrorForNonAssociatedProviderId() throws IOException {
 		String email = CCUtils.generateNewEmail(10);
 		String mobile = String.valueOf(CCUtils.generateMobileNumber());
