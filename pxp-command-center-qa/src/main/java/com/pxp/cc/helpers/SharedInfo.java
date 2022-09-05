@@ -401,4 +401,45 @@ public class SharedInfo extends BaseRest {
 				externalId);
 		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
 	}
+
+	private Map<String, Object> savePracticeProviderApiPayload(Map<String, Object> displayName, String email,
+			String mobile) {
+		Map<String, Object> savePracticeProviderMap = new HashMap<>();
+		savePracticeProviderMap.put("displayName", displayName);
+		savePracticeProviderMap.put("email", email);
+		savePracticeProviderMap.put("mobile", mobile);
+		return savePracticeProviderMap;
+	}
+
+	public Response savePracticeProvider_BL(int practiceId, int providerId, String en, String es, String email,
+			String mobile) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderUsingInvalidUrl_BL(int practiceId, int providerId, String en, String es,
+			String email, String mobile) {
+		String url = ApiPath.INVALID_PATH_SAVE_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderUsingInvalidMethod_BL(int practiceId, int providerId, String en, String es,
+			String email, String mobile) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().post(url).then().extract().response();
+	}
+
+	public Response getPracticeProviderDetails_BL(int practiceId, int providerId) {
+		String url = ApiPath.GET_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
