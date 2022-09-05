@@ -85,8 +85,8 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify Client Status is changed from active to inactive");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				ccUser.getClientType(), clientSapNumber, "false", ccUser.getTestClient(), ccUser.getTimezoneId(),
-				"Eastern Standard Time", 0, solutionLists);
+				testData.getProperty("api.client.one.type"), clientSapNumber, "false", ccUser.getTestClient(),
+				ccUser.getTimezoneId(), "Eastern Standard Time", 0, solutionLists);
 		logStep("Update client status from inactive to active");
 		updateClientApiResponse = clientInfo.updateClient(Boolean.parseBoolean("true"), clientId, clientName,
 				clientSapNumber, ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),

@@ -305,8 +305,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated system details using system id and verify sap number is updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemId, "System_name_2",
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.type"), "System_name_2",
-				clientSapNumber, "true", testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
+				"System_name_2", clientSapNumber, "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Update enterprise name, enterprise display name, sap id, timezone (enter null value in sap id and timezone field)");
@@ -320,7 +320,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated enterprise details using enterprise id and verify sap number is updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseId, "enterprise_name_2",
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
 				"enterprise_name_2", clientSapNumber, "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -335,7 +335,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated nge practice details using practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(practiceId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceId, "practice_name_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
 				"practice_name_2", clientSapNumber, "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -350,7 +350,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeId, "ag_Prac_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"), "ag_Prac_2",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), "ag_Prac_2",
 				clientSapNumber, "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -368,8 +368,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated system details using system id and verify sap number is updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemId, systemName,
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.type"), systemDisplayName,
-				"", "true", testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
+				systemDisplayName, "", "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Update enterprise name, enterprise display name, sap id, timezone (enter blank space in sap id and timezone field)");
@@ -387,7 +387,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated enterprise details using enterprise id and verify sap number is updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseId, enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
 				enterpriseDisplayName, "", "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -405,7 +405,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated nge practice details using practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(practiceId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceId, practiceName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
 				practiceDisplayName, "", "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -424,7 +424,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeId, agPracticeName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
 				agPracticeDisplayName, "", "true", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -457,8 +457,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated system details using system id and verify sap number is updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemId, "System_name_2",
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.type"), "System_name_2",
-				"", "false", testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
+				"System_name_2", "", "false", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Update enterprise name, enterprise display name, sap id, timezone (enter null value in sap id and timezone field)");
@@ -472,7 +472,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated enterprise details using enterprise id and verify sap number is updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseId, "enterprise_name_2",
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
 				"enterprise_name_2", "", "false", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -487,7 +487,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated nge practice details using practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(practiceId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceId, "practice_name_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
 				"practice_name_2", "", "false", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -502,8 +502,9 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeId, "ag_Prac_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"), "ag_Prac_2", "",
-				"false", testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), "ag_Prac_2",
+				"", "false", testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Update system name, system display name, sap id, timezone (enter not null value in sap id and timezone field)");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer("sys1", testData.getProperty("api.system.orgtype"),
@@ -516,8 +517,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated system details using system id and verify updated system details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemId, "sys1",
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.type"), "s1", "s_sap@001",
-				"true", testData.getProperty("api.client.testclient"), "US/Samoa");
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"), "s1",
+				"s_sap@001", "true", testData.getProperty("api.client.testclient"), "US/Samoa");
 
 		logStep("Update enterprise name, enterprise display name, sap id, timezone (enter not null value in sap id and timezone field)");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer("ent2",
@@ -530,7 +531,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated enterprise details using enterprise id and  and verify updated enterprise details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseId, "ent2",
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.type"), "e1",
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"), "e1",
 				"entSap@01", "true", testData.getProperty("api.client.testclient"), "US/Arizona");
 
 		logStep("Update nge practice name, practice display name, sap id, timezone (enter not null value in sap id and timezone field)");
@@ -544,7 +545,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated nge practice details using practice id and verify practice details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(practiceId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceId, "prac2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"), "p2",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), "p2",
 				"pracSap@002", "true", testData.getProperty("api.client.testclient"), "US/Mountain");
 
 		logStep("Update agnostic practice name, practice display name, sap id, timezone (enter not null value in sap id and timezone field)");
@@ -558,7 +559,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify practice details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeId, "ag_prac2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"), "agp2",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), "agp2",
 				"agSap@002", "true", testData.getProperty("api.client.testclient"), "Canada/Atlantic");
 
 	}
@@ -590,8 +591,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated system details using system id and verify updated system details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemId, "System_name_2",
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.type"), "System_name_2",
-				" ", "false", testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
+				"System_name_2", " ", "false", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Update enterprise name, enterprise display name, sap id, timezone (enter blank space in sap id and timezone field)");
@@ -605,7 +606,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated enterprise details using enterprise id and verify updated enterprise details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseId, "enterprise_name_2",
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
 				"enterprise_name_2", " ", "false", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -620,7 +621,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated nge practice details using practice id and verify practice details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(practiceId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceId, "practice_name_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
 				"practice_name_2", " ", "false", testData.getProperty("api.client.testclient"),
 				testData.getProperty("api.client.timezoneid"));
 
@@ -635,8 +636,9 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify practice details");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeId, "ag_Prac_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"), "ag_Prac_2", " ",
-				"false", testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), "ag_Prac_2",
+				" ", "false", testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.timezoneid"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Verify error message for invalid url")

@@ -278,7 +278,7 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		validation.verifyMaximumCharacterErrorMessageInResponseForClientNameField(updateClientApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in active, client name, sap nummber, timezone id fields and validate error message")
 	public void testErrorMessagesForBlankFields() throws IOException {
 		logStep("Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message");
 		int existingClientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
