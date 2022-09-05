@@ -118,7 +118,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new practice below enterprise.");
@@ -153,7 +154,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new system below client.");

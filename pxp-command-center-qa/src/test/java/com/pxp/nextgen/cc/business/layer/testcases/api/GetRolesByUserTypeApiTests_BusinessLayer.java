@@ -31,7 +31,8 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
 		newClientId = createClientApiResponse.jsonPath().get("clientId").toString();
 	}
 

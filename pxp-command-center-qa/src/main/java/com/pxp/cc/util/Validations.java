@@ -275,10 +275,9 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseForClientTypeField(Response response, String clientType)
-			throws IOException {
+	public void verifyErrorMessageInResponseForClientTypeField(Response response, int clientType) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Type=" + clientType + " does not exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client type not found by " + clientType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2826,7 +2825,8 @@ public class Validations {
 		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
 	}
 
-	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId) throws IOException {
+	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice not found for orgId=" + practiceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");

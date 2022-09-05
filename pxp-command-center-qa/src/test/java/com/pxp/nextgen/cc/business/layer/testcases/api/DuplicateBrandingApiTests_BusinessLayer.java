@@ -49,7 +49,8 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}

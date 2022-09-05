@@ -38,7 +38,8 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
@@ -49,7 +50,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
 				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
+				Integer.parseInt(testData.getProperty("client.type.tsi.id")), testData.getProperty("api.targetclient.timezoneid"));
 		targetClientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create target client");
@@ -59,7 +60,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient("false", inactiveTargetclientName,
 				inactiveTargetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				testData.getProperty("api.targetclient.type"), testData.getProperty("api.targetclient.timezoneid"));
+				Integer.parseInt(testData.getProperty("client.type.tsi.id")), testData.getProperty("api.targetclient.timezoneid"));
 		inactiveTargetClientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
@@ -104,7 +105,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemId);
 		logStep("Verify system node inherit client type,sap number,timezone and status attributes from target client node");
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemId, "System_name_1",
-				testData.getProperty("api.targetclient.active"), testData.getProperty("api.targetclient.type"),
+				testData.getProperty("api.targetclient.active"), testData.getProperty("api.client.forteen.type"),
 				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 
 		logStep("Create an active system node below client");
@@ -122,7 +123,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemIdOne);
 		logStep("Verify system node inherit client type,sap number,timezone and status attributes from target client node");
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemIdOne, "System_name_2",
-				testData.getProperty("api.targetclient.active"), testData.getProperty("api.targetclient.type"),
+				testData.getProperty("api.targetclient.active"), testData.getProperty("api.client.forteen.type"),
 				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 	}
 
@@ -142,7 +143,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemId);
 		logStep("Verify system node do not inherit client type,sap number,timezone and status attributes from target client node");
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemId, "System_name_1",
-				"false", testData.getProperty("api.targetclient.type"), clientSapNumber,
+				"false", testData.getProperty("api.client.forteen.type"), clientSapNumber,
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Create an active system node below client");
@@ -159,7 +160,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceSystemIdOne);
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, sourceSystemIdOne, "System_name_2",
-				"true", testData.getProperty("api.targetclient.type"), clientSapNumber, "US/Central");
+				"true", testData.getProperty("api.client.forteen.type"), clientSapNumber, "US/Central");
 
 		logStep("Move an inactive system node an inactive client and verify error message");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrgNode_BL(inactiveTargetClientId, sourceSystemId,
@@ -195,7 +196,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceId);
 		logStep("Verify agnostic practice node inherit client type,sap number,timezone and status attributes from target client node");
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceId, "Agnostic_Practice_Name_1",
-				testData.getProperty("api.targetclient.active"), testData.getProperty("api.targetclient.type"),
+				testData.getProperty("api.targetclient.active"), testData.getProperty("api.client.forteen.type"),
 				targetclientSapNumber, testData.getProperty("api.targetclient.timezoneid"));
 
 		logStep("Create an active agnostic practice below client");
@@ -213,7 +214,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		logStep("Verify system node inherit client type,sap number,timezone and status attributes from target client node");
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceIdOne,
 				"Agnostic_Practice_Name_1", testData.getProperty("api.targetclient.active"),
-				testData.getProperty("api.targetclient.type"), targetclientSapNumber,
+				testData.getProperty("api.client.forteen.type"), targetclientSapNumber,
 				testData.getProperty("api.targetclient.timezoneid"));
 	}
 
@@ -234,7 +235,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceId);
 		logStep("Verify practice node do not inherit client type,sap number,timezone and status attributes from target client node");
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceId, "Agnostic_Practice_Name_1",
-				"false", testData.getProperty("api.targetclient.type"), clientSapNumber,
+				"false", testData.getProperty("api.client.forteen.type"), clientSapNumber,
 				testData.getProperty("api.client.timezoneid"));
 
 		logStep("Create an active agnostic practice below client");
@@ -250,7 +251,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(transferBusinessUnitsApiResponse.getStatusCode(), 200);
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(practiceIdOne);
 		validation.verifyOrgNodeDetailsApiResponseBody(fetchOrgNodeApiResponse, practiceIdOne,
-				"Agnostic_Practice_Name_2", "true", testData.getProperty("api.targetclient.type"), clientSapNumber,
+				"Agnostic_Practice_Name_2", "true", testData.getProperty("api.client.forteen.type"), clientSapNumber,
 				"US/Alaska");
 
 		logStep("Move an inactive agnostic practice node an inactive client and verify error message");

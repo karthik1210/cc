@@ -17,7 +17,7 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).when().pathParam("clientId", clientId).get(url).then().extract().response();
 	}
 
-	public Response createNewClient(String active, String clientName, String sapNumber, String testClient, String type,
+	public Response createNewClient(String active, String clientName, String sapNumber, String testClient, int type,
 			String timezoneId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
@@ -26,7 +26,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response updateClient(Boolean active, String clientId, String clientName, String sapNumber,
-			String testClient, String type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId) throws IOException {
 		String url = ApiPath.CLIENT_DETAILS_BL(clientId);
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
@@ -35,7 +35,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response updateClientWithInvalidUrl(Boolean active, String clientId, String clientName, String sapNumber,
-			String testClient, String type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId) throws IOException {
 		String url = ApiPath.INVALID_PATH_CLIENT_DETAILS_BL(clientId);
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
@@ -76,7 +76,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	private Map<String, Object> postCreateClient(String active, String clientName, String clientSapNumber,
-			String testClient, String type, String timezoneId) {
+			String testClient, int type, String timezoneId) {
 		Map<String, Object> createClientMap = new HashMap<String, Object>();
 		createClientMap.put("active", active);
 		createClientMap.put("name", clientName);
@@ -98,7 +98,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClientUsingInvalidUrl(String active, String clientName, String sapNumber,
-			String testClient, String type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_BL;
@@ -156,7 +156,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClient_DataLayer(String active, String clientName, String sapNumber, String testClient,
-			String type, String timezoneId) throws IOException {
+			int type, String timezoneId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.CLIENT_DL).then().extract()
@@ -164,7 +164,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientName, String sapNumber,
-			String testClient, String type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_DL;
@@ -183,7 +183,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response UpdateClient_DataLayer(int clientId, boolean active, String clientName, String sapNumber,
-			String testClient, String type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId) throws IOException {
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
 		String url = ApiPath.CLIENT_DETAILS_DL(clientId);
@@ -192,7 +192,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response UpdateClientIsingInvalidUrl_DataLayer(int clientId, boolean active, String clientName,
-			String sapNumber, String testClient, String type, String timezoneId) throws IOException {
+			String sapNumber, String testClient, int type, String timezoneId) throws IOException {
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
 		String url = ApiPath.INVALID_PATH_CLIENT_DETAILS_DL(clientId);
@@ -201,7 +201,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	private Map<String, Object> putUpdateClient(boolean active, String clientName, String clientSapNumber,
-			String testClient, String type, String timezoneId) {
+			String testClient, int type, String timezoneId) {
 		Map<String, Object> updateClientMap = new HashMap<String, Object>();
 		updateClientMap.put("active", active);
 		updateClientMap.put("name", clientName);

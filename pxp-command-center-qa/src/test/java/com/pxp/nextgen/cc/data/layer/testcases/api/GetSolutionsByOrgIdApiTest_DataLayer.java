@@ -41,7 +41,8 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 		logStep("Create a client of name : " + clientName);
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
