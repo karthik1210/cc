@@ -2826,7 +2826,18 @@ public class Validations {
 		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
 	}
 
-	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId) throws IOException {
+	public void verifyResponseBodyForGetPracticeProvider(Response response, String en, String es, String email,
+			String mobile) throws NullPointerException, IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Map<String, String> displayName = response.jsonPath().getMap("displayName");
+		CCUtils.assertEquals(displayName.get("en").toString(), en);
+		CCUtils.assertEquals(displayName.get("es").toString(), es);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+	}
+
+	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice not found for orgId=" + practiceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
