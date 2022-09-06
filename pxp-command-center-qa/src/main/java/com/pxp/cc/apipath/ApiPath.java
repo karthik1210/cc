@@ -991,20 +991,32 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers/" + providerId;
 	}
 
-	public static final String PRACTICE_WEBSITES_BL(int practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	public static final String PRACTICE_WEBSITES(String serviceLayer, int practiceId) {
+		if(serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
 	}
 
-	public static final String PRACTICE_WEBSITES_WITHOUT_PRACTICEID_BL() {
-		return SERVICE_ORG_BL + "/v1/practice-website/practices/sites";
+	public static final String PRACTICE_WEBSITES_WITHOUT_PRACTICEID(String serviceLayer) {
+		if(serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/sites";
 	}
 
-	public static final String PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(String practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	public static final String PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if(serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
 	}
 
-	public static final String PRACTICE_WEBSITES_WITH_INVLAID_URI_BL(int practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
+	public static final String PRACTICE_WEBSITES_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if(serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 	}
 
 	public static final String ADDTOU_BL(int practiceId) {
@@ -1036,21 +1048,5 @@ public class ApiPath {
 
 	public static final String NULL_PRACTICEID_ADDTOU_DL() {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
-	}
-
-	public static final String GET_PRACTICE_WEBSITES_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
-	}
-
-	public static final String GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_DL() {
-		return SERVICE_ORG_DL + "/v1/practice-website/practices/sites";
-	}
-
-	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
-	}
-
-	public static final String GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 	}
 }
