@@ -3,6 +3,7 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.OrgWebsites;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
@@ -56,7 +57,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
         orgWebsites.add(orgWebsites2);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
@@ -69,7 +70,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
@@ -82,7 +83,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL(practiceId, orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL("DL", practiceId, orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 400);
@@ -96,7 +97,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidURI_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidURI_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 404);
@@ -110,7 +111,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithoutPracticeId_DL(orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithoutPracticeId_DL("DL", orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 404);
@@ -124,7 +125,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidRequest_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidRequest_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 405);
@@ -135,7 +136,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
     public void addPracticeWebsitesWithPracticeIdHasExternalLinksWithNullPayload() throws IOException {
         orgWebsites1 = new OrgWebsites(null,null,null,null);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 400);
@@ -149,7 +150,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.does.not.have.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.does.not.have.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
@@ -167,7 +168,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
         orgWebsites.add(orgWebsites2);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.not.have.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_DL("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.not.have.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
