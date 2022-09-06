@@ -574,5 +574,150 @@ public class AddOrgNodePage extends CCMainPage {
 		textboxName.sendKeys(orgName);
 		log("Entered org name is " + orgName);
 	}
+	
+	///////////
+	
 
-}
+
+
+	 @FindBy(xpath = "(//button[@class='buttonaslink history ml-1'])[2]")
+ //  @FindBy(xpath = "//div[contains(text(),'+ ADD SYSTEM')]")
+    private WebElement buttonAddSystem;
+
+
+
+   //@FindBy(xpath = "//div[contains(text(),'MANAGE CLIENT')]")
+    //private WebElement buttonManageClient;
+    
+    @FindBy(id = "addNodeNameInput")
+    private WebElement inputName;
+    
+    @FindBy(xpath = "(//input[@type='text'])[2]")
+    private WebElement ehrSystemDropdown;
+    
+    @FindBy(xpath = "(//input[@type='text'])[3]")
+    private WebElement pmSystemDropdown;
+    
+    
+    @FindBy(xpath = "(//span[contains(text(), 'NextGen Enterprise ')])[1]")
+    private WebElement nextgenOptionEhrSystem;
+    
+    @FindBy(xpath = "(//span[contains(text(), 'NextGen Enterprise ')])[2]")
+    private WebElement nextgenOptionPmSystem;
+    
+   @FindBy(id= "closeLabel")
+    private WebElement buttonClose;
+    
+    public void clickOnAddSystemButton() {
+        CCUtils.verifyAndWaitForElement(buttonAddSystem, driver);
+        log("Clicked on Add System button");
+        buttonAddSystem.click();
+    }
+    
+	
+	  public void addNewSystemDetails(String systemName) {
+	  CCUtils.verifyAndWaitForElement(inputName, driver);
+	  inputName.sendKeys(systemName);
+	  
+	  CCUtils.verifyAndWaitForElement(ehrSystemDropdown, driver);
+	  ehrSystemDropdown.click();
+	  CCUtils.verifyAndWaitForElement(nextgenOptionEhrSystem, driver);
+	  nextgenOptionEhrSystem.click();
+	  
+	  CCUtils.verifyAndWaitForElement(pmSystemDropdown, driver);
+	  pmSystemDropdown.click();
+	  CCUtils.verifyAndWaitForElement(nextgenOptionPmSystem, driver);
+	  nextgenOptionPmSystem.click();
+	  CCUtils.verifyAndWaitForElement(buttonSaveAndAdd, driver);
+	  buttonSaveAndAdd.click();
+	 
+	  CCUtils.verifyAndWaitForElement(buttonClose, driver);
+	  buttonClose.click();
+
+	
+
+	  
+	  }
+	//  @FindBy(xpath ="//div[contains(text(),' + ADD ENTERPRISE ')]")
+      
+      @FindBy(xpath = "(//button[@class='buttonaslink history ml-1'])[2]")
+      private WebElement buttonAddEnterprise;
+      
+      @FindBy(xpath = "(//span[@class='ng-arrow'])[3]")
+      private WebElement timezoneDropdown;
+      
+      @FindBy(id = "a977ab62d75b-0")
+      private WebElement selectTimezone;
+      
+      public void clickOnAddEnterpriseButton() {
+      CCUtils.verifyAndWaitForElement(buttonAddEnterprise, driver);
+      log("Clicked on Add Enterprise button"); buttonAddEnterprise.click(); }
+      
+      public void addNewEnterpriseDetails(String enterpriseName)
+     {
+      CCUtils.verifyAndWaitForElement(inputName, driver);
+      inputName.sendKeys("system.name");
+      CCUtils.verifyAndWaitForElement(ehrSystemDropdown, driver);
+      ehrSystemDropdown.click();
+      CCUtils.verifyAndWaitForElement(nextgenOptionEhrSystem, driver);
+      nextgenOptionEhrSystem.click();
+      CCUtils.verifyAndWaitForElement(pmSystemDropdown, driver);
+      pmSystemDropdown.click();
+      CCUtils.verifyAndWaitForElement(nextgenOptionPmSystem, driver);
+      nextgenOptionPmSystem.click();
+      CCUtils.verifyAndWaitForElement(timezoneDropdown, driver);
+      timezoneDropdown.click();
+      CCUtils.verifyAndWaitForElement(selectTimezone, driver);
+      selectTimezone.click();
+      CCUtils.verifyAndWaitForElement(buttonSaveAndAdd, driver);
+      buttonSaveAndAdd.click();
+      }
+     
+      ///PRACTICE
+           
+    @FindBy(xpath = "(//button[@class='buttonaslink history ml-1'])[3]")
+    private  WebElement buttonAddPractice;
+    
+    @FindBy(id = "addNodeSolutionInput")
+   private  WebElement solutionDisplayName;
+    
+      public void clickOnAddPracticeButton() {
+           CCUtils.verifyAndWaitForElement(buttonAddPractice, driver);
+           log("Clicked on Add Practice button"); buttonAddPractice.click(); }
+
+     public void addNewPracticeDetails(String enterpriseName)
+     {
+      CCUtils.verifyAndWaitForElement(inputName, driver);
+      inputName.sendKeys("practice.name");
+      
+     CCUtils.verifyAndWaitForElement(solutionDisplayName, driver);
+    solutionDisplayName.click();
+    solutionDisplayName.sendKeys("Engage");
+      
+      CCUtils.verifyAndWaitForElement(ehrSystemDropdown, driver);
+      ehrSystemDropdown.click();
+      CCUtils.verifyAndWaitForElement(nextgenOptionEhrSystem, driver);
+      nextgenOptionEhrSystem.click();
+      CCUtils.verifyAndWaitForElement(pmSystemDropdown, driver);
+      pmSystemDropdown.click();
+      CCUtils.verifyAndWaitForElement(nextgenOptionPmSystem, driver);
+      nextgenOptionPmSystem.click();
+      CCUtils.verifyAndWaitForElement(timezoneDropdown, driver);
+      timezoneDropdown.click(); CCUtils.verifyAndWaitForElement(selectTimezone,
+      driver); selectTimezone.click();
+      CCUtils.verifyAndWaitForElement(buttonSaveAndAdd, driver);
+      buttonSaveAndAdd.click();
+      }
+
+     @FindBy(id = "treeExpandBtn")
+     private  WebElement treeExpandBtn;
+		
+     public void clickOntreeExpandButton() {
+         CCUtils.verifyAndWaitForElement(treeExpandBtn, driver);
+         log("Clicked on Add Enterprise button");
+         treeExpandBtn.click(); 
+         }
+          
+		 
+	}
+

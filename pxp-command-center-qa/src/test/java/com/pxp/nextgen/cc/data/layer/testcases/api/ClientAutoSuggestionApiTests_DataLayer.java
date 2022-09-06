@@ -17,18 +17,38 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 
 	private ClientInfo clientData;
 	private Validations validation;
-	Response getSearchedClientDetailsApiResponse;
+	Response getSearchedClientDetailsApiResponse, createClientApiResponse;
+	public int clientIdOne;
+	public int clientIdTwo;
+	public int clientIdThree;
+	public int clientIdFour;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientData = new ClientInfo();
 		validation = new Validations();
+		clientIdOne = createClient();
+		clientIdTwo = createClient();
+		clientIdThree = createClient();
+		clientIdFour = createClient();
+	}
+
+	public int createClient() throws NullPointerException, IOException {
+		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
+		String clientSapNumber = CCUtils
+				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
+						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
+		createClientApiResponse = clientData.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
 	@DataProvider(name = "typesofsearchdata")
 	public Object[] typesOfSearchData() {
-		Object[] obj = new Object[] { "Client", "4051", "client1", "Client@12" };
+		Object[] obj = new Object[] { "Client", "client1", "@12" };
 		return obj;
 	}
 

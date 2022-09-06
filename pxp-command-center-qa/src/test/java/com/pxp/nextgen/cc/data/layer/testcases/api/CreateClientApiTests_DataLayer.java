@@ -34,8 +34,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -54,14 +53,13 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message")
 	public void testErrorMessagesForMandatoryFields() throws IOException {
-		logStep("Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message");
+		logStep("Enter null value in mandatory fields(active,client name,sap number and type) and validate error message");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(null, null, null,
-				testData.getProperty("api.client.testclient"), null, testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.testclient"), null, testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		validation.verifyNullErrorMessageResponseBody(createClientApiResponse);
+		validation.verifyNullValuesErrorMessageResponseBody(createClientApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing value in client name field and validate error message")
@@ -71,8 +69,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				testData.getProperty("api.existing.client.name"), clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -87,8 +84,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, testData.getProperty("api.existing.client.sapnumber"),
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -104,8 +100,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"), clientType,
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -120,8 +115,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), clientTimezoneId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), clientTimezoneId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -136,8 +130,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, testData.getProperty("api.invalid.client.sapnumber"),
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -152,8 +145,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				testData.getProperty("api.invalid.client.name"), clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -164,12 +156,11 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 	public void testErrorMessagesForBlankFields() throws IOException {
 		logStep("Enter blank space in active, client name, sap nummber, timezone id and type fields and validate error message");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(" ", " ", " ",
-				testData.getProperty("api.client.testclient"), " ", " ",
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.testclient"), " ", " ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
-		validation.verifyNullErrorMessageResponseBody(createClientApiResponse);
+		validation.verifyNullValuesErrorMessageResponseBody(createClientApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
@@ -182,8 +173,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayerUsingInvalidUrl(
 				testData.getProperty("api.client.active"), clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 404);
@@ -198,8 +188,7 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumber, "false",
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);

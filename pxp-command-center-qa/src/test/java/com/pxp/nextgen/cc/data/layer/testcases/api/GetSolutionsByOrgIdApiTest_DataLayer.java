@@ -41,8 +41,7 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 		logStep("Create a client of name : " + clientName);
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -53,8 +52,7 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 				ccUser.getPracticeOrgTypeApi(), ccUser.getPracticeDisplayNameApi(), practiceSapNumber, active,
 				ccUser.getPracticeTimezoneIdApi(), parentId, parentType,
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createPracticeApiResponse.jsonPath().getInt("orgId");
 	}
 
@@ -64,8 +62,7 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.active"),
 				ccUser.getSystemTimezoneIdApi(), clientId, testData.getProperty("api.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
 		Response createEnterpriseApiResponse = orgInfo.createOrgNode_DataLayer(
@@ -73,8 +70,7 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 				ccUser.getEnterpriseDisplayNameApi(), testData.getProperty("api.enterprise.sapnumber"),
 				testData.getProperty("api.enterprise.active"), ccUser.getEnterpriseTimezoneIdApi(), systemId,
 				ccUser.getSystemOrgTypeApi(), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 		return createPracticeNode(enterpriseId, active, testData.getProperty("api.enterprise.orgtype"));
 	}
