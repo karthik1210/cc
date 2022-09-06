@@ -50,7 +50,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.system.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.displayname"),
 				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.testclient"), testData.getProperty("api.system.timezoneid"));
 	}
@@ -90,7 +90,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.enterprise.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.displayname"),
 				testData.getProperty("api.enterprise.sapnumber"), testData.getProperty("api.enterprise.active"),
 				testData.getProperty("api.enterprise.testclient"), testData.getProperty("api.enterprise.timezoneid"));
 	}
@@ -118,7 +118,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new practice below enterprise.");
@@ -140,7 +141,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
 				testData.getProperty("api.practice.sapnumber"), testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.testclient"), testData.getProperty("api.practice.timezoneid"));
 	}
@@ -153,7 +154,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new system below client.");
@@ -192,7 +194,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
 				testData.getProperty("api.practice.sapnumber"), testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.testclient"), testData.getProperty("api.practice.timezoneid"));
 	}

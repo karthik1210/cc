@@ -41,7 +41,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				ccUser.getClientType(), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -87,7 +87,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.system.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.displayname"),
 				clientSapNumber, testData.getProperty("api.system.active"), "false", ccUser.getTimezoneId());
 	}
 
@@ -100,7 +100,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.enterprise.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.displayname"),
 				clientSapNumber, testData.getProperty("api.enterprise.active"), "false",
 				testData.getProperty("api.enterprise.timezoneid"));
 	}
@@ -115,7 +115,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
 				clientSapNumber, testData.getProperty("api.practice.active"), "false",
 				testData.getProperty("api.practice.timezoneid"));
 	}

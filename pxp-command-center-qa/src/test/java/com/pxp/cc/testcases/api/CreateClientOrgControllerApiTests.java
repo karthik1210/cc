@@ -37,7 +37,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -57,7 +57,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new active enterprise below active client.");
@@ -76,7 +76,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new inactive system below active client.");
@@ -94,7 +94,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -139,7 +139,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getOrgActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -159,7 +159,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -179,7 +179,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new inactive system below active client.");
@@ -196,7 +196,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getOrgActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		logStep("Create a new inactive system below active client.");
@@ -226,7 +226,7 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());

@@ -43,7 +43,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.testclient"), Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}

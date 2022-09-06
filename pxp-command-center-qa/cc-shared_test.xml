@@ -58,7 +58,7 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandingDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeProvideApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeProviderApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

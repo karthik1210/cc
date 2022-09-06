@@ -50,7 +50,8 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -113,7 +114,8 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -144,7 +146,8 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);

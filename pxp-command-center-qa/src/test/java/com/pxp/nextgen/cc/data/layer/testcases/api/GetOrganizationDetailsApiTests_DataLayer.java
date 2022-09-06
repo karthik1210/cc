@@ -44,7 +44,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId, systemName,
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
 				testData.getProperty("api.system.displayname"), systemSapNumber,
 				testData.getProperty("api.system.active"), testData.getProperty("api.system.testclient"),
 				testData.getProperty("api.system.timezoneid"));
@@ -70,7 +70,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId, enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
 				testData.getProperty("api.enterprise.displayname"), enterpriseSapNumber,
 				testData.getProperty("api.enterprise.active"), testData.getProperty("api.enterprise.testclient"),
 				testData.getProperty("api.enterprise.timezoneid"));
@@ -96,7 +96,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, orgId, practiceName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
 				testData.getProperty("api.practice.displayname"), practiceSapNumber,
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.testclient"),
 				testData.getProperty("api.practice.timezoneid"));

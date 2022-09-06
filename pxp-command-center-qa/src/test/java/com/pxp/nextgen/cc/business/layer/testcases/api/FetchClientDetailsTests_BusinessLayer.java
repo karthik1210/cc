@@ -72,7 +72,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -86,8 +87,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
-				ccUser.getTimezoneId(), ccUser.getDisplayName(), 0, solutionLists);
+				testData.getProperty("api.client.one.type"), clientSapNumber, ccUser.getActive(),
+				ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(), 0, solutionLists);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create new active practice nodes with solutions and verify solution details are displayed in the client details")
@@ -97,7 +98,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 
 		Map<String, Object> solutionMapOne = new HashMap<String, Object>();
@@ -151,8 +153,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
-				ccUser.getTimezoneId(), ccUser.getDisplayName(), 2, finalSolutionLists);
+				testData.getProperty("api.client.one.type"), clientSapNumber, ccUser.getActive(),
+				ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(), 2, finalSolutionLists);
 
 	}
 
@@ -162,7 +164,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("create another active practice node without solutions");
 		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
@@ -189,8 +192,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
-				ccUser.getTimezoneId(), ccUser.getDisplayName(), 1, finalSolutionLists);
+				testData.getProperty("api.client.one.type"), clientSapNumber, ccUser.getActive(),
+				ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(), 1, finalSolutionLists);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create new Inactive practice node and verify the practice count is zero and solutions details is null")
@@ -199,7 +202,8 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), ccUser.getClientType(), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
 
@@ -222,7 +226,7 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				ccUser.getClientType(), clientSapNumber, ccUser.getActive(), ccUser.getTestClient(),
-				ccUser.getTimezoneId(), ccUser.getDisplayName(), pracCount, finalSolutionLists);
+				testData.getProperty("api.client.one.type"), clientSapNumber, ccUser.getActive(),
+				ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(), pracCount, finalSolutionLists);
 	}
 }
