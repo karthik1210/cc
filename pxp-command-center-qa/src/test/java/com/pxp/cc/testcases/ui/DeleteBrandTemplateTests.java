@@ -123,5 +123,4 @@ public class DeleteBrandTemplateTests extends CommandCenterGenericTest {
 		logStep("Verify user redirected to client information page and branding template is displayed");
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
 	}
-
 }

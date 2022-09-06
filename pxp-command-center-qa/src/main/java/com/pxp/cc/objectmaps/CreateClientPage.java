@@ -7,8 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.Select;
-
 import com.pxp.cc.util.CCUtils;
 
 public class CreateClientPage extends CCMainPage {
@@ -167,16 +165,15 @@ public class CreateClientPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxSapId, driver);
 		textboxSapId.sendKeys(newSAPID);
 		log("Entered text in SAP ID field : " + newSAPID);
-		
+
 		CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
 		log("click to dropdown of client type");
 		dropdownClientType.click();
-		  selectClientType(clientType);
-		  CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
-		  log("click to dropdown of Timezone"); 
-		  dropdownTimezone.click();
-		  selectTimeZone(newTimezone);
-		 
+		selectClientType(clientType);
+		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
+		log("click to dropdown of Timezone");
+		dropdownTimezone.click();
+		selectTimeZone(newTimezone);
 	}
 
 	public void clickConfirmPopup() throws InterruptedException {

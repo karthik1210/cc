@@ -11,7 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import com.pxp.cc.util.CCUtils;
 
 public class BrandingTemplatesPage extends CCMainPage {
-	
+
 	@FindBy(xpath = "//span[contains( text(),'+ VERSION')]")
 	private WebElement versionButton;
 
@@ -53,7 +53,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='mat-tree-node-click noclass']")
 	private WebElement clientNode;
-	
+
 	@FindBy(id = "delete_forever")
 	private WebElement deleteButton;
 
@@ -71,7 +71,6 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(id = "clearDelete")
 	private WebElement CrossIcon;
-
 
 	public BrandingTemplatesPage(WebDriver driver) {
 		super(driver);
@@ -177,9 +176,9 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.assertTrue(true, editButton.getText().trim());
 		log("Edit option is  display");
 	}
-	
+
 	public void clickOnDelete() throws InterruptedException {
-		//CCUtils.verifyAndWaitForElement(deleteButton, driver);
+		// CCUtils.verifyAndWaitForElement(deleteButton, driver);
 		javascriptClick(deleteButton);
 		log("Clicked on delete");
 	}
@@ -242,8 +241,5 @@ public class BrandingTemplatesPage extends CCMainPage {
 		javascriptClick(CrossIcon);
 		log("Clicked on CrossIcon");
 	}
-
-	
-	
 
 }
