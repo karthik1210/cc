@@ -886,37 +886,37 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response getPracticeWebsitesWithValidPracticeIdHasWebsites_BL(int practiceId) {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithValidPracticeIdHasNotWebsites_BL(int practiceId) {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidURI_BL(int practiceId) {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_URI_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_URI_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidRequest_BL(int practiceId) {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_BL(String practiceId) {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithEmptyOnPracticeId_BL() {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_WITHOUT_PRACTICEID_BL();
+		String url = ApiPath.PRACTICE_WEBSITES_WITHOUT_PRACTICEID_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithNonExistingPracticeId_BL(int practiceId) {
-		String url = ApiPath.GET_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -996,27 +996,27 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(int practiceId, List<OrgWebsites> orgWebsites) {
-		String url = ApiPath.ADD_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
 	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(String practiceId, List<OrgWebsites> orgWebsites) {
-		String url = ApiPath.ADD_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
 	public Response addPracticeWebsitesWithoutPracticeId_BL(List<OrgWebsites> orgWebsites) {
-		String url = ApiPath.ADD_PRACTICE_WEBSITES_WITHOUT_PRACTICE_ID_BL();
+		String url = ApiPath.PRACTICE_WEBSITES_WITHOUT_PRACTICEID_BL();
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
 	public Response addPracticeWebsitesWithInvalidURI_BL(int practiceId, List<OrgWebsites> orgWebsites) {
-		String url = ApiPath.ADD_PRACTICE_WEBSITES_WITH_INVALID_URI_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_URI_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
 	public Response addPracticeWebsitesWithInvalidRequest_BL(int practiceId, List<OrgWebsites> orgWebsites) {
-		String url = ApiPath.ADD_PRACTICE_WEBSITES_BL(practiceId);
+		String url = ApiPath.PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
 	}
 }
