@@ -33,10 +33,10 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),'Branding Templates')]")
 	private WebElement brandingTemplatesLabel;
 
-	@FindBy(xpath = "(//span[contains(text(),' ACTIVE ')])[1]")
+	@FindBy(xpath = "//span[contains(text(),' ACTIVE ')]")
 	private WebElement activeStatus;
 
-	@FindBy(xpath = "(//span[contains(text(),' INACTIVE ')])[2]")
+	@FindBy(xpath = "//span[contains(text(),' INACTIVE ')]")
 	private WebElement inactiveStatus;
 
 	@FindBy(xpath = "(//mat-icon[@id='kebabIcon'])[1]")
@@ -60,7 +60,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(id = "edit")
 	private WebElement editButton;
 
-	@FindBy(id = "mat-dialog-title-1")
+	@FindBy(id = "confirmLabel")
 	private WebElement labelConfirmationQuestion;
 
 	@FindBy(id = "unsavedConfirmBtn")
@@ -69,7 +69,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(id = "unsavedCancelBtn")
 	private WebElement CancelButton;
 
-	@FindBy(xpath = "//span[@class='material-icons cross']")
+	@FindBy(id = "clearDelete")
 	private WebElement CrossIcon;
 
 

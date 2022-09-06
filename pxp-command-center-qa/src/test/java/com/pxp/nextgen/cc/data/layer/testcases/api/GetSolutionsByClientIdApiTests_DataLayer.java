@@ -49,10 +49,11 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
-		
+
 		logStep("create an active system node");
 		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
 		String systemSapNumber = ccUser.getSystemSapNumberApi().concat(CCUtils.generateRandomString());
@@ -62,7 +63,7 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				testData.getProperty("pm.identifier"));
 
 		int systemId = createSystemApiResponse.jsonPath().get("orgId");
-		
+
 		logStep("Enter orgId instead of client id in clientId field and validate error message");
 		fetchClientDetailsApiResponse = clientInfo.getClientSolutionsDetails_DataLayer(systemId);
 		logStep("Validating response information");
@@ -80,7 +81,8 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 		logStep("Fetch newly created client details using client id");
@@ -99,7 +101,8 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 		logStep("create an active practice node");
@@ -126,7 +129,8 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
@@ -171,7 +175,8 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
@@ -218,7 +223,8 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 
@@ -264,7 +270,8 @@ public class GetSolutionsByClientIdApiTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 		logStep("Create a new active system below client.");

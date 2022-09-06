@@ -3,7 +3,6 @@
 package com.pxp.cc.util;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -28,6 +29,7 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -226,7 +228,7 @@ public class Validations {
 
 	public void verifyNullErrorMessageResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Sap number can not be blank, Type can not be blank, Name can not be blank";
+		String actual = "Sap number can not be blank, Name can not be blank";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -244,7 +246,7 @@ public class Validations {
 
 	public void verifyNullValuesErrorMessageResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name can not be blank, Sap number can not be blank, Type can not be blank, Active can not be null";
+		String actual = "Name can not be blank, Sap number can not be blank, Active can not be null";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -275,10 +277,9 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseForClientTypeField(Response response, String clientType)
-			throws IOException {
+	public void verifyErrorMessageInResponseForClientTypeField(Response response, int clientType) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Type=" + clientType + " does not exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client type not found by " + clientType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
