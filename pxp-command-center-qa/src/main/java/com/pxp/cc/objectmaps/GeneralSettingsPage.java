@@ -144,10 +144,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-
-	@FindBy(className = "info")
+	
+	@FindBy(id = "displayClientName")
 	private WebElement labelNodeNameRightPanel;
-
+	
 	@FindBy(className = "mat-option-text")
 	private List<WebElement> listOfSuggestions;
 
@@ -883,4 +883,17 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Client node title is displayed");
 	}
 
+	public void verifySearchResult(String actualTitle, String expectedTitle) {
+		CCUtils.assertTrue(actualTitle.contains(expectedTitle), "Searched node not selected. Title not found");
+	}
+	
+	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
+		if (nodesInClient.contains(expectedTitle)) {
+			log("Node present in client's general setting page");
+		} else {
+			log("Test Case failed, node not present under client");
+		}
+	}
 }
+
+

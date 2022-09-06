@@ -18,32 +18,37 @@ public class DeleteBrandTemplateTests extends CommandCenterGenericTest {
 	private GeneralSettingsPage generalSettingsPage;
 	private BrandingTemplatesPage brandingTemplatesPage;
 	public CommonMethods commonMethods;
-	public CreateClientPage createClientPage;
+	//public CreateClientPage createClientPage;
 
 	@BeforeMethod
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		commonMethods = new CommonMethods(driver);
-		createClientPage = new CreateClientPage(driver);
-		createClientPage = new CreateClientPage(driver);
-		logStep("Select create client button from new dropdown");
-		createClientPage.clickCreateClient();
-		commonMethods = new CommonMethods(driver);
-		logStep("Enter valid details in mandatory fields");
-		String clientName = testData.getProperty("new.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-		String clientSapNumber = testData.getProperty("new.client.sap")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
-				testData.getProperty("new.client.timezone"));
-		logStep("Verify active radio button is by default selected on the create client popup");
-		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
-		logStep("Click on create button on the create client popup");
-		createClientPage.clickConfirmPopup();
-		String actualMessage = commonMethods.getToasterMessage();
-		logStep("Verify success toaster message");
-		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
+		/*
+		 * commonMethods = new CommonMethods(driver); createClientPage = new
+		 * CreateClientPage(driver); createClientPage = new CreateClientPage(driver);
+		 * logStep("Select create client button from new dropdown");
+		 * createClientPage.clickCreateClient(); commonMethods = new
+		 * CommonMethods(driver);
+		 */
+		/*
+		 * logStep("Enter valid details in mandatory fields"); String clientName =
+		 * testData.getProperty("new.client.name")
+		 * .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20)); String
+		 * clientSapNumber = testData.getProperty("new.client.sap")
+		 * .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		 * createClientPage.createNewClient(clientName, clientSapNumber,
+		 * testData.getProperty("new.client.type"),
+		 * testData.getProperty("new.client.timezone"));
+		 * logStep("Verify active radio button is by default selected on the create client popup"
+		 * ); createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
+		 * logStep("Click on create button on the create client popup");
+		 * createClientPage.clickConfirmPopup(); String actualMessage =
+		 * commonMethods.getToasterMessage(); logStep("Verify success toaster message");
+		 * CCUtils.assertEquals(actualMessage, "Success! " + clientName +
+		 * " has been successfully created");
+		 */
+		String clientName = testData.getProperty("new.client.name.one");
 		logStep("Searching a created client in client directory");
 		clientDirectoryPage.searchNode(clientName);
 		clientDirectoryPage.clickSearchButton();
@@ -56,7 +61,7 @@ public class DeleteBrandTemplateTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Delete brand for Inactive status at Client level")
 	public void testDeleteBrandForInactiveStatusAtClientLevel() throws Exception {
-		
+
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();

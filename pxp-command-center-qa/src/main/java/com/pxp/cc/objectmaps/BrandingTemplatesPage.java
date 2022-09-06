@@ -36,13 +36,13 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(xpath = "(//span[contains(text(),' ACTIVE ')])[1]")
 	private WebElement activeStatus;
 
-	@FindBy(xpath = "(//span[contains(text(),' INACTIVE ')])[1]")
+	@FindBy(xpath = "(//span[contains(text(),' INACTIVE ')])[2]")
 	private WebElement inactiveStatus;
 
-	@FindBy(xpath = "(//mat-icon[@role='img'][contains(text(),'more_vert')])[1]")
+	@FindBy(xpath = "(//mat-icon[@id='kebabIcon'])[1]")
 	private WebElement kebabMenuForActiveStatus;
 
-	@FindBy(xpath = "(//mat-icon[@role='img'][contains(text(),'more_vert')])[2]")
+	@FindBy(xpath = "(//mat-icon[@id='kebabIcon'])[2]")
 	private WebElement kebabMenu;
 
 	@FindBy(id = "duplicate")

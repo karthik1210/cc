@@ -30,21 +30,19 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update newly created internal user details using user id")
 	public void testCreateNewInternalUserAndModifyAllDetails() throws IOException {
 		logStep("Create internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify all the existing details of Internal user");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
 				email, mobileNumber, testData.getProperty("user.status.active"),
-				testData.getProperty("api.clientId.id"), null, null, null, roleIds, id);
+				testData.getProperty("api.clientId.id"), null, null, null, null, id);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
@@ -62,7 +60,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter null value in mandatory fields and validate error message");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal", null, null, null,
@@ -85,7 +83,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter existing username details of Internal user");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal",
@@ -109,7 +107,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter existing email id details of Internal user while updating email id");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal",
@@ -133,7 +131,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify existing mobile nuber details of Internal user");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal",
@@ -158,7 +156,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter more than 100 character in firstName lastName & UserName fields and validate error message");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal",
@@ -183,7 +181,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify invalid user type for Internal user");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null,
@@ -208,7 +206,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter invalid url and validate error status code");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayerUsingInvalidUrl(null, "Internal",
@@ -232,7 +230,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Call api with invalid method type which is POST");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayerUsingInvalidMethodCall(null,
@@ -256,7 +254,7 @@ public class UpdateInternalUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer(null, "Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
+				mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, null);
 		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify existing user type from Internal to VAReseller user");
 		updateInternalUserDetailsApiResponse = userInfo.updateInternalUser_DataLayer(null, "Internal",
