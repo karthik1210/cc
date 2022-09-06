@@ -404,7 +404,7 @@ public class SharedInfo extends BaseRest {
 
 	private Map<String, Object> savePracticeProviderApiPayload(Map<String, Object> displayName, String email,
 			String mobile) {
-		Map<String, Object> savePracticeProviderMap = new HashMap<>();
+		Map<String, Object> savePracticeProviderMap = new HashMap<String, Object>();
 		savePracticeProviderMap.put("displayName", displayName);
 		savePracticeProviderMap.put("email", email);
 		savePracticeProviderMap.put("mobile", mobile);
