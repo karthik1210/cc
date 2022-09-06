@@ -995,27 +995,27 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
-	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks(int practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(int practiceId, List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.ADD_PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks(String practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(String practiceId, List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.ADD_PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsitesWithoutPracticeId(List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsitesWithoutPracticeId_BL(List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.ADD_PRACTICE_WEBSITES_WITHOUT_PRACTICE_ID_BL();
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsitesWithInvalidURI(int practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsitesWithInvalidURI_BL(int practiceId, List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.ADD_PRACTICE_WEBSITES_WITH_INVALID_URI_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsitesWithInvalidRequest(int practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsitesWithInvalidRequest_BL(int practiceId, List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.ADD_PRACTICE_WEBSITES_BL(practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
 	}

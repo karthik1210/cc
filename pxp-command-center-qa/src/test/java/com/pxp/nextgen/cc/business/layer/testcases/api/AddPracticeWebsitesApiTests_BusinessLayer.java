@@ -57,7 +57,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
         orgWebsites.add(orgWebsites2);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
@@ -70,7 +70,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
@@ -83,7 +83,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks(practiceId, orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(practiceId, orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 400);
@@ -97,7 +97,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidURI(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidURI_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 404);
@@ -111,7 +111,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithoutPracticeId(orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithoutPracticeId_BL(orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 404);
@@ -125,7 +125,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2)), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidRequest(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsitesWithInvalidRequest_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 405);
@@ -136,7 +136,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
     public void addPracticeWebsitesWithPracticeIdHasExternalLinksWithNullPayload() throws IOException {
         orgWebsites1 = new OrgWebsites(null,null,null,null);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 400);
@@ -150,7 +150,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.does.not.have.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.does.not.have.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
@@ -168,7 +168,7 @@ public class AddPracticeWebsitesApiTests_BusinessLayer extends BaseRest {
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites.add(orgWebsites1);
         orgWebsites.add(orgWebsites2);
-        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.not.have.links")), orgWebsites);
+        addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks_BL(Integer.parseInt(testData.getProperty("api.practice.website.practice.id.not.have.links")), orgWebsites);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeWebsitesApiResponse);
         CCUtils.assertEquals(addPracticeWebsitesApiResponse.getStatusCode(), 200);
