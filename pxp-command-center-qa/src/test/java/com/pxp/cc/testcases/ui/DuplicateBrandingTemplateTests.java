@@ -75,6 +75,7 @@ public class DuplicateBrandingTemplateTests extends CommandCenterGenericTest {
 		String actualMessage = commonMethods.getToasterMessage();
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! Duplicate brand has been successfully created");
+
 	}
 
 	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Duplicate Branding confirmation Popup")
@@ -101,6 +102,7 @@ public class DuplicateBrandingTemplateTests extends CommandCenterGenericTest {
 		String actualMessage = commonMethods.getToasterMessage();
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! Duplicate brand has been successfully created");
+
 	}
 
 	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Duplicate option is present in kebab menu for INACTIVE branding template status at Client level")
@@ -127,5 +129,6 @@ public class DuplicateBrandingTemplateTests extends CommandCenterGenericTest {
 		String actualMessage = commonMethods.getToasterMessage();
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! Duplicate brand has been successfully created");
+
 	}
 }
