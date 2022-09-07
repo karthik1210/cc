@@ -30,7 +30,7 @@ public class DeletePracticeWebsitesApiTests_DataLayer extends BaseRest {
     List<OrgWebsites> orgWebsites = new ArrayList<OrgWebsites>();
     Map<String, Object> displayText1 = new HashMap<String, Object>();
     Map<String, Object> displayText2 = new HashMap<String, Object>();
-    OrgWebsites orgWebsites1,orgWebsites2;
+    OrgWebsites orgWebsites1, orgWebsites2;
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
@@ -176,6 +176,7 @@ public class DeletePracticeWebsitesApiTests_DataLayer extends BaseRest {
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 400);
     }
+
     @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Delete the Practice Website for invalid PracticeId")
     public void deletePracticeWebsiteInvalidPracticeApi() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links"));
@@ -190,24 +191,24 @@ public class DeletePracticeWebsitesApiTests_DataLayer extends BaseRest {
         displayTextObj = new DisplayText(englishDisplay, spanishDisplay);
         savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
         savePracticeWebsite.add(savePracticeWebsiteObj);
-        int clientId=Integer.parseInt(testData.getProperty("api.client.id"));
+        int clientId = Integer.parseInt(testData.getProperty("api.client.id"));
         logStep("Delete a SiteId for a given orgId");
         deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "DL", clientId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
-        validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse,clientId);
-        int systemId=Integer.parseInt(testData.getProperty("api.system.id"));
+        validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse, clientId);
+        int systemId = Integer.parseInt(testData.getProperty("api.system.id"));
         logStep("Delete a SiteId for a given orgId");
         deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "DL", systemId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
-        validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse,systemId);
-        int enterpriseId=Integer.parseInt(testData.getProperty("api.enterprise.id"));
+        validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse, systemId);
+        int enterpriseId = Integer.parseInt(testData.getProperty("api.enterprise.id"));
         logStep("Delete a SiteId for a given orgId");
         deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "DL", enterpriseId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
-        validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse,enterpriseId);
+        validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse, enterpriseId);
     }
 
     @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Delete the Single Practice Website for Invalid URI")
@@ -251,10 +252,11 @@ public class DeletePracticeWebsitesApiTests_DataLayer extends BaseRest {
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 200);
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithValidPracticeIdHasWebsites("DL", orgId);
-        int dSiteId=getPracticeWebsitesApiResponse.jsonPath().get("siteId[0]");
-        if (siteId==dSiteId)
-        logStep("SiteId is "+dSiteId+" not deleted");
+        int dSiteId = getPracticeWebsitesApiResponse.jsonPath().get("siteId[0]");
+        if (siteId == dSiteId)
+            logStep("SiteId is " + dSiteId + " not deleted");
     }
+
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Delete the multiple Practice Website with delete attribute as false")
     public void deleteMultiplePracticeWebsiteWithDeleteFalseApi() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links"));
@@ -285,10 +287,10 @@ public class DeletePracticeWebsitesApiTests_DataLayer extends BaseRest {
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 200);
         getPracticeWebsitesApiResponse = orgInfo.getPracticeWebsitesWithValidPracticeIdHasWebsites("DL", orgId);
-        int dSiteId=getPracticeWebsitesApiResponse.jsonPath().get("siteId[0]");
-        int dSiteId1=getPracticeWebsitesApiResponse.jsonPath().get("siteId[1]");
-        if (siteId==dSiteId && siteId1==dSiteId1)
-            logStep("SiteId is "+dSiteId+" ,"+dSiteId1+" not deleted");
+        int dSiteId = getPracticeWebsitesApiResponse.jsonPath().get("siteId[0]");
+        int dSiteId1 = getPracticeWebsitesApiResponse.jsonPath().get("siteId[1]");
+        if (siteId == dSiteId && siteId1 == dSiteId1)
+            logStep("SiteId is " + dSiteId + " ," + dSiteId1 + " not deleted");
     }
 
 
