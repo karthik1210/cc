@@ -61,7 +61,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites2 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
-                Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
+                Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText2);
         orgWebsites.add(orgWebsites1);
         orgWebsites.add(orgWebsites2);
         addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks("DL", Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links")), orgWebsites);
@@ -252,7 +252,7 @@ public class AddPracticeWebsitesApiTests_DataLayer extends BaseRest {
         orgWebsites1 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
                 Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
         orgWebsites2 = new OrgWebsites(testData.getProperty("api.practice.website.url").replace("1", CCUtils.generateAlphaNumericString(2).trim()), testData.getProperty("api.practice.website.type"),
-                Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText1);
+                Integer.parseInt(testData.getProperty("api.practice.website.sortOrder")), displayText2);
         orgWebsites.add(orgWebsites1);
         orgWebsites.add(orgWebsites2);
         addPracticeWebsitesApiResponse = orgInfo.addPracticeWebsiteWithPracticeIdHasExternalLinks("DL", orgId, orgWebsites);

@@ -13,6 +13,7 @@ import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.OrgWebsites;
+import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
@@ -983,5 +984,28 @@ public class OrgInfo extends BaseRest {
 	public Response addPracticeWebsitesWithInvalidRequest(String serviceLayer, int practiceId, List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
+	}
+
+	public Response deletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId, List<SavePracticeWebsite> SavePracticeWebsiteList) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValidMethodType")) {
+			String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().delete(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("NullValue")) {
+			String url = ApiPath.NULL_PRACTICE_WEBSITES(serviceLayer);
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_WEBSITES_WITHOUT_PRACTICEID(serviceLayer);
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
+		}
+	}
+	public Response deletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId, List<SavePracticeWebsite> SavePracticeWebsiteList) {
+			String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 	}
 }

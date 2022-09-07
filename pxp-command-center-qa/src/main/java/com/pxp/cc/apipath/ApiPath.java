@@ -1019,6 +1019,13 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 	}
 
+	public static final String NULL_PRACTICE_WEBSITES(String serviceLayer) {
+		if(serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/null/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/null/sites";
+	}
+
 	public static final String ADDTOU_BL(int practiceId) {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
 	}
