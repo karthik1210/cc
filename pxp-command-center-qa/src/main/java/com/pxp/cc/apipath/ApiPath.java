@@ -1056,4 +1056,14 @@ public class ApiPath {
 	public static final String NULL_PRACTICEID_ADDTOU_DL() {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
 	}
+	
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/"+practiceId+"/locations";
+	}
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_INVALID_URL_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/"+practiceId+"/locationsssss";
+	}
+	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/providers/null/practices//locations";
+	}
 }

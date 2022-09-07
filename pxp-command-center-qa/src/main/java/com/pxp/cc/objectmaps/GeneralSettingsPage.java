@@ -138,7 +138,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "searchIcon")
 	private WebElement SearchiconInGeneralSetting;
-	
+
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
 
@@ -197,10 +197,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-tree-node[@aria-level='1']")
 	private WebElement treeClientNode;
-	
+
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> treeNode;
-	
+
 	@FindBy(id = "displayClientName")
 	private WebElement clientNodeTitle;
 
@@ -492,7 +492,6 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Node title on right panel is : " + labelNodeNameRightPanel.getText());
 		return labelNodeNameRightPanel.getText();
 	}
-	
 
 	public void verifyStatusIcon() {
 		CCUtils.verifyAndWaitForElement(nodeStatusInGeneralSetting.get(0), driver);
@@ -862,23 +861,22 @@ public class GeneralSettingsPage extends CCMainPage {
 		treeClientNode.click();
 		log("Clicked on the client node in the tree");
 	}
-	
 
 	public void clickSearchIcon() {
 		CCUtils.verifyAndWaitForElement(SearchiconInGeneralSetting, driver);
 		javascriptClick(SearchiconInGeneralSetting);
 		log("Clicked on Search icon");
-		
-	}	
-	
+
+	}
+
 	public void verifynodesPresentInClientGeneralSettings(String orgNode) {
-		for(WebElement ele : treeNode) {
-			if(ele.equals(orgNode)) {
-				log("tree node :"+ele+" is equal to provided org node "+orgNode);
+		for (WebElement ele : treeNode) {
+			if (ele.equals(orgNode)) {
+				log("tree node :" + ele + " is equal to provided org node " + orgNode);
 			}
 		}
 	}
-	
+
 	public void verifyClientNodeIsSelected() {
 		CCUtils.verifyAndWaitForElement(clientNodeTitle, driver);
 		CCUtils.assertEquals(clientNodeTitle.isDisplayed(), true);
