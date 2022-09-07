@@ -2,14 +2,16 @@
 package com.pxp.cc.util;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
+import com.pxp.cc.objectmaps.LocationStatus;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class LocationsValidations {
-
 	JsonPath jsonPath;
 
 	public void verifySearchLocationOutputWithoutFilter(Response response, String getSearchLocations) {
@@ -74,5 +76,34 @@ public class LocationsValidations {
 			jsonObject = jsonArray.getJSONObject(i);
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
+	}
+
+	public void verifyAddOrRemoveLocationsApiResponseBody(Response response, int locationId) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
+	}
+
+	public void verifyAddOrRemoveLocationsApiResponseBodyForInvalidInput(Response response, List<Integer> locationId,
+			String status, String message) throws IOException {
+		List<LocationStatus> actualLocationStatusList = new ArrayList<LocationStatus>();
+		for (int i = 0; i < locationId.size(); i++) {
+			actualLocationStatusList.add(new LocationStatus(locationId.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Location list is empty");
+		CCUtils.assertTrue(actualLocationStatusList.size() == responseBody.length(),
+				"Size of actual resource list and expected user list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualLocationStatusList.contains(new LocationStatus(jsonObject.getInt("locationId"),
+							jsonObject.getString("status"), jsonObject.getString("message"))),
+					"location Id " + jsonObject.getInt("locationId") + " doesn't exist");
+		}
 	}
 }
