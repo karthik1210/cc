@@ -82,10 +82,9 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createAgnosticPractice(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
-				testData.getProperty("api.practice.parenttype"),
+		createAgnosticPracticeApiResponse = orgInfo.createOrg("false", testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"), systemId,
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.practice.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createAgnosticPracticeApiResponse.jsonPath().getInt("orgId");

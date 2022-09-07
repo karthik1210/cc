@@ -329,7 +329,7 @@ public class OrgInfo extends BaseRest {
 
 	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType)
 			throws IOException {
-		String url = ApiPath.GET_ORGANIZATION_LIST_DL(clientId);
+		String url = ApiPath.INVALID_PATH_GET_ORGANIZATION_LIST_DL(clientId);
 		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
 
 	}

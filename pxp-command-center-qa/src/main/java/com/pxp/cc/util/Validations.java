@@ -2881,4 +2881,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Name size maximum 100 character");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+
+	public void verifyErrorResponseBodyForInvalidProductId(Response response, int productId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Product not found by productId=" + productId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
