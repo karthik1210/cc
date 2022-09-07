@@ -13,6 +13,7 @@ import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.OrgWebsites;
+import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
@@ -1018,5 +1019,10 @@ public class OrgInfo extends BaseRest {
 	public Response addPracticeWebsitesWithInvalidRequest_BL(String serviceLayer, int practiceId, List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
+	}
+
+	public Response deletePracticeWebsitesWithValidPracticeIdHasWebsites(String serviceLayer, int practiceId, List<SavePracticeWebsite> SavePracticeWebsiteList) {
+		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+		return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 	}
 }
