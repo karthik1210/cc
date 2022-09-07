@@ -17,13 +17,11 @@ import com.pxp.cc.util.LocationsValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class AddOrRemoveLocationsForTheProvider extends BaseRest {
+public class AddOrRemoveLocationsForTheProviderApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private LocationsValidations locationsValidations;
-	Response createProviderApiResponse, createClientApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, updatePracticeassociateToProvider, updateLocationassociateToPractice,
-			updateLocationForProvider;
+	Response updateLocationForProvider;
 	List<Locations> locationId;
 
 	@BeforeClass()
@@ -35,7 +33,7 @@ public class AddOrRemoveLocationsForTheProvider extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add location id for existing providerId and practiceId and verify response body")
-	public void testAddlocationForProvider() throws IOException {
+	public void testAddLocationForProvider() throws IOException {
 		logStep("Add valid location id for existing providerId and practiceId");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), true));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider(
@@ -49,7 +47,7 @@ public class AddOrRemoveLocationsForTheProvider extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Remove location id for existing providerId and practiceId and verify response body")
-	public void testRemovelocationForProvider() throws IOException {
+	public void testRemoveLocationForProvider() throws IOException {
 		logStep("Remove valid location id for existing providerId and practiceId ");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), false));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider(
@@ -63,7 +61,7 @@ public class AddOrRemoveLocationsForTheProvider extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter nonexisting location id for existing providerId and practiceId  and verify error message")
-	public void testNonExistingLocationForProvider() throws IOException {
+	public void testToAddNonExistingLocationIdForExistingProviderId() throws IOException {
 		logStep("Enter nonexisting location id for existing providerId and practiceId");
 		locationId = Arrays
 				.asList(new Locations(Integer.parseInt(testData.getProperty("nonexisting.location.id")), true));
@@ -75,8 +73,8 @@ public class AddOrRemoveLocationsForTheProvider extends BaseRest {
 		CCUtils.assertEquals(updateLocationForProvider.getStatusCode(), 207);
 		ArrayList<Integer> locationId = new ArrayList<Integer>();
 		locationId.add(Integer.parseInt(testData.getProperty("nonexisting.location.id")));
-		locationsValidations.verifyAddOrRemoveLocationsApiResponseBodyForInvalidInput(updateLocationForProvider, locationId, "ERROR",
-				"Invalid input");
+		locationsValidations.verifyAddOrRemoveLocationsApiResponseBodyForInvalidInput(updateLocationForProvider,
+				locationId, "ERROR", "Invalid input");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id for nonexisting provider id and existing practice id and verify error message")
@@ -131,8 +129,8 @@ public class AddOrRemoveLocationsForTheProvider extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateLocationForProvider);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url to Add or Remove locations for the provider and verify error message")
-	public void testErrorMessageForInvalidUrl() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url to Add locations for the provider and verify error message")
+	public void testErrorMessageToAddLocationsWithInvalidUrl() throws IOException {
 		logStep("Add valid location id for provider");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), true));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider_InvalidUrl(
@@ -144,8 +142,8 @@ public class AddOrRemoveLocationsForTheProvider extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(updateLocationForProvider);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values for providerId and practiceId to get Locations  and verify error message")
-	public void testGetLocationForNullValues() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values for providerId and practiceId to add Locations and verify error message")
+	public void testAddLocationForNullValues() throws IOException {
 		updateLocationForProvider = sharedInfo.getLocationsForProviderForNullValues();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForProvider);

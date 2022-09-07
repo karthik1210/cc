@@ -2,8 +2,6 @@
 
 package com.pxp.cc.objectmaps;
 
-import com.pxp.cc.pojos.Locations;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

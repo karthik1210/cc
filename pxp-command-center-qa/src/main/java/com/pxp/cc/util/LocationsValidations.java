@@ -4,15 +4,10 @@ package com.pxp.cc.util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.objectmaps.LocationStatus;
-import com.pxp.cc.pojos.Locations;
-import com.pxp.cc.pojos.ResourceStatus;
-import com.pxp.cc.pojos.UserStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
