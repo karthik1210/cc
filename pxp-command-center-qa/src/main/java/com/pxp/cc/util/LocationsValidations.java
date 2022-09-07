@@ -12,7 +12,6 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class LocationsValidations {
-
 	JsonPath jsonPath;
 
 	public void verifySearchLocationOutputWithoutFilter(Response response, String getSearchLocations) {

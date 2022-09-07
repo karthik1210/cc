@@ -33,7 +33,7 @@ public class AddOrRemoveLocationsForTheProviderApiTests_DataLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add location id for existing providerId and practiceId and verify response body")
-	public void testAddLocationForProvider() throws IOException {
+	public void testToAddExistingLocationIdForExistingProviderId() throws IOException {
 		logStep("Add valid location id for existing providerId and practiceId");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), true));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider(
@@ -47,7 +47,7 @@ public class AddOrRemoveLocationsForTheProviderApiTests_DataLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Remove location id for existing providerId and practiceId and verify response body")
-	public void testRemoveLocationForProvider() throws IOException {
+	public void testToRemoveExistingLocationIdForExistingProviderId() throws IOException {
 		logStep("Remove valid location id for existing providerId and practiceId ");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), false));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider(
@@ -78,7 +78,7 @@ public class AddOrRemoveLocationsForTheProviderApiTests_DataLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id for nonexisting provider id and existing practice id and verify error message")
-	public void testValidLocationForNonExistingProvider() throws IOException {
+	public void testValidLocationIdForNonExistingProviderId() throws IOException {
 		logStep("Enter valid location id for nonexisting provider id and existing practice id");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), true));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider(
@@ -91,7 +91,7 @@ public class AddOrRemoveLocationsForTheProviderApiTests_DataLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id for nonexisting provider and practiceId and verify error message")
-	public void testValidLocationForNonExistingProviderIdAndPracticeId() throws IOException {
+	public void testValidLocationIdForNonExistingProviderIdAndPracticeId() throws IOException {
 		logStep("Enter valid location id for nonexisting provider and practiceId");
 		locationId = Arrays.asList(new Locations(Integer.parseInt(testData.getProperty("valid.location.Id")), true));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider(
@@ -143,7 +143,7 @@ public class AddOrRemoveLocationsForTheProviderApiTests_DataLayer extends BaseRe
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values for providerId and practiceId to add Locations and verify error message")
-	public void testAddLocationForNullValues() throws IOException {
+	public void testAddToLocationForNullValues() throws IOException {
 		updateLocationForProvider = sharedInfo.getLocationsForProviderForNullValues();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForProvider);
