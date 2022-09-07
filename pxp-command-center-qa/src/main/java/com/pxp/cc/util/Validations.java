@@ -312,8 +312,8 @@ public class Validations {
 	}
 
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String systemName, String orgType,
-			String clientType, String displayName, String sapNumber, String active, String testClient,
-			String timezoneId) throws IOException {
+			String clientType, String displayName, String active, String testClient, String timezoneId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
@@ -321,7 +321,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
 		CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
 		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
-		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
 		if (Objects.isNull(jsonpath.get("timezone"))) {
@@ -614,7 +613,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyInactiveClientErrorResponsForPractice(Response response) throws IOException {
+	public void verifyInactiveSystemErrorResponsForPractice(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as System is Inactive");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -2857,5 +2856,29 @@ public class Validations {
 			jsonObject = jsonArray.getJSONObject(i);
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
+	}
+
+	public void verifyErrorResponseBodyForPmIdentifier(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "PM Id not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForEhrIdentifier(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "EHR Id not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForNullTimezone(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid timezone");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForNameField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Name size maximum 100 character");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }

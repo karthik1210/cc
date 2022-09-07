@@ -88,7 +88,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
 				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.displayname"),
-				clientSapNumber, testData.getProperty("api.system.active"), "false", ccUser.getTimezoneId());
+				testData.getProperty("api.system.active"), "false", ccUser.getTimezoneId());
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter enterprise id in orgId field and validate response body")
@@ -101,7 +101,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
 				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.displayname"),
-				clientSapNumber, testData.getProperty("api.enterprise.active"), "false",
+				testData.getProperty("api.enterprise.active"), "false",
 				testData.getProperty("api.enterprise.timezoneid"));
 	}
 
@@ -116,8 +116,7 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
 				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				clientSapNumber, testData.getProperty("api.practice.active"), "false",
-				testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.active"), "false", testData.getProperty("api.practice.timezoneid"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid org id in orgid field and validate response body")

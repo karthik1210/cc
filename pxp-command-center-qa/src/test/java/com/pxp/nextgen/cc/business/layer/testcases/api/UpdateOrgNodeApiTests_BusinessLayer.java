@@ -323,7 +323,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyInactiveClientErrorResponsForPractice(updateOrgNodeApiResponse);
+		validation.verifyInactiveSystemErrorResponsForPractice(updateOrgNodeApiResponse);
 
 		logStep("Modify nge practice node status from inactive to active when enterprise node is inactive and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("practice_name_1",

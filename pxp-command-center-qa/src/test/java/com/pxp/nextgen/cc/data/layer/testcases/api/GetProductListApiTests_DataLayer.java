@@ -106,14 +106,6 @@ public class GetProductListApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(getProductListApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "ecoSystemValue", description = "Enter valid ecosystem=NGO or ecosystem=INT and verify 204 response code")
-	public void testResponseCodeForEcosystemNgoAndInt(String ecosystem) throws IOException {
-		getProductListApiResponse = product.getProducts_DataLayer(ecosystem, "");
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(getProductListApiResponse);
-		CCUtils.assertEquals(getProductListApiResponse.getStatusCode(), 204);
-	}
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid ecosystem=NGO and verify 204 response code")
 	public void testResponseCodeForEcosystemNgo() throws IOException {
 		getProductListApiResponse = product.getProducts_DataLayer(testData.getProperty("ecosystem.ngo").trim(), "");
