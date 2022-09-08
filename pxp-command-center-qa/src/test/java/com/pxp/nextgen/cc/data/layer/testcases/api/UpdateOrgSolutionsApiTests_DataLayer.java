@@ -47,9 +47,8 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 
 	public int createPracticeNode(int parentId, String active, String parentType) throws IOException {
 		practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
-		String practiceSapNumber = ccUser.getPracticeSapNumberApi().concat(CCUtils.generateRandomString());
 		Response createPracticeApiResponse = orgInfo.createOrgNode_DataLayer(practiceName,
-				ccUser.getPracticeOrgTypeApi(), ccUser.getPracticeDisplayNameApi(), practiceSapNumber, active,
+				ccUser.getPracticeOrgTypeApi(), ccUser.getPracticeDisplayNameApi(), active,
 				ccUser.getPracticeTimezoneIdApi(), parentId, parentType,
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
@@ -58,16 +57,14 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 
 	public int createNgePracticeNode(String active) throws IOException {
 		Response createSystemApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.system.name"),
-				ccUser.getSystemOrgTypeApi(), ccUser.getSystemDisplayNameApi(),
-				testData.getProperty("api.system.sapnumber"), testData.getProperty("api.system.active"),
+				ccUser.getSystemOrgTypeApi(), "", testData.getProperty("api.system.active"),
 				ccUser.getSystemTimezoneIdApi(), clientId, testData.getProperty("api.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
 		Response createEnterpriseApiResponse = orgInfo.createOrgNode_DataLayer(
-				testData.getProperty("api.enterprise.name"), ccUser.getEnterpriseOrgTypeApi(),
-				ccUser.getEnterpriseDisplayNameApi(), testData.getProperty("api.enterprise.sapnumber"),
+				testData.getProperty("api.enterprise.name"), ccUser.getEnterpriseOrgTypeApi(), "",
 				testData.getProperty("api.enterprise.active"), ccUser.getEnterpriseTimezoneIdApi(), systemId,
 				ccUser.getSystemOrgTypeApi(), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));

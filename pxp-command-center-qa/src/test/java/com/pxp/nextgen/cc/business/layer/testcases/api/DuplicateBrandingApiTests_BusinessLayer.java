@@ -57,18 +57,17 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	public int createSystem(int clientId) throws NumberFormatException, NullPointerException, IOException {
 		createSystemNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.system.displayname"), "", "false",
-				"", clientId, testData.getProperty("api.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), "", "false", "", clientId,
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createSystemNodeApiResponse.jsonPath().getInt("orgId");
 	}
 
 	public int createEnterprise(int systemId) throws NumberFormatException, NullPointerException, IOException {
 		createEnterpriseNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.displayname"), "",
-				testData.getProperty("api.enterprise.active"), testData.getProperty("api.enterprise.timezoneid"),
-				systemId, testData.getProperty("api.enterprise.parenttype"),
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createEnterpriseNodeApiResponse.jsonPath().get("orgId");
@@ -76,7 +75,7 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	public int createNGPractice(int enterpriseId) throws NumberFormatException, NullPointerException, IOException {
 		createNgPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
 				enterpriseId, testData.getProperty("api.practice.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
@@ -86,10 +85,9 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	public int createAgnosticPractice(int systemId) throws NumberFormatException, NullPointerException, IOException {
 		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
-				testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createAgnosticPracticeApiResponse.jsonPath().getInt("orgId");
 	}

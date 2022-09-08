@@ -51,18 +51,16 @@ public class CreateBrandApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
-				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
+				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
+				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createSystemApiResponse.jsonPath().get("orgId");
 	}
 
 	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), SystemId,
+		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
+				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), SystemId,
 				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));

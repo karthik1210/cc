@@ -330,7 +330,7 @@ public class OrgInfo extends BaseRest {
 
 	public Response getOrganizationListByClientIdUsingInvalidUrl_DataLayer(int clientId, String orgType)
 			throws IOException {
-		String url = ApiPath.GET_ORGANIZATION_LIST_DL(clientId);
+		String url = ApiPath.INVALID_PATH_GET_ORGANIZATION_LIST_DL(clientId);
 		return given().spec(requestSpec).queryParam("type", orgType).when().get(url).then().extract().response();
 
 	}
@@ -391,39 +391,39 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public static Map<String, Object> updateOrgNodeMap(String name, String orgType, String displayName,
-			String sapNumber, String active, String timezoneId) {
+	public static Map<String, Object> updateOrgNodeMap(String name, String orgType, String displayName, String active,
+			String timezoneId, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> updateOrgMap = new HashMap<String, Object>();
 		updateOrgMap.put("name", name);
 		updateOrgMap.put("orgType", orgType);
 		updateOrgMap.put("displayName", displayName);
-		updateOrgMap.put("sapNumber", sapNumber);
 		updateOrgMap.put("active", active);
 		updateOrgMap.put("timezoneId", timezoneId);
+		updateOrgMap.put("ehrIdentifier", ehrIdentifier);
+		updateOrgMap.put("pmIdentifier", pmIdentifier);
 		return updateOrgMap;
 	}
 
-	public Response updateOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, Integer orgId, Integer userId) throws IOException {
+	public Response updateOrgNode_DataLayer(String name, String orgType, String displayName, String active,
+			String timezoneId, Integer orgId, int ehrIdentifier, int pmIdentifier) throws IOException {
 		String url = ApiPath.UPDATE_ORG(orgId);
-		Map<String, Object> updateOrgNodePayload = updateOrgNodeMap(name, orgType, displayName, sapNumber, active,
-				timezoneId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).pathParam("orgId", orgId)
-				.body(updateOrgNodePayload).when().put(url).then().extract().response();
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeMap(name, orgType, displayName, active, timezoneId,
+				ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
 	}
 
 	public Response updateOrgNodeUsingInvalidUrl_DataLayer(String name, String orgType, String displayName,
-			String sapNumber, String active, String timezoneId, Integer orgId, Integer userId) throws IOException {
+			String active, String timezoneId, Integer orgId, int ehrIdentifier, int pmIdentifier) throws IOException {
 		String url = ApiPath.INVALID_PATH_UPDATE_ORG(orgId);
-		Map<String, Object> updateOrgNodePayload = updateOrgNodeMap(name, orgType, displayName, sapNumber, active,
-				timezoneId);
-		return given().spec(requestSpec).header(ApiPath.PXP_CC_USER, userId).pathParam("orgId", orgId)
-				.body(updateOrgNodePayload).when().put(url).then().extract().response();
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeMap(name, orgType, displayName, active, timezoneId,
+				ehrIdentifier, pmIdentifier);
+		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
+				.extract().response();
 	}
 
 	public static Map<String, Object> createOrgNodeMap(String active, String displayName, String name, String orgType,
-			Integer parentId, String parentType, String sapNumber, String timezoneId,
-			List<Map<String, Object>> solutionList) {
+			Integer parentId, String parentType, String timezoneId, List<Map<String, Object>> solutionList) {
 		Map<String, Object> orgMap = new HashMap<String, Object>();
 		orgMap.put("active", active);
 		orgMap.put("displayName", displayName);
@@ -431,28 +431,26 @@ public class OrgInfo extends BaseRest {
 		orgMap.put("orgType", orgType);
 		orgMap.put("parentId", parentId);
 		orgMap.put("parentType", parentType);
-		orgMap.put("sapNumber", sapNumber);
 		orgMap.put("timezoneId", timezoneId);
 		orgMap.put("solutions", solutionList);
 		return orgMap;
 	}
 
 	public Response createOrgNode(String active, String displayName, String name, String orgType, Integer parentId,
-			String parentType, String sapNumber, String timezoneId, List<Map<String, Object>> solutionList)
-			throws Exception {
+			String parentType, String timezoneId, List<Map<String, Object>> solutionList) throws Exception {
 
 		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId, solutionList);
+				parentType, timezoneId, solutionList);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
 	public Response createOrgNodeUsingInvalidUrl(String active, String displayName, String name, String orgType,
-			Integer parentId, String parentType, String sapNumber, String timezoneId,
-			List<Map<String, Object>> solutionList) throws Exception {
+			Integer parentId, String parentType, String timezoneId, List<Map<String, Object>> solutionList)
+			throws Exception {
 
 		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId, solutionList);
+				parentType, timezoneId, solutionList);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
 				.extract().response();
 	}
@@ -504,23 +502,21 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
-	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
 			throws IOException {
-		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
-				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, active, timezoneId,
+				parentId, parentType, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
 				.response();
 	}
 
-	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName,
-			String sapNumber, String active, String timezoneId, int parentId, String parentType, int ehrIdentifier,
-			int pmIdentifier) {
+	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> orgMap = new HashMap<String, Object>();
 		orgMap.put("name", name);
 		orgMap.put("orgType", orgType);
 		orgMap.put("displayName", displayName);
-		orgMap.put("sapNumber", sapNumber);
 		orgMap.put("active", active);
 		orgMap.put("timezoneId", timezoneId);
 		orgMap.put("parentId", parentId);
@@ -551,22 +547,21 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
-	public Response createOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
-			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
-			throws IOException {
+	public Response createOrgNode_BL(String name, String orgType, String displayName, String active, String timezoneId,
+			int parentId, String parentType, int ehrIdentifier, int pmIdentifier) throws IOException {
 
-		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
-				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, active, timezoneId,
+				parentId, parentType, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
-	public Response createOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+	public Response createOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
 			throws IOException {
 
-		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
-				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, active, timezoneId,
+				parentId, parentType, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
 				.extract().response();
 	}
@@ -577,12 +572,11 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public static Map<String, Object> updateOrgNodeDetailsMap(String name, String orgType, String displayName,
-			String sapNumber, String active, String timezoneId, int ehrIdentifier, int pmIdentifier) {
+			String active, String timezoneId, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> updateOrgNodeValueMap = new HashMap<String, Object>();
 		updateOrgNodeValueMap.put("name", name);
 		updateOrgNodeValueMap.put("orgType", orgType);
 		updateOrgNodeValueMap.put("displayName", displayName);
-		updateOrgNodeValueMap.put("sapNumber", sapNumber);
 		updateOrgNodeValueMap.put("active", active);
 		updateOrgNodeValueMap.put("timezoneId", timezoneId);
 		updateOrgNodeValueMap.put("ehrIdentifier", ehrIdentifier);
@@ -590,11 +584,11 @@ public class OrgInfo extends BaseRest {
 		return updateOrgNodeValueMap;
 	}
 
-	public Response updateOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
-			String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
+	public Response updateOrgNode_BL(String name, String orgType, String displayName, String active, String timezoneId,
+			int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
 		String url = ApiPath.UPDATE_ORG_BL(orgId);
-		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
-				active, timezoneId, ehrIdentifier, pmIdentifier);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, active,
+				timezoneId, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
 				.extract().response();
 	}
@@ -602,8 +596,8 @@ public class OrgInfo extends BaseRest {
 	public Response updateOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
 			String active, String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
 		String url = ApiPath.INVALID_PATH_UPDATE_ORG_BL(orgId);
-		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
-				active, timezoneId, ehrIdentifier, pmIdentifier);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, active,
+				timezoneId, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
 				.extract().response();
 	}
@@ -670,7 +664,8 @@ public class OrgInfo extends BaseRest {
 
 	public Response getListOfTouForAPractice_DL(String practiceId, int type) {
 		String url = ApiPath.FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(practiceId);
-		return given().spec(requestSpec).queryParam("type", type).when().get(url.replace("%2F%2F", "")).then().extract().response();
+		return given().spec(requestSpec).queryParam("type", type).when().get(url.replace("%2F%2F", "")).then().extract()
+				.response();
 	}
 
 	public Response getListOfTouForPracticeWithoutPracticeId_DL(String type) {
@@ -770,7 +765,7 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
 	}
 
-	public Response deletePrivacySettingByPracticeIdAndTouId_BL(String practiceId, int touId,String deleteStatus) {
+	public Response deletePrivacySettingByPracticeIdAndTouId_BL(String practiceId, int touId, String deleteStatus) {
 		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
@@ -788,13 +783,16 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
 	}
 
-	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_BL(int practiceId, int touId, String deleteStatus) {
+	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_BL(int practiceId, int touId,
+			String deleteStatus) {
 		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(practiceId, touId);
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
-		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().patch(url).then().extract()
+				.response();
 	}
 
-	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_BL(int practiceId, int touId, String deleteStatus) {
+	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_BL(int practiceId, int touId,
+			String deleteStatus) {
 		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(practiceId, touId);
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
@@ -806,7 +804,7 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
 	}
 
-	public Response deletePrivacySettingByPracticeIdAndTouId_DL(String practiceId, int touId,String deleteStatus) {
+	public Response deletePrivacySettingByPracticeIdAndTouId_DL(String practiceId, int touId, String deleteStatus) {
 		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
@@ -824,19 +822,23 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
 	}
 
-	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(int practiceId, int touId, String deleteStatus) {
+	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(int practiceId, int touId,
+			String deleteStatus) {
 		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(practiceId, touId);
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
-		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().patch(url).then().extract()
+				.response();
 	}
 
-	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(int practiceId, int touId, String deleteStatus) {
+	public Response deletePrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(int practiceId, int touId,
+			String deleteStatus) {
 		String url = ApiPath.DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(practiceId, touId);
 		Map<String, Object> deletePrivacySettingPayload = deletePrivacySetting(deleteStatus);
 		return given().spec(requestSpec).body(deletePrivacySettingPayload).when().put(url).then().extract().response();
 	}
-	public static Map<String, Object> addTouMap(String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-												Map<String, Object> addTouContMap, String touType) {
+
+	public static Map<String, Object> addTouMap(String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType) {
 		Map<String, Object> addTouMap = new HashMap<String, Object>();
 		addTouMap.put("name", name);
 		addTouMap.put("active", active);
@@ -846,44 +848,44 @@ public class OrgInfo extends BaseRest {
 		return addTouMap;
 	}
 
-	public Response addTou_BL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-							  Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTou_BL(Integer practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.ADDTOU_BL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addTouInvalidURI_BL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-										Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouInvalidURI_BL(Integer practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.INVALIDURI_ADDTOU_BL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addTouAlphaNumericPracticeId_BL(String practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-													Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouAlphaNumericPracticeId_BL(String practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.INVALID_DATATYPE_ADDTOU_BL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addTouInvalidMethod_BL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-										   Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouInvalidMethod_BL(Integer practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.ADDTOU_BL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().patch(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().patch(url).then().extract().response();
 	}
 
-	public Response addTouToNullPractice_BL(String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-											Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouToNullPractice_BL(String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.NULL_PRACTICEID_ADDTOU_BL();
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
 	public Response getPracticeWebsitesWithValidPracticeIdHasWebsites(String serviceLayer, int practiceId) {
@@ -916,57 +918,95 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getPracticeWebsitesWithNonExistingPracticeId_BL(String serviceLayer, int practiceId) {
+		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdHasWebsites_DL(String serviceLayer, int practiceId) {
+		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdHasNotWebsites_DL(String serviceLayer, int practiceId) {
+		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidURI_DL(String serviceLayer, int practiceId) {
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_URI(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithValidPracticeIdWithInvalidRequest_DL(String serviceLayer, int practiceId) {
+		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithNullOrInvalidDataTypeOnPracticeId_DL(String serviceLayer,
+			String practiceId) {
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeWebsitesWithEmptyOnPracticeId_DL(String serviceLayer) {
+		String url = ApiPath.PRACTICE_WEBSITES_WITHOUT_PRACTICEID(serviceLayer);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response getPracticeWebsitesWithNonExistingPracticeId(String serviceLayer, int practiceId) {
 		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response addTou_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-							  Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTou_DL(Integer practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.ADDTOU_DL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addTouInvalidURI_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-										Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouInvalidURI_DL(Integer practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.INVALIDURI_ADDTOU_DL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addTouAlphaNumericPracticeId_DL(String practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-													Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouAlphaNumericPracticeId_DL(String practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.INVALID_DATATYPE_ADDTOU_DL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addTouInvalidMethod_DL(Integer practiceId, String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-										   Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouInvalidMethod_DL(Integer practiceId, String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.ADDTOU_DL(practiceId);
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().patch(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().patch(url).then().extract().response();
 	}
 
-	public Response addTouToNullPractice_DL(String name, Boolean active, ArrayList<HashMap<String, Object>> TouSolutions,
-											Map<String, Object> addTouContMap, String touType) throws IOException {
+	public Response addTouToNullPractice_DL(String name, Boolean active,
+			ArrayList<HashMap<String, Object>> TouSolutions, Map<String, Object> addTouContMap, String touType)
+			throws IOException {
 		String url = ApiPath.NULL_PRACTICEID_ADDTOU_DL();
 		Map<String, Object> addTouMapPayload = addTouMap(name, active, TouSolutions, addTouContMap, touType);
-		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(addTouMapPayload).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks(String serviceLayer, int practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks(String serviceLayer, int practiceId,
+			List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks(String serviceLayer, String practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsiteWithPracticeIdHasExternalLinks(String serviceLayer, String practiceId,
+			List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
@@ -976,17 +1016,20 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsitesWithInvalidURI(String serviceLayer, int practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsitesWithInvalidURI(String serviceLayer, int practiceId,
+			List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_URI(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().post(url).then().extract().response();
 	}
 
-	public Response addPracticeWebsitesWithInvalidRequest(String serviceLayer, int practiceId, List<OrgWebsites> orgWebsites) {
+	public Response addPracticeWebsitesWithInvalidRequest(String serviceLayer, int practiceId,
+			List<OrgWebsites> orgWebsites) {
 		String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
 	}
 
-	public Response deletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId, List<SavePracticeWebsite> SavePracticeWebsiteList) {
+	public Response deletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId,
+			List<SavePracticeWebsite> SavePracticeWebsiteList) {
 		if (validURI.equalsIgnoreCase("Valid")) {
 			String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
@@ -995,7 +1038,8 @@ public class OrgInfo extends BaseRest {
 			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 		} else if (validURI.equalsIgnoreCase("InValidMethodType")) {
 			String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
-			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().delete(url).then().extract().response();
+			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().delete(url).then().extract()
+					.response();
 		} else if (validURI.equalsIgnoreCase("NullValue")) {
 			String url = ApiPath.NULL_PRACTICE_WEBSITES(serviceLayer);
 			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
@@ -1004,8 +1048,10 @@ public class OrgInfo extends BaseRest {
 			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 		}
 	}
-	public Response deletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId, List<SavePracticeWebsite> SavePracticeWebsiteList) {
-			String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
-			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
+
+	public Response deletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId,
+			List<SavePracticeWebsite> SavePracticeWebsiteList) {
+		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 	}
 }

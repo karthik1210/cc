@@ -50,7 +50,8 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.targetclient.active"),
 				targetclientName, targetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				Integer.parseInt(testData.getProperty("client.type.tsi.id")), testData.getProperty("api.targetclient.timezoneid"));
+				Integer.parseInt(testData.getProperty("client.type.tsi.id")),
+				testData.getProperty("api.targetclient.timezoneid"));
 		targetClientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create target client");
@@ -60,13 +61,13 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient("false", inactiveTargetclientName,
 				inactiveTargetclientSapNumber, testData.getProperty("api.targetclient.testclient"),
-				Integer.parseInt(testData.getProperty("client.type.tsi.id")), testData.getProperty("api.targetclient.timezoneid"));
+				Integer.parseInt(testData.getProperty("client.type.tsi.id")),
+				testData.getProperty("api.targetclient.timezoneid"));
 		inactiveTargetClientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.system.displayname"), "",
-				testData.getProperty("api.system.active"), "", clientId, testData.getProperty("api.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		newSystemId = createSystemApiResponse.jsonPath().get("orgId");
 	}
@@ -93,7 +94,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	public void testMoveActiveAndInactiveSystemNodeToAnotherClientWithInherit() throws Exception {
 		logStep("Create an inactive system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_1", testData.getProperty("api.system.orgtype"),
-				"", "", "false", "", clientId, testData.getProperty("api.parenttype"),
+				"", "false", "", clientId, testData.getProperty("api.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -110,7 +111,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 		logStep("Create an active system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_2", testData.getProperty("api.system.orgtype"),
-				"System1", "", testData.getProperty("api.system.active"), "US/Central", clientId,
+				"System1", testData.getProperty("api.system.active"), "US/Central", clientId,
 				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -131,7 +132,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 	public void testMoveInactiveAndActiveSystemNodeActiveInactiveTargetClientNodeWithDoNotInherit() throws Exception {
 		logStep("Create an inactive system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_1", testData.getProperty("api.system.orgtype"),
-				"", "", "false", "", clientId, testData.getProperty("api.parenttype"),
+				"", "false", "", clientId, testData.getProperty("api.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -148,7 +149,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 		logStep("Create an active system node below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("System_name_2", testData.getProperty("api.system.orgtype"),
-				"System1", "", testData.getProperty("api.system.active"), "US/Central", clientId,
+				"System1", testData.getProperty("api.system.active"), "US/Central", clientId,
 				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int sourceSystemIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -184,7 +185,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 			throws NullPointerException, Exception {
 		logStep("Create an inactive agnostic practice node  below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), "", "", "false", "", clientId, "CLIENT",
+				testData.getProperty("api.practice.orgtype"), "", "false", "", clientId, "CLIENT",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -201,7 +202,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 		logStep("Create an active agnostic practice below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), "", "", testData.getProperty("api.practice.active"), "",
+				testData.getProperty("api.practice.orgtype"), "", testData.getProperty("api.practice.active"), "",
 				clientId, "CLIENT", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -223,7 +224,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 			throws NullPointerException, Exception {
 		logStep("Create an inactive agnostic practice node");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_1",
-				testData.getProperty("api.practice.orgtype"), "", "", "false", "", clientId, "CLIENT",
+				testData.getProperty("api.practice.orgtype"), "", "false", "", clientId, "CLIENT",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
@@ -240,7 +241,7 @@ public class MoveSystemAndAgnosticPracticeNode_BusinessLayer extends BaseRest {
 
 		logStep("Create an active agnostic practice below client");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL("Agnostic_Practice_Name_2",
-				testData.getProperty("api.practice.orgtype"), " ", "", testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.orgtype"), "", testData.getProperty("api.practice.active"),
 				"US/Alaska", clientId, "CLIENT", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");

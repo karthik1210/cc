@@ -33,21 +33,21 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		clientId = createClient(testData.getProperty("api.client.active"));
 		logStep("Create active system, enterprise ,nge practice and inactive agnostic practice nodes below active client");
 		systemId = createOrgNode(testData.getProperty("api.system.active"), "", testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "", "",
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		enterpriseId = createOrgNode(testData.getProperty("api.enterprise.active"), "",
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), "", "US/Eastern",
+				testData.getProperty("api.enterprise.parenttype"), "US/Eastern",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		practiceId = createOrgNode(testData.getProperty("api.practice.active"), "",
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), "", "US/Central",
+				testData.getProperty("api.practice.parenttype"), "US/Central",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		agnosticPracticeId = createOrgNode("false", "", "ag_practice_name_1",
-				testData.getProperty("api.practice.orgtype"), systemId, testData.getProperty("api.system.orgtype"), "",
+				testData.getProperty("api.practice.orgtype"), systemId, testData.getProperty("api.system.orgtype"),
 				"US/Hawaii", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 	}
@@ -65,10 +65,9 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 	}
 
 	public int createOrgNode(String status, String displayName, String name, String orgType, int parentId,
-			String parentType, String sapNumber, String timezoneId, int ehridentifier, int pmIdentifier)
-			throws Exception {
-		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType, displayName, sapNumber, status, timezoneId,
-				parentId, parentType, ehridentifier, pmIdentifier);
+			String parentType, String timezoneId, int ehridentifier, int pmIdentifier) throws Exception {
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType, displayName, status, timezoneId, parentId,
+				parentType, ehridentifier, pmIdentifier);
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 
@@ -76,8 +75,8 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 	public void testOrgNodeUpdateStatusFunctionality() throws NullPointerException, Exception {
 		logStep("Modify system node status from active to inactive");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", "", "false",
-				testData.getProperty("api.client.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), "", "false", testData.getProperty("api.client.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), systemId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
@@ -98,8 +97,8 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify system node status from inactive to active when parent node client is active");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", "", "true",
-				testData.getProperty("api.client.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), "", "true", testData.getProperty("api.client.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), systemId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
@@ -120,7 +119,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify enterprise node status from inactive to active when parent node system is active");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", "", "true", "US/Eastern",
+				testData.getProperty("api.enterprise.orgtype"), "", "true", "US/Eastern",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), enterpriseId);
 		logStep("Validating response information");
@@ -138,7 +137,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify nge practice node status from inactive to active when parent node enterprise is active");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), "", "", "true", "US/Central",
+				testData.getProperty("api.practice.orgtype"), "", "true", "US/Central",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), practiceId);
 		logStep("Validating response information");
@@ -153,7 +152,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify enterprise node status from active to inactive");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", "", "false", "US/Eastern",
+				testData.getProperty("api.enterprise.orgtype"), "", "false", "US/Eastern",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), enterpriseId);
 		logStep("Validating response information");
@@ -171,7 +170,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify agnostic practice node status from inactive to active when parent node system is active");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("ag_practice_name_1",
-				testData.getProperty("api.practice.orgtype"), "", "", "true", "US/Hawaii",
+				testData.getProperty("api.practice.orgtype"), "", "true", "US/Hawaii",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), agnosticPracticeId);
 		logStep("Validating response information");
@@ -196,7 +195,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessagesForMandatoryFields(String[] getOrgTypeAndOrgId) throws IOException {
 		logStep("Enter null value in mandatory fields and validate error response body");
 		System.out.println("dataprovider" + getOrgTypeAndOrgId);
-		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("", getOrgTypeAndOrgId[0], "", "", null, "",
+		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("", getOrgTypeAndOrgId[0], "", null, "",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), Integer.parseInt(getOrgTypeAndOrgId[1]));
 
@@ -206,11 +205,11 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageResponseBodyForNullValueInMandatoryField(updateOrgNodeApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter maximum characters in sap id,splution display name and name field and validate error response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter maximum characters in splution display name and name field and validate error response body")
 	public void testMaximumCharactersErrorMessage(String[] getOrgTypeAndOrgId) throws IOException {
 		logStep("Enter maximum characters in sap id,splution display name and name field and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(testData.getProperty("invalid.name"), getOrgTypeAndOrgId[0],
-				testData.getProperty("invalid.solutionDisplayName"), "", "true", "US/Central",
+				testData.getProperty("invalid.solutionDisplayName"), "true", "US/Central",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), Integer.parseInt(getOrgTypeAndOrgId[1]));
 		logStep("Validating response information");
@@ -223,8 +222,8 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForInvalidTimezoneId(String[] getOrgTypeAndOrgId) throws IOException {
 		logStep("Enter invalid timezone id in timezone field and validate error response body");
 		String invalidTimezoneId = testData.getProperty("api.system.timezoneid").concat("abcdef@12");
-		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("Org_Name", getOrgTypeAndOrgId[0], "Dispaly_Name_1", "",
-				"true", invalidTimezoneId, Integer.parseInt(testData.getProperty("ehr.identifier")),
+		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("Org_Name", getOrgTypeAndOrgId[0], "Dispaly_Name_1", "true",
+				invalidTimezoneId, Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), Integer.parseInt(getOrgTypeAndOrgId[1]));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
@@ -249,7 +248,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForInvalidOrgId(String[] getOrgTypeAndInvalidOrgId) throws IOException {
 		logStep("Enter invalid org id in orgId field and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("Org_Name", getOrgTypeAndInvalidOrgId[0], "Dispaly_Name_1",
-				"", "true", "US/Eastern", Integer.parseInt(testData.getProperty("ehr.identifier")),
+				"true", "US/Eastern", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")),
 				Integer.parseInt(getOrgTypeAndInvalidOrgId[1]));
 		logStep("Validating response information");
@@ -276,29 +275,28 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		int clientId = createClient("false");
 		logStep("Create inactive system, enterprise ,nge practice and agnostic practice nodes below inactive client");
 		int systemIdOne = createOrgNode("false", "", "system_name_1", testData.getProperty("api.system.orgtype"),
-				clientId, testData.getProperty("api.parenttype"), "", "",
+				clientId, testData.getProperty("api.parenttype"), "",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int enterpriseIdOne = createOrgNode("false", "", "enterprise_name_1",
 				testData.getProperty("api.enterprise.orgtype"), systemIdOne,
-				testData.getProperty("api.enterprise.parenttype"), "",
-				testData.getProperty("api.enterprise.timezoneid"),
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceIdOne = createOrgNode("false", "", "practice_name_1", testData.getProperty("api.practice.orgtype"),
-				enterpriseIdOne, testData.getProperty("api.practice.parenttype"), "",
+				enterpriseIdOne, testData.getProperty("api.practice.parenttype"),
 				testData.getProperty("api.practice.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int agnosticPracticeIdOne = createOrgNode("false", "", "ag_practice_name_1",
 				testData.getProperty("api.practice.orgtype"), systemIdOne, testData.getProperty("api.system.orgtype"),
-				"", testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		logStep("Modify system node status from inactive to active when client node is inactive and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("system_name_1", testData.getProperty("api.system.orgtype"),
-				"", "", "true", "US/Samoa", Integer.parseInt(testData.getProperty("ehr.identifier")),
+				"", "true", "US/Samoa", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), systemIdOne);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
@@ -307,7 +305,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify enterprise node status from inactive to active when system node is inactive and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("enterprise_name_1",
-				testData.getProperty("api.enterprise.orgtype"), "", "", "true", "US/Eastern",
+				testData.getProperty("api.enterprise.orgtype"), "", "true", "US/Eastern",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), enterpriseIdOne);
 		logStep("Validating response information");
@@ -317,23 +315,97 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Modify agnostic practice node status from inactive to active when system node is inactive and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("ag_practice_name_1",
-				testData.getProperty("api.practice.orgtype"), "", "", "true", "US/Hawaii",
+				testData.getProperty("api.practice.orgtype"), "", "true", "US/Hawaii",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), agnosticPracticeIdOne);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyInactiveClientErrorResponsForPractice(updateOrgNodeApiResponse);
+		validation.verifyInactiveSystemErrorResponsForPractice(updateOrgNodeApiResponse);
 
 		logStep("Modify nge practice node status from inactive to active when enterprise node is inactive and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("practice_name_1",
-				testData.getProperty("api.practice.orgtype"), "", "", "true", "US/Central",
+				testData.getProperty("api.practice.orgtype"), "", "true", "US/Central",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")), practiceIdOne);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
 		validation.verifyInactivePracticeErrorResponsWhileUpdataingActivePractice(updateOrgNodeApiResponse);
+
+		logStep("Update system name value");
+		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(
+				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
+				testData.getProperty("api.system.orgtype"), "", "false", "",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")), systemIdOne);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
+		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 200);
+		validation.verifyUpdateOrgApiResponseBody(updateOrgNodeApiResponse, systemIdOne,
+				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12");
+		logStep("Fetch updated system details using system id and verify sap number is updated as null value and timezone fetch from its parent node");
+		fetchOrgNodeDetails = orgInfo.getOrgId(systemIdOne);
+		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemIdOne,
+				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
+				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
+				"false", testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"));
+
+		logStep("Update enterprise name, timezone");
+		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(
+				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
+				testData.getProperty("api.enterprise.orgtype"), "", "false", "US/Alaska",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")), enterpriseIdOne);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
+		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 200);
+		validation.verifyUpdateOrgApiResponseBody(updateOrgNodeApiResponse, enterpriseIdOne,
+				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234");
+		logStep("Fetch updated enterprise details using enterprise id and verify sap number is updated as null value and timezone fetch from its parent node");
+		fetchOrgNodeDetails = orgInfo.getOrgId(enterpriseIdOne);
+		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseIdOne,
+				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
+				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
+				"false", testData.getProperty("api.client.testclient"), "US/Alaska");
+
+		logStep("Update nge practice name, practice display name,timezone");
+		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(
+				"practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2@1234",
+				testData.getProperty("api.practice.orgtype"),
+				"practice_display_name@123 practice_display_name@123 practice_display_name@123 practice_display_name1",
+				"false", "US/Arizona", Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")), practiceIdOne);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
+		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 200);
+		validation.verifyUpdateOrgApiResponseBody(updateOrgNodeApiResponse, practiceIdOne,
+				"practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2@1234");
+		logStep("Fetch updated nge practice details using practice id and verify sap number updated as null value and timezone fetch from its parent node");
+		fetchOrgNodeDetails = orgInfo.getOrgId(practiceIdOne);
+		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceIdOne,
+				"practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2@1234",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
+				"practice_display_name@123 practice_display_name@123 practice_display_name@123 practice_display_name1",
+				"false", testData.getProperty("api.client.testclient"), "US/Arizona");
+
+		logStep("Update agnostic practice name, practice display name, timezone");
+		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("ag_Prac_2", testData.getProperty("api.practice.orgtype"),
+				"agnostic_practice_display_name", "false", "Canada/Atlantic",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")), agnosticPracticeIdOne);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
+		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 200);
+		validation.verifyUpdateOrgApiResponseBody(updateOrgNodeApiResponse, agnosticPracticeIdOne, "ag_Prac_2");
+		logStep("Fetch updated agnostic practice details using agnostic practice id and verify sap number updated as null value and timezone fetch from its parent node");
+		fetchOrgNodeDetails = orgInfo.getOrgId(agnosticPracticeIdOne);
+		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeIdOne, "ag_Prac_2",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
+				"agnostic_practice_display_name", "false", testData.getProperty("api.client.testclient"),
+				"Canada/Atlantic");
 	}
 
 }

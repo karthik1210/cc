@@ -50,44 +50,41 @@ public class DuplicateBrandingApiTests_DataLayer extends BaseRest {
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25))));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
 	public int createSystem(int clientId) throws NumberFormatException, NullPointerException, IOException {
-		createSystemNodeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.system.displayname"), "", "false",
-				"", clientId, testData.getProperty("api.parenttype"),
+		createSystemNodeApiResponse = orgInfo.createOrg("false", "", testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createSystemNodeApiResponse.jsonPath().getInt("orgId");
 	}
 
 	public int createEnterprise(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createEnterpriseNodeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.displayname"), "",
-				testData.getProperty("api.enterprise.active"), testData.getProperty("api.enterprise.timezoneid"),
-				systemId, testData.getProperty("api.enterprise.parenttype"),
+		createEnterpriseNodeApiResponse = orgInfo.createOrg("false", "", testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), systemId,
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createEnterpriseNodeApiResponse.jsonPath().get("orgId");
 	}
 
 	public int createNGPractice(int enterpriseId) throws NumberFormatException, NullPointerException, IOException {
-		createNgPracticeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
+		createNgPracticeApiResponse = orgInfo.createOrg("false", testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createNgPracticeApiResponse.jsonPath().getInt("orgId");
 	}
 
 	public int createAgnosticPractice(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
-				testData.getProperty("api.practice.parenttype"),
+		createAgnosticPracticeApiResponse = orgInfo.createOrg("false", testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"), systemId,
+				testData.getProperty("api.system.orgtype"), testData.getProperty("api.practice.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createAgnosticPracticeApiResponse.jsonPath().getInt("orgId");
