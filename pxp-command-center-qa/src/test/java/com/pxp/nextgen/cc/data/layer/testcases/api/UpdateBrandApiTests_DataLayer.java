@@ -20,8 +20,9 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 	private BrandsInfo brandInfo;
 	private Validations validation;
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
-			createAgnosticPracticeApiResponse, createClientApiResponse, createBrandApiResponse,updateBrandDetailsApiResponse;
-	int clientId, systemId, enterpriseId, practiceId,   clientBrandId, systemBrandId,enterpriseBrandId,practiceBrandId;
+			createAgnosticPracticeApiResponse, createClientApiResponse, createBrandApiResponse,
+			updateBrandDetailsApiResponse;
+	int clientId, systemId, enterpriseId, practiceId, clientBrandId, systemBrandId, enterpriseBrandId, practiceBrandId;
 	String clientName, clientSapNumber;
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
@@ -55,18 +56,16 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 	}
 
 	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
-				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
+				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
+				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createSystemApiResponse.jsonPath().get("orgId");
 	}
 
 	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), SystemId,
+		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
+				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), SystemId,
 				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
@@ -83,13 +82,15 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		return createPracticeApiResponse.jsonPath().get("orgId");
 
 	}
+
 	public int createBrand(int orgId) {
 		logStep("Enter valid values in request payload to create branding template at client level");
 		String name = "New_Node".concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String color = "#ffffff";
-		createBrandApiResponse =brandInfo.createBrandingTemplate_DL(String.valueOf(orgId), name, "true", color);
+		createBrandApiResponse = brandInfo.createBrandingTemplate_DL(String.valueOf(orgId), name, "true", color);
 		return createBrandApiResponse.jsonPath().getInt("brandId");
 	}
+
 	@DataProvider(name = "updateBrandingValidDetails")
 	public Object[] getDetails() {
 		Object[][] obj = new Object[][] {
@@ -127,7 +128,7 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 						testData.getProperty("showlogo.false").trim(), testData.getProperty("practice.brand.color") } };
 		return obj;
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "updateBrandingValidDetails", description = "Enter existing BrandID, orgId to update brand at CLIENT, SYSTEM, ENTERPRISE, PRACTICE level")
 	public void testSuccessResponseCodeForExistingBrandIdOrgIdToUpdateBranding(String[] getDetails)
 			throws NullPointerException, IOException {
@@ -139,7 +140,7 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyUpdateBrandingDetails(updateBrandDetailsApiResponse, getDetails[0], getDetails[2]);
 	}
-   
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing BrandID, existing orgId and validate error response code")
 	public void testErrorResponseCodeForNonExistingBrandIdExistingOrgId() throws NullPointerException, IOException {
 		logStep("Enter non-existing BrandID, existing orgId");
@@ -154,7 +155,7 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageForInvalidBrandId(updateBrandDetailsApiResponse,
 				Integer.parseInt(testData.getProperty("non.existing.brand.id")));
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing BrandID, orgId as null and validate error response code")
 	public void testErrorResponseCodeForExistingBrandIdAndOrgIdAsNull() throws NullPointerException, IOException {
 		logStep("Enter existing brandId, orgId as null ");
@@ -171,8 +172,8 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseCodeForExistingOrgIdAndBrandIdAsNull() throws NullPointerException, IOException {
 		logStep("Enter existing orgId, BrandID as null");
 		String brandName = testData.getProperty("client.org.brand.name").concat(CCUtils.generateAlphaNumericString(5));
-		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(null, String.valueOf(clientId), brandName, "true",
-				testData.getProperty("client.brand.color"));
+		updateBrandDetailsApiResponse = brandInfo.updateBrandDetails_DL(null, String.valueOf(clientId), brandName,
+				"true", testData.getProperty("client.brand.color"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
 		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 400);
@@ -218,4 +219,5 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateBrandDetailsApiResponse);
 		CCUtils.assertEquals(updateBrandDetailsApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(updateBrandDetailsApiResponse);
-	}}
+	}
+}

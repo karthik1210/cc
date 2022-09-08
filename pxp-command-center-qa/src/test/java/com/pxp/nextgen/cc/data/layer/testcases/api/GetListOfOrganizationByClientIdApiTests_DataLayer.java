@@ -143,7 +143,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 	public Object[][] getInvalidOrgType() throws Exception {
 		return new Object[][] { { " " + testData.getProperty("api.system.orgtype") },
 				{ " " + testData.getProperty("api.enterprise.orgtype") },
-				{ "   " + testData.getProperty("api.practice.orgtype") }, { testData.getProperty("api.parenttype") },
+				{ "   " + testData.getProperty("api.practice.orgtype") }, { " "+testData.getProperty("api.parenttype") },
 				{ "null" }, { "abcdfefd" } };
 	}
 
@@ -164,9 +164,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 				testData.getProperty("api.parenttype"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrganizationListApiResponse);
-		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForOrgTypeField(getOrganizationListApiResponse,
-				testData.getProperty("api.parenttype"));
+		CCUtils.assertEquals(getOrganizationListApiResponse.getStatusCode(), 204);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Verify error response for invalid url")

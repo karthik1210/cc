@@ -18,13 +18,14 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
-			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer" />
+			<!-- Enable test classes once issue is addressed for Jira # PXPP-21442 
+				PXPP-21447 -->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
+				/> -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
 			<class
