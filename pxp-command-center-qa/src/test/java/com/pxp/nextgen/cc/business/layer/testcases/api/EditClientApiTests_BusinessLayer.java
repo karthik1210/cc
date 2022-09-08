@@ -59,9 +59,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify updated client details");
-		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, newClientName, "TSI",
-				newSapNumber, ccUser.getActive(), ccUser.getTestClient(), "Asia/Kuwait", "Kuwait, Riyadh", 0,
-				solutionLists);
+		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, newClientName,
+				Integer.parseInt(testData.getProperty("client.type.tsi.id")), "TSI", newSapNumber, ccUser.getActive(),
+				ccUser.getTestClient(), "Asia/Kuwait", "Kuwait, Riyadh", 0, solutionLists);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client status from active to inactive anf inactive to active and fetch updated client details using client id")
@@ -85,8 +85,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify Client Status is changed from active to inactive");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.one.type"), clientSapNumber, "false", ccUser.getTestClient(),
-				ccUser.getTimezoneId(), "Eastern Standard Time", 0, solutionLists);
+				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
+				clientSapNumber, "false", ccUser.getTestClient(), ccUser.getTimezoneId(), "Eastern Standard Time", 0,
+				solutionLists);
 		logStep("Update client status from inactive to active");
 		updateClientApiResponse = clientInfo.updateClient(Boolean.parseBoolean("true"), clientId, clientName,
 				clientSapNumber, ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
@@ -99,8 +100,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify Client Status is changed from inactive to active");
 		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.one.type"), clientSapNumber, "true", ccUser.getTestClient(),
-				ccUser.getTimezoneId(), "Eastern Standard Time", 0, solutionLists);
+				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
+				clientSapNumber, "true", ccUser.getTestClient(), ccUser.getTimezoneId(), "Eastern Standard Time", 0,
+				solutionLists);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code when editing client details with invalid url")

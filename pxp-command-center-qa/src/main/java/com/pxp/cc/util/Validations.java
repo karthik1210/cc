@@ -51,14 +51,17 @@ public class Validations {
 
 	}
 
-	public void verifySearchClientResponseBody(Response response, String clientId, String clientName, String type,
-			String sapNumber, String active, String testClient, String timezoneId, String timezoneDisplayName,
-			Integer practiceCountValue, Boolean isPurchased, List<Integer> purchasedSolutionList) throws IOException {
+	public void verifySearchClientResponseBody(Response response, String clientId, String clientName, int clientTypeId,
+			String type, String sapNumber, String active, String testClient, String timezoneId,
+			String timezoneDisplayName, Integer practiceCountValue, Boolean isPurchased,
+			List<Integer> purchasedSolutionList) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
-		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		Map<String, String> clientTypeMap = response.jsonPath().getMap("clientType");
+		CCUtils.assertEquals(clientTypeMap.get("id"), clientTypeId);
+		CCUtils.assertEquals(clientTypeMap.get("name").toString(), type);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
@@ -114,14 +117,17 @@ public class Validations {
 		}
 	}
 
-	public void verifySearchClientIdResponseBody(Response response, String clientId, String clientName, String type,
-			String sapNumber, String active, String testClient, String timezoneId, String timezoneDisplayName,
-			Integer practiceCountValue, List<Map<String, Object>> purchasedSolutionList) throws IOException {
+	public void verifySearchClientIdResponseBody(Response response, String clientId, String clientName,
+			int clientTypeId, String type, String sapNumber, String active, String testClient, String timezoneId,
+			String timezoneDisplayName, Integer practiceCountValue, List<Map<String, Object>> purchasedSolutionList)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
-		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		Map<String, String> clientTypeMap = response.jsonPath().getMap("clientType");
+		CCUtils.assertEquals(clientTypeMap.get("id"), clientTypeId);
+		CCUtils.assertEquals(clientTypeMap.get("name").toString(), type);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
@@ -669,21 +675,21 @@ public class Validations {
 
 	public void verifyGetClientTypesApiResponseBody(Response response) throws IOException {
 		List<ClientTypes> actualClientTypeList = new ArrayList<ClientTypes>();
-		actualClientTypeList.add(new ClientTypes(1, "Direct Client", true));
-		actualClientTypeList.add(new ClientTypes(101, "Dedicated IT", true));
-		actualClientTypeList.add(new ClientTypes(102, "GBS", true));
-		actualClientTypeList.add(new ClientTypes(103, "Health Prime International", true));
-		actualClientTypeList.add(new ClientTypes(104, "Itelagen", true));
-		actualClientTypeList.add(new ClientTypes(105, "KM Strategic", true));
-		actualClientTypeList.add(new ClientTypes(106, "MdCentric", true));
-		actualClientTypeList.add(new ClientTypes(107, "Medicalistics", true));
-		actualClientTypeList.add(new ClientTypes(108, "MTS/MMIC", true));
-		actualClientTypeList.add(new ClientTypes(109, "Newport Medical Group", true));
-		actualClientTypeList.add(new ClientTypes(110, "New Stork Healthdata Management", true));
-		actualClientTypeList.add(new ClientTypes(111, "OSIS", true));
-		actualClientTypeList.add(new ClientTypes(112, "SharedMed", true));
-		actualClientTypeList.add(new ClientTypes(113, "TSI", true));
-		actualClientTypeList.add(new ClientTypes(114, "Virmedice", true));
+		actualClientTypeList.add(new ClientTypes(1, "Direct Client"));
+		actualClientTypeList.add(new ClientTypes(101, "Dedicated IT"));
+		actualClientTypeList.add(new ClientTypes(102, "GBS"));
+		actualClientTypeList.add(new ClientTypes(103, "Health Prime International"));
+		actualClientTypeList.add(new ClientTypes(104, "Itelagen"));
+		actualClientTypeList.add(new ClientTypes(105, "KM Strategic"));
+		actualClientTypeList.add(new ClientTypes(106, "MdCentric"));
+		actualClientTypeList.add(new ClientTypes(107, "Medicalistics"));
+		actualClientTypeList.add(new ClientTypes(108, "MTS/MMIC"));
+		actualClientTypeList.add(new ClientTypes(109, "Newport Medical Group"));
+		actualClientTypeList.add(new ClientTypes(110, "New Stork Healthdata Management"));
+		actualClientTypeList.add(new ClientTypes(111, "OSIS"));
+		actualClientTypeList.add(new ClientTypes(112, "SharedMed"));
+		actualClientTypeList.add(new ClientTypes(113, "TSI"));
+		actualClientTypeList.add(new ClientTypes(114, "Virmedice"));
 
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
@@ -691,8 +697,8 @@ public class Validations {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
 				CCUtils.assertTrue(
-						actualClientTypeList.contains(new ClientTypes(jsonObject.getInt("id"),
-								jsonObject.get("name").toString(), jsonObject.getBoolean("active"))),
+						actualClientTypeList
+								.contains(new ClientTypes(jsonObject.getInt("id"), jsonObject.get("name").toString())),
 						"Client type " + jsonObject.get("name").toString() + " doesn't exist");
 			}
 		} else if (jsonArray.length() == 0) {
@@ -1186,13 +1192,15 @@ public class Validations {
 	}
 
 	public void verifyGetClientDetailsApiResponseBody(Response response, String clientId, String clientName,
-			String type, String sapNumber, String active, String testClient, String timezoneId,
+			int clientTypeId, String type, String sapNumber, String active, String testClient, String timezoneId,
 			String timezoneDisplayName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
-		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		Map<String, String> clientTypeMap = response.jsonPath().getMap("clientType");
+		CCUtils.assertEquals(clientTypeMap.get("id"), clientTypeId);
+		CCUtils.assertEquals(clientTypeMap.get("name").toString(), type);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);

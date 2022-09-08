@@ -63,8 +63,7 @@ public class SearchClientsFromClientDirectoryApiTest_DataLayer extends BaseRest 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithoutfilter", description = "search client nodes in client directory without select Client Type in client directory by keeping page 0 and page size 10")
 	public void testSearchClientOutputWithoutFilter(String[] getSearchClientDetails) throws IOException {
 		Response searchClientDirResult = clientDirectory.getClientFromClientDirectoryWithoutFilter_DL(
-				getSearchClientDetails[0], getSearchClientDetails[1], getSearchClientDetails[2]
-		/* getSearchClientDetails[3] */);
+				getSearchClientDetails[0], getSearchClientDetails[1], getSearchClientDetails[2]);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchClientDirResult);
 		CCUtils.assertEquals(searchClientDirResult.getStatusCode(), 200);
