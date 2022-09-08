@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.Locations;
 import com.pxp.cc.pojos.ResourceDetails;
 import io.restassured.response.Response;
 
@@ -441,5 +442,25 @@ public class SharedInfo extends BaseRest {
 	public Response getPracticeProviderDetails_BL(int practiceId, int providerId) {
 		String url = ApiPath.GET_PRACTICE_PROVIDER_BL(practiceId, providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response addOrRemoveLocationForProvider(int providerId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallForaddOrRemoveLocationForProvider(int providerId, int practiceId,
+			List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().post(url).then().extract().response();
+	}
+
+	public Response addOrRemoveLocationForProvider_InvalidUrl(int providerId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_INVALID_URL_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+	public Response getLocationsForProviderForNullValues() {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }

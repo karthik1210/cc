@@ -27,7 +27,6 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
-
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer" />
 			<class
@@ -36,6 +35,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
+
+
 		</classes>
 	</test>
 </suite>

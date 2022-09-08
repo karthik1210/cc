@@ -1019,6 +1019,13 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 	}
 
+	public static final String NULL_PRACTICE_WEBSITES(String serviceLayer) {
+		if(serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/null/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/null/sites";
+	}
+
 	public static final String ADDTOU_BL(int practiceId) {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
 	}
@@ -1048,5 +1055,15 @@ public class ApiPath {
 
 	public static final String NULL_PRACTICEID_ADDTOU_DL() {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
+	}
+	
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/"+practiceId+"/locations";
+	}
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_INVALID_URL_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/"+practiceId+"/locationsssss";
+	}
+	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/providers/null/practices//locations";
 	}
 }

@@ -28,8 +28,10 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeWebsitesApiTests_BusinessLayer"/>
-			<!-- <class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer"/> -->
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
