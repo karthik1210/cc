@@ -463,4 +463,42 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+	
+	public Response  enableOrDisableSolutionsForResource_DL(int resourceId , int practiceId, int solutionId, boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload =  enableOrDisableSolutionsForResource(solutionId, active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_DL(resourceId,practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response  enableOrDisableSolutionsForResourceUsingInvalidMethod_DL(int resourceId, int practiceId, int solutionId, boolean active) {
+		Map<String, Object>  EnableOrDisableSolutionsForResourcePayload =  enableOrDisableSolutionsForResource(solutionId, active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_DL(resourceId,practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response  enableOrDisableSolutionsForResourceUsingInvalidUrl_DL(int resourceId, int practiceId, int solutionId, boolean active) {
+		Map<String, Object>  EnableOrDisableSolutionsForResourcePayload =  enableOrDisableSolutionsForResource(solutionId, active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_INVALID_URL_DL(resourceId,practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then().extract()
+				.response();
+	}
+	public Response  enableOrDisableSolutionsForResourceForNullPayload_DL(int resourceId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_DL(resourceId,practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract()
+				.response();
+	}
+	public Response  enableOrDisableSolutionsForResourceUsingNullValue_DL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object>  enableOrDisableSolutionsForResource(int solutionId, boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourceMap = new HashMap<String, Object>();
+		EnableOrDisableSolutionsForResourceMap.put("solutionId", solutionId);
+		EnableOrDisableSolutionsForResourceMap.put("active", active);
+		return EnableOrDisableSolutionsForResourceMap;
+	}
 }
