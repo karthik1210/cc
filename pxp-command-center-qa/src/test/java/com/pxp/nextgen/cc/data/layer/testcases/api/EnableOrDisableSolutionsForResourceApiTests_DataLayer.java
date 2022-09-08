@@ -30,7 +30,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -43,7 +43,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -56,7 +56,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("nonexisting.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -70,7 +70,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("nonexisting.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -84,7 +84,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("nonexisting.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -97,7 +97,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		logStep("Enable existing solution id for existing resourceId  and practiceId ");
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResourceForNullPayload_DL(resourceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceForNullPayload_DL(resourceId,
 				practiceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -110,7 +110,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResourceUsingInvalidMethod_DL(resourceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceUsingInvalidMethod_DL(resourceId,
 				practiceId, solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -124,7 +124,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
 		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResourceUsingInvalidUrl_DL(resourceId,
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceUsingInvalidUrl_DL(resourceId,
 				practiceId, solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
@@ -134,7 +134,7 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values for resourceId and practiceId to add Locations and verify error message")
 	public void testAddToLocationForNullValues() throws IOException {
-		updateSolutionForResources = sharedInfo.EnableOrDisableSolutionsForResourceUsingNullValue_DL();
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceUsingNullValue_DL();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
 		CCUtils.assertEquals(updateSolutionForResources.getStatusCode(), 400);
