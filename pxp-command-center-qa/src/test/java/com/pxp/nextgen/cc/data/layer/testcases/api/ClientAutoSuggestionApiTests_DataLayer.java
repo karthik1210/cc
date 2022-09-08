@@ -81,7 +81,7 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 
 	@DataProvider(name = "nonexistingclientdata")
 	public Object[] nonExistingClientData() {
-		Object[] obj = new Object[] { "on1!", "01@1", "8*8" };
+		Object[] obj = new Object[] { "on1!", "8*8" };
 		return obj;
 	}
 

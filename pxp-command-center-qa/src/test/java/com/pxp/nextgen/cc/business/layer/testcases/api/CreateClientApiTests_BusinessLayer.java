@@ -51,7 +51,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.one.type"), clientSapNumber, testData.getProperty("api.client.active"),
+				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
+				clientSapNumber, testData.getProperty("api.client.active"),
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"),
 				testData.getProperty("api.client.displayname"),
 				Integer.parseInt(testData.getProperty("api.client.practice.count")), false, solutionList);
@@ -213,10 +214,10 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation
-				.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.one.type"), clientSapNumber, "false", "false",
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("api.client.displayname"),
+		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
+				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
+				clientSapNumber, "false", "false", testData.getProperty("api.client.timezoneid"),
+				testData.getProperty("api.client.displayname"),
 				Integer.parseInt(testData.getProperty("api.client.practice.count")), false, solutionList);
 	}
 

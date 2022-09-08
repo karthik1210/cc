@@ -53,7 +53,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		logStep("Verify updated client details");
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, Integer.toString(clientId),
-				newClientName, testData.getProperty("api.client.forteen.type"), newClientSapNumber, "false",
+				newClientName, Integer.parseInt(testData.getProperty("client.type.tsi.id")),
+				testData.getProperty("api.client.forteen.type"), newClientSapNumber, "false",
 				testData.getProperty("api.client.testclient"), testData.getProperty("new.timezone"),
 				testData.getProperty("new.timezone.display.name"));
 	}
@@ -83,7 +84,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		logStep("Verify client status is changed from inactive to active and timezone value is changed from not null value to null value");
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, Integer.toString(clientId),
-				clientName, testData.getProperty("api.client.forteen.type"), clientSapNumber, "true",
+				clientName, Integer.parseInt(testData.getProperty("client.type.tsi.id")),
+				testData.getProperty("api.client.forteen.type"), clientSapNumber, "true",
 				testData.getProperty("api.client.testclient"), null, null);
 	}
 

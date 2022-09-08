@@ -51,9 +51,8 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Enter system id in orgId field and validate response body")
 	public void testFetchSystemDetailsUsingSystemId() throws IOException {
 		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
-				testData.getProperty("api.system.displayname"), systemName, testData.getProperty("api.system.orgtype"),
-				clientId, testData.getProperty("api.parenttype"), "",
+		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "", systemName,
+				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		systemId = createSystemApiResponse.jsonPath().getInt("orgId");
@@ -71,9 +70,8 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Enter enterprise id in orgId field and validate response body")
 	public void testFetchEnterpriseDetailsUsingEnterpriseId() throws IOException {
 		String enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateRandomString());
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.displayname"), enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), systemId,
+		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
+				enterpriseName, testData.getProperty("api.enterprise.orgtype"), systemId,
 				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
