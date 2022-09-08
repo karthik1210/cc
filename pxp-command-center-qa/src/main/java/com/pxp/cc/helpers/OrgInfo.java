@@ -422,8 +422,7 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public static Map<String, Object> createOrgNodeMap(String active, String displayName, String name, String orgType,
-			Integer parentId, String parentType, String sapNumber, String timezoneId,
-			List<Map<String, Object>> solutionList) {
+			Integer parentId, String parentType, String timezoneId, List<Map<String, Object>> solutionList) {
 		Map<String, Object> orgMap = new HashMap<String, Object>();
 		orgMap.put("active", active);
 		orgMap.put("displayName", displayName);
@@ -431,28 +430,26 @@ public class OrgInfo extends BaseRest {
 		orgMap.put("orgType", orgType);
 		orgMap.put("parentId", parentId);
 		orgMap.put("parentType", parentType);
-		orgMap.put("sapNumber", sapNumber);
 		orgMap.put("timezoneId", timezoneId);
 		orgMap.put("solutions", solutionList);
 		return orgMap;
 	}
 
 	public Response createOrgNode(String active, String displayName, String name, String orgType, Integer parentId,
-			String parentType, String sapNumber, String timezoneId, List<Map<String, Object>> solutionList)
-			throws Exception {
+			String parentType, String timezoneId, List<Map<String, Object>> solutionList) throws Exception {
 
 		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId, solutionList);
+				parentType, timezoneId, solutionList);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
 	public Response createOrgNodeUsingInvalidUrl(String active, String displayName, String name, String orgType,
-			Integer parentId, String parentType, String sapNumber, String timezoneId,
-			List<Map<String, Object>> solutionList) throws Exception {
+			Integer parentId, String parentType, String timezoneId, List<Map<String, Object>> solutionList)
+			throws Exception {
 
 		Map<String, Object> createNewOrgPayload = createOrgNodeMap(active, displayName, name, orgType, parentId,
-				parentType, sapNumber, timezoneId, solutionList);
+				parentType, timezoneId, solutionList);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
 				.extract().response();
 	}
@@ -504,23 +501,21 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
-	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+	public Response createOrgNode_DataLayer(String name, String orgType, String displayName, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
 			throws IOException {
-		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
-				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, active, timezoneId,
+				parentId, parentType, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_DL).then().extract()
 				.response();
 	}
 
-	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName,
-			String sapNumber, String active, String timezoneId, int parentId, String parentType, int ehrIdentifier,
-			int pmIdentifier) {
+	public static Map<String, Object> postCreateOrgMap(String name, String orgType, String displayName, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> orgMap = new HashMap<String, Object>();
 		orgMap.put("name", name);
 		orgMap.put("orgType", orgType);
 		orgMap.put("displayName", displayName);
-		orgMap.put("sapNumber", sapNumber);
 		orgMap.put("active", active);
 		orgMap.put("timezoneId", timezoneId);
 		orgMap.put("parentId", parentId);
@@ -551,22 +546,21 @@ public class OrgInfo extends BaseRest {
 				.extract().response();
 	}
 
-	public Response createOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
-			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
-			throws IOException {
+	public Response createOrgNode_BL(String name, String orgType, String displayName, String active, String timezoneId,
+			int parentId, String parentType, int ehrIdentifier, int pmIdentifier) throws IOException {
 
-		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
-				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, active, timezoneId,
+				parentId, parentType, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.ORG_BL).then().extract()
 				.response();
 	}
 
-	public Response createOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
-			String active, String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
+	public Response createOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String active,
+			String timezoneId, int parentId, String parentType, int ehrIdentifier, int pmIdentifier)
 			throws IOException {
 
-		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, sapNumber, active,
-				timezoneId, parentId, parentType, ehrIdentifier, pmIdentifier);
+		Map<String, Object> createNewOrgPayload = postCreateOrgMap(name, orgType, displayName, active, timezoneId,
+				parentId, parentType, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).body(createNewOrgPayload).when().post(ApiPath.INVALID_PATH_ORG_BL).then()
 				.extract().response();
 	}
@@ -577,12 +571,11 @@ public class OrgInfo extends BaseRest {
 	}
 
 	public static Map<String, Object> updateOrgNodeDetailsMap(String name, String orgType, String displayName,
-			String sapNumber, String active, String timezoneId, int ehrIdentifier, int pmIdentifier) {
+			String active, String timezoneId, int ehrIdentifier, int pmIdentifier) {
 		Map<String, Object> updateOrgNodeValueMap = new HashMap<String, Object>();
 		updateOrgNodeValueMap.put("name", name);
 		updateOrgNodeValueMap.put("orgType", orgType);
 		updateOrgNodeValueMap.put("displayName", displayName);
-		updateOrgNodeValueMap.put("sapNumber", sapNumber);
 		updateOrgNodeValueMap.put("active", active);
 		updateOrgNodeValueMap.put("timezoneId", timezoneId);
 		updateOrgNodeValueMap.put("ehrIdentifier", ehrIdentifier);
@@ -590,11 +583,11 @@ public class OrgInfo extends BaseRest {
 		return updateOrgNodeValueMap;
 	}
 
-	public Response updateOrgNode_BL(String name, String orgType, String displayName, String sapNumber, String active,
-			String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
+	public Response updateOrgNode_BL(String name, String orgType, String displayName, String active, String timezoneId,
+			int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
 		String url = ApiPath.UPDATE_ORG_BL(orgId);
-		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
-				active, timezoneId, ehrIdentifier, pmIdentifier);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, active,
+				timezoneId, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
 				.extract().response();
 	}
@@ -602,8 +595,8 @@ public class OrgInfo extends BaseRest {
 	public Response updateOrgNodeUsingInvalidUrl_BL(String name, String orgType, String displayName, String sapNumber,
 			String active, String timezoneId, int ehrIdentifier, int pmIdentifier, Integer orgId) throws IOException {
 		String url = ApiPath.INVALID_PATH_UPDATE_ORG_BL(orgId);
-		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, sapNumber,
-				active, timezoneId, ehrIdentifier, pmIdentifier);
+		Map<String, Object> updateOrgNodePayload = updateOrgNodeDetailsMap(name, orgType, displayName, active,
+				timezoneId, ehrIdentifier, pmIdentifier);
 		return given().spec(requestSpec).pathParam("orgId", orgId).body(updateOrgNodePayload).when().put(url).then()
 				.extract().response();
 	}

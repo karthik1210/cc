@@ -40,15 +40,15 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 			throws NumberFormatException, IOException {
 		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
-		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.system.displayname"), "", activeStatus, "", Integer.parseInt(clientId),
-				"CLIENT", Integer.parseInt(testData.getProperty("ehr.identifier")),
+		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"), "",
+				activeStatus, "", Integer.parseInt(clientId), "CLIENT",
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
 		logStep("create an active practice node with solutions");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(practiceName, testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.practice.displayname"), "", activeStatus,
+				testData.getProperty("api.practice.displayname"), activeStatus,
 				testData.getProperty("api.practice.timezoneid"), systemId, "SYSTEM",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));

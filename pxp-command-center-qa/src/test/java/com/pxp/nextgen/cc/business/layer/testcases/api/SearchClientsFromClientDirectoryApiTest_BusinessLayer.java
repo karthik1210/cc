@@ -65,9 +65,8 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 
 	public int createSystemNode(int clientId) throws Exception {
 		systemName = testData.getProperty("api.system.name").concat(CCUtils.generateAlphaNumericString(5));
-		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.system.displayname"), "", testData.getProperty("api.system.active"), "",
-				clientId, testData.getProperty("api.parenttype"),
+		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"), "",
+				testData.getProperty("api.system.active"), "", clientId, testData.getProperty("api.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createSystemApiResponse.jsonPath().get("orgId");
@@ -76,9 +75,9 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 	public int createEnterpriseNode(int SystemId) throws Exception {
 		enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateAlphaNumericString(5));
 		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.displayname"), "",
-				testData.getProperty("api.enterprise.active"), testData.getProperty("api.enterprise.timezoneid"),
-				systemId, testData.getProperty("api.enterprise.parenttype"),
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createEnterpriseApiResponse.jsonPath().get("orgId");
@@ -87,7 +86,7 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 	public int createPracticeNode(int enterpriseId) throws Exception {
 		practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateAlphaNumericString(5));
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(practiceName, testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.practice.displayname"), "", testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.timezoneid"), enterpriseId,
 				testData.getProperty("api.practice.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),

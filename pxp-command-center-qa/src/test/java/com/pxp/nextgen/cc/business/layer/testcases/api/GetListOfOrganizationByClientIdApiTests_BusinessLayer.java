@@ -51,8 +51,7 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 
 	public int createOrgNode(String status, String name, int parentId, String orgType, String parentType)
 			throws Exception {
-		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType,
-				testData.getProperty("api.system.displayname"), "", status,
+		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType, "", status,
 				testData.getProperty("api.system.timezoneid"), parentId, parentType,
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));

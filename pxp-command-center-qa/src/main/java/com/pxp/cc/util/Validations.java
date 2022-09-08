@@ -1604,7 +1604,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("name").toString(), orgName);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("clientType").toString(), parentType);
-		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
 		} else {
