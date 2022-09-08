@@ -992,35 +992,35 @@ public class ApiPath {
 	}
 
 	public static final String PRACTICE_WEBSITES(String serviceLayer, int practiceId) {
-		if(serviceLayer.equalsIgnoreCase("BL"))
+		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
 		else
 			return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
 	}
 
 	public static final String PRACTICE_WEBSITES_WITHOUT_PRACTICEID(String serviceLayer) {
-		if(serviceLayer.equalsIgnoreCase("BL"))
+		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-website/practices/sites";
 		else
 			return SERVICE_ORG_DL + "/v1/practice-website/practices/sites";
 	}
 
 	public static final String PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
-		if(serviceLayer.equalsIgnoreCase("BL"))
+		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
 		else
 			return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
 	}
 
 	public static final String PRACTICE_WEBSITES_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
-		if(serviceLayer.equalsIgnoreCase("BL"))
+		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 		else
 			return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
 	}
 
 	public static final String NULL_PRACTICE_WEBSITES(String serviceLayer) {
-		if(serviceLayer.equalsIgnoreCase("BL"))
+		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-website/practices/null/sites";
 		else
 			return SERVICE_ORG_DL + "/v1/practice-website/practices/null/sites";
@@ -1041,6 +1041,7 @@ public class ApiPath {
 	public static final String NULL_PRACTICEID_ADDTOU_BL() {
 		return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous";
 	}
+
 	public static final String ADDTOU_DL(int practiceId) {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
 	}
@@ -1056,14 +1057,28 @@ public class ApiPath {
 	public static final String NULL_PRACTICEID_ADDTOU_DL() {
 		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
 	}
-	
+
 	public static final String UPDATE_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
-		return SHARED_DL + "/v1/providers/" + providerId + "/practices/"+practiceId+"/locations";
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
 	}
+
 	public static final String UPDATE_LOCATION_FOR_PROVIDER_INVALID_URL_DL(int providerId, int practiceId) {
-		return SHARED_DL + "/v1/providers/" + providerId + "/practices/"+practiceId+"/locationsssss";
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locationsssss";
 	}
+
 	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/providers/null/practices//locations";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES_INVALID_URL_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsss";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/resources/null/practices/null/solutions";
 	}
 }
