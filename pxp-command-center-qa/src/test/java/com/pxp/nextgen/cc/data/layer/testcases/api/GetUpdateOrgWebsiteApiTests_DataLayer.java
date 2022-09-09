@@ -45,6 +45,31 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(fetchOrgDetailsApiResponse.jsonPath().get("websiteUrl"), generateWebsiteUrl);
     }
 
+    @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Update the Org Website for existing websiteUrl")
+    public void updateExistingOrgWebsiteApiSuccess() throws IOException {
+        int orgId = createPractice();
+        logStep("Update websiteUrl for a given orgId");
+        String generateWebsiteUrl=testData.getProperty("api.org.website.Url").concat(CCUtils.generateAlphaNumericString(2));
+        websiteUrl.clear();
+        websiteUrl.put("websiteUrl",generateWebsiteUrl);
+        updateOrgWebsiteApiResponse = orgInfo.updateGetOrgPracticeWebsitesResponse("Valid", "DL", orgId, websiteUrl);
+        logStep("Validating response information");
+        CCUtils.responseTimeValidation(updateOrgWebsiteApiResponse);
+        CCUtils.assertEquals(updateOrgWebsiteApiResponse.getStatusCode(), 200);
+        fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
+        CCUtils.assertEquals(fetchOrgDetailsApiResponse.jsonPath().get("websiteUrl"), generateWebsiteUrl);
+        String responseWebsiteUrl=fetchOrgDetailsApiResponse.jsonPath().get("websiteUrl");
+        String updateWebsiteUrl=responseWebsiteUrl.concat(CCUtils.generateAlphaNumericString(4));
+        websiteUrl.clear();
+        websiteUrl.put("websiteUrl",updateWebsiteUrl);
+        updateOrgWebsiteApiResponse = orgInfo.updateGetOrgPracticeWebsitesResponse("Valid", "DL", orgId, websiteUrl);
+        logStep("Validating response information");
+        CCUtils.responseTimeValidation(updateOrgWebsiteApiResponse);
+        CCUtils.assertEquals(updateOrgWebsiteApiResponse.getStatusCode(), 200);
+        fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(orgId);
+        CCUtils.assertEquals(fetchOrgDetailsApiResponse.jsonPath().get("websiteUrl"), updateWebsiteUrl);
+    }
+
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Update the Org Website for Invalid datatype of Practice Id")
     public void updateOrgWebsiteInvaliDataTypePracticeApi() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("api.practice.website.practice.id.existing.links"));
