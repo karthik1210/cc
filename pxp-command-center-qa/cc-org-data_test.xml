@@ -38,8 +38,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
-
-
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer" />
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
