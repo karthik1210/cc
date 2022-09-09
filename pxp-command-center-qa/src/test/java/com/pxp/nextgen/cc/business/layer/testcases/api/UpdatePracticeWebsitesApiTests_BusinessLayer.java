@@ -133,7 +133,7 @@ public class UpdatePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         String type = getPracticeWebsitesApiResponse.jsonPath().get("type[0]");
         int sortOrder = getPracticeWebsitesApiResponse.jsonPath().get("sortOrder[0]");
         displayTextObj = new DisplayText(englishDisplay, spanishDisplay);
-        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
+        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, false);
         savePracticeWebsite.clear();
         savePracticeWebsite.add(savePracticeWebsiteObj);
         String orgIdString = orgId + "Sample";
@@ -156,7 +156,7 @@ public class UpdatePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         String type = getPracticeWebsitesApiResponse.jsonPath().get("type[0]");
         int sortOrder = getPracticeWebsitesApiResponse.jsonPath().get("sortOrder[0]");
         displayTextObj = new DisplayText(englishDisplay, spanishDisplay);
-        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
+        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, false);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Update a SiteId for a given orgId");
         updatePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("InValidMethodType", "BL", orgId, savePracticeWebsite);
@@ -177,7 +177,7 @@ public class UpdatePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         String type = getPracticeWebsitesApiResponse.jsonPath().get("type[0]");
         int sortOrder = getPracticeWebsitesApiResponse.jsonPath().get("sortOrder[0]");
         displayTextObj = new DisplayText(englishDisplay, spanishDisplay);
-        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
+        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, false);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Update a SiteId for a given orgId");
         updatePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("NullValue", "BL", orgId, savePracticeWebsite);
@@ -198,7 +198,7 @@ public class UpdatePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         String type = getPracticeWebsitesApiResponse.jsonPath().get("type[0]");
         int sortOrder = getPracticeWebsitesApiResponse.jsonPath().get("sortOrder[0]");
         displayTextObj = new DisplayText(englishDisplay, spanishDisplay);
-        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
+        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, false);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         int clientId = Integer.parseInt(testData.getProperty("api.client.id"));
         logStep("Update a SiteId for a given orgId");
@@ -232,7 +232,7 @@ public class UpdatePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         String type = getPracticeWebsitesApiResponse.jsonPath().get("type[0]");
         int sortOrder = getPracticeWebsitesApiResponse.jsonPath().get("sortOrder[0]");
         displayTextObj = new DisplayText(englishDisplay, spanishDisplay);
-        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
+        savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, false);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Update a SiteId for a given orgId");
         updatePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("InValid", "BL", orgId, savePracticeWebsite);
