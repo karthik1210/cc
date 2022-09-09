@@ -1017,8 +1017,8 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
 	}
 
-	public Response deletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId,
-			List<SavePracticeWebsite> SavePracticeWebsiteList) {
+	public Response updateDeletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId,
+														 List<SavePracticeWebsite> SavePracticeWebsiteList) {
 		if (validURI.equalsIgnoreCase("Valid")) {
 			String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
@@ -1038,8 +1038,8 @@ public class OrgInfo extends BaseRest {
 		}
 	}
 
-	public Response deletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId,
-			List<SavePracticeWebsite> SavePracticeWebsiteList) {
+	public Response updateDeletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId,
+																	   List<SavePracticeWebsite> SavePracticeWebsiteList) {
 		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 	}
