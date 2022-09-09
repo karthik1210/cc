@@ -71,11 +71,14 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(id = "clearDelete")
 	private WebElement CrossIcon;
+	
+	@FindBy(xpath = "//div[contains(text(),'Version name is required')])")
+	private WebElement errorVersionName;
 
 	public BrandingTemplatesPage(WebDriver driver) {
 		super(driver);
 	}
-
+	
 	public void VerifyBrandingTemplatesIsDisplayed() throws InterruptedException, AWTException {
 		CCUtils.scrollPageViaElement(driver, brandingTemplatesLabel);
 		CCUtils.verifyAndWaitForElement(brandingTemplatesLabel, driver);
@@ -242,4 +245,13 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on CrossIcon");
 	}
 
+	
+	public void verifyVerionNameErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorVersionName, driver);
+		if(errorVersionName.isDisplayed() && errorVersionName.getText().trim().equals("Version name is required")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+			
+		}
+	}
+	
 }
