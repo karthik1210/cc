@@ -22,7 +22,6 @@ public class AddNewLocationTests extends CommandCenterGenericTest {
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
-
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		commonMethods = new CommonMethods(driver);
@@ -51,7 +50,6 @@ public class AddNewLocationTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyClientNodeIsSelected();
-
 		logStep("Verify Locations tab is displayed");
 		generalSettingsPage.verifyLocationsTab();
 		generalSettingsPage.clickOnLocationsTab();
@@ -142,5 +140,4 @@ public class AddNewLocationTests extends CommandCenterGenericTest {
 		logStep("Verify after clicking on cross button user redirected to Locations page");
 		addLocationPage.verifyLocationsPageTitle();
 	}
-
 }
