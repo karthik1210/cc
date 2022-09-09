@@ -335,17 +335,6 @@ public class OrgInfo extends BaseRest {
 
 	}
 
-	public Response createAgnosticPracticeNodeDataLayer(String name, String displayName, String sapNumber,
-			String active, String timezoneId, String orgType, int parentId, String parentType, String ehrIdentifier,
-			String pmIdentifier) throws IOException {
-
-		Map<String, Object> createNewPracticeNodePayload = postCreatePracticeNodeDataLayer(name, displayName, sapNumber,
-				active, timezoneId, orgType, parentId, parentType, ehrIdentifier, pmIdentifier);
-
-		return given().spec(requestSpec).body(createNewPracticeNodePayload).when().post(ApiPath.ORG_DL).then().extract()
-				.response();
-	}
-
 	public static Map<String, Object> postCreatePracticeNodeDataLayer(String name, String displayName, String sapNumber,
 			String active, String timezoneId, String orgType, int parentId, String parentType, String ehrIdentifier,
 			String pmIdentifier) {
@@ -1028,8 +1017,8 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(orgWebsites).when().delete(url).then().extract().response();
 	}
 
-	public Response deletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId,
-			List<SavePracticeWebsite> SavePracticeWebsiteList) {
+	public Response updateDeletePracticeWebsitesResponse(String validURI, String serviceLayer, int practiceId,
+														 List<SavePracticeWebsite> SavePracticeWebsiteList) {
 		if (validURI.equalsIgnoreCase("Valid")) {
 			String url = ApiPath.PRACTICE_WEBSITES(serviceLayer, practiceId);
 			return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
@@ -1049,8 +1038,8 @@ public class OrgInfo extends BaseRest {
 		}
 	}
 
-	public Response deletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId,
-			List<SavePracticeWebsite> SavePracticeWebsiteList) {
+	public Response updateDeletePracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId,
+																	   List<SavePracticeWebsite> SavePracticeWebsiteList) {
 		String url = ApiPath.PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(SavePracticeWebsiteList).when().post(url).then().extract().response();
 	}

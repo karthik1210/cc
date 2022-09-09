@@ -47,9 +47,10 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, String.valueOf(clientId),
-				clientName, testData.getProperty("api.client.one.type"), clientSapNumber,
-				testData.getProperty("api.client.active"), testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("api.client.displayname"));
+				clientName, Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.one.type"), clientSapNumber, testData.getProperty("api.client.active"),
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"),
+				testData.getProperty("api.client.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields(active,client name,sap nummber and type) and validate error message")
@@ -207,7 +208,8 @@ public class CreateClientApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, String.valueOf(clientId),
-				clientName, testData.getProperty("api.client.one.type"), clientSapNumber, "false", "false",
+				clientName, Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.one.type"), clientSapNumber, "false", "false",
 				testData.getProperty("api.client.timezoneid"), testData.getProperty("api.client.displayname"));
 	}
 

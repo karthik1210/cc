@@ -10,5 +10,4 @@ import lombok.Data;
 public class ClientTypes {
 	private Integer id;
 	private String name;
-	private Boolean active;
 }

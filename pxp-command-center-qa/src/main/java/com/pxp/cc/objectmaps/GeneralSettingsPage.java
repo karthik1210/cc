@@ -144,10 +144,10 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-	
+
 	@FindBy(id = "displayClientName")
 	private WebElement labelNodeNameRightPanel;
-	
+
 	@FindBy(className = "mat-option-text")
 	private List<WebElement> listOfSuggestions;
 
@@ -203,6 +203,15 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "displayClientName")
 	private WebElement clientNodeTitle;
+
+	@FindBy(id = "locationOnIcon")
+	private WebElement tabLocations;
+
+	@FindBy(id = "locationTile")
+	private WebElement tileLocations;
+
+	@FindBy(id = "headerSettingIcon")
+	private WebElement generalSettingsTab;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -886,7 +895,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void verifySearchResult(String actualTitle, String expectedTitle) {
 		CCUtils.assertTrue(actualTitle.contains(expectedTitle), "Searched node not selected. Title not found");
 	}
-	
+
 	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
 		if (nodesInClient.contains(expectedTitle)) {
 			log("Node present in client's general setting page");
@@ -894,6 +903,29 @@ public class GeneralSettingsPage extends CCMainPage {
 			log("Test Case failed, node not present under client");
 		}
 	}
+
+	public void clickOnLocationsTab() {
+		CCUtils.verifyAndWaitForElement(tabLocations, driver);
+		javascriptClick(tabLocations);
+		log("Clicked on Locations tab");
+	}
+
+	public void clickOnLocationsTile() {
+		CCUtils.verifyAndWaitForElement(tileLocations, driver);
+		javascriptClick(tileLocations);
+		log("Clicked on Locations tile");
+	}
+
+	public void verifyLocationsTab() {
+		log("Verify 'Locations Tab' on General Settings page");
+		CCUtils.verifyAndWaitForElement(tabLocations, driver);
+		CCUtils.assertEquals(tabLocations.isDisplayed(), true);
+	}
+
+	public void clickOnGeneralSettingsTab() {
+		CCUtils.verifyAndWaitForElement(generalSettingsTab, driver);
+		javascriptClick(generalSettingsTab);
+		log("Clicked on General Settings Tab");
+	}
+
 }
-
-

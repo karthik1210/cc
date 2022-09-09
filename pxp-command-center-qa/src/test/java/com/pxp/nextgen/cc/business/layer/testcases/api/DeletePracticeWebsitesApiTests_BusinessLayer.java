@@ -1,7 +1,8 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
@@ -10,10 +11,8 @@ import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.OrgWebsites;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -42,7 +41,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         validations = new Validations();
     }
 
-    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Delete the Single Practice Website")
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Delete the Single Practice Website with delete as true")
     public void deletePracticeWebsiteApiSuccess() throws IOException {
         int orgId = createPractice();
         logStep("Add a SiteId for a given orgId");
@@ -65,13 +64,13 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsite.clear();
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 200);
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and inactive tou id")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Delete the Multiple Practice Website with delete as true")
     public void deleteMultiPracticeWebsiteApiSuccess() throws IOException {
         int orgId = createPractice();
         logStep("Add multiple SiteIds for a given orgId");
@@ -108,7 +107,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsite.add(savePracticeWebsiteObj);
         savePracticeWebsite.add(savePracticeWebsiteObj1);
         logStep("Delete multiple SiteIds for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 200);
@@ -131,7 +130,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsite.add(savePracticeWebsiteObj);
         String orgIdString = orgId + "Sample";
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesInvaliDatatypeResponse("BL", orgIdString, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesInvaliDatatypeResponse("BL", orgIdString, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 400);
@@ -152,7 +151,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("InValidMethodType", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("InValidMethodType", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 405);
@@ -173,7 +172,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("NullValue", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("NullValue", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 400);
@@ -194,19 +193,19 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsite.add(savePracticeWebsiteObj);
         int clientId=Integer.parseInt(testData.getProperty("api.client.id"));
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", clientId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", clientId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse,clientId);
         int systemId=Integer.parseInt(testData.getProperty("api.system.id"));
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", systemId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", systemId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse,systemId);
         int enterpriseId=Integer.parseInt(testData.getProperty("api.enterprise.id"));
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", enterpriseId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", enterpriseId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         validations.verifyErrorResponseBodyForNonExistingPracticeIdTou(deletePracticeWebsiteApiResponse,enterpriseId);
@@ -227,7 +226,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, true);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("InValid", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("InValid", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 404);
@@ -248,7 +247,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsiteObj = new SavePracticeWebsite(siteId, url, type, sortOrder, displayTextObj, false);
         savePracticeWebsite.add(savePracticeWebsiteObj);
         logStep("Try to Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 200);
@@ -282,7 +281,7 @@ public class DeletePracticeWebsitesApiTests_BusinessLayer extends BaseRest {
         savePracticeWebsite.add(savePracticeWebsiteObj);
         savePracticeWebsite.add(savePracticeWebsiteObj1);
         logStep("Try to Delete a SiteId for a given orgId");
-        deletePracticeWebsiteApiResponse = orgInfo.deletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
+        deletePracticeWebsiteApiResponse = orgInfo.updateDeletePracticeWebsitesResponse("Valid", "BL", orgId, savePracticeWebsite);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(deletePracticeWebsiteApiResponse);
         CCUtils.assertEquals(deletePracticeWebsiteApiResponse.getStatusCode(), 200);

@@ -32,6 +32,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePracticeWebsitesApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
