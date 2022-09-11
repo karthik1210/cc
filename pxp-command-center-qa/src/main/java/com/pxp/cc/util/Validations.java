@@ -2894,4 +2894,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Product not found by productId=" + productId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+
+	public void verifyErrorMessageInResponseForInvalidPatchMethodCall(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PATCH' not supported");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+	}
 }
