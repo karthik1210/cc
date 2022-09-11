@@ -26,15 +26,14 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		commonMethods = new CommonMethods(driver);
 		createClientPage = new CreateClientPage(driver);
-		createClientPage = new CreateClientPage(driver);
 		logStep("Select create client button from new dropdown");
 		createClientPage.clickCreateClient();
 		commonMethods = new CommonMethods(driver);
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("new.client.sap")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
 				testData.getProperty("new.client.timezone"));
 		logStep("Verify active radio button is by default selected on the create client popup");
@@ -73,7 +72,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level")
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test 'Version name required' error message when click to save withour entering version name")
 	public void testErrorMessageCreateBrandAtClientLevel() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
@@ -84,4 +83,47 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.verifyAndClickSaveButton();
 		brandingTemplatesPage.verifyVerionNameErrorGotDisplayed();
 	}
+
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test 'Invalid file type' error message while uploading image at Solutions Logo")
+	public void testErrorInvalidFileTypeAtSolutionsLogoWhileCreateBrandAtClientLevel() throws Exception {
+		logStep("Verify Branding templates displayed at client level");
+		brandingTemplatesPage = new BrandingTemplatesPage(driver);
+		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
+		logStep("Add New Brand");
+		brandingTemplatesPage.VerifyAndClickVersionButton();
+		String newVersion = testData.getProperty("new.client.name");
+		brandingTemplatesPage.createNewBrand(newVersion);
+		brandingTemplatesPage.uploadSolutionLogoInvalidImage();
+		brandingTemplatesPage.verifyInvalidSolutionsLogoImageErrorGotDisplayed();
+	}
+
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test 'Invalid file type' error message while uploading image at Favicon Logo")
+	public void testErrorInvalidFileTypeAtFaviconLogoWhileCreateBrandAtClientLevel() throws Exception {
+		logStep("Verify Branding templates displayed at client level");
+		brandingTemplatesPage = new BrandingTemplatesPage(driver);
+		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
+		logStep("Add New Brand");
+		brandingTemplatesPage.VerifyAndClickVersionButton();
+		String newVersion = testData.getProperty("new.client.name");
+		brandingTemplatesPage.createNewBrand(newVersion);
+		brandingTemplatesPage.uploadFaviconLogoInvalidImage();
+		brandingTemplatesPage.verifyInvalidFaviconImageErrorGotDisplayed();
+	}
+
+	@Test(enabled = true, groups = {
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test 'Invalid file type' error message while uploading image at Patient Communications Logo")
+	public void testErrorInvalidFileTypeAtPatientCommunicationsLogoWhileCreateBrandAtClientLevel() throws Exception {
+		logStep("Verify Branding templates displayed at client level");
+		brandingTemplatesPage = new BrandingTemplatesPage(driver);
+		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
+		logStep("Add New Brand");
+		brandingTemplatesPage.VerifyAndClickVersionButton();
+		String newVersion = testData.getProperty("new.client.name");
+		brandingTemplatesPage.createNewBrand(newVersion);
+		brandingTemplatesPage.uploadPatientCommunicationsLogoInvalidImage();
+		brandingTemplatesPage.verifyInvalidPatientCommunicationsLogoImageErrorGotDisplayed();
+	}
+
 }

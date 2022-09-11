@@ -71,14 +71,33 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(id = "clearDelete")
 	private WebElement CrossIcon;
-	
-	@FindBy(xpath = "//div[contains(text(),'Version name is required')])")
+
+	@FindBy(xpath = "//div[contains(text(),'Version name is required')]")
 	private WebElement errorVersionName;
+
+	@FindBy(xpath = "//input[@id='favicon']//preceding::p[1]")
+	private WebElement errorInvalidFormatTypeFavicon;
+
+	@FindBy(xpath = "//input[@id='logo']//preceding::p[1]")
+	private WebElement errorInvalidFormatTypeSolutionsLogo;
+
+	@FindBy(xpath = "//input[@id='emailLogo']//preceding::p[1]")
+	private WebElement errorInvalidFormatTypePatientCommunicationsLogo;
+
+	@FindBy(xpath = "(//input[@type='file'])[3]")
+	private WebElement browsePatientCommunicationLogo;
+
+	@FindBy(xpath = "(//input[@type='file'])[1]")
+	private WebElement browseFaviconLogo;
+
+	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
+
+	public String validImagePath = "\\src\\test\\resources\\data-driven\\images\\logo.png";
 
 	public BrandingTemplatesPage(WebDriver driver) {
 		super(driver);
 	}
-	
+
 	public void VerifyBrandingTemplatesIsDisplayed() throws InterruptedException, AWTException {
 		CCUtils.scrollPageViaElement(driver, brandingTemplatesLabel);
 		CCUtils.verifyAndWaitForElement(brandingTemplatesLabel, driver);
@@ -245,13 +264,59 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on CrossIcon");
 	}
 
-	
 	public void verifyVerionNameErrorGotDisplayed() {
 		CCUtils.verifyAndWaitForElement(errorVersionName, driver);
-		if(errorVersionName.isDisplayed() && errorVersionName.getText().trim().equals("Version name is required")) {
+		if (errorVersionName.isDisplayed() && errorVersionName.getText().trim().equals("Version name is required")) {
 			CCUtils.assertTrue(true, "Message got displayed");
-			
 		}
 	}
-	
+
+	public void uploadPatientCommunicationsLogoInvalidImage() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		javascriptClick(browsePatientCommunicationLogo);
+		log("Clicked on Patient Communication BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browsePatientCommunicationLogo.sendKeys(projectpath + invalidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void uploadFaviconLogoInvalidImage() throws InterruptedException, AWTException {
+		javascriptClick(browseFaviconLogo);
+		log("Clicked on Favicon BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseFaviconLogo.sendKeys(projectpath + invalidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void uploadSolutionLogoInvalidImage() throws InterruptedException, AWTException {
+		javascriptClick(browseSolLogo);
+		log("Clicked on Solution Logo BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseSolLogo.sendKeys(projectpath + invalidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void verifyInvalidFaviconImageErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorInvalidFormatTypeFavicon, driver);
+		if (errorInvalidFormatTypeFavicon.isDisplayed()
+				&& errorInvalidFormatTypeFavicon.getText().trim().equals("Invalid file type")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
+
+	public void verifyInvalidSolutionsLogoImageErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorInvalidFormatTypeSolutionsLogo, driver);
+		if (errorInvalidFormatTypeSolutionsLogo.isDisplayed()
+				&& errorInvalidFormatTypeSolutionsLogo.getText().trim().equals("Invalid file type")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
+
+	public void verifyInvalidPatientCommunicationsLogoImageErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorInvalidFormatTypePatientCommunicationsLogo, driver);
+		if (errorInvalidFormatTypePatientCommunicationsLogo.isDisplayed()
+				&& errorInvalidFormatTypePatientCommunicationsLogo.getText().trim().equals("Invalid file type")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
 }
