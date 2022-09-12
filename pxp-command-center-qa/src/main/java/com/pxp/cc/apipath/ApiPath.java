@@ -1116,4 +1116,25 @@ public class ApiPath {
         else
             return SERVICE_ORG_DL + "/v1/orgs/null";
     }
+    
+    public static final String UPDATE_LOCATION_FOR_PRACTICE_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
+	}
+
+	public static final String UPDATE_SOLUTION_FOR_LOCATION_BL(int locationId, int practiceId) {
+
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String LOCATION_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_URL_LOCATION_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_FOR_CLIENT_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/clients/null/locations";
+	}
 }

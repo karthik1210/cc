@@ -4,6 +4,11 @@ package com.pxp.cc.helpers;
 
 import com.pxp.cc.model.BaseRest;
 import static io.restassured.RestAssured.given;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 
@@ -164,4 +169,98 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).post(url).then().extract().response();
 	}
 
+	public Response createLocation_BL(String clientId, String name, String addressLine1, String addressLine2,
+			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
+			throws IOException {
+		String url = ApiPath.LOCATION_FOR_CLIENT_BL(clientId);
+		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
+				lat, lng);
+		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
+				timezoneCode);
+		return given().spec(requestSpec).body(createLocationPayload).when().post(url).then().extract().response();
+	}
+
+	private Map<String, Object> postAddressLocation(String addressLine1, String addressLine2, String city, String state,
+			int zipcode, int lat, int lng) {
+		Map<String, Object> createAddressMap = new HashMap<String, Object>();
+		createAddressMap.put("addressLine1", addressLine1);
+		createAddressMap.put("addressLine2", addressLine2);
+		createAddressMap.put("city", city);
+		createAddressMap.put("state", state);
+		createAddressMap.put("zipcode", zipcode);
+		createAddressMap.put("lat", lat);
+		createAddressMap.put("lng", lng);
+		return createAddressMap;
+	}
+
+	private Map<String, Object> postLocationApiPayload(String name, Map<String, Object> address, int externalId,
+			String timezoneCode) {
+		Map<String, Object> createLocationMap = new HashMap<String, Object>();
+		createLocationMap.put("name", name);
+		createLocationMap.put("address", address);
+		createLocationMap.put("externalId", externalId);
+		createLocationMap.put("timezoneCode", timezoneCode);
+		return createLocationMap;
+	}
+
+	public Response locationAssociateToPractice_BL(int locationId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> locationAssociateToPracticePayload = locationAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(locationAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> locationAssociateToPractice(Integer practiceId, Boolean active) {
+		Map<String, Object> locationassociatetoPracticeMap = new HashMap<String, Object>();
+		locationassociatetoPracticeMap.put("practiceId", practiceId);
+		locationassociatetoPracticeMap.put("active", active);
+		return locationassociatetoPracticeMap;
+	}
+
+	public Response solutionAssociateToLocation_BL(int locationId, int practiceId, int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_BL(locationId, practiceId);
+		Map<String, Object> solutionAssociateToLocationPayload = solutionAssociateToLocation(solutionId, active);
+		return given().spec(requestSpec).body(solutionAssociateToLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> solutionAssociateToLocation(Integer solutionId, Boolean active) {
+		Map<String, Object> solutionAssociateToLocationMap = new HashMap<String, Object>();
+		solutionAssociateToLocationMap.put("solutionId", solutionId);
+		solutionAssociateToLocationMap.put("active", active);
+		return solutionAssociateToLocationMap;
+	}
+
+	public Response getLocationsForClient_BL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.LOCATION_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+
+	}
+
+	public Response getLocationsForClientInvalidUrl_BL(String clientId, String name, String systemid,
+			String enterpriseid, String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.INVALID_URL_LOCATION_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response getLocationsForClientInvalidMethodCall_BL(String clientId, String name, String systemid,
+			String enterpriseid, String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.LOCATION_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response getLocationsForClientForNullValue_BL() {
+		String url = ApiPath.LOCATION_FOR_CLIENT_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
