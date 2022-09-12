@@ -1081,4 +1081,16 @@ public class ApiPath {
 	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/resources/null/practices/null/solutions";
 	}
+
+	public static final String CREATE_LOCATION_BL(int clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_PATH_CREATE_LOCATION_BL(int clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_DETAILS_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId;
+	}
 }
