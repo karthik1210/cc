@@ -1,4 +1,5 @@
 //Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
@@ -19,7 +20,7 @@ import com.pxp.cc.util.Validations;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-public class SearchClientLoactionApiTests_DataLayer extends BaseRest {
+public class SearchClientLocationApiTests_DataLayer extends BaseRest {
 	private LocationsInfo locationInfo;
 	private LocationsValidations locationsValidations;
 	JsonPath jsonPath;
@@ -119,10 +120,10 @@ public class SearchClientLoactionApiTests_DataLayer extends BaseRest {
 						null, null, testData.getProperty("api.pageSize1") } };
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "searchLocationUsingValidInput", description = "Search  location for client using clientId and lacation name")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "searchLocationUsingValidInput", description = "Search location for client using clientId and location name")
 	public void testSearchLocationUsingValidInput(String[] getDetails) throws IOException {
 
-		logStep("Search  location for client using clientId and lacation name");
+		logStep("Search  location for client using clientId and location name");
 		searchLocationsResult = locationInfo.getLocationsForClient_DL(getDetails[0], getDetails[1], getDetails[2],
 				getDetails[3], getDetails[4], getDetails[5], getDetails[6]);
 		logStep("Validating response information");
@@ -191,7 +192,7 @@ public class SearchClientLoactionApiTests_DataLayer extends BaseRest {
 				testData.getProperty("search.location.full.name").trim());
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for client using invalid url")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search location for client using invalid url")
 	public void testSearchLocationUsingInvalidUrl() throws IOException {
 		logStep("Search  location for client using invalid url");
 		searchLocationsResult = locationInfo.getLocationsForClientInvalidUrl_DL(String.valueOf(clientId), null, null,
@@ -200,18 +201,18 @@ public class SearchClientLoactionApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(searchLocationsResult);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for client using invalid method call PUT instead of GET")
-	public void testSearchLocationUsingInvalidMethodPutInstedOfGet() throws IOException {
-		logStep("Search  location for client using method call PUT instead of GET");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search location for client using invalid PUT method call instead of GET method call")
+	public void testSearchLocationUsingInvalidMethodPutInsteadOfGet() throws IOException {
+		logStep("Search  location for client using PUT method call instead of GET method call");
 		searchLocationsResult = locationInfo.getLocationsForClientInvalidMethodCall_DL(String.valueOf(clientId), null,
 				null, null, null, null, null);
 		CCUtils.assertEquals(searchLocationsResult.getStatusCode(), 405);
 		validation.verifyResponseBodyUpdatingClientWithOutClientIdAndAllValuesNull(searchLocationsResult);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for null value")
-	public void testSearchLocationForNullValue() throws IOException {
-		logStep("Search  location for client using method call PUT instead of GET");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search location for null value in clientId input field")
+	public void testSearchLocationForNullValueInClientIdField() throws IOException {
+		logStep("Search  location for null value in clientId input field");
 		searchLocationsResult = locationInfo.getLocationsForClientForNullValue_DL();
 		CCUtils.assertEquals(searchLocationsResult.getStatusCode(), 400);
 	}

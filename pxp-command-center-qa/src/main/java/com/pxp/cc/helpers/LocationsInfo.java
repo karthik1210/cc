@@ -4,11 +4,9 @@ package com.pxp.cc.helpers;
 
 import com.pxp.cc.model.BaseRest;
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 
@@ -239,7 +237,6 @@ public class LocationsInfo extends BaseRest {
 				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
-
 	}
 
 	public Response getLocationsForClientInvalidUrl_DL(String clientId, String name, String systemid,
@@ -264,5 +261,4 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.LOCATION_FOR_CLIENT_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
 }
