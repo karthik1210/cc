@@ -280,7 +280,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with all logos Favicon,Solutions,Patient Communication logo gets uploaded")
+			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Max Characters Reached Error at all Favicon,Solutions,Patient Communication logo gets uploaded")
 	public void testMaxCharactersReachedErrorAtAltText() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
