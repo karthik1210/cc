@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
@@ -77,7 +76,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test maximum character functionality for mandatory field")
 	public void testAddNewLocationFunctionalityUsingMaximumFieldSize() throws IOException {
-		logStep("Enter 100 characters in loacation name,addressline1,addressline2,50 charcters in city,zipcode,external id field");
+		logStep("Enter 100 characters in loacation name,addressline1,addressline2,50 charcters in city,zipcode,external id fields");
 		String locationName = CCUtils.getName(CCUtils.generateStringWithSpace(
 				testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(95))));
 		String addressLine1 = CCUtils.getName(CCUtils.generateStringWithSpace(
@@ -96,7 +95,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
 		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
-		logStep("Fetch Newly Created location details usin location id");
+		logStep("Fetch Newly Created location details using location id");
 		fetchClientDetailsApiResponse = sharedInfo.getLocationDetails(locationId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
@@ -168,9 +167,9 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorResponseForTimezoneCodeField(createNewLocationApiResponse, invalidTimezoneId);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in addressline1,addressline2,location name,city,zipcode,external id,state field field and verify error response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in addressline1, addressline2, location name and more than 50 characters in city, zipcode, external id, state field and verify error response body")
 	public void testMaximumCharacterErrorFunctionality() throws IOException {
-		logStep("Enter more than 100 characters in all mandatory field and verify response body");
+		logStep("Enter more than 100 characters in addressline1, addressline2, location name and more than 50 characters in city, zipcode, external id, state field and verify response body");
 		String invalidValue = CCUtils.generateAlphaNumericString(101);
 		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId, invalidValue, invalidValue,
 				invalidValue, invalidValue, invalidValue, Float.parseFloat(testData.getProperty("location.lat")),
@@ -213,7 +212,6 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 405);
 		validation.verifyErrorMessageInResponseForInvalidMethod(createNewLocationApiResponse);
-
 	}
 
 }
