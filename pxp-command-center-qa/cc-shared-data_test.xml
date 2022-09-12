@@ -34,6 +34,9 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
 				/> -->
 				 <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer"></class>
+				  <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveLocationsForTheProviderApiTests_DataLayer"></class>
+				    <class name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer"></class>
+				      <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLoactionApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
