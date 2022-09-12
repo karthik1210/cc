@@ -63,7 +63,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId, systemName,
 				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
-				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.active"), testFlag,
+				systemName, testData.getProperty("api.system.active"), testFlag,
 				clientTimezoneId);
 	}
 
@@ -84,7 +84,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId, enterpriseName,
 				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
-				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.active"),
+				enterpriseName, testData.getProperty("api.enterprise.active"),
 				testFlag, testData.getProperty("api.enterprise.timezoneid"));
 	}
 

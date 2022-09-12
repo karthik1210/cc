@@ -1093,4 +1093,40 @@ public class ApiPath {
 	public static final String LOCATION_DETAILS_BL(int locationId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId;
 	}
+
+	public static final String UPDATE_ORG_WEBSITES(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId;
+	}
+
+	public static final String UPDATE_ORG_WEBSITES_WITHOUT_PRACTICEID(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/";
+	}
+
+	public static final String UPDATE_ORG_WEBSITES_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId;
+	}
+
+	public static final String UPDATE_ORG_WEBSITES_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId;
+	}
+
+	public static final String NULL_UPDATE_ORG_WEBSITES(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/null";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/null";
+	}
+
 }
