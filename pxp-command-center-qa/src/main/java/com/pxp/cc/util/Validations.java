@@ -2982,5 +2982,23 @@ public class Validations {
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for TimezoneId=" + timezoneCode);
 	}
-
+	
+	public void verifyBrandingImageDetails_BL(Response response, String orgId, String orgType, String name, String showLogo,
+		String color)
+		throws IOException {
+	JsonPath jsonpath = new JsonPath(response.getBody().asString());
+	if (Objects.isNull(jsonpath.get("orgId"))) {
+		Log4jUtil.log("orgId is null");
+	} else {
+		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+	}
+	if (Objects.isNull(jsonpath.get("orgType"))) {
+		Log4jUtil.log("orgType is null");
+	} else {
+		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+	}
+	CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+	CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+	CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+}
 }

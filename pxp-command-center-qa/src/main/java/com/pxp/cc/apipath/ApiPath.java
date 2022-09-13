@@ -1128,5 +1128,15 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/orgs/null";
 	}
+	public static final String UPDATE_BRAND_LOGO_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/upload";
+	}
 
+	public static final String UPDATE_BRAND_LOGO_INVALID_URL_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/uploadsss";
+	}
+
+	public static final String UPDATE_BRAND_LOGO_NULL_BRANDID_BL() {
+		return SERVICE_SHARED_BL + "/v1/brands/" + null + "/upload";
+	}
 }
