@@ -1129,4 +1129,16 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/orgs/null";
 	}
 
+	public static final String CREATE_LOCATION_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_PATH_CREATE_LOCATION_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_DETAILS_DL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId;
+	}
+
 }

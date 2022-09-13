@@ -570,4 +570,42 @@ public class SharedInfo extends BaseRest {
 				timezoneCode);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().put(url).then().extract().response();
 	}
+
+	public Response createNewLocation_DL(int clientId, String addressLine1, String addressLine2, String city,
+			String state, String zipcode, float lat, float lng, String name, String externalId, String timezoneCode) {
+		String url = ApiPath.CREATE_LOCATION_DL(clientId);
+		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
+				lng);
+		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
+				timezoneCode);
+		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createNewLocationUsingInvalidUrl_DL(int clientId, String addressLine1, String addressLine2,
+			String city, String state, String zipcode, float lat, float lng, String name, String externalId,
+			String timezoneCode) {
+		String url = ApiPath.INVALID_PATH_CREATE_LOCATION_DL(clientId);
+		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
+				lng);
+		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
+				timezoneCode);
+		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createNewLocationUsingInvalidMethod_DL(int clientId, String addressLine1, String addressLine2,
+			String city, String state, String zipcode, float lat, float lng, String name, String externalId,
+			String timezoneCode) {
+		String url = ApiPath.CREATE_LOCATION_DL(clientId);
+		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
+				lng);
+		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
+				timezoneCode);
+		return given().spec(requestSpec).body(addNewLocationPayload).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationDetails_DL(int locationId) {
+		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }
