@@ -15,10 +15,9 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
-
 	private BrandsInfo brandsInfo;
 	private ClientInfo clientInfo;
-	Response updateBrandImageApiResponse,createClientApiResponse,createBrandApiResponse;
+	Response updateBrandImageApiResponse, createClientApiResponse, createBrandApiResponse;
 	public int orgId;
 	public int brandId;
 	public String namePayLoad;
@@ -34,7 +33,6 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		clientInfo = new ClientInfo();
 	}
 
-
 	public int createClient() throws NullPointerException, IOException {
 		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(30))));
@@ -47,7 +45,7 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
-	
+
 	public int createBrand(int orgId) {
 		String name = testData.getProperty("client.org.brand.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
@@ -58,6 +56,7 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
 		return createBrandApiResponse.jsonPath().getInt("brandId");
 	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response code when creating a new brand logo")
 	public void testResponseCodeForCreateBrandLogo() throws IOException {
 		log("Create new brandId & update brand image");
@@ -71,7 +70,6 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		updateBrandImageApiResponse = brandsInfo.updateBrandImage_DL(brandId, logoType, altText, href, name, mimeType);
 		CCUtils.responseTimeValidation(updateBrandImageApiResponse);
 		CCUtils.assertEquals(updateBrandImageApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter new brandId, update brand image and delete updated imageId and verify response code")
