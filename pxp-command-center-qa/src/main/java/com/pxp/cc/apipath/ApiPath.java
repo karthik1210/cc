@@ -1149,6 +1149,10 @@ public class ApiPath {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
 	}
 
+	public static final String LOCATION_FOR_CLIENT_DL(String clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locations";
+	}
+
 	public static final String INVALID_URL_LOCATION_FOR_CLIENT_DL(String clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
 	}
