@@ -70,7 +70,7 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updateTouApiResponse.getStatusCode(), 200);
         getTousApiResponse = orgInfo.getListOfTouForAPractice_DL(orgId, touType);
         List<String> touIds = getTousApiResponse.jsonPath().get("touId");
-        for (int i = touIds.size()-1; i >0 ; i--) {
+        for (int i = touIds.size() - 1; i > 0; i--) {
             String touName = getTousApiResponse.jsonPath().get("name[" + i + "]");
             if (updatedName.equalsIgnoreCase(touName)) {
                 int newVersionTouId = getTousApiResponse.jsonPath().get("touId[" + i + "]");
@@ -108,9 +108,9 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updateTouApiResponse.getStatusCode(), 200);
         getTouIdResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(orgId, touId);
         boolean updateSolutionActive = getTouIdResponse.jsonPath().get("solutions.active[0]");
-        if (solutionActive==updateSolutionActive) {
-                logStep("Solution updated successfully for " + touId );
-            }
+        if (solutionActive == updateSolutionActive) {
+            logStep("Solution updated successfully for " + touId);
+        }
         logStep("Solution not updated successfully for " + touId);
         touSolutionsObj = new TouSolutions(solutionId, solutionName, true);
         touSolutionsList.clear();
@@ -123,21 +123,21 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updateTouApiResponse.getStatusCode(), 200);
         getTouIdResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(orgId, touId);
         updateSolutionActive = getTouIdResponse.jsonPath().get("solutions.active[0]");
-        if (solutionActive==updateSolutionActive) {
-            logStep("Solution updated successfully for " + touId );
+        if (solutionActive == updateSolutionActive) {
+            logStep("Solution updated successfully for " + touId);
         }
     }
 
-    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Update the Single Practice Website for Invalid datatype of Practice Id")
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Update the Tou Id for Invalid datatype of Practice Id")
     public void updateTouInvaliDataTypePracticeApi() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
-        String stringOrgId=testData.getProperty("PXPP.18282.api.practice.id").concat("Sample");
+        String stringOrgId = testData.getProperty("PXPP.18282.api.practice.id").concat("Sample");
         String touType = testData.getProperty("api.valid.tou.type");
         logStep("Get all touId details which are associated with give orgId");
         getTousApiResponse = orgInfo.getListOfTouForAPractice_DL(orgId, touType);
         logStep("Get the 1st touId of the given orgId");
         int touId = getTousApiResponse.jsonPath().get("touId[0]");
-        String stringTouId=touId+"Sample";
+        String stringTouId = touId + "Sample";
         logStep("Get the details of the given touId of the orgId");
         getTouIdResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(orgId, touId);
         String name = getTouIdResponse.jsonPath().get("name");
@@ -152,13 +152,14 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
         touContentObj = new TouContent(contentEng, contentSpan);
         logStep("update the solution for the given tou_id");
         updateTou = new UpdateTou(name, false, touSolutionsList, touType, touContentObj);
-        updateTouApiResponse = orgInfo.updateTouPracticeInvaliDatatypeResponse("DL", stringOrgId, stringTouId, updateTou);;
+        updateTouApiResponse = orgInfo.updateTouPracticeInvaliDatatypeResponse("DL", stringOrgId, stringTouId, updateTou);
+        ;
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updateTouApiResponse);
         CCUtils.assertEquals(updateTouApiResponse.getStatusCode(), 400);
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Update the Single Practice Website for Invalid Method Call")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Update the TouId for Invalid Method Call")
     public void updateTouInvalidMethodCallApi() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
         String touType = testData.getProperty("api.valid.tou.type");
@@ -214,7 +215,7 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updateTouApiResponse.getStatusCode(), 400);
     }
 
-    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Update the Practice Website for invalid PracticeId")
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Update the TouId for invalid PracticeId")
     public void updateTouInvalidPracticeApi() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
         String touType = testData.getProperty("api.valid.tou.type");
