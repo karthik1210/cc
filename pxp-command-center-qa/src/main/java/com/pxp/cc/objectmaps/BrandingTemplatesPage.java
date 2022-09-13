@@ -103,7 +103,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(xpath = "(//button[@id='removeImageButton'])[2]")
 	private WebElement removeSolutionsLogo;
 	
-	@FindBy(xpath = "(//button[@id='removeImageButton'])[3]")
+	@FindBy(xpath = "(//button[@id='removeImageButton'])")
 	private WebElement removePatientCommunicationsLogo;
 	
 	@FindBy(xpath = "(//button[@id='removeImageButton'])[1]")
@@ -465,7 +465,8 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("clicked to remove button of Favicon Logo");
 	}
 	
-	public void clickToRemoveButtonOfPatientCommunicationsLogo() {
+	public void clickToRemoveButtonOfPatientCommunicationsLogo() throws AWTException {
+		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForElement(removePatientCommunicationsLogo, driver);
 		removePatientCommunicationsLogo.click();
 		log("clicked to remove button of Patient Communications Logo");
