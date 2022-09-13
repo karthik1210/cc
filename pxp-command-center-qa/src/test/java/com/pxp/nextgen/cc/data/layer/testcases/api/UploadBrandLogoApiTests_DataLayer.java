@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
+import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.BrandsValidations;
 import com.pxp.cc.util.CCUtils;
@@ -16,7 +17,8 @@ import io.restassured.response.Response;
 public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 
 	private BrandsInfo brandsInfo;
-	Response createClientApiResponse, createBrandApiResponse, updateBrandImageApiResponse;
+	private ClientInfo clientInfo;
+	Response updateBrandImageApiResponse,createClientApiResponse,createBrandApiResponse;
 	public int orgId;
 	public int brandId;
 	public String namePayLoad;
@@ -29,12 +31,38 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		brandsInfo = new BrandsInfo();
 		validation = new Validations();
 		brandsValidations = new BrandsValidations();
+		clientInfo = new ClientInfo();
 	}
 
+
+	public int createClient() throws NullPointerException, IOException {
+		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(30))));
+		String clientSapNumber = CCUtils
+				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
+						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25))));
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
+		return createClientApiResponse.jsonPath().getInt("clientId");
+	}
+	
+	public int createBrand(int orgId) {
+		String name = testData.getProperty("client.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = testData.getProperty("client.brand.color");
+		createBrandApiResponse = brandsInfo.createBrandingTemplateDL(String.valueOf(orgId), name, "true", color);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		return createBrandApiResponse.jsonPath().getInt("brandId");
+	}
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response code when creating a new brand logo")
 	public void testResponseCodeForCreateBrandLogo() throws IOException {
 		log("Create new brandId & update brand image");
-		int brandId = Integer.parseInt(testData.getProperty("created.brand.id"));
+		orgId = createClient();
+		brandId = createBrand(orgId);
 		String logoType = testData.getProperty("api.logoType");
 		String altText = testData.getProperty("api.altText");
 		String href = testData.getProperty("api.href");
@@ -60,9 +88,8 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageForInvalidBrandId(updateBrandImageApiResponse, brandId);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of PATCH")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PATCH is used instead of POST")
 	public void testErrorForInvalidMethodCall() throws IOException {
-		int brandId = Integer.parseInt(testData.getProperty("created.brand.id"));
 		String logoType = testData.getProperty("api.logoType");
 		String altText = testData.getProperty("api.altText");
 		String href = testData.getProperty("api.href");
@@ -76,9 +103,8 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidPatchMethodCall(updateBrandImageApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url to check upload brand logo functionality and validate error status code")
 	public void testErrorForInvalidUrl() throws IOException {
-		int brandId = Integer.parseInt(testData.getProperty("created.brand.id"));
 		String logoType = testData.getProperty("api.logoType");
 		String altText = testData.getProperty("api.altText");
 		String href = testData.getProperty("api.href");
@@ -94,9 +120,8 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create Branding Template with null values in orgId field and verify error response code")
 	public void testErrorMessageCreateBrandLogoWithAllFieldAsNull() throws IOException {
-		int brandId = Integer.parseInt(testData.getProperty("created.brand.id"));
 		logStep("Enter null values in orgId field in request payload");
-		updateBrandImageApiResponse = brandsInfo.updateBrandImage_DL(brandId,null, null, null, null, null);
+		updateBrandImageApiResponse = brandsInfo.updateBrandImage_DL(brandId, null, null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateBrandImageApiResponse);
 		CCUtils.assertEquals(updateBrandImageApiResponse.getStatusCode(), 400);
