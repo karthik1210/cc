@@ -1137,6 +1137,23 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
 	}
 
+	public static final String CREATE_LOCATION_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_PATH_CREATE_LOCATION_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_DETAILS_DL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId;
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
+
+	}
+
 	public static final String UPDATE_SOLUTION_FOR_LOCATION_BL(int locationId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
 	}
@@ -1163,9 +1180,5 @@ public class ApiPath {
 
 	public static final String LOCATION_FOR_CLIENT_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/clients/null/locations";
-	}
-
-	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
-		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
 	}
 }
