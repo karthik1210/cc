@@ -1069,4 +1069,12 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.UPDATE_ORG_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(websiteUrl).when().patch(url).then().extract().response();
 	}
+	 public Response updateOrgsSolutionsDetails_BL(int solutionId, String status, int orgId) throws IOException {
+	        String url = ApiPath.ORG_BL + "/" + orgId + "/solutions";
+	        List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
+	                status);
+
+	        return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
+	    }
+
 }
