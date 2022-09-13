@@ -3,7 +3,6 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.UpdateTou;
@@ -23,7 +22,6 @@ import java.util.Map;
 
 public class UpdateTouApiTests_DataLayer extends BaseRest {
     private OrgInfo orgInfo;
-    private ClientInfo clientInfo;
     private Validations validations;
     Response updateTouApiResponse, getTousApiResponse, getTouIdResponse;
     ArrayList<TouSolutions> touSolutionsList = new ArrayList<TouSolutions>();
@@ -35,7 +33,6 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
     public void setBaseUri() throws Exception {
         setupServiceRequestSpecificationBuilderForDataLayer();
         orgInfo = new OrgInfo();
-        clientInfo = new ClientInfo();
         validations = new Validations();
     }
 
