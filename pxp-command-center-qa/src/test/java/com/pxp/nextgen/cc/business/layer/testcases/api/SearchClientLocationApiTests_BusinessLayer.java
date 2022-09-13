@@ -152,7 +152,6 @@ public class SearchClientLocationApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchLocationsResult);
 		CCUtils.assertEquals(searchLocationsResult.getStatusCode(), 204);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for client using SolutionId",enabled = false)

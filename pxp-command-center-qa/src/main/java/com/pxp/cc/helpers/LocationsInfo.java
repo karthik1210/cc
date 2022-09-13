@@ -162,6 +162,7 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_DL_NULL_VALUES();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
 	public Response getLocationsForResourceForInvalidMethod_DL(int resourceId, int practiceId) {
 		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_DL(resourceId, practiceId);
 		return given().spec(requestSpec).post(url).then().extract().response();
@@ -171,6 +172,17 @@ public class LocationsInfo extends BaseRest {
 			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
 			throws IOException {
 		String url = ApiPath.LOCATION_FOR_CLIENT_BL(clientId);
+		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
+				lat, lng);
+		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
+				timezoneCode);
+		return given().spec(requestSpec).body(createLocationPayload).when().post(url).then().extract().response();
+	}
+
+	public Response createLocation_DL(String clientId, String name, String addressLine1, String addressLine2,
+			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
+			throws IOException {
+		String url = ApiPath.LOCATION_FOR_CLIENT_DL(clientId);
 		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
 				lat, lng);
 		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
@@ -208,6 +220,13 @@ public class LocationsInfo extends BaseRest {
 				.response();
 	}
 
+	public Response locationAssociateToPractice_DL(int locationId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_DL(locationId);
+		Map<String, Object> locationAssociateToPracticePayload = locationAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(locationAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}
+
 	private Map<String, Object> locationAssociateToPractice(Integer practiceId, Boolean active) {
 		Map<String, Object> locationassociatetoPracticeMap = new HashMap<String, Object>();
 		locationassociatetoPracticeMap.put("practiceId", practiceId);
@@ -217,6 +236,13 @@ public class LocationsInfo extends BaseRest {
 
 	public Response solutionAssociateToLocation_BL(int locationId, int practiceId, int solutionId, boolean active) {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_BL(locationId, practiceId);
+		Map<String, Object> solutionAssociateToLocationPayload = solutionAssociateToLocation(solutionId, active);
+		return given().spec(requestSpec).body(solutionAssociateToLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response solutionAssociateToLocation_DL(int locationId, int practiceId, int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
 		Map<String, Object> solutionAssociateToLocationPayload = solutionAssociateToLocation(solutionId, active);
 		return given().spec(requestSpec).body(solutionAssociateToLocationPayload).when().put(url).then().extract()
 				.response();
@@ -236,12 +262,29 @@ public class LocationsInfo extends BaseRest {
 				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
+	}
 
+	public Response getLocationsForClient_DL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.LOCATION_FOR_CLIENT_DL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
 	}
 
 	public Response getLocationsForClientInvalidUrl_BL(String clientId, String name, String systemid,
 			String enterpriseid, String practiceid, String solutionid, String pagesize) {
 		String url = ApiPath.INVALID_URL_LOCATION_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response getLocationsForClientInvalidUrl_DL(String clientId, String name, String systemid,
+			String enterpriseid, String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.INVALID_URL_LOCATION_FOR_CLIENT_DL(clientId);
 		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
 				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
@@ -257,8 +300,22 @@ public class LocationsInfo extends BaseRest {
 				.response();
 	}
 
+	public Response getLocationsForClientInvalidMethodCall_DL(String clientId, String name, String systemid,
+			String enterpriseid, String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.LOCATION_FOR_CLIENT_DL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().put(url).then().extract()
+				.response();
+	}
+
 	public Response getLocationsForClientForNullValue_BL() {
 		String url = ApiPath.LOCATION_FOR_CLIENT_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationsForClientForNullValue_DL() {
+		String url = ApiPath.LOCATION_FOR_CLIENT_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
