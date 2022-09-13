@@ -1116,4 +1116,39 @@ public class ApiPath {
         else
             return SERVICE_ORG_DL + "/v1/orgs/null";
     }
+
+    public static final String UPDATE_TOU(String serviceLayer, int practiceId, int touId) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+    }
+
+    public static final String UPDATE_TOU_WITHOUT_PRACTICEID(String serviceLayer) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices//tous/";
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices//tous/";
+    }
+
+    public static final String UPDATE_TOU_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String touId) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+    }
+
+    public static final String UPDATE_TOU_WITH_INVLAID_URI(String serviceLayer, int practiceId, int touId) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+    }
+
+    public static final String NULL_UPDATE_TOU(String serviceLayer) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous/null";
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous/null";
+    }
 }
