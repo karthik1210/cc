@@ -2729,8 +2729,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("brandId").toString(), brandId);
 	}
 
-	public void verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(Response response, String orgId)
-			throws IOException {
+	public void verifyErrorMessageInResponseForInvalidOrgId(Response response, String orgId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for OrgId=" + orgId);
 	}
@@ -2895,9 +2894,100 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+
 	public void verifyErrorMessageInResponseForInvalidPatchMethodCall(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PATCH' not supported");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
+
+	public void verifyCreateLocationApiResponseBody(Response response, String locationName) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertNotNull(jsonpath.get("id"), "location id is not in the response");
+		CCUtils.assertNotNull(jsonpath.get("name"), "location name is not in the response");
+		CCUtils.assertEquals(response.jsonPath().get("name").toString(), locationName);
+	}
+
+	public void verifyGetLocationDetailsApiResponseBody(Response response, String locationName, String addressLine1,
+			String addressLine2, String city, String state, String zipcode, float lat, float lng, String code,
+			String timezoneDisplayName) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("name"), locationName);
+		Map<String, String> timezone = jsonpath.getMap("timezone");
+		CCUtils.assertEquals(timezone.get("code").toString(), code);
+		CCUtils.assertEquals(timezone.get("name").toString(), timezoneDisplayName);
+		Map<String, String> address = jsonpath.getMap("address");
+		CCUtils.assertEquals(address.get("addressLine1").toString(), addressLine1);
+		CCUtils.assertEquals(address.get("addressLine2").toString(), addressLine2);
+		CCUtils.assertEquals(address.get("city").toString(), city);
+		CCUtils.assertEquals(address.get("state").toString(), state);
+		CCUtils.assertEquals(address.get("zipcode").toString(), zipcode);
+		CCUtils.assertEquals(address.get("lat"), lat);
+		CCUtils.assertEquals(address.get("lng"), lng);
+	}
+
+	public void verifyErrorResponseBodyForInvalidData(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Address Line1 size maximum 100 characters, State size maximum 2 characters, Address Line2 size maximum 100 characters, City size maximum 50 characters, Zipcode size maximum 50 characters, Name size maximum 100 characters";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForMandatoryFieldsForLocation(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "Zipcode cannot be empty or null, TimezoneCode cannot be empty or null, City cannot be empty or null, Address Line1 cannot be empty or null, State cannot be empty or null, Name cannot be empty or null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyCreateProviderApiResponseBody(Response response, String firstName, String lastName)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath, "Response is null");
+		CCUtils.assertNotNull(jsonpath.get("providerId"), "provider id is not in the response");
+		CCUtils.assertEquals(jsonpath.getString("firstName"), firstName);
+		CCUtils.assertEquals(jsonpath.getString("lastName"), lastName);
+	}
+
+	public void verifyErrorResponseForInvalidEmailFormat(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "must be a well-formed email address");
+	}
+
+	public void verifyErrorResponseForInvalidMobileNumber(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Maximum mobile number size is 30 characters");
+	}
+
+	public void verifyErrorResponseForTimezoneCodeField(Response response, String timezoneCode) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for TimezoneId=" + timezoneCode);
+	}
+
 }
