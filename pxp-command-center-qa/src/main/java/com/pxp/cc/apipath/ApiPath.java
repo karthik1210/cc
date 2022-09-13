@@ -1122,7 +1122,6 @@ public class ApiPath {
 	}
 
 	public static final String UPDATE_SOLUTION_FOR_LOCATION_BL(int locationId, int practiceId) {
-
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
 	}
 

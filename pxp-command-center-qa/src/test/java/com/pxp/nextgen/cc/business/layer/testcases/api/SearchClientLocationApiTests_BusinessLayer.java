@@ -19,7 +19,7 @@ import com.pxp.cc.util.Validations;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
-public class SearchClientLoactionApiTests_BusinessLayer extends BaseRest {
+public class SearchClientLocationApiTests_BusinessLayer extends BaseRest {
 	private LocationsInfo locationInfo;
 	private LocationsValidations locationsValidations;
 	JsonPath jsonPath;
@@ -210,7 +210,7 @@ public class SearchClientLoactionApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for null value")
 	public void testSearchLocationForNullValue() throws IOException {
-		logStep("Search  location for client using method call PUT instead of GET");
+		logStep("Search  location for null value in clientId input field");
 		searchLocationsResult = locationInfo.getLocationsForClientForNullValue_BL();
 		CCUtils.assertEquals(searchLocationsResult.getStatusCode(), 400);
 	}

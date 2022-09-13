@@ -60,7 +60,7 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeProviderApiTests_BusinessLayer" />
 				<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientLoactionApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientLocationApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

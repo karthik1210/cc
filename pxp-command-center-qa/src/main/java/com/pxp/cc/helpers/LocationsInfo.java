@@ -4,11 +4,9 @@ package com.pxp.cc.helpers;
 
 import com.pxp.cc.model.BaseRest;
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 
