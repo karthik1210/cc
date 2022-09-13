@@ -15,8 +15,8 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.OrgWebsites;
 import com.pxp.cc.pojos.SavePracticeWebsite;
-import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.pojos.UpdateTou;
+import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -1066,11 +1066,17 @@ public class OrgInfo extends BaseRest {
         }
     }
 
-    public Response updateGetOrgPracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId, Map<String, Object> websiteUrl) {
-        String url = ApiPath.UPDATE_ORG_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
-        return given().spec(requestSpec).body(websiteUrl).when().patch(url).then().extract().response();
-    }
+	public Response updateGetOrgPracticeWebsitesInvaliDatatypeResponse(String serviceLayer, String practiceId,Map<String, Object> websiteUrl) {
+		String url = ApiPath.UPDATE_ORG_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).body(websiteUrl).when().patch(url).then().extract().response();
+	}
+	 public Response updateOrgsSolutionsDetails_BL(int solutionId, String status, int orgId) throws IOException {
+	        String url = ApiPath.ORG_BL + "/" + orgId + "/solutions";
+	        List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
+	                status);
 
+	        return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
+	    }
 
     public Response updateTouPracticeResponse(String validURI, String serviceLayer, int practiceId, int touId, UpdateTou updateTouDetails) {
         if (validURI.equalsIgnoreCase("Valid")) {
@@ -1095,4 +1101,5 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.UPDATE_TOU_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, touId);
         return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
     }
+
 }
