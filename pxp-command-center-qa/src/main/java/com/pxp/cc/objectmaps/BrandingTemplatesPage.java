@@ -1,7 +1,5 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
 
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
-
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
@@ -26,6 +24,12 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(id = "uploadText1")
 	private WebElement altTextBox;
+	
+	@FindBy(id = "uploadText0")
+	private WebElement altTextFaviconBox;
+	
+	@FindBy(id = "uploadText2")
+	private WebElement altTextPatientCommunicationBox;
 
 	@FindBy(id = "removeImageButton")
 	private WebElement removeImageButton;
@@ -71,6 +75,64 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(id = "clearDelete")
 	private WebElement CrossIcon;
+
+	@FindBy(xpath = "//div[contains(text(),'Version name is required')]")
+	private WebElement errorVersionName;
+
+	@FindBy(xpath = "//input[@id='favicon']//preceding::p[1]")
+	private WebElement errorInvalidFormatTypeFavicon;
+
+	@FindBy(xpath = "//input[@id='logo']//preceding::p[1]")
+	private WebElement errorInvalidFormatTypeSolutionsLogo;
+
+	@FindBy(xpath = "//input[@id='emailLogo']//preceding::p[1]")
+	private WebElement errorInvalidFormatTypePatientCommunicationsLogo;
+
+	@FindBy(xpath = "(//input[@type='file'])[3]")
+	private WebElement browsePatientCommunicationLogo;
+
+	@FindBy(xpath = "(//input[@type='file'])[1]")
+	private WebElement browseFaviconLogo;
+
+	@FindBy(xpath = "//div[contains(text(),'AltText name is required')]")
+	private WebElement errorAltTextRequired;
+
+	@FindBy(xpath = "//div[contains(text(),'Maximum characters reached')]")
+	private WebElement errorMaxCharacterReached;
+	
+	@FindBy(xpath = "(//button[@id='removeImageButton'])[2]")
+	private WebElement removeSolutionsLogo;
+	
+	@FindBy(xpath = "(//button[@id='removeImageButton'])")
+	private WebElement removePatientCommunicationsLogo;
+	
+	@FindBy(xpath = "(//button[@id='removeImageButton'])[1]")
+	private WebElement removeFaviconLogo;
+	
+	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[1]")
+	private WebElement faviconNoFileUploaded;
+	
+	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[2]")
+	private WebElement solutionsNoFileUploaded;
+	
+	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[3]")
+	private WebElement patientCommunicationsNoFileUploaded;
+
+	@FindBy(id = "mat-radio-9")
+	private WebElement logoRadioButton;
+	
+	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[1]")
+	private WebElement faviconMaxCharReached;
+	
+	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[2]")
+	private WebElement solutionsLogoMaxCharReached;
+	
+	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[3]")
+	private WebElement patientCommunicationsLogoMaxCharReached;
+	
+	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
+
+	public String validImagePath = "\\src\\test\\resources\\data-driven\\images\\logo.png";
 
 	public BrandingTemplatesPage(WebDriver driver) {
 		super(driver);
@@ -150,6 +212,18 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(altTextBox, driver);
 		altTextBox.sendKeys(altText);
 		log("Entered text in Version name field : " + altText);
+	}
+	
+	public void enterAltTextForPatientCommunication(String altText) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
+		altTextPatientCommunicationBox.sendKeys(altText);
+		log("Entered text in Alt Text field of Patient Communication is : " + altText);
+	}
+	
+	public void enterAltTextForFavicon(String altText) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextFaviconBox, driver);
+		altTextFaviconBox.sendKeys(altText);
+		log("Entered text in Alt Text field of Favicon is : " + altText);
 	}
 
 	public void verifyRemoveButton() throws InterruptedException, AWTException {
@@ -242,4 +316,164 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on CrossIcon");
 	}
 
+	public void verifyVerionNameErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorVersionName, driver);
+		if (errorVersionName.isDisplayed() && errorVersionName.getText().trim().equals("Version name is required")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
+
+	public void uploadPatientCommunicationsLogoInvalidImage() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		javascriptClick(browsePatientCommunicationLogo);
+		log("Clicked on Patient Communication BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browsePatientCommunicationLogo.sendKeys(projectpath + invalidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void uploadPatientCommunicationsLogoValidImage() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		javascriptClick(browsePatientCommunicationLogo);
+		log("Clicked on Patient Communication BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browsePatientCommunicationLogo.sendKeys(projectpath + validImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void uploadFaviconLogoInvalidImage() throws InterruptedException, AWTException {
+		javascriptClick(browseFaviconLogo);
+		log("Clicked on Favicon BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseFaviconLogo.sendKeys(projectpath + invalidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void uploadFaviconLogoValidImage() throws InterruptedException, AWTException {
+		javascriptClick(browseFaviconLogo);
+		log("Clicked on Favicon BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseFaviconLogo.sendKeys(projectpath + validImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void uploadSolutionLogoInvalidImage() throws InterruptedException, AWTException {
+		javascriptClick(browseSolLogo);
+		log("Clicked on Solution Logo BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseSolLogo.sendKeys(projectpath + invalidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void verifyInvalidFaviconImageErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorInvalidFormatTypeFavicon, driver);
+		if (errorInvalidFormatTypeFavicon.isDisplayed()
+				&& errorInvalidFormatTypeFavicon.getText().trim().equals("Invalid file type")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
+
+	public void verifyInvalidSolutionsLogoImageErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorInvalidFormatTypeSolutionsLogo, driver);
+		if (errorInvalidFormatTypeSolutionsLogo.isDisplayed()
+				&& errorInvalidFormatTypeSolutionsLogo.getText().trim().equals("Invalid file type")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
+
+	public void verifyInvalidPatientCommunicationsLogoImageErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorInvalidFormatTypePatientCommunicationsLogo, driver);
+		if (errorInvalidFormatTypePatientCommunicationsLogo.isDisplayed()
+				&& errorInvalidFormatTypePatientCommunicationsLogo.getText().trim().equals("Invalid file type")) {
+			CCUtils.assertTrue(true, "Message got displayed");
+		}
+	}
+
+	public void verifyAltTextRequiredErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorAltTextRequired, driver);
+		if (errorAltTextRequired.isDisplayed()
+				&& errorAltTextRequired.getText().trim().equals("AltText name is required")) {
+			CCUtils.assertTrue(true, "Alt Text Required error message got displayed");
+		}
+	}
+
+	public void verifyMaxCharacterReachedErrorGotDisplayed() {
+		CCUtils.verifyAndWaitForElement(errorMaxCharacterReached, driver);
+		if (errorMaxCharacterReached.isDisplayed()
+				&& errorMaxCharacterReached.getText().trim().equals("Maximum characters reached")) {
+			CCUtils.assertTrue(true, "Maximum characters reached error message got displayed");
+		}
+	}
+	
+	public void verifyNoFileUploadedFaviconIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(faviconNoFileUploaded, driver);
+		if (faviconNoFileUploaded.isDisplayed()
+				&& faviconNoFileUploaded.getText().trim().equals("No File Uploaded")) {
+			CCUtils.assertTrue(true, "No File Uploaded message got displayed");
+		}
+	}
+	
+	public void verifyNoFileUploadedSolutionIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(solutionsNoFileUploaded, driver);
+		if (solutionsNoFileUploaded.isDisplayed()
+				&& solutionsNoFileUploaded.getText().trim().equals("No File Uploaded")) {
+			CCUtils.assertTrue(true, "No File Uploaded message got displayed");
+		}
+	}
+	
+	public void verifyNoFileUploadedPatientCommunicationIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(patientCommunicationsNoFileUploaded, driver);
+		if (patientCommunicationsNoFileUploaded.isDisplayed()
+				&& patientCommunicationsNoFileUploaded.getText().trim().equals("No File Uploaded")) {
+			CCUtils.assertTrue(true, "No File Uploaded message got displayed");
+		}
+	}
+	
+	public void verifyPatientCommunicationMaxCharReachedErrorIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(patientCommunicationsLogoMaxCharReached, driver);
+		if (patientCommunicationsLogoMaxCharReached.isDisplayed()
+				&& patientCommunicationsLogoMaxCharReached.getText().trim().equals("Maximum characters reached")) {
+			CCUtils.assertTrue(true, "Patient Communication Max character reached message got displayed");
+		}
+	}
+	
+	public void verifySolutionsLogoMaxCharReachedErrorIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(solutionsLogoMaxCharReached, driver);
+		if (solutionsLogoMaxCharReached.isDisplayed()
+				&& solutionsLogoMaxCharReached.getText().trim().equals("Maximum characters reached")) {
+			CCUtils.assertTrue(true, "Solutions Logo Max character reached message got displayed");
+		}
+	}
+	
+	public void verifyFaviconLogoMaxCharReachedErrorIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(faviconMaxCharReached, driver);
+		if (faviconMaxCharReached.isDisplayed()
+				&& faviconMaxCharReached.getText().trim().equals("Maximum characters reached")) {
+			CCUtils.assertTrue(true, "Favicon Max character reached message got displayed");
+		}
+	}
+	
+	public void clickToRemoveButtonOfSolutionsLogo() {
+		CCUtils.verifyAndWaitForElement(removeSolutionsLogo, driver);
+		removeSolutionsLogo.click();
+		log("clicked to remove button of Solutions Logo");
+	}
+	
+	public void clickToRemoveButtonOfFaviconLogo() {
+		CCUtils.verifyAndWaitForElement(removeFaviconLogo, driver);
+		removeFaviconLogo.click();
+		log("clicked to remove button of Favicon Logo");
+	}
+	
+	public void clickToRemoveButtonOfPatientCommunicationsLogo() throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(removePatientCommunicationsLogo, driver);
+		removePatientCommunicationsLogo.click();
+		log("clicked to remove button of Patient Communications Logo");
+	}
+	
+	public void clickToLogoRadioButton() {
+		CCUtils.verifyAndWaitForElement(logoRadioButton, driver);
+		logoRadioButton.click();
+	}
 }
