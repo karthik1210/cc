@@ -1137,6 +1137,10 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
 	}
 
+	public static final String UPDATE_BRAND_IMAGE_DL_INVALID_URL(int brandId) {
+		return SHARED_DL + "/v1/brands/" + brandId + "/logoinvalidurl";
+	}
+
 	public static final String CREATE_LOCATION_DL(int clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/locations";
 	}
@@ -1151,7 +1155,6 @@ public class ApiPath {
 
 	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
-
 	}
 
 	public static final String UPDATE_SOLUTION_FOR_LOCATION_BL(int locationId, int practiceId) {

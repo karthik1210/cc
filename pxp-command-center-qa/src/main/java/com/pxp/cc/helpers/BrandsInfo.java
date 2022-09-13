@@ -304,4 +304,18 @@ public class BrandsInfo extends BaseRest {
 		String url = ApiPath.UPDATE_BRAND_DETAILS_INVALID_URL_DL(brandId);
 		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
 	}
+
+	public Response updateBrandImage_DL_Invalid_Url(int brandId, String logoType, String altText, String href,
+			String name, String mimeType) {
+		String url = ApiPath.UPDATE_BRAND_IMAGE_DL_INVALID_URL(brandId);
+		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
+		return given().spec(requestSpec).body(createBrandImagePayload).when().patch(url).then().extract().response();
+	}
+
+	public Response updateBrandImage_DL_Invalid_Method_Call(int brandId, String logoType, String altText, String href,
+			String name, String mimeType) {
+		String url = ApiPath.UPDATE_BRAND_IMAGE_DL(brandId);
+		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
+		return given().spec(requestSpec).body(createBrandImagePayload).when().patch(url).then().extract().response();
+	}
 }

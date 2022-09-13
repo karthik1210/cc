@@ -39,4 +39,13 @@ public class BrandsValidations {
 		CCUtils.assertEquals(jsonpath.get("message"),
 				"Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \"brandId\"");
 	}
+
+	public void verifyErrorMessageIfCreateBrandLogoResponseBodyNull(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		if ((jsonpath.get("message")).toString().contains(
+				"Alt text can not be blank, Href can not be blank, File name can not be blank, Logo type can not be blank")) {
+			CCUtils.assertTrue(true, "condition fulfilled");
+		}
+	}
 }
