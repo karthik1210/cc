@@ -36,7 +36,7 @@ public class ClientUserLockFromKebabMenuTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active user and Verify lock button is not displayed in kebab menu for locked user")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active user and Verify lock button is not displayed in kebab menu for locked user")
 	public void testClientUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
 		searchOptionsPage = clientUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
