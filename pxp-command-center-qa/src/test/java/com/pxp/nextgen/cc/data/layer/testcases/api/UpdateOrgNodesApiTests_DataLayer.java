@@ -74,7 +74,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForEhrIdentifier(updateOrgNodeApiResponse);
+		validation.verifyErrorResponseBodyForInvalidProductId(updateOrgNodeApiResponse, 0);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter invalid value in pmidentifier, ehr identifier field and validate error response body")
@@ -86,7 +86,7 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForPmIdentifier(updateOrgNodeApiResponse);
+		validation.verifyErrorResponseBodyForInvalidProductId(updateOrgNodeApiResponse, 0);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter maximum characters in solution display name and name field and validate error response body")
