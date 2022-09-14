@@ -640,5 +640,10 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response associateDisassociateBrandUsingNullValue_BL() {
+		String url = ApiPath.ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 
 }

@@ -1226,4 +1226,8 @@ public class ApiPath {
         else
             return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous/null";
     }
+    
+    public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/orgs/null/brands";
+	}
 }

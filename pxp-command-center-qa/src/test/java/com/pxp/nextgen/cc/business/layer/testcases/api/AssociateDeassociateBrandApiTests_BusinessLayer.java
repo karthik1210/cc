@@ -23,7 +23,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private BrandsInfo brandsInfo;
 	private OrgInfo orgInfo;
-	int clientId, systemId, enterpriseId, practiceId;
+	int clientId, systemId, enterpriseId, practiceId,brandId=0;
 	Response associateDisassociateBrandApiResponse, createClientApiResponse,
 			createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
 			createBrandApiResponse;
@@ -102,7 +102,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	public void associateAndDisassociateBrandToClient() throws IOException
 	{
 		logStep("Create new branding template at Client level");
-		int brandId=createBrandTemplate(clientId);
+		brandId=createBrandTemplate(clientId);
 		logStep("associate branding template to Client");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(clientId, brandId, true);
 		logStep("Validating response Information");
@@ -118,7 +118,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	public void associateAndDisassociateBrandToSystem() throws IOException
 	{
 		logStep("Create new branding template at System level");
-		int brandId=createBrandTemplate(systemId);
+		brandId=createBrandTemplate(systemId);
 		logStep("associate branding template to System");
 		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(systemId, brandId, true);
 		logStep("Validating response Information");
@@ -134,7 +134,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	public void associateAndDisassociateBrandToEnterprise() throws IOException
 	{
 		logStep("Create new branding template at Enterprise level");
-		int brandId=createBrandTemplate(enterpriseId);
+		brandId=createBrandTemplate(enterpriseId);
 		logStep("associate branding template to enterprise");
 		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(enterpriseId, brandId, true);
 		logStep("Validating respone information");
@@ -151,7 +151,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	public void associateAndDisassociateBrandToPractice() throws IOException
 	{
 		logStep("create new branding template at Practice level");
-		int brandId= createBrandTemplate(practiceId);
+		brandId= createBrandTemplate(practiceId);
 		logStep("associate branding template to practice");
 		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(practiceId, brandId, true);
 		logStep("validating response information");
@@ -163,12 +163,12 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing Org Id and verify error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing Org Id and existing brand id to verify error message")
 	public void testErrorMessageForNonExistingOrgId() throws Exception {
-		logStep("Enter non-existing Org Id");
+		logStep("Enter non-existing Org Id and existing brand id");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(
 				Integer.parseInt(testData.getProperty("non.existing.org.id")),
-				Integer.parseInt(testData.getProperty("brand.id")), false);
+				brandId, false);
 		logStep("Validating Response Body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
@@ -176,24 +176,45 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("non.existing.org.id"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing Brand Id and verify error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing org id and non-existing Brand Id to verify error message")
 	public void testErrorMessageForNonExistingBrandId() throws Exception {
-		logStep("Enter non-existing Brand Id");
+		logStep("Enter existing org id and non-existing Brand Id");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(
-				Integer.parseInt(testData.getProperty("org.client.id")),
-				Integer.parseInt(testData.getProperty("non.existing.brand.id")), false);
+				clientId,Integer.parseInt(testData.getProperty("non.existing.brand.id")), true);
 		logStep("Validating Response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
 		brandingValidations.verifyErrorMessageInResponseForNonExistingBrandId(associateDisassociateBrandApiResponse,
 				testData.getProperty("non.existing.brand.id"));
 	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing org id and Brand Id to verify error message")
+	public void testErrorMessageForNonExistingOrgIdAndBrandId() throws Exception {
+		logStep("Enter non-existing org id and Brand Id");
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(
+				Integer.parseInt(testData.getProperty("non.existing.org.id")),
+				Integer.parseInt(testData.getProperty("non.existing.brand.id")), true);
+		logStep("Validating Response body");
+		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
+		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
+		brandingValidations.verifyErrorMessageInResponseForNonExistingBrandId(associateDisassociateBrandApiResponse,
+				testData.getProperty("non.existing.brand.id"));
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Org Id as null to verify error message")
+	public void testErrorMessageForOrgIdAsNull() throws Exception {
+		logStep("Enter Org Id as null");
+		associateDisassociateBrandApiResponse = sharedInfo.associateDisassociateBrandUsingNullValue_BL();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
+		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
+	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter empty payload and verify error message")
 	public void testErrorMessageForEmptyPayload() throws Exception {
 		logStep("Enter existing Client id");
 		associateDisassociateBrandApiResponse = sharedInfo
-				.associateDeassociateBrandUsingEmptyPayload_BL(Integer.parseInt(testData.getProperty("org.client.id")));
+				.associateDeassociateBrandUsingEmptyPayload_BL(clientId);
 		logStep("validating Response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
@@ -202,22 +223,20 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Hit invalid URL and verify error message")
 	public void testErrorMessageForInvalidURL() throws Exception {
-		logStep("Enter existing Org Id");
+		logStep("Enter existing Org Id and brand id");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingInvalidUrl_BL(
-				Integer.parseInt(testData.getProperty("org.client.id")),
-				Integer.parseInt(testData.getProperty("client.brand.id")), true);
+				clientId,brandId, true);
 		logStep("Validate Response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(associateDisassociateBrandApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Use call POST instead of PUT and verify error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Instead of PUT method call make POST call and verify error message")
 	public void testErrorMessageForInvalidMethodCall() throws Exception {
-		logStep("Enter existing Org id");
+		logStep("Enter existing Org id and brand id");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingInvalidMethodCall_BL(
-				Integer.parseInt(testData.getProperty("org.client.id")),
-				Integer.parseInt(testData.getProperty("client.brand.id")), false);
+				clientId,brandId, false);
 		logStep("Validate response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 405);
