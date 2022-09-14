@@ -20,7 +20,7 @@ public class ClientUsersPage extends CCMainPage {
 	@FindBy(id = "firstName")
 	private List<WebElement> selectUser;
 
-	@FindBy(xpath = "//div[text()='User Status']//following::mat-icon")
+	@FindBy(id = "clientProductIcon")
 	private List<WebElement> listClientUserStatus;
 
 	@FindBy(id = "newButton")

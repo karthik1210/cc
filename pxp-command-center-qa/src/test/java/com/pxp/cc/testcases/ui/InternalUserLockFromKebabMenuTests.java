@@ -2,18 +2,18 @@
 
 package com.pxp.cc.testcases.ui;
 
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddNewInternalUsersPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.InternalUserDetailsPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
-import com.pxp.cc.objectmaps.PasswordResetPage;
 import com.pxp.cc.objectmaps.SearchOptionsPage;
+import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
 public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest {
@@ -26,9 +26,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 	public List<String> userStatusList = null;
 	public List<String> enrollmentStatusList = null;
 	public CommonMethods commonMethods;
-	SecureRandom random = new SecureRandom();
-	String autogeneratePassword = PasswordResetPage.genPassword(random);
-	public PasswordResetPage resetPage;
+	public AddNewInternalUsersPage addNewInternalUsersPage;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
@@ -39,15 +37,30 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		commonMethods = new CommonMethods(driver);
+		logStep("Click on new button");
+		internalUsersPage.clickOnNewButton();
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active internal user")
-	public void testInternalUserLockButtonIsPresentForActiveUser() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
+	public void testInternalUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
+		logStep("Create New Active Internal User");
+		String firstName = "ActiveUser" + CCUtils.generateAlphaNumericString(3).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		String lastName = CCUtils.generateAlphaNumericString(9);
+		commonMethods.enterLastName(lastName);
+		commonMethods.enterEmail(CCUtils.generateNewEmail(10));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		addNewInternalUsersPage.selectUserRole("Super Admin");
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
+		searchOptionsPage.enterSearchTextInSearchFields(firstName, lastName, "", "", "");
 		searchOptionsPage.clickOnSearchButton();
 		String userStatus = internalUsersPage.getInternalUserStatus();
 		internalUsersPage.selectUser();
@@ -64,6 +77,9 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		commonMethods.verifyToasterMessage("Success! User status has been successfully locked");
 		logStep("Verify user status after clicking on lock user button");
 		internalUserDetailsPage.verifyUserStatusAfterClickingOnLockUserButton();
+		logStep("Verify lock button is not displayed in kebab menu for locked user");
+		internalUserDetailsPage.clickOnKebabMenuButton();
+		internalUserDetailsPage.verifyLockUsertButtonIsNotDisplayed();
 		logStep("Click on unlock user button in kebab menu");
 		internalUserDetailsPage.clickOnUnlockUserButton();
 		logStep("verify success toaster message");
@@ -71,12 +87,22 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock no roles assigned user")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock no roles assigned user")
 	public void testInternalUserLockButtonIsPresentForNoRolesAssignedUser() throws Exception {
+		logStep("Create New Internal User without user role");
+		String firstName = "NewInternalUser" + CCUtils.generateAlphaNumericString(3).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		String lastName = CCUtils.generateAlphaNumericString(9);
+		commonMethods.enterLastName(lastName);
+		commonMethods.enterEmail(CCUtils.generateNewEmail(10));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select no roles assigned user");
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.no.roles.assigned"));
+		searchOptionsPage.enterSearchTextInSearchFields(firstName, lastName, "", "", "");
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
 		String userStatus = internalUsersPage.getInternalUserStatus();
@@ -100,11 +126,23 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		commonMethods.verifyToasterMessage("Success! User status has been successfully activated");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock button is not displayed in kebab menu for inactive user")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify lock button is not displayed in kebab menu for inactive user")
 	public void testInternalUserLockButtonIsNotPresentForInactiveUser() throws Exception {
+		logStep("Create New Inactive Internal User");
+		String firstName = "InactiveUser" + CCUtils.generateAlphaNumericString(3).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		String lastName = CCUtils.generateAlphaNumericString(9);
+		commonMethods.enterLastName(lastName);
+		commonMethods.enterEmail(CCUtils.generateNewEmail(10));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		commonMethods.selectInactiveRadiobutton();
+		addNewInternalUsersPage.selectUserRole("Super Admin");
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select inactive user");
 		userStatusList = new ArrayList<String>();
+		searchOptionsPage.enterSearchTextInSearchFields(firstName, lastName, "", "", "");
 		userStatusList.add(testData.getProperty("user.status.inactive"));
 		searchOptionsPage.selectUserStatus(userStatusList);
 		searchOptionsPage.clickOnSearchButton();
@@ -115,26 +153,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
 		internalUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify lock button is displayed in kebab menu for inactive user");
-		internalUserDetailsPage.verifyLockUsertButtonIsNotDisplayed();
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify lock button is not displayed in kebab menu for locked user")
-	public void testInternalUserLockButtonIsNotPresentForAlreadyLockedUser() throws Exception {
-		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
-		logStep("Search and select locked user");
-		userStatusList = new ArrayList<String>();
-		userStatusList.add(testData.getProperty("user.status.lockedout"));
-		searchOptionsPage.selectUserStatus(userStatusList);
-		searchOptionsPage.clickOnSearchButton();
-		String userStatus = internalUsersPage.getInternalUserStatus();
-		internalUsersPage.selectUser();
-		internalUserDetailsPage = new InternalUserDetailsPage(driver);
-		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
-		internalUserDetailsPage.verifySelectedUserStatusIsSameOnInternalUserDetailsPage(userStatus);
-		internalUserDetailsPage.clickOnKebabMenuButton();
-		logStep("Verify lock button is displayed in kebab menu for inactive user");
+		logStep("Verify lock button is not displayed in kebab menu for inactive user");
 		internalUserDetailsPage.verifyLockUsertButtonIsNotDisplayed();
 	}
 

@@ -26,7 +26,7 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
-	@FindBy(xpath = "//button[@class='mat-menu-trigger menu-button']")
+	@FindBy(xpath = "//mat-icon[@mattooltip='More Options']")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
@@ -35,7 +35,7 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	@FindBy(id = "detailSaveBtn")
 	private WebElement buttonUnlockUser;
 
-	@FindBy(xpath = "//div[@class='ml-auto']//following::mat-icon[@role='img']")
+	@FindBy(xpath = "//span[text()='User Status']//following::span/mat-icon[@role='img']")
 	private WebElement labelSelectedUserStatus;
 
 	@FindBy(xpath = "//span[@class='pl-3']")

@@ -175,7 +175,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='m-2']")
 	private WebElement labelPageTitle;
 
-	@FindBy(xpath = "//div[@class='ml-auto']//following::mat-icon[@role='img']")
+	@FindBy(xpath = "//span[text()='User Status']//following::span/mat-icon[@role='img']")
 	private WebElement labelInternalUserStatusValue;
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")

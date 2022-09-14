@@ -18,7 +18,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='m-2']")
 	private WebElement labelPageTitle;
 
-	@FindBy(id = "kebabMenu")
+	@FindBy(xpath = "//mat-icon[@mattooltip='More Options']")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(id = "enrollBtn")
@@ -27,7 +27,7 @@ public class ClientUserDetailsPage extends CCMainPage {
 	@FindBy(id = "enrollStatus")
 	private WebElement labelEnrollmentStatusValue;
 
-	@FindBy(xpath = "//div[@class='ml-auto']//following::mat-icon[@role='img']")
+	@FindBy(xpath = "//span[text()='User Status']//following::span/mat-icon[@role='img']")
 	private WebElement labelUserStatusValue;
 
 	@FindBy(xpath = "//mat-card-title[@id='userName']")

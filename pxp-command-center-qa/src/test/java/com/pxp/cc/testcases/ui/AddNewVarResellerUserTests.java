@@ -9,6 +9,7 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.AddNewVarResellerUserPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
+import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.objectmaps.VarResellerUsersPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;

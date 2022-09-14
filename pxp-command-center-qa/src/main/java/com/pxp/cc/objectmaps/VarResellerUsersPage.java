@@ -44,7 +44,7 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(id = "enrollStatus")
 	private List<WebElement> labelSelectedEnrollmentStatus;
 
-	@FindBy(xpath = "//div[text()='User Status']//following::mat-icon")
+	@FindBy(id = "resellerProductIcon")
 	private List<WebElement> labelSelectedUserStatus;
 
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
@@ -79,6 +79,9 @@ public class VarResellerUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//td[@class='mat-cell cdk-cell cdk-column-firstName mat-column-firstName ng-star-inserted'][1]")
 	private WebElement selectVarResellerUser;
+
+	@FindBy(xpath = "//mat-icon[@mattooltip='More Options']")
+	private WebElement buttonKebabMenu;
 
 	public VarResellerUsersPage(WebDriver driver) {
 		super(driver);
@@ -199,6 +202,8 @@ public class VarResellerUsersPage extends CCMainPage {
 	}
 
 	public AddNewVarResellerUserPage clickOnNewButton() {
+		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
+		buttonKebabMenu.click();
 		CCUtils.verifyAndWaitForElement(buttonNew, driver);
 		buttonNew.click();
 		log("Clicked on new button in VAR/Reseller users page");
