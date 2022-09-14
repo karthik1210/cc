@@ -15,6 +15,7 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.OrgWebsites;
 import com.pxp.cc.pojos.SavePracticeWebsite;
+import com.pxp.cc.pojos.UpdateTou;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import io.restassured.response.Response;
 
@@ -1069,4 +1070,36 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.UPDATE_ORG_WEBSITES_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
 		return given().spec(requestSpec).body(websiteUrl).when().patch(url).then().extract().response();
 	}
+	 public Response updateOrgsSolutionsDetails_BL(int solutionId, String status, int orgId) throws IOException {
+	        String url = ApiPath.ORG_BL + "/" + orgId + "/solutions";
+	        List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
+	                status);
+
+	        return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
+	    }
+
+    public Response updateTouPracticeResponse(String validURI, String serviceLayer, int practiceId, int touId, UpdateTou updateTouDetails) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.UPDATE_TOU(serviceLayer, practiceId, touId);
+            return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.UPDATE_TOU_WITH_INVLAID_URI(serviceLayer, practiceId, touId);
+            return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValidMethodType")) {
+            String url = ApiPath.UPDATE_TOU(serviceLayer, practiceId, touId);
+            return given().spec(requestSpec).body(updateTouDetails).when().patch(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("NullValue")) {
+            String url = ApiPath.NULL_UPDATE_TOU(serviceLayer);
+            return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
+        } else {
+            String url = ApiPath.UPDATE_TOU_WITHOUT_PRACTICEID(serviceLayer);
+            return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
+        }
+    }
+
+    public Response updateTouPracticeInvaliDatatypeResponse(String serviceLayer, String practiceId, String touId, UpdateTou updateTouDetails) {
+        String url = ApiPath.UPDATE_TOU_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, touId);
+        return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
+    }
+
 }

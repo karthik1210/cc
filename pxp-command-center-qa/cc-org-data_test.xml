@@ -44,6 +44,8 @@
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer"/>
             <class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer"/>
+            <class
+                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer"/>
         </classes>
     </test>
 </suite>
