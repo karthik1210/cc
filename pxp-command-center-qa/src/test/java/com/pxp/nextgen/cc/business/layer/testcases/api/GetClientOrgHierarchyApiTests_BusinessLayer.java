@@ -53,7 +53,8 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -66,9 +67,9 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.system.displayname"), "",
-				testData.getProperty("api.system.active"), testData.getProperty("api.system.timezoneid"), clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"),
+				testData.getProperty("api.system.timezoneid"), clientId, testData.getProperty("api.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
@@ -78,9 +79,9 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Create a new enterprise below system.");
 		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.displayname"), "",
-				testData.getProperty("api.enterprise.active"), testData.getProperty("api.enterprise.timezoneid"),
-				systemId, testData.getProperty("api.enterprise.parenttype"),
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
@@ -91,7 +92,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Create a new practice below enterprise.");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
 				enterpriseId, testData.getProperty("api.practice.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
@@ -118,7 +119,8 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -155,7 +157,8 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -169,9 +172,9 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.system.displayname"), "",
-				testData.getProperty("api.system.active"), testData.getProperty("api.system.timezoneid"), clientIdTwo,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"),
+				testData.getProperty("api.system.timezoneid"), clientIdTwo, testData.getProperty("api.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int systemIdTwo = createSystemApiResponse.jsonPath().getInt("orgId");
 
@@ -181,7 +184,7 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 
 		logStep("Create a new practice below system.");
 		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "",
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
 				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
 				systemIdTwo, testData.getProperty("api.system.orgtype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),

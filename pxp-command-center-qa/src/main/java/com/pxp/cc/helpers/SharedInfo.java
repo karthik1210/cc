@@ -4,10 +4,11 @@ package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.Locations;
 import com.pxp.cc.pojos.ResourceDetails;
 import io.restassured.response.Response;
 
@@ -433,5 +434,104 @@ public class SharedInfo extends BaseRest {
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
 				externalId);
 		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
+	}
+
+	private Map<String, Object> savePracticeProviderApiPayload(Map<String, Object> displayName, String email,
+			String mobile) {
+		Map<String, Object> savePracticeProviderMap = new HashMap<String, Object>();
+		savePracticeProviderMap.put("displayName", displayName);
+		savePracticeProviderMap.put("email", email);
+		savePracticeProviderMap.put("mobile", mobile);
+		return savePracticeProviderMap;
+	}
+
+	public Response savePracticeProvider_BL(int practiceId, int providerId, String en, String es, String email,
+			String mobile) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderUsingInvalidUrl_BL(int practiceId, int providerId, String en, String es,
+			String email, String mobile) {
+		String url = ApiPath.INVALID_PATH_SAVE_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderUsingInvalidMethod_BL(int practiceId, int providerId, String en, String es,
+			String email, String mobile) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().post(url).then().extract().response();
+	}
+
+	public Response getPracticeProviderDetails_BL(int practiceId, int providerId) {
+		String url = ApiPath.GET_PRACTICE_PROVIDER_BL(practiceId, providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response addOrRemoveLocationForProvider(int providerId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+
+	public Response invalidMethodCallForaddOrRemoveLocationForProvider(int providerId, int practiceId,
+			List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().post(url).then().extract().response();
+	}
+
+	public Response addOrRemoveLocationForProvider_InvalidUrl(int providerId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_INVALID_URL_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+	public Response getLocationsForProviderForNullValues() {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response  enableOrDisableSolutionsForResource_DL(int resourceId , int practiceId, int solutionId, boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload =  enableOrDisableSolutionsForResource(solutionId, active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_DL(resourceId,practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response  enableOrDisableSolutionsForResourceUsingInvalidMethod_DL(int resourceId, int practiceId, int solutionId, boolean active) {
+		Map<String, Object>  EnableOrDisableSolutionsForResourcePayload =  enableOrDisableSolutionsForResource(solutionId, active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_DL(resourceId,practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response  enableOrDisableSolutionsForResourceUsingInvalidUrl_DL(int resourceId, int practiceId, int solutionId, boolean active) {
+		Map<String, Object>  EnableOrDisableSolutionsForResourcePayload =  enableOrDisableSolutionsForResource(solutionId, active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_INVALID_URL_DL(resourceId,practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then().extract()
+				.response();
+	}
+	public Response  enableOrDisableSolutionsForResourceForNullPayload_DL(int resourceId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_DL(resourceId,practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract()
+				.response();
+	}
+	public Response  enableOrDisableSolutionsForResourceUsingNullValue_DL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object>  enableOrDisableSolutionsForResource(int solutionId, boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourceMap = new HashMap<String, Object>();
+		EnableOrDisableSolutionsForResourceMap.put("solutionId", solutionId);
+		EnableOrDisableSolutionsForResourceMap.put("active", active);
+		return EnableOrDisableSolutionsForResourceMap;
 	}
 }

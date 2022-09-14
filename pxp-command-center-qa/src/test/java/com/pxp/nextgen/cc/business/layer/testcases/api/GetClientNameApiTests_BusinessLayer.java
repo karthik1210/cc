@@ -33,7 +33,7 @@ public class GetClientNameApiTests_BusinessLayer extends BaseRest {
 	public int createClient(String name, String sapNumber) throws Exception {
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), name, sapNumber, "false",
-				ccUser.getClientType(), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);

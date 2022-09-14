@@ -12,6 +12,7 @@
 	</listeners>
 	<test name="CC Client Test">
 		<classes>
+
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.FetchClientDetailsTests_BusinessLayer" />
 			<class

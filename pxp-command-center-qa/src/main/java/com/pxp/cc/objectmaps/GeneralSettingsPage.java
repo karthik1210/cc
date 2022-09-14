@@ -138,14 +138,14 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "searchIcon")
 	private WebElement SearchiconInGeneralSetting;
-	
+
 	@FindBy(id = "searchInput")
 	private WebElement textboxSearchInGeneralSetting;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
 
-	@FindBy(className = "info")
+	@FindBy(id = "displayClientName")
 	private WebElement labelNodeNameRightPanel;
 
 	@FindBy(className = "mat-option-text")
@@ -197,9 +197,21 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-tree-node[@aria-level='1']")
 	private WebElement treeClientNode;
-	
+
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> treeNode;
+
+	@FindBy(id = "displayClientName")
+	private WebElement clientNodeTitle;
+
+	@FindBy(id = "locationOnIcon")
+	private WebElement tabLocations;
+
+	@FindBy(id = "locationTile")
+	private WebElement tileLocations;
+
+	@FindBy(id = "headerSettingIcon")
+	private WebElement generalSettingsTab;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -489,7 +501,6 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Node title on right panel is : " + labelNodeNameRightPanel.getText());
 		return labelNodeNameRightPanel.getText();
 	}
-	
 
 	public void verifyStatusIcon() {
 		CCUtils.verifyAndWaitForElement(nodeStatusInGeneralSetting.get(0), driver);
@@ -859,21 +870,62 @@ public class GeneralSettingsPage extends CCMainPage {
 		treeClientNode.click();
 		log("Clicked on the client node in the tree");
 	}
-	
 
 	public void clickSearchIcon() {
 		CCUtils.verifyAndWaitForElement(SearchiconInGeneralSetting, driver);
 		javascriptClick(SearchiconInGeneralSetting);
 		log("Clicked on Search icon");
-		
-	}	
-	
+
+	}
+
 	public void verifynodesPresentInClientGeneralSettings(String orgNode) {
-		for(WebElement ele : treeNode) {
-			if(ele.equals(orgNode)) {
-				log("tree node :"+ele+" is equal to provided org node "+orgNode);
+		for (WebElement ele : treeNode) {
+			if (ele.equals(orgNode)) {
+				log("tree node :" + ele + " is equal to provided org node " + orgNode);
 			}
 		}
+	}
+
+	public void verifyClientNodeIsSelected() {
+		CCUtils.verifyAndWaitForElement(clientNodeTitle, driver);
+		CCUtils.assertEquals(clientNodeTitle.isDisplayed(), true);
+		log("Client node title is displayed");
+	}
+
+	public void verifySearchResult(String actualTitle, String expectedTitle) {
+		CCUtils.assertTrue(actualTitle.contains(expectedTitle), "Searched node not selected. Title not found");
+	}
+
+	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
+		if (nodesInClient.contains(expectedTitle)) {
+			log("Node present in client's general setting page");
+		} else {
+			log("Test Case failed, node not present under client");
+		}
+	}
+
+	public void clickOnLocationsTab() {
+		CCUtils.verifyAndWaitForElement(tabLocations, driver);
+		javascriptClick(tabLocations);
+		log("Clicked on Locations tab");
+	}
+
+	public void clickOnLocationsTile() {
+		CCUtils.verifyAndWaitForElement(tileLocations, driver);
+		javascriptClick(tileLocations);
+		log("Clicked on Locations tile");
+	}
+
+	public void verifyLocationsTab() {
+		log("Verify 'Locations Tab' on General Settings page");
+		CCUtils.verifyAndWaitForElement(tabLocations, driver);
+		CCUtils.assertEquals(tabLocations.isDisplayed(), true);
+	}
+
+	public void clickOnGeneralSettingsTab() {
+		CCUtils.verifyAndWaitForElement(generalSettingsTab, driver);
+		javascriptClick(generalSettingsTab);
+		log("Clicked on General Settings Tab");
 	}
 
 }

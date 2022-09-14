@@ -12,8 +12,6 @@
 	</listeners>
 	<test name="CC Client Data Test">
 		<classes>
-			<!-- Enable test suite once pipeline issue is addressed for data services 
-				Jira # PXPP-16483 -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.FetchClientDetailsTests_DataLayer" />
 			<class

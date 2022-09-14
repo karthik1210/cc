@@ -37,7 +37,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -50,7 +51,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.type"), clientSapNumber, testData.getProperty("api.client.active"),
+				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
+				clientSapNumber, testData.getProperty("api.client.active"),
 				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"),
 				testData.getProperty("api.client.displayname"),
 				Integer.parseInt(testData.getProperty("api.client.practice.count")), false, solutionList);
@@ -77,7 +79,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		String clientSapNumberOne = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
 				clientSapNumberOne, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -89,7 +92,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Enter already existing value in sap number field and validate error message");
 		String clientNameOne = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientNameOne,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -100,7 +104,7 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client type and validate error message")
 	public void testErrorResponseForTypeField() throws IOException {
 		logStep("Enter non existing client type and validate error message");
-		String clientType = testData.getProperty("api.client.type").concat(CCUtils.generateRandomString());
+		int clientType = Integer.parseInt(testData.getProperty("invalid.client.type"));
 		String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
@@ -119,8 +123,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateRandomString());
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
-				clientTimezoneId);
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")), clientTimezoneId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -134,7 +138,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(4));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
 				testData.getProperty("api.invalid.client.sapnumber"), testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 400);
@@ -148,7 +153,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(4));
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
 				testData.getProperty("api.invalid.client.name"), clientSapNumber,
-				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.type"),
+				testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
@@ -180,7 +186,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClientUsingInvalidUrl(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 404);
@@ -195,7 +202,8 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = testData.getProperty("api.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		createClientApiResponse = clientInfo.createNewClient("false", clientName, clientSapNumber, "false",
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -207,8 +215,9 @@ public class CreateClientApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				testData.getProperty("api.client.type"), clientSapNumber, "false", "false",
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("api.client.displayname"),
+				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
+				clientSapNumber, "false", "false", testData.getProperty("api.client.timezoneid"),
+				testData.getProperty("api.client.displayname"),
 				Integer.parseInt(testData.getProperty("api.client.practice.count")), false, solutionList);
 	}
 

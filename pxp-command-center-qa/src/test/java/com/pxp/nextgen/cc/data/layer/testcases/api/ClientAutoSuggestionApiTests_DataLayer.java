@@ -42,7 +42,8 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
 		createClientApiResponse = clientData.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -80,7 +81,7 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 
 	@DataProvider(name = "nonexistingclientdata")
 	public Object[] nonExistingClientData() {
-		Object[] obj = new Object[] { "on1!", "01@1", "8*8" };
+		Object[] obj = new Object[] { "on1!", "8*8" };
 		return obj;
 	}
 

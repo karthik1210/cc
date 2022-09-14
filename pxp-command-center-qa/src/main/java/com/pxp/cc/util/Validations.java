@@ -3,7 +3,6 @@
 package com.pxp.cc.util;
 
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -28,6 +29,7 @@ import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -49,14 +51,17 @@ public class Validations {
 
 	}
 
-	public void verifySearchClientResponseBody(Response response, String clientId, String clientName, String type,
-			String sapNumber, String active, String testClient, String timezoneId, String timezoneDisplayName,
-			Integer practiceCountValue, Boolean isPurchased, List<Integer> purchasedSolutionList) throws IOException {
+	public void verifySearchClientResponseBody(Response response, String clientId, String clientName, int clientTypeId,
+			String type, String sapNumber, String active, String testClient, String timezoneId,
+			String timezoneDisplayName, Integer practiceCountValue, Boolean isPurchased,
+			List<Integer> purchasedSolutionList) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
-		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		Map<String, String> clientTypeMap = response.jsonPath().getMap("clientType");
+		CCUtils.assertEquals(clientTypeMap.get("id"), clientTypeId);
+		CCUtils.assertEquals(clientTypeMap.get("name").toString(), type);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
@@ -112,14 +117,17 @@ public class Validations {
 		}
 	}
 
-	public void verifySearchClientIdResponseBody(Response response, String clientId, String clientName, String type,
-			String sapNumber, String active, String testClient, String timezoneId, String timezoneDisplayName,
-			Integer practiceCountValue, List<Map<String, Object>> purchasedSolutionList) throws IOException {
+	public void verifySearchClientIdResponseBody(Response response, String clientId, String clientName,
+			int clientTypeId, String type, String sapNumber, String active, String testClient, String timezoneId,
+			String timezoneDisplayName, Integer practiceCountValue, List<Map<String, Object>> purchasedSolutionList)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
-		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		Map<String, String> clientTypeMap = response.jsonPath().getMap("clientType");
+		CCUtils.assertEquals(clientTypeMap.get("id"), clientTypeId);
+		CCUtils.assertEquals(clientTypeMap.get("name").toString(), type);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
@@ -226,7 +234,7 @@ public class Validations {
 
 	public void verifyNullErrorMessageResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Sap number can not be blank, Type can not be blank, Name can not be blank";
+		String actual = "Sap number can not be blank, Name can not be blank";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -244,7 +252,7 @@ public class Validations {
 
 	public void verifyNullValuesErrorMessageResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Name can not be blank, Sap number can not be blank, Type can not be blank, Active can not be null";
+		String actual = "Name can not be blank, Sap number can not be blank, Active can not be null";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -275,10 +283,9 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageInResponseForClientTypeField(Response response, String clientType)
-			throws IOException {
+	public void verifyErrorMessageInResponseForClientTypeField(Response response, int clientType) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Type=" + clientType + " does not exist");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client type not found by " + clientType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -311,8 +318,8 @@ public class Validations {
 	}
 
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String systemName, String orgType,
-			String clientType, String displayName, String sapNumber, String active, String testClient,
-			String timezoneId) throws IOException {
+			String clientType, String displayName, String active, String testClient, String timezoneId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
@@ -320,7 +327,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
 		CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
 		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
-		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
 		if (Objects.isNull(jsonpath.get("timezone"))) {
@@ -613,7 +619,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyInactiveClientErrorResponsForPractice(Response response) throws IOException {
+	public void verifyInactiveSystemErrorResponsForPractice(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice cannot be Activated as System is Inactive");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -669,21 +675,21 @@ public class Validations {
 
 	public void verifyGetClientTypesApiResponseBody(Response response) throws IOException {
 		List<ClientTypes> actualClientTypeList = new ArrayList<ClientTypes>();
-		actualClientTypeList.add(new ClientTypes(1, "Direct Client", true));
-		actualClientTypeList.add(new ClientTypes(101, "Dedicated IT", true));
-		actualClientTypeList.add(new ClientTypes(102, "GBS", true));
-		actualClientTypeList.add(new ClientTypes(103, "Health Prime International", true));
-		actualClientTypeList.add(new ClientTypes(104, "Itelagen", true));
-		actualClientTypeList.add(new ClientTypes(105, "KM Strategic", true));
-		actualClientTypeList.add(new ClientTypes(106, "MdCentric", true));
-		actualClientTypeList.add(new ClientTypes(107, "Medicalistics", true));
-		actualClientTypeList.add(new ClientTypes(108, "MTS/MMIC", true));
-		actualClientTypeList.add(new ClientTypes(109, "Newport Medical Group", true));
-		actualClientTypeList.add(new ClientTypes(110, "New Stork Healthdata Management", true));
-		actualClientTypeList.add(new ClientTypes(111, "OSIS", true));
-		actualClientTypeList.add(new ClientTypes(112, "SharedMed", true));
-		actualClientTypeList.add(new ClientTypes(113, "TSI", true));
-		actualClientTypeList.add(new ClientTypes(114, "Virmedice", true));
+		actualClientTypeList.add(new ClientTypes(1, "Direct Client"));
+		actualClientTypeList.add(new ClientTypes(101, "Dedicated IT"));
+		actualClientTypeList.add(new ClientTypes(102, "GBS"));
+		actualClientTypeList.add(new ClientTypes(103, "Health Prime International"));
+		actualClientTypeList.add(new ClientTypes(104, "Itelagen"));
+		actualClientTypeList.add(new ClientTypes(105, "KM Strategic"));
+		actualClientTypeList.add(new ClientTypes(106, "MdCentric"));
+		actualClientTypeList.add(new ClientTypes(107, "Medicalistics"));
+		actualClientTypeList.add(new ClientTypes(108, "MTS/MMIC"));
+		actualClientTypeList.add(new ClientTypes(109, "Newport Medical Group"));
+		actualClientTypeList.add(new ClientTypes(110, "New Stork Healthdata Management"));
+		actualClientTypeList.add(new ClientTypes(111, "OSIS"));
+		actualClientTypeList.add(new ClientTypes(112, "SharedMed"));
+		actualClientTypeList.add(new ClientTypes(113, "TSI"));
+		actualClientTypeList.add(new ClientTypes(114, "Virmedice"));
 
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
@@ -691,8 +697,8 @@ public class Validations {
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
 				CCUtils.assertTrue(
-						actualClientTypeList.contains(new ClientTypes(jsonObject.getInt("id"),
-								jsonObject.get("name").toString(), jsonObject.getBoolean("active"))),
+						actualClientTypeList
+								.contains(new ClientTypes(jsonObject.getInt("id"), jsonObject.get("name").toString())),
 						"Client type " + jsonObject.get("name").toString() + " doesn't exist");
 			}
 		} else if (jsonArray.length() == 0) {
@@ -1146,7 +1152,7 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("error"), "Bad Request");
 		if (jsonpath.get("message").toString().contains(
-				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))	
+				"Type can not be blank, Name can not be blank, Active can not be null, Sap number can not be blank"))
 			CCUtils.assertTrue(true, "Message : " + jsonpath.get("message").toString() + " is not verified");
 	}
 
@@ -1186,13 +1192,15 @@ public class Validations {
 	}
 
 	public void verifyGetClientDetailsApiResponseBody(Response response, String clientId, String clientName,
-			String type, String sapNumber, String active, String testClient, String timezoneId,
+			int clientTypeId, String type, String sapNumber, String active, String testClient, String timezoneId,
 			String timezoneDisplayName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), clientName);
-		CCUtils.assertEquals(jsonpath.get("type").toString(), type);
+		Map<String, String> clientTypeMap = response.jsonPath().getMap("clientType");
+		CCUtils.assertEquals(clientTypeMap.get("id"), clientTypeId);
+		CCUtils.assertEquals(clientTypeMap.get("name").toString(), type);
 		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
@@ -1604,7 +1612,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("name").toString(), orgName);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("clientType").toString(), parentType);
-		CCUtils.assertEquals(jsonpath.get("sapNumber").toString(), sapNumber);
 		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
 		} else {
@@ -1662,7 +1669,7 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String statusMsg)
+			String lastName, String userName, String email, String mobile, String userStatus)
 			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -1674,12 +1681,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
 		CCUtils.assertEquals(jsonpath.get("userStatus").toString(), userStatus);
-		CCUtils.assertEqualsNull(jsonpath.get("expiryDate"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("client"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("reseller"), null);
-		CCUtils.assertEqualsNull(jsonpath.get("provider"), null);
-		CCUtils.assertEquals(jsonpath.get("statusMsg").toString(), statusMsg);
-
 	}
 
 	public void verifyErrorMessageForInactiveTargetOrgNode(Response response) throws IOException {
@@ -2400,7 +2401,7 @@ public class Validations {
 	public void verifyErrorMessageInResponseForNullInput(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Internal Server Error");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorResponseBodyForNonexistingproviderId(Response response, int providerId) throws IOException {
@@ -2829,6 +2830,68 @@ public class Validations {
 
 	public void verifyOutputForPrivacySettingFromInput(Response response) {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("touType"),"NPP");
+		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
+	}
+
+	public void verifyResponseBodyForGetPracticeProvider(Response response, String en, String es, String email,
+			String mobile) throws NullPointerException, IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Map<String, String> displayName = response.jsonPath().getMap("displayName");
+		CCUtils.assertEquals(displayName.get("en").toString(), en);
+		CCUtils.assertEquals(displayName.get("es").toString(), es);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
+	}
+
+	public void verifyErrorResponseBodyForNonExistingPracticeIdTou(Response response, int practiceId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Practice not found for orgId=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForInvalidSolTou(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Solution not found for practice");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyOutputFromValidInputForPracticeWebsites(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
+	}
+
+	public void verifyErrorResponseBodyForPmIdentifier(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "PM Id not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForEhrIdentifier(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "EHR Id not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForNullTimezone(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid timezone");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForNameField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Name size maximum 100 character");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorResponseBodyForInvalidProductId(Response response, int productId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Product not found by productId=" + productId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }

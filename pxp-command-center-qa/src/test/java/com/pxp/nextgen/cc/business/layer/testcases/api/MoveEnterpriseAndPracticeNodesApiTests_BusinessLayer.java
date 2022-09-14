@@ -3,6 +3,9 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -181,7 +184,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), "NgePractice1",
 				"NGE_Practice_Name_1", testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("parent.enterprise.id")),
-				testData.getProperty("api.practice.parenttype"), "NG_Prac@001", "US/Pacific", null);
+				testData.getProperty("api.practice.parenttype"), "US/Pacific", null);
 		int ngePracticeId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(ngePracticeId);
 		clientType = validation.getClientType(fetchOrgNodeApiResponse);
@@ -216,7 +219,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "Np2", "NGE_Practice_Name_2",
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("inactive.enterprise.same.client")),
-				testData.getProperty("api.practice.parenttype"), "", "", null);
+				testData.getProperty("api.practice.parenttype"), "", null);
 		int ngePracticeIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("fetch nge practice details");
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(ngePracticeIdOne);
@@ -256,7 +259,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), "NgePractice1",
 				"NGE_Practice_1", testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("parent.enterprise.id")),
-				testData.getProperty("api.practice.parenttype"), "NG_Prac@001", "US/Pacific", null);
+				testData.getProperty("api.practice.parenttype"), "US/Pacific", null);
 		int ngePracticeId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Fetch sap id,timezone,status and client type attributes of target node");
 		fetchOrgNodeApiResponse = orgInfo
@@ -299,7 +302,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "Np2", "NGE_Practice_2",
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("inactive.enterprise.same.client")),
-				testData.getProperty("api.practice.parenttype"), "", "", null);
+				testData.getProperty("api.practice.parenttype"), "", null);
 		int ngePracticeIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Move an inactive nge practice node to an active enterprise node of same client with inherit");
 		transferBusinessUnitsApiResponse = transferBusinessUnits.moveOrganizationNode_BL(
@@ -333,7 +336,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), "AgnoPractice1",
 				"AG_Practice_Name_1", testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("active.client.id")), testData.getProperty("api.parenttype"),
-				"AG_Prac@001", "US/Alaska", null);
+				"US/Alaska", null);
 		int sourceAgnosticPracticeId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		fetchClientDetailsApiReponse = clientInfo.getClientDetails(testData.getProperty("active.client.id"));
 		clientType = validation.getClientNodeClientType(fetchClientDetailsApiReponse);
@@ -384,7 +387,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "Ap2", "Ag_Practice_Name_2",
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("active.client.id")), testData.getProperty("api.parenttype"), "",
-				"", null);
+				null);
 		int sourceAgnosticPracticeIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("fetch agnostic practice details");
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(sourceAgnosticPracticeIdOne);
@@ -410,7 +413,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "AgnoPractice1", "AG_Practice_1",
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("active.client.id")), testData.getProperty("api.parenttype"),
-				"AG_Prac@001", "US/Alaska", null);
+				"US/Alaska", null);
 		int sourceAgnosticPracticeId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Fetch sap id,timezone,status and client type attributes of target node");
 		fetchOrgNodeApiResponse = orgInfo
@@ -435,7 +438,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("true", "Ap2", "Ag_Practice_2",
 				testData.getProperty("api.practice.orgtype"),
 				Integer.parseInt(testData.getProperty("active.client.id")), testData.getProperty("api.parenttype"), "",
-				"", null);
+				null);
 		int sourceAgnosticPracticeIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("fetch enterprise node details");
 		fetchOrgNodeApiResponse = orgInfo
@@ -465,7 +468,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.enterprise.active"), "Ent1",
 				"Ent_name_1", testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("parent.system.id")),
-				testData.getProperty("api.enterprise.parenttype"), "ENT@001_01", "US/Samoa", null);
+				testData.getProperty("api.enterprise.parenttype"), "US/Samoa", null);
 		int enterpriseId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Fetch enterprise node details");
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(enterpriseId);
@@ -473,7 +476,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		logStep("Create active nge practice node below active enterprise node");
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), "NgePractice1",
 				"Prac_Name_1", testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), "Prac@001", "US/Pacific", null);
+				testData.getProperty("api.practice.parenttype"), "US/Pacific", null);
 		int ngePracticeId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 
 		logStep("Move an active enterprise node to an active system node of same client with do not inherit");
@@ -513,7 +516,7 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "Ent1", "Ent_name_2",
 				testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("parent.system.id")),
-				testData.getProperty("api.enterprise.parenttype"), "e1", "", null);
+				testData.getProperty("api.enterprise.parenttype"), "", null);
 		int enterpriseIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 
 		logStep("Fetch client type and timezone details of parent node");
@@ -564,12 +567,12 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.enterprise.active"), "Ent1", "Ent_1",
 				testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("parent.system.id")),
-				testData.getProperty("api.enterprise.parenttype"), " ", "US/Samoa", null);
+				testData.getProperty("api.enterprise.parenttype"), "US/Samoa", null);
 		int enterpriseId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Create active nge practice node below active enterprise node");
 		createOrgNodeApiResponse = orgInfo.createOrgNode(testData.getProperty("api.practice.active"), "NgePractice1",
 				"Prac_1", testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), "Prac@001", "US/Pacific", null);
+				testData.getProperty("api.practice.parenttype"), "US/Pacific", null);
 		int ngePracticeId = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 
 		logStep("Move an active enterprise node to an active system node of same client with inherit");
@@ -620,12 +623,12 @@ public class MoveEnterpriseAndPracticeNodesApiTests_BusinessLayer extends BaseRe
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "Ent2", "Ent_name_02",
 				testData.getProperty("api.enterprise.orgtype"),
 				Integer.parseInt(testData.getProperty("parent.system.id")),
-				testData.getProperty("api.enterprise.parenttype"), "", "", null);
+				testData.getProperty("api.enterprise.parenttype"), "", null);
 		int enterpriseIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 		logStep("Create inactive nge practice node below inactive enterprise node");
 		createOrgNodeApiResponse = orgInfo.createOrgNode("false", "NgePractice2", "Prac_02",
 				testData.getProperty("api.practice.orgtype"), enterpriseIdOne,
-				testData.getProperty("api.practice.parenttype"), "Prac@002", "US/Pacific", null);
+				testData.getProperty("api.practice.parenttype"), "US/Pacific", null);
 		int ngePracticeIdOne = createOrgNodeApiResponse.jsonPath().getInt("orgId");
 
 		logStep("Move an inactive enterprise node to an active system node of same client with inherit");

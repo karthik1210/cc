@@ -28,7 +28,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and active tou id")
     public void getPrivacySettingWithPracticeIdAndActiveTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 200);
@@ -37,7 +37,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and inactive tou id")
     public void getPrivacySettingWithPracticeIdAndInactiveTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.inactive")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.inactive")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 200);
@@ -46,7 +46,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, active tou id and invalid uri")
     public void getPrivacySettingWithPracticeIdAndInactiveTouIdAlongWithInvalidURI() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouIdWithInvalidURI_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 404);
@@ -55,7 +55,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id, active tou id and invalid request")
     public void getPrivacySettingWithPracticeIdAndInactiveTouIdAlongWithInvalidRequest() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouIdWithInvalidRequest_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 405);
@@ -64,7 +64,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and non-existing tou id")
     public void getPrivacySettingWithPracticeIdAndNonExistingTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), Integer.parseInt(testData.getProperty("Non.existing.tou.id")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), Integer.parseInt(testData.getProperty("api.Non.existing.tou.id")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -73,7 +73,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a non-existing practice id and valid active tou id")
     public void getPrivacySettingWithNonExistingPracticeIdAndValidActiveTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("Non.existing.practice.id")), Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.Non.existing.practice.id")), Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -82,7 +82,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a non-existing practice id and non-existing tou id")
     public void getPrivacySettingWithNonExistingPracticeIdAndNonExistingTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("Non.existing.practice.id")), Integer.parseInt(testData.getProperty("Non.existing.tou.id")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.Non.existing.practice.id")), Integer.parseInt(testData.getProperty("api.Non.existing.tou.id")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -91,7 +91,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and null on tou id")
     public void getPrivacySettingWithPracticeIdAndNullOnTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), null);
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), null);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -100,7 +100,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a null on practice id and valid active tou id")
     public void getPrivacySettingWithNullOnPracticeIdAndValidActiveTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(null, Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(null, Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -118,7 +118,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and empty value on tou id")
     public void getPrivacySettingWithValidPracticeIdAndEmptyValueOnTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), " ");
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), " ");
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -127,7 +127,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 12, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a without practice id and valid active on tou id")
     public void getPrivacySettingWithoutPracticeIdAndValidActiveTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingWithoutPracticeIdAndValidTouId_DL(Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingWithoutPracticeIdAndValidTouId_DL(Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 404);
@@ -145,7 +145,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 14, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a valid practice id and Invalid datatype on tou id")
     public void getPrivacySettingWithValidPracticeIdAndInvalidDataTypeOnTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("valid.practice.id.tou")), testData.getProperty("invalid.datatype.tou.id"));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(Integer.parseInt(testData.getProperty("api.valid.practice.id.tou")), testData.getProperty("api.invalid.datatype.tou.id"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -154,7 +154,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 15, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a Invalid datatype on practice id and valid active tou id")
     public void getPrivacySettingWithInvalidDataTypeOnPracticeIdAndValidActiveTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("invalid.practice.id.tou"), Integer.parseInt(testData.getProperty("valid.tou.id.active")));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("api.invalid.practice.id.tou"), Integer.parseInt(testData.getProperty("api.valid.tou.id.active")));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);
@@ -163,7 +163,7 @@ public class GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer extends Bas
 
     @Test(priority = 16, retryAnalyzer = RetryAnalyzer.class, description = "Fetching privacy setting with a Invalid Datatype practice id and tou id")
     public void getPrivacySettingWithInvalidDataTypeOnPracticeIdAndTouId() throws IOException {
-        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("invalid.practice.id.tou"), testData.getProperty("invalid.datatype.tou.id"));
+        getPrivacySettingApiResponse = orgInfo.getPrivacySettingByPracticeIdAndTouId_DL(testData.getProperty("api.invalid.practice.id.tou"), testData.getProperty("api.invalid.datatype.tou.id"));
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPrivacySettingApiResponse);
         CCUtils.assertEquals(getPrivacySettingApiResponse.getStatusCode(), 400);

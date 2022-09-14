@@ -3,6 +3,8 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -15,7 +17,7 @@ import io.restassured.response.Response;
 public class GetUserDetailsApiTests_DataLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	Response fetchUserDetailsApiResponse;
+	Response fetchUserDetailsApiResponse, createUserApiResponse;
 	int userId;;
 
 	@BeforeClass()
@@ -37,18 +39,31 @@ public class GetUserDetailsApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch Internal user detail using Existing Internal user id in userId field")
-	public void fetchInternalUserDetails() throws NullPointerException {
+	public void fetchInternalUserDetails() throws NullPointerException, IOException {
 
-		logStep("Enter  existing internal userid");
-		fetchUserDetailsApiResponse = UserInfo.getUserDetails_DL(testData.getProperty("existing.internal.userid"));
+		logStep("Create  user using valid details ");
+		String authIdOne = CCUtils.generateAuthId();
+		List<Integer> roleIds = new ArrayList<Integer>();
+		String firstName = testData.getProperty("api.user.firstName");
+		String lastName = testData.getProperty("api.user.lastName");
+		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_DataLayer(authIdOne, "Internal", firstName, lastName, userName,
+				email, mobileNumber, testData.getProperty("user.userStatus"), null, null, null, null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		logStep("Enter  new internal userid");
+		fetchUserDetailsApiResponse = UserInfo.getUserDetails_DL(String.valueOf(id));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse,
-				testData.getProperty("api.internal.authId"), "Internal", testData.getProperty("api.internal.firstName"),
-				testData.getProperty("api.internal.lastName"), testData.getProperty("api.internal.userName"),
-				testData.getProperty("api.internal.email"), testData.getProperty("api.internal.mobile"),
-				testData.getProperty("api.internal.userStatus"), "User created on 05/09/2022");
+		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, authIdOne, "Internal", firstName,
+				lastName, userName, email, Long.toString(mobileNumber), testData.getProperty("user.userStatus"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch Client user detail using Existing Client user id in userId field")
@@ -67,7 +82,7 @@ public class GetUserDetailsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.provider.name"), "Role must be assigned for user to enroll");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch VAR/Reseller user detail using existing Internal user id in userId field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch VAR/Reseller user detail using existing VAR/Reseller user id in userId field")
 	public void fetchVarResellerUserDetails() throws NullPointerException {
 		logStep("Enter  existing var/reseller userid");
 		fetchUserDetailsApiResponse = UserInfo.getUserDetails_DL(testData.getProperty("existing.varReseller.userid"));
@@ -78,8 +93,7 @@ public class GetUserDetailsApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.varReseller.authId"), "VAReseller",
 				testData.getProperty("api.varReseller.firstName"), testData.getProperty("api.varReseller.lastName"),
 				testData.getProperty("api.varReseller.userName"), testData.getProperty("api.varReseller.email"),
-				testData.getProperty("api.varReseller.mobile"), testData.getProperty("api.varReseller.userStatus"),
-				"Role must be assigned for user to enroll");
+				testData.getProperty("api.varReseller.mobile"), testData.getProperty("api.varReseller.userStatus"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
