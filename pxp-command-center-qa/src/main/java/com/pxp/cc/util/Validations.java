@@ -2864,18 +2864,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
 	}
 
-	public void verifyErrorResponseBodyForPmIdentifier(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "PM Id not found");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
-	public void verifyErrorResponseBodyForEhrIdentifier(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "EHR Id not found");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyErrorResponseBodyForNullTimezone(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid timezone");
@@ -2893,7 +2881,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Product not found by productId=" + productId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-
 
 	public void verifyErrorMessageInResponseForInvalidPatchMethodCall(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
