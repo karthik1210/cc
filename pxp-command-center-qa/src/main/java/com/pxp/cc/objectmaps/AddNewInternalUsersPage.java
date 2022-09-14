@@ -51,6 +51,9 @@ public class AddNewInternalUsersPage extends CCMainPage {
 	public final List<String> expectedUserRoleValues = Arrays.asList("Super Admin", "Support T2", "Implementation",
 			"Support T3", "Demo/Sales", "Support T1");
 
+	@FindBy(xpath = "//label[text()='User Roles']//following::input[@type='checkbox']")
+	private List<WebElement> listUserRoleCheckBox;
+
 	public AddNewInternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -160,6 +163,36 @@ public class AddNewInternalUsersPage extends CCMainPage {
 		log("Select all user role");
 		for (int i = 0; i < checkboxUserRoles.size(); i++) {
 			javascriptClick(checkboxUserRoles.get(i));
+		}
+	}
+
+	public void selectUserRole(String userRole) {
+		if (listUserRoleCheckBox.size() > 0) {
+			if (userRole.equals("Super Admin")) {
+				javascriptClick(listUserRoleCheckBox.get(0));
+				log("Clicked on super admin user role checkbox");
+			} else if (userRole.equals("Support T1")) {
+				javascriptClick(listUserRoleCheckBox.get(1));
+				log("Clicked on Support T1 user role checkbox");
+			} else if (userRole.equals("Support T2")) {
+				javascriptClick(listUserRoleCheckBox.get(2));
+				log("Clicked on Support T2 user role checkbox");
+			} else if (userRole.equals("Support T3")) {
+				javascriptClick(listUserRoleCheckBox.get(3));
+				log("Clicked on Support T3 user role checkbox");
+			} else if (userRole.equals("Demo/Sales")) {
+				javascriptClick(listUserRoleCheckBox.get(4));
+				log("Clicked on Demo/Sales user role checkbox");
+			} else if (userRole.equals("Implementation")) {
+				javascriptClick(listUserRoleCheckBox.get(5));
+				log("Clicked on Implementation user role checkbox");
+			} else if (userRole.equals("Solution Admin")) {
+				javascriptClick(listUserRoleCheckBox.get(6));
+				log("Clicked on Solution Admin user role checkbox");
+			}
+
+		} else {
+			log("User role checkboxs are not displayed on the add new internal page");
 		}
 	}
 
