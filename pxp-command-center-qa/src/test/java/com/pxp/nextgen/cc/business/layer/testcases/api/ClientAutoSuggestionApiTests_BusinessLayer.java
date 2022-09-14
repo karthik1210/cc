@@ -17,18 +17,34 @@ public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientData;
 	private Validations validation;
-	Response getSearchedClientDetailsApiResponse;
+	Response getSearchedClientDetailsApiResponse, createClientApiResponse;
+	int clientId;
+	String clientNameData, clientSapNumber;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		clientData = new ClientInfo();
 		validation = new Validations();
+		clientId = createClient();
+	}
+
+	public int createClient() throws Exception {
+		clientNameData = "Client@12".concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientData.createNewClient(ccUser.getActive(), clientNameData, clientSapNumber,
+				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientNameData);
+		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	@DataProvider(name = "searchData")
 	public Object[] searchData() {
-		Object[] obj = new Object[] { "Client", "client1", testData.getProperty("favoriting.client.one"), "Client@12" };
+		Object[] obj = new Object[] { "Client", "client1", clientNameData, "Client@12" };
 		return obj;
 	}
 
@@ -59,7 +75,7 @@ public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
 
 	@DataProvider(name = "nonexistingclientdata")
 	public Object[] nonExistingClientData() {
-		Object[] obj = new Object[] { "on1!", "01@1", "8*8" };
+		Object[] obj = new Object[] { "on1!","8*8" };
 		return obj;
 	}
 

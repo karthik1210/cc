@@ -10,11 +10,15 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientDirectory;
+import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.GeneralSettingsClientDropdown;
+import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.ClientDirectoryValidations;
 import com.pxp.cc.util.ClientTopNavDropdownValidations;
+import com.pxp.cc.util.Validations;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -23,39 +27,93 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 	private ClientDirectoryValidations clientDirectoryValidations;
 	JsonPath jsonPath;
 	List<String> list = null;
+	private ClientInfo clientInfo;
+	int clientId, systemId, enterpriseId, practiceId;
+	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
+	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse;
+	private Validations validation;
+	private OrgInfo orgInfo;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
+		clientInfo = new ClientInfo();
+		validation = new Validations();
+		orgInfo = new OrgInfo();
 		clientDirectory = new ClientDirectory();
 		new GeneralSettingsClientDropdown();
 		new ClientTopNavDropdownValidations();
 		clientDirectoryValidations = new ClientDirectoryValidations();
+		clientId = createClient(ccUser.getClientOneType());
+		systemId = createSystemNode(clientId);
+		enterpriseId = createEnterpriseNode(systemId);
+		practiceId = createPracticeNode(enterpriseId);
+	}
+
+	public int createClient(String clientType) throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
+	}
+
+	public int createSystemNode(int clientId) throws Exception {
+		systemName = testData.getProperty("api.system.name").concat(CCUtils.generateAlphaNumericString(5));
+		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"), "",
+				testData.getProperty("api.system.active"), "", clientId, testData.getProperty("api.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createSystemApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createEnterpriseNode(int SystemId) throws Exception {
+		enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateAlphaNumericString(5));
+		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(enterpriseName,
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createEnterpriseApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createPracticeNode(int enterpriseId) throws Exception {
+		practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateAlphaNumericString(5));
+		createPracticeApiResponse = orgInfo.createOrgNode_BL(practiceName, testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.timezoneid"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
 	}
 
 	@DataProvider(name = "clientdatawithoutfilter")
 	public Object[] searchClientDetailsWithoutFilter() {
 		Object[][] obj = new Object[][] {
-				{ testData.getProperty("api.query.full.client.name").trim(), testData.getProperty("api.page").trim(),
+				{ clientName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ clientName.substring(3), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.partial.client.name").trim(), testData.getProperty("api.page").trim(),
+				{ String.valueOf(clientId), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.full.command.center.id").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.partial.command.center.id").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.full.system.name").trim(), testData.getProperty("api.page").trim(),
+				{ String.valueOf(clientId).substring(2), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.partial.system.name").trim(), testData.getProperty("api.page").trim(),
+				{ systemName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ systemName.substring(4), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.full.enterprise.name").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.partial.enterprise.name").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.full.practice.name").trim(), testData.getProperty("api.page").trim(),
+				{ enterpriseName, testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim() },
-				{ testData.getProperty("api.query.partial.practice.name").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() } };
+				{ enterpriseName.substring(4), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() },
+				{ practiceName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim() },
+				{ practiceName.substring(4), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim() } };
 		return obj;
 	}
 
@@ -104,43 +162,38 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 	}
 
 	@DataProvider(name = "clientdatawithfilter")
-	public Object[] searchClientDetailsWithFilter() {
+	public Object[] searchClientDetailsWithFilter() throws Exception {
 		ArrayList<String> filterType = new ArrayList<String>();
 		filterType.add(ccUser.getClientOneType());
 		filterType.add(ccUser.getClientElevenType());
 		filterType.add(ccUser.getClientTwoType());
 		filterType.add(ccUser.getClientEightType());
 		Object[][] obj = new Object[][] {
-				{ testData.getProperty("api.query.full.client.name").trim(), testData.getProperty("api.page").trim(),
-						testData.getProperty("api.pageSize1").trim(), filterType },
-				{ testData.getProperty("api.query.partial.client.name").trim(), testData.getProperty("api.page").trim(),
-						testData.getProperty("api.pageSize1").trim(), filterType },
-				{ testData.getProperty("api.query.full.command.center.id").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
+				{ clientName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
 						filterType },
-				{ testData.getProperty("api.query.partial.command.center.id"), testData.getProperty("api.page").trim(),
+				{ clientName.substring(3), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim(), filterType },
-				{ testData.getProperty("api.query.full.system.name"), testData.getProperty("api.page").trim(),
+				{ String.valueOf(clientId), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim(), filterType },
-				{ testData.getProperty("api.query.partial.system.name").trim(), testData.getProperty("api.page").trim(),
+				{ String.valueOf(clientId), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim(), filterType },
-				{ testData.getProperty("api.query.full.enterprise.name").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
+				{ systemName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
 						filterType },
-				{ testData.getProperty("api.query.partial.enterprise.name").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
-						filterType },
-				{ testData.getProperty("api.query.full.practice.name").trim(), testData.getProperty("api.page").trim(),
+				{ systemName.substring(3), testData.getProperty("api.page").trim(),
 						testData.getProperty("api.pageSize1").trim(), filterType },
-				{ testData.getProperty("api.query.partial.practice.name").trim(),
-						testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
-						filterType } };
+				{ enterpriseName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
+						filterType },
+				{ enterpriseName.substring(3), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType },
+				{ practiceName, testData.getProperty("api.page").trim(), testData.getProperty("api.pageSize1").trim(),
+						filterType },
+				{ practiceName.substring(3), testData.getProperty("api.page").trim(),
+						testData.getProperty("api.pageSize1").trim(), filterType } };
 		return obj;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientdatawithfilter", description = "search client nodes by applying multiselect Client Type Filter in client directory by keeping page 0 and page size 10")
-	public void testSearchClientOutputWithFilter(Object[] clientDataWithFilter)
-			throws IOException {
+	public void testSearchClientOutputWithFilter(Object[] clientDataWithFilter) throws IOException {
 		System.out.println("Type :" + clientDataWithFilter[3]);
 		Response searchClientDirResultWithFilter = clientDirectory.getClientFromClientDirectoryWithFilter(
 				clientDataWithFilter[0].toString(), clientDataWithFilter[1].toString(),

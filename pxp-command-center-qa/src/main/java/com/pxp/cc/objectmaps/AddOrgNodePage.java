@@ -574,5 +574,4 @@ public class AddOrgNodePage extends CCMainPage {
 		textboxName.sendKeys(orgName);
 		log("Entered org name is " + orgName);
 	}
-
 }

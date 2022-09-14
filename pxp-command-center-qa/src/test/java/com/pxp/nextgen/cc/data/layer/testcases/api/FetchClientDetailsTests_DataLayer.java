@@ -47,8 +47,8 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Enter existing client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
@@ -56,9 +56,10 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, String.valueOf(clientId),
-				clientName, testData.getProperty("api.client.type"), clientSapNumber,
-				testData.getProperty("api.client.active"), testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("api.client.displayname"));
+				clientName, Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.one.type"), clientSapNumber, testData.getProperty("api.client.active"),
+				testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"),
+				testData.getProperty("api.client.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
@@ -70,8 +71,8 @@ public class FetchClientDetailsTests_DataLayer extends BaseRest {
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				testData.getProperty("api.client.type"), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Enter existing client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayerInvalidUrl(clientId);

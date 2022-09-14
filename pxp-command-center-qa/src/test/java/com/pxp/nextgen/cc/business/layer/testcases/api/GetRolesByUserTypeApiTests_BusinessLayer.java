@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.RoleInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -16,13 +17,23 @@ import io.restassured.response.Response;
 public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	private RoleInfo roleInfo;
 	private Validations validation;
-	Response getUserRolesApiResponse;
+	Response getUserRolesApiResponse, createClientApiResponse;
+	String clientName, clientSapNumber, newClientId;
+	private ClientInfo clientInfo;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupQaServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilder();
 		roleInfo = new RoleInfo();
+		clientInfo = new ClientInfo();
 		validation = new Validations();
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
+				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
+				ccUser.getTimezoneId());
+		newClientId = createClientApiResponse.jsonPath().get("clientId").toString();
 	}
 
 	@DataProvider(name = "userTypeValue")
@@ -36,7 +47,7 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	public Object[][] getUserType() throws Exception {
 		return new Object[][] {
 				{ testData.getProperty("user.type.internal").concat(CCUtils.generateAlphaNumericString(5)) },
-				{ testData.getProperty("api.existing.client.id") } };
+				{ newClientId } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userTypeValue", description = "Get user roles by userType")

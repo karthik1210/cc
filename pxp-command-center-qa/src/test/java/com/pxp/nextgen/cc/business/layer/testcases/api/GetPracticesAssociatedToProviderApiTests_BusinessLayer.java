@@ -30,12 +30,12 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	public void testResponseCodeForOneProviderAssociatedWithOnePractice() throws IOException {
 		logStep("Enter existing providerId");
 		fetchProviderDetailsApiResponse = sharedInfo
-				.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("existing.provider.id")));
+				.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("new.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
 		ArrayList<Integer> practiceIds = new ArrayList<Integer>();
-		practiceIds.add(Integer.parseInt(testData.getProperty("practice.id.one")));
+		practiceIds.add(Integer.parseInt(testData.getProperty("new.practice.id.one")));
 		validation.verifyResponseBodyForProviderAssociatedToPractices(fetchProviderDetailsApiResponse, practiceIds);
 	}
 
@@ -43,13 +43,13 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	public void testResponseCodeForOneProviderAssociatedWithMultiplePractices() throws IOException {
 		logStep("Enter existing providerId");
 		fetchProviderDetailsApiResponse = sharedInfo
-				.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("existing.provider.id")));
+				.getPracticesAssociatedToProvider(Integer.parseInt(testData.getProperty("new.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
 		ArrayList<Integer> practiceIds = new ArrayList<Integer>();
-		practiceIds.add(Integer.parseInt(testData.getProperty("practice.id.one")));
-        practiceIds.add(Integer.parseInt(testData.getProperty("practice.id.two")));
+		practiceIds.add(Integer.parseInt(testData.getProperty("new.practice.id.one")));
+		practiceIds.add(Integer.parseInt(testData.getProperty("new.practice.id.two")));
 		validation.verifyResponseBodyForProviderAssociatedToPractices(fetchProviderDetailsApiResponse, practiceIds);
 	}
 
@@ -67,7 +67,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	public void testErrorMessageForInvalidUrl() throws IOException {
 		logStep("Enter existing providerId");
 		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProviderInvalidUrl(
-				Integer.parseInt(testData.getProperty("existing.provider.id")));
+				Integer.parseInt(testData.getProperty("new.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 404);
@@ -78,7 +78,7 @@ public class GetPracticesAssociatedToProviderApiTests_BusinessLayer extends Base
 	public void testErrorForInvalidMethodCall() throws IOException {
 		logStep("Enter existing providerId");
 		fetchProviderDetailsApiResponse = sharedInfo.getPracticesAssociatedToProviderInvalidMethodCall(
-				Integer.parseInt(testData.getProperty("existing.provider.id")));
+				Integer.parseInt(testData.getProperty("new.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 405);

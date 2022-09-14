@@ -166,8 +166,9 @@ public class CreateClientPage extends CCMainPage {
 		textboxSapId.sendKeys(newSAPID);
 		log("Entered text in SAP ID field : " + newSAPID);
 		CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
-		log("click to dropdown of client type");
+		CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
 		dropdownClientType.click();
+		log("clicked to dropdown of client type");
 		selectClientType(clientType);
 		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
 		log("click to dropdown of Timezone");

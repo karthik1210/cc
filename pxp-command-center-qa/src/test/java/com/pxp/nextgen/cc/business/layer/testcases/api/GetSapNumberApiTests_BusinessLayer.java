@@ -17,21 +17,35 @@ public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
 
 	private ClientInfo clientInfo;
 	private Validations validation;
-	Response getSapNumberApiResponse;
+	Response getSapNumberApiResponse, createClientApiResponse;
+	int clientId;
+	String clientName, clientSapNumber;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
+		clientName = ccUser.getClientName().trim().concat(CCUtils.generateRandomString()).trim();
+		clientSapNumber = "SAP_01_number_".trim().concat(CCUtils.generateAlphaNumericString(5)).trim();
+		clientId = createClient(clientName, clientSapNumber);
+	}
+
+	public int createClient(String name, String sapNumber) throws Exception {
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), name, sapNumber, "false",
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, name);
+		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	@DataProvider(name = "clientSapNumber")
 	public Object[][] getClientSapNumber() throws Exception {
-		return new Object[][] { { testData.getProperty("api.existing.client.sapnumber").trim() },
-				{ testData.getProperty("api.existing.client.sapnumber").trim().toLowerCase() },
-				{ testData.getProperty("api.existing.client.sapnumber").trim().toUpperCase() },
-				{ CCUtils.reverseCase(testData.getProperty("api.existing.client.sapnumber").trim()) } };
+		return new Object[][] { { clientSapNumber.trim() }, { clientSapNumber.toLowerCase().trim() },
+				{ clientSapNumber.toUpperCase().trim() }, { CCUtils.reverseCase(clientSapNumber).trim() } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "clientSapNumber", description = "Enter already existing client SapNumber and verify client name and client id details displayed in response body")
@@ -45,13 +59,13 @@ public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client sap number in client sap number field and validate error message")
 	public void testErrorMessageForNonExistingSapNumber() throws IOException {
-		String clientSapNumber = testData.getProperty("api.existing.client.sapnumber")
+		String newSapNumber = testData.getProperty("api.existing.client.sapnumber")
 				.concat(CCUtils.generateAlphaNumericString(5));
-		getSapNumberApiResponse = clientInfo.getSapNumber(clientSapNumber);
+		getSapNumberApiResponse = clientInfo.getSapNumber(newSapNumber);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse, clientSapNumber);
+		validation.verifyErrorMessageInResponseForSapNumberField(getSapNumberApiResponse, newSapNumber);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in SapNumber field and validate error message")
@@ -65,8 +79,7 @@ public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
-		getSapNumberApiResponse = clientInfo
-				.getClientSapNumbrUsingInvalidUrl(testData.getProperty("api.existing.client.sapnumber"));
+		getSapNumberApiResponse = clientInfo.getClientSapNumbrUsingInvalidUrl(clientSapNumber);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getSapNumberApiResponse);
 		CCUtils.assertEquals(getSapNumberApiResponse.getStatusCode(), 404);

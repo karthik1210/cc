@@ -177,17 +177,13 @@ public class ApiPath {
 
 	public static final String CLIENT_DIRECTORY_BL = SERVICE_CLIENT_BL + "/v1/clients";
 
-	public static final String CLIENT_DIRECTORY_BL(String searchData, String page, String pageSize, Object type)
-
-	{
+	public static final String CLIENT_DIRECTORY_BL(String searchData, String page, String pageSize, Object type) {
 		return SERVICE_CLIENT_BL + "/v1/clients";
 	}
 
 	public static final String CLIENT_DIRECTORY_DL = SERVICE_CLIENT_DL + "/v1/clients";
 
-	public static final String CLIENT_DIRECTORY_DL(String searchData, String page, String pageSize, Object type)
-
-	{
+	public static final String CLIENT_DIRECTORY_DL(String searchData, String page, String pageSize, Object type) {
 		return SERVICE_CLIENT_DL + "/v1/clients";
 	}
 
@@ -704,17 +700,17 @@ public class ApiPath {
 			String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_DL(int orgId) {
-		return SHARED_DL + "/v1/orgs/"+orgId+"/brands";
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brands";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_DL_INVALID_ORG(int orgId) {
-		return SHARED_DL + "/v1/orgs/"+orgId+"!3w/brands";
+		return SHARED_DL + "/v1/orgs/" + orgId + "!3w/brands";
 	}
-	
+
 	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_DL(int orgId) {
-		return SHARED_DL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
+		return SHARED_DL + "/v1/orgs/" + orgId + "/brandsinvalidurl";
 	}
 
 	public static final String BRAND_LIST_DL(int orgId) {
@@ -730,7 +726,9 @@ public class ApiPath {
 	}
 
 	public static final String CREATE_BRAND_BL = SERVICE_SHARED_BL + "/v1/brands/";
-	
+
+	public static final String CREATE_BRAND_DL = SHARED_DL + "/v1/brands/";
+
 	public static final String GET_APPOINTMENT_TYPES_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/" + appointmentTypeId;
 	}
@@ -738,19 +736,487 @@ public class ApiPath {
 	public static final String GET_APPOINTMENT_TYPES_INVALID_PATH_BL(int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-typesss/" + appointmentTypeId;
 	}
-	
-	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL+ "/v1/appointment-types/null";
-	
-	public static final String FETCH_LIST_OF_BRANDS_BL(int orgId) {
-		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brands";
-	}
-	
-	public static final String FETCH_LIST_OF_BRANDS_BL_INVALID_ORG(int orgId) {
-		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"!3w/brands";
-	}
-	
-	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_BL(int orgId) {
-		return SERVICE_SHARED_BL + "/v1/orgs/"+orgId+"/brandsinvalidurl";
+
+	public static final String GET_APPOINTMENT_TYPES_BL_NULL_VALUES = SERVICE_SHARED_BL + "/v1/appointment-types/null";
+
+	public static final String GET_RESOURCE_DETAILS_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId;
 	}
 
+	public static final String RESOURCE_IMAGE_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/images";
+	}
+
+	public static final String INVALID_PATH_RESOURCE_IMAGE_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/imagessss";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brands";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_BL_INVALID_ORG(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "!3w/brands";
+	}
+
+	public static final String FETCH_LIST_OF_BRANDS_INVALID_URL_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brandsinvalidurl";
+	}
+
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_URL(int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resourcess/" + resourceId;
+	}
+
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_VALID_URL(int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String UPDATE_PRACTICE_AND_RESOURCES_DL_INVALID_DATATYPE(String practiceId, String resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
+	}
+
+	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(int locationId) {
+		return SHARED_DL + "/v1/locationsss/" + locationId + "/practices";
+	}
+
+	public static final String UPDATE_BRAND_IMAGE_DL(int brandId) {
+		return SHARED_DL + "/v1/brands/" + brandId + "/logo";
+	}
+
+	public static final String DETETE_BRAND_IMAGE_DL(int brandId, String id) {
+		return SHARED_DL + "/v1/brands/" + brandId + "/images/" + id;
+	}
+
+	public static final String DETETE_BRAND_IMAGE_INVALID_URL_DL(int brandId, String id) {
+		return SHARED_DL + "/v1/brands/" + brandId + "/imagesssss/" + id;
+	}
+
+	public static final String DETETE_BRAND_IMAGE_NullValue_DL() {
+		return SHARED_DL + "/v1/brands/brandId/images/id";
+	}
+
+	public static final String CREATE_PROVIDER_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practicesssss/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(String practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_BL() {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesssss/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_DL() {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous";
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(int practiceId,
+			int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, String touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, String touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_BL(int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_BL() {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/tous";
+	}
+
+	public static final String GET_RESOURCE_DETAILS_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId;
+	}
+
+	public static final String GET_RESOURCE_DETAILS_BL_INVALID_URL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources23/" + resourceId;
+	}
+
+	public static final String GET_RESOURCE_DETAILS_BL_NULL = SERVICE_SHARED_BL + "/v1/resources/" + "null";
+
+	public static final String CREATE_RESOURCE_DETAILS_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources";
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId,
+			int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, String touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, String touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_DL(int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous/" + touId;
+	}
+
+	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_DL() {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous";
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(int practiceId,
+			int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, String touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, String touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, int touId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId,
+			int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, String touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, String touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String GET_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATION_FOR_RESOURCE_INVALID_URL_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locationssss";
+	}
+
+	public static final String GET_LOCATION_FOR_RESOURCE_DL_NULL_VALUES() {
+		return SHARED_DL + "/v1/resources/null/practices/null/locations";
+	}
+
+	public static final String UPDATE_BRAND_DETAILS_DL(String BrandId) {
+		return SHARED_DL + "/v1/brands/" + BrandId;
+	}
+
+	public static final String UPDATE_BRAND_DETAILS_INVALID_URL_DL(String BrandId) {
+		return SHARED_DL + "/v1/brandssssss/" + BrandId;
+	}
+
+	public static final String CREATE_BRANDS_INVALID_URL_DL = SHARED_DL + "/v1/brandsss/";
+
+	public static final String ADD_RESOURCE_IMAGE(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/images";
+	}
+
+	public static final String ADD_RESOURCE_IMAGE_INVALID_URL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources123/" + resourceId + "/imagesss";
+	}
+
+	public static final String SAVE_PRACTICE_PROVIDER_BL(int practiceId, int providerId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers/" + providerId;
+	}
+
+	public static final String INVALID_PATH_SAVE_PRACTICE_PROVIDER_BL(int practiceId, int providerId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providerssss/" + providerId;
+	}
+
+	public static final String GET_PRACTICE_PROVIDER_BL(int practiceId, int providerId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers/" + providerId;
+	}
+
+	public static final String PRACTICE_WEBSITES(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	}
+
+	public static final String PRACTICE_WEBSITES_WITHOUT_PRACTICEID(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/sites";
+	}
+
+	public static final String PRACTICE_WEBSITES_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/" + practiceId + "/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/" + practiceId + "/sites";
+	}
+
+	public static final String PRACTICE_WEBSITES_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practicesssss/" + practiceId + "/sites";
+	}
+
+	public static final String NULL_PRACTICE_WEBSITES(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-website/practices/null/sites";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-website/practices/null/sites";
+	}
+
+	public static final String ADDTOU_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String INVALIDURI_ADDTOU_BL(int practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous";
+	}
+
+	public static final String INVALID_DATATYPE_ADDTOU_BL(String practiceId) {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String NULL_PRACTICEID_ADDTOU_BL() {
+		return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous";
+	}
+
+	public static final String ADDTOU_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String INVALIDURI_ADDTOU_DL(int practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous";
+	}
+
+	public static final String INVALID_DATATYPE_ADDTOU_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String NULL_PRACTICEID_ADDTOU_DL() {
+		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_INVALID_URL_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locationsssss";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/providers/null/practices//locations";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES_INVALID_URL_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/solutionsss";
+	}
+
+	public static final String UPDATE_SOLUTION_FOR_LOCATION_DL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/resources/null/practices/null/solutions";
+	}
+
+	public static final String CREATE_LOCATION_BL(int clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_PATH_CREATE_LOCATION_BL(int clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_DETAILS_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId;
+	}
+
+	public static final String UPDATE_ORG_WEBSITES(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId;
+	}
+
+	public static final String UPDATE_ORG_WEBSITES_WITHOUT_PRACTICEID(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/";
+	}
+
+	public static final String UPDATE_ORG_WEBSITES_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId;
+	}
+
+	public static final String UPDATE_ORG_WEBSITES_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId;
+	}
+
+	public static final String NULL_UPDATE_ORG_WEBSITES(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/null";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/null";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PRACTICE_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
+	}
+
+	public static final String UPDATE_BRAND_IMAGE_DL_INVALID_URL(int brandId) {
+		return SHARED_DL + "/v1/brands/" + brandId + "/logoinvalidurl";
+	}
+
+	public static final String CREATE_LOCATION_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_PATH_CREATE_LOCATION_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_DETAILS_DL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId;
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
+	}
+
+	public static final String UPDATE_SOLUTION_FOR_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String LOCATION_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_URL_LOCATION_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_FOR_CLIENT_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/clients/null/locations";
+	}
+
+	public static final String LOCATION_FOR_CLIENT_DL(String clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locations";
+	}
+
+	public static final String INVALID_URL_LOCATION_FOR_CLIENT_DL(String clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
+	}
+
+	public static final String LOCATION_FOR_CLIENT_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/clients/null/locations";
+	}
+
+    public static final String UPDATE_TOU(String serviceLayer, int practiceId, int touId) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+    }
+
+    public static final String UPDATE_TOU_WITHOUT_PRACTICEID(String serviceLayer) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices//tous/";
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices//tous/";
+    }
+
+    public static final String UPDATE_TOU_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String touId) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+    }
+
+    public static final String UPDATE_TOU_WITH_INVLAID_URI(String serviceLayer, int practiceId, int touId) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+    }
+
+    public static final String NULL_UPDATE_TOU(String serviceLayer) {
+        if (serviceLayer.equalsIgnoreCase("BL"))
+            return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous/null";
+        else
+            return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous/null";
+    }
 }

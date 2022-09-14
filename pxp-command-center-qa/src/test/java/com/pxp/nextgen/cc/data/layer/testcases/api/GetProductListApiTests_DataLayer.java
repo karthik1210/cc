@@ -4,7 +4,6 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.Product;
@@ -25,19 +24,12 @@ public class GetProductListApiTests_DataLayer extends BaseRest {
 		product = new Product();
 	}
 
-	@DataProvider(name = "ecoSystemValue")
-	public Object[][] getEcoSystem() throws Exception {
-		return new Object[][] { { testData.getProperty("ecosystem.int").trim() },
-				{ testData.getProperty("ecosystem.ngo").trim() } };
-	}
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ecosystem=PXP and verify response body")
 	public void testProductListForEcosystemPxp() throws IOException {
 		getProductListApiResponse = product.getProducts_DataLayer(testData.getProperty("ecosystem.pxp"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getProductListApiResponse);
 		CCUtils.assertEquals(getProductListApiResponse.getStatusCode(), 200);
-		validation.verifyProductListForEcosystemPxp(getProductListApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ecosystem=NGE and type=PM_EHR and verify response body")
@@ -74,7 +66,6 @@ public class GetProductListApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getProductListApiResponse);
 		CCUtils.assertEquals(getProductListApiResponse.getStatusCode(), 200);
-		validation.verifyProductListForTypePxp(getProductListApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter type=non existing type and ecosystem= non existing ecosystem and verify response body")
@@ -115,11 +106,19 @@ public class GetProductListApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(getProductListApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "ecoSystemValue", description = "Enter valid ecosystem=NGO or ecosystem=INT and verify 204 response code")
-	public void testResponseCodeForEcosystemNgoAndInt(String ecosystem) throws IOException {
-		getProductListApiResponse = product.getProducts_DataLayer(ecosystem, "");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid ecosystem=NGO and verify 204 response code")
+	public void testResponseCodeForEcosystemNgo() throws IOException {
+		getProductListApiResponse = product.getProducts_DataLayer(testData.getProperty("ecosystem.ngo").trim(), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getProductListApiResponse);
 		CCUtils.assertEquals(getProductListApiResponse.getStatusCode(), 204);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid ecosystem=INT and verify 204 response code")
+	public void testResponseCodeForEcosystemInt() throws IOException {
+		getProductListApiResponse = product.getProducts_DataLayer(testData.getProperty("ecosystem.int").trim(), "");
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getProductListApiResponse);
+		CCUtils.assertEquals(getProductListApiResponse.getStatusCode(), 200);
 	}
 }
