@@ -19,7 +19,7 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 	@FindBy(xpath = "//span[text()='VAR/Reseller *']")
 	private WebElement labelVarReseller;
 
-	@FindBy(id = "selectUser")
+	@FindBy(xpath = "//div[@role='combobox']/input[@type='text']")
 	private WebElement textboxSearchVarResellerName;
 
 	@FindBy(xpath = "//label[text()='User Roles']")
@@ -90,7 +90,8 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 	public void verifyCloseWindowButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCloseWindow, driver);
 		log("Verifying close window button is displayed on add VAR/Reseller user page");
-		CCUtils.assertTrue(buttonCloseWindow.isDisplayed(), "Close window button is not displayed on add VAR/Reseller user page");
+		CCUtils.assertTrue(buttonCloseWindow.isDisplayed(),
+				"Close window button is not displayed on add VAR/Reseller user page");
 		CCUtils.assertEquals(buttonCloseWindow.getText().trim(), "clear");
 	}
 
@@ -172,6 +173,7 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxSearchVarResellerName, driver);
 		textboxSearchVarResellerName.clear();
 		textboxSearchVarResellerName.sendKeys(input);
+		CCUtils.pressEnterKey();
 		log("Entered input for VAR/Reseller Name : " + input);
 	}
 
@@ -200,7 +202,6 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 
 	public void searchAndSelectVarReseller(String varResellerName) {
 		enterVarResellerName(varResellerName);
-		clickFirstInAutoSuggestion();
 	}
 
 	public void selectUserRole(String userRole) {

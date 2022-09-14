@@ -2,6 +2,10 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,7 +26,7 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	@FindBy(id = "saveUser")
 	private WebElement buttonSave;
 
-	@FindBy(xpath = "//button[@class='mat-menu-trigger menu-button']")
+	@FindBy(xpath = "//mat-icon[@mattooltip='More Options']")
 	private WebElement buttonKebabMenu;
 
 	@FindBy(xpath = "//button[contains(text(),'Lock User')]")
@@ -31,7 +35,7 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	@FindBy(id = "detailSaveBtn")
 	private WebElement buttonUnlockUser;
 
-	@FindBy(xpath = "//div[@class='ml-auto']")
+	@FindBy(xpath = "//span[text()='User Status']//following::span/mat-icon[@role='img']")
 	private WebElement labelSelectedUserStatus;
 
 	@FindBy(xpath = "//span[@class='pl-3']")
@@ -51,6 +55,22 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//button[contains(text(),'Activate User')]")
 	private WebElement kebabActiveUserOption;
+
+	@FindBy(xpath = "//button[@role='menuitem']")
+	private List<WebElement> buttonKebabMenuOptionsAdminView;
+
+	@FindBy(id = "detailSaveBtn")
+	private WebElement buttonUnlock;
+
+	@FindBy(className = "locked-label")
+	private WebElement labelLockedUser;
+
+	private String xpathHoverTextMessage = "//div[@id='cdk-describedby-message-container']//following-sibling::div[@id='valueToReplace']";
+
+	private WebElement prepareDynamicXpath(String xpathValue, String substitutionValue) {
+		System.out.println(driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue))));
+		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
+	}
 
 	public VarResellerUserDetailsPage(WebDriver driver) {
 		super(driver);
@@ -109,14 +129,18 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	}
 
 	public void verifyLockUserButtonIsNotDisplayed() {
-		log("Verifying lock user button is not displayed in kebab menu");
-		CCUtils.assertEquals(buttonLockUser.isDisplayed(), false);
+		log("Verifying send enrollment email button is not displayed in kebab menu");
+		List<String> buttonName = null;
+		for (int i = 0; i < buttonKebabMenuOptionsAdminView.size(); i++) {
+			buttonName = new ArrayList<String>();
+			buttonName.add(buttonKebabMenuOptionsAdminView.get(i).getText().trim());
+		}
+		CCUtils.assertTrue(!buttonName.contains("Lock User"), "Lock User button is present on screen");
 	}
 
-	public LockUserConfirmationPage clickOnLockUserButton() {
+	public void clickOnLockUserButton() {
 		CCUtils.verifyAndWaitForElement(buttonLockUser, driver);
 		javascriptClick(buttonLockUser);
-		return PageFactory.initElements(driver, LockUserConfirmationPage.class);
 	}
 
 	public void verifyUnlockButtonIsDispalyed() {
@@ -133,11 +157,9 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 
 	public void verifySelectedUserStatusIsSameOnVarResellerUserDetailsPage(String userStatus) {
 		CCUtils.verifyAndWaitForElement(labelSelectedUserStatus, driver);
-		if (labelSelectedUserStatus.isDisplayed() == true) {
-			CCUtils.assertEquals(labelSelectedUserStatus.getText().trim(), userStatus);
-		} else {
-			log("User status value is not present on  user details page");
-		}
+		CCUtils.assertTrue(labelSelectedUserStatus.isDisplayed(),
+				"User status value is not present on VARReseller user details page");
+		CCUtils.assertEquals(labelSelectedUserStatus.getText().trim(), userStatus);
 	}
 
 	public String getUserName() {
@@ -186,5 +208,35 @@ public class VarResellerUserDetailsPage extends CCMainPage {
 	public void verifyActivateUserButtonIsDisplayed() {
 		log("Verifying activate user button is displayed in kebab menu");
 		CCUtils.assertEquals(kebabActiveUserOption.isDisplayed(), true);
+	}
+
+	public void verifyUnlockButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(buttonUnlock, driver);
+		CCUtils.assertTrue(buttonUnlock.isDisplayed(), "Unlock button is not present on VARReseller user details page");
+		CCUtils.assertEquals(buttonUnlock.getText().trim(), "UNLOCK");
+		CCUtils.assertTrue(buttonUnlock.isEnabled(), "Unlock button is disabled on VARReseller user details page");
+	}
+
+	public void verifyLockedLabelAndIconIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(labelLockedUser, driver);
+		CCUtils.assertTrue(labelLockedUser.isDisplayed(),
+				"locked label status is not present on VARReseller user details page");
+		CCUtils.assertEquals(labelLockedUser.getText().trim(), "Locked");
+		CCUtils.assertEquals(labelSelectedUserStatus.getText().trim(), "lock");
+		CCUtils.mouseHoverOverTheElement(driver, labelSelectedUserStatus);
+		String id = labelSelectedUserStatus.getAttribute("aria-describedby").trim();
+		CCUtils.assertEquals(prepareDynamicXpath(xpathHoverTextMessage, id).getAttribute("innerHTML").trim(),
+				"Account manually locked");
+	}
+
+	public void verifyUserStatusAfterClickingOnLockUserButton() {
+		verifyUnlockButtonIsDisplayed();
+		verifyLockedLabelAndIconIsDisplayed();
+	}
+
+	public void clickOnUnlockUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonUnlock, driver);
+		log("Click on unlock user button");
+		javascriptClick(buttonUnlock);
 	}
 }
