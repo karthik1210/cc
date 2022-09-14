@@ -22,7 +22,6 @@ public class AddTouApiTests_DataLayer extends BaseRest {
     private Validations touValidation;
     Response addTouApiResponse;
     int practiceId;
-    String namePayLoad;
     Map<String, Object> addTouContent = new HashMap<String, Object>();
     HashMap<String, Object> SolutionInformation = new HashMap<String, Object>();
     ArrayList<HashMap<String, Object>> TouSolutions = new ArrayList<HashMap<String, Object>>();
