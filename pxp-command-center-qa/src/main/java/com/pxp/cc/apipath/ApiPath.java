@@ -1256,4 +1256,13 @@ public class ApiPath {
 	public static final String DETETE_BRAND_IMAGE_NullValue_BL() {
 		return SERVICE_SHARED_BL + "/v1/brands/brandId/images/id";
 	}
+	
+	public static final String INVALID_PATH_LOCATION_DETAILS_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locationsssss/" + locationId;
+	}
+
+	public static final String CREATE_RESOURCE_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources";
+
+	}
 }
