@@ -1230,4 +1230,34 @@ public class ApiPath {
     public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/orgs/null/brands";
 	}
+
+	public static final String PRACTICE_SOCIALS(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-social/practices/" + practiceId + "/socials";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-social/practices/" + practiceId + "/socials";
+	}
+
+	public static final String PRACTICE_SOCIALS_WITHOUT_PRACTICEID(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-social/practices//socials";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-social/practices//socials";
+	}
+
+	public static final String PRACTICE_SOCIALS_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-social/practices/" + practiceId + "/socials";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-social/practices/" + practiceId + "/socials";
+	}
+
+	public static final String PRACTICE_SOCIALS_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-social/practicesss/" + practiceId + "/socials";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-social/practicesss/" + practiceId + "/socials";
+	}
+
+
 }
