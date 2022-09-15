@@ -1230,4 +1230,17 @@ public class ApiPath {
     public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/orgs/null/brands";
 	}
+
+	public static final String DETETE_BRAND_IMAGE_BL(int brandId, String id) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/images/" + id;
+	}
+	public static final String DETETE_BRAND_IMAGE_INVALID_URL_BL(int brandId, String id) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/imagesssss/" + id;
+	}
+	public static final String DETETE_BRAND_IMAGE_NullValue_BL() {
+		return SERVICE_SHARED_BL + "/v1/brands/brandId/images/id";
+	}
+	public static final String UPDATE_BRAND_LOGO_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/upload";
+	}
 }
