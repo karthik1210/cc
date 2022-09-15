@@ -1152,6 +1152,7 @@ public class ApiPath {
 	public static final String UPDATE_BRAND_LOGO_NULL_BRANDID_BL() {
 		return SERVICE_SHARED_BL + "/v1/brands/" + null + "/upload";
 	}
+
 	public static final String UPDATE_LOCATION_FOR_PRACTICE_BL(int locationId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
 	}
@@ -1244,11 +1245,24 @@ public class ApiPath {
 
 	}
 
+	public static final String DETETE_BRAND_IMAGE_BL(int brandId, String id) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/images/" + id;
+	}
+
+	public static final String DETETE_BRAND_IMAGE_INVALID_URL_BL(int brandId, String id) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/imagesssss/" + id;
+	}
+
+	public static final String DETETE_BRAND_IMAGE_NullValue_BL() {
+		return SERVICE_SHARED_BL + "/v1/brands/brandId/images/id";
+	}
+	
 	public static final String INVALID_PATH_LOCATION_DETAILS_BL(int locationId) {
 		return SERVICE_SHARED_BL + "/v1/locationsssss/" + locationId;
 	}
 
 	public static final String CREATE_RESOURCE_BL(int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources";
+
 	}
 }
