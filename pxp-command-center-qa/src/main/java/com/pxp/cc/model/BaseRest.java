@@ -65,8 +65,8 @@ public class BaseRest extends BaseTestNG {
 
 	public void setupServiceRequestSpecificationBuilder() throws IOException {
 		RestAssured.baseURI = testData.getProperty("service.base.url");
-		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
-				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE).addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
 	}
 
 	public void setupServiceRequestSpecificationBuilderForDataLayer() throws IOException {
