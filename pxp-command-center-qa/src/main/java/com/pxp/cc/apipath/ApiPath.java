@@ -778,13 +778,14 @@ public class ApiPath {
 	public static final String BRAND_LIST_BL(int orgId) {
 		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brands";
 	}
+
 	public static final String INVALID_PATH_BRAND_LIST_BL(int orgId) {
 		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/brandsssss";
 	}
 
-    public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(int locationId) {
-        return SHARED_DL + "/v1/locations/" + locationId + "/practices";
-    }
+	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices";
+	}
 
 	public static final String FETCH_PRACTICE_FOR_LOCATIONS_DL_INVALID_URL(int locationId) {
 		return SHARED_DL + "/v1/locationsss/" + locationId + "/practices";
@@ -1192,42 +1193,50 @@ public class ApiPath {
 		return SHARED_DL + "/v1/clients/null/locations";
 	}
 
-    public static final String UPDATE_TOU(String serviceLayer, int practiceId, int touId) {
-        if (serviceLayer.equalsIgnoreCase("BL"))
-            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-        else
-            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-    }
+	public static final String UPDATE_TOU(String serviceLayer, int practiceId, int touId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
 
-    public static final String UPDATE_TOU_WITHOUT_PRACTICEID(String serviceLayer) {
-        if (serviceLayer.equalsIgnoreCase("BL"))
-            return SERVICE_ORG_BL + "/v1/practice-tou/practices//tous/";
-        else
-            return SERVICE_ORG_DL + "/v1/practice-tou/practices//tous/";
-    }
+	public static final String UPDATE_TOU_WITHOUT_PRACTICEID(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices//tous/";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices//tous/";
+	}
 
-    public static final String UPDATE_TOU_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String touId) {
-        if (serviceLayer.equalsIgnoreCase("BL"))
-            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-        else
-            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-    }
+	public static final String UPDATE_TOU_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String touId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
 
-    public static final String UPDATE_TOU_WITH_INVLAID_URI(String serviceLayer, int practiceId, int touId) {
-        if (serviceLayer.equalsIgnoreCase("BL"))
-            return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
-        else
-            return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
-    }
+	public static final String UPDATE_TOU_WITH_INVLAID_URI(String serviceLayer, int practiceId, int touId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+	}
 
-    public static final String NULL_UPDATE_TOU(String serviceLayer) {
-        if (serviceLayer.equalsIgnoreCase("BL"))
-            return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous/null";
-        else
-            return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous/null";
-    }
-    
-    public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
+	public static final String NULL_UPDATE_TOU(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous/null";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous/null";
+	}
+
+	public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/orgs/null/brands";
+	}
+
+	public static final String INVALID_PATH_LOCATION_DETAILS_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locationsssss/" + locationId;
+	}
+
+	public static final String CREATE_RESOURCE_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources";
 	}
 }

@@ -395,7 +395,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.FETCH_PRACTICE_FOR_LOCATIONS_DL_VALID_URL(locationId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
-	
+
 	public Response associateDeassociateBrand_BL(int orgId, int brandId, boolean active) {
 		String url = ApiPath.BRAND_LIST_BL(orgId);
 		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
@@ -640,10 +640,20 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response associateDisassociateBrandUsingNullValue_BL() {
 		String url = ApiPath.ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidUrl_BL(int locationId) {
+		String url = ApiPath.INVALID_PATH_LOCATION_DETAILS_BL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidMethod_BL(int locationId) {
+		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
 }
