@@ -106,4 +106,10 @@ public class LocationsValidations {
 					"location Id " + jsonObject.getInt("locationId") + " doesn't exist");
 		}
 	}
+
+	public void verifyErrorResponseForInvalidLocationId(Response response, int locationId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Location not found by id=" + locationId);
+	}
 }

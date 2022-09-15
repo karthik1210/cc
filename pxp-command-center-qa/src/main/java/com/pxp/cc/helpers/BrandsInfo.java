@@ -3,13 +3,20 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class BrandsInfo extends BaseRest {
+	public static RequestSpecification requestSpecification;
 
 	public Response postDuplicateBrand(int brandId, int ownerId) {
 		String url = ApiPath.DUPLICATE_BRANDS_DL + brandId;
@@ -121,7 +128,6 @@ public class BrandsInfo extends BaseRest {
 		String url = ApiPath.UPDATE_BRAND_DL(BrandId);
 		Map<String, Object> putUpdateBrandPayload = errorpostCreateBrandPayload(orgId, brandname, showLogo, color);
 		return given().spec(requestSpec).body(putUpdateBrandPayload).when().put(url).then().extract().response();
-
 	}
 
 	public Response errorPutUpateBrand(int BrandId, Integer orgId, String brandname, Boolean showLogo, String color) {
@@ -298,11 +304,41 @@ public class BrandsInfo extends BaseRest {
 		return given().spec(requestSpec).body(brandDetailsPayload).when().post(url).then().extract().response();
 	}
 
+	public Response getBrandImage_BL(int brandId) {
+		String url = ApiPath.BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response updateBrandDetailsInvalidUrl_DL(String brandId, String orgId, String name, String showLogo,
 			String color) {
 		Map<String, Object> brandDetailsPayload = updateBrands(orgId, name, showLogo, color);
 		String url = ApiPath.UPDATE_BRAND_DETAILS_INVALID_URL_DL(brandId);
 		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateBrandLogo_BL(int brandId, String logoType, String altText, File file, String fileType) {
+		String url = ApiPath.UPDATE_BRAND_LOGO_BL(brandId);
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data").multiPart("file", file, fileType)
+				.formParam("logoType", logoType).formParam("altText", altText).post(url).then().extract().response();
+	}
+
+	public Response updateBrandLogo_InvalidUrl_BL(int brandId, String logoType, String altText, File file,
+			String fileType) {
+		String url = ApiPath.UPDATE_BRAND_LOGO_INVALID_URL_BL(brandId);
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data").queryParam("logoType", logoType)
+				.queryParam("altText", altText).multiPart("file", file, fileType).post(url).then().extract().response();
+	}
+
+	public Response updateBrandLogo_Null_BrandId_BL(String logoType, String altText, File file, String fileType) {
+		String url = ApiPath.UPDATE_BRAND_LOGO_NULL_BRANDID_BL();
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data").queryParam("logoType", logoType)
+				.queryParam("altText", altText).multiPart("file", file, fileType).post(url).then().extract().response();
 	}
 
 	public Response updateBrandImage_DL_Invalid_Url(int brandId, String logoType, String altText, String href,
@@ -317,5 +353,20 @@ public class BrandsInfo extends BaseRest {
 		String url = ApiPath.UPDATE_BRAND_IMAGE_DL(brandId);
 		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
 		return given().spec(requestSpec).body(createBrandImagePayload).when().patch(url).then().extract().response();
+	}
+
+	public Response deteteBrandImageInvalidUrl_BL(int brandId, String id) {
+		String url = ApiPath.DETETE_BRAND_IMAGE_INVALID_URL_BL(brandId, id);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deteteBrandImage_BL(int brandId, String id) {
+		String url = ApiPath.DETETE_BRAND_IMAGE_BL(brandId, id);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response deteteBrandImage_NullValue_BL() {
+		String url = ApiPath.DETETE_BRAND_IMAGE_NullValue_BL();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 }
