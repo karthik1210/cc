@@ -1141,6 +1141,17 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/orgs/null";
 	}
 
+	public static final String UPDATE_BRAND_LOGO_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/upload";
+	}
+
+	public static final String UPDATE_BRAND_LOGO_INVALID_URL_BL(int brandId) {
+		return SERVICE_SHARED_BL + "/v1/brands/" + brandId + "/uploadsss";
+	}
+
+	public static final String UPDATE_BRAND_LOGO_NULL_BRANDID_BL() {
+		return SERVICE_SHARED_BL + "/v1/brands/" + null + "/upload";
+	}
 	public static final String UPDATE_LOCATION_FOR_PRACTICE_BL(int locationId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
 	}
@@ -1230,6 +1241,7 @@ public class ApiPath {
 
 	public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/orgs/null/brands";
+
 	}
 
 	public static final String INVALID_PATH_LOCATION_DETAILS_BL(int locationId) {
