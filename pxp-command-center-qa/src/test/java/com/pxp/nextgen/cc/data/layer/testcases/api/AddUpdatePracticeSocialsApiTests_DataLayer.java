@@ -195,7 +195,7 @@ public class AddUpdatePracticeSocialsApiTests_DataLayer extends BaseRest {
         socialHrefUpdated.add(testData.getProperty("api.practice.socials.youTube") + orgId + "/Updated");
         ArrayList<String> listSocialHrefUpdated = new ArrayList<String>(socialHrefUpdated);
         practiceSocialsReqList.clear();
-        for (int i = 0; i < listSocialHref.size(); i++) {
+        for (int i = 0; i < listSocialHrefUpdated.size(); i++) {
             practiceSocialsObj = new PracticeSocials(i + 1, listSocialHrefUpdated.get(i), false);
             practiceSocialsReqList.add(practiceSocialsObj);
         }
@@ -205,10 +205,10 @@ public class AddUpdatePracticeSocialsApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(addUpdatePracticeSocialsApiResponse.getStatusCode(), 200);
         logStep("Getting SocialId information for a given orgId");
         getPracticeSocialApiResponse = orgInfo.getPracticeSocialsResponse("Valid", "DL", orgId);
-        for (int i = 0; i < listSocialHref.size(); i++) {
+        for (int i = 0; i < listSocialHrefUpdated.size(); i++) {
             int socialId = getPracticeSocialApiResponse.jsonPath().get("socialId[" + i + "]");
             String href = getPracticeSocialApiResponse.jsonPath().get("href[" + i + "]");
-            if (socialId == i + 1 && href.equalsIgnoreCase(listSocialHref.get(i))) {
+            if (socialId == i + 1 && href.equalsIgnoreCase(listSocialHrefUpdated.get(i))) {
                 logStep("Added Updated successfully to " + orgId);
             }
         }
