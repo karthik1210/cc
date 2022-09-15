@@ -17,6 +17,7 @@ import com.pxp.cc.pojos.OrgWebsites;
 import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.UpdateTou;
 import com.pxp.cc.pojos.UpdateProductStatus;
+import com.pxp.cc.pojos.PracticeSocials;
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -1100,6 +1101,48 @@ public class OrgInfo extends BaseRest {
     public Response updateTouPracticeInvaliDatatypeResponse(String serviceLayer, String practiceId, String touId, UpdateTou updateTouDetails) {
         String url = ApiPath.UPDATE_TOU_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, touId);
         return given().spec(requestSpec).body(updateTouDetails).when().post(url).then().extract().response();
+    }
+
+    public Response addUpdatePracticeSocialsResponse(String validURI, String serviceLayer, int practiceId, ArrayList<PracticeSocials> socialsDetails) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.PRACTICE_SOCIALS(serviceLayer, practiceId);
+            return given().spec(requestSpec).body(socialsDetails).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.PRACTICE_SOCIALS_WITH_INVLAID_URI(serviceLayer, practiceId);
+            return given().spec(requestSpec).body(socialsDetails).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValidMethodType")) {
+            String url = ApiPath.PRACTICE_SOCIALS(serviceLayer, practiceId);
+            return given().spec(requestSpec).body(socialsDetails).when().patch(url).then().extract().response();
+        } else {
+            String url = ApiPath.PRACTICE_SOCIALS_WITHOUT_PRACTICEID(serviceLayer);
+            return given().spec(requestSpec).body(socialsDetails).when().post(url).then().extract().response();
+        }
+    }
+
+    public Response addUpdatePracticeSocialsInvaliDatatypeResponse(String serviceLayer, String practiceId, ArrayList<PracticeSocials> socialsDetails) {
+        String url = ApiPath.PRACTICE_SOCIALS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+        return given().spec(requestSpec).body(socialsDetails).when().post(url).then().extract().response();
+    }
+
+    public Response getPracticeSocialsResponse(String validURI, String serviceLayer, int practiceId) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.PRACTICE_SOCIALS(serviceLayer, practiceId);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.PRACTICE_SOCIALS_WITH_INVLAID_URI(serviceLayer, practiceId);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValidMethodType")) {
+            String url = ApiPath.PRACTICE_SOCIALS(serviceLayer, practiceId);
+            return given().spec(requestSpec).when().patch(url).then().extract().response();
+        } else {
+            String url = ApiPath.PRACTICE_SOCIALS_WITHOUT_PRACTICEID(serviceLayer);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        }
+    }
+
+    public Response AddUpdatePracticeSocialsInvaliDatatypeResponse(String serviceLayer, String practiceId) {
+        String url = ApiPath.PRACTICE_SOCIALS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+        return given().spec(requestSpec).when().get(url).then().extract().response();
     }
 
 }
