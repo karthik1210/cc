@@ -13,7 +13,7 @@ public class VarResellerUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='tab-name']")
 	private WebElement labelPageTitle;
-	
+
 	@FindBy(xpath = "//button[text()=' SEND ENROLLMENT ']")
 	private WebElement buttonSendEnrollment;
 
@@ -44,7 +44,7 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(id = "enrollStatus")
 	private List<WebElement> labelSelectedEnrollmentStatus;
 
-	@FindBy(id = "userStatus")
+	@FindBy(id = "resellerProductIcon")
 	private List<WebElement> labelSelectedUserStatus;
 
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
@@ -79,6 +79,9 @@ public class VarResellerUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//td[@class='mat-cell cdk-cell cdk-column-firstName mat-column-firstName ng-star-inserted'][1]")
 	private WebElement selectVarResellerUser;
+
+	@FindBy(xpath = "//mat-icon[@mattooltip='More Options']")
+	private WebElement buttonKebabMenu;
 
 	public VarResellerUsersPage(WebDriver driver) {
 		super(driver);
@@ -195,10 +198,12 @@ public class VarResellerUsersPage extends CCMainPage {
 
 	public String getVarResellerUserStatus() {
 		CCUtils.verifyAndWaitForElement(labelSelectedUserStatus.get(0), driver);
-		return labelSelectedUserStatus.get(0).getAttribute("ng-reflect-message").toString().trim();
+		return labelSelectedUserStatus.get(0).getText().toString().trim();
 	}
 
 	public AddNewVarResellerUserPage clickOnNewButton() {
+		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
+		buttonKebabMenu.click();
 		CCUtils.verifyAndWaitForElement(buttonNew, driver);
 		buttonNew.click();
 		log("Clicked on new button in VAR/Reseller users page");

@@ -3,7 +3,6 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
-import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -19,7 +18,6 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 	private Validations validation;
 	private ClientInfo clientInfo;
 	Response createNewLocationApiResponse, createClientApiResponse, fetchClientDetailsApiResponse;
-	List<Integer> solutionList = null;
 	String externalId;
 	int clientId;
 
@@ -76,7 +74,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test maximum character functionality for mandatory field")
 	public void testAddNewLocationFunctionalityUsingMaximumFieldSize() throws IOException {
-		logStep("Enter 100 characters in loacation name,addressline1,addressline2,50 charcters in city,zipcode,external id fields");
+		logStep("Enter 100 characters in loacation name, addressline1, addressline2 and 50 charcters in city, zipcode, external id fields");
 		String locationName = CCUtils.getName(CCUtils.generateStringWithSpace(
 				testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(95))));
 		String addressLine1 = CCUtils.getName(CCUtils.generateStringWithSpace(

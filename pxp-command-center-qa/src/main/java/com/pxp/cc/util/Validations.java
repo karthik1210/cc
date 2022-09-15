@@ -2375,6 +2375,11 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Brand not found by id=" + brandId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	public void verifyErrorMessageForInvalidBrandImage(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid file");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
 			String color, int brandId, String logo, String favicon, String emailLogo, String active)
@@ -2864,18 +2869,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
 	}
 
-	public void verifyErrorResponseBodyForPmIdentifier(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "PM Id not found");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
-	public void verifyErrorResponseBodyForEhrIdentifier(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "EHR Id not found");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyErrorResponseBodyForNullTimezone(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid timezone");
@@ -2892,6 +2885,12 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Product not found by productId=" + productId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyErrorMessageInResponseForInvalidPatchMethodCall(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method 'PATCH' not supported");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
 
 	public void verifyCreateLocationApiResponseBody(Response response, String locationName) throws IOException {

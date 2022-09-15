@@ -306,6 +306,10 @@ public class BrandsInfo extends BaseRest {
 		String url = ApiPath.UPDATE_BRAND_DETAILS_DL(brandId);
 		return given().spec(requestSpec).body(brandDetailsPayload).when().post(url).then().extract().response();
 	}
+	public Response getBrandImage_BL(int brandId) {
+		String url = ApiPath.BRAND_DETAILS_BL(brandId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 	public Response updateBrandDetailsInvalidUrl_DL(String brandId, String orgId, String name, String showLogo,
 			String color) {
@@ -313,26 +317,42 @@ public class BrandsInfo extends BaseRest {
 		String url = ApiPath.UPDATE_BRAND_DETAILS_INVALID_URL_DL(brandId);
 		return given().spec(requestSpec).body(brandDetailsPayload).when().put(url).then().extract().response();
 	}
-
-	public Response updateBrandLogo_BL(int brandId, String logoType, String altText, File file) {
+	public Response updateBrandLogo_BL(int brandId, String logoType, String altText, File file,String fileType) {
 		String url = ApiPath.UPDATE_BRAND_LOGO_BL(brandId);
-		return given().spec(requestSpec).contentType("multipart/form-data").multiPart("file", file)
-				.queryParam("logoType", logoType).queryParam("altText", altText).post(url).then().extract().response();
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data")
+				.multiPart("file", file, fileType).formParam("logoType", logoType).formParam("altText", altText)
+				.post(url).then().extract().response();
 	}
 
-	public Response updateBrandLogo_InvalidUrl_BL(int brandId, String logoType, String altText, File file) {
+	public Response updateBrandLogo_InvalidUrl_BL(int brandId, String logoType, String altText, File file,String fileType){
 		String url = ApiPath.UPDATE_BRAND_LOGO_INVALID_URL_BL(brandId);
 		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
 				.addFilter(new RequestLoggingFilter()).build();
 		return given().spec(requestSpecification).contentType("multipart/form-data").queryParam("logoType", logoType)
-				.queryParam("altText", altText).multiPart("file", file).post(url).then().extract().response();
+				.queryParam("altText", altText).multiPart("file", file,fileType).post(url).then().extract().response();
 	}
 
-	public Response updateBrandLogo_Null_BrandId_BL(String logoType, String altText, File file) {
+	public Response updateBrandLogo_Null_BrandId_BL(String logoType, String altText, File file,String fileType) {
 		String url = ApiPath.UPDATE_BRAND_LOGO_NULL_BRANDID_BL();
 		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
 				.addFilter(new RequestLoggingFilter()).build();
 		return given().spec(requestSpecification).contentType("multipart/form-data").queryParam("logoType", logoType)
-				.queryParam("altText", altText).multiPart("file", file).post(url).then().extract().response();
+				.queryParam("altText", altText).multiPart("file", file,fileType).post(url).then().extract().response();
+	}
+
+	public Response updateBrandImage_DL_Invalid_Url(int brandId, String logoType, String altText, String href,
+			String name, String mimeType) {
+		String url = ApiPath.UPDATE_BRAND_IMAGE_DL_INVALID_URL(brandId);
+		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
+		return given().spec(requestSpec).body(createBrandImagePayload).when().patch(url).then().extract().response();
+	}
+
+	public Response updateBrandImage_DL_Invalid_Method_Call(int brandId, String logoType, String altText, String href,
+			String name, String mimeType) {
+		String url = ApiPath.UPDATE_BRAND_IMAGE_DL(brandId);
+		Map<String, Object> createBrandImagePayload = updateBrandImage(logoType, altText, href, name, mimeType);
+		return given().spec(requestSpec).body(createBrandImagePayload).when().patch(url).then().extract().response();
 	}
 }
