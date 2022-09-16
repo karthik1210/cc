@@ -4,6 +4,7 @@ package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -20,8 +21,8 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 	private BrandsInfo brandInfo;
 	private Validations validation;
 	private BrandsValidations brandsValidations;
-	Response  getBrandImageApiResponse, updateBrandingLogoApiResponse,
-			deleteBrandImageApiResponse, createBrandApiResponse, createClientApiResponse;
+	Response getBrandImageApiResponse, updateBrandingLogoApiResponse, deleteBrandImageApiResponse,
+			createBrandApiResponse, createClientApiResponse;
 	int orgId, clientId, brandId;
 	String namePayLoad;
 
@@ -64,8 +65,8 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter new brandId, update brand image and delete updated imageId and verify response code")
 	public void testResponseCodeForDeleteBrandImage() throws IOException {
 		log("Enter new brandId & update brand image");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath +  "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.logo.type"),
 				testData.getProperty("api.alt.text"), file, fileType);
@@ -74,9 +75,9 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 		log("Fetch updated brandId");
 		getBrandImageApiResponse = brandInfo.getBrandImage_BL(brandId);
 		CCUtils.responseTimeValidation(getBrandImageApiResponse);
-		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);	
+		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);
 		log("Delete updated brandImage");
-		String href= getBrandImageApiResponse.jsonPath().getString("logo.href");
+		String href = getBrandImageApiResponse.jsonPath().getString("logo.href");
 		deleteBrandImageApiResponse = brandInfo.deteteBrandImage_BL(brandId, href);
 		CCUtils.responseTimeValidation(deleteBrandImageApiResponse);
 		CCUtils.assertEquals(deleteBrandImageApiResponse.getStatusCode(), 200);
@@ -98,9 +99,8 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brandId & existing imageId  and verify error message")
 	public void testErrorMessageForNonExistingBrandId() throws IOException {
 		log("Enter non-existing brand & Id existing imageid");
-		log("Enter new brandId & update brand image");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath +  "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.logo.type"),
 				testData.getProperty("api.alt.text"), file, fileType);
@@ -109,13 +109,15 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 		log("Fetch updated brandId");
 		getBrandImageApiResponse = brandInfo.getBrandImage_BL(brandId);
 		CCUtils.responseTimeValidation(getBrandImageApiResponse);
-		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);	
+		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);
 		log("Delete updated brandImage for non-existing brandId");
-		String href= getBrandImageApiResponse.jsonPath().getString("logo.href");
-		deleteBrandImageApiResponse = brandInfo.deteteBrandImage_BL(Integer.parseInt(testData.getProperty("api.nonexisting.brand.id")), href);
+		String href = getBrandImageApiResponse.jsonPath().getString("logo.href");
+		deleteBrandImageApiResponse = brandInfo
+				.deteteBrandImage_BL(Integer.parseInt(testData.getProperty("api.nonexisting.brand.id")), href);
 		CCUtils.responseTimeValidation(deleteBrandImageApiResponse);
 		CCUtils.assertEquals(deleteBrandImageApiResponse.getStatusCode(), 400);
-		brandsValidations.verifyBrandNotFoundErrorMessageResponse(deleteBrandImageApiResponse, Integer.parseInt(testData.getProperty("api.nonexisting.brand.id")));
+		brandsValidations.verifyBrandNotFoundErrorMessageResponse(deleteBrandImageApiResponse,
+				Integer.parseInt(testData.getProperty("api.nonexisting.brand.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brandId & non-existing imageId  and verify error message")
@@ -123,15 +125,14 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 		log("Enter non-existing brand & Id non-existing imageid");
 		int brandId = Integer.parseInt(testData.getProperty("api.nonexisting.brand.id"));
 		String href = testData.getProperty("api.invalid.href");
-		
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath +  "\\src\\test\\resources\\data-driven\\images\\logo.png");
+
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.logo.type"),
 				testData.getProperty("api.alt.text"), file, fileType);
 		CCUtils.responseTimeValidation(updateBrandingLogoApiResponse);
-		
-		
+
 		deleteBrandImageApiResponse = brandInfo.deteteBrandImage_BL(brandId, href);
 		CCUtils.responseTimeValidation(deleteBrandImageApiResponse);
 		CCUtils.assertEquals(deleteBrandImageApiResponse.getStatusCode(), 400);
@@ -141,8 +142,8 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Invalid url and verify error message")
 	public void testErrorMessageForInvalidUrl() throws IOException {
 		log("Enter new brandId & update brand image for invalid url");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath +  "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.logo.type"),
 				testData.getProperty("api.alt.text"), file, fileType);
@@ -151,9 +152,9 @@ public class DeleteBrandImageApiTests_BusinessLayer extends BaseRest {
 		log("Fetch updated brandId");
 		getBrandImageApiResponse = brandInfo.getBrandImage_BL(brandId);
 		CCUtils.responseTimeValidation(getBrandImageApiResponse);
-		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);	
+		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);
 		log("Delete updated brandImage");
-		String href= getBrandImageApiResponse.jsonPath().getString("logo.href");
+		String href = getBrandImageApiResponse.jsonPath().getString("logo.href");
 		deleteBrandImageApiResponse = brandInfo.deteteBrandImageInvalidUrl_BL(brandId, href);
 		CCUtils.responseTimeValidation(deleteBrandImageApiResponse);
 		CCUtils.assertEquals(deleteBrandImageApiResponse.getStatusCode(), 404);

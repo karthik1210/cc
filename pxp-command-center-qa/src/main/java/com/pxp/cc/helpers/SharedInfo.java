@@ -656,4 +656,14 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
+	public Response getLocationDetailsUsingInvalidUrl_DL(int locationId) {
+		String url = ApiPath.INVALID_PATH_LOCATION_DETAILS_DL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidMethod_DL(int locationId) {
+		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
 }

@@ -4,6 +4,7 @@ package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -60,8 +61,8 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  brand image in  logo type and verify response code")
 	public void testResponseCodeForUpdateBrandImageInLogoType() throws NullPointerException, Exception {
 		log("Update brand image for brandId in  logo type");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + File.separator + "src\\test\\resources\\data-driven\\images\\leaf.svg");
+		URL url = ClassLoader.getSystemResource("data-driven/images/leaf.svg");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.logo.type"),
 				testData.getProperty("api.alt.text"), file, fileType);
@@ -72,12 +73,12 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getBrandImageApiResponse);
 		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  brand image in  favicon type and verify response code")
 	public void testResponseCodeForUpdateBrandImageInFaviconType() throws NullPointerException, Exception {
 		log("Update brand image for brandId in  favicon type");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + File.separator + "src\\test\\resources\\data-driven\\images\\leaf.svg");
+		URL url = ClassLoader.getSystemResource("data-driven/images/leaf.svg");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.favicon.type"),
 				testData.getProperty("api.alt.text"), file, fileType);
@@ -88,28 +89,29 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getBrandImageApiResponse);
 		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  brand image in  emailLogo type and verify response code")
-	public void testResponseCodeForUpdateBrandImageInPatientCommunicationsLogoType() throws NullPointerException, Exception {
+	public void testResponseCodeForUpdateBrandImageInPatientCommunicationsLogoType()
+			throws NullPointerException, Exception {
 		log("Update brand image for brandId in  favicon type");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + File.separator + "src\\test\\resources\\data-driven\\images\\leaf.svg");
+		URL url = ClassLoader.getSystemResource("data-driven/images/leaf.svg");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
-		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.emailLogo.type"),
-				testData.getProperty("api.alt.text"), file, fileType);
+		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_BL(brandId,
+				testData.getProperty("api.emailLogo.type"), testData.getProperty("api.alt.text"), file, fileType);
 		CCUtils.responseTimeValidation(updateBrandingLogoApiResponse);
 		CCUtils.assertEquals(updateBrandingLogoApiResponse.getStatusCode(), 200);
 		log("Fetch updated brandId");
 		getBrandImageApiResponse = brandsInfo.getBrandImage_BL(brandId);
 		CCUtils.responseTimeValidation(getBrandImageApiResponse);
 		CCUtils.assertEquals(getBrandImageApiResponse.getStatusCode(), 200);
-	}	
+	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  brand image  for invalid url and verify error message")
 	public void testResponseCodeForUpdateBrandImageForInvalidUrl() throws IOException {
 		log("Update  brand image  for invalid url");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + File.separator + "src\\test\\resources\\data-driven\\images\\leaf.svg");
+		URL url = ClassLoader.getSystemResource("data-driven/images/leaf.svg");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_InvalidUrl_BL(brandId,
 				testData.getProperty("api.logo.type"), testData.getProperty("api.alt.text"), file, fileType);
@@ -121,8 +123,8 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  brand image  for null brandId and verify error message")
 	public void testResponseCodeForUpdateBrandImageForNullBrandId() throws IOException {
 		log("Update brand image for null brandId");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_Null_BrandId_BL(
 				testData.getProperty("api.logo.type"), testData.getProperty("api.alt.text"), file, fileType);
@@ -134,8 +136,8 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  brand image Non-existing BrandId and verify error message")
 	public void testResponseCodeForUpdateBrandImageForNonExistingBrandId() throws IOException {
 		log("Update  brand image  for Non-existing BrandId");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_BL(
 				Integer.parseInt(testData.getProperty("non.existing.brand.id")), testData.getProperty("api.logo.type"),
@@ -149,8 +151,8 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update  invalid brand image in  logo type and verify response code")
 	public void testResponseCodeForUpdateInValidBrandImage() throws NullPointerException, Exception {
 		log("Update brand image for brandId in  logo type");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\Upload.pdf");
+		URL url = ClassLoader.getSystemResource("data-driven/images/Upload.pdf");
+		File file = new File(url.getFile());
 		String fileType = "application/pdf";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_BL(brandId, testData.getProperty("api.logo.type"),
 				testData.getProperty("api.alt.text"), file, fileType);

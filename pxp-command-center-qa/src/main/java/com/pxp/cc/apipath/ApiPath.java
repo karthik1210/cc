@@ -1256,7 +1256,7 @@ public class ApiPath {
 	public static final String DETETE_BRAND_IMAGE_NullValue_BL() {
 		return SERVICE_SHARED_BL + "/v1/brands/brandId/images/id";
 	}
-	
+
 	public static final String INVALID_PATH_LOCATION_DETAILS_BL(int locationId) {
 		return SERVICE_SHARED_BL + "/v1/locationsssss/" + locationId;
 	}
@@ -1294,5 +1294,12 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/practice-social/practicesss/" + practiceId + "/socials";
 	}
 
+	public static final String INVALID_PATH_LOCATION_DETAILS_DL(int locationId) {
+		return SHARED_DL + "/v1/locationsssss/" + locationId;
+	}
 
+	public static final String CREATE_RESOURCE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources";
+
+	}
 }
