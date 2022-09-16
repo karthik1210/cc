@@ -286,7 +286,7 @@ public class UpdateTouApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updateTouApiResponse.getStatusCode(), 404);
     }
 
-    @Test(priority = 8, enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Update Invalid payload")
+    @Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Update Invalid payload")
     public void updateTousForPracticeIdWithNullPayload() throws IOException {
         int orgId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
         String touType = testData.getProperty("api.valid.tou.type");
