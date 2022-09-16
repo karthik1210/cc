@@ -43,6 +43,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationDetailsApiTests_DataLayer"></class>
 		</classes>
 	</test>
 

@@ -4,6 +4,7 @@ package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -104,8 +105,8 @@ public class AddResourceImageApiTests_BusinessLayer extends BaseRest {
 	public void testResponseCodeToAddResourceImageWithValidResourceId(String getImageValue)
 			throws NullPointerException, IOException {
 		log("Enter valid resourceid with valid image format");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\" + getImageValue);
+		URL url = ClassLoader.getSystemResource("data-driven/images/" + getImageValue);
+		File file = new File(url.getFile());
 		String fileType = "image/png";
 		addResourceImageApiResponse = resourceInfo.addResourceImage_BL(resourceId, file, fileType);
 		CCUtils.responseTimeValidation(addResourceImageApiResponse);
@@ -121,8 +122,8 @@ public class AddResourceImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid resourceid with invalid image format to add resource image and verify response code")
 	public void testResponseCodeToAddResourceImageWithInvalidImageFormat() throws IOException {
 		log("Enter valid resourceid with invalid image format");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\Upload.pdf");
+		URL url = ClassLoader.getSystemResource("data-driven/images/Upload.pdf");
+		File file = new File(url.getFile());
 		String fileType = "application/pdf";
 		addResourceImageApiResponse = resourceInfo.addResourceImage_BL(resourceId, file, fileType);
 		CCUtils.responseTimeValidation(addResourceImageApiResponse);
@@ -132,8 +133,8 @@ public class AddResourceImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing resourceid with valid image format to add resource image and verify response code")
 	public void testResponseCodeToAddResourceImageWithNonExistingResourceId() throws IOException {
 		log("Enter non-existing resourceid with valid image format");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		int nonExistingResourceId = Integer.parseInt(testData.getProperty("non.existing.resource.id"));
 		String fileType = "image/png";
 		addResourceImageApiResponse = resourceInfo.addResourceImage_BL(nonExistingResourceId, file, fileType);
@@ -146,8 +147,8 @@ public class AddResourceImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error message")
 	public void testErrorResponseForInvalidUrl() throws IOException {
 		log("Enter valid resourceid with valid image format");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		addResourceImageApiResponse = resourceInfo.addResourceImageInvalidUrl_BL(resourceId, file);
 		CCUtils.responseTimeValidation(addResourceImageApiResponse);
 		CCUtils.assertEquals(addResourceImageApiResponse.getStatusCode(), 404);
@@ -157,8 +158,8 @@ public class AddResourceImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter PUT instead of POST and verify response code")
 	public void testErrorMessageForInvalidMethodCall() throws IOException {
 		log("Enter valid resourceid with valid image format");
-		String projectpath = System.getProperty("user.dir");
-		File file = new File(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
+		File file = new File(url.getFile());
 		addResourceImageApiResponse = resourceInfo.addResourceImageInvalidMethodCall_BL(resourceId, file);
 		CCUtils.responseTimeValidation(addResourceImageApiResponse);
 		CCUtils.assertEquals(addResourceImageApiResponse.getStatusCode(), 405);
