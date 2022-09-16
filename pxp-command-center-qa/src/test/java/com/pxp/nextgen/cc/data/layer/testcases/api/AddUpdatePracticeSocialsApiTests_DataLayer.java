@@ -88,8 +88,8 @@ public class AddUpdatePracticeSocialsApiTests_DataLayer extends BaseRest {
         for (int i = 0; i < listSocialHref.size(); i++) {
             int socialId = getPracticeSocialApiResponse.jsonPath().get("socialId[" + i + "]");
             String href = getPracticeSocialApiResponse.jsonPath().get("href[" + i + "]");
-            if (socialId == i + 1 && href.equalsIgnoreCase(listSocialHref.get(i))) {
-                logStep("Added Socials successfully to " + orgId);
+            if (socialHref.contains(href)) {
+                logStep(href+" added Socials successfully to " + orgId);
             }
         }
     }
@@ -208,11 +208,10 @@ public class AddUpdatePracticeSocialsApiTests_DataLayer extends BaseRest {
         for (int i = 0; i < listSocialHrefUpdated.size(); i++) {
             int socialId = getPracticeSocialApiResponse.jsonPath().get("socialId[" + i + "]");
             String href = getPracticeSocialApiResponse.jsonPath().get("href[" + i + "]");
-            if (socialId == i + 1 && href.equalsIgnoreCase(listSocialHrefUpdated.get(i))) {
-                logStep("Added Updated successfully to " + orgId);
+            if (listSocialHrefUpdated.contains(href)) {
+                logStep(href + " Updated successfully to " + orgId);
             }
         }
-
     }
 
     @Test(enabled = false)

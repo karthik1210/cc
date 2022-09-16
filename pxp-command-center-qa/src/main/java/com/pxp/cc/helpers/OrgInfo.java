@@ -1140,7 +1140,7 @@ public class OrgInfo extends BaseRest {
         }
     }
 
-    public Response AddUpdatePracticeSocialsInvaliDatatypeResponse(String serviceLayer, String practiceId) {
+    public Response getPracticeSocialsInvaliDatatypeResponse(String serviceLayer, String practiceId) {
         String url = ApiPath.PRACTICE_SOCIALS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
