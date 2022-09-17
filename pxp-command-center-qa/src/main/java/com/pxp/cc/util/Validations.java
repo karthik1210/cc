@@ -2999,4 +2999,48 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
 		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
 	}
+
+	public void verifyGetSocialDetails( Response getSocialApiResponse)
+	{
+		HashMap<String, Object> addSocials1 = new HashMap<String, Object>();
+		HashMap<String, Object> addSocials2 = new HashMap<String, Object>();
+		HashMap<String, Object> addSocials3 = new HashMap<String, Object>();
+		HashMap<String, Object> addSocials4 = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> getSocials = new ArrayList<HashMap<String, Object>>();
+		addSocials1.put("socialId", 1);
+		addSocials1.put("name", "Twitter");
+		addSocials1.put("icon", "twitter-square");
+		addSocials2.put("socialId", 2);
+		addSocials2.put("name", "Facebook");
+		addSocials2.put("icon", "facebook-square");
+		addSocials3.put("socialId", 3);
+		addSocials3.put("name", "Linkedin");
+		addSocials3.put("icon", "linkedin-square");
+		addSocials4.put("socialId", 4);
+		addSocials4.put("name", "Youtube");
+		addSocials4.put("icon", "youtube-play");
+		getSocials.clear();
+		getSocials.add(addSocials1);
+		getSocials.add(addSocials2);
+		getSocials.add(addSocials3);
+		getSocials.add(addSocials4);
+		List<String> socialIds = getSocialApiResponse.jsonPath().get("socialId");
+		for (int i = 0; i < socialIds.size(); i++) {
+			String responseName = getSocialApiResponse.jsonPath().get("name[" + i + "]");
+			String expectedName = getSocials.get(i).get("name").toString();
+			if (responseName.equalsIgnoreCase(expectedName)) {
+				int responseSocialId = getSocialApiResponse.jsonPath().get("socialId[" + i + "]");
+				String responseIcon = getSocialApiResponse.jsonPath().get("icon[" + i + "]");
+				int expectedSocialId = Integer.parseInt(getSocials.get(i).get("socialId").toString());
+				String expectedIcon = getSocials.get(i).get("icon").toString();
+				if(responseSocialId==expectedSocialId && responseIcon.equalsIgnoreCase(expectedIcon))
+				{
+					Log4jUtil.log("Validation is Successful for "+responseName);
+				}else
+				{
+					Log4jUtil.log("Validation is not Successful for "+responseName);
+				}
+			}
+		}
+	}
 }
