@@ -32,6 +32,11 @@ public class ResourceValidations {
 	public void verifyErrorResponseForNullPayload_DL(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "ExternalId cannot be empty or null, linkId cannot be null, linkType cannot be empty or null";
+	}
+	
+	public void verifyErrorResponseForNullPayload(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "LinkType cannot be blank, Type cannot be blank, LinkId cannot be blank, ExternalId cannot be blank, Name cannot be blank";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -52,4 +57,23 @@ public class ResourceValidations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "ExternalId size maximum 50 characters");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+
+	public void verifyErrorResponseForMaxCharacterLimit(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "ExternalId size maximum 50 characters, Name size maximum 100 characters";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
 }
