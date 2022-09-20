@@ -41,8 +41,6 @@ public class SearchClientLocationApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 		orgInfo = new OrgInfo();
 		locationsValidations = new LocationsValidations();
-		new GeneralSettingsClientDropdown();
-		new ClientTopNavDropdownValidations();
 		locationInfo = new LocationsInfo();
 		clientId = createClient(ccUser.getClientOneType());
 		systemId = createSystemNode(clientId);
