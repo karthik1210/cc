@@ -12,7 +12,7 @@ module "pipeline" {
   source_bitbucket_project    = "PXPCC"
   source_bitbucket_repo       = local.application_name
   git_branch_trigger_pipeline = local.git_branch_trigger_pipeline
-  source_buildspec = local.source_buildspec
+  source_buildspec            = local.source_buildspec
 
   s3_artifact_bucket_name                = local.s3_artifacts_target_bucket_name
   codeartifact_repository_name_to_upload = "pxp-mf"
