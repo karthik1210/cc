@@ -72,6 +72,30 @@ public class ResourceInfo extends BaseRest {
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
 	}
+	
+	public Response createResourceInvalidUrl_BL(int practiceId, String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_INVALID_URL_BL(practiceId);
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	}
+	public Response createResourceInvalidMethodCall_BL(int practiceId, String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_BL(practiceId);
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
+	}
+	
+	public Response createResourceNullValue_BL( String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_BL;
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	}
+	
 
 	private Map<String, Object> createResourceRequestPayload(String name, String type, String externalId, String linkId,
 			String linkType) {

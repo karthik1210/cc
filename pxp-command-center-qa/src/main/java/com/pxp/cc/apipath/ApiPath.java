@@ -1263,7 +1263,12 @@ public class ApiPath {
 
 	public static final String CREATE_RESOURCE_BL(int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources";
+	}
 
+	public static final String CREATE_RESOURCE_NULL_VALUE_BL = SERVICE_SHARED_BL + "/v1/practices/null/resources";
+
+	public static final String CREATE_RESOURCE_INVALID_URL_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources12@";
 	}
 
 	public static final String PRACTICE_SOCIALS(String serviceLayer, int practiceId) {
