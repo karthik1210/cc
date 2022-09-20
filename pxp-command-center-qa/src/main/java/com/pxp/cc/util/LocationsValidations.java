@@ -3,11 +3,16 @@ package com.pxp.cc.util;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.objectmaps.LocationStatus;
+import com.pxp.cc.pojos.OrgNode;
+import com.pxp.cc.pojos.UserStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -111,5 +116,48 @@ public class LocationsValidations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Location not found by id=" + locationId);
+	}
+
+	public void verifyGetPracticesAssociatedToLocationApiResponseBody(Response response, List<Integer> practiceIds)
+			throws IOException {
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(responseBody.length() > 0, "practice Id list is empty");
+		CCUtils.assertTrue(practiceIds.size() == responseBody.length(),
+				"Size of actual practice list and expected practice list is not same");
+		List<Integer> data = new ArrayList<Integer>();
+		for (int i = 0; i < responseBody.length(); i++) {
+			data.add(Integer.valueOf(responseBody.getInt(i)));
+		}
+		CCUtils.assertEquals(practiceIds, data);
+
+	}
+
+	public void verifyErrorResponseForNonExistingLocationId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid location Id");
+	}
+
+	public void verifyErrorResponseForNonExistingPracticeId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid practice Id");
+	}
+
+	public void verifyErrorResponseForEmptyPayload(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		String actual = "PracticeId cannot be null, Active cannot be null";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
 	}
 }

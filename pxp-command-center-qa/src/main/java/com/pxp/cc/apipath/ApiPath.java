@@ -1316,4 +1316,8 @@ public class ApiPath {
 		else
 			return SERVICE_COMMONS_DL + "/v1/socialsss";
 	}
+
+	public static final String INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practicessss";
+	}
 }

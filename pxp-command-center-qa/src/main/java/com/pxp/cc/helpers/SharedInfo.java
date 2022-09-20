@@ -666,4 +666,48 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
+	private Map<String, Object> associateDeassociatePracticeMapPayload(int practiceId, Boolean active) {
+		Map<String, Object> associateDeassociatePracticeMap = new HashMap<String, Object>();
+		associateDeassociatePracticeMap.put("practiceId", practiceId);
+		associateDeassociatePracticeMap.put("active", active);
+		return associateDeassociatePracticeMap;
+	}
+
+	public Response associateDeassociatePracticeForLocation_BL(int locationId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getPracticesAssociatedToLocation_BL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationWithEmptyPayload_BL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationUsingInvalidUrl_BL(int locationId, int practiceId,
+			boolean active) {
+		String url = ApiPath.INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationUsingInvalidMethod_BL(int locationId, int practiceId,
+			boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().post(url).then()
+				.extract().response();
+	}
 }
