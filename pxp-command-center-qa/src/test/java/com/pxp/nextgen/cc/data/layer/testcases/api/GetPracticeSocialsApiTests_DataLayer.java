@@ -107,8 +107,18 @@ public class GetPracticeSocialsApiTests_DataLayer extends BaseRest {
         CCUtils.responseTimeValidation(getPracticeSocialApiResponse);
         CCUtils.assertEquals(getPracticeSocialApiResponse.getStatusCode(), 400);
     }
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19417Get social to given practiceId with Invalid URI Type")
+    public void getPracticeSocialsWithInvalidUriApi() throws IOException {
+        logStep("TC 007_verify response code 404 and error message when user enters valid practice Id with Invalid URI by using GET Method  [BL]");
+        int orgId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
+        logStep("Getting SocialId information for a given orgId");
+        getPracticeSocialApiResponse = orgInfo.getPracticeSocialsResponse("InValid", "DL", orgId);
+        logStep("Validating response information");
+        CCUtils.responseTimeValidation(getPracticeSocialApiResponse);
+        CCUtils.assertEquals(getPracticeSocialApiResponse.getStatusCode(), 404);
+    }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19418_Get social to given practiceId with Invalid Mathod Type")
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19418_Get social to given practiceId with Invalid Mathod Type")
     public void getPracticeSocialsWithInvalidMethodApi() throws IOException {
         logStep("TC 008_verify response code 405 and error message when user enters valid practice Id with Invalid DELETE method [DL]");
         int orgId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
