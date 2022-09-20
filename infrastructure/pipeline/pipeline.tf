@@ -3,7 +3,7 @@
 # Specify configuration details for the CI/CD pipeline
 
 module "pipeline" {
-  source = "git::ssh://bitbucket.nextgen.com:7999/dope/codepipeline_framework.git//predefined_pipelines/bitbucket_codecommit_codebuild?ref=0.17.0"
+  source = "git::ssh://bitbucket.nextgen.com:7999/dope/codepipeline_framework.git//predefined_pipelines/bitbucket_codecommit_codebuild?ref=0.18.0"
   providers = {
     aws = aws
   }
@@ -12,6 +12,7 @@ module "pipeline" {
   source_bitbucket_project    = "PXPCC"
   source_bitbucket_repo       = local.application_name
   git_branch_trigger_pipeline = local.git_branch_trigger_pipeline
+  source_buildspec = local.source_buildspec
 
   s3_artifact_bucket_name                = local.s3_artifacts_target_bucket_name
   codeartifact_repository_name_to_upload = "pxp-mf"

@@ -8,4 +8,6 @@ locals {
   s3_artifacts_target_bucket_name = "nextgen-aws-pxp-mf-build-artifacts-us-east-2"
 
   git_branch_trigger_pipeline = "main"
+
+  source_buildspec = "testspec_post_deploy.yml"
 }
