@@ -1,4 +1,5 @@
 # Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 terraform {
   required_version = "~> 1.0"
 
