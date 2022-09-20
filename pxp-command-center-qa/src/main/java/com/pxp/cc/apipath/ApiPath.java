@@ -1302,4 +1302,18 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources";
 
 	}
+
+	public static final String GET_SOCIALS(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/socials";
+		else
+			return SERVICE_COMMONS_DL + "/v1/socials";
+	}
+
+	public static final String GET_SOCIALS_INVALID_URI(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/socialsss";
+		else
+			return SERVICE_COMMONS_DL + "/v1/socialsss";
+	}
 }

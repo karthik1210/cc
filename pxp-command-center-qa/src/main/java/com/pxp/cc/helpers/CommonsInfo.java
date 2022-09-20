@@ -39,4 +39,17 @@ public class CommonsInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_TIMEZONES_DL;
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response getSocialsResponse(String validURI, String serviceLayer) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_SOCIALS(serviceLayer);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_SOCIALS_INVALID_URI(serviceLayer);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else  {
+			String url = ApiPath.GET_SOCIALS(serviceLayer);
+			return given().spec(requestSpec).when().put(url).then().extract().response();
+		}
+	}
 }
