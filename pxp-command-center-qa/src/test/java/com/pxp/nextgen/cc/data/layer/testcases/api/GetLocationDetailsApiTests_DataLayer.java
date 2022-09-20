@@ -87,8 +87,6 @@ public class GetLocationDetailsApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
 		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 400);
-		locationValidation.verifyErrorResponseForInvalidLocationId(fetchLocationDetailsApiResponse,
-				Integer.parseInt(testData.getProperty("non.existing.location.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error response body for invalid url")
