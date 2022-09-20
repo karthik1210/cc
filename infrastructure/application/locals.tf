@@ -2,4 +2,5 @@
 locals {
   environment      = terraform.workspace
   application_name = "pxp-command-center-qa"
+  ecr_name         = local.application_name
 }
