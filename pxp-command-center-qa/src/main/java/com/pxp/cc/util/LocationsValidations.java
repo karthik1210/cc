@@ -10,9 +10,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.objectmaps.LocationStatus;
-import com.pxp.cc.pojos.OrgNode;
-import com.pxp.cc.pojos.UserStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
