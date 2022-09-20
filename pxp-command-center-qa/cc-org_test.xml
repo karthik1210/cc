@@ -38,6 +38,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddUpdatePracticeSocialsApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
