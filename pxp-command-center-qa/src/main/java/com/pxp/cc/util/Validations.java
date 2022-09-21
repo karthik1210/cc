@@ -3043,4 +3043,41 @@ public class Validations {
 			}
 		}
 	}
+
+	public void verifyGetProductDetailsWithDescription(Response getProductApiResponse) {
+		HashMap<String, Object> addProduct1 = new HashMap<String, Object>();
+		HashMap<String, Object> addProduct2 = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> addProducts = new ArrayList<HashMap<String, Object>>();
+		addProduct1.put("productId", 88);
+		addProduct1.put("name", "MFRest_NG");
+		addProduct1.put("active", true);
+		addProduct1.put("description", "MedfusionREST - NextGen");
+		addProduct2.put("productId", 82);
+		addProduct2.put("name", "GW");
+		addProduct2.put("active", true);
+		addProduct2.put("description", "Greenway PrimeSuite EMR");
+		addProducts.clear();
+		addProducts.add(addProduct1);
+		addProducts.add(addProduct2);
+		List<String> productIds = getProductApiResponse.jsonPath().get("productId");
+		for (int i = 0; i < productIds.size(); i++) {
+			int responseProductId = getProductApiResponse.jsonPath().get("productId[" + i + "]");
+			int expectedProductId = Integer.parseInt(addProducts.get(0).get("productId").toString());
+			int expectedProductId1 = Integer.parseInt(addProducts.get(1).get("productId").toString());
+			if (responseProductId == expectedProductId || responseProductId == expectedProductId1) {
+				String responseName = getProductApiResponse.jsonPath().get("name[" + i + "]");
+				String expectedName = addProducts.get(0).get("name").toString();
+				String expectedName1 = addProducts.get(1).get("name").toString();
+				String responseDescription = getProductApiResponse.jsonPath().get("description[" + i + "]");
+				String expectedDescription = addProducts.get(0).get("description").toString();
+				String expectedDescription1 = addProducts.get(1).get("description").toString();
+				if ((responseName.equalsIgnoreCase(expectedName) && responseDescription.equalsIgnoreCase(expectedDescription)) || responseName.equalsIgnoreCase(expectedName1) && responseDescription.equalsIgnoreCase(expectedDescription1) )
+				{
+					Log4jUtil.log("Validation is Successful for " + responseName);
+				} else {
+					Log4jUtil.log("Validation is not Successful for " + responseName);
+				}
+			}
+		}
+	}
 }
