@@ -1325,4 +1325,8 @@ public class ApiPath {
 	public static final String INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_BL(int locationId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practicessss";
 	}
+
+	public static final String INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practicessss";
+	}
 }

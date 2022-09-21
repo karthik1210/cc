@@ -42,6 +42,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationDetailsApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
