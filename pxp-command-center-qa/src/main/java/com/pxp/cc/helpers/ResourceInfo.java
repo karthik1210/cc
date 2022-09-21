@@ -3,14 +3,11 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
-
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
@@ -107,4 +104,37 @@ public class ResourceInfo extends BaseRest {
 		createResourceMap.put("linkType", linkType);
 		return createResourceMap;
 	}
+	
+	public Response createResource_DL(int practiceId, String name, String type, String externalId, String linkId, String linkType ) {
+        String url = ApiPath.CREATE_RESOURCE_DL(practiceId);
+        Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+                linkType);
+        return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+    }
+
+	public Response createResourceInvalidUrl_DL(int practiceId, String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_INVALID_URL_DL(practiceId);
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	}
+	
+	public Response createResourceInvalidPutMethodCall_DL(int practiceId, String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_DL(practiceId);
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
+	}
+	
+	public Response createResourceNullValue_DL( String name, String type, String externalId, String linkId,
+            String linkType) {
+        String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
+        Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+                linkType);
+        return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+    }
+	
+	
 }

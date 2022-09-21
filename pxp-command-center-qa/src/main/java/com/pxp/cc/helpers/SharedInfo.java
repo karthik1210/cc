@@ -720,4 +720,12 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
+
+	public Response createProvider_DL(int practiceId, String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
+	}
 }
