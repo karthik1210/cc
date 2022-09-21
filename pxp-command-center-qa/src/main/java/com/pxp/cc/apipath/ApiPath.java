@@ -1329,4 +1329,16 @@ public class ApiPath {
 	public static final String INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practicessss";
 	}
+
+	public static final String CREATE_RESOURCE_DL(String practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources";
+
+	}
+
+	public static final String CREATE_RESOURCE_INVALID_URL_DL(int practiceId) {
+		return SHARED_DL + "/v1/practicesSS/" + practiceId + "/resources123";
+	}
+
+	public static final String CREATE_RESOURCE_NULL_VALUE_DL = SHARED_DL + "/v1/practices/null/resources";
+
 }
