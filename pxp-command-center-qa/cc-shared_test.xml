@@ -71,10 +71,12 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" />
-				<class
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToLocationApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
