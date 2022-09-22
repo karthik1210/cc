@@ -2542,15 +2542,11 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
 
-	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String showLogo,
-			String color, String logo, String favicon, String emailLogo) throws IOException {
+	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String color)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
-		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
 		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
-		CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
-		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
-		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
 	}
 
 	public void verifyInternalUserOutputWithValidInput(Response response, String getSearchUserDetails) {
@@ -2623,8 +2619,7 @@ public class Validations {
 	public void verifyErrorResponseBodyForInvalidAppointmentTypeId(Response response, String AppointmentTypeId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Appointment not found for OrgId=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Appointment not found for id=" + AppointmentTypeId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -3000,8 +2995,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
 	}
 
-	public void verifyGetSocialDetails( Response getSocialApiResponse)
-	{
+	public void verifyGetSocialDetails(Response getSocialApiResponse) {
 		HashMap<String, Object> addSocials1 = new HashMap<String, Object>();
 		HashMap<String, Object> addSocials2 = new HashMap<String, Object>();
 		HashMap<String, Object> addSocials3 = new HashMap<String, Object>();
@@ -3033,12 +3027,10 @@ public class Validations {
 				String responseIcon = getSocialApiResponse.jsonPath().get("icon[" + i + "]");
 				int expectedSocialId = Integer.parseInt(getSocials.get(i).get("socialId").toString());
 				String expectedIcon = getSocials.get(i).get("icon").toString();
-				if(responseSocialId==expectedSocialId && responseIcon.equalsIgnoreCase(expectedIcon))
-				{
-					Log4jUtil.log("Validation is Successful for "+responseName);
-				}else
-				{
-					Log4jUtil.log("Validation is not Successful for "+responseName);
+				if (responseSocialId == expectedSocialId && responseIcon.equalsIgnoreCase(expectedIcon)) {
+					Log4jUtil.log("Validation is Successful for " + responseName);
+				} else {
+					Log4jUtil.log("Validation is not Successful for " + responseName);
 				}
 			}
 		}
@@ -3071,8 +3063,10 @@ public class Validations {
 				String responseDescription = getProductApiResponse.jsonPath().get("description[" + i + "]");
 				String expectedDescription = addProducts.get(0).get("description").toString();
 				String expectedDescription1 = addProducts.get(1).get("description").toString();
-				if ((responseName.equalsIgnoreCase(expectedName) && responseDescription.equalsIgnoreCase(expectedDescription)) || responseName.equalsIgnoreCase(expectedName1) && responseDescription.equalsIgnoreCase(expectedDescription1) )
-				{
+				if ((responseName.equalsIgnoreCase(expectedName)
+						&& responseDescription.equalsIgnoreCase(expectedDescription))
+						|| responseName.equalsIgnoreCase(expectedName1)
+								&& responseDescription.equalsIgnoreCase(expectedDescription1)) {
 					Log4jUtil.log("Validation is Successful for " + responseName);
 				} else {
 					Log4jUtil.log("Validation is not Successful for " + responseName);

@@ -4,9 +4,10 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.BrandsInfo;
+import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -18,7 +19,13 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private DuplicateBrandingValidations brandingValidations;
 	private Validations validation;
-	Response associateDeassociateBrandApiResponse, getBrandListApiResponse;
+	Response associateDeassociateBrandApiResponse, getBrandListApiResponse, createBrandApiResponse,
+			createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
+			createAgnosticPracticeApiResponse, createClientApiResponse;
+	private BrandsInfo brandInfo;
+	int orgId, brandIdone, brandITwo;
+	String clientName, clientSapNumber;
+	private ClientInfo clientInfo;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -26,50 +33,78 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		brandingValidations = new DuplicateBrandingValidations();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		brandInfo = new BrandsInfo();
+		validation = new Validations();
+		clientInfo = new ClientInfo();
+		orgId = createClient();
+		brandIdone = CreateBrandOne(orgId);
+		brandITwo = CreateBrandTwo(orgId);
+
 	}
 
-	@DataProvider(name = "orgId")
-	public Object[] getOrgId() {
-		Object[] obj = new Object[] { Integer.parseInt(testData.getProperty("org.client.id")),
-				Integer.parseInt(testData.getProperty("org.system.id")),
-				Integer.parseInt(testData.getProperty("org.enterprise.id")),
-				Integer.parseInt(testData.getProperty("org.practice.id")) };
-		return obj;
+	public int createClient() throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
+				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
-	@DataProvider(name = "orgIdValue")
-	public Object[] getOrgIdDetails() {
-		Object[] obj = new Object[] { Integer.parseInt(testData.getProperty("org.client.one.id")),
-				Integer.parseInt(testData.getProperty("org.system.one.id")),
-				Integer.parseInt(testData.getProperty("org.enterprise.one.id")),
-				Integer.parseInt(testData.getProperty("org.practice.one.id")) };
-		return obj;
+	public int CreateBrandOne(int orgId) throws IOException {
+		logStep("Enter valid values in request payload to create branding template at client level");
+		String name = testData.getProperty("client.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = testData.getProperty("client.brand.color");
+		createBrandApiResponse = brandInfo.createBrandingTemplate_DL(String.valueOf(orgId), name, "true", color);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		return createBrandApiResponse.jsonPath().get("brandId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgId", description = "Verify user able to activate/deactivate branding template")
-	public void testAssociateDeassociateBrandingTemplateFunctionalityAtOrgLevel(Integer orgId) throws Exception {
+	public int CreateBrandTwo(int orgId) throws IOException {
+		logStep("Enter valid values in request payload to create branding template at client level");
+		String name = testData.getProperty("client.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = testData.getProperty("client.brand.color");
+		createBrandApiResponse = brandInfo.createBrandingTemplate_DL(String.valueOf(orgId), name, "false", color);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		return createBrandApiResponse.jsonPath().get("brandId");
+	}
+
+	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to deactivate branding template")
+	public void testDeassociateBrandingTemplateFunctionalityAtOrgLevel() throws Exception {
 		logStep("Get branding list");
 		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
 		logStep("Fetch active template brandId");
-		int brandId = brandingValidations.getActiveBrandId(getBrandListApiResponse);
 		logStep("Change branding template status from active to inactive");
-		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(orgId, brandId, false);
+		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(orgId, brandIdone, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDeassociateBrandApiResponse.getStatusCode(), 200);
-		logStep("Get branding list");
 		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
 		logStep("Verify branding template status is changed from active to inactive");
-		brandingValidations.VerifyActiveFlagStatus(getBrandListApiResponse, false, brandId);
+		brandingValidations.VerifyActiveFlagStatus(getBrandListApiResponse, false, brandIdone);
+
+	}
+
+	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to activate branding template")
+	public void testAssociateBrandingTemplateFunctionalityAtOrgLevel() throws Exception {
+		logStep("Get branding list");
+		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
+		logStep("Fetch active template brandId");
 		logStep("Change branding template status from inactive to active");
-		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(orgId, brandId, true);
+		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(orgId, brandITwo, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDeassociateBrandApiResponse.getStatusCode(), 200);
-		logStep("Get branding list");
-		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
-		logStep("Verify branding template status is changed from inactive to active");
-		brandingValidations.VerifyActiveFlagStatus(getBrandListApiResponse, true, brandId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing org id and verify error message")
@@ -77,12 +112,10 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		logStep("Enter non existing org id");
 		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(
 				Integer.parseInt(testData.getProperty("non.existing.org.id")),
-				Integer.parseInt(testData.getProperty("brand.id")), false);
+				brandITwo, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDeassociateBrandApiResponse.getStatusCode(), 400);
-		brandingValidations.verifyErrorMessageInResponseForNonExistingOrgIdOfOrg(associateDeassociateBrandApiResponse,
-				testData.getProperty("non.existing.org.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brand id and verify error message")
@@ -133,20 +166,15 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(associateDeassociateBrandApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "orgIdValue", description = "Verify user able to activate/deactivate in use branding template status from inactive to active")
-	public void testAssociateDeassociateInUseBrandFunctionalityAtOrgLevel(Integer orgId) throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to activate/deactivate in use branding template status from inactive to active")
+	public void testAssociateDeassociateInUseBrandFunctionalityAtOrgLevel() throws Exception {
 		logStep("Get branding list");
 		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
 		logStep("Fetch active template brandId");
-		int brandId = brandingValidations.getInactiveInUseBrandId(getBrandListApiResponse);
 		logStep("Change branding template status from inactive to active");
-		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(orgId, brandId, true);
+		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(orgId, brandIdone, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDeassociateBrandApiResponse.getStatusCode(), 200);
-		logStep("Get branding list");
-		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
-		logStep("Verify branding template status is changed from inactive to active");
-		brandingValidations.VerifyActiveFlagStatus(getBrandListApiResponse, true, brandId);
 	}
 }
