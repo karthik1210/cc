@@ -9,5 +9,5 @@ locals {
 
   git_branch_trigger_pipeline = "main"
 
-  source_buildspec = "testspec_post_deploy.yml"
+  source_buildspec = "testspec_automation.yml"
 }
