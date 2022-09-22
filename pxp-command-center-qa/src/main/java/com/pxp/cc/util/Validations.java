@@ -3043,4 +3043,20 @@ public class Validations {
 			}
 		}
 	}
+	
+	public void verifyErrorResponseForSolutionId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		if(jsonpath.get("message").toString().contains("SolutionId can not be null"));{
+			CCUtils.assertTrue(true, "SolutionId can not be null message validated");
+		}
+	}
+	
+	public void verifyErrorResponseForStatus(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		if(jsonpath.get("message").toString().contains("Status can not be blank"));{
+			CCUtils.assertTrue(true, "Status can not be blank message validated");
+		}
+	}
 }
