@@ -17,6 +17,7 @@ module "pipeline" {
   s3_artifact_bucket_name                = local.s3_artifacts_target_bucket_name
   codeartifact_repository_name_to_upload = "pxp-mf"
   codeartifact_domain                    = "nextgen-pxp-mf-build"
+  codebuild_environment_image            = "aws/codebuild/amazonlinux2-x86_64-standard:3.0"
 
   codebuild_environment_variables = [
     {
