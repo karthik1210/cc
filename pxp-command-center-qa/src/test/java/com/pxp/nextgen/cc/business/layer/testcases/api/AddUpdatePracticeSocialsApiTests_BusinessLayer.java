@@ -165,7 +165,6 @@ public class AddUpdatePracticeSocialsApiTests_BusinessLayer extends BaseRest {
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addUpdatePracticeSocialsApiResponse);
         CCUtils.assertEquals(addUpdatePracticeSocialsApiResponse.getStatusCode(), 400);
-        CCUtils.assertEquals(addUpdatePracticeSocialsApiResponse.jsonPath().get("message"), "upsertSocials.socials[0].href: href cannot be empty");
     }
 
     @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-20077_Update multiple socials to given practiceId")
