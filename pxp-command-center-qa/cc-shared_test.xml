@@ -77,6 +77,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToLocationApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceForLocationApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

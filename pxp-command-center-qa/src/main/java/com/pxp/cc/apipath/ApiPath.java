@@ -1341,4 +1341,12 @@ public class ApiPath {
 
 	public static final String CREATE_RESOURCE_NULL_VALUE_DL = SHARED_DL + "/v1/practices/null/resources";
 
+	public static final String ADD_RESOURCE_FOR_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String DELETE_RESOURCE_FOR_LOCATION_BL(int locationId, int practiceId, int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/resources/"
+				+ resourceId;
+	}
 }
