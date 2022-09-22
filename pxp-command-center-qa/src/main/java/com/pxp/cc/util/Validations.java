@@ -3000,8 +3000,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
 	}
 
-	public void verifyGetSocialDetails( Response getSocialApiResponse)
-	{
+	public void verifyGetSocialDetails(Response getSocialApiResponse) {
 		HashMap<String, Object> addSocials1 = new HashMap<String, Object>();
 		HashMap<String, Object> addSocials2 = new HashMap<String, Object>();
 		HashMap<String, Object> addSocials3 = new HashMap<String, Object>();
@@ -3033,30 +3032,67 @@ public class Validations {
 				String responseIcon = getSocialApiResponse.jsonPath().get("icon[" + i + "]");
 				int expectedSocialId = Integer.parseInt(getSocials.get(i).get("socialId").toString());
 				String expectedIcon = getSocials.get(i).get("icon").toString();
-				if(responseSocialId==expectedSocialId && responseIcon.equalsIgnoreCase(expectedIcon))
-				{
-					Log4jUtil.log("Validation is Successful for "+responseName);
-				}else
-				{
-					Log4jUtil.log("Validation is not Successful for "+responseName);
+				if (responseSocialId == expectedSocialId && responseIcon.equalsIgnoreCase(expectedIcon)) {
+					Log4jUtil.log("Validation is Successful for " + responseName);
+				} else {
+					Log4jUtil.log("Validation is not Successful for " + responseName);
 				}
 			}
 		}
 	}
-	
+
 	public void verifyErrorResponseForSolutionId(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-		if(jsonpath.get("message").toString().contains("SolutionId can not be null"));{
+		if (jsonpath.get("message").toString().contains("SolutionId can not be null")) {
 			CCUtils.assertTrue(true, "SolutionId can not be null message validated");
 		}
 	}
-	
+
 	public void verifyErrorResponseForStatus(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-		if(jsonpath.get("message").toString().contains("Status can not be blank"));{
+		if (jsonpath.get("message").toString().contains("Status can not be blank")) {
 			CCUtils.assertTrue(true, "Status can not be blank message validated");
+		}
+	}
+
+	public void verifyGetProductDetailsWithDescription(Response getProductApiResponse) {
+		HashMap<String, Object> addProduct1 = new HashMap<String, Object>();
+		HashMap<String, Object> addProduct2 = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> addProducts = new ArrayList<HashMap<String, Object>>();
+		addProduct1.put("productId", 88);
+		addProduct1.put("name", "MFRest_NG");
+		addProduct1.put("active", true);
+		addProduct1.put("description", "MedfusionREST - NextGen");
+		addProduct2.put("productId", 82);
+		addProduct2.put("name", "GW");
+		addProduct2.put("active", true);
+		addProduct2.put("description", "Greenway PrimeSuite EMR");
+		addProducts.clear();
+		addProducts.add(addProduct1);
+		addProducts.add(addProduct2);
+		List<String> productIds = getProductApiResponse.jsonPath().get("productId");
+		for (int i = 0; i < productIds.size(); i++) {
+			int responseProductId = getProductApiResponse.jsonPath().get("productId[" + i + "]");
+			int expectedProductId = Integer.parseInt(addProducts.get(0).get("productId").toString());
+			int expectedProductId1 = Integer.parseInt(addProducts.get(1).get("productId").toString());
+			if (responseProductId == expectedProductId || responseProductId == expectedProductId1) {
+				String responseName = getProductApiResponse.jsonPath().get("name[" + i + "]");
+				String expectedName = addProducts.get(0).get("name").toString();
+				String expectedName1 = addProducts.get(1).get("name").toString();
+				String responseDescription = getProductApiResponse.jsonPath().get("description[" + i + "]");
+				String expectedDescription = addProducts.get(0).get("description").toString();
+				String expectedDescription1 = addProducts.get(1).get("description").toString();
+				if ((responseName.equalsIgnoreCase(expectedName)
+						&& responseDescription.equalsIgnoreCase(expectedDescription))
+						|| responseName.equalsIgnoreCase(expectedName1)
+								&& responseDescription.equalsIgnoreCase(expectedDescription1)) {
+					Log4jUtil.log("Validation is Successful for " + responseName);
+				} else {
+					Log4jUtil.log("Validation is not Successful for " + responseName);
+				}
+			}
 		}
 	}
 }
