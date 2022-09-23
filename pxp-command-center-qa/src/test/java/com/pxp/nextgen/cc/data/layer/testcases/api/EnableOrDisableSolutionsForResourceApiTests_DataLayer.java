@@ -12,7 +12,6 @@ import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.SharedServiceApiValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
@@ -34,7 +33,6 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		
 			clientInfo = new ClientInfo();
 			validation = new Validations();
 			orgInfo = new OrgInfo();
@@ -99,10 +97,9 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Disable existing solution id for existing resourceId  and practiceId and verify response body")
 	public void testToDisableExistingSolutionIdForExistingResourceId() throws IOException {
-		logStep("Enable existing solution id for existing resourceId  and practiceId ");
-		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
-		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
+		logStep("Disable existing solution id for existing resourceId  and practiceId ");
+		int solutionId = Integer.parseInt(testData.getProperty("api.solution.id"));
+		updateSolutionsApiResponse = orgInfo.updateOrgsSolutionsDetails_DataLayer(solutionId, "New", practiceId);
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, false);
 		logStep("Validating response information");
@@ -112,23 +109,20 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter nonexisting solution id for existing resourceId and practiceId  and verify error message")
 	public void testErrorMessageForNonExistingSolutionIdForExistingResourceId() throws IOException {
-		logStep("Enter nonexisting solution id for existing resourceId and practiceId ");
-		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
+		logStep("Enter nonexisting solution id for existing resourceId and practiceId ");	
 		int solutionId = Integer.parseInt(testData.getProperty("nonexisting.solutionId"));
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionForResources);
 		CCUtils.assertEquals(updateSolutionForResources.getStatusCode(), 400);
-		validation.verifyErrorMessageForInvalidInput(updateSolutionForResources);
+		validation.verifyErrorMessageForNonExistingInput(updateSolutionForResources,practiceId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing solution id for non-existing resourceId and existing practice id and verify error message")
 	public void testErrorMessageForNonExistingSolutionIdForNonExistingResourceId() throws IOException {
 		logStep("Enter nonexisting solution id for non-existing resourceId and existing practiceId ");
 		int resourceId = Integer.parseInt(testData.getProperty("nonexisting.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
@@ -138,12 +132,12 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 		validation.verifyErrorMessageForInvalidInput(updateSolutionForResources);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id for nonexisting provider and practiceId and verify error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid solution id for nonexisting resourceId and nonexisting practiceId and verify error message")
 	public void testValidLocationIdForNonExistingProviderIdAndPracticeId() throws IOException {
 		logStep("Enter nonexisting solution id for existing resourceId and practiceId ");
-		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
-		int solutionId = Integer.parseInt(testData.getProperty("nonexisting.solutionId"));
+		int resourceId = Integer.parseInt(testData.getProperty("nonexisting.resourceId"));
+		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
+		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
 				solutionId, true);
 		logStep("Validating response information");
@@ -155,8 +149,6 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank input in request payload and verify error message")
 	public void testErrorMessageForBlankRequestPayload() throws IOException {
 		logStep("Enable existing solution id for existing resourceId  and practiceId ");
-		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceForNullPayload_DL(resourceId,
 				practiceId);
 		logStep("Validating response information");
@@ -167,8 +159,6 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Make a POST method call instead of PUT method call and verify error message")
 	public void testErrorMessageForPostMethodCall() throws IOException {
 		logStep("Enable existing solution id for existing resourceId  and practiceId ");
-		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceUsingInvalidMethod_DL(resourceId,
 				practiceId, solutionId, true);
@@ -181,8 +171,6 @@ public class EnableOrDisableSolutionsForResourceApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url to Enable or disable solutions for resources and verify error message")
 	public void testErrorMessageEnableOrDisableSolutionsForResourceWithInvalidUrl() throws IOException {
 		logStep("Enable existing solution id for existing resourceId  and practiceId ");
-		int resourceId = Integer.parseInt(testData.getProperty("valid.resourceId"));
-		int practiceId = Integer.parseInt(testData.getProperty("valid.practiceId.one"));
 		int solutionId = Integer.parseInt(testData.getProperty("valid.solutionId"));
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResourceUsingInvalidUrl_DL(resourceId,
 				practiceId, solutionId, true);
