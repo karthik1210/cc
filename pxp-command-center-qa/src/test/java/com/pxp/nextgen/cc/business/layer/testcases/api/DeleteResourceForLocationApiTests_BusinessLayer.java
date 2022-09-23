@@ -30,7 +30,6 @@ public class DeleteResourceForLocationApiTests_BusinessLayer extends BaseRest {
 			createNewLocationApiResponse, addResourceForLocationApiResponse, deleteResourceForLocationsApiResponse,
 			getResourcesForLocationApiResponse, associateDeassociatePracticesForLocationApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, locationId, resourceIdOne;
-	String resourceName;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -86,7 +85,7 @@ public class DeleteResourceForLocationApiTests_BusinessLayer extends BaseRest {
 
 	public int createResource(int practiceId) {
 		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
-		resourceName = testData.getProperty("resource.name").concat(CCUtils.generateAlphaNumericString(5));
+		String resourceName = testData.getProperty("resource.name").concat(CCUtils.generateAlphaNumericString(5));
 		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, resourceName,
 				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
 				testData.getProperty("resource.link.type"));
@@ -119,9 +118,12 @@ public class DeleteResourceForLocationApiTests_BusinessLayer extends BaseRest {
 		addResourceForLocationApiResponse = sharedInfo.addResourceForLocation_BL(locationId, practiceId,
 				resourceIdList);
 		CCUtils.assertEquals(addResourceForLocationApiResponse.getStatusCode(), 207);
+		logStep("Fetch resource name using resourceId");
+		getResourceDetailsApiResponse = resourceInfo.getResourceDetails_BL(resourceId);
+		String name = locationsValidations.getResourceName(getResourceDetailsApiResponse);
 		logStep("Verify newly added resource is displayed for location");
 		getResourcesForLocationApiResponse = sharedInfo.getResourcesForLocation_BL(locationId, practiceId, 0, 10,
-				resourceName);
+				name.trim());
 		CCUtils.assertEquals(getResourcesForLocationApiResponse.getStatusCode(), 200);
 		logStep("Delete resource for location");
 		deleteResourceForLocationsApiResponse = sharedInfo.deleteResourceForLocation_BL(locationId, practiceId,
@@ -131,7 +133,7 @@ public class DeleteResourceForLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(deleteResourceForLocationsApiResponse.getStatusCode(), 200);
 		logStep("Verify deleted resource is not displayed for location");
 		getResourcesForLocationApiResponse = sharedInfo.getResourcesForLocation_BL(locationId, practiceId, 0, 10,
-				resourceName);
+				name.trim());
 		CCUtils.assertEquals(getResourcesForLocationApiResponse.getStatusCode(), 204);
 	}
 

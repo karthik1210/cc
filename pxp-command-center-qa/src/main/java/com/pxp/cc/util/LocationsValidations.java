@@ -164,4 +164,7 @@ public class LocationsValidations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
 	}
 
+	public String getResourceName(Response response) throws IOException {
+		return response.jsonPath().getString("name");
+	}
 }
