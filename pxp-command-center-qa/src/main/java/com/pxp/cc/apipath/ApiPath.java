@@ -1347,4 +1347,7 @@ public class ApiPath {
 
 	public static final String CREATE_RESOURCE_NULL_VALUE_DL = SHARED_DL + "/v1/practices/null/resources";
 
+	public static final String CREATE_APPOINTMENT_TYPE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types";
+	}
 }
