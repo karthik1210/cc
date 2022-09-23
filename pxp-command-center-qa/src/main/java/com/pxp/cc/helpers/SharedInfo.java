@@ -766,7 +766,7 @@ public class SharedInfo extends BaseRest {
 				externalId, credentials);
 		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
 	}
-	
+
 	public Response addResourceForLocation_DL(int locationId, int practiceId, List<Integer> resourceIdList) {
 		String url = ApiPath.ADD_RESOURCE_FOR_LOCATION_DL(locationId, practiceId);
 		return given().spec(requestSpec).body(resourceIdList).when().post(url).then().extract().response();
@@ -781,5 +781,20 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.ADD_RESOURCE_FOR_LOCATION_DL(locationId, practiceId);
 		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
 				.queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeToProvider_DL(int providerId, int PracticeId, boolean active) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		Map<String, Object> associateDeassociatePracticeToProviderPayload = associateDeassociatePracticeToProvider(
+				PracticeId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeToProviderPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	private Map<String, Object> associateDeassociatePracticeToProvider(Integer PracticeId, Boolean active) {
+		Map<String, Object> associateDeassociatePracticeToProviderMap = new HashMap<String, Object>();
+		associateDeassociatePracticeToProviderMap.put("PracticeId", PracticeId);
+		associateDeassociatePracticeToProviderMap.put("active", active);
+		return associateDeassociatePracticeToProviderMap;
 	}
 }

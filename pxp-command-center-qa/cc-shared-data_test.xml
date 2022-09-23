@@ -14,34 +14,53 @@
 		<classes>
 			<!-- Enable test suite once pipeline issue is addressed for for data services 
 				Jira # PXPP-16483 -->
-			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationsApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandDetailsApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateBrandApiTests_DataLayer" 
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
+				/><class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.DuplicateBrandingApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer"></class> 
-				<class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveLocationsForTheProviderApiTests_DataLayer"></class> -->
+				/> </class> -->
+			<!-- Jira #PXPP-22174 <class name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer"> -->
+			<!--Jira #PXPP-20235- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer"/> -->
+
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewLocationApiTests_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateBrandApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForResourcesApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationDetailsApiTests_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationsAssociatedWithResourceApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveLocationsForTheProviderApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandImageApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetBrandDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateProviderDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewLocationApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfBrandsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourceImageApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteBrandDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateBrandApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewLocationApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticestoLocation_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_DataLayer"></class>
 			<class

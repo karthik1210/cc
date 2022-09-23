@@ -6,6 +6,9 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.OrgInfo;
+import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -15,38 +18,91 @@ import io.restassured.response.Response;
 
 public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
-	private Validations validation;
-	Response getResourceDetailsApiResponse, deleteResourceImageApiResponse, addResourceImageUrlApiResponse;
+	private Validations validation; 
 	private SharedServiceApiValidations sharedServiceApiValidations;
-
+	private ClientInfo clientInfo;
+	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId,resourceId;
+	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
+	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
+			createProviderApiResponse, createResourceApiResponse, getResourceDetailsApiResponse,deleteResourceImageApiResponse, addResourceImageUrlApiResponse;;
+	private OrgInfo orgInfo;
+	private ResourceInfo resourceInfo;
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		sharedServiceApiValidations = new SharedServiceApiValidations();
+			clientInfo = new ClientInfo();
+			validation = new Validations();
+			orgInfo = new OrgInfo();
+			sharedInfo = new SharedInfo();
+			resourceInfo = new ResourceInfo();
+			String clientName = testData.getProperty("api.client.name")
+					.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+			String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+			createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
+					clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
+					Integer.parseInt(testData.getProperty("api.client.type")),
+					testData.getProperty("api.client.timezoneid"));
+			clientId = createClientApiResponse.jsonPath().get("clientId");
+			createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
+					testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
+					testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
+					testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+					Integer.parseInt(testData.getProperty("pm.identifier")));
+			systemId = createSystemApiResponse.jsonPath().get("orgId");
+			createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
+					testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
+					testData.getProperty("api.enterprise.orgtype"), systemId,
+					testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
+					Integer.parseInt(testData.getProperty("ehr.identifier")),
+					Integer.parseInt(testData.getProperty("pm.identifier")));
+			enterpriseId = createEnterpriseApiResponse.jsonPath().get("orgId");
+			createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+					testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+					testData.getProperty("api.practice.orgtype"), enterpriseId,
+					testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+					Integer.parseInt(testData.getProperty("ehr.identifier")),
+					Integer.parseInt(testData.getProperty("pm.identifier")));
+			practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+			logStep("Create new provider");
+			String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+			String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+			String externalId = CCUtils.generateAlphaNumericString(10);
+			createProviderApiResponse = sharedInfo.createProvider_DL(practiceId, firstName, lastName,
+					testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+			CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
+			providerId = createProviderApiResponse.jsonPath().getInt("providerId");
+			logStep("Create new resource");
+			String resourceExternalId = CCUtils.generateAlphaNumericString(10);
+			createResourceApiResponse = resourceInfo.createResource_DL(practiceId, testData.getProperty("resource.name"),
+					testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
+					testData.getProperty("resource.link.type"));
+			CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
+		    resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add resource Url functionality")
 	public void testAddImageUrlFunctionality() throws Exception {
 		logStep("Get resource ImageUrl Details");
 		getResourceDetailsApiResponse = sharedInfo
-				.getResourceDetails_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
+				.getResourceDetails_DL(resourceId);
 		logStep("Verify imageurl is not present for selected resource");
 		Boolean value = sharedServiceApiValidations.validateInageUrlValueIsNull(getResourceDetailsApiResponse);
 		if (value.equals(false)) {
 			logStep("delete resource imageurl");
 			deleteResourceImageApiResponse = sharedInfo
-					.deleteResourceImage_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
+					.deleteResourceImage_DL(resourceId);
 			logStep("Resource image url is deleted");
 			getResourceDetailsApiResponse = sharedInfo
-					.getResourceDetails_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
+					.getResourceDetails_DL(resourceId);
 			CCUtils.assertTrue(sharedServiceApiValidations.validateInageUrlValueIsNull(getResourceDetailsApiResponse),
 					"imageUrl is present");
 		}
 		logStep("Add Resouce image url");
 		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(
-				Integer.parseInt(testData.getProperty("valid.resource.id.two")), testData.getProperty("imageurl"));
+				resourceId, testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 200);
@@ -68,7 +124,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseForBlankSpace() throws Exception {
 		logStep("Enter blank value in imageUrl field");
 		addResourceImageUrlApiResponse = sharedInfo
-				.addResourceImage_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")), "");
+				.addResourceImage_DL(resourceId, "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 400);
@@ -79,7 +135,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseForEmptyPayload() throws Exception {
 		logStep("Enter empty payload");
 		addResourceImageUrlApiResponse = sharedInfo
-				.addResourceImageWithEmptyPayload_DL(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
+				.addResourceImageWithEmptyPayload_DL(resourceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 400);
@@ -89,7 +145,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of PATCH")
 	public void testErrorForInvalidMethodCall() throws IOException {
 		addResourceImageUrlApiResponse = sharedInfo.addResourceImageUsingInvalidMethodCall_DL(
-				Integer.parseInt(testData.getProperty("valid.resource.id.two")), testData.getProperty("imageurl"));
+				resourceId, testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 405);
@@ -99,7 +155,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorForInvalidUrl() throws IOException {
 		addResourceImageUrlApiResponse = sharedInfo.addResourceImageUsingInvalidUrl_DL(
-				Integer.parseInt(testData.getProperty("valid.resource.id.two")), testData.getProperty("imageurl"));
+				resourceId, testData.getProperty("imageurl"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 404);
