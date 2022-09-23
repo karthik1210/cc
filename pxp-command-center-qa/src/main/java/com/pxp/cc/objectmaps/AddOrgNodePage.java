@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -129,6 +130,45 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//label[text()='Inactive']")
 	private WebElement labelInactive;
 
+	@FindBy(id = "manageClientLabel")
+	private WebElement btnManageClient;
+
+	@FindBy(xpath = "//button[contains(text(),' + ADD SYSTEM')]")
+	private WebElement btnAddSystem;
+
+	@FindBy(id = "addNodeNameInput")
+	private WebElement enterSystemName;
+
+	@FindBy(xpath = "(//input[@type='text'])[2]")
+	private WebElement enterEhrSystem;
+
+	@FindBy(xpath = "//div[@role='option']")
+	private WebElement selectOptionSystem;
+
+	@FindBy(xpath = "(//input[@type='text'])[3]")
+	private WebElement enterPmSystem;
+
+	@FindBy(id = "addNodeSave")
+	private WebElement btnSave;
+
+	@FindBy(xpath = "(//input[@type='text'])[4]")
+	private WebElement enterTimezone;
+
+	@FindBy(xpath = "//button[contains(text(),'+ ADD PRACTICE')]")
+	private WebElement btnAddPractice;
+
+	@FindBy(id = "addNodeNameInput")
+	private WebElement enterPracticeName;
+
+	@FindBy(xpath = "(//input[@type='text'])[5]")
+	private WebElement enterPmPractice;
+
+	@FindBy(xpath = "(//input[@type='text'])[3]")
+	private WebElement enterEhrPractice;
+	
+	@FindBy(xpath = "//mat-icon[contains(text(),' expand_more ')]")
+	private WebElement expandArrow;
+		
 	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public final List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "PSS", "Pay", "Portal",
@@ -573,5 +613,81 @@ public class AddOrgNodePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxName, driver);
 		textboxName.sendKeys(orgName);
 		log("Entered org name is " + orgName);
+	}
+
+	public void clickOnManageClient() {
+		CCUtils.verifyAndWaitForElement(btnManageClient, driver);
+		javascriptClick(btnManageClient);
+		log("Clicked on Manage Client button");
+	}
+	
+	public void clickOnExpandArrow() {
+		CCUtils.verifyAndWaitForElement(expandArrow, driver);
+		javascriptClick(expandArrow);
+		log("Clicked on expand Arrow button");
+	}
+
+	public void clickOnAddSystem() {
+		CCUtils.verifyAndWaitForElement(btnAddSystem, driver);
+		javascriptClick(btnAddSystem);
+		log("Clicked on Add System  button");
+	}
+
+	public void enterNewSystemDetails(String systemName) {
+		CCUtils.verifyAndWaitForElement(enterSystemName, driver);
+		enterSystemName.sendKeys(systemName);
+		enterEhrSystem.click();
+		selectOptionSystem.click();
+		enterPmSystem.click();
+		selectOptionSystem.click();
+		btnSave.click();
+	}
+
+	public void addNewSystem(String systemName) {
+		clickOnAddSystem();
+		enterNewSystemDetails(systemName);
+	}
+
+    private String xpathRequiredNewTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+
+	private WebElement prepareDynamicXpathForTimezone(String xpathValue, String substitutionValue) {
+
+		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
+	}
+
+	public void addTimezone(String newTimezone) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
+		log("click to dropdown of Timezone");
+		dropdownTimezone.click();
+		selectTimeZone(newTimezone);
+	}
+
+	public void selectTimeZone(String newTimezone) {
+		WebElement newClientTimezone = prepareDynamicXpathForTimezone(xpathRequiredNewTimezone, newTimezone);
+		newClientTimezone.click();
+		log("Clicked on : " + newTimezone);
+	}
+
+	public void clickOnAddPractice() {
+		CCUtils.verifyAndWaitForElement(btnAddPractice, driver);
+		javascriptClick(btnAddPractice);
+		log("Clicked on Add Practice  button");
+	}
+
+	public void enterNewPracticeDetails(String practiceName) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(enterPracticeName, driver);
+		enterPracticeName.sendKeys(practiceName);
+		enterPmPractice.click();
+		selectOptionSystem.click();
+		enterEhrPractice.click();
+		selectOptionSystem.click();
+		enterTimezone.click();
+		addTimezone("Nairobi");
+		btnSave.click();
+	}
+
+	public void addNewPractice(String practiceName) throws InterruptedException {
+		clickOnAddPractice();
+		enterNewPracticeDetails(practiceName);
 	}
 }
