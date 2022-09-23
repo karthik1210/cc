@@ -1349,4 +1349,16 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/resources/"
 				+ resourceId;
 	}
+
+	public static final String ADD_RESOURCE_FOR_LOCATION_DL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String DELETE_RESOURCE_FOR_LOCATION_DL(int locationId, int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String CREATE_APPOINTMENT_TYPE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types";
+	}
 }
