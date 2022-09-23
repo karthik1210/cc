@@ -166,6 +166,5 @@ public class LocationsValidations {
 
 	public String getResourceName(Response response) throws IOException {
 		return response.jsonPath().getString("name");
-
 	}
 }
