@@ -766,4 +766,19 @@ public class SharedInfo extends BaseRest {
 				externalId, credentials);
 		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
 	}
+
+	public Response associateDeassociatePracticeToProvider_DL(int providerId, int PracticeId, boolean active) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		Map<String, Object> associateDeassociatePracticeToProviderPayload = associateDeassociatePracticeToProvider(
+				PracticeId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeToProviderPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	private Map<String, Object> associateDeassociatePracticeToProvider(Integer PracticeId, Boolean active) {
+		Map<String, Object> associateDeassociatePracticeToProviderMap = new HashMap<String, Object>();
+		associateDeassociatePracticeToProviderMap.put("PracticeId", PracticeId);
+		associateDeassociatePracticeToProviderMap.put("active", active);
+		return associateDeassociatePracticeToProviderMap;
+	}
 }
