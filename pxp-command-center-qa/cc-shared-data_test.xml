@@ -20,9 +20,10 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
 				/> </class> -->
-			<!-- Jira #PXPP-22174 <class name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer"> -->
 			<!--Jira #PXPP-20235- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer"/> -->
 
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateBrandApiTests_DataLayer" />
 			<class
