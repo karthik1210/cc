@@ -127,7 +127,7 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 	public void testUpdateOrgDetailsForOneSolutionForInactiveAgnosticPractice() throws Exception {
 		clientId = createClient();
 		systemId = createSystemNode(clientId);
-		agnosticPracticeId = createAgnosticInActivePracticeNode(systemId);
+		agnosticPracticeId = createAgnosticInactivePracticeNode(systemId);
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, agnosticPracticeId);
