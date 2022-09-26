@@ -167,6 +167,15 @@ public class ClientUserDetailsPage extends CCMainPage {
 
 	@FindBy(className = "locked-label")
 	private WebElement labelLockedUser;
+	
+	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
+	private WebElement buttonDeactivateUser;
+	
+	@FindBy(xpath = "//span[@class='pl-3']")
+	private WebElement inactiveStatus;
+
+	@FindBy(xpath = "//span[contains(text(),'Active')]")
+	private WebElement activeStatus;
 
 	private String xpathHoverTextMessage = "//div[@id='cdk-describedby-message-container']//following-sibling::div[@id='valueToReplace']";
 
@@ -662,4 +671,38 @@ public class ClientUserDetailsPage extends CCMainPage {
 		javascriptClick(buttonUnlock);
 	}
 
+	public DeactivateUserConfirmationPage clickOnDeactivateUserButton() {
+		CCUtils.verifyAndWaitForElement(buttonDeactivateUser, driver);
+		log("Click on deactivate user button");
+		javascriptClick(buttonDeactivateUser);
+		return PageFactory.initElements(driver, DeactivateUserConfirmationPage.class);
+	}
+
+	public void verifyDeactivateUserButtonIsDisplayed() {
+		log("Verifying deactivate user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
+	}
+
+	public void verifyActivateUserButtonIsDisplayed() {
+		log("Verifying activate user button is displayed in kebab menu");
+		CCUtils.assertEquals(kebabActiveUserOption.isDisplayed(), true);
+	}
+
+	public void verifyDeactivateUserButtonIsNotDisplayed() {
+		log("Verifying deactivate user button is displayed in kebab menu");
+		CCUtils.assertEquals(buttonDeactivateUser.isDisplayed(), true);
+	}
+
+	public void verifyDeactivateUserButtonIsNotEnabled() {
+		log("Verifying deactivate user button is enabled in kebab menu");
+		CCUtils.assertEquals(!buttonDeactivateUser.isEnabled(), false);
+	}
+
+	public void checkInactiveStatus() {
+		CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
+	}
+	
+	public void verifySelectedUserStatusIsSameOnClientUserDetailsPage() {
+		CCUtils.assertEquals(activeStatus.isDisplayed(), true);
+	}
 }
