@@ -118,6 +118,9 @@ public class AddNewClientUserPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[text()='No Clients found']")
 	private WebElement errorNoClientsFound;
+	
+	@FindBy(xpath = "//input[@id='createUserInactiveRadio-input']")
+	private WebElement inactiveStatus;
 
 	public String columnNameValue;
 
@@ -409,5 +412,11 @@ public class AddNewClientUserPage extends CCMainPage {
 		buttonSaveAndAdd.click();
 		log("Clicked on save and add button");
 		return PageFactory.initElements(driver, ClientUsersPage.class);
+	}
+	
+	public void clickOnInactiveStatus() {
+		CCUtils.verifyAndWaitForElement(inactiveStatus, driver);
+		inactiveStatus.click();
+		log("Clicked on Inactive Status");
 	}
 }
