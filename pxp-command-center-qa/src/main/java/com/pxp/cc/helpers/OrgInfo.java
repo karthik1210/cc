@@ -359,7 +359,6 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgsSolutionsDetails_DataLayer(solutionId,
 				status);
-
 		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
 	}
 
@@ -1168,9 +1167,33 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
 	
+	public Response updateOrgsSolutions_DataLayer_InvalidUrl(List<OrgSolutions> productList, int orgId)
+			throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL_INVALID_URL(orgId);
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+	
 	public Response updateOrgsSolutions_BusinessLayer_InvalidHTTPMethod(List<OrgSolutions> productList, int orgId)
 			throws IOException {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().post(url).then().extract().response();
+	}
+	
+	public Response updateOrgsSolutions_DataLayer_InvalidHTTPMethod(List<OrgSolutions> productList, int orgId)
+			throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).body(productList).when().post(url).then().extract().response();
+	}
+
+	
+	public Response updateOrgsSolutions_DataLayer(List<OrgSolutions> productList, int orgId)
+			throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+	
+	public Response updateOrgSolutions_OrgNULLValue_DL(List<OrgSolutions> productList) {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL_ORG_NULL;
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
 }
