@@ -125,8 +125,9 @@ public class LocationsValidations {
 		for (int i = 0; i < responseBody.length(); i++) {
 			data.add(Integer.valueOf(responseBody.getInt(i)));
 		}
+		Collections.sort(practiceIds);
+		Collections.sort(data);
 		CCUtils.assertEquals(practiceIds, data);
-
 	}
 
 	public void verifyErrorResponseForNonExistingLocationId(Response response) throws IOException {
