@@ -12,7 +12,6 @@
 	</listeners>
 	<test name="CC Org Data Test">
 		<classes>
-
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
 			<class
@@ -52,6 +51,6 @@
 
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer"></class>
-		</classes>
-	</test>
+        </classes>
+    </test>
 </suite>

@@ -1373,4 +1373,26 @@ public class ApiPath {
 	public static final String CREATE_APPOINTMENT_TYPE_DL(int practiceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types";
 	}
+
+	public static final String PRACTICE_INTERFACE(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces";
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfaces";
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces";
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfaces";
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfacesss";
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss";
+	}
+
 }
