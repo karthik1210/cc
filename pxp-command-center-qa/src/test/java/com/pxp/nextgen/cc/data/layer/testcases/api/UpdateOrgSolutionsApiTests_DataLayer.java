@@ -74,13 +74,34 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createPracticeApiResponse.jsonPath().get("orgId");
 	}
+	
+	public int createAgnosticActivePracticeNode(int systemId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), systemId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
+	}
 
+	public int createAgnosticInActivePracticeNode(int systemId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer("false",
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), systemId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
+	}
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only one solution as Active Implementation")
 	public void testUpdateOrgDetailsForOneSolution() throws Exception {
 		clientId = createClient();
 		systemId = createSystemNode(clientId);
 		enterpriseId = createEnterpriseNode(systemId);
 		practiceId = createPracticeNode(enterpriseId);
+		agnosticPracticeId = createAgnosticActivePracticeNode(systemId);
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, practiceId);
@@ -89,9 +110,35 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
 	}
 
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only one solution as Active Implementation for active agnostic practice")
+	public void testUpdateOrgDetailsForOneSolutionForActiveAgnosticPractice() throws Exception {
+		clientId = createClient();
+		systemId = createSystemNode(clientId);
+		agnosticPracticeId = createAgnosticActivePracticeNode(systemId);
+		List<OrgSolutions> productList = Arrays.asList(
+				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
+		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, agnosticPracticeId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateSolutionsApiResponse);
+		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only one solution as Active Implementation for active agnostic practice")
+	public void testUpdateOrgDetailsForOneSolutionForInactiveAgnosticPractice() throws Exception {
+		clientId = createClient();
+		systemId = createSystemNode(clientId);
+		agnosticPracticeId = createAgnosticInActivePracticeNode(systemId);
+		List<OrgSolutions> productList = Arrays.asList(
+				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
+		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, agnosticPracticeId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateSolutionsApiResponse);
+		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
+	}
+	
 	@Test(dependsOnMethods = {
 			"testUpdateOrgDetailsForOneSolution" }, retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only more than one solutions as Active Implementation,Go-live,Newly purchased")
-	public void testUpdateOrgDetailsForMultipleSolution() throws IOException {
+	public void testUpdateOrgDetailsForMultipleSolutions() throws IOException {
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
 				new OrgSolutions(testData.getProperty("engage.id"), testData.getProperty("status.go.live")),
