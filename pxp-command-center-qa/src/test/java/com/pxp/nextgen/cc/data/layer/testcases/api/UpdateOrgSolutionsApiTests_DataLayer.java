@@ -85,7 +85,7 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 		return createPracticeApiResponse.jsonPath().get("orgId");
 	}
 
-	public int createAgnosticInActivePracticeNode(int systemId) throws Exception {
+	public int createAgnosticInactivePracticeNode(int systemId) throws Exception {
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer("false",
 				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), systemId,
@@ -123,7 +123,7 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only one solution as Active Implementation for active agnostic practice")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only one solution as Active Implementation for inactive agnostic practice")
 	public void testUpdateOrgDetailsForOneSolutionForInactiveAgnosticPractice() throws Exception {
 		clientId = createClient();
 		systemId = createSystemNode(clientId);
@@ -137,7 +137,7 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 	}
 	
 	@Test(dependsOnMethods = {
-			"testUpdateOrgDetailsForOneSolution" }, retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only more than one solutions as Active Implementation,Go-live,Newly purchased")
+			"testUpdateOrgDetailsForOneSolution" }, retryAnalyzer = RetryAnalyzer.class, description = "Update org details by adding up only more than one solutions as Active Implementation, Go-live, Newly purchased")
 	public void testUpdateOrgDetailsForMultipleSolutions() throws IOException {
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
@@ -150,7 +150,7 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate error message when enter non-exitsing org id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate error message when enter non-existing org id")
 	public void testErrorMsgWithNonExistingOrgId() throws IOException {
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
@@ -164,7 +164,7 @@ public class UpdateOrgSolutionsApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(updateSolutionsApiResponse, 20);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate error messag when we enter null as a value in org id")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate error message when we enter null as a value in org id")
 	public void testErrorMsgWithNullOrgId() throws IOException {
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
