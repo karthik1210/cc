@@ -56,12 +56,12 @@ public class GetPracticeInterfacesApiTests_DataLayer extends BaseRest {
             int actualExternalSystemId = getPracticeInterfacesApiResponse.jsonPath().get("externalSystemId[" + i + "]");
             int expectedExternalSystemId = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId"));
             String actualName = getPracticeInterfacesApiResponse.jsonPath().get("name[" + i + "]");
-            String expectedname = testData.getProperty("api.practice.interface.name");
-            if (actualExternalSystemId == expectedExternalSystemId && actualName.equalsIgnoreCase(expectedname)) {
-                logStep("Interface is available for " + expectedname + " as " + actualName);
+            String expectedName = testData.getProperty("api.practice.interface.name");
+            if (actualExternalSystemId == expectedExternalSystemId && actualName.equalsIgnoreCase(expectedName)) {
+                logStep("Interface is available for " + expectedName + " as " + actualName);
                 break;
             } else {
-                logStep("Interface is available for " + expectedname + " as " + actualName);
+                logStep("Interface is not available for " + expectedName + " as " + actualName);
             }
         }
     }
