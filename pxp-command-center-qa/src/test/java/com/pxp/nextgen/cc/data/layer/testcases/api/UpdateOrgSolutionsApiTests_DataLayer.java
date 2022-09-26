@@ -3,7 +3,6 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.testng.annotations.BeforeClass;
