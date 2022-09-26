@@ -212,6 +212,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "headerSettingIcon")
 	private WebElement generalSettingsTab;
+	
+	@FindBy(id = "manageAccountsIcon")
+    private WebElement tabProvidersAndResources;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -927,5 +930,16 @@ public class GeneralSettingsPage extends CCMainPage {
 		javascriptClick(generalSettingsTab);
 		log("Clicked on General Settings Tab");
 	}
-
+	
+   public void verifyProvidersAndResourcesTab() {
+        log("Verify 'ProvidersAndResources' on General Settings page");
+        CCUtils.verifyAndWaitForElement(tabProvidersAndResources, driver);
+        CCUtils.assertEquals(tabProvidersAndResources.isDisplayed(), true);
+    }
+   
+    public void clickOnProvidersAndResourcesTab() {
+        CCUtils.verifyAndWaitForElement(tabProvidersAndResources, driver);
+        javascriptClick(tabProvidersAndResources);
+        log("Clicked on ProvidersAndResources tab");
+    }
 }

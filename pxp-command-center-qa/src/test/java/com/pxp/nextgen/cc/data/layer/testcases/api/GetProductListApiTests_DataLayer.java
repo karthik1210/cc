@@ -120,5 +120,6 @@ public class GetProductListApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getProductListApiResponse);
 		CCUtils.assertEquals(getProductListApiResponse.getStatusCode(), 200);
+		validation.verifyGetProductDetailsWithDescription(getProductListApiResponse);
 	}
 }

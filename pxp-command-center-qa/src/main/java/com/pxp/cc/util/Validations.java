@@ -1134,7 +1134,6 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client SAP ID already use");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-
 	}
 
 	public void verifyErrorInResponseForInvalidUrl(Response response) throws IOException {
@@ -2376,6 +2375,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyErrorMessageForInvalidBrandImage(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid file");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
 	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
 			String color, int brandId, String logo, String favicon, String emailLogo, String active)
 			throws IOException {
@@ -2537,15 +2542,11 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.getInt("id"), id);
 	}
 
-	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String showLogo,
-			String color, String logo, String favicon, String emailLogo) throws IOException {
+	public void verifyBrandingDetails_DL(Response response, String orgId, String orgType, String name, String color)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
-		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
 		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
-		CCUtils.assertEquals(jsonpath.get("logo").toString(), logo);
-		CCUtils.assertEquals(jsonpath.get("favicon").toString().toString(), favicon);
-		CCUtils.assertEquals(jsonpath.get("emailLogo").toString(), emailLogo);
 	}
 
 	public void verifyInternalUserOutputWithValidInput(Response response, String getSearchUserDetails) {
@@ -2618,8 +2619,7 @@ public class Validations {
 	public void verifyErrorResponseBodyForInvalidAppointmentTypeId(Response response, String AppointmentTypeId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(),
-				"Appointment not found for OrgId=" + AppointmentTypeId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Appointment not found for id=" + AppointmentTypeId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -2864,18 +2864,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("siteId"), true);
 	}
 
-	public void verifyErrorResponseBodyForPmIdentifier(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "PM Id not found");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
-	public void verifyErrorResponseBodyForEhrIdentifier(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "EHR Id not found");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyErrorResponseBodyForNullTimezone(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid timezone");
@@ -2893,7 +2881,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Product not found by productId=" + productId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-
 
 	public void verifyErrorMessageInResponseForInvalidPatchMethodCall(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -2990,4 +2977,123 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Timezone not found for TimezoneId=" + timezoneCode);
 	}
 
+	public void verifyBrandingImageDetails_BL(Response response, String orgId, String orgType, String name,
+			String showLogo, String color) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		if (Objects.isNull(jsonpath.get("orgId"))) {
+			Log4jUtil.log("orgId is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
+		}
+		if (Objects.isNull(jsonpath.get("orgType"))) {
+			Log4jUtil.log("orgType is null");
+		} else {
+			CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
+		}
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+		CCUtils.assertEquals(jsonpath.get("showLogo").toString(), showLogo);
+		CCUtils.assertEquals(jsonpath.get("color").toString(), color);
+	}
+
+	public void verifyGetSocialDetails(Response getSocialApiResponse) {
+		HashMap<String, Object> addSocials1 = new HashMap<String, Object>();
+		HashMap<String, Object> addSocials2 = new HashMap<String, Object>();
+		HashMap<String, Object> addSocials3 = new HashMap<String, Object>();
+		HashMap<String, Object> addSocials4 = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> getSocials = new ArrayList<HashMap<String, Object>>();
+		addSocials1.put("socialId", 1);
+		addSocials1.put("name", "Twitter");
+		addSocials1.put("icon", "twitter-square");
+		addSocials2.put("socialId", 2);
+		addSocials2.put("name", "Facebook");
+		addSocials2.put("icon", "facebook-square");
+		addSocials3.put("socialId", 3);
+		addSocials3.put("name", "Linkedin");
+		addSocials3.put("icon", "linkedin-square");
+		addSocials4.put("socialId", 4);
+		addSocials4.put("name", "Youtube");
+		addSocials4.put("icon", "youtube-play");
+		getSocials.clear();
+		getSocials.add(addSocials1);
+		getSocials.add(addSocials2);
+		getSocials.add(addSocials3);
+		getSocials.add(addSocials4);
+		List<String> socialIds = getSocialApiResponse.jsonPath().get("socialId");
+		for (int i = 0; i < socialIds.size(); i++) {
+			String responseName = getSocialApiResponse.jsonPath().get("name[" + i + "]");
+			String expectedName = getSocials.get(i).get("name").toString();
+			if (responseName.equalsIgnoreCase(expectedName)) {
+				int responseSocialId = getSocialApiResponse.jsonPath().get("socialId[" + i + "]");
+				String responseIcon = getSocialApiResponse.jsonPath().get("icon[" + i + "]");
+				int expectedSocialId = Integer.parseInt(getSocials.get(i).get("socialId").toString());
+				String expectedIcon = getSocials.get(i).get("icon").toString();
+				if (responseSocialId == expectedSocialId && responseIcon.equalsIgnoreCase(expectedIcon)) {
+					Log4jUtil.log("Validation is Successful for " + responseName);
+				} else {
+					Log4jUtil.log("Validation is not Successful for " + responseName);
+				}
+			}
+		}
+	}
+
+	public void verifyErrorResponseForSolutionId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		if (jsonpath.get("message").toString().contains("SolutionId can not be null")) {
+			CCUtils.assertTrue(true, "SolutionId can not be null message validated");
+		}
+	}
+
+	public void verifyErrorResponseForStatus(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		if (jsonpath.get("message").toString().contains("Status can not be blank")) {
+			CCUtils.assertTrue(true, "Status can not be blank message validated");
+		}
+	}
+
+	public void verifyGetProductDetailsWithDescription(Response getProductApiResponse) {
+		HashMap<String, Object> addProduct1 = new HashMap<String, Object>();
+		HashMap<String, Object> addProduct2 = new HashMap<String, Object>();
+		ArrayList<HashMap<String, Object>> addProducts = new ArrayList<HashMap<String, Object>>();
+		addProduct1.put("productId", 88);
+		addProduct1.put("name", "MFRest_NG");
+		addProduct1.put("active", true);
+		addProduct1.put("description", "MedfusionREST - NextGen");
+		addProduct2.put("productId", 82);
+		addProduct2.put("name", "GW");
+		addProduct2.put("active", true);
+		addProduct2.put("description", "Greenway PrimeSuite EMR");
+		addProducts.clear();
+		addProducts.add(addProduct1);
+		addProducts.add(addProduct2);
+		List<String> productIds = getProductApiResponse.jsonPath().get("productId");
+		for (int i = 0; i < productIds.size(); i++) {
+			int responseProductId = getProductApiResponse.jsonPath().get("productId[" + i + "]");
+			int expectedProductId = Integer.parseInt(addProducts.get(0).get("productId").toString());
+			int expectedProductId1 = Integer.parseInt(addProducts.get(1).get("productId").toString());
+			if (responseProductId == expectedProductId || responseProductId == expectedProductId1) {
+				String responseName = getProductApiResponse.jsonPath().get("name[" + i + "]");
+				String expectedName = addProducts.get(0).get("name").toString();
+				String expectedName1 = addProducts.get(1).get("name").toString();
+				String responseDescription = getProductApiResponse.jsonPath().get("description[" + i + "]");
+				String expectedDescription = addProducts.get(0).get("description").toString();
+				String expectedDescription1 = addProducts.get(1).get("description").toString();
+				if ((responseName.equalsIgnoreCase(expectedName)
+						&& responseDescription.equalsIgnoreCase(expectedDescription))
+						|| responseName.equalsIgnoreCase(expectedName1)
+								&& responseDescription.equalsIgnoreCase(expectedDescription1)) {
+					Log4jUtil.log("Validation is Successful for " + responseName);
+				} else {
+					Log4jUtil.log("Validation is not Successful for " + responseName);
+				}
+			}
+		}
+	}
+	
+	public void verifyErrorMessageForNonExistingInput(Response response, int solutionId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org product not found by practiceId=" + solutionId);
+	}
 }

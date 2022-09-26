@@ -396,6 +396,39 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
+	public Response associateDeassociateBrand_BL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.BRAND_LIST_BL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingEmptyPayload_BL(int orgId) {
+		String url = ApiPath.BRAND_LIST_BL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingInvalidMethodCall_BL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.BRAND_LIST_BL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response associateDeassociateBrandUsingInvalidUrl_BL(int orgId, int brandId, boolean active) {
+		String url = ApiPath.INVALID_PATH_BRAND_LIST_BL(orgId);
+		Map<String, Object> associateDeassociateBrandPayload = associateDeassociateBrandTemplate(brandId, active);
+		return given().spec(requestSpec).body(associateDeassociateBrandPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response getBrandList_BL(int orgId) {
+		String url = ApiPath.BRAND_LIST_BL(orgId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response createProvider_BL(int practiceId, String firstName, String lastName, String gender,
 			String externalId, String credentials) {
 		String url = ApiPath.CREATE_PROVIDER_BL(practiceId);
@@ -608,4 +641,176 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response associateDisassociateBrandUsingNullValue_BL() {
+		String url = ApiPath.ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidUrl_BL(int locationId) {
+		String url = ApiPath.INVALID_PATH_LOCATION_DETAILS_BL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidMethod_BL(int locationId) {
+		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidUrl_DL(int locationId) {
+		String url = ApiPath.INVALID_PATH_LOCATION_DETAILS_DL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationDetailsUsingInvalidMethod_DL(int locationId) {
+		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	private Map<String, Object> associateDeassociatePracticeMapPayload(int practiceId, Boolean active) {
+		Map<String, Object> associateDeassociatePracticeMap = new HashMap<String, Object>();
+		associateDeassociatePracticeMap.put("practiceId", practiceId);
+		associateDeassociatePracticeMap.put("active", active);
+		return associateDeassociatePracticeMap;
+	}
+
+	public Response associateDeassociatePracticeForLocation_BL(int locationId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getPracticesAssociatedToLocation_BL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationWithEmptyPayload_BL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationUsingInvalidUrl_BL(int locationId, int practiceId,
+			boolean active) {
+		String url = ApiPath.INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationUsingInvalidMethod_BL(int locationId, int practiceId,
+			boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().post(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocation_DL(int locationId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_DL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getPracticesAssociatedToLocation_DL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_DL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationWithEmptyPayload_DL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_DL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationUsingInvalidUrl_DL(int locationId, int practiceId,
+			boolean active) {
+		String url = ApiPath.INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_DL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForLocationUsingInvalidMethod_DL(int locationId, int practiceId,
+			boolean active) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_DL(locationId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().post(url).then()
+				.extract().response();
+	}
+
+	public Response getPracticesAssociatedToLocationUsingInvalidUrl_BL(int locationId) {
+		String url = ApiPath.INVALID_PATH_UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticesAssociatedToLocationUsingInvalidMethod_BL(int locationId) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PRACTICE_BL(locationId);
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response createProvider_DL(int practiceId, String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		String url = ApiPath.CREATE_PROVIDER_DL(practiceId);
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
+	}
+
+	public Response addResourceForLocation_BL(int locationId, int practiceId, List<Integer> resourceIdList) {
+		String url = ApiPath.ADD_RESOURCE_FOR_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).body(resourceIdList).when().post(url).then().extract().response();
+	}
+
+	public Response deleteResourceForLocation_BL(int locationId, int practiceId, int resourceId) {
+		String url = ApiPath.DELETE_RESOURCE_FOR_LOCATION_BL(locationId, practiceId, resourceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getResourcesForLocation_BL(int locationId, int practiceId, int page, int pageSize, String name) {
+		String url = ApiPath.ADD_RESOURCE_FOR_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response addResourceForLocation_DL(int locationId, int practiceId, List<Integer> resourceIdList) {
+		String url = ApiPath.ADD_RESOURCE_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).body(resourceIdList).when().post(url).then().extract().response();
+	}
+
+	public Response deleteResourceForLocation_DL(int locationId, int practiceId, int resourceId) {
+		String url = ApiPath.DELETE_RESOURCE_FOR_LOCATION_DL(locationId, practiceId, resourceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getResourcesForLocation_DL(int locationId, int practiceId, int page, int pageSize, String name) {
+		String url = ApiPath.ADD_RESOURCE_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
+				.queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeToProvider_DL(int providerId, int PracticeId, boolean active) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		Map<String, Object> associateDeassociatePracticeToProviderPayload = associateDeassociatePracticeToProvider(
+				PracticeId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeToProviderPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	private Map<String, Object> associateDeassociatePracticeToProvider(Integer PracticeId, Boolean active) {
+		Map<String, Object> associateDeassociatePracticeToProviderMap = new HashMap<String, Object>();
+		associateDeassociatePracticeToProviderMap.put("PracticeId", PracticeId);
+		associateDeassociatePracticeToProviderMap.put("active", active);
+		return associateDeassociatePracticeToProviderMap;
+	}
 }

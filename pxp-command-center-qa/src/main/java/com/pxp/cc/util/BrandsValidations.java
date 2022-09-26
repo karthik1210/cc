@@ -48,4 +48,10 @@ public class BrandsValidations {
 			CCUtils.assertTrue(true, "condition fulfilled");
 		}
 	}
+	
+	public void verifyBrandNotFoundErrorMessageResponse(Response response, int brandId) {
+		jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("message").toString().trim(),
+				"Brand not found by id=" + brandId);
+	}
 }

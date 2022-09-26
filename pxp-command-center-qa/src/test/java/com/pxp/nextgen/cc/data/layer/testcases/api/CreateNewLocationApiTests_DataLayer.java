@@ -17,7 +17,7 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private ClientInfo clientInfo;
-	Response createNewLocationApiResponse, createClientApiResponse, fetchClientDetailsApiResponse;
+	Response createNewLocationApiResponse, createClientApiResponse, fetchLocationDetailsApiResponse;
 	String externalId;
 	int clientId;
 
@@ -62,11 +62,11 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
 		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 		logStep("Fetch Newly Created location details using location id");
-		fetchClientDetailsApiResponse = sharedInfo.getLocationDetails_DL(locationId);
+		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails_DL(locationId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetLocationDetailsApiResponseBody(fetchClientDetailsApiResponse, locationName,
+		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
+		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyGetLocationDetailsApiResponseBody(fetchLocationDetailsApiResponse, locationName,
 				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
@@ -96,11 +96,11 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
 		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 		logStep("Fetch Newly Created location details using location id");
-		fetchClientDetailsApiResponse = sharedInfo.getLocationDetails_DL(locationId);
+		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails_DL(locationId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetLocationDetailsApiResponseBody(fetchClientDetailsApiResponse, locationName, addressLine1,
+		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
+		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyGetLocationDetailsApiResponseBody(fetchLocationDetailsApiResponse, locationName, addressLine1,
 				addressLine2, city, testData.getProperty("location.state"), zipcode,
 				Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), testData.getProperty("location.timezonecode"),

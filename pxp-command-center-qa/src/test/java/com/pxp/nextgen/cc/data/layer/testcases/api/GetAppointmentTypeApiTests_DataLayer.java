@@ -18,7 +18,7 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	Response getAppointmentTypeApiResponse;
+	Response getAppointmentTypeApiResponse, createAppointmentTypeApiResponse;
 	List<ResourceDetails> resourceList;
 
 	@BeforeClass()
@@ -28,6 +28,8 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 	}
 
+	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get the Appointment type details with the valid AppointmentypeId and verify response body")
 	public void testGetAppointmentTypeFunctionalityUsingAppointmentTypeId() throws IOException {
 		logStep("Add valid resource id for appointment type");
@@ -36,8 +38,9 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getAppointmentTypeApiResponse);
 		CCUtils.assertEquals(getAppointmentTypeApiResponse.getStatusCode(), 200);
-		validation.verifyGetAppointmentResponseBody(getAppointmentTypeApiResponse, testData.getProperty("api.appointment.name"),
-				testData.getProperty("api.appointment.externalId"), (Integer.parseInt(testData.getProperty("api.appointment.duration"))),
+		validation.verifyGetAppointmentResponseBody(getAppointmentTypeApiResponse,
+				testData.getProperty("api.appointment.name"), testData.getProperty("api.appointment.externalId"),
+				(Integer.parseInt(testData.getProperty("api.appointment.duration"))),
 				testData.getProperty("api.appointment.durationUnit"), testData.getProperty("api.appointment.status"));
 	}
 
@@ -48,7 +51,8 @@ public class GetAppointmentTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getAppointmentTypeApiResponse);
 		CCUtils.assertEquals(getAppointmentTypeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForInvalidAppointmentTypeId(getAppointmentTypeApiResponse, testData.getProperty("non.existing.appointment.type.id"));
+		validation.verifyErrorResponseBodyForInvalidAppointmentTypeId(getAppointmentTypeApiResponse,
+				testData.getProperty("non.existing.appointment.type.id"));
 
 	}
 

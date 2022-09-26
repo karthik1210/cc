@@ -19,25 +19,33 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePrivacySettingApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePrivacySettingApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeWebsitesApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePracticeWebsitesApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePracticeWebsitesApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer"/>
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeSocialsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeWebsitesApiTests_BusinessLayer" />
+
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddUpdatePracticeSocialsApiTests_BusinessLayer" />
+
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgSolutionsApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
