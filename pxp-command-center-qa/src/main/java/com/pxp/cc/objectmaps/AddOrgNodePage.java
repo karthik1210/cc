@@ -6,7 +6,6 @@ import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -14,7 +13,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import com.pxp.cc.util.CCUtils;
 
 public class AddOrgNodePage extends CCMainPage {

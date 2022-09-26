@@ -705,6 +705,4 @@ public class ClientUserDetailsPage extends CCMainPage {
 	public void verifySelectedUserStatusIsSameOnClientUserDetailsPage() {
 		CCUtils.assertEquals(activeStatus.isDisplayed(), true);
 	}
-	
-	
 }

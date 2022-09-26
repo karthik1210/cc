@@ -11,7 +11,6 @@ import com.pxp.cc.util.CCUtils;
 
 public class ClientUsersPage extends CCMainPage {
 
-	//@FindBy(className = "tab-name")
 	@FindBy(xpath = "//span[contains(text(),' Client Users ')]") 
 	private WebElement labelPageTitle;
 
@@ -210,7 +209,7 @@ public class ClientUsersPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, searchButton);
 		CCUtils.verifyAndWaitForElement(lockedCheckbox, driver);
 		lockedCheckbox.click();
-		log("Clicked on inactive User Status checkbox on Search Options popup");
+		log("Clicked on locked User Status checkbox on Search Options popup");
 	}
 
 	public void selectClientUser() throws InterruptedException {

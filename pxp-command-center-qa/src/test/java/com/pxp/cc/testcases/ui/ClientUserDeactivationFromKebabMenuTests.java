@@ -2,7 +2,6 @@
 
 package com.pxp.cc.testcases.ui;
 
-import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -10,8 +9,6 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.objectmaps.DeactivateUserConfirmationPage;
-import com.pxp.cc.objectmaps.InternalUserDetailsPage;
-import com.pxp.cc.objectmaps.InternalUsersPage;
 import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.objectmaps.ClientUsersPage;
 import com.pxp.cc.objectmaps.ClientUserDetailsPage;
@@ -25,8 +22,6 @@ import com.pxp.cc.objectmaps.AddOrgNodePage;
 public class ClientUserDeactivationFromKebabMenuTests extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public CommandCenterUsersPage commandCenterUsersPage;
-	public InternalUserDetailsPage internalUserDetailsPage;
-	public InternalUsersPage internalUsersPage;
 	public ClientUsersPage clientUserPage;
 	public ClientUserDetailsPage clientUserDetailsPage;
 	public SearchOptionsPage searchOptionsPage;
@@ -34,7 +29,6 @@ public class ClientUserDeactivationFromKebabMenuTests extends CommandCenterGener
 	public AddNewClientUserPage addNewClientUserPage;
 	public GeneralSettingsPage generalSettingsPage;
 	public AddNewProviderPage addNewProviderPage;
-	public List<String> userStatusList = null;
 	public CommonMethods commonMethods;
 	public CreateClientPage createClientPage;
 	public AddOrgNodePage addOrgNodePage;

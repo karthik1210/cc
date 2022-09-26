@@ -176,7 +176,6 @@ public class AddNewProviderPage extends CCMainPage {
 	public void clickOnEdit() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(clickOnEdit, driver);
 		clickOnEdit.click();
-
 	}
 
 	public void enterProviderEmail(String email) {
@@ -187,13 +186,11 @@ public class AddNewProviderPage extends CCMainPage {
 	public void clickOnSave() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(saveBtn, driver);
 		saveBtn.click();
-
 	}
 
 	public void clickOnBackArrow() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(backArrow, driver);
 		backArrow.click();
-
 	}
 
 	public void editProvider() throws InterruptedException {
