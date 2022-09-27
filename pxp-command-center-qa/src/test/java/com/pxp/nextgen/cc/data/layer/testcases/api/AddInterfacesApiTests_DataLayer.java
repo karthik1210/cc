@@ -46,11 +46,11 @@ public class AddInterfacesApiTests_DataLayer extends BaseRest {
     public void addSinglePracticeInterfaceApiSuccess() throws IOException {
         logStep("TC_01_Verify the Response code as 200, when user try to Add an Interface by using POST Request [DL]");
         ArrayList<Integer> orgIds = createPractice();
+        logStep("Create a payload to Add an InterfaceId for a given practiceId");
         int practiceId = orgIds.get(2);
         String nextGenApiId = "NextGenApiId" + orgIds.get(0);
         String nextGenEnterpriseId = "NextGenEnterpriseId" + orgIds.get(1);
         String nextGenPracticeId = "NextGenPracticeId" + orgIds.get(2);
-        logStep("Create a payload to Add an InterfaceId for a given practiceId");
         params.put("5", nextGenEnterpriseId);
         params.put("6", nextGenPracticeId);
         params.put("7", nextGenApiId);
@@ -70,9 +70,9 @@ public class AddInterfacesApiTests_DataLayer extends BaseRest {
             int actualExternalSystemId = getPracticeInterfaceApiResponse.jsonPath().get("externalSystemId[" + i + "]");
             String actualName = getPracticeInterfaceApiResponse.jsonPath().get("name[" + i + "]");
             if (actualExternalSystemId == expectedExternalSystemId && actualName.equalsIgnoreCase(expectedName)) {
-                logStep("Interface is available for " + expectedName + " as " + actualName);
+                logStep("Interface is added successfully for " + expectedName + " as " + actualName);
             } else {
-                logStep("Interface is not available for " + expectedName + " as " + actualName);
+                logStep("Interface is not added successfully for " + expectedName + " as " + actualName);
             }
         }
 
@@ -82,11 +82,11 @@ public class AddInterfacesApiTests_DataLayer extends BaseRest {
     public void addMultiplePracticeInterfaceApiSuccess() throws IOException {
         logStep("TC_01_Verify the Response code as 200, when user try to Add an Interface by using POST Request [DL]");
         ArrayList<Integer> orgIds = createPractice();
+        logStep("Create a payload to Add an InterfaceId for a given practiceId : 1");
         int practiceId = orgIds.get(2);
         String nextGenApiId = "NextGenApiId" + orgIds.get(0);
         String nextGenEnterpriseId = "NextGenEnterpriseId" + orgIds.get(1);
         String nextGenPracticeId = "NextGenPracticeId" + orgIds.get(2);
-        logStep("Create a payload to Add an InterfaceId for a given practiceId");
         params.put("5", nextGenEnterpriseId);
         params.put("6", nextGenPracticeId);
         params.put("7", nextGenApiId);
@@ -99,12 +99,14 @@ public class AddInterfacesApiTests_DataLayer extends BaseRest {
         logStep("Validating response information");
         CCUtils.responseTimeValidation(addPracticeInterfaceApiResponse);
         CCUtils.assertEquals(addPracticeInterfaceApiResponse.getStatusCode(), 200);
+        logStep("Create a another payload to Add an InterfaceId for a given practiceId : 2");
         params1.put("13", nextGenPracticeId);
         int expectedExternalSystemId1 = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId82"));
         String expectedName1 = testData.getProperty("api.practice.interface.name82");
         practiceInterfacesObj1 = new PracticeInterfaces(expectedExternalSystemId1, params1, active);
         logStep("Add an InterfaceId for a given practiceId");
         addPracticeInterfaceApiResponse = orgInfo.addPracticeInterfacesResponse("Valid", "DL", practiceId, practiceInterfacesObj1);
+        logStep("Create a another payload to Add an InterfaceId for a given practiceId : 3");
         params2.put("18", nextGenPracticeId);
         int expectedExternalSystemId2 = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId84"));
         String expectedName2 = testData.getProperty("api.practice.interface.name84");
@@ -131,9 +133,9 @@ public class AddInterfacesApiTests_DataLayer extends BaseRest {
             String expectedExternalName = expectedExternalSystemNames.get(i);
             if (actualName.contains(expectedExternalName)) {
                 CCUtils.assertEquals(actualExternalSystemId, expectedExternalId);
-                logStep("Interface is available for " + expectedExternalName + " as " + actualName);
+                logStep("Interface is added successfully for " + expectedExternalName + " as " + actualName);
             } else {
-                logStep("Interface is not available for " + expectedExternalName + " as " + actualName);
+                logStep("Interface is not added successfully for " + expectedExternalName + " as " + actualName);
             }
         }
     }
