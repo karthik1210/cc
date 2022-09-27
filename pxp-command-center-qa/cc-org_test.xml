@@ -50,6 +50,9 @@
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeInterfacesApiTests_BusinessLayer"/>
 
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddAnInterfaceApiTests_BusinessLayer"/>
+
 		</classes>
 	</test>
 </suite>
