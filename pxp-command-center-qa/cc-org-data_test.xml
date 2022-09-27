@@ -1,56 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="CCOrgDataTestSuite">
-    <listeners>
-        <listener
-                class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener"/>
-        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
-        <listener
-                class-name="org.uncommons.reportng.JUnitXMLReporter"/>
-        <listener
-                class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
-    </listeners>
-    <test name="CC Org Data Test">
-        <classes>
-
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer"/>
-            <!-- Enable test classes once issue is addressed for Jira # PXPP-21442
-                PXPP-21447 -->
-            <!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgSolutionsApiTests_DataLayer"
-                /> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer"
-                /> -->
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePrivacySettingApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer"/>
-            <class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.AddUpdatePracticeSocialsApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeSocialsApiTests_DataLayer"/>
-            <class
+	<listeners>
+		<listener
+			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener
+			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener
+			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+	</listeners>
+	<test name="CC Org Data Test">
+		<classes>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrganizationDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateOrgNodesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
+			<!-- Enable test classes once issue is addressed for Jira # PXPP-21442 
+				-->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
+				/> -->
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePrivacySettingApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddUpdatePracticeSocialsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeSocialsApiTests_DataLayer" />
+				  <class
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer"/>
             <class
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer"/>
