@@ -58,7 +58,7 @@ public class GetExternalMetaDataApiTests_DataLayer extends BaseRest {
         }
     }
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19980_Get exteralnal meta data to given externalSystemId with Invalid URI Type")
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19980_Get external meta data to given externalSystemId with Invalid URI Type")
     public void getExternalSystemMetaDataWithInvalidUriApi() throws IOException {
         logStep("TC 002_Verify the Response code as 404, when user try to give invalid URI for GET Call of the externalsystems for Interface SetUp [DL]");
         int externalSystemId = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId"));
@@ -69,7 +69,7 @@ public class GetExternalMetaDataApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(getExternalSystemApiResponse.getStatusCode(), 404);
     }
 
-    @Test(priority = 3, dataProvider = "inValidAndNullExternalSystemId", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19981_PXPP-23629_PXPP-23630_Get exteralnal meta data for null and Invalid Datatype externalSystemId")
+    @Test(priority = 3, dataProvider = "inValidAndNullExternalSystemId", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19981_PXPP-23629_PXPP-23630_Get external meta data for null and Invalid Datatype externalSystemId")
     public void getExternalSystemMetaDataWithInvalidDatatypePracticeApi(String externalSystemId) throws IOException {
         logStep("TC 003_TC 005_TC 006_verify response code 400, when user enters null and Invalid Datatype value on externalSystemId by using GET Method [DL]");
         logStep("Getting externalSystemMetaData information for a given externalSystemId");
@@ -79,7 +79,7 @@ public class GetExternalMetaDataApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(getExternalSystemApiResponse.getStatusCode(), 400);
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19982_Get exteralnal meta data to given externalSystemId with Invalid Mathod Type")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19982_Get external meta data to given externalSystemId with Invalid Mathod Type")
     public void getExternalSystemMetaDataWithInvalidMethodApi() throws IOException {
         logStep("TC 004_Verify the Response code as 405, when user try to Patch method instead of GET Request for external systems of Interface SetUp [DL]");
         int externalSystemId = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId"));
@@ -90,7 +90,7 @@ public class GetExternalMetaDataApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(getExternalSystemApiResponse.getStatusCode(), 405);
     }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Get exteralnal meta data to given externalSystemId as emptystring with Invalid URI Type")
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Get external meta data to given externalSystemId as emptystring with Invalid URI Type")
     public void getExternalSystemMetaDataWithEmptyStringUriApi() throws IOException {
         logStep("Verify the Response code as 404, when user try to give empty string externalId for GET Call of the externalsystems for Interface SetUp [DL]");
         int externalSystemId = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId"));
