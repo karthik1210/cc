@@ -192,7 +192,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		addNewClientUserPage.verifySaveAndAddButtonIsDisabled();
 	}
 
-	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum characters error message for first name, last name, username and email field")
+	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum characters error message for first name, last name, username and email field")
 	public void testMaximumCharacterError() throws Exception {
 		commonMethods = new CommonMethods(driver);
 		logStep("Select command center users icon");
@@ -214,7 +214,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getMaximumCharacterErrorForEmailField(), "Maximum characters reached");
 	}
 
-	@Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in add new client user step one page")
+	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in add new client user step one page")
 	public void testRequiredErrorMessage() throws Exception {
 		logStep("Select command center users icon");
 		clientDirectoryPage.clickOnCommandCenterUsersIcon();
@@ -258,7 +258,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		return obj;
 	}
 
-	@Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email,username and mobile number fields and verify error message")
+	@Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email,username and mobile number fields and verify error message")
 	public void testEnterValidDetailError(String[] getTestData) throws Exception {
 		commonMethods = new CommonMethods(driver);
 		logStep("Enter invalid data in first name, last name, email,username and mobile number fields and verify error message");
@@ -274,7 +274,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getValidErrorForMobileNumberField(), "Please enter valid mobile number");
 	}
 
-	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user select all checkboxes using indeterminate checkbox and deselect all checkboxes again clicking on indeterminate checkbox")
+	@Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user select all checkboxes using indeterminate checkbox and deselect all checkboxes again clicking on indeterminate checkbox")
 	public void testFunctionalityOfInderminateCheckbox() throws Exception {
 		logStep("Enter data in mandatory fields and Click on next button");
 		createProvider();
@@ -305,7 +305,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		addNewClientUserPage.verifySaveAndAddButtonIsDisabled();
 	}
 
-	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the functionality of cancel and back button on add new client user step two popup")
+	@Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the functionality of cancel and back button on add new client user step two popup")
 	public void testFunctionalityOfCancelAndBackButton() throws Exception {
 		createProvider();
 		logStep("Select command center users icon");
@@ -325,7 +325,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		clientUsersPage.verifyClientUsersPageTitle();
 	}
 
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client name in client search textbox and verify error message")
+	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client name in client search textbox and verify error message")
 	public void testErrorMessageForNonExistingClient() throws Exception {
 		logStep("Enter non existing client name in client search textbox and verify error message");
 		logStep("Select command center users icon");
@@ -340,7 +340,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		addNewClientUserPage.verifyNoClientsFoundErrorMessage();
 	}
 
-	@Test(priority = 10, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the functionality of cancel button and cross icon on add new client user step one popup")
+	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the functionality of cancel button and cross icon on add new client user step one popup")
 	public void testFunctionalityOfCancelAndCrossButton() throws Exception {
 		logStep("Click on cancel button and verify user redirected to client user page");
 		logStep("Select command center users icon");
@@ -361,12 +361,12 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		clientUsersPage.verifyClientUsersPageTitle();
 	}
 
-	@Test(priority = 11, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active client user functionality")
+	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active client user functionality")
 	public void testCreateActiveClientUser() throws Exception {
 		createActiveClientUser();
 	}
 
-	@Test(priority = 12, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive client user functionality")
+	@Test(priority = 10, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive client user functionality")
 	public void testCreateInactiveClientUser() throws Exception {
 		createInactiveClientUser();
 	}
