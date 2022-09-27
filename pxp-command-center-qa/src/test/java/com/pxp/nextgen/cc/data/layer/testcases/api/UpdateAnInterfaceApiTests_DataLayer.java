@@ -72,8 +72,12 @@ public class UpdateAnInterfaceApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(getByInterfaceResponse.jsonPath().get("params.key[4]"), 5);
         logStep("Create a payload to update an InterfaceId for a given practiceId");
         String updatedValue = (getByInterfaceResponse.jsonPath().get("params.value[4]")).toString().concat("updated");
+        String updatedValue1 = (getByInterfaceResponse.jsonPath().get("params.value[5]")).toString().concat("updated");
+        String updatedValue2 = (getByInterfaceResponse.jsonPath().get("params.value[6]")).toString().concat("updated");
         params1.clear();
         params1.put("5", updatedValue);
+        params1.put("6", updatedValue1);
+        params1.put("7", updatedValue2);
         practiceInterfacesObj1 = new PracticeInterfaces(expectedExternalSystemId, params1, active);
         logStep("Update an InterfaceId for a given practiceId");
         updatePracticeInterfaceApiResponse = orgInfo.updatePracticeInterfacesResponse("Valid", "DL", practiceId, interfaceId, practiceInterfacesObj1);
@@ -82,7 +86,11 @@ public class UpdateAnInterfaceApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updatePracticeInterfaceApiResponse.getStatusCode(), 200);
         getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
         String getValue = (getByInterfaceResponse.jsonPath().get("params.value[4]"));
+        String getValue1 = (getByInterfaceResponse.jsonPath().get("params.value[5]"));
+        String getValue2 = (getByInterfaceResponse.jsonPath().get("params.value[6]"));
         CCUtils.assertEquals(getValue, updatedValue);
+        CCUtils.assertEquals(getValue1, updatedValue1);
+        CCUtils.assertEquals(getValue2, updatedValue2);
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-23460_Update an Interface to given practiceId and interfaceId with Invalid URI")
