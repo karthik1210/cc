@@ -1178,7 +1178,6 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().post(url).then().extract().response();
 	}
-<<<<<<< HEAD
 	
 	public Response updateOrgsSolutions_DataLayer_InvalidHTTPMethod(List<OrgSolutions> productList, int orgId)
 			throws IOException {
@@ -1197,7 +1196,6 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL_ORG_NULL;
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
-=======
 
 	public Response getPracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId) {
 		if (validURI.equalsIgnoreCase("Valid")) {
@@ -1216,6 +1214,4 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
->>>>>>> 60e410d404c5a32af7aa9b73ebf60ffd21e306db
 }
