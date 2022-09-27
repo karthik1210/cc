@@ -124,7 +124,7 @@ public class UpdateAnInterfaceApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-23463_Update an Interface to given practiceId and interfaceId with Invalid Mathod Type")
-    public void getPracticeInterfacesWithInvalidMethodApi() throws IOException {
+    public void updatePracticeInterfacesWithInvalidMethodApi() throws IOException {
         logStep("TC 005_Verify the Response code as 405, when user try PATCH method instead of PUT Request for An Interface[DL]");
         int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
         logStep("Getting InterfaceId information for a given practiceId");
