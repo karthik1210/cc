@@ -18,6 +18,7 @@ import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.UpdateTou;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.pojos.PracticeSocials;
+import com.pxp.cc.pojos.*;
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -1173,4 +1174,41 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().post(url).then().extract().response();
 	}
+
+	public Response getPracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getPracticeInterfacesInvaliDatatypeResponse(String serviceLayer, String practiceId) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response addPracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId, PracticeInterfaces addPracticeInterfaces) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeInterfaces).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response addPracticeInterfacesInvaliDatatypeResponse(String serviceLayer, String practiceId, PracticeInterfaces addPracticeInterfaces) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
+	}
+
 }
