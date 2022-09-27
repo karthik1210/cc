@@ -101,7 +101,7 @@ public class DeleteAnInterfaceApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 400);
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-23463_delete an Interface to given practiceId and interfaceId with Invalid Mathod Type")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19961_delete an Interface to given practiceId and interfaceId with Invalid Mathod Type")
     public void deletePracticeInterfacesWithInvalidMethodApi() throws IOException {
         logStep("TC 004_Verify the Response code as 405, when user try to Patch method instead of DELETE Request for practice interfaces");
         int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
