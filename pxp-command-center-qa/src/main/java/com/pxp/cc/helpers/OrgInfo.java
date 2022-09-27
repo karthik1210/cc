@@ -1211,4 +1211,40 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
 	}
 
+	public Response updatePracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId, int interfaceId, PracticeInterfaces updatePracticeInterfaces) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).body(updatePracticeInterfaces).when().put(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).body(updatePracticeInterfaces).when().put(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).body(updatePracticeInterfaces).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response updatePracticeInterfacesInvaliDatatypeResponse(String serviceLayer, String practiceId, String interfaceId, PracticeInterfaces updatePracticeInterfaces) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, interfaceId);
+		return given().spec(requestSpec).body(updatePracticeInterfaces).when().put(url).then().extract().response();
+	}
+
+	public Response getByInterfaceResponse(String validURI, String serviceLayer, int practiceId, int interfaceId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else  {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getByInterfaceInvaliDatatypeResponse(String serviceLayer, String practiceId, String interfaceId) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, interfaceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }

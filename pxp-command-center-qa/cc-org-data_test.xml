@@ -54,6 +54,8 @@
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer"/>
             <class
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer"/>
+            <class
+                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateAnInterfaceApiTests_DataLayer"/>
         </classes>
     </test>
 </suite>

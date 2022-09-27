@@ -1389,4 +1389,25 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss";
 	}
 
+	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID(String serviceLayer, int practiceId, int interfaceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String interfaceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(String serviceLayer, int practiceId,  int interfaceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfacesss/"+interfaceId;
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss/"+interfaceId;
+	}
+
 }
