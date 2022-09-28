@@ -10,5 +10,4 @@ import lombok.Data;
 public class ResourcesStatus {
 	private Integer roleId;
 	private String status;
-	
 }
