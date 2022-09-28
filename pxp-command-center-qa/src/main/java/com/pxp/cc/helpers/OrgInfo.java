@@ -1298,4 +1298,9 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL(orgId);
 		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
 	}
+	
+	public Response getOrgSolutionsDetails_DataLayer_InvalidHTTPMethod(int orgId, String type) {
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
+		return given().spec(requestSpec).queryParam("type", type).when().post(url).then().extract().response();
+	}
 }

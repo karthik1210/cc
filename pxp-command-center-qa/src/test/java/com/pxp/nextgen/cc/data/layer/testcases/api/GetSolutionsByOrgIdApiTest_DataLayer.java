@@ -135,17 +135,15 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 		validation.verifyErrorInResponseForInvalidUrl(fetchOrgSolutionDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing client id in orgId field and verify error message for org id field")
-	public void testErrorMessageWhenSearchClientIdInOrgIdField() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid http method and validate status code")
+	public void testErrorMessageForInvalidHTTPMethod() throws IOException {
 		logStep("Enter clientId instead of org id in orgId field and validate error message");
 		int clientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(clientId,
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer_InvalidHTTPMethod(clientId,
 				testData.getProperty("get.org.type"));
 		logStep("Validating response information");
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 400);
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(fetchOrgSolutionDetailsApiResponse,
-				clientId);
+		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(fetchOrgSolutionDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test for fetching solutions for correct org id")
