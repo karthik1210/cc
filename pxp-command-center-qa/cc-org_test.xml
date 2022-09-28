@@ -18,6 +18,7 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateOrgNodeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer" />
+			<!-- TOU test classes are disabled due to enhancement of privacy policies.
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer" />
 			<class
@@ -27,6 +28,8 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer" />
 			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" /> -->
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer" />
@@ -34,8 +37,6 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePracticeWebsitesApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeSocialsApiTests_BusinessLayer" />
 			<class
