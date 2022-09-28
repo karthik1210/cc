@@ -53,6 +53,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateAnInterfacesApiTests_BusinessLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteAnInterfacesApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetByInterfaceApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
