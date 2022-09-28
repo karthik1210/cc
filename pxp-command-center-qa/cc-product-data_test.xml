@@ -14,6 +14,8 @@
 		<classes>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProductListApiTests_DataLayer" />
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetExternalMetaDataApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

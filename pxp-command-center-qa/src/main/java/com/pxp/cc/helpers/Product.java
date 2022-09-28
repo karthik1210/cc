@@ -45,4 +45,22 @@ public class Product extends BaseRest {
 				.then().extract().response();
 	}
 
+	public Response getExternalSystemMetaDataResponse(String validURI, String serviceLayer, int externalSystemId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_EXTERNAL_SYSTEMID(serviceLayer, externalSystemId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_EXTERNAL_SYSTEMID_WITH_INVLAID_URI(serviceLayer, externalSystemId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_EXTERNAL_SYSTEMID(serviceLayer, externalSystemId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getExternalSystemMetaDataInvaliDatatypeResponse(String serviceLayer, String externalSystemId) {
+		String url = ApiPath.GET_EXTERNAL_SYSTEMID_WITH_INVLAID_DATATYPE(serviceLayer, externalSystemId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }
