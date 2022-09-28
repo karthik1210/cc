@@ -816,7 +816,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response associateDeassociatePractice_BL(int practiceId, int locationId, boolean active)
 	{
-		String url=ApiPath.ASSOCIATEDEASSOCIATE_PRACTICE_TO_LOCATION_BL(locationId);
+		String url=ApiPath.ASSOCIATE_DEASSOCIATE_PRACTICE_TO_LOCATION_BL(locationId);
 		Map<String,Object> associatePracticePayload = associateDeassociatePracticeToLocation(practiceId,active);
 		return given().spec(requestSpec).body(associatePracticePayload).when().put(url).then().extract().response();
 	}

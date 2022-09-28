@@ -1389,7 +1389,7 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss";
 	}
 	
-	public static final String ASSOCIATEDEASSOCIATE_PRACTICE_TO_LOCATION_BL(int locationId)
+	public static final String ASSOCIATE_DEASSOCIATE_PRACTICE_TO_LOCATION_BL(int locationId)
     {
     	return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
     }

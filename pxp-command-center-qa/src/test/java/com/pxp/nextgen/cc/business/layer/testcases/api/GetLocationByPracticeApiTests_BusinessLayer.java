@@ -34,6 +34,7 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
 		systemId = createSystemNode(clientId);
 		enterpriseId = createEnterpriseNode(systemId);
 		practiceId = createPracticeNode(enterpriseId);
+		locationId = addNewLocation();
 	}
 	
 	public int createClient(String clientType) throws Exception {
@@ -79,9 +80,7 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
         return createPracticeApiResponse.jsonPath().get("orgId");
     }
    
-   @Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in mandatory field and verify response body")
-	public void testAddNewLocationFunctionality() throws IOException {
-		logStep("Enter valid data in mandatory field");
+	public int addNewLocation() throws IOException {
 		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
 		String externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
 		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId,
@@ -90,26 +89,15 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
 				testData.getProperty("location.timezonecode"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createNewLocationApiResponse);
-		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
-		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
-		locationId = createNewLocationApiResponse.jsonPath().getInt("id");
+		return createNewLocationApiResponse.jsonPath().getInt("id");
+		
 	}
    
-   @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify associating Practice to Location")
-   public void testAssociatePracticeToLocationFunctionality() throws Exception
-   {
-	   logStep("Enter valid practice Id and location Id to associate prcatice to location");
-	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
-	   logStep("Validating response Information");
-	   CCUtils.responseTimeValidation(associatePracticeToLocationResponse);
-	   CCUtils.assertEquals(associatePracticeToLocationResponse.getStatusCode(), 200);
-   }
-   
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using valid locationId and practiceId")
-   public void testGetLocationByPrcaticeFunctionality()
+   public void testGetLocationByPracticeFunctionality()
    {
+	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
+	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter valid location Id and practice Id to get location by practice");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingValidInputs(locationId, practiceId);
 	   logStep("Validating response Information");
@@ -118,18 +106,22 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    }
    
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using non-existing location ID and existing practiceId")
-   public void testGetLocationByPrcaticeFunctionalityUsingNonExistingLocationId()
+   public void testGetLocationByPracticeFunctionalityUsingNonExistingLocationId()
    {
+	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
+	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter non-existing location Id and existing practice Id to get location by practice");
-	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingValidInputs(Integer.parseInt(testData.getProperty("non.existing.brand.id")), practiceId);
+	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingValidInputs(Integer.parseInt(testData.getProperty("non.existing.location.id")), practiceId);
 	   logStep("Validating response Information");
 	   CCUtils.responseTimeValidation(getLocationByPracticeResponse);
 	   CCUtils.assertEquals(getLocationByPracticeResponse.getStatusCode(), 400);
    }
    
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using existing location ID and non-existing practiceId")
-   public void testGetLocationByPrcaticeFunctionalityUsingNonExistingPracticeId()
+   public void testGetLocationByPracticeFunctionalityUsingNonExistingPracticeId()
    {
+	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
+	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter existing location ID and non-existing practiceId to get location by practice");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingValidInputs(locationId,Integer.parseInt(testData.getProperty("non.existing.practice.id")));
 	   logStep("Validating response Information");
@@ -138,8 +130,10 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    }
    
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using location ID and practiceId as null values")
-   public void testGetLocationByPrcaticeFunctionalityUsingNullValues()
+   public void testGetLocationByPracticeFunctionalityUsingNullValues()
    {
+	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
+	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter location ID and practiceId as null to get location by practice");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingNullValue_BL();
 	   CCUtils.responseTimeValidation(getLocationByPracticeResponse);
@@ -147,8 +141,10 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    }
    
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using invalid URL")
-   public void testGetLocationByPrcaticeFunctionalityUsingInvalidUrl()
+   public void testGetLocationByPracticeFunctionalityUsingInvalidUrl()
    {
+	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
+	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter valid location ID and practiceId to get location by practice using invalid URL");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingInvalidUrlPath(locationId, practiceId);
 	   CCUtils.responseTimeValidation(getLocationByPracticeResponse);
@@ -156,8 +152,10 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    }
    
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using invalid HTTP method call")
-   public void testGetLocationByPrcaticeFunctionalityUsingInvalidMethodCall()
+   public void testGetLocationByPracticeFunctionalityUsingInvalidMethodCall()
    {
+	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
+	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter valid location ID and practiceId to get location by practice using invalid HTTP method call");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingInvalidMethodCall(locationId, practiceId);
 	   CCUtils.responseTimeValidation(getLocationByPracticeResponse);
