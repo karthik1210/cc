@@ -108,8 +108,6 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using non-existing location ID and existing practiceId")
    public void testGetLocationByPracticeFunctionalityUsingNonExistingLocationId()
    {
-	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
-	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter non-existing location Id and existing practice Id to get location by practice");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingValidInputs(Integer.parseInt(testData.getProperty("non.existing.location.id")), practiceId);
 	   logStep("Validating response Information");
@@ -120,8 +118,6 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using existing location ID and non-existing practiceId")
    public void testGetLocationByPracticeFunctionalityUsingNonExistingPracticeId()
    {
-	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
-	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter existing location ID and non-existing practiceId to get location by practice");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingValidInputs(locationId,Integer.parseInt(testData.getProperty("non.existing.practice.id")));
 	   logStep("Validating response Information");
@@ -132,8 +128,6 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest{
    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify fetching location by practice using location ID and practiceId as null values")
    public void testGetLocationByPracticeFunctionalityUsingNullValues()
    {
-	   logStep("Enter location Id and prcatice Id to associate Practice to Location");
-	   associatePracticeToLocationResponse=sharedInfo.associateDeassociatePractice_BL(practiceId, locationId, true);
 	   logStep("Enter location ID and practiceId as null to get location by practice");
 	   getLocationByPracticeResponse=sharedInfo.getLocationByPracticeUsingNullValue_BL();
 	   CCUtils.responseTimeValidation(getLocationByPracticeResponse);
