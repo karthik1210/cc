@@ -14,6 +14,9 @@
 		<classes>
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProductListApiTests_BusinessLayer" />
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetExternalSystemMetaDataApiTests_BusinessLayer" />
+
 		</classes>
 	</test>
 </suite>
