@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.testcases.ui;
 
@@ -8,656 +8,671 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.AddAndUpdateProductSolutionsPage;
 import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
+import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
 public class AddOrgNodeTests extends CommandCenterGenericTest {
-	public ClientDirectoryPage clientDirectoryPage;
-	public AddOrgNodePage addOrgNodePage;
-	public GeneralSettingsPage generalSettingsPage;
+	private ClientDirectoryPage clientDirectoryPage;
+	public ClientDirectoryPage cchomepage;
+	public CreateClientPage createClientPage;
 	public CommonMethods commonMethods;
+	private GeneralSettingsPage generalSettingsPage;
+	public AddOrgNodePage addOrgNodePage;
 	public AddAndUpdateProductSolutionsPage addAndUpdateProductSolutionsPage;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to CC portal");
-		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
-				testData.getProperty("user.password"));
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+	}
+
+	String clientName, systemName, enterpriseName, practiceName;
+
+	public void createNewActiveClient() throws Exception {
 		commonMethods = new CommonMethods(driver);
+		createClientPage = new CreateClientPage(driver);
+		logStep("Select create client button from new dropdown");
+		createClientPage.clickCreateClient();
+		commonMethods = new CommonMethods(driver);
+		logStep("Enter valid details in mandatory fields");
+		clientName = testData.getProperty("new.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientSapNumber = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
+				testData.getProperty("new.client.timezone"));
+		logStep("Verify active radio button is by default selected on the create client popup");
+		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
+		logStep("Click on create button on the create client popup");
+		createClientPage.clickConfirmPopup();
+		String actualMessage = commonMethods.getToasterMessage();
+		logStep("Verify success toaster message");
+		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
+		commonMethods = new CommonMethods(driver);
+		clientDirectoryPage = new ClientDirectoryPage(driver);
+		logStep("Searching a client in client directory");
+		clientDirectoryPage.searchNode(clientName);
+		clientDirectoryPage.clickSearchButton();
+		clientDirectoryPage.clickSearchResult();
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.verifyClientNodeIsSelected();
 	}
 
-	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system pop up")
-	public void testAddNewSystemPopup() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+	private void createNewInactiveClient() throws NullPointerException, InterruptedException {
+		commonMethods = new CommonMethods(driver);
+		createClientPage = new CreateClientPage(driver);
+		logStep("Select create client button from new dropdown");
+		createClientPage.clickCreateClient();
+		commonMethods = new CommonMethods(driver);
+		logStep("Enter valid details in mandatory fields");
+		clientName = testData.getProperty("new.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(6));
+		String clientSapNumber = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(6));
+		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
+				"Pacific Standard Time");
+		logStep("Select inactive radio button and click on test checkbox on the create client pop-up");
+		createClientPage.selectInactiveRadiobutton();
+		createClientPage.selectTestClient();
+		logStep("Click on create button on the create client pop-up");
+		createClientPage.clickConfirmPopup();
+		String actualMessage = commonMethods.getToasterMessage();
+		logStep("Verify success toaster message");
+		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
+		commonMethods = new CommonMethods(driver);
+		clientDirectoryPage = new ClientDirectoryPage(driver);
+		logStep("Searching a client in client directory");
+		clientDirectoryPage.searchNode(clientName);
+		clientDirectoryPage.clickSearchButton();
+		clientDirectoryPage.clickSearchResult();
+		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Fetch client name,sap id,client timezone and client status values from general settings page");
-		String parentSapId = generalSettingsPage.getClientSapId();
-		String parentTimezone = generalSettingsPage.getClientTimezone();
-		String parentStatus = generalSettingsPage.getClientStatus();
-		String clientName = generalSettingsPage.getClientName();
-		logStep("Verify Parent Entity dropdown functionality on add new system pop up");
-		addOrgNodePage = generalSettingsPage.clickOnAddSystem();
-		addOrgNodePage.verifyParentEntityDropdownisReadonlyField();
-		addOrgNodePage.verifyClientNameIsDisplayedOnParentEntityDropdown(clientName);
-		logStep("Verify sap id,timezone and status value fetched from selected parent(client) at add new system popup");
-		addOrgNodePage.verifyTestDataFetchedFromSelectedParent(parentSapId, parentTimezone, parentStatus);
-		logStep("Verify add system node popup page title and labels present on add new system popup");
-		addOrgNodePage.verifyLabelPresentOnAddNewNodePopup(testData.getProperty("api.system.orgtype"));
-		logStep("Verify timezone dropdown values");
-		commonMethods.getTimezoneDropdownValue();
-		commonMethods.verifyTimezoneDropdownValues();
-		logStep("Verify box text displayed for textbox field on add new system popup");
-		addOrgNodePage.verifyBoxTextForNameField();
-		addOrgNodePage.verifyBoxTextForSolutionDisplayNameField();
-		addOrgNodePage.verifyBoxTextForSapIdField();
-		addOrgNodePage.verifyBoxTextForTimezoneField();
-		logStep("Verify after clicking on cancel button user redirected to general settings page");
-		addOrgNodePage.clickOnCancelButton();
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Click on system option in new drop down");
-		generalSettingsPage.clickOnAddSystem();
-		logStep("Verify after clicking on X icon user redirected to general settings page");
-		addOrgNodePage.clickOnCrossIcon();
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		generalSettingsPage.verifyClientNodeIsSelected();
 	}
 
-	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Error messages are displayed on add new system popup")
-	public void testErrorMessagesAtAddNewSystem() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on system option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddSystem();
-		String systemNameLabelText = addOrgNodePage.getSystemNameLabelText();
-		logStep("Verify error messages are displayed for mandatory field");
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addOrgNodePage.verifyOrgNameIsRequiredField(systemNameLabelText);
-		addOrgNodePage.enterSpaceInRequiredField();
-		commonMethods.verifyToasterMessage("System name cannot be empty");
-		commonMethods.closeToasterMessage();
-		logStep("Click on add new system button");
-		generalSettingsPage.clickOnAddSystem();
-		logStep("Enter more than 100 characters in system name field and verify error message for system name field");
-		addOrgNodePage.verifyErrorMessageForOrgNodeNameField(testData.getProperty("invalid.name"));
-		logStep("Enter more than 100 characters in solution display name field and verify error message for solution display name field");
-		addOrgNodePage
-				.verifyErrorMessageForSolutionDisplayNameField(testData.getProperty("invalid.solutionDisplayName"));
-		logStep("Enter more than 50 characters in sap id field and verify error message for sap id field");
-		addOrgNodePage.verifyErrorMessageForSapIdField(testData.getProperty("invalid.sap"));
-	}
-
-	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active system below inactive client and status of newly added node is by default inactive")
-	public void testAddNewActiveSystemBelowInactiveClient() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.inactive.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		String parentSapId = generalSettingsPage.getClientSapId();
-		String parentTimezone = generalSettingsPage.getClientTimezone();
-		logStep("Click on system option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddSystem();
-		logStep("Enter details in add new system popup");
-		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateAlphaNumericString(5));
-		addOrgNodePage.enterOrgName(systemName);
-		logStep("Click on active radio button in add new system popup");
-		addOrgNodePage.selectActiveRadiobutton();
+	private void createNewActiveSystem() throws NullPointerException, InterruptedException {
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyAddSystemButton();
+		addOrgNodePage.clickOnAddSystem();
+		logStep("Enter data in all input fields");
+		systemName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterSystemName(systemName);
+		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
+		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
 		logStep("Click on save and add button");
 		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	private void createNewInactiveSystem() throws NullPointerException, InterruptedException {
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyAddSystemButton();
+		addOrgNodePage.clickOnAddSystem();
+		logStep("Enter data in all input fields");
+		systemName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterSystemName(systemName);
+		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
+		addOrgNodePage.verifyInactiveRadioButton();
+		logStep("Click on inactive radio button");
+		addOrgNodePage.selectInactiveRadiobutton();
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	private void createNewActiveEnterprise() throws NullPointerException, InterruptedException {
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new Enterprise page");
+		addOrgNodePage.verifyAddEnterpriseButton();
+		addOrgNodePage.clickOnAddEnterprise();
+		logStep("Enter data in all input fields");
+		enterpriseName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterEnterpriseName(enterpriseName);
+		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	private void createNewInactiveEnterprise() throws NullPointerException, InterruptedException {
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new Enterprise page");
+		addOrgNodePage.verifyAddEnterpriseButton();
+		addOrgNodePage.clickOnAddEnterprise();
+		logStep("Enter data in all input fields");
+		enterpriseName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterEnterpriseName(enterpriseName);
+		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.verifyInactiveRadioButton();
+		logStep("Click on inactive radio button");
+		addOrgNodePage.selectInactiveRadiobutton();
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	private void createNewActivePractice() throws NullPointerException, InterruptedException {
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(enterpriseName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new practice page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		logStep("Enter data in all input fields");
+		practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
+		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+	
+	private void createNewInactivePractice() throws NullPointerException, InterruptedException {
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(enterpriseName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new practice page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		logStep("Enter data in all input fields");
+		practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
+		addOrgNodePage.verifyInactiveRadioButton();
+		logStep("Click on inactive radio button");
+		addOrgNodePage.selectInactiveRadiobutton();
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system page")
+	public void testAddNewSystemPage() throws Exception {
+		createNewActiveClient();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		logStep("Verify add new system page");
+		addOrgNodePage.verifyAddSystemButton();
+		addOrgNodePage.clickOnAddSystem();
+		addOrgNodePage.verifyAddNewSystemPage();
+	}
+
+	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in system Name field and verify error message")
+	public void testErrorMessagesAtAddNewSystem() throws Exception {
+		createNewActiveClient();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		logStep("Verify maximum character reached error message for system Name");
+		addOrgNodePage.verifyAddSystemButton();
+		addOrgNodePage.clickOnAddSystem();
+		addOrgNodePage.verifyMaximumCharactersReachedErrorMessage(CCUtils.generateAlphaNumericString(101));
+	}
+
+	@Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active system below inactive client and status of newly added node is by default inactive")
+	public void testAddNewActiveSystemBelowInactiveClient() throws Exception {
+		createNewInactiveClient();
+		createNewActiveSystem();
+		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added system node displayed on general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(systemName, parentSapId, systemName,
-				parentTimezone);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(systemName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(systemName, false);
 	}
 
-	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive system below active client")
+	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive system below active client")
 	public void testAddNewInactiveSystemBelowActiveClient() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewInactiveSystem();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on system option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddSystem();
-		logStep("Enter details in add new system popup");
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.inactive.system.name"),
-				testData.getProperty("new.inactive.system.sapid"), testData.getProperty("new.inactive.system.timezone"),
-				testData.getProperty("new.inactive.system.solutiondisplayname"));
-		logStep("Click on inactive radio button in add new system popup");
-		addOrgNodePage.selectInactiveRadiobutton();
-		logStep("Click on save and add button");
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added system node is displayed on general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.inactive.system.name"), testData.getProperty("new.inactive.system.sapid"),
-				testData.getProperty("new.inactive.system.solutiondisplayname"),
-				testData.getProperty("new.inactive.system.timezone"));
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(systemName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(false);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.inactive.system.name"),
-				false);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(systemName, false);
 	}
 
-	@Test(priority = 4, enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in add new system popup and verify add new system functionality")
+	@Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in add new system page and verify add new system functionality")
 	public void testAddNewActiveSystemBelowActiveClient() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewActiveSystem();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on Add new system option");
-		addOrgNodePage = generalSettingsPage.clickOnAddSystem();
-		logStep("Enter details in add new system popup");
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.system.name"),
-				testData.getProperty("new.system.sapid"), testData.getProperty("new.system.timezone"),
-				testData.getProperty("new.system.solutiondisplayname"));
-		logStep("Click on save and add button");
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Verify newly added system node displayed in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(testData.getProperty("new.system.name"),
-				testData.getProperty("new.system.sapid"), testData.getProperty("new.system.solutiondisplayname"),
-				testData.getProperty("new.system.timezone"));
+		logStep("Verify newly added system node displayed on general settings page");
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(systemName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.system.name"), true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(systemName, true);
 	}
 
-	@Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new enterprise popup")
-	public void testAddNewEnterprisePopup() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+	@Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Enterprise page")
+	public void testAddNewEnterprisePage() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on enterprise option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddEnterprise();
-		logStep("Verify sap id, timezone and status fields are blank, if the parent is not selected");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		Boolean isParentEntityNameNotSelected = addOrgNodePage.verifyValueIsNotSelectedInParentEntity();
-		addOrgNodePage.verifyDataIsNotFetchedIfParentEntityNotSelected(isParentEntityNameNotSelected);
-		logStep("Verify add enterprise node popup page title and labels present on add new enterprise popup");
-		addOrgNodePage.verifyLabelPresentOnAddNewNodePopup(testData.getProperty("api.enterprise.orgtype"));
-		logStep("Verify active radio button is by default selected");
-		addOrgNodePage.verifyActiveButtonByDefaultSelected();
-		logStep("Verify timezone dropdown value");
-		commonMethods.getTimezoneDropdownValue();
-		commonMethods.verifyTimezoneDropdownValues();
-		logStep("Verify box text displayed for textbox fields on add new enterprise popup");
-		addOrgNodePage.verifyBoxTextForNameField();
-		addOrgNodePage.verifyBoxTextForSolutionDisplayNameField();
-		addOrgNodePage.verifyBoxTextForSapIdField();
-		addOrgNodePage.verifyBoxTextForParentEntityField();
-		addOrgNodePage.verifyBoxTextForTimezoneField();
-		logStep("Verify after clicking on cancel button user redirected to general settings page");
-		addOrgNodePage.clickOnCancelButton();
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Click on enterprise option in new dropdown");
-		generalSettingsPage.clickOnAddEnterprise();
-		logStep("Verify after clicking on X icon user redirected to general settings page");
-		addOrgNodePage.clickOnCrossIcon();
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.searchNode(testData.getProperty("new.system.name"));
-		logStep("Get system name, sap id, timezone and status values from system node in general settings page");
-		String parentEntitySystemName = generalSettingsPage.getOrgName();
-		String parentEntitySystemSapId = generalSettingsPage.getOrgSapId();
-		String parentEntitySystemTimezone = generalSettingsPage.getOrgTimezone();
-		String parentEntitySystemStatus = generalSettingsPage.getOrgStatus();
-		logStep("Click on enterprise option in new dropdown");
-		generalSettingsPage.clickOnAddEnterprise();
-		logStep("Select system name in parent entity drop down");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentEntitySystemName);
-		logStep("Verify sap id, timezone and status values inherited from selected parent entity(system) in add new enterprise popup");
-		addOrgNodePage.verifyTestDataFetchedFromSelectedParent(parentEntitySystemSapId, parentEntitySystemTimezone,
-				parentEntitySystemStatus);
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new Enterprise page");
+		addOrgNodePage.verifyAddEnterpriseButton();
+		addOrgNodePage.clickOnAddEnterprise();
+		addOrgNodePage.verifyAddNewEnterprisePage();
 	}
 
-	@Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error messages are displayed on add new enterprise popup")
+	@Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in enterprise Name field and verify error message")
 	public void testErrorMessagesAtAddNewEnterprise() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewActiveSystem();
+		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on enterprise option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddEnterprise();
-		String enterpriseNameLabelText = addOrgNodePage.getEnterpriseNameLabelText();
-		logStep("Verify parent entity is required field");
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addOrgNodePage.verifyParentEntityNameIsRequiredField();
-		logStep("Verify Enterprise Name is required field");
-		addOrgNodePage.verifyOrgNameIsRequiredField(enterpriseNameLabelText);
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.system.name"));
-		addOrgNodePage.enterSpaceInRequiredField();
-		commonMethods = new CommonMethods(driver);
-		commonMethods.verifyToasterMessage("Enterprise name cannot be empty");
-		commonMethods.closeToasterMessage();
-		logStep("Click on add new enterprise button");
-		generalSettingsPage.clickOnAddEnterprise();
-		logStep("Enter random text in parent entity textbox");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName("abcdef@##24");
-		logStep("Verify No Items Found message is displayed for parent entity field on add new enterprise pop up");
-		addOrgNodePage.verifyNoItemsFound();
-		logStep("Enter more than 100 characters in enterprise name field and verify error message for system name field");
-		addOrgNodePage.verifyErrorMessageForOrgNodeNameField(testData.getProperty("invalid.name"));
-		logStep("Enter more than 100 characters in solution display name field and verify error message for solution display name field");
-		addOrgNodePage
-				.verifyErrorMessageForSolutionDisplayNameField(testData.getProperty("invalid.solutionDisplayName"));
-		logStep("Enter more than 50 characters in sap id field and verify error message for sap id field");
-		addOrgNodePage.verifyErrorMessageForSapIdField(testData.getProperty("invalid.sap"));
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
+		addOrgNodePage.verifyOrgName();
+		logStep("Verify add new Enterprise page");
+		addOrgNodePage.verifyAddEnterpriseButton();
+		addOrgNodePage.clickOnAddEnterprise();
+		addOrgNodePage.verifyMaximumCharactersReachedErrorMessage(CCUtils.generateAlphaNumericString(101));
 	}
 
-	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new enterprise functionality")
+	@Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new enterprise functionality")
 	public void testAddNewActiveEnterpriseBelowActiveSystem() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewActiveEnterprise();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on enterprise option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddEnterprise();
-		logStep("Enter details in add new enterprise pop up");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.system.name"));
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.enterprise.name"),
-				testData.getProperty("new.enterprise.sapid"), testData.getProperty("new.enterprise.timezone"),
-				testData.getProperty("new.enterprise.solutiondisplayname"));
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added enterprise node displayed on general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.enterprise.name"), testData.getProperty("new.enterprise.sapid"),
-				testData.getProperty("new.enterprise.solutiondisplayname"),
-				testData.getProperty("new.enterprise.timezone"));
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(enterpriseName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.enterprise.name"), true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(enterpriseName, true);
 	}
 
-	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active enterprise below inactive system and status of newly added node is by default inactive")
+	@Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active enterprise below inactive system and status of newly added node is by default inactive")
 	public void testAddNewActiveEnterpriseBelowInactiveSystem() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewInactiveSystem();
+		createNewActiveEnterprise();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.searchNode(testData.getProperty("new.inactive.system.name"));
-		logStep("Fetch system sap id, timezone values from general settings page");
-		String parentSapId = generalSettingsPage.getOrgSapId();
-		String parentTimezone = generalSettingsPage.getOrgTimezone();
-		logStep("Click on enterprise option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddEnterprise();
-		logStep("Add new active enterprise node below inactive system node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.inactive.system.name"));
-		String enterpriseName = testData.getProperty("api.enterprise.orgtype")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		addOrgNodePage.enterOrgName(enterpriseName);
-		addOrgNodePage.selectActiveRadiobutton();
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added enterprise node displayed on general settings page and status of enterprise node is inactive");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(enterpriseName, parentSapId,
-				enterpriseName, parentTimezone);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(enterpriseName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(enterpriseName, false);
 	}
 
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive enterprise node below active system. ")
+	@Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive enterprise node below active system")
 	public void testAddNewInactiveEnterpriseBelowActiveSystem() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewInactiveEnterprise();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on enterprise option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddEnterprise();
-		logStep("Add new inactive enterprise node below active system node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.system.name"));
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.inactive.enterprise.name"),
-				testData.getProperty("new.inactive.enterprise.sapid"),
-				testData.getProperty("new.inactive.enterprise.timezone"),
-				testData.getProperty("new.inactive.enterprise.solutiondisplayname"));
-		addOrgNodePage.selectInactiveRadiobutton();
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added enterprise node displayed on general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.inactive.enterprise.name"),
-				testData.getProperty("new.inactive.enterprise.sapid"),
-				testData.getProperty("new.inactive.enterprise.solutiondisplayname"),
-				testData.getProperty("new.inactive.enterprise.timezone"));
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(enterpriseName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(false);
-		generalSettingsPage
-				.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.inactive.enterprise.name"), false);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(enterpriseName, false);
 	}
 
-	@Test(priority = 10, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new practice popup")
-	public void testAddNewPracticePopup() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Get client name, sap id, timezone and status values from client node in general settings page");
-		String parentName = generalSettingsPage.getClientName();
-		String parentSapId = generalSettingsPage.getClientSapId();
-		String parentTimezone = generalSettingsPage.getClientTimezone();
-		String parentStatus = generalSettingsPage.getClientStatus();
-		logStep("Click on practice option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
-		logStep("Verify sap id, timezone and status fields are blank, if the parent is not selected");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		Boolean isParentEntityNameNotSelected = addOrgNodePage.verifyValueIsNotSelectedInParentEntity();
-		addOrgNodePage.verifyDataIsNotFetchedIfParentEntityNotSelected(isParentEntityNameNotSelected);
-		logStep("Verify add practice node popup page title and labels present on add new practice popup");
-		addOrgNodePage.verifyLabelPresentOnAddNewNodePopup(testData.getProperty("api.practice.orgtype"));
-		logStep("Verify active radio button is by default selected");
-		addOrgNodePage.verifyActiveButtonByDefaultSelected();
-		logStep("Verify solutions value");
-		addOrgNodePage.getSolutionValues();
-		addOrgNodePage.verifySolutionValues();
-		logStep("Verify timezone dropdown value");
-		commonMethods.getTimezoneDropdownValue();
-		commonMethods.verifyTimezoneDropdownValues();
-		logStep("Verify box text displayed for textbox field on add new practice popup");
-		addOrgNodePage.verifyBoxTextForNameField();
-		addOrgNodePage.verifyBoxTextForSolutionDisplayNameField();
-		addOrgNodePage.verifyBoxTextForSapIdField();
-		addOrgNodePage.verifyBoxTextForParentEntityField();
-		addOrgNodePage.verifyBoxTextForTimezoneField();
-		logStep("Verify after clicking on cancel button user redirected to general settings page");
-		addOrgNodePage.clickOnCancelButton();
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Click on practice option in new dropdown");
-		generalSettingsPage.clickOnAddPractice();
-		logStep("Verify after clicking on X icon user redirected to general settings page");
-		addOrgNodePage.clickOnCrossIcon();
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.searchNode(testData.getProperty("new.enterprise.name"));
-		logStep("Get enterprise name, sap id, timezone and status values from enterpeise node in general settings page");
-		String parentEntityEnterpriseName = generalSettingsPage.getOrgName();
-		String parentEntityEnterpriseSapId = generalSettingsPage.getOrgSapId();
-		String parentEntityEnterpriseTimezone = generalSettingsPage.getOrgTimezone();
-		String parentEntityEnterpriseStatus = generalSettingsPage.getOrgStatus();
-		logStep("Click on practice option in new dropdown");
-		generalSettingsPage.clickOnAddPractice();
-		logStep("Verify sap id, timezone and status value fetch from selected parent (enterprise) in add new practice popup");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentEntityEnterpriseName);
-		addOrgNodePage.verifyTestDataFetchedFromSelectedParent(parentEntityEnterpriseSapId,
-				parentEntityEnterpriseTimezone, parentEntityEnterpriseStatus);
-		logStep("Verify sap id, timezone and status value fetch from selected parent (client) in add new practice popup");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
-		addOrgNodePage.verifyTestDataFetchedFromSelectedParent(parentSapId, parentTimezone, parentStatus);
-	}
-
-	@Test(priority = 11, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error messages are displayed on add new practice popup")
-	public void testErrorMessagesAtAddNewPractice() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on practice option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
-		String practiceNameLabelText = addOrgNodePage.getPracticeNameLabelText();
-		logStep("Verify parent entity is required field");
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addOrgNodePage.verifyParentEntityNameIsRequiredField();
-		logStep("Verify Practice Name is required field");
-		addOrgNodePage.verifyOrgNameIsRequiredField(practiceNameLabelText);
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
-		addOrgNodePage.enterSpaceInRequiredField();
-		commonMethods = new CommonMethods(driver);
-		commonMethods.verifyToasterMessage("Practice name cannot be empty");
-		commonMethods.closeToasterMessage();
-		logStep("Click on add new enterprise button");
-		generalSettingsPage.clickOnAddPractice();
-		logStep("Enter random text in parent entity textbox");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName("abcdef@##24");
-		logStep("Verify No Items Found message is displayed for parent entity field on add new enterprise pop up");
-		addOrgNodePage.verifyNoItemsFound();
-		logStep("Enter more than 100 characters in enterprise name field and verify error message for system name field");
-		addOrgNodePage.verifyErrorMessageForOrgNodeNameField(testData.getProperty("invalid.name"));
-		logStep("Enter more than 100 characters in solution display name field and verify error message for solution display name field");
-		addOrgNodePage
-				.verifyErrorMessageForSolutionDisplayNameField(testData.getProperty("invalid.solutionDisplayName"));
-		logStep("Enter more than 50 characters in sap id field and verify error message for sap id field");
-		addOrgNodePage.verifyErrorMessageForSapIdField(testData.getProperty("invalid.sap"));
-	}
-
-	@Test(priority = 12, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice(without solutions) functionality")
-	public void testAddNewActiveAgnosticPracticeWithoutSolutionsBelowActiveClient() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
-		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.practice.name"),
-				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.clickOnSaveAndAddButton();
+	@Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Practice page")
+	public void testAddNewPracticePage() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewActiveEnterprise();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Verify newly added practice node details in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.practice.name"), testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.solutiondisplayname"),
-				testData.getProperty("new.practice.timezone"));
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.practice.name"), true);
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(enterpriseName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new Enterprise page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		addOrgNodePage.verifyAddNewPracticePage();
 	}
 
-	@Test(priority = 13, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive agnostic practice(with solutions) functionality")
-	public void testAddNewInactiveAgnosticPracticeWithSolutionsBelowActiveClient() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+	@Test(priority = 12, retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in Practice Name field and verify error message")
+	public void testMaximumCharactersErrorMessageForPracticeNameInputField() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewActiveEnterprise();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
-		generalSettingsPage.clickOnAddPractice();
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(enterpriseName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.inactive.practice.name"),
-				testData.getProperty("new.inactive.practice.sapid"),
-				testData.getProperty("new.inactive.practice.timezone"),
-				testData.getProperty("new.inactive.practice.solutiondisplayname"));
-		addOrgNodePage.selectInactiveRadiobutton();
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Verify newly added practice node details in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.inactive.practice.name"), testData.getProperty("new.inactive.practice.sapid"),
-				testData.getProperty("new.inactive.practice.solutiondisplayname"),
-				testData.getProperty("new.inactive.practice.timezone"));
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(false);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.inactive.practice.name"),
-				false);
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.verifyActiveSolutions();
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new Enterprise page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		addOrgNodePage.verifyMaximumCharactersReachedErrorMessage(CCUtils.generateAlphaNumericString(101));
 	}
 
-	@Test(priority = 14, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active agnostic practice node below inactive client")
-	public void testAddNewActiveAgnosticPracticeBelowInactiveClient() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(ccuser.getInactiveClientName());
+	@Test(priority = 13, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active nge practice node below inactive enterprise")
+	public void testAddNewActiveNgePracticeBelowInactiveEnterprise() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewInactiveEnterprise();
+		createNewActivePractice();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		String parentName = generalSettingsPage.getClientName();
-		String parentSapId = generalSettingsPage.getClientSapId();
-		String parentTimezone = generalSettingsPage.getClientTimezone();
-		logStep("Click on practice option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
-		logStep("Add active agnostic practice below inactive client");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
-		String practiceName = ccuser.getProperty("api.practice.orgtype").concat(CCUtils.generateAlphaNumericString(5));
-		addOrgNodePage.enterOrgName(practiceName);
-		addOrgNodePage.selectActiveRadiobutton();
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(practiceName, parentSapId, practiceName,
-				parentTimezone);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
+	}
+
+	@Test(priority = 14, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add inactive nge practice node below active enterprise")
+	public void testAddNewInactiveNgePracticeBelowActiveEnterprise() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewActiveEnterprise();
+		createNewInactivePractice();
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		logStep("Verify newly added practice node details in general settings page");
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
 	}
 
 	@Test(priority = 15, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new nge practice(without solutions) functionality")
 	public void testAddNewActiveNgePracticeWithoutSolutionsBelowActiveEnterprise() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewActiveEnterprise();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on practice option in new dropdown");
-		addOrgNodePage = generalSettingsPage.clickOnAddPractice();
-		logStep("Add new nge practice node below enterprise node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.enterprise.name"));
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.practice.name"),
-				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(enterpriseName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new practice page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		logStep("Enter data in all input fields");
+		String practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+		logStep("Click on save and add button");
 		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.practice.name"), testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.solutiondisplayname"),
-				testData.getProperty("new.practice.timezone"));
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(true);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.practice.name"), true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 	}
 
 	@Test(priority = 16, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new nge practice(with solutions) functionality")
 	public void testAddNewInactiveNgePracticeWithSolutionsBelowActiveEnterprise() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewActiveEnterprise();
+		createNewActivePractice();
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on practice option in new dropdown");
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new nge practice node below enterprise node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.enterprise.name"));
-		addOrgNodePage.createNewOrgNode(testData.getProperty("new.inactive.practice.name"),
-				testData.getProperty("new.inactive.practice.sapid"),
-				testData.getProperty("new.inactive.practice.timezone"),
-				testData.getProperty("new.inactive.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.selectInactiveRadiobutton();
-		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(
-				testData.getProperty("new.inactive.practice.name"), testData.getProperty("new.inactive.practice.sapid"),
-				testData.getProperty("new.inactive.practice.solutiondisplayname"),
-				testData.getProperty("new.inactive.practice.timezone"));
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusOnGeneralSettings(false);
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(testData.getProperty("new.inactive.practice.name"),
-				false);
-
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
 		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
 		addAndUpdateProductSolutionsPage.verifyActiveSolutions();
 	}
 
-	@Test(priority = 17, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active nge practice node below inactive enterprise")
-	public void testAddNewActiveNgePracticeBelowInactieEnterprise() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
+	@Test(priority = 17, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice(without solutions) functionality")
+	public void testAddNewActiveAgnosticPracticeWithoutSolutionsBelowActiveClient() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
+		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.searchNode(testData.getProperty("new.inactive.enterprise.name"));
-		String parentSapId = generalSettingsPage.getOrgSapId();
-		String parentTimezone = generalSettingsPage.getOrgTimezone();
-		logStep("Click on practice option in new dropdown");
-		generalSettingsPage.clickOnAddPractice();
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		generalSettingsPage.clickSearchIcon();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new active nge practice below inactive enterprise");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.inactive.enterprise.name"));
-		String practiceName = testData.getProperty("api.practice.orgtype")
-				.concat(CCUtils.generateAlphaNumericString(5));
-		addOrgNodePage.enterOrgName(practiceName);
-		addOrgNodePage.selectActiveRadiobutton();
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new practice page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		logStep("Enter data in all input fields");
+		String practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+		logStep("Click on save and add button");
 		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
-		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsDisplayedInRightPane(practiceName, parentSapId, practiceName,
-				parentTimezone);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
+	}
+
+	@Test(priority = 18, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive agnostic practice(with solutions) functionality")
+	public void testAddNewInactiveAgnosticPracticeWithSolutionsBelowActiveClient() throws Exception {
+		createNewActiveClient();
+		createNewActiveSystem();
+		createNewInactivePractice();
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		logStep("Verify newly added practice node details in general settings page");
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
+		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
+		addAndUpdateProductSolutionsPage.verifyActiveSolutions();
+	}
+
+	@Test(priority = 19, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active agnostic practice node below inactive client")
+	public void testAddNewActiveAgnosticPracticeBelowInactiveClient() throws Exception {
+		createNewInactiveClient();
+		createNewActiveSystem();
+		createNewActivePractice();
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		logStep("Verify newly added practice node details in general settings page");
+		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
 		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
 	}
 
-	@Test(priority = 18, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter space in sap id field in add new system popup and verify hyphen sysmbol is displayed for blank sap id field in general sttings page")
-	public void testSapIdIsBlankAtAddSystemPopup() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on Add new system option");
-		generalSettingsPage.clickOnAddSystem();
+	@Test(priority = 20, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button and close button on add org page")
+	public void testCancelAndCrossIconFunctionality() throws Exception {
+		createNewActiveClient();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Enter details in add new system popup");
-		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.verifySapIdFieldAcceptBlankSpace(systemName);
-		logStep("Click on save and add button");
-		addOrgNodePage.clickOnSaveAndAddButton();
-		logStep("Verify general settings page title");
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyAddSystemButton();
+		addOrgNodePage.clickOnAddSystem();
+		logStep("Click on cancel button");
+		addOrgNodePage.clickOnCancelButton();
+		logStep("Verify after clicking on cancel button user redirected to General Settings page");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Verify hyphen symbol is displayed for sap id field for newly added system node in general settings page");
-		generalSettingsPage.verifyHyphenSymbolIsDisplayedForSapIdField(systemName);
+		logStep("Click on Add button");
+		addOrgNodePage.clickOnAddSystem();
+		logStep("Click on org close button");
+		addOrgNodePage.clickOnOrgCloseButton();
+		logStep("Verify after clicking on cross button user redirected to General Settings page");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
 	}
 
-	@Test(priority = 19, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter space in sap id field in add new enterprise popup and verify hyphen sysmbol is displayed for blank sap id field in general sttings page")
-	public void testSapIdIsBlankAtAddEnterprisePopup() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		logStep("Click on enterprise option in new dropdown");
-		generalSettingsPage.clickOnAddEnterprise();
+	@Test(priority = 21, retryAnalyzer = RetryAnalyzer.class, description = "Verify when user click on 'CLOSE' button User redirected to general setting page")
+	public void testCloseButtonFunctionality() throws Exception {
+		createNewActiveClient();
 		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Enter details in add new enterprise pop up");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(testData.getProperty("new.system.name"));
-		String enterpriseName = testData.getProperty("api.enterprise.orgtype")
-				.concat(CCUtils.generateAlphaNumericString(5));
-		addOrgNodePage.verifySapIdFieldAcceptBlankSpace(enterpriseName);
-		logStep("Click on save and add button");
-		addOrgNodePage.clickOnSaveAndAddButton();
-		logStep("Verify general settings page title");
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		logStep("Click on close button");
+		addOrgNodePage.clickOnCloseButton();
+		logStep("Verify after clicking on close button user redirected to General Settings page");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Verify hyphen symbol is displayed for sap id field for newly added enterprise node in general settings page");
-		generalSettingsPage.verifyHyphenSymbolIsDisplayedForSapIdField(enterpriseName);
-	}
-
-	@Test(priority = 20, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter space in sap id field in add new practice popup and verify hyphen sysmbol is displayed for blank sap id field in general sttings page")
-	public void testSapIdIsBlankAtAddPracticePopup() throws Exception {
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("new.active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		String parentName = generalSettingsPage.getClientName();
-		logStep("Click on practice option in new dropdown");
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new agnostic practice node below client node");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(parentName);
-		String practiceName = testData.getProperty("api.practice.orgtype").concat(CCUtils.generateRandomString());
-		addOrgNodePage.verifySapIdFieldAcceptBlankSpace(practiceName);
-		logStep("Click on save and add button");
-		addOrgNodePage.clickOnSaveAndAddButton();
-		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		logStep("Verify hyphen symbol is displayed for sap id field for newly added system node in general settings page");
-		generalSettingsPage.verifyHyphenSymbolIsDisplayedForSapIdField(practiceName);
 	}
 }
