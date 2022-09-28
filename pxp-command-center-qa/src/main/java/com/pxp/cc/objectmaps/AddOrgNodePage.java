@@ -13,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 
 public class AddOrgNodePage extends CCMainPage {
@@ -163,10 +164,61 @@ public class AddOrgNodePage extends CCMainPage {
 
 	@FindBy(xpath = "(//input[@type='text'])[3]")
 	private WebElement enterEhrPractice;
-	
-	@FindBy(xpath = "//mat-icon[contains(text(),' expand_more ')]")
+
+	@FindBy(xpath = "//div[@class='mat-tree-node-click bordernode']//mat-icon[@role='img'][normalize-space()='keyboard_arrow_right']")
 	private WebElement expandArrow;
-		
+
+	@FindBy(id = "//span[text()='PM System *']")
+	private WebElement labelPm;
+
+	@FindBy(xpath = "//span[text()='EHR System *']")
+	private WebElement labelEhr;
+
+	@FindBy(xpath = "//button[contains(text(),'+ ADD ENTERPRISE')]")
+	private WebElement btnAddEnterprise;
+
+	@FindBy(xpath = "(//input[@type='text'])[2]")
+	private WebElement enterPmEnterprise;
+
+	@FindBy(xpath = "(//input[@type='text'])[3]")
+	private WebElement enterEhrEnterprise;
+
+	@FindBy(xpath = "//span[@id='timezone-label']")
+	private WebElement labelTimeZone;
+
+	@FindBy(xpath = "//span[text()='Solutions Display Name']")
+	private WebElement labelSolutionsDisplayName;
+
+	@FindBy(id = "addNodeSolutionInput")
+	private WebElement textboxSolutionsName;
+
+	@FindBy(xpath = "//input[@value='true']")
+	private WebElement radioBtnActive;
+
+	@FindBy(xpath = "//div[@class='flex']/span")
+	private WebElement toasterMessage;
+
+	@FindBy(id = "closeManageClientLabel")
+	private WebElement btnOrgClose;
+
+	@FindBy(xpath = "(//input[@type='text'])[3]")
+	private WebElement enterPracEhrSystem;
+
+	@FindBy(xpath = "(//input[@type='text'])[5]")
+	private WebElement enterPracPmSystem;
+
+	@FindBy(xpath = "(//p[@id='treeNodeName'])[2]")
+	private WebElement orgName;
+
+	@FindBy(id = "closeLabel")
+	private WebElement btnClose;
+
+	@FindBy(xpath = "//input[@id='addNodeInactiveRadio-input']")
+	private WebElement radioBtnInactive;
+
+	@FindBy(xpath = "//div[contains(text(),'Maximum characters reached')] ")
+	private WebElement errorMessage;
+
 	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public final List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "PSS", "Pay", "Portal",
@@ -196,7 +248,6 @@ public class AddOrgNodePage extends CCMainPage {
 			log("Search text is present in parent entity textbox");
 		}
 		return false;
-
 	}
 
 	public void verifyDataIsNotFetchedIfParentEntityNotSelected(Boolean isParentEntityNameNotSelected) {
@@ -618,7 +669,7 @@ public class AddOrgNodePage extends CCMainPage {
 		javascriptClick(btnManageClient);
 		log("Clicked on Manage Client button");
 	}
-	
+
 	public void clickOnExpandArrow() {
 		CCUtils.verifyAndWaitForElement(expandArrow, driver);
 		javascriptClick(expandArrow);
@@ -646,7 +697,7 @@ public class AddOrgNodePage extends CCMainPage {
 		enterNewSystemDetails(systemName);
 	}
 
-    private String xpathRequiredNewTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+	private String xpathRequiredNewTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	private WebElement prepareDynamicXpathForTimezone(String xpathValue, String substitutionValue) {
 
@@ -687,5 +738,288 @@ public class AddOrgNodePage extends CCMainPage {
 	public void addNewPractice(String practiceName) throws InterruptedException {
 		clickOnAddPractice();
 		enterNewPracticeDetails(practiceName);
+	}
+
+	public void verifyAddSystemButton() {
+		CCUtils.verifyAndWaitForElement(btnAddSystem, driver);
+		log("Add System Button is displayed");
+	}
+
+	public void verifyAddNewSystemPage() throws InterruptedException, AWTException {
+		log("Verifying add New System Page");
+		verifySystemNameLabelTextAndTextboxDefaultValue();
+		verifyPmSystemLabelText();
+		verifyEhrSystemLabelText();
+		verifyActiveInactiveRadioButtonStatusLabel();
+		verifyActiveRadioButtonIsByDefaultSelected();
+	}
+
+	public void verifySystemNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelSystemName, driver);
+		log("Verifying System name label text");
+		CCUtils.assertEquals(labelSystemName.getText().trim(), "System Name *");
+		log("System name label text is " + labelSystemName.getText().trim());
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		log("Verifying Input text here placeholder is displayed for System name textbox field");
+		CCUtils.assertEquals(textboxName.getAttribute("placeholder").trim(), "Input System Name");
+		log("Box text for System name textbox field is " + textboxName.getAttribute("placeholder").trim());
+	}
+
+	public void verifyEhrSystemLabelText() {
+		CCUtils.verifyAndWaitForElement(labelEhr, driver);
+		log("Verifying State label text");
+		CCUtils.assertEquals(labelEhr.getText().trim(), "EHR System *");
+		log("State label text is " + labelEhr.getText().trim());
+	}
+
+	public void verifyPmSystemLabelText() {
+		CCUtils.verifyAndWaitForElement(labelPm, driver);
+		log("Verifying Timezone label text");
+		CCUtils.assertEquals(labelPm.getText().trim(), "PM System *");
+		log("Timezone label text is " + labelPm.getText().trim());
+	}
+
+	public void enterSystemName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.clear();
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.sendKeys(input);
+		log("Entered input for System Name : " + input);
+	}
+
+	private String xpathRequiredPmSystem = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+
+	private String xpathRequiredNewEhrSystem = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+
+	private WebElement prepareDynamicXpathForState(String xpathValue, String substitutionValue) {
+
+		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
+	}
+
+	public void addPmSystemAndEhrSystem(String pmName, String ehrName) throws InterruptedException {
+		log("click to dropdown of PM system");
+		enterPmSystem.click();
+		selectPmSystem(pmName);
+		log("click to dropdown of EhrSystem");
+		enterEhrSystem.click();
+		selectEhrSystem(ehrName);
+	}
+
+	public void selectPmSystem(String pmName) {
+		WebElement pm = prepareDynamicXpathForState(xpathRequiredPmSystem, pmName);
+		CCUtils.verifyAndWaitForElement(pm, driver);
+		pm.click();
+		log("Clicked on : " + pmName);
+	}
+
+	public void selectEhrSystem(String ehrName) {
+		WebElement ehr = prepareDynamicXpathForState(xpathRequiredNewEhrSystem, ehrName);
+		ehr.click();
+		log("Clicked on : " + ehrName);
+	}
+
+	public void verifyAddEnterpriseButton() {
+		CCUtils.verifyAndWaitForElement(btnAddEnterprise, driver);
+		log("Add Enterprise Button is displayed");
+	}
+
+	public void verifyAddNewEnterprisePage() throws InterruptedException, AWTException {
+		log("Verifying add New Enterprise Page");
+		verifyEnterpriseNameLabelTextAndTextboxDefaultValue();
+		verifyPmSystemLabelText();
+		verifyEhrSystemLabelText();
+		verifyTimezoneLabelText();
+		verifyActiveInactiveRadioButtonStatusLabel();
+		verifyActiveRadioButtonIsByDefaultSelected();
+	}
+
+	public void verifyEnterpriseNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelEnterpriseName, driver);
+		log("Verifying Enterprise name label text");
+		CCUtils.assertEquals(labelEnterpriseName.getText().trim(), "Enterprise Name *");
+		log("Enterprise name label text is " + labelEnterpriseName.getText().trim());
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		log("Verifying Input text here placeholder is displayed for Enterprise name textbox field");
+		CCUtils.assertEquals(textboxName.getAttribute("placeholder").trim(), "Input Enterprise Name");
+		log("Box text for Enterprise name textbox field is " + textboxName.getAttribute("placeholder").trim());
+	}
+
+	public void addNewEnterprise() throws InterruptedException {
+		clickOnAddEnterprise();
+		enterNewEnterpriseDetails("EnterpriseForDemo");
+	}
+
+	public void clickOnAddEnterprise() {
+		CCUtils.verifyAndWaitForElement(btnAddEnterprise, driver);
+		javascriptClick(btnAddEnterprise);
+		log("Clicked on Add Enterprise  button");
+	}
+
+	public void enterNewEnterpriseDetails(String enterpriseName) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.sendKeys(enterpriseName);
+		enterPmEnterprise.click();
+		selectOptionSystem.click();
+		enterEhrEnterprise.click();
+		selectOptionSystem.click();
+		enterTimezone.click();
+		addTimezone("Nairobi");
+		btnSave.click();
+	}
+
+	public void verifyTimezoneLabelText() {
+		CCUtils.verifyAndWaitForElement(labelTimeZone, driver);
+		log("Verifying Timezone label text");
+		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone *");
+		log("Timezone label text is " + labelTimeZone.getText().trim());
+	}
+
+	public void clickOnAddPracticeButton() {
+		CCUtils.verifyAndWaitForElement(btnAddPractice, driver);
+		javascriptClick(btnAddPractice);
+		log("Clicked on Add Practice  button");
+	}
+
+	public void addNewPractice() throws InterruptedException {
+		clickOnAddPracticeButton();
+		enterNewPracticeDetails("PracticeForDemo");
+	}
+
+	public void verifyManageClientButton() {
+		CCUtils.verifyAndWaitForElement(btnManageClient, driver);
+		CCUtils.assertEquals(btnManageClient.getText().trim(), "MANAGE CLIENT");
+		log(" MANAGE CLIENT  Button is displayed");
+	}
+
+	public void verifyAddPracticeButton() {
+		CCUtils.verifyAndWaitForElement(btnAddPractice, driver);
+		log("Add Practice Button is displayed");
+	}
+
+	public void verifyAddNewPracticePage() throws InterruptedException, AWTException {
+		log("Verifying add New Practice Page");
+		verifyPracticeNameLabelTextAndTextboxDefaultValue();
+		verifyPmSystemLabelText();
+		verifyEhrSystemLabelText();
+		verifyTimezoneLabelText();
+		verifySolutionsDisplayNameLabelTextAndTextboxDefaultValue();
+		verifyActiveInactiveRadioButtonStatusLabel();
+		verifyActiveRadioButtonIsByDefaultSelected();
+	}
+
+	public void verifyPracticeNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelPracticeName, driver);
+		log("Verifying Practice name label text");
+		CCUtils.assertEquals(labelPracticeName.getText().trim(), "Practice Name *");
+		log("Practice name label text is " + labelPracticeName.getText().trim());
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		log("Verifying Input text here placeholder is displayed for Practice name textbox field");
+		CCUtils.assertEquals(textboxName.getAttribute("placeholder").trim(), "Input Practice Name");
+		log("Box text for Practice name textbox field is " + textboxName.getAttribute("placeholder").trim());
+	}
+
+	public void verifySolutionsDisplayNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelSolutionsDisplayName, driver);
+		log("Verifying Solutions Display Name label text");
+		CCUtils.assertEquals(labelSolutionsDisplayName.getText().trim(), "Practice Name *");
+		log("Solutions Display Name label text is " + labelSolutionsDisplayName.getText().trim());
+		CCUtils.verifyAndWaitForElement(textboxSolutionsName, driver);
+		log("Verifying Input text here placeholder is displayed for Practice name textbox field");
+		CCUtils.assertEquals(textboxSolutionsName.getAttribute("placeholder").trim(), "Input Solutions Display Name");
+		log("Box text for Solutions Display Name textbox field is "
+				+ textboxSolutionsName.getAttribute("placeholder").trim());
+	}
+
+	public void verifyActiveRadioButtonIsByDefaultSelected() {
+		CCUtils.verifyAndWaitForElement(radioBtnActive, driver);
+		log("Verifying active radio button is by default selected");
+		CCUtils.assertTrue(radioBtnActive.isSelected(), "Active radio button is by default selected");
+	}
+
+	public void verifyActiveInactiveRadioButtonStatusLabel() {
+		CCUtils.verifyAndWaitForElement(labelActive, driver);
+		log("Verifying Active label text");
+		CCUtils.assertEquals(labelActive.getText().trim(), " Active ");
+		log("Active label text is " + labelActive.getText().trim());
+
+		CCUtils.verifyAndWaitForElement(labelInactive, driver);
+		log("Verifying Inactive label text");
+		CCUtils.assertEquals(labelInactive.getText().trim(), " Inactive ");
+		log("Inactive label text is " + labelInactive.getText().trim());
+	}
+
+	public void verifyToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void verifyInactiveRadioButton() {
+		CCUtils.verifyAndWaitForElement(radioBtnInactive, driver);
+		log("Inactive Button is displayed");
+	}
+
+	public void enterEnterpriseName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.clear();
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.sendKeys(input);
+		log("Entered input for Enterprise Name : " + input);
+	}
+
+	public void enterSolutionsDisplayName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxSolutionsName, driver);
+		textboxSolutionsName.clear();
+		CCUtils.verifyAndWaitForElement(textboxSolutionsName, driver);
+		textboxSolutionsName.sendKeys(input);
+		log("Entered input for Solutions Display Name : " + input);
+	}
+
+	public void verifyMaximumCharactersReachedErrorMessage(String orgName) {
+		log("Enter more than 100 characters in system Name field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.sendKeys(orgName);
+		log("Entered text in system Name field is " + orgName);
+		CCUtils.verifyAndWaitForElement(errorMessage, driver);
+		CCUtils.assertEquals(errorMessage.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for system Name field is " + errorMessage.getText().trim());
+	}
+
+	public void clickOnCloseButton() {
+		CCUtils.verifyAndWaitForElement(btnClose, driver);
+		javascriptClick(btnClose);
+		log("Clicked on close button");
+	}
+
+	public void clickOnOrgCloseButton() {
+		CCUtils.verifyAndWaitForElement(btnOrgClose, driver);
+		javascriptClick(btnOrgClose);
+		log("Clicked on close button");
+	}
+
+	public void enterPracticeName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.clear();
+		CCUtils.verifyAndWaitForElement(textboxName, driver);
+		textboxName.sendKeys(input);
+		log("Entered input for Practice Name : " + input);
+	}
+
+	public void addPracticePmSystemAndEhrSystem(String pmName, String ehrName) throws InterruptedException {
+		log("click to dropdown of PM system");
+		enterPracPmSystem.click();
+		selectPmSystem(pmName);
+		log("click to dropdown of EhrSystem");
+		enterPracEhrSystem.click();
+		selectEhrSystem(ehrName);
+	}
+
+	public void verifyOrgName() {
+		CCUtils.verifyAndWaitForElement(orgName, driver);
+		CCUtils.assertEquals(orgName.isDisplayed(), true);
+		log("Org node is displayed");
 	}
 }

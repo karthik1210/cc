@@ -646,12 +646,18 @@ public class ApiPath {
 	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
 	}
-	
+
 	public static final String UPDATE_ORG_SOLUTIONS_BL_INVALID_URL(int orgId) {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutionsinvalidurl";
 	}
+	
+	public static final String UPDATE_ORG_SOLUTIONS_DL_INVALID_URL(int orgId) {
+		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutionsinvalidurl";
+	}
 
 	public static final String UPDATE_ORG_SOLUTIONS_BL_ORG_NULL = SERVICE_ORG_BL + "/v1/orgs/null/solutions";
+	
+	public static final String UPDATE_ORG_SOLUTIONS_DL_ORG_NULL = SERVICE_ORG_DL + "/v1/orgs/null/solutions";
 
 	public static final String CREATEBRANDS_DL = SHARED_DL + "/v1/brands/";
 	public static final String INVALID_CREATE_BRANDS_DL = SHARED_DL + "/v1/brandsss/";
@@ -1405,5 +1411,47 @@ public class ApiPath {
     
     public static final String INVALID_PATH_TO_FETCH_LOCATION_BY_PRACTICE_BL(int locationId,int practiceId) {
     	return SERVICE_SHARED_BL + "/v1/locations/" +  locationId + "/practicesERROR/" + practiceId;
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID(String serviceLayer, int practiceId, int interfaceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String interfaceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfaces/"+interfaceId;
+	}
+
+	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(String serviceLayer, int practiceId,  int interfaceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfacesss/"+interfaceId;
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss/"+interfaceId;
+	}
+
+	public static final String GET_EXTERNAL_SYSTEMID(String serviceLayer, int externalSystemId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_PRODUCT_BL + "/v1/externalsystems/" + externalSystemId;
+		else
+			return SERVICE_PRODUCT_DL + "/v1/externalsystems/" + externalSystemId;
+	}
+
+	public static final String GET_EXTERNAL_SYSTEMID_WITH_INVLAID_DATATYPE(String serviceLayer, String externalSystemId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_PRODUCT_BL + "/v1/externalsystems/" + externalSystemId;
+		else
+			return SERVICE_PRODUCT_DL + "/v1/externalsystems/" + externalSystemId;
+	}
+
+	public static final String GET_EXTERNAL_SYSTEMID_WITH_INVLAID_URI(String serviceLayer, int externalSystemId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_PRODUCT_BL + "/v1/externalsystemsss/" + externalSystemId;
+		else
+			return SERVICE_PRODUCT_DL + "/v1/externalsystemsss/" + externalSystemId;
 	}
 }
