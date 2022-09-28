@@ -31,7 +31,7 @@ public class DeleteAnInterfacesApiTests_BusinessLayer extends BaseRest {
         setupServiceRequestSpecificationBuilder();
         orgInfo = new OrgInfo();
         clientInfo = new ClientInfo();
-        validations= new Validations();
+        validations = new Validations();
     }
 
     @DataProvider(name = "invalidPracticeId")
@@ -72,10 +72,10 @@ public class DeleteAnInterfacesApiTests_BusinessLayer extends BaseRest {
         CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
         CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 200);
         getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "BL", practiceId, interfaceId);
-        if (getByInterfaceResponse.getStatusCode()==400)
-            logStep("Validating that interface is deleted successfully for "+interfaceId);
+        if (getByInterfaceResponse.getStatusCode() == 400)
+            logStep("Validating that interface is deleted successfully for " + interfaceId);
         else
-            logStep("Validating that interface is not deleted for "+interfaceId);
+            logStep("Validating that interface is not deleted for " + interfaceId);
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19959_delete an Interface to given practiceId and interfaceId with Invalid URI")
