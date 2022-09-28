@@ -1288,5 +1288,19 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, interfaceId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+	
+	public Response getOrgSolutionsDetails_DataLayer(int orgId, String type) {
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
 
+	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId,String type) throws IOException {
+		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL(orgId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+	
+	public Response getOrgSolutionsDetails_DataLayer_InvalidHTTPMethod(int orgId, String type) {
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
+		return given().spec(requestSpec).queryParam("type", type).when().post(url).then().extract().response();
+	}
 }
