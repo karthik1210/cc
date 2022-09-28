@@ -10,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.objectmaps.LocationStatus;
+import com.pxp.cc.pojos.ResourceStatus;
+import com.pxp.cc.pojos.ResourcesStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -168,4 +171,45 @@ public class LocationsValidations {
 	public String getResourceName(Response response) throws IOException {
 		return response.jsonPath().getString("name");
 	}
+
+	public void verifyAddResourcesForLocationApiResponseBody(Response response, List<Integer> resourceIds,
+			String status) throws IOException {
+		List<ResourcesStatus> actualResourceStatusList = new ArrayList<ResourcesStatus>();
+		for (int i = 0; i < resourceIds.size(); i++) {
+			actualResourceStatusList.add(new ResourcesStatus(resourceIds.get(i), status));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Resources list is empty");
+		CCUtils.assertTrue(actualResourceStatusList.size() == responseBody.length(),
+				"Size of actual resource list and expected Resources list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualResourceStatusList.contains(
+							new ResourcesStatus(jsonObject.getInt("resourceId"), jsonObject.getString("status"))),
+					"Resource Id " + jsonObject.getInt("resourceId") + " doesn't exist");
+		}
+	}
+
+	public void verifyAddInvalidResourcesForLocationApiResponseBody(Response response, List<Integer> resourceIds,
+			String status, String message) throws IOException {
+		List<ResourceStatus> actualResourceStatusList = new ArrayList<ResourceStatus>();
+		for (int i = 0; i < resourceIds.size(); i++) {
+			actualResourceStatusList.add(new ResourceStatus(resourceIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Resources list is empty");
+		CCUtils.assertTrue(actualResourceStatusList.size() == responseBody.length(),
+				"Size of actual resource list and expected Resources list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualResourceStatusList.contains(new ResourceStatus(jsonObject.getInt("resourceId"),
+							jsonObject.getString("status"), jsonObject.getString("message"))),
+					"Resource Id " + jsonObject.getInt("resourceId") + " doesn't exist");
+		}
+	}
+
 }
