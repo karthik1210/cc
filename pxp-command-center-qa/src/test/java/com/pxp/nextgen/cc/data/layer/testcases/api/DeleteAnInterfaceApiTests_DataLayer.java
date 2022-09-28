@@ -1,3 +1,5 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -103,7 +105,7 @@ public class DeleteAnInterfaceApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19961_delete an Interface to given practiceId and interfaceId with Invalid Mathod Type")
     public void deletePracticeInterfacesWithInvalidMethodApi() throws IOException {
-        logStep("TC 004_Verify the Response code as 405, when user try to Patch method instead of DELETE Request for practice interfaces");
+        logStep("TC 004_Verify the Response code as 405, when user try to Patch method instead of DELETE Request for practice interfaces [DL]");
         int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
         logStep("Getting InterfaceId information for a given practiceId");
         getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);

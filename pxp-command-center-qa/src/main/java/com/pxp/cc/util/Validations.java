@@ -3116,4 +3116,48 @@ public class Validations {
 					"Resource Id " + jsonObject.getInt("id") + " doesn't exist");
 		}
 	}
+
+	public void verifyGetOrgSolutionsResponseBody(Response response, List<OrgSolutions> finalList) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < finalList.size(); i++) {
+			for (int soluDetail = 0; soluDetail < jsonArray.length(); soluDetail++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(soluDetail);
+				int perJSONSolutionId = jsonObject.getInt("solutionId");
+				int perFinalListSolutionId = Integer.parseInt(finalList.get(i).getSolutionId());
+				if (perJSONSolutionId == perFinalListSolutionId) {
+					Boolean perJSONSolutionActiveValue = jsonObject.getBoolean("active");
+					if (perJSONSolutionActiveValue == true) {
+						if (finalList.get(i).getStatus().equals("New")) {
+							CCUtils.assertEquals(jsonObject.getInt("status"), 0);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with New status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("Active Implementation")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 1);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name")
+									+ " is in active status with Active Implementation status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("Go-live")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 2);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with Go-live status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("On Hold")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 3);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with On Hold status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("Terminated")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 4);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with Terminated status value"
+									+ jsonObject.get("status"));
+						}
+					}
+				}
+			}
+
+		}
+	}
 }
