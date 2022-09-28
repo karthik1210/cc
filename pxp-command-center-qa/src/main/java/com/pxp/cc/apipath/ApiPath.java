@@ -1416,4 +1416,25 @@ public class ApiPath {
 			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss/"+interfaceId;
 	}
 
+	public static final String GET_EXTERNAL_SYSTEMID(String serviceLayer, int externalSystemId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_PRODUCT_BL + "/v1/externalsystems/" + externalSystemId;
+		else
+			return SERVICE_PRODUCT_DL + "/v1/externalsystems/" + externalSystemId;
+	}
+
+	public static final String GET_EXTERNAL_SYSTEMID_WITH_INVLAID_DATATYPE(String serviceLayer, String externalSystemId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_PRODUCT_BL + "/v1/externalsystems/" + externalSystemId;
+		else
+			return SERVICE_PRODUCT_DL + "/v1/externalsystems/" + externalSystemId;
+	}
+
+	public static final String GET_EXTERNAL_SYSTEMID_WITH_INVLAID_URI(String serviceLayer, int externalSystemId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_PRODUCT_BL + "/v1/externalsystemsss/" + externalSystemId;
+		else
+			return SERVICE_PRODUCT_DL + "/v1/externalsystemsss/" + externalSystemId;
+	}
+
 }
