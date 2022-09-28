@@ -4,7 +4,6 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -24,8 +23,9 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 	private Validations validation;
 	Response createClientApiResponse, createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
 			updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse;
-	int clientId, systemId, enterpriseId;
-	String practiceName;
+	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId;
+	String clientName, clientSapNumber;
+	List<OrgSolutions> finalList;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -33,192 +33,132 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
-		clientId = createClient();
 	}
 
-	public int createClient() throws IOException {
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		logStep("Create a client of name : " + clientName);
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+	public int createClient() throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId());
-		return createClientApiResponse.jsonPath().getInt("clientId");
+				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
-	public int createPracticeNode(int parentId, String active, String parentType) throws IOException {
-		practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
-		Response createPracticeApiResponse = orgInfo.createOrgNode_DataLayer(practiceName,
-				ccUser.getPracticeOrgTypeApi(), ccUser.getPracticeDisplayNameApi(), active,
-				ccUser.getPracticeTimezoneIdApi(), parentId, parentType,
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
+	public int createSystemNode(int clientId) throws Exception {
+		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
+				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
+				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().getInt("orgId");
+		return createSystemApiResponse.jsonPath().get("orgId");
 	}
 
-	public int createNgePracticeNode(String active) throws IOException {
-		Response createSystemApiResponse = orgInfo.createOrgNode_DataLayer(testData.getProperty("api.system.name"),
-				ccUser.getSystemOrgTypeApi(), "", testData.getProperty("api.system.active"),
-				ccUser.getSystemTimezoneIdApi(), clientId, testData.getProperty("api.parenttype"),
+	public int createEnterpriseNode(int SystemId) throws Exception {
+		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
+				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), SystemId,
+				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
-		systemId = createSystemApiResponse.jsonPath().getInt("orgId");
+		return createEnterpriseApiResponse.jsonPath().get("orgId");
+	}
 
-		Response createEnterpriseApiResponse = orgInfo.createOrgNode_DataLayer(
-				testData.getProperty("api.enterprise.name"), ccUser.getEnterpriseOrgTypeApi(), "",
-				testData.getProperty("api.enterprise.active"), ccUser.getEnterpriseTimezoneIdApi(), systemId,
-				ccUser.getSystemOrgTypeApi(), Integer.parseInt(testData.getProperty("ehr.identifier")),
+	public int createPracticeNode(int enterpriseId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
-		enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		return createPracticeNode(enterpriseId, active, testData.getProperty("api.enterprise.orgtype"));
+		return createPracticeApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createAgnosticePracticeNode(int SystemId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), SystemId, testData.getProperty("api.practice.parenttype"),
+				testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
+	}
+
+	public void updateOrgSolutions(int orgId) throws IOException {
+		finalList = new ArrayList<OrgSolutions>();
+		finalList.add(new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.on.hold")));
+		finalList.add(new OrgSolutions(testData.getProperty("forms.id"),
+				testData.getProperty("status.active.implementation")));
+		logStep("Fetch solutions details using practice id");
+		fetchOrgSolutionDetailsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(finalList, orgId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing org id in orgId field and verify error message for org id field")
-	public void testErrorMessageForNonExistingOrgId() throws IOException {
+	public void testErrorMessageForNonExistingOrgId() throws Exception {
 		logStep("Enter non existing org id and validate error message");
-		int orgId = Integer.parseInt(testData.getProperty("api.org.invalid.id"));
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(orgId);
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(
+				Integer.parseInt(testData.getProperty("api.org.invalid.id")), testData.getProperty("get.org.type"));
 		logStep("Validating response information");
 		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 400);
 		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(fetchOrgSolutionDetailsApiResponse, orgId);
+		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(fetchOrgSolutionDetailsApiResponse,
+				Integer.parseInt(testData.getProperty("api.org.invalid.id")));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter incorrect type and existing org id in orgId field and verify status code")
+	public void testStatusCodeWhenEnterIncorrectTypeAndExistingOrgId() throws Exception {
+		clientId = createClient();
+		systemId = createSystemNode(clientId);
+		enterpriseId = createEnterpriseNode(systemId);
+		practiceId = createPracticeNode(enterpriseId);
+		updateOrgSolutions(practiceId);
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(practiceId, "incorrect");
+		logStep("Validating response information");
+		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 204);
+		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorMessageForInvalidUrl() throws IOException {
+	public void testErrorMessageForInvalidUrl() throws Exception {
 		logStep("Enter invalid url  and validate error message");
-		int orgId = Integer.parseInt(testData.getProperty("api.existing.orgid"));
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getSolutionOrgIdUsingInvalidUrl_DataLayer(orgId);
+		clientId = createClient();
+		systemId = createSystemNode(clientId);
+		enterpriseId = createEnterpriseNode(systemId);
+		practiceId = createPracticeNode(enterpriseId);
+		updateOrgSolutions(practiceId);
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getSolutionOrgIdUsingInvalidUrl_DataLayer(practiceId,
+				testData.getProperty("get.org.type"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(fetchOrgSolutionDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing client id in orgId field and verify error message for org id field")
-	public void testErrorMessageWhenSearchClientIdInOrgIdField() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid http method and validate status code")
+	public void testErrorMessageForInvalidHTTPMethod() throws IOException {
 		logStep("Enter clientId instead of org id in orgId field and validate error message");
 		int clientId = Integer.parseInt(testData.getProperty("api.existing.client.id"));
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(clientId);
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer_InvalidHTTPMethod(clientId,
+				testData.getProperty("get.org.type"));
 		logStep("Validating response information");
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 400);
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(fetchOrgSolutionDetailsApiResponse,
-				clientId);
+		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(fetchOrgSolutionDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create active nge practice with/without solutions verify response & status code ")
-	public void verifySolutionsDetailsForActiveNgePracticeWithoutOrWithSolutions() throws IOException {
-		int activeNgePracticeId = createNgePracticeNode("true");
-		List<OrgSolutions> defaultSolutionList = Arrays.asList(
-				new OrgSolutions(testData.getProperty("default.solution.id"),
-						testData.getProperty("status.newly.purchased")),
-				new OrgSolutions(testData.getProperty("forms.id"), testData.getProperty("status.newly.purchased")));
-		logStep("Fetch solutions details using practice id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(activeNgePracticeId);
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test for fetching solutions for correct org id")
+	public void testForFetchingSolutionsForOrgId() throws Exception {
+		clientId = createClient();
+		systemId = createSystemNode(clientId);
+		enterpriseId = createEnterpriseNode(systemId);
+		practiceId = createPracticeNode(enterpriseId);
+		updateOrgSolutions(practiceId);
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(practiceId,
+				testData.getProperty("get.org.type"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, activeNgePracticeId,
-				practiceName, defaultSolutionList);
-		logStep("Fetch solutions details using enterprise id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(enterpriseId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, activeNgePracticeId,
-				practiceName, defaultSolutionList);
-		logStep("Fetch solutions details using system id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(systemId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, activeNgePracticeId,
-				practiceName, defaultSolutionList);
-
-		logStep("Purchase solutions for active practice node");
-		List<OrgSolutions> productList = Arrays.asList(
-				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
-				new OrgSolutions(testData.getProperty("forms.id"), testData.getProperty("status.newly.purchased")));
-		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, activeNgePracticeId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		logStep("Fetch solutions details using practice id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(activeNgePracticeId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		List<OrgSolutions> finalList = new ArrayList<OrgSolutions>();
-		finalList.addAll(productList);
-		finalList.addAll(defaultSolutionList);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, activeNgePracticeId,
-				practiceName, finalList);
-		logStep("Fetch solutions details using enterprise id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(enterpriseId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, activeNgePracticeId,
-				practiceName, finalList);
-		logStep("Fetch solutions details using system id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(systemId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, activeNgePracticeId,
-				practiceName, finalList);
-
+		validation.verifyGetOrgSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, finalList);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create inactive nge practice with/without solution and verify response & status code ")
-	public void verifySolutionsDetailsForInactiveNgePracticeWithoutSolution() throws IOException {
-		int inactiveNgePracticeId = createNgePracticeNode("false");
-		List<OrgSolutions> defaultSolutionList = Arrays.asList(
-				new OrgSolutions(testData.getProperty("default.solution.id"),
-						testData.getProperty("status.newly.purchased")),
-				new OrgSolutions(testData.getProperty("forms.id"), testData.getProperty("status.newly.purchased")));
-		logStep("Fetch solutions details using practice id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(inactiveNgePracticeId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, inactiveNgePracticeId,
-				practiceName, defaultSolutionList);
-		logStep("Fetch solutions details using enterprise id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(enterpriseId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 204);
-		logStep("Fetch solutions details using system id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(systemId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 204);
-
-		logStep("Purchase solutions for inactive practice node");
-		List<OrgSolutions> productList = Arrays.asList(
-				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
-				new OrgSolutions(testData.getProperty("forms.id"), testData.getProperty("status.newly.purchased")));
-		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, inactiveNgePracticeId,
-				Integer.parseInt(testData.getProperty("pxpp.cc.user.id")));
-		logStep("Fetch solutions details using practice id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(inactiveNgePracticeId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 200);
-		List<OrgSolutions> finalList = new ArrayList<OrgSolutions>();
-		finalList.addAll(productList);
-		finalList.addAll(defaultSolutionList);
-		validation.verifyGetOrgIdSolutionsResponseBody(fetchOrgSolutionDetailsApiResponse, inactiveNgePracticeId,
-				practiceName, finalList);
-		logStep("Fetch solutions details using enterprise id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(enterpriseId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 204);
-		logStep("Fetch solutions details using system id");
-		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(systemId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgSolutionDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgSolutionDetailsApiResponse.getStatusCode(), 204);
-	}
 }
