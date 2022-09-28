@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.AppointmentTypeDetails;
 import com.pxp.cc.pojos.Locations;
 import com.pxp.cc.pojos.ResourceDetails;
 import io.restassured.response.Response;
@@ -812,5 +813,11 @@ public class SharedInfo extends BaseRest {
 		associateDeassociatePracticeToProviderMap.put("PracticeId", PracticeId);
 		associateDeassociatePracticeToProviderMap.put("active", active);
 		return associateDeassociatePracticeToProviderMap;
+	}
+
+	public Response addOrRemoveAppoinmentTypesAssociatedWithResources_BL(int practiceId, int resourceId,
+			List<AppointmentTypeDetails> appointmentTypeList) {
+		String url = ApiPath.ADD_OR_REMOVE_APPOINTMENT_TYPES_FOR_RESOURCE_BL(resourceId, practiceId);
+		return given().spec(requestSpec).body(appointmentTypeList).when().put(url).then().extract().response();
 	}
 }
