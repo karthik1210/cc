@@ -20,9 +20,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
-
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" />
+			<!-- Enable test classes once issue is addressed for Jira # PXPP-21442 
+				-->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
+				/> -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
 			<class
@@ -47,14 +48,16 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddUpdatePracticeSocialsApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeSocialsApiTests_DataLayer" />
+				  <class
+                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer"/>
+            <class
+                    name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer"/>
+            <class
+                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateAnInterfaceApiTests_DataLayer"/>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer" />
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteAnInterfaceApiTests_DataLayer"/>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateAnInterfaceApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteAnInterfaceApiTests_DataLayer" />
-		</classes>
-	</test>
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetByInterfaceApiTests_DataLayer"/>
+        </classes>
+    </test>
 </suite>
