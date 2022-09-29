@@ -24,6 +24,7 @@
 				-->
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
 				/> -->
+			<!-- TOU test classes are disabled due to enhancement of privacy policies.
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
 			<class
@@ -31,19 +32,20 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePrivacySettingApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
-			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" /> 	-->
+
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer" />
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer" />
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer" />
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" />
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer" />
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddUpdatePracticeSocialsApiTests_DataLayer" />
 			<class
