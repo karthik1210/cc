@@ -329,7 +329,7 @@ public class LocationsInfo extends BaseRest {
 	}
 
 	public Response addResourceForLocationInvalidMethod_BL(int locationId, int practiceId,
-			ArrayList<Integer> resourceIds) {
+			List<Integer> resourceIds) {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_BL(locationId, practiceId);
 		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
 		return given().spec(requestSpec).body(addResourceForLocationPayload).when().put(url).then().extract()
@@ -337,7 +337,7 @@ public class LocationsInfo extends BaseRest {
 	}
 
 	public Response addResourceForLocationInvalidUrl_BL(int locationId, int practiceId,
-			ArrayList<Integer> resourceIds) {
+		List<Integer> resourceIds) {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_INVALID_URL_BL(locationId, practiceId);
 		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
 		return given().spec(requestSpec).body(addResourceForLocationPayload).when().post(url).then().extract()
@@ -349,7 +349,7 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
-	private List<Integer> addResourceForLocation(ArrayList<Integer> resourceId) {
+	private List<Integer> addResourceForLocation(List<Integer> resourceId) {
 		List<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.addAll(resourceId);
 		return resourceIds;
