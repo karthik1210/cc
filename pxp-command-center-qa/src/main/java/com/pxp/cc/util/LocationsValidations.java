@@ -18,7 +18,9 @@ import io.restassured.response.Response;
 
 public class LocationsValidations {
 	JsonPath jsonPath;
-
+	JSONArray jsonArray;
+	JSONObject jsonObject;
+	
 	public void verifySearchLocationOutputWithoutFilter(Response response, String getSearchLocations) {
 		jsonPath = new JsonPath(response.asString());
 		Log4jUtil.log("Display list of locations in response body : " + jsonPath.get("items"));
@@ -211,5 +213,14 @@ public class LocationsValidations {
 					"Resource Id " + jsonObject.getInt("resourceId") + " doesn't exist");
 		}
 	}
-
+	public void verifyNoOfSolutionsFetchedSolutionNameandId(Response response) {
+		jsonArray = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		Log4jUtil.log("Number of resources fetched is " + jsonArray.length());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			Log4jUtil.log("print the solution name : " + jsonObject.getString("name") + " and solution Id : "
+					+ jsonObject.get("solutionId"));
+		}
+	}
 }
