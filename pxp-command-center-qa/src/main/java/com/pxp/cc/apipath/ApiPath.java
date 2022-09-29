@@ -1472,4 +1472,19 @@ public class ApiPath {
 	public static final String ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/locations/null/practices/null/resources";
 	}
+	
+	public static final String ORGS_SOLUTION_BL = SERVICE_ORG_BL + "/v1/orgs/";
+
+	public static final String UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_USING_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/locations/null/practices/null/solutions";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_INVALID_URL_BL(int locationId,
+			int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practicesError/" + practiceId + "/solutions";
+	}
 }
