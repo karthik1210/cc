@@ -1303,4 +1303,21 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
 		return given().spec(requestSpec).queryParam("type", type).when().post(url).then().extract().response();
 	}
+	
+	public Response updateOrgSolutionsDetails_BL(int solutionId, String status, int orgId) throws IOException {
+		String url = ApiPath.ORGS_SOLUTION_BL + orgId + "/solutions";
+		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgSolutionsDetails_BL(solutionId,
+				status);
+		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
+	}
+
+	public static List<Map<String, Object>> putUpdateOrgSolutionsDetails_BL(int solutionId,
+			String NewlyPurchased) {
+		List<Map<String, Object>> solutionsList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> solutionsMap = new HashMap<String, Object>();
+		solutionsMap.put("solutionId", solutionId);
+		solutionsMap.put("status", NewlyPurchased);
+		solutionsList.add(solutionsMap);
+		return solutionsList;
+	}
 }
