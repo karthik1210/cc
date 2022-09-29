@@ -853,4 +853,41 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_BL_VALID_DETAILS(locationId, practiceId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
+	
+	public Response enableOrDisableSolutionsForResource_BL(int resourceId, int practiceId, int solutionId,
+			boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_BL(resourceId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForResourceForNullPayload_BL(int resourceId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_BL(resourceId, practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForResourceUsingInvalidMethod_BL(int resourceId, int practiceId,
+			int solutionId, boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_BL(resourceId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().post(url).then()
+				.extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForResourceUsingInvalidUrl_BL(int resourceId, int practiceId,
+			int solutionId, boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_INVALID_URL_BL(resourceId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForResourceUsingNullValue_BL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_USING_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
