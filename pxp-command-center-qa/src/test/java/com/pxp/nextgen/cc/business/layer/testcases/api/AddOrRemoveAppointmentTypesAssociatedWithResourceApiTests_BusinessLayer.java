@@ -72,7 +72,6 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 		resourceIdOne = createNewResource();
-
 	}
 
 	public int createNewResource() {
@@ -137,7 +136,6 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 		appointmentTypeIds.add(Integer.parseInt(testData.getProperty("valid.appointment.type.id")));
 		validation.verifyAddOrRemoveAppointmentTypesForResourceApiResponseBody(
 				AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeIds, "SUCCESS", null);
-
 		logStep("Remove valid appointment type id for resource");
 		appointmentTypeList = Arrays.asList(
 				new AppointmentTypeDetails(Integer.parseInt(testData.getProperty("valid.appointment.type.id")), false));
@@ -148,7 +146,6 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 		CCUtils.assertEquals(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse.getStatusCode(), 207);
 		validation.verifyAddOrRemoveAppointmentTypesForResourceApiResponseBody(
 				AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeIds, "SUCCESS", null);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add/Remove multiple appointment type id for resource and verify response body")
@@ -180,7 +177,6 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 		CCUtils.assertEquals(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse.getStatusCode(), 207);
 		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
 				AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeIds, "SUCCESS", null);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank list in payload and verify response body")
