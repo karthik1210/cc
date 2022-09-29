@@ -81,6 +81,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourcesForLocationApiTests_BusinessLayer" />
+			<class 
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
