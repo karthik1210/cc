@@ -1394,23 +1394,21 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/interfacesss";
 	}
-	
-	public static final String ASSOCIATE_DEASSOCIATE_PRACTICE_TO_LOCATION_BL(int locationId)
-    {
-    	return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
-    }
-    
-    public static final String FETCH_LOCATION_BY_PRACTICE_BL_VALID_DETAILS(int locationId,int practiceId)
-    {
-    	return SERVICE_SHARED_BL + "/v1/locations/" +  locationId + "/practices/" + practiceId;
-    }
-    
-    public static final String FETCH_LOCATION_BY_PRACTICE_USING_NULL_VALUE_BL() {
-		return SERVICE_SHARED_BL + "/v1/locations/" +  null + "/practices/" + null;
+
+	public static final String ASSOCIATE_DEASSOCIATE_PRACTICE_TO_LOCATION_BL(int locationId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices";
 	}
-    
-    public static final String INVALID_PATH_TO_FETCH_LOCATION_BY_PRACTICE_BL(int locationId,int practiceId) {
-    	return SERVICE_SHARED_BL + "/v1/locations/" +  locationId + "/practicesERROR/" + practiceId;
+
+	public static final String FETCH_LOCATION_BY_PRACTICE_BL_VALID_DETAILS(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId;
+	}
+
+	public static final String FETCH_LOCATION_BY_PRACTICE_USING_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/locations/" + null + "/practices/" + null;
+	}
+
+	public static final String INVALID_PATH_TO_FETCH_LOCATION_BY_PRACTICE_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practicesERROR/" + practiceId;
 	}
 
 	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID(String serviceLayer, int practiceId,
@@ -1457,6 +1455,10 @@ public class ApiPath {
 			return SERVICE_PRODUCT_BL + "/v1/externalsystemsss/" + externalSystemId;
 		else
 			return SERVICE_PRODUCT_DL + "/v1/externalsystemsss/" + externalSystemId;
+	}
+
+	public static final String ADD_OR_REMOVE_APPOINTMENT_TYPES_FOR_RESOURCE_BL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/appointment-types";
 	}
 
 	public static final String ADD_RESOURCES_FOR_LOCATION_BL(int locationId, int practiceId) {
