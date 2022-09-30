@@ -163,10 +163,10 @@ public class AddOrgNodePage extends CCMainPage {
 
 	@FindBy(xpath = "(//input[@type='text'])[3]")
 	private WebElement enterEhrPractice;
-	
-	@FindBy(xpath = "//mat-icon[contains(text(),' expand_more ')]")
+
+	@FindBy(xpath = "//button[@id='treeExpandBtn']")
 	private WebElement expandArrow;
-		
+
 	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public final List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "PSS", "Pay", "Portal",
@@ -618,11 +618,19 @@ public class AddOrgNodePage extends CCMainPage {
 		javascriptClick(btnManageClient);
 		log("Clicked on Manage Client button");
 	}
-	
+
 	public void clickOnExpandArrow() {
 		CCUtils.verifyAndWaitForElement(expandArrow, driver);
 		javascriptClick(expandArrow);
 		log("Clicked on expand Arrow button");
+	}
+
+	public void clickOnExpandArrow(String orgName) {
+		CCUtils.verifyAndWaitForElement(expandArrow, driver);
+		if (expandArrow.getAttribute("aria-label").contains(orgName)) {
+			javascriptClick(expandArrow);
+		}
+		log("Clicked on expand Arrow button for Org : "+orgName);
 	}
 
 	public void clickOnAddSystem() {
@@ -641,12 +649,12 @@ public class AddOrgNodePage extends CCMainPage {
 		btnSave.click();
 	}
 
-	public void addNewSystem(String systemName) {
+	public void systemName(String systemName) {
 		clickOnAddSystem();
 		enterNewSystemDetails(systemName);
 	}
 
-    private String xpathRequiredNewTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
+	private String xpathRequiredNewTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	private WebElement prepareDynamicXpathForTimezone(String xpathValue, String substitutionValue) {
 
@@ -687,5 +695,11 @@ public class AddOrgNodePage extends CCMainPage {
 	public void addNewPractice(String practiceName) throws InterruptedException {
 		clickOnAddPractice();
 		enterNewPracticeDetails(practiceName);
+	}
+
+	public void addNewSystem(String systemName) {
+		clickOnAddSystem();
+		enterNewSystemDetails(systemName);
+
 	}
 }

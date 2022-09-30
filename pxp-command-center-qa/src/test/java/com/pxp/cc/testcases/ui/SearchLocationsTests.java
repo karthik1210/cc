@@ -3,7 +3,10 @@
 package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.AddLocationPage;
+import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
@@ -17,10 +20,12 @@ public class SearchLocationsTests extends CommandCenterGenericTest {
 	public CommonMethods commonMethods;
 	private GeneralSettingsPage generalSettingsPage;
 	private AddLocationPage addLocationPage;
-
+	private AddOrgNodePage addOrgNodePage;
+	String systemName,practiceNameOne,practiceNameTwo;
+	
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		commonMethods = new CommonMethods(driver);
 		createClientPage = new CreateClientPage(driver);
@@ -48,6 +53,42 @@ public class SearchLocationsTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyClientNodeIsSelected();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnAddSystem();
+		systemName = "SystemDemo".concat(CCUtils.generateAlphaNumericString(8));
+		addOrgNodePage.enterNewSystemDetails(systemName);
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow(systemName);
+		practiceNameOne = "PracticeForDemo".concat(CCUtils.generateAlphaNumericString(8));
+		addOrgNodePage.addNewPractice(practiceNameOne);
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow(systemName);
+		practiceNameTwo = "PracticeForDemo".concat(CCUtils.generateAlphaNumericString(8));
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.enterSearchText("SystemDemo");
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		generalSettingsPage.verifyLocationsTab();
+		generalSettingsPage.clickOnLocationsTab();
+		addLocationPage.clickOnAddLocationButton();
+		logStep("Enter data in all input fields");
+		addLocationPage.enterLocationName(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.enterLocationDisplayName(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.enterAddressOne(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.enterAddressTwo(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.enterCity(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.enterLocationIdExternal(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.enterZip(CCUtils.generateAlphaNumericString(18));
+		addLocationPage.addStateAndTimezone(testData.getProperty("new.locations.state"),
+				testData.getProperty("new.locations.timezone"));
+		logStep("Click on save and add button");
+		addLocationPage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addLocationPage.verifyToasterMessage("Success! New location has been successfully created");
+		
+		addOrgNodePage.addNewPractice(practiceNameTwo);
+		generalSettingsPage.verifyClientNodeIsSelected();		
 		logStep("Verify Locations tab is displayed");
 		generalSettingsPage.verifyLocationsTab();
 		generalSettingsPage.clickOnLocationsTab();
@@ -95,4 +136,7 @@ public class SearchLocationsTests extends CommandCenterGenericTest {
 		return locationName;
 	}
 	
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user confirmation popup")
+	public void testDeactivateConfirmationPopupForClientUser() throws Exception {
+	}
 }
