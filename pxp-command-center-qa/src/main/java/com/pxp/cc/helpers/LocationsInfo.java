@@ -391,5 +391,24 @@ public class LocationsInfo extends BaseRest {
 		toggleSolutionStatusMap.put("active", active);
 		return toggleSolutionStatusMap;
 	}
-
+	
+	public Response getLocationsForResourceForInvalidUrl_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_INVALID_URL_BL(resourceId, practiceId);
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+	
+	public Response getLocationsForResourceForInvalidMethod_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_BL(resourceId, practiceId);
+		return given().spec(requestSpec).post(url).then().extract().response();
+	}
+	
+	public Response getLocationsForResourceUsingNullValues() {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_BL_NULL_VALUES();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getLocationsForResource_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_BL(resourceId, practiceId);
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
 }
