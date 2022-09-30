@@ -3090,10 +3090,74 @@ public class Validations {
 			}
 		}
 	}
-	
+
 	public void verifyErrorMessageForNonExistingInput(Response response, int solutionId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org product not found by practiceId=" + solutionId);
+	}
+
+	public void verifyAddOrRemoveAppointmentTypesForResourceApiResponseBody(Response response,
+			List<Integer> appointmentTypeIds, String status, String message) throws IOException {
+		List<ResourceStatus> actualResourceStatusList = new ArrayList<ResourceStatus>();
+		for (int i = 0; i < appointmentTypeIds.size(); i++) {
+			actualResourceStatusList.add(new ResourceStatus(appointmentTypeIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "appointmentid list is empty");
+		CCUtils.assertTrue(actualResourceStatusList.size() == responseBody.length(),
+				"Size of actual appointment type list and expected appointment id list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualResourceStatusList.contains(new ResourceStatus(jsonObject.getInt("id"),
+							jsonObject.getString("status"), jsonObject.getString("message"))),
+					"Resource Id " + jsonObject.getInt("id") + " doesn't exist");
+		}
+	}
+
+	public void verifyGetOrgSolutionsResponseBody(Response response, List<OrgSolutions> finalList) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < finalList.size(); i++) {
+			for (int soluDetail = 0; soluDetail < jsonArray.length(); soluDetail++) {
+				JSONObject jsonObject = jsonArray.getJSONObject(soluDetail);
+				int perJSONSolutionId = jsonObject.getInt("solutionId");
+				int perFinalListSolutionId = Integer.parseInt(finalList.get(i).getSolutionId());
+				if (perJSONSolutionId == perFinalListSolutionId) {
+					Boolean perJSONSolutionActiveValue = jsonObject.getBoolean("active");
+					if (perJSONSolutionActiveValue == true) {
+						if (finalList.get(i).getStatus().equals("New")) {
+							CCUtils.assertEquals(jsonObject.getInt("status"), 0);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with New status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("Active Implementation")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 1);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name")
+									+ " is in active status with Active Implementation status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("Go-live")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 2);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with Go-live status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("On Hold")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 3);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with On Hold status value"
+									+ jsonObject.get("status"));
+						} else if (finalList.get(i).getStatus().equals("Terminated")) {
+							CCUtils.assertEquals(jsonObject.get("status"), 4);
+							Log4jUtil.log("Solution ID : " + jsonObject.get("solutionId") + " with solution name : "
+									+ jsonObject.get("name") + " is in active status with Terminated status value"
+									+ jsonObject.get("status"));
+						}
+					}
+				}
+			}
+
+		}
 	}
 }

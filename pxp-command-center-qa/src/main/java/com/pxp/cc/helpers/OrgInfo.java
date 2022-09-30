@@ -18,6 +18,7 @@ import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.UpdateTou;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.pojos.PracticeSocials;
+import com.pxp.cc.pojos.*;
 import io.restassured.response.Response;
 
 public class OrgInfo extends BaseRest {
@@ -1151,26 +1152,179 @@ public class OrgInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response updateOrgsSolutions_BusinessLayer(List<OrgSolutions> productList, int orgId)
-			throws IOException {
+	public Response updateOrgsSolutions_BusinessLayer(List<OrgSolutions> productList, int orgId) throws IOException {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateOrgSolutions_OrgNULLValue(List<OrgSolutions> productList) {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL_ORG_NULL;
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateOrgsSolutions_BusinessLayer_InvalidUrl(List<OrgSolutions> productList, int orgId)
 			throws IOException {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL_INVALID_URL(orgId);
 		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
 	}
-	
+
+	public Response updateOrgsSolutions_DataLayer_InvalidUrl(List<OrgSolutions> productList, int orgId)
+			throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL_INVALID_URL(orgId);
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+
 	public Response updateOrgsSolutions_BusinessLayer_InvalidHTTPMethod(List<OrgSolutions> productList, int orgId)
 			throws IOException {
 		String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
 		return given().spec(requestSpec).body(productList).when().post(url).then().extract().response();
+	}
+
+	public Response updateOrgsSolutions_DataLayer_InvalidHTTPMethod(List<OrgSolutions> productList, int orgId)
+			throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).body(productList).when().post(url).then().extract().response();
+	}
+
+	public Response updateOrgsSolutions_DataLayer(List<OrgSolutions> productList, int orgId) throws IOException {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+
+	public Response updateOrgSolutions_OrgNULLValue_DL(List<OrgSolutions> productList) {
+		String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL_ORG_NULL;
+		return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+	}
+
+	public Response getPracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getPracticeInterfacesInvaliDatatypeResponse(String serviceLayer, String practiceId) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response addPracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId,
+			PracticeInterfaces addPracticeInterfaces) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeInterfaces).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response addPracticeInterfacesInvaliDatatypeResponse(String serviceLayer, String practiceId,
+			PracticeInterfaces addPracticeInterfaces) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).body(addPracticeInterfaces).when().post(url).then().extract().response();
+	}
+
+	public Response updatePracticeInterfacesResponse(String validURI, String serviceLayer, int practiceId,
+			int interfaceId, PracticeInterfaces updatePracticeInterfaces) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).body(updatePracticeInterfaces).when().put(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(serviceLayer, practiceId,
+					interfaceId);
+			return given().spec(requestSpec).body(updatePracticeInterfaces).when().put(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).body(updatePracticeInterfaces).when().patch(url).then().extract()
+					.response();
+		}
+	}
+
+	public Response updatePracticeInterfacesInvaliDatatypeResponse(String serviceLayer, String practiceId,
+			String interfaceId, PracticeInterfaces updatePracticeInterfaces) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId,
+				interfaceId);
+		return given().spec(requestSpec).body(updatePracticeInterfaces).when().put(url).then().extract().response();
+	}
+
+	public Response getByInterfaceResponse(String validURI, String serviceLayer, int practiceId, int interfaceId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(serviceLayer, practiceId,
+					interfaceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getByInterfaceInvaliDatatypeResponse(String serviceLayer, String practiceId, String interfaceId) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId,
+				interfaceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response deleteAnInterfaceResponse(String validURI, String serviceLayer, int practiceId, int interfaceId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().delete(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(serviceLayer, practiceId,
+					interfaceId);
+			return given().spec(requestSpec).when().delete(url).then().extract().response();
+		} else {
+			String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID(serviceLayer, practiceId, interfaceId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response deleteAnInterfaceInvaliDatatypeResponse(String serviceLayer, String practiceId,
+			String interfaceId) {
+		String url = ApiPath.PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId,
+				interfaceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getOrgSolutionsDetails_DataLayer(int orgId, String type) {
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getSolutionOrgIdUsingInvalidUrl_DataLayer(int orgId, String type) throws IOException {
+		String url = ApiPath.INVALID_PATH_ORGS_SOLUTION_DL(orgId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getOrgSolutionsDetails_DataLayer_InvalidHTTPMethod(int orgId, String type) {
+		String url = ApiPath.ORGS_SOLUTION_DL + orgId + "/solutions";
+		return given().spec(requestSpec).queryParam("type", type).when().post(url).then().extract().response();
+	}
+
+	public Response updateOrgSolutionsDetails_BL(int solutionId, String status, int orgId) throws IOException {
+		String url = ApiPath.ORGS_SOLUTION_BL + orgId + "/solutions";
+		List<Map<String, Object>> updateOrgsSolutionPayload = putUpdateOrgSolutionsDetails_BL(solutionId, status);
+		return given().spec(requestSpec).body(updateOrgsSolutionPayload).when().put(url).then().extract().response();
+	}
+
+	public static List<Map<String, Object>> putUpdateOrgSolutionsDetails_BL(int solutionId, String NewlyPurchased) {
+		List<Map<String, Object>> solutionsList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> solutionsMap = new HashMap<String, Object>();
+		solutionsMap.put("solutionId", solutionId);
+		solutionsMap.put("status", NewlyPurchased);
+		solutionsList.add(solutionsMap);
+		return solutionsList;
 	}
 }

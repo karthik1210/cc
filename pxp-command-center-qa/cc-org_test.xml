@@ -18,6 +18,7 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateOrgNodeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer" />
+			<!-- TOU test classes are disabled due to enhancement of privacy policies.
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer" />
 			<class
@@ -27,6 +28,8 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer" />
 			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" /> -->
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer" />
@@ -35,17 +38,23 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" />
-			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeSocialsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeWebsitesApiTests_BusinessLayer" />
-
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddUpdatePracticeSocialsApiTests_BusinessLayer" />
-
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgSolutionsApiTests_BusinessLayer" />
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeInterfacesApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddAnInterfaceApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateAnInterfacesApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteAnInterfacesApiTests_BusinessLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetByInterfaceApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>

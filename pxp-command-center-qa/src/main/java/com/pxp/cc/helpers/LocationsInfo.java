@@ -5,7 +5,9 @@ package com.pxp.cc.helpers;
 import com.pxp.cc.model.BaseRest;
 import static io.restassured.RestAssured.given;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
@@ -318,4 +320,76 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.LOCATION_FOR_CLIENT_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	public Response addResourceForLocation_BL(int locationId, int practiceId, ArrayList<Integer> resourceIds) {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_BL(locationId, practiceId);
+		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
+		return given().spec(requestSpec).body(addResourceForLocationPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response addResourceForLocationInvalidMethod_BL(int locationId, int practiceId,
+			List<Integer> resourceIds) {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_BL(locationId, practiceId);
+		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
+		return given().spec(requestSpec).body(addResourceForLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response addResourceForLocationInvalidUrl_BL(int locationId, int practiceId,
+		List<Integer> resourceIds) {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_INVALID_URL_BL(locationId, practiceId);
+		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
+		return given().spec(requestSpec).body(addResourceForLocationPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response addResourceForLocation_BL() {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	private List<Integer> addResourceForLocation(List<Integer> resourceId) {
+		List<Integer> resourceIds = new ArrayList<Integer>();
+		resourceIds.addAll(resourceId);
+		return resourceIds;
+	}
+
+	public Response getSolutionStatusApiResponse_BL(int locationId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response toggleSolutionStatusApiResponse_BL(int locationId, int practiceId, int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_BL(locationId, practiceId);
+		Map<String, Object> toggleSolutionStatusPayload = toggleSolutionStatus(solutionId, active);
+		return given().spec(requestSpec).body(toggleSolutionStatusPayload).when().put(url).then().extract().response();
+	}
+
+	public Response toggleSolutionStatusApiResponseInvalidUrl_BL(int locationId, int practiceId, int solutionId,
+			boolean active) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_INVALID_URL_BL(locationId, practiceId);
+		Map<String, Object> toggleSolutionStatusPayload = toggleSolutionStatus(solutionId, active);
+		return given().spec(requestSpec).body(toggleSolutionStatusPayload).when().put(url).then().extract().response();
+	}
+
+	public Response toggleSolutionStatusApiResponseInvalidMethodCall_BL(int locationId, int practiceId, int solutionId,
+			boolean active) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_BL(locationId, practiceId);
+		Map<String, Object> toggleSolutionStatusPayload = toggleSolutionStatus(solutionId, active);
+		return given().spec(requestSpec).body(toggleSolutionStatusPayload).when().post(url).then().extract().response();
+	}
+
+	public Response toggleSolutionStatusApiResponseNullValue_BL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_USING_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> toggleSolutionStatus(Integer solutionId, Boolean active) {
+		Map<String, Object> toggleSolutionStatusMap = new HashMap<String, Object>();
+		toggleSolutionStatusMap.put("solutionId", solutionId);
+		toggleSolutionStatusMap.put("active", active);
+		return toggleSolutionStatusMap;
+	}
+
 }
