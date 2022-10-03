@@ -99,7 +99,16 @@ public class AddLocationPage extends CCMainPage {
 
 	@FindBy(id = "LocationExternalInput")
 	private WebElement textboxLocationExternal;
-
+	
+	@FindBy(xpath = "(//tr[@role='row'])[2]")
+	private WebElement selectLocation;
+	
+	@FindBy(id = "searchOrgInput")
+	private WebElement Searchicon;
+	
+	@FindBy(id = "searchOrgInput")
+	private WebElement textboxSearch;
+	
 	public void verifyLocationsPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelLocationsPageTitle, driver);
 		CCUtils.assertEquals(labelLocationsPageTitle.getText().trim(), "Locations");
@@ -137,7 +146,7 @@ public class AddLocationPage extends CCMainPage {
 	public void verifyLocationDisplayNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelLocationDisplayName, driver);
 		log("Verifying Location Display Name label text");
-		CCUtils.assertEquals(labelLocationDisplayName.getText().trim(), "Location Display Name (EN) *");
+		CCUtils.assertEquals(labelLocationDisplayName.getText().trim(), "Location Display Name (EN)");
 		log("Location Display Name label text is " + labelLocationDisplayName.getText().trim());
 		CCUtils.verifyAndWaitForElement(textboxLocationDisplayName, driver);
 		log("Verifying Input Text placeholder is displayed for Location Display Name textbox field");
@@ -393,5 +402,28 @@ public class AddLocationPage extends CCMainPage {
 		textboxCity.clear();
 		textboxCity.sendKeys(input);
 		log("Entered input for city : " + input);
+	}
+
+	public void selectLocation() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(selectLocation, driver);
+		selectLocation.click();
+		log("Clicked on first Location");
+	}
+
+	public void clickSearchIcon() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(Searchicon, driver);
+		Searchicon.click();
+	}
+
+	public void enterSearchText(String firstName) {
+		CCUtils.verifyAndWaitForElement(textboxSearch, driver);
+		textboxSearch.sendKeys(firstName);
+		log("Entered text in search :" + firstName);
+	}
+
+	public void verifyAddButtonIsEnabled() {
+		logStep("Verifying add button is enabled or not");
+		CCUtils.verifyAndWaitForElement(addButton, driver);
+		CCUtils.assertEquals(addButton.isEnabled(), true);
 	}
 }
