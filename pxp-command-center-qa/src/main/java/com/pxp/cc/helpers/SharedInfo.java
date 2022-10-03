@@ -893,7 +893,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response saveLocationInfoForPractice_BL(int locationId,int practiceId,String enDisplayName,String esDisplayName,
 			String addressExtension,String phoneNumber,String startTime,String endTime,String enDirection,String esDirection) {
-		String url = ApiPath.SAVE_LOLCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
 		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
 		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
@@ -936,7 +936,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response saveLocationInfoForPracticeUsingInvalidMethodCall_BL(int locationId,int practiceId,String enDisplayName,String esDisplayName,
 			String addressExtension,String phoneNumber,String startTime,String endTime,String enDirection,String esDirection) {
-		String url = ApiPath.SAVE_LOLCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
 		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
 		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
@@ -948,7 +948,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response saveLocationInfoForPracticeUsingInvalidUrl_BL(int locationId,int practiceId,String enDisplayName,String esDisplayName,
 			String addressExtension,String phoneNumber,String startTime,String endTime,String enDirection,String esDirection) {
-		String url = ApiPath.SAVE_LOLCATION_INFO_FOR_PRACTICE_USING_INVALID_URL_BL(locationId, practiceId);
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_USING_INVALID_URL_BL(locationId, practiceId);
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
 		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
 		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
@@ -959,7 +959,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response saveLocationInfoForPracticeUsingNullValues_BL(String enDisplayName,String esDisplayName,
 			String addressExtension,String phoneNumber,String startTime,String endTime,String enDirection,String esDirection) {
-		String url = ApiPath.SAVE_LOLCATION_INFO_FOR_PRACTICE_USING_NULL_VALUE_BL();
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_USING_NULL_VALUE_BL();
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
 		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
 		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
@@ -970,7 +970,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response saveLocationInfoForPracticeForSelectivePayload_BL(int locationId,int practiceId,String enDisplayName,String esDisplayName,
 			String addressExtension,String phoneNumber,String enDirection,String esDirection) {
-		String url = ApiPath.SAVE_LOLCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
 		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
 		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(createEnESDisplayNamePayload,addressExtension,
