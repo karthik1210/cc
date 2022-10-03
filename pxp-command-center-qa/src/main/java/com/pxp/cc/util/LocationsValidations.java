@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.objectmaps.LocationStatus;
+import com.pxp.cc.pojos.ProviderStatus;
+import com.pxp.cc.pojos.ProvidersStatus;
 import com.pxp.cc.pojos.ResourceStatus;
 import com.pxp.cc.pojos.ResourcesStatus;
 
@@ -223,4 +225,44 @@ public class LocationsValidations {
 					+ jsonObject.get("solutionId"));
 		}
 	}
+	
+	public void verifyAssociateProvidersForLocationApiResponseBody(Response response, List<Integer> providerIds,
+			String status) throws IOException {
+		List<ProvidersStatus> actualProvidersStatusList = new ArrayList<ProvidersStatus>();
+		for (int i = 0; i < providerIds.size(); i++) {
+			actualProvidersStatusList.add(new ProvidersStatus(providerIds.get(i), status));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Providers list is empty");
+		CCUtils.assertTrue(actualProvidersStatusList.size() == responseBody.length(),
+				"Size of actual Providers list and expected Providers list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualProvidersStatusList.contains(
+							new ProvidersStatus(jsonObject.getInt("providerId"), jsonObject.getString("status"))),
+					"Provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
+		}
+	}
+
+	public void verifyAssociateInvalidProviderForLocationApiResponseBody(Response response, List<Integer> providerIds,
+			String status, String message) throws IOException {
+		List<ProviderStatus> actualProvidersStatusList = new ArrayList<ProviderStatus>();
+		for (int i = 0; i < providerIds.size(); i++) {
+			actualProvidersStatusList.add(new ProviderStatus(providerIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
+		CCUtils.assertTrue(actualProvidersStatusList.size() == responseBody.length(),
+				"Size of actual provider list and expected provider list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualProvidersStatusList.contains(new ProviderStatus(jsonObject.getInt("providerId"),
+							jsonObject.getString("status"), jsonObject.getString("message"))),
+					"provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
+		}
+}
 }
