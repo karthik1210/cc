@@ -66,6 +66,7 @@
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer" 
 				/> -->
 			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsAssociatedWithResourceApiTests_BusinessLayer" />
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveLocationDisplayInfoForPracticeApiTests_BusinessLayer" />
 
 
 		</classes>
