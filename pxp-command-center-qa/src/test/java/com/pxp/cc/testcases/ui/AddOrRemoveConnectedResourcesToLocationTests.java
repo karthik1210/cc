@@ -46,17 +46,13 @@ public class AddOrRemoveConnectedResourcesToLocationTests extends CommandCenterG
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
 				testData.getProperty("new.client.timezone"));
-		logStep("Verify active radio button is by default selected on the create client popup");
-		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
 		logStep("Click on create button on the create client popup");
 		createClientPage.clickConfirmPopup();
 		String actualMessage = commonMethods.getToasterMessage();
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
 		logStep("Searching a created client in client directory");
-		clientDirectoryPage.searchNode(clientName);
-		clientDirectoryPage.clickSearchButton();
-		clientDirectoryPage.clickSearchResult();
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(clientName);
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyClientNodeIsSelected();
 	}

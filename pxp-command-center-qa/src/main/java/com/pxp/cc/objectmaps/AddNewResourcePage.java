@@ -54,9 +54,9 @@ public class AddNewResourcePage extends CCMainPage {
 	}
 
 	public void clickOnAddResourceButton() {
+		log("Click on add new Resource Button");
 		CCUtils.verifyAndWaitForElement(addButton, driver);
-		addButton.click();
-		log("Verifying add new Resource Button");
+		addButton.click();	
 	}
 
 	public void enterResourceName(String input) {
