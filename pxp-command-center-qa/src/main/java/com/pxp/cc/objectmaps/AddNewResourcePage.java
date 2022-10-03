@@ -35,7 +35,7 @@ public class AddNewResourcePage extends CCMainPage {
 	@FindBy(id = "ExternalIdInput")
 	private WebElement textboxExternalId;
 
-	@FindBy(xpath = "(//input[@aria-autocomplete='list'])[5]")
+	@FindBy(xpath = "//div[text()='Select Resource Type']//following::div[@role='combobox']/input")
 	private WebElement dropdownResourceType;
 
 	@FindBy(id = "searchValues")
