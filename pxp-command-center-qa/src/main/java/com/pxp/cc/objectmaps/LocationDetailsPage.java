@@ -106,7 +106,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Phone Number')]")
 	private WebElement labelPhoneNumber;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Directions (EN)')]")
 	private WebElement labelDirectionsEn;
 
@@ -145,7 +145,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='flex']/span")
 	private WebElement toasterMessage;
-	
+
 	@FindBy(xpath = "//div[contains(text(),'Solutions Display Info')]")
 	private WebElement labelSolutionsSection;
 
@@ -432,7 +432,6 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMessageDisplayNameEn, driver);
 		CCUtils.assertEquals(errorMessageDisplayNameEn.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for LocationDisplayNameEn field is " + errorMessageDisplayNameEn.getText().trim());
-
 		log("Enter more than 100 characters in LocationDisplayNameEs textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEs, driver);
 		textboxLocationDisplayNameEs.sendKeys(LocationDisplayNameEs);
@@ -440,17 +439,14 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMessageDisplayNameEs, driver);
 		CCUtils.assertEquals(errorMessageDisplayNameEs.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for LocationDisplayNameEs field is " + errorMessageDisplayNameEs.getText().trim());
-
 		log("Enter more than 100 characters in Address2 textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxAddress, driver);
 		textboxAddress.clear();
 		textboxAddress.sendKeys(address2);
 		log("Entered input for Address2 name : " + address2);
-
 		CCUtils.verifyAndWaitForElement(errorMessageAddress2, driver);
 		CCUtils.assertEquals(errorMessageAddress2.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for Address2 field is " + errorMessageAddress2.getText().trim());
-
 		log("Enter more than 100 characters in DirectionsEn textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxDirectionsEn, driver);
 		textboxDirectionsEn.clear();
@@ -459,7 +455,6 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMessageDirectionsEn, driver);
 		CCUtils.assertEquals(errorMessageDirectionsEn.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for DirectionsEn field is " + errorMessageDirectionsEn.getText().trim());
-
 		log("Enter more than 100 characters in DirectionsEs textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxDirectionsEs, driver);
 		textboxDirectionsEs.clear();
@@ -468,7 +463,6 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMessageDirectionsEs, driver);
 		CCUtils.assertEquals(errorMessageDirectionsEs.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for DirectionsEs field is " + errorMessageDirectionsEs.getText().trim());
-
 	}
 
 	public void verifyErrorMessageForInvalidPhoneNumber(String phoneNumber) {
@@ -497,6 +491,7 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.assertEquals(errorMessageOfficeTime.getText().trim(),
 				"Invalid range selected. Start time cannot be greater than End time");
 	}
+
 	public void verifySaveButtonIsDisabled() {
 		CCUtils.verifyAndWaitForElement(saveSolutionInfo, driver);
 		CCUtils.assertEquals(saveSolutionInfo.isEnabled(), false);
