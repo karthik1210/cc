@@ -110,7 +110,7 @@ public class AddResourcesForLocationApiTests_DataLayer extends BaseRest {
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, practiceId, true);
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
-		logStep("Add one Resource for Location");
+		logStep("Add multiple Resource for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(resourceId);
 		resourceIds.add(resourceIdOne);
