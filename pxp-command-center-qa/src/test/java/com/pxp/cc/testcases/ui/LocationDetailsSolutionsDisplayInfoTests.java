@@ -43,14 +43,8 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
 		logStep("Click on create button on the create client popup");
 		createClientPage.clickConfirmPopup();
-		String actualMessage = commonMethods.getToasterMessage();
-		logStep("Verify success toaster message");
-		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
 		logStep("Searching a created client in client directory");
-		clientDirectoryPage.searchNode(clientName);
-		clientDirectoryPage.clickSearchButton();
-		clientDirectoryPage.clickSearchResult();
-		commonMethods = new CommonMethods(driver);
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(clientName);
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyClientNodeIsSelected();
 	}
@@ -101,7 +95,7 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all input fields and verify save functionality")
 	public void testSaveFunctionalityWithValidDetailsInAllInputFields() throws Exception {
-		logStep("Edit Solutions Display Info and verify success toaster");
+		logStep("Enter valid details in all input fields and verify save functionality");
 		createLocation();
 		addLocationPage.clickSearchIcon();
 		addLocationPage.enterSearchText(locationName);
@@ -109,7 +103,6 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		addLocationPage.selectLocation();
 		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyLocationDetailsTitle();
-		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyEditButtonLabel();
 		locationDetailsPage.clickOnEditButton();
 		locationDetailsPage.verifySolutionsDisplayInfoSectionLabel();
@@ -124,9 +117,9 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		locationDetailsPage.clickOnSaveButton();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify  error message for LocationDisplayNameEn, LocationDisplayNameEs, address2, directionsEn, directionsEs, phoneNumber fields and verify error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for LocationDisplayNameEn, LocationDisplayNameEs, address2, directionsEn, directionsEs, phoneNumber and officeHours fields and verify error message")
 	public void testMaximumCharactersErrorMessageForInputFields() throws Exception {
-		logStep("Verify maximum character reached error message for LocationDisplayNameEn, LocationDisplayNameEs, address2, directionsEn, directionsEs, phoneNumber");
+		logStep("Verify error message for LocationDisplayNameEn, LocationDisplayNameEs, address2, directionsEn, directionsEs, phoneNumber and officeHours");
 		createLocation();
 		addLocationPage.clickSearchIcon();
 		addLocationPage.enterSearchText(locationName);
@@ -134,7 +127,6 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		addLocationPage.selectLocation();
 		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyLocationDetailsTitle();
-		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyEditButtonLabel();
 		locationDetailsPage.clickOnEditButton();
 		locationDetailsPage.verifySolutionsDisplayInfoSectionLabel();
@@ -148,6 +140,7 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel button functionality")
 	public void testCancelFunctionality() throws Exception {
+		logStep("Verify cancel button functionality");
 		createLocation();
 		addLocationPage.clickSearchIcon();
 		addLocationPage.enterSearchText(locationName);
@@ -163,7 +156,7 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in mandatory input fields and verify save functionality")
 	public void testSaveFunctionalityWithValidDetailsInMandatoryInputFields() throws Exception {
-		logStep("Edit Solutions Display Info and verify success toaster");
+		logStep("Enter valid details in mandatory input fields and verify save functionality");
 		createLocation();
 		addLocationPage.clickSearchIcon();
 		addLocationPage.enterSearchText(locationName);
@@ -171,7 +164,6 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		addLocationPage.selectLocation();
 		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyLocationDetailsTitle();
-		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyEditButtonLabel();
 		locationDetailsPage.clickOnEditButton();
 		locationDetailsPage.verifySolutionsDisplayInfoSectionLabel();
@@ -180,10 +172,10 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		locationDetailsPage.enterEndOfficeHours("20:00");
 		locationDetailsPage.clickOnSaveButton();
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in Non manadory input fields and verify save button is disabled")
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in Non mandatory input fields and verify save button is disabled")
 	public void testSaveFunctionalityWithValidDetailsInAllInputNonMandatoryFields() throws Exception {
-		logStep(" For valid details in Non manadory input fields and verify save button is disabled");
+		logStep("Enter valid details in Non mandatory input fields and verify save button is disabled");
 		createLocation();
 		addLocationPage.clickSearchIcon();
 		addLocationPage.enterSearchText(locationName);
@@ -191,7 +183,6 @@ public class LocationDetailsSolutionsDisplayInfoTests extends CommandCenterGener
 		addLocationPage.selectLocation();
 		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyLocationDetailsTitle();
-		locationDetailsPage = new LocationDetailsPage(driver);
 		locationDetailsPage.verifyEditButtonLabel();
 		locationDetailsPage.clickOnEditButton();
 		locationDetailsPage.verifySolutionsDisplayInfoSectionLabel();
