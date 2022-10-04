@@ -421,4 +421,38 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
+
+	public Response associateProvidersToLocation_BL(int locationId, int practiceId, ArrayList<Integer> providerIds) {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_BL(locationId, practiceId);
+		List<Integer> associateProvidersForLocationPayload = associateProvidersToLocation(providerIds);
+		return given().spec(requestSpec).body(associateProvidersForLocationPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response associateProvidersToLocationInvalidMethodCall_BL(int locationId, int practiceId,
+			List<Integer> providerIds) {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_BL(locationId, practiceId);
+		List<Integer> associateProvidersForLocationPayload = associateProvidersToLocation(providerIds);
+		return given().spec(requestSpec).body(associateProvidersForLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response associateProvidersToLocationInvalidUrl_BL(int locationId, int practiceId,
+			List<Integer> providerIds) {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_INVALID_URL_BL(locationId, practiceId);
+		List<Integer> associateProvidersForLocationPayload = associateProvidersToLocation(providerIds);
+		return given().spec(requestSpec).body(associateProvidersForLocationPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response associateProvidersToLocation_BL() {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	private List<Integer> associateProvidersToLocation(List<Integer> providerId) {
+		List<Integer> providerIds = new ArrayList<Integer>();
+		providerIds.addAll(providerId);
+		return providerIds;
+	}
 }
