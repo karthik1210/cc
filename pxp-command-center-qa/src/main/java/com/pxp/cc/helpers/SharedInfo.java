@@ -987,4 +987,21 @@ public class SharedInfo extends BaseRest {
 		saveLocationInfoDetailsMap.put("direction", createDirectionPayload);
 		return saveLocationInfoDetailsMap;
 	}
+	
+	public Response associateDeassociatePractice_DL(int practiceId, int locationId, boolean active) {
+		String url = ApiPath.ASSOCIATE_DEASSOCIATE_PRACTICE_TO_LOCATION_DL(locationId);
+		Map<String, Object> associatePracticePayload = associateDeassociatePracticeToLocation(practiceId, active);
+		return given().spec(requestSpec).body(associatePracticePayload).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationByPractice_DL(int locationId, int practiceId) {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_DL(locationId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationByPracticeUsingNullValues_DL() {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_USING_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }
