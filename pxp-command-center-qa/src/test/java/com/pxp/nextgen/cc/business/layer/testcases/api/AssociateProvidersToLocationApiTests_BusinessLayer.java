@@ -97,7 +97,7 @@ public class AssociateProvidersToLocationApiTests_BusinessLayer extends BaseRest
 				providerIds);
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 207);
 		locationsValidations.verifyAssociateProvidersForLocationApiResponseBody(
-				associateProvidersForLocationApiResponse, providerIds, "SUCCESS");
+				associateProvidersForLocationApiResponse, providerIds, "SUCCESS", null);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid and existing locationId with invalid details in request body  and verify response code")
@@ -112,7 +112,7 @@ public class AssociateProvidersToLocationApiTests_BusinessLayer extends BaseRest
 		associateProvidersForLocationApiResponse = locationsInfo.associateProvidersToLocation_BL(locationId, practiceId,
 				providerIds);
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 207);
-		locationsValidations.verifyAssociateInvalidProviderForLocationApiResponseBody(
+		locationsValidations.verifyAssociateProvidersForLocationApiResponseBody(
 				associateProvidersForLocationApiResponse, providerIds, "ERROR", "Invalid input");
 	}
 

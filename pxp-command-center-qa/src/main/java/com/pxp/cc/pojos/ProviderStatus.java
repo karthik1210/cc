@@ -10,5 +10,5 @@ import lombok.Data;
 public class ProviderStatus {
 	private Integer providerId;
 	private String status;
-	private String message;
+	private Object message;
 }
