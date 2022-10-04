@@ -3157,7 +3157,35 @@ public class Validations {
 					}
 				}
 			}
-
 		}
+	}
+	
+	public void verifySaveDisplayInfoForPracticeApiResponseBody(Response response, String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime, String enDirection,
+			String esDirection) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Map<String, String> dsName = jsonpath.getMap("displayName");
+		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
+		CCUtils.assertEquals(dsName.get("es").toString(), esDisplayName);
+		CCUtils.assertEquals(jsonpath.get("addressExtension"), addressExtension);
+		CCUtils.assertEquals(jsonpath.getString("phoneNumber"),phoneNumber);
+		Map<String,String> officeTimings= jsonpath.getMap("officeHours");
+		CCUtils.assertEquals(officeTimings.get("startTime").toString(), startTime);
+		CCUtils.assertEquals(officeTimings.get("endTime").toString(), endTime);
+		Map<String,String> diectionInfo=jsonpath.getMap("direction");
+		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
+		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
+	}
+	
+	public void verifySaveDisplayInfoForSelectivePayloadApiResponseBody(Response response, String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String enDirection,
+			String esDirection) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Map<String, String> dsName = jsonpath.getMap("displayName");
+		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
+		CCUtils.assertEquals(dsName.get("es").toString(), esDisplayName);
+		CCUtils.assertEquals(jsonpath.get("addressExtension"), addressExtension);
+		CCUtils.assertEquals(jsonpath.getString("phoneNumber"),phoneNumber);
+		Map<String,String> diectionInfo=jsonpath.getMap("direction");
+		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
+		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
 	}
 }

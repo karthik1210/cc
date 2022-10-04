@@ -1520,6 +1520,18 @@ public class ApiPath {
 		return SHARED_DL + "/v1/locations/null/practices/null/resources";
 	}
 
+	public static final String SAVE_LOCATION_INFO_FOR_PRACTICE_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId;
+	}
+
+	public static final String SAVE_LOCATION_INFO_FOR_PRACTICE_USING_INVALID_URL_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practicesWRONG/" + practiceId;
+	}
+
+	public static final String SAVE_LOCATION_INFO_FOR_PRACTICE_USING_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/locations/" + null + "/practices/" + null;
+	}
+
 	public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_BL(int locationId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
