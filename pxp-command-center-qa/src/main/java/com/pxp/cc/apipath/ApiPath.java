@@ -1511,4 +1511,16 @@ public class ApiPath {
     public static final String GET_LOCATION_FOR_RESOURCE_BL_NULL_VALUES() {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices/null/locations";
 	}
+    
+    public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
+	}
+
+	public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_INVALID_URL_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providersssss";
+	}
+
+	public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/locations/null/practices/null/providers";
+	}
 }
