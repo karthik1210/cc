@@ -105,12 +105,12 @@ public class AddResourcesForLocationApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid practiceid and locationId with valid details in request body and verify response code")
-	public void testResponseCodeToAddResorceForLocation() throws NullPointerException, IOException {
+	public void testResponseCodeToAddResourceForLocation() throws NullPointerException, IOException {
 		logStep("Associate location to practice");
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, practiceId, true);
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
-		logStep("Add one Resorce for Location");
+		logStep("Add one Resource for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(resourceId);
 		resourceIds.add(resourceIdOne);
@@ -122,12 +122,12 @@ public class AddResourcesForLocationApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid and existing locationId with invalid details in request body  and verify response code")
-	public void testResponseCodeForNonExistingResorceIdForLocation() throws NullPointerException, IOException {
+	public void testResponseCodeForNonExistingResourceIdForLocation() throws NullPointerException, IOException {
 		logStep("Associate location to practice");
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, practiceId, true);
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
-		logStep("Add nonexisting ResorceId for Location");
+		logStep("Add nonexisting ResourceId for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(Integer.parseInt(testData.getProperty("non.exting.resource.id")));
 		addResourceForLocationApiResponse = locationsInfo.addResourceForLocation_DL(locationId, practiceId,
@@ -138,10 +138,10 @@ public class AddResourcesForLocationApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceid and existing locationId with valid details in request body  and verify response code")
-	public void testErrorMessageForNonExistingPracticeIdAndExistingResorceIdForLocation()
+	public void testErrorMessageForNonExistingPracticeIdAndExistingResourceIdForLocation()
 			throws NullPointerException, IOException {
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
-		logStep("Add valid ResorceId for Location");
+		logStep("Add valid ResourceId for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(resourceId);
 		addResourceForLocationApiResponse = locationsInfo.addResourceForLocation_DL(locationId, practiceId,
@@ -151,10 +151,10 @@ public class AddResourcesForLocationApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid and non-existing locationId with valid details in request body  and verify response code")
-	public void testErrorMessageForExistingPracticeIdResorceIdAndNonExistingLocationId()
+	public void testErrorMessageForExistingPracticeIdResourceIdAndNonExistingLocationId()
 			throws NullPointerException, IOException {
 		int locationId = Integer.parseInt(testData.getProperty("api.nonexisting.locationId"));
-		logStep("Add valid ResorceId for Location");
+		logStep("Add valid ResourceId for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(resourceId);
 		addResourceForLocationApiResponse = locationsInfo.addResourceForLocation_DL(locationId, practiceId,
@@ -167,7 +167,7 @@ public class AddResourcesForLocationApiTests_DataLayer extends BaseRest {
 	public void testErrorMessageForNonExistingInputInAllFields() throws NullPointerException, IOException {
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
 		int locationId = Integer.parseInt(testData.getProperty("api.nonexisting.locationId"));
-		logStep("Add nonexisting ResorceId for Location");
+		logStep("Add nonexisting ResourceId for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(Integer.parseInt(testData.getProperty("non.exting.resource.id")));
 		addResourceForLocationApiResponse = locationsInfo.addResourceForLocation_DL(locationId, practiceId,
