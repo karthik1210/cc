@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class TouSolutions {
-    public int solutionId;
+    public Integer solutionId;
     public String name;
     public boolean active;
 }

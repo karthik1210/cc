@@ -2827,11 +2827,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
 	}
 
-	public void verifyOutputForPrivacySettingFromInput(Response response) {
-		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
-	}
-
 	public void verifyResponseBodyForGetPracticeProvider(Response response, String en, String es, String email,
 			String mobile) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -3187,5 +3182,16 @@ public class Validations {
 		Map<String,String> diectionInfo=jsonpath.getMap("direction");
 		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
 		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
+	}
+
+	public void verifyOutputForPrivacySettingFromInput(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
+	}
+
+	public void verifyOutputForTouFromInput(Response response, String touType, String touName) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("touType"), touType);
+		CCUtils.assertEquals(jsonPath.get("name"), touName);
 	}
 }
