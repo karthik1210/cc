@@ -3194,4 +3194,17 @@ public class Validations {
 		CCUtils.assertEquals(jsonPath.get("touType"), touType);
 		CCUtils.assertEquals(jsonPath.get("name"), touName);
 	}
+
+	public void getTouIdValidation( Response getTouApiResponse,  String actualName, int practiceId)
+	{
+		List<String> touIds = getTouApiResponse.jsonPath().get("touId");
+		for (int i = 0; i < touIds.size(); i++) {
+			int touId = getTouApiResponse.jsonPath().get("touId[" + i + "]");
+			String name = getTouApiResponse.jsonPath().get("name[" + i + "]");
+			if (name.equalsIgnoreCase(actualName)) {
+				Log4jUtil.log( touId+ " added/fetched/updated successfully for " + practiceId);
+			}
+		}
+	}
+
 }
