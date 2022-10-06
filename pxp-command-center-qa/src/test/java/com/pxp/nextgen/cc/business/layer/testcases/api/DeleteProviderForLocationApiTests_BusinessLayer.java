@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.LocationsInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
@@ -23,6 +24,7 @@ public class DeleteProviderForLocationApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private LocationsValidations locationsValidations;
 	private Validations validation;
+	private LocationsInfo locationInfo;
 	Response getProviderDetailsApiResponse, createClientApiResponse, createProviderApiResponse, createSystemApiResponse,
 			createPracticeApiResponse, createEnterpriseApiResponse, createNewLocationApiResponse,
 			addProviderForLocationApiResponse, deleteProviderForLocationsApiResponse,
@@ -36,6 +38,7 @@ public class DeleteProviderForLocationApiTests_BusinessLayer extends BaseRest {
 		orgInfo = new OrgInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		locationInfo = new LocationsInfo();
 		locationsValidations = new LocationsValidations();
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
@@ -102,14 +105,14 @@ public class DeleteProviderForLocationApiTests_BusinessLayer extends BaseRest {
 		logStep("Add Provider for Location");
 		List<Integer> providerIdList = new ArrayList<Integer>();
 		providerIdList.add(providerId);
-		addProviderForLocationApiResponse = sharedInfo.addProviderForLocation_BL(locationId, practiceId,
+		addProviderForLocationApiResponse = locationInfo.associateProvidersToLocation_BL(locationId, practiceId,
 				providerIdList);
 		CCUtils.assertEquals(addProviderForLocationApiResponse.getStatusCode(), 207);
 		logStep("Fetch provider name using providerId");
-		getProviderDetailsApiResponse = sharedInfo.getProviderDetails_BL(providerId);
+		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
 		String name = locationsValidations.getFirstName(getProviderDetailsApiResponse);
 		logStep("Verify newly added provider is displayed for location");
-		getProvidersForLocationApiResponse = sharedInfo.getProvidersForLocation_BL(locationId, practiceId, 0, 10,
+		getProvidersForLocationApiResponse = locationInfo.getProvidersForLocation_BL(locationId, practiceId, 0, 10,
 				name.trim());
 		CCUtils.assertEquals(getProvidersForLocationApiResponse.getStatusCode(), 200);
 		logStep("Delete provider for location");
@@ -119,7 +122,7 @@ public class DeleteProviderForLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(deleteProviderForLocationsApiResponse);
 		CCUtils.assertEquals(deleteProviderForLocationsApiResponse.getStatusCode(), 200);
 		logStep("Verify deleted provider is not displayed for location");
-		getProvidersForLocationApiResponse = sharedInfo.getProvidersForLocation_BL(locationId, practiceId, 0, 10,
+		getProvidersForLocationApiResponse = locationInfo.getProvidersForLocation_BL(locationId, practiceId, 0, 10,
 				name.trim());
 		CCUtils.assertEquals(getProvidersForLocationApiResponse.getStatusCode(), 204);
 	}

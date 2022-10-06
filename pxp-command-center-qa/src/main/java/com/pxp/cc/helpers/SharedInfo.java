@@ -1010,24 +1010,8 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response addProviderForLocation_BL(int locationId, int practiceId, List<Integer> providerIdList) {
-		String url = ApiPath.ADD_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
-		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
-	}
-
-	public Response getProviderDetails_BL(int providerId) {
-		String url = ApiPath.GET_PROVIDER_DETAILS_BL(providerId);
-		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}
-
 	public Response deleteProviderForLocation_BL(int locationId, int practiceId, int providerId) {
 		String url = ApiPath.DELETE_PROVIDER_FOR_LOCATION_BL(locationId, practiceId, providerId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
-	}
-
-	public Response getProvidersForLocation_BL(int locationId, int practiceId, int page, int pageSize, String name) {
-		String url = ApiPath.ADD_PROVIDER_FOR_LOCATION_BL(locationId, practiceId);
-		return given().spec(requestSpec).queryParam("page", page).queryParam("pageSize", pageSize)
-				.queryParam("name", name).when().get(url).then().extract().response();
 	}
 }

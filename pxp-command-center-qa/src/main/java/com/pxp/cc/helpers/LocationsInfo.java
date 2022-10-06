@@ -422,27 +422,21 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
-	public Response associateProvidersToLocation_BL(int locationId, int practiceId, ArrayList<Integer> providerIds) {
+	public Response associateProvidersToLocation_BL(int locationId, int practiceId, List<Integer> providerIdList) {
 		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_BL(locationId, practiceId);
-		List<Integer> associateProvidersForLocationPayload = associateProvidersToLocation(providerIds);
-		return given().spec(requestSpec).body(associateProvidersForLocationPayload).when().post(url).then().extract()
-				.response();
+		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
 	}
 
 	public Response associateProvidersToLocationInvalidMethodCall_BL(int locationId, int practiceId,
-			List<Integer> providerIds) {
+			List<Integer> providerIdList) {
 		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_BL(locationId, practiceId);
-		List<Integer> associateProvidersForLocationPayload = associateProvidersToLocation(providerIds);
-		return given().spec(requestSpec).body(associateProvidersForLocationPayload).when().put(url).then().extract()
-				.response();
+		return given().spec(requestSpec).body(providerIdList).when().put(url).then().extract().response();
 	}
 
 	public Response associateProvidersToLocationInvalidUrl_BL(int locationId, int practiceId,
-			List<Integer> providerIds) {
+			List<Integer> providerIdList) {
 		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_INVALID_URL_BL(locationId, practiceId);
-		List<Integer> associateProvidersForLocationPayload = associateProvidersToLocation(providerIds);
-		return given().spec(requestSpec).body(associateProvidersForLocationPayload).when().post(url).then().extract()
-				.response();
+		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
 	}
 
 	public Response associateProvidersToLocation_BL() {
@@ -450,9 +444,4 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
-	private List<Integer> associateProvidersToLocation(List<Integer> providerId) {
-		List<Integer> providerIds = new ArrayList<Integer>();
-		providerIds.addAll(providerId);
-		return providerIds;
-	}
 }

@@ -1556,17 +1556,9 @@ public class ApiPath {
 		return SHARED_DL + "/v1/locations/null/practices/null";
 	}
 
-	public static final String ADD_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
-	}
-
-	public static final String GET_PROVIDER_DETAILS_BL(int providerId) {
-		return SERVICE_SHARED_BL + "/v1/providers/" + providerId;
-	}
-
 	public static final String DELETE_PROVIDER_FOR_LOCATION_BL(int locationId, int practiceId, int providerId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers/"
 				+ providerId;
 	}
-	
+
 }
