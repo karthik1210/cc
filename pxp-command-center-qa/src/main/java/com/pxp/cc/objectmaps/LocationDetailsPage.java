@@ -1,0 +1,499 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
+package com.pxp.cc.objectmaps;
+
+import java.awt.AWTException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import com.pxp.cc.util.CCUtils;
+
+public class LocationDetailsPage extends CCMainPage {
+
+	public LocationDetailsPage(WebDriver driver) {
+		super(driver);
+	}
+
+	@FindBy(xpath = "//span[text()='Location Details']")
+	private WebElement titleLocationDetails;
+
+	@FindBy(xpath = "//div[text()='Resource']")
+	private WebElement labelResource;
+
+	@FindBy(id = "resourceInput")
+	private WebElement textboxResource;
+
+	@FindBy(xpath = "(//div[@role='option'])[1]")
+	private WebElement selectFirstInAutoSuggestion;
+
+	@FindBy(id = "cancel-icon")
+	private WebElement buttonCancel;
+
+	@FindBy(xpath = "//span[contains(text(),'clear')]")
+	private WebElement crossIcon;
+
+	@FindBy(xpath = "(//td[@role='gridcell'])[1]")
+	private WebElement newResource;
+
+	@FindBy(id = "removeResourceBtn")
+	private WebElement removeConnection;
+
+	@FindBy(xpath = "//div[contains(text(),'Connected Scheduling Resources')]")
+	private WebElement labelSection;
+
+	@FindBy(xpath = "(//button[contains(text(),'+ ADD')])[2]")
+	private WebElement btnAdd;
+
+	@FindBy(xpath = "//div[contains(text(),'Resource Name')]")
+	private WebElement labelResourceNameColumn;
+
+	@FindBy(xpath = "//div[contains(text(),'Type')]")
+	private WebElement labelTypeColumn;
+
+	@FindBy(id = "save-icon")
+	private WebElement clickAdd;
+
+	@FindBy(xpath = "//div[@class='title']")
+	private WebElement popupTitle;
+
+	@FindBy(id = "cancelBtn")
+	private WebElement btnCancel;
+
+	@FindBy(id = "maxdisplayNameENError")
+	private WebElement errorMessageDisplayNameEn;
+
+	@FindBy(id = "maxdisplayNameESError")
+	private WebElement errorMessageDisplayNameEs;
+
+	@FindBy(id = "maxaddressExtensionError")
+	private WebElement errorMessageAddress2;
+
+	@FindBy(xpath = "//input[@formcontrolname='en']")
+	private WebElement textboxAddress2;
+
+	@FindBy(id = "maxdirectionENError")
+	private WebElement errorMessageDirectionsEn;
+
+	@FindBy(id = "maxdirectionESError")
+	private WebElement errorMessageDirectionsEs;
+
+	@FindBy(id = "validMobileNumberError")
+	private WebElement errorMessagePhoneNumber;
+
+	@FindBy(xpath = "//span[contains(text(),'Invalid range selected')]")
+	private WebElement errorMessageOfficeTime;
+
+	@FindBy(id = "copySettingsBtn")
+	private WebElement labelCopySettings;
+
+	@FindBy(id = "saveDetailsBtn")
+	private WebElement saveSolutionInfo;
+
+	@FindBy(xpath = "//span[contains(text(),'Address 2')]")
+	private WebElement labelAddress2;
+
+	@FindBy(xpath = "//mat-icon[contains(text(),'edit')]")
+	private WebElement labelEditButton;
+
+	@FindBy(xpath = "//span[contains(text(),'Location Display Name (EN)')]")
+	private WebElement labelLocationDisplayNameEn;
+
+	@FindBy(xpath = "//span[contains(text(),'Location Display Name (ES)')]")
+	private WebElement labelLocationDisplayNameEs;
+
+	@FindBy(xpath = "//span[contains(text(),'Office Hours')]")
+	private WebElement labelOfficeHours;
+
+	@FindBy(xpath = "//span[contains(text(),'Phone Number')]")
+	private WebElement labelPhoneNumber;
+
+	@FindBy(xpath = "//span[contains(text(),'Directions (EN)')]")
+	private WebElement labelDirectionsEn;
+
+	@FindBy(xpath = "//span[contains(text(),'Directions (ES)')]")
+	private WebElement labelDirectionsEs;
+
+	@FindBy(xpath = "//textarea[@formcontrolname='en']")
+	private WebElement textboxDirectionsEn;
+
+	@FindBy(xpath = "//textarea[@formcontrolname='es']")
+	private WebElement textboxDirectionsEs;
+
+	@FindBy(id = "editDetailsBtn")
+	private WebElement btnEdit;
+
+	@FindBy(xpath = "//input[@formcontrolname='en']")
+	private WebElement textboxLocationDisplayNameEn;
+
+	@FindBy(xpath = "//input[@formcontrolname='es']")
+	private WebElement textboxLocationDisplayNameEs;
+
+	@FindBy(xpath = "//input[@formcontrolname='addressExtension']")
+	private WebElement textboxAddress2Name;
+
+	@FindBy(xpath = "(//input[@type='text'])[6]")
+	private WebElement textboxAddress;
+
+	@FindBy(xpath = "//input[@formcontrolname='phoneNumber']")
+	private WebElement textboxPhoneNumber;
+
+	@FindBy(xpath = "//input[@formcontrolname='startTime']")
+	private WebElement textboxStartOfficeHours;
+
+	@FindBy(xpath = "//input[@formcontrolname='endTime']")
+	private WebElement textboxEndOfficeHours;
+
+	@FindBy(xpath = "//span[@class='flex']/span")
+	private WebElement toasterMessage;
+
+	@FindBy(xpath = "//div[contains(text(),'Solutions Display Info')]")
+	private WebElement labelSolutionsSection;
+
+	public void verifyLocationDetailsTitle() {
+		CCUtils.verifyAndWaitForElement(titleLocationDetails, driver);
+		log("Verifying Location Details Title");
+		CCUtils.assertEquals(titleLocationDetails.getText().trim(), "Location Details");
+	}
+
+	public void verifyConnectedSchedulingResourcesSection() throws InterruptedException, AWTException {
+		log("Verifying Connected Scheduling Resources Section");
+		verifyConnectedSchedulingResourcesLabel();
+		verifyResourceNameColumnLabel();
+		verifyTypeColumnLabel();
+		verifyAddButtonLabel();
+	}
+
+	public void verifyConnectedSchedulingResourcesLabel() {
+		CCUtils.verifyAndWaitForElement(labelSection, driver);
+		log("Verifying Connected Scheduling Resources Label");
+		CCUtils.assertEquals(labelSection.getText().trim(), "Connected Scheduling Resources");
+	}
+
+	public void verifyResourceNameColumnLabel() {
+		CCUtils.verifyAndWaitForElement(labelResourceNameColumn, driver);
+		log("Verifying Resource Name Column Label");
+		CCUtils.assertEquals(labelResourceNameColumn.getText().trim(), "Resource Name");
+	}
+
+	public void verifyTypeColumnLabel() {
+		CCUtils.verifyAndWaitForElement(labelTypeColumn, driver);
+		log("Verifying Type Column Label");
+		CCUtils.assertEquals(labelTypeColumn.getText().trim(), "Type");
+	}
+
+	public void verifyAddButtonLabel() {
+		CCUtils.verifyAndWaitForElement(btnAdd, driver);
+		log("Verifying Add Button Label");
+		CCUtils.assertEquals(btnAdd.getText().trim(), "+ ADD");
+	}
+
+	public void clickOnAddButton() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(btnAdd, driver);
+		btnAdd.click();
+	}
+
+	public void clickOnAddToSave() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(clickAdd, driver);
+		clickAdd.click();
+	}
+
+	public void verifyAddResourcePopupTitle() {
+		CCUtils.verifyAndWaitForElement(popupTitle, driver);
+		log("Verifying Add Resource Popup title");
+		CCUtils.assertEquals(popupTitle.getText().trim(), "Add Resource(s)");
+	}
+
+	public void verifyResourceNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelResource, driver);
+		log("Verifying Resource name label text");
+		CCUtils.assertEquals(labelResource.getText().trim(), "Resource");
+		log("Resource name label text is " + labelResource.getText().trim());
+		CCUtils.verifyAndWaitForElement(textboxResource, driver);
+		log("Verifying Input text here placeholder is displayed for Resource name textbox field");
+		CCUtils.assertEquals(textboxResource.getAttribute("placeholder").trim(), "Input Text");
+		log("Box text for Resource name textbox field is " + textboxResource.getAttribute("placeholder").trim());
+	}
+
+	public void verifyAddButtonIsDisabled() {
+		CCUtils.verifyAndWaitForElement(clickAdd, driver);
+		CCUtils.assertEquals(clickAdd.isEnabled(), false);
+	}
+
+	public void enterResourceName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxResource, driver);
+		textboxResource.sendKeys(input);
+		log("Entered input for Resource Name : " + input);
+	}
+
+	public void clickFirstInAutoSuggestion() {
+		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
+		if (selectFirstInAutoSuggestion.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			javascriptClick(selectFirstInAutoSuggestion);
+
+		} else {
+			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present");
+		}
+	}
+
+	public void clickOnCancelButton() {
+		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
+		buttonCancel.click();
+		log("Clicked on Cancel Button");
+	}
+
+	public void clickOnCrossIcon() {
+		CCUtils.verifyAndWaitForElement(crossIcon, driver);
+		crossIcon.click();
+		log("Clicked on cross Icon");
+	}
+
+	public void verifyNewlyAddedConnectedSchedulingResource() {
+		CCUtils.verifyAndWaitForElement(newResource, driver);
+		log("Verifying newly added Connected Scheduling Resource in list");
+		CCUtils.assertEquals(newResource.isDisplayed(), true);
+	}
+
+	public void clickOnRemoveConnectionButton() {
+		CCUtils.verifyAndWaitForElement(removeConnection, driver);
+		removeConnection.click();
+		log("Clicked on Remove Connection Button");
+	}
+
+	public void verifySolutionsDisplayInfoSection() throws InterruptedException, AWTException {
+		log("Verifying Solutions Display Info Section");
+		verifySolutionsDisplayInfoSectionLabel();
+		verifyEditButtonLabel();
+		verifyCopySettingsButtonLabel();
+		verifyLocationDisplayNameEnLabel();
+		verifyLocationDisplayNameEsLabel();
+		verifyPhoneNumberLabel();
+		verifyAddress2Label();
+		verifyDirectionsEnNameLabelTextAndTextboxDefaultValue();
+		verifyDirectionsEsNameLabelTextAndTextboxDefaultValue();
+		verifyOfficeHoursLabel();
+	}
+
+	public void verifyCopySettingsButtonLabel() {
+		CCUtils.verifyAndWaitForElement(labelCopySettings, driver);
+		log("Verifying Copy Settings Button Label");
+		CCUtils.assertEquals(labelCopySettings.getText().trim(), "COPY SETTINGS");
+	}
+
+	public void verifyEditButtonLabel() {
+		CCUtils.verifyAndWaitForElement(labelEditButton, driver);
+		log("Verifying Edit Button Label");
+		CCUtils.assertEquals(labelEditButton.getText().trim(), "edit");
+	}
+
+	public void verifySolutionsDisplayInfoSectionLabel() {
+		CCUtils.scrollPageViaElement(driver, labelSolutionsSection);
+		CCUtils.verifyAndWaitForElement(labelSolutionsSection, driver);
+		log("Verifying Solutions Display Info Label");
+		CCUtils.assertEquals(labelSolutionsSection.getText().trim(), "Solutions Display Info");
+	}
+
+	public void verifyLocationDisplayNameEnLabel() {
+		CCUtils.verifyAndWaitForElement(labelLocationDisplayNameEn, driver);
+		log("Verifying Location Display Name (EN) Label");
+		CCUtils.assertEquals(labelLocationDisplayNameEn.getText().trim(), "Location Display Name (EN)");
+	}
+
+	public void verifyLocationDisplayNameEsLabel() {
+		CCUtils.verifyAndWaitForElement(labelLocationDisplayNameEs, driver);
+		log("Verifying Location Display Name (ES) Label");
+		CCUtils.assertEquals(labelLocationDisplayNameEs.getText().trim(), "Location Display Name (ES)");
+	}
+
+	public void verifyOfficeHoursLabel() {
+		CCUtils.verifyAndWaitForElement(labelOfficeHours, driver);
+		log("Verifying Office Hours Label");
+		CCUtils.assertEquals(labelOfficeHours.getText().trim(), "Office Hours");
+	}
+
+	public void verifyPhoneNumberLabel() {
+		CCUtils.verifyAndWaitForElement(labelPhoneNumber, driver);
+		log("Verifying Phone Number Label");
+		CCUtils.assertEquals(labelPhoneNumber.getText().trim(), "Phone Number");
+	}
+
+	public void verifyAddress2Label() {
+		CCUtils.verifyAndWaitForElement(labelAddress2, driver);
+		log("Verifying Address 2 (suite, floor etc) Label");
+		CCUtils.assertEquals(labelAddress2.getText().trim(), "Address 2 (suite, floor etc)");
+	}
+
+	public void verifyDirectionsEnNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelDirectionsEn, driver);
+		log("Verifying Directions En label text");
+		CCUtils.assertEquals(labelDirectionsEn.getText().trim(), "Directions (EN)");
+		log("Directions En label text is " + labelDirectionsEn.getText().trim());
+	}
+
+	public void verifyDirectionsEsNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelDirectionsEs, driver);
+		log("Verifying Directions Es label text");
+		CCUtils.assertEquals(labelDirectionsEs.getText().trim(), "Directions (ES)");
+		log("Directions Es label text is " + labelDirectionsEs.getText().trim());
+	}
+
+	public void clickOnSaveButton() {
+		CCUtils.verifyAndWaitForElement(saveSolutionInfo, driver);
+		saveSolutionInfo.click();
+		log("Clicked on Save Button");
+	}
+
+	public void clickOnEditButton() {
+		CCUtils.verifyAndWaitForElement(btnEdit, driver);
+		btnEdit.click();
+		log("Clicked on Edit Button");
+	}
+
+	public void enterLocationDisplayNameEn(String input) {
+		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEn, driver);
+		textboxLocationDisplayNameEn.clear();
+		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEn, driver);
+		textboxLocationDisplayNameEn.sendKeys(input);
+		log("Entered input for Location Display Name En : " + input);
+	}
+
+	public void enterLocationDisplayNameEs(String input) {
+		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEs, driver);
+		textboxLocationDisplayNameEs.clear();
+		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEs, driver);
+		textboxLocationDisplayNameEs.sendKeys(input);
+		log("Entered input for Location Display Name Es : " + input);
+	}
+
+	public void enterAddress2(String input) {
+		CCUtils.verifyAndWaitForElement(textboxAddress2Name, driver);
+		textboxAddress2Name.clear();
+		textboxAddress2Name.sendKeys(input);
+		log("Entered input for Address2 name : " + input);
+	}
+
+	public void enterPhoneNumber(String input) {
+		CCUtils.verifyAndWaitForElement(textboxPhoneNumber, driver);
+		textboxPhoneNumber.clear();
+		textboxPhoneNumber.sendKeys(input);
+		log("Entered input for Phone number : " + input);
+	}
+
+	public void enterDirectionsEn(String input) {
+		CCUtils.verifyAndWaitForElement(textboxDirectionsEn, driver);
+		textboxDirectionsEn.clear();
+		CCUtils.verifyAndWaitForElement(textboxDirectionsEn, driver);
+		textboxDirectionsEn.sendKeys(input);
+		log("Entered input for Directions EN : " + input);
+	}
+
+	public void enterDirectionsEs(String input) {
+		CCUtils.verifyAndWaitForElement(textboxDirectionsEs, driver);
+		textboxDirectionsEs.clear();
+		CCUtils.verifyAndWaitForElement(textboxDirectionsEs, driver);
+		textboxDirectionsEs.sendKeys(input);
+		log("Entered input for Directions ES : " + input);
+	}
+
+	public void enterStartOfficeHours(String input) {
+		CCUtils.verifyAndWaitForElement(textboxStartOfficeHours, driver);
+		textboxStartOfficeHours.clear();
+		CCUtils.verifyAndWaitForElement(textboxStartOfficeHours, driver);
+		textboxStartOfficeHours.sendKeys(input);
+		log("Entered input for Start Office Hours : " + input);
+	}
+
+	public void enterEndOfficeHours(String input) {
+		CCUtils.verifyAndWaitForElement(textboxEndOfficeHours, driver);
+		textboxEndOfficeHours.clear();
+		CCUtils.verifyAndWaitForElement(textboxEndOfficeHours, driver);
+		textboxEndOfficeHours.sendKeys(input);
+		log("Entered input for End Office Hours : " + input);
+	}
+
+	public void verifyToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		CCUtils.assertEquals(toasterMessage.isDisplayed(), true);
+	}
+
+	public void clickOnCancel() {
+		CCUtils.verifyAndWaitForElement(btnCancel, driver);
+		btnCancel.click();
+		log("Clicked on Cancel Button");
+	}
+
+	public void verifyMaximumCharactersReachedErrorMessage(String LocationDisplayNameEn, String LocationDisplayNameEs,
+			String address2, String directionsEn, String directionsEs) {
+		log("Enter more than 100 characters in LocationDisplayNameEn textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEn, driver);
+		textboxLocationDisplayNameEn.sendKeys(LocationDisplayNameEn);
+		log("Entered text in LocationDisplayNameEn field is " + LocationDisplayNameEn);
+		CCUtils.verifyAndWaitForElement(errorMessageDisplayNameEn, driver);
+		CCUtils.assertEquals(errorMessageDisplayNameEn.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for LocationDisplayNameEn field is " + errorMessageDisplayNameEn.getText().trim());
+		log("Enter more than 100 characters in LocationDisplayNameEs textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEs, driver);
+		textboxLocationDisplayNameEs.sendKeys(LocationDisplayNameEs);
+		log("Entered text in LocationDisplayNameEs field is " + LocationDisplayNameEs);
+		CCUtils.verifyAndWaitForElement(errorMessageDisplayNameEs, driver);
+		CCUtils.assertEquals(errorMessageDisplayNameEs.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for LocationDisplayNameEs field is " + errorMessageDisplayNameEs.getText().trim());
+		log("Enter more than 100 characters in Address2 textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxAddress, driver);
+		textboxAddress.clear();
+		textboxAddress.sendKeys(address2);
+		log("Entered input for Address2 name : " + address2);
+		CCUtils.verifyAndWaitForElement(errorMessageAddress2, driver);
+		CCUtils.assertEquals(errorMessageAddress2.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for Address2 field is " + errorMessageAddress2.getText().trim());
+		log("Enter more than 100 characters in DirectionsEn textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxDirectionsEn, driver);
+		textboxDirectionsEn.clear();
+		textboxDirectionsEn.sendKeys(directionsEn);
+		log("Entered text in DirectionsEn field is " + directionsEn);
+		CCUtils.verifyAndWaitForElement(errorMessageDirectionsEn, driver);
+		CCUtils.assertEquals(errorMessageDirectionsEn.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for DirectionsEn field is " + errorMessageDirectionsEn.getText().trim());
+		log("Enter more than 100 characters in DirectionsEs textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxDirectionsEs, driver);
+		textboxDirectionsEs.clear();
+		textboxDirectionsEs.sendKeys(directionsEs);
+		log("Entered text in DirectionsEs field is " + directionsEs);
+		CCUtils.verifyAndWaitForElement(errorMessageDirectionsEs, driver);
+		CCUtils.assertEquals(errorMessageDirectionsEs.getText().trim(), "Maximum characters reached");
+		log("Error message displayed for DirectionsEs field is " + errorMessageDirectionsEs.getText().trim());
+	}
+
+	public void verifyErrorMessageForInvalidPhoneNumber(String phoneNumber) {
+		log("Enter invalid phone number in textbox field and verify error message");
+		CCUtils.verifyAndWaitForElement(textboxPhoneNumber, driver);
+		textboxPhoneNumber.clear();
+		textboxPhoneNumber.sendKeys(phoneNumber);
+		log("Entered text in phone number field is " + phoneNumber);
+		CCUtils.verifyAndWaitForElement(errorMessagePhoneNumber, driver);
+		CCUtils.assertEquals(errorMessagePhoneNumber.getText().trim(), "Please enter valid phone number");
+		log("Error message displayed for phone number field is " + errorMessagePhoneNumber.getText().trim());
+	}
+
+	public void verifyErrorMessageForInvalidOfficeHours(String startTime, String endTime) {
+		CCUtils.verifyAndWaitForElement(textboxStartOfficeHours, driver);
+		textboxStartOfficeHours.clear();
+		CCUtils.verifyAndWaitForElement(textboxStartOfficeHours, driver);
+		textboxStartOfficeHours.sendKeys(startTime);
+		log("Entered input for Start Office Hours : " + startTime);
+		CCUtils.verifyAndWaitForElement(textboxEndOfficeHours, driver);
+		textboxEndOfficeHours.clear();
+		CCUtils.verifyAndWaitForElement(textboxEndOfficeHours, driver);
+		textboxEndOfficeHours.sendKeys(endTime);
+		log("Entered input for End Office Hours : " + endTime);
+		CCUtils.verifyAndWaitForElement(errorMessageOfficeTime, driver);
+		CCUtils.assertEquals(errorMessageOfficeTime.getText().trim(),
+				"Invalid range selected. Start time cannot be greater than End time");
+	}
+
+	public void verifySaveButtonIsDisabled() {
+		CCUtils.verifyAndWaitForElement(saveSolutionInfo, driver);
+		CCUtils.assertEquals(saveSolutionInfo.isEnabled(), false);
+	}
+}

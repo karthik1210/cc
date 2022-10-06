@@ -66,6 +66,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteResourceForLocationApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddResourcesForLocationApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationByPracticeApiTests_DataLayer"></class>
 		</classes>
 	</test>
 

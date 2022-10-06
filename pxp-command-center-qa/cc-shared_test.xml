@@ -88,7 +88,17 @@
 			<!-- Enable test class once issue is addressed for Jira # PXPP-23905 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer" 
 				/> -->
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsAssociatedWithResourceApiTests_BusinessLayer" />
 
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveLocationDisplayInfoForPracticeApiTests_BusinessLayer" />
+
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateProvidersToLocationApiTests_BusinessLayer" />
+
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteProviderForLocationApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

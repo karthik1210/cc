@@ -853,7 +853,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_BL_VALID_DETAILS(locationId, practiceId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
-	
+
 	public Response enableOrDisableSolutionsForResource_BL(int resourceId, int practiceId, int solutionId,
 			boolean active) {
 		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
@@ -862,12 +862,12 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
 				.extract().response();
 	}
-	
+
 	public Response enableOrDisableSolutionsForResourceForNullPayload_BL(int resourceId, int practiceId) {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_BL(resourceId, practiceId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response enableOrDisableSolutionsForResourceUsingInvalidMethod_BL(int resourceId, int practiceId,
 			int solutionId, boolean active) {
 		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
@@ -876,7 +876,7 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().post(url).then()
 				.extract().response();
 	}
-	
+
 	public Response enableOrDisableSolutionsForResourceUsingInvalidUrl_BL(int resourceId, int practiceId,
 			int solutionId, boolean active) {
 		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
@@ -885,9 +885,133 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
 				.extract().response();
 	}
-	
+
 	public Response enableOrDisableSolutionsForResourceUsingNullValue_BL() {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_USING_NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPractice_BL(int locationId, int practiceId, String enDisplayName,
+			String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime,
+			String enDirection, String esDirection) {
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createTimePayload, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> createDisplayNamePayload(String en, String es) {
+		Map<String, Object> createDisplayNameMap = new HashMap<String, Object>();
+		createDisplayNameMap.put("en", en);
+		createDisplayNameMap.put("es", es);
+		return createDisplayNameMap;
+	}
+
+	private Map<String, Object> createOfficeHoursPayload(String startTime, String endTime) {
+		Map<String, Object> createOfficeTimeMap = new HashMap<String, Object>();
+		createOfficeTimeMap.put("startTime", startTime);
+		createOfficeTimeMap.put("endTime", endTime);
+		return createOfficeTimeMap;
+	}
+
+	private Map<String, Object> createDirectionPayload(String enDirection, String esDirection) {
+		Map<String, Object> createDirectionTimeMap = new HashMap<String, Object>();
+		createDirectionTimeMap.put("en", enDirection);
+		createDirectionTimeMap.put("es", esDirection);
+		return createDirectionTimeMap;
+	}
+
+	private Map<String, Object> saveLocationInfoForPracticeApiPayload(Map<String, Object> displayName,
+			String addressExtension, String phoneNumber, Map<String, Object> createTimePayload,
+			Map<String, Object> createDirectionPayload) {
+		Map<String, Object> saveLocationInfoDetailsMap = new HashMap<String, Object>();
+		saveLocationInfoDetailsMap.put("displayName", displayName);
+		saveLocationInfoDetailsMap.put("addressExtension", addressExtension);
+		saveLocationInfoDetailsMap.put("phoneNumber", phoneNumber);
+		saveLocationInfoDetailsMap.put("officeHours", createTimePayload);
+		saveLocationInfoDetailsMap.put("direction", createDirectionPayload);
+		return saveLocationInfoDetailsMap;
+	}
+
+	public Response saveLocationInfoForPracticeUsingInvalidMethodCall_BL(int locationId, int practiceId,
+			String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String startTime,
+			String endTime, String enDirection, String esDirection) {
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createTimePayload, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().post(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPracticeUsingInvalidUrl_BL(int locationId, int practiceId, String enDisplayName,
+			String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime,
+			String enDirection, String esDirection) {
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_USING_INVALID_URL_BL(locationId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createTimePayload, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPracticeUsingNullValues_BL(String enDisplayName, String esDisplayName,
+			String addressExtension, String phoneNumber, String startTime, String endTime, String enDirection,
+			String esDirection) {
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_USING_NULL_VALUE_BL();
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createTimePayload, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPracticeForSelectivePayload_BL(int locationId, int practiceId,
+			String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String enDirection,
+			String esDirection) {
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_BL(locationId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> saveLocationInfoForPracticeApiPayload(Map<String, Object> displayName,
+			String addressExtension, String phoneNumber, Map<String, Object> createDirectionPayload) {
+		Map<String, Object> saveLocationInfoDetailsMap = new HashMap<String, Object>();
+		saveLocationInfoDetailsMap.put("displayName", displayName);
+		saveLocationInfoDetailsMap.put("addressExtension", addressExtension);
+		saveLocationInfoDetailsMap.put("phoneNumber", phoneNumber);
+		saveLocationInfoDetailsMap.put("direction", createDirectionPayload);
+		return saveLocationInfoDetailsMap;
+	}
+
+	public Response associateDeassociatePractice_DL(int practiceId, int locationId, boolean active) {
+		String url = ApiPath.ASSOCIATE_DEASSOCIATE_PRACTICE_TO_LOCATION_DL(locationId);
+		Map<String, Object> associatePracticePayload = associateDeassociatePracticeToLocation(practiceId, active);
+		return given().spec(requestSpec).body(associatePracticePayload).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationByPractice_DL(int locationId, int practiceId) {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_DL(locationId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationByPracticeUsingNullValues_DL() {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_USING_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response deleteProviderForLocation_BL(int locationId, int practiceId, int providerId) {
+		String url = ApiPath.DELETE_PROVIDER_FOR_LOCATION_BL(locationId, practiceId, providerId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 }

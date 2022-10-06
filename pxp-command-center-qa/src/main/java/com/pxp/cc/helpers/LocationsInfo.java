@@ -328,16 +328,14 @@ public class LocationsInfo extends BaseRest {
 				.response();
 	}
 
-	public Response addResourceForLocationInvalidMethod_BL(int locationId, int practiceId,
-			List<Integer> resourceIds) {
+	public Response addResourceForLocationInvalidMethod_BL(int locationId, int practiceId, List<Integer> resourceIds) {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_BL(locationId, practiceId);
 		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
 		return given().spec(requestSpec).body(addResourceForLocationPayload).when().put(url).then().extract()
 				.response();
 	}
 
-	public Response addResourceForLocationInvalidUrl_BL(int locationId, int practiceId,
-		List<Integer> resourceIds) {
+	public Response addResourceForLocationInvalidUrl_BL(int locationId, int practiceId, List<Integer> resourceIds) {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_INVALID_URL_BL(locationId, practiceId);
 		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
 		return given().spec(requestSpec).body(addResourceForLocationPayload).when().post(url).then().extract()
@@ -390,6 +388,60 @@ public class LocationsInfo extends BaseRest {
 		toggleSolutionStatusMap.put("solutionId", solutionId);
 		toggleSolutionStatusMap.put("active", active);
 		return toggleSolutionStatusMap;
+	}
+
+	public Response getLocationsForResourceForInvalidUrl_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_INVALID_URL_BL(resourceId, practiceId);
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+
+	public Response getLocationsForResourceForInvalidMethod_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_BL(resourceId, practiceId);
+		return given().spec(requestSpec).post(url).then().extract().response();
+	}
+
+	public Response getLocationsForResourceUsingNullValues() {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_BL_NULL_VALUES();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getLocationsForResource_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_RESOURCE_BL(resourceId, practiceId);
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+
+	public Response addResourceForLocation_DL(int locationId, int practiceId, ArrayList<Integer> resourceIds) {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_DL(locationId, practiceId);
+		List<Integer> addResourceForLocationPayload = addResourceForLocation(resourceIds);
+		return given().spec(requestSpec).body(addResourceForLocationPayload).when().post(url).then().extract()
+				.response();
+	}
+
+	public Response addResourceForLocation_DL() {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocation_BL(int locationId, int practiceId, List<Integer> providerIdList) {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocationInvalidMethodCall_BL(int locationId, int practiceId,
+			List<Integer> providerIdList) {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).body(providerIdList).when().put(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocationInvalidUrl_BL(int locationId, int practiceId,
+			List<Integer> providerIdList) {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_INVALID_URL_BL(locationId, practiceId);
+		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocation_BL() {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
 }

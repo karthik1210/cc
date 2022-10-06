@@ -2827,11 +2827,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
 	}
 
-	public void verifyOutputForPrivacySettingFromInput(Response response) {
-		JsonPath jsonPath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
-	}
-
 	public void verifyResponseBodyForGetPracticeProvider(Response response, String en, String es, String email,
 			String mobile) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
@@ -3157,7 +3152,59 @@ public class Validations {
 					}
 				}
 			}
-
 		}
 	}
+	
+	public void verifySaveDisplayInfoForPracticeApiResponseBody(Response response, String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime, String enDirection,
+			String esDirection) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Map<String, String> dsName = jsonpath.getMap("displayName");
+		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
+		CCUtils.assertEquals(dsName.get("es").toString(), esDisplayName);
+		CCUtils.assertEquals(jsonpath.get("addressExtension"), addressExtension);
+		CCUtils.assertEquals(jsonpath.getString("phoneNumber"),phoneNumber);
+		Map<String,String> officeTimings= jsonpath.getMap("officeHours");
+		CCUtils.assertEquals(officeTimings.get("startTime").toString(), startTime);
+		CCUtils.assertEquals(officeTimings.get("endTime").toString(), endTime);
+		Map<String,String> diectionInfo=jsonpath.getMap("direction");
+		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
+		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
+	}
+	
+	public void verifySaveDisplayInfoForSelectivePayloadApiResponseBody(Response response, String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String enDirection,
+			String esDirection) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Map<String, String> dsName = jsonpath.getMap("displayName");
+		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
+		CCUtils.assertEquals(dsName.get("es").toString(), esDisplayName);
+		CCUtils.assertEquals(jsonpath.get("addressExtension"), addressExtension);
+		CCUtils.assertEquals(jsonpath.getString("phoneNumber"),phoneNumber);
+		Map<String,String> diectionInfo=jsonpath.getMap("direction");
+		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
+		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
+	}
+
+	public void verifyOutputForPrivacySettingFromInput(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("touType"), "NPP");
+	}
+
+	public void verifyOutputForTouFromInput(Response response, String touType, String touName) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("touType"), touType);
+		CCUtils.assertEquals(jsonPath.get("name"), touName);
+	}
+
+	public void getTouIdValidation( Response getTouApiResponse,  String actualName, int practiceId)
+	{
+		List<String> touIds = getTouApiResponse.jsonPath().get("touId");
+		for (int i = 0; i < touIds.size(); i++) {
+			int touId = getTouApiResponse.jsonPath().get("touId[" + i + "]");
+			String name = getTouApiResponse.jsonPath().get("name[" + i + "]");
+			if (name.equalsIgnoreCase(actualName)) {
+				Log4jUtil.log( touId+ " added/fetched/updated successfully for " + practiceId);
+			}
+		}
+	}
+
 }

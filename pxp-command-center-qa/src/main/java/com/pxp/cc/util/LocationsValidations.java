@@ -6,10 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.objectmaps.LocationStatus;
+import com.pxp.cc.pojos.ProviderStatus;
 import com.pxp.cc.pojos.ResourceStatus;
 import com.pxp.cc.pojos.ResourcesStatus;
 
@@ -20,7 +22,7 @@ public class LocationsValidations {
 	JsonPath jsonPath;
 	JSONArray jsonArray;
 	JSONObject jsonObject;
-	
+
 	public void verifySearchLocationOutputWithoutFilter(Response response, String getSearchLocations) {
 		jsonPath = new JsonPath(response.asString());
 		Log4jUtil.log("Display list of locations in response body : " + jsonPath.get("items"));
@@ -213,6 +215,7 @@ public class LocationsValidations {
 					"Resource Id " + jsonObject.getInt("resourceId") + " doesn't exist");
 		}
 	}
+
 	public void verifyNoOfSolutionsFetchedSolutionNameandId(Response response) {
 		jsonArray = new JSONArray(response.getBody().asString());
 		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
@@ -222,5 +225,34 @@ public class LocationsValidations {
 			Log4jUtil.log("print the solution name : " + jsonObject.getString("name") + " and solution Id : "
 					+ jsonObject.get("solutionId"));
 		}
+	}
+
+	public void verifyAssociateProvidersForLocationApiResponseBody(Response response, List<Integer> providerIds,
+			String status, String message) throws IOException {
+		List<ProviderStatus> actualProvidersStatusList = new ArrayList<ProviderStatus>();
+		for (int i = 0; i < providerIds.size(); i++) {
+			actualProvidersStatusList.add(new ProviderStatus(providerIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Providers list is empty");
+		CCUtils.assertTrue(actualProvidersStatusList.size() == responseBody.length(),
+				"Size of actual Providers list and expected Providers list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualProvidersStatusList.contains(new ProviderStatus(jsonObject.getInt("providerId"),
+							jsonObject.getString("status"), jsonObject.get("message"))),
+					"Provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
+		}
+	}
+
+	public void verifyGetLocationByPracticeApiResponseBody(Response response, String enDisplayName) throws IOException {
+		Map<String, String> displayName = response.jsonPath().getMap("displayName");
+		CCUtils.assertEquals(displayName.get("en").toString(), enDisplayName);
+	}
+
+	public String getFirstName(Response response) throws IOException {
+		return response.jsonPath().getString("firstName");
 	}
 }
