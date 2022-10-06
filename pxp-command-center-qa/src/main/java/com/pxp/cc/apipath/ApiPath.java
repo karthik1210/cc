@@ -1555,4 +1555,46 @@ public class ApiPath {
 	public static final String FETCH_LOCATION_BY_PRACTICE_USING_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/locations/null/practices/null";
 	}
+
+	public static final String GET_UPDATE_DELETE_TOUID(String serviceLayer, int practiceId, int touId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String GET_UPDATE_DELETE_TOUID_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String touId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
+	}
+
+	public static final String GET_UPDATE_DELETE_TOUID_WITH_INVLAID_URI(String serviceLayer, int practiceId, int touId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
+	}
+
+	public static final String GET_ADD_TOUS(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String GET_ADD_TOUS_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
+	}
+
+	public static final String GET_ADD_TOUS_WITH_INVLAID_URI(String serviceLayer, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss";
+		else
+			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss";
+	}
 }
