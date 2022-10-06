@@ -1327,4 +1327,105 @@ public class OrgInfo extends BaseRest {
 		solutionsList.add(solutionsMap);
 		return solutionsList;
 	}
+
+	public Response getPracticeTousResponse(String validURI, String serviceLayer, int practiceId, String type) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_ADD_TOUS(serviceLayer, practiceId);
+			return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_ADD_TOUS_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_ADD_TOUS(serviceLayer, practiceId);
+			return given().spec(requestSpec).queryParam("type", type).when().put(url).then().extract().response();
+		}
+	}
+
+	public Response getPracticeTousInvaliDatatypeResponse(String serviceLayer, String practiceId, String type) {
+		String url = ApiPath.GET_ADD_TOUS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
+
+	public Response getByTouIdResponse(String validURI, String serviceLayer, int practiceId, int touId) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID_WITH_INVLAID_URI(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getByTouIdInvaliDatatypeResponse(String serviceLayer, String practiceId, String touId) {
+		String url = ApiPath.GET_UPDATE_DELETE_TOUID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, touId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response addPracticeTousResponse(String validURI, String serviceLayer, int practiceId, PracticeTouDetails addPracticeTous) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_ADD_TOUS(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeTous).when().post(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_ADD_TOUS_WITH_INVLAID_URI(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeTous).when().post(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_ADD_TOUS(serviceLayer, practiceId);
+			return given().spec(requestSpec).body(addPracticeTous).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response addPracticeTousInvaliDatatypeResponse(String serviceLayer, String practiceId, PracticeTouDetails addPracticeTous) {
+		String url = ApiPath.GET_ADD_TOUS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+		return given().spec(requestSpec).body(addPracticeTous).when().post(url).then().extract().response();
+	}
+
+	public Response updatePracticeTousResponse(String validURI, String serviceLayer, int practiceId, int touId, PracticeTouDetails updatePracticeTous) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).body(updatePracticeTous).when().post(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID_WITH_INVLAID_URI(serviceLayer, practiceId,
+					touId);
+			return given().spec(requestSpec).body(updatePracticeTous).when().post(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).body(updatePracticeTous).when().patch(url).then().extract()
+					.response();
+		}
+	}
+
+	public Response updatePracticeTousInvaliDatatypeResponse(String serviceLayer, String practiceId, String touId, PracticeTouDetails updatePracticeTous) {
+		String url = ApiPath.GET_UPDATE_DELETE_TOUID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId,
+				touId);
+		return given().spec(requestSpec).body(updatePracticeTous).when().post(url).then().extract().response();
+	}
+
+	public Response deletePracticeTousResponse(String validURI, String serviceLayer, int practiceId, int touId, Map<String, Object>  deleteTouMap) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).body(deleteTouMap).when().put(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID_WITH_INVLAID_URI(serviceLayer, practiceId,
+					touId);
+			return given().spec(requestSpec).body(deleteTouMap).when().put(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_UPDATE_DELETE_TOUID(serviceLayer, practiceId, touId);
+			return given().spec(requestSpec).body(deleteTouMap).when().patch(url).then().extract()
+					.response();
+		}
+	}
+
+	public Response deletePracticeTousInvaliDatatypeResponse(String serviceLayer, String practiceId, String touId, Map<String, Object> deleteTouMap) {
+		String url = ApiPath.GET_UPDATE_DELETE_TOUID_WITH_INVLAID_DATATYPE(serviceLayer, practiceId,
+				touId);
+		return given().spec(requestSpec).body(deleteTouMap).when().put(url).then().extract().response();
+	}
+
+	public Response getOrgSolutionsDetails_BusinessLayer(int orgId, String type) {
+		String url = ApiPath.ORGS_SOLUTION_BL + orgId + "/solutions";
+		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+	}
 }
