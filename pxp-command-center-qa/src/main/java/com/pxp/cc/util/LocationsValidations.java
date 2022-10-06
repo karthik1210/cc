@@ -251,4 +251,8 @@ public class LocationsValidations {
 		Map<String, String> displayName = response.jsonPath().getMap("displayName");
 		CCUtils.assertEquals(displayName.get("en").toString(), enDisplayName);
 	}
+
+	public String getFirstName(Response response) throws IOException {
+		return response.jsonPath().getString("firstName");
+	}
 }
