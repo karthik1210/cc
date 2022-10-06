@@ -862,9 +862,9 @@ public class AddOrgNodePage extends CCMainPage {
 		log("Box text for Enterprise name textbox field is " + textboxName.getAttribute("placeholder").trim());
 	}
 
-	public void addNewEnterprise() throws InterruptedException {
+	public void addNewEnterprise(String enterpriseName) throws InterruptedException {
 		clickOnAddEnterprise();
-		enterNewEnterpriseDetails("EnterpriseForDemo");
+		enterNewEnterpriseDetails(enterpriseName);
 	}
 
 	public void clickOnAddEnterprise() {
