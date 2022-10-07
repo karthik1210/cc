@@ -148,6 +148,54 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Solutions Display Info')]")
 	private WebElement labelSolutionsSection;
+	
+	@FindBy(xpath = "//div[contains(text(),'Location Info')]")
+	private WebElement labelLocationInfoSection;
+
+	@FindBy(xpath = "//span[contains(text(),'External ID')]")
+	private WebElement labelExternalIDSection;
+
+	@FindBy(xpath = "(//span[contains(text(),'Address')])[1]")
+	private WebElement labelAddress;
+
+	@FindBy(xpath = "//span[contains(text(),'Command Center ID')]")
+	private WebElement labelCommandCenterId;
+
+	@FindBy(xpath = "//span[contains(text(),'Latitude')]")
+	private WebElement labelLatitude;
+
+	@FindBy(xpath = "//span[contains(text(),'Timezone')]")
+	private WebElement labelTimezone;
+
+	@FindBy(xpath = "//span[contains(text(),'Longitude')]")
+	private WebElement labelLongitude;
+
+	@FindBy(xpath = "//span[contains(text(),'Google Maps Link')]")
+	private WebElement labelGoogleMapsLink;
+
+	@FindBy(xpath = "//span[contains(text(),'LOCATION')]")
+	private WebElement labelLocation;
+
+	@FindBy(xpath = "//div[@role= 'region']")
+	private WebElement locationMap;
+
+	@FindBy(xpath = "//mat-icon[@svgicon= 'Location_Icon']")
+	private WebElement locationIcon;
+
+	@FindBy(xpath = "//mat-icon[contains(text(),'content_copy')]")
+	private WebElement copyIcon;
+
+	@FindBy(xpath = "//mat-icon[contains(text(),'check_circle')]")
+	private WebElement messageCopied;
+
+	@FindBy(xpath = "(//div[@class='row'])[2]")
+	private WebElement locationName;
+
+	@FindBy(xpath = "(//div[@class='row'])[4]")
+	private WebElement address;
+
+	@FindBy(xpath = "(//div[@class='row'])[8]")
+	private WebElement timeZone;
 
 	public void verifyLocationDetailsTitle() {
 		CCUtils.verifyAndWaitForElement(titleLocationDetails, driver);
@@ -496,4 +544,108 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(saveSolutionInfo, driver);
 		CCUtils.assertEquals(saveSolutionInfo.isEnabled(), false);
 	}
+	
+	public void verifyLocationInfoSection() throws InterruptedException, AWTException {
+		log("Verifying Location Info Section");
+		verifyLocationLabel();
+		verifyocationIcon();
+		verifyLocationMap();
+		verifyLocationInfoSectionLabel();
+		verifyExternalIdLabel();
+		verifyLocationAddressLabel();
+		verifyLocationCommandCenterIdLabel();
+		verifyLatitudeLabel();
+		verifyTimezoneLabel();
+		verifyLongitudeLabel();
+		verifyGoogleMapsLink();
+	}
+
+	public void verifyLocationInfoSectionLabel() {
+		CCUtils.verifyAndWaitForElement(labelLocationInfoSection, driver);
+		log("Verifying Location Info Label");
+		CCUtils.assertEquals(labelLocationInfoSection.getText().trim(), "Location Info");
+	}
+
+	public void verifyExternalIdLabel() {
+		CCUtils.verifyAndWaitForElement(labelExternalIDSection, driver);
+		log("Verifying Location External ID Label");
+		CCUtils.assertEquals(labelExternalIDSection.getText().trim(), "External ID");
+	}
+
+	public void verifyLocationAddressLabel() {
+		CCUtils.verifyAndWaitForElement(labelAddress, driver);
+		log("Verifying Location Address Label");
+		CCUtils.assertEquals(labelAddress.getText().trim(), "Address");
+	}
+
+	public void verifyLocationCommandCenterIdLabel() {
+		CCUtils.verifyAndWaitForElement(labelCommandCenterId, driver);
+		log("Verifying Command Center Id Label");
+		CCUtils.assertEquals(labelCommandCenterId.getText().trim(), "Command Center ID");
+	}
+
+	public void verifyLatitudeLabel() {
+		CCUtils.verifyAndWaitForElement(labelLatitude, driver);
+		log("Verifying Latitude Label");
+		CCUtils.assertEquals(labelLatitude.getText().trim(), "Latitude");
+	}
+
+	public void verifyTimezoneLabel() {
+		CCUtils.verifyAndWaitForElement(labelTimezone, driver);
+		log("Verifying Timezone Label");
+		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone");
+	}
+
+	public void verifyLongitudeLabel() {
+		CCUtils.verifyAndWaitForElement(labelLongitude, driver);
+		log("Verifying Longitude Label");
+		CCUtils.assertEquals(labelLongitude.getText().trim(), "Longitude");
+	}
+
+	public void verifyGoogleMapsLink() {
+		CCUtils.verifyAndWaitForElement(labelGoogleMapsLink, driver);
+		log("Verifying Google Maps Link Label");
+		CCUtils.assertEquals(labelGoogleMapsLink.getText().trim(), "Google Maps Link");
+	}
+
+	public void verifyLocationLabel() {
+		CCUtils.verifyAndWaitForElement(labelLocation, driver);
+		log("Verifying Location Label");
+		CCUtils.assertEquals(labelLocation.getText().trim(), "LOCATION");
+	}
+
+	public void verifyLocationMap() {
+		log("Verifying Location map");
+		CCUtils.verifyAndWaitForElement(locationMap, driver);
+		CCUtils.assertTrue(locationMap.isDisplayed(), "Location map is displayed");
+	}
+
+	public void verifyocationIcon() {
+		log("Verifying Location icon");
+		CCUtils.verifyAndWaitForElement(locationIcon, driver);
+		CCUtils.assertTrue(locationIcon.isDisplayed(), "Location icon is displayed");
+	}
+
+	public void verifyCopyIconFunctionality() {
+		log("Verifying Copy icon");
+		CCUtils.verifyAndWaitForElement(copyIcon, driver);
+		CCUtils.assertTrue(copyIcon.isDisplayed(), "copy icon is displayed");
+		javascriptClick(copyIcon);
+		log("Clicked on Copy icon");
+		log("Verifying Copied message");
+		CCUtils.assertEquals(messageCopied.isDisplayed(), true);
+	}
+
+	public void verifyLocationNameAddressAndTimezone() {
+		log("Verifying location Name");
+		CCUtils.verifyAndWaitForElement(locationName, driver);
+		CCUtils.assertTrue(locationName.isDisplayed(), "location Name is displayed");
+		log("Verifying address");
+		CCUtils.verifyAndWaitForElement(address, driver);
+		CCUtils.assertTrue(address.isDisplayed(), "address is displayed");
+		log("Verifying timeZone");
+		CCUtils.verifyAndWaitForElement(timeZone, driver);
+		CCUtils.assertTrue(timeZone.isDisplayed(), "timeZone is displayed");
+	}
 }
+
