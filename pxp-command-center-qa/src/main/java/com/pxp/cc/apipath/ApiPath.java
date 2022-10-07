@@ -1604,4 +1604,8 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss";
 	}
+
+	public static final String DELETE_PROVIDER_FOR_LOCATION_DL(int locationId, int practiceId, int providerId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers/" + providerId;
+	}
 }
