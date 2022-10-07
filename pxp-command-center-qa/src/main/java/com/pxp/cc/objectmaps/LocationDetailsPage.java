@@ -188,7 +188,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-icon[contains(text(),'check_circle')]")
 	private WebElement messageCopied;
 
-	@FindBy(xpath = "(//div[@class='row'])[2]")
+	@FindBy(xpath = "//div[@class='col header-small ellipses']/span")
 	private WebElement locationName;
 
 	@FindBy(xpath = "(//div[@class='row'])[4]")
@@ -626,7 +626,7 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.assertTrue(locationIcon.isDisplayed(), "Location icon is displayed");
 	}
 
-	public void verifyCopyIconFunctionality() {
+	public void verifyCopiedText() {
 		log("Verifying Copy icon");
 		CCUtils.verifyAndWaitForElement(copyIcon, driver);
 		CCUtils.assertTrue(copyIcon.isDisplayed(), "copy icon is displayed");

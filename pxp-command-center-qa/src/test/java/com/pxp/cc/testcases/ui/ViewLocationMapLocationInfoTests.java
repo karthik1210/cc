@@ -88,10 +88,10 @@ public class ViewLocationMapLocationInfoTests extends CommandCenterGenericTest {
 		locationDetailsPage.verifyLocationInfoSection();
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify Copy icon Functionality")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify Copied text")
 	public void testCopyIcon() throws Exception {
-		logStep("Verify copy icon Functionality");
-		locationDetailsPage.verifyCopyIconFunctionality();
+		logStep("Verify copied text");
+		locationDetailsPage.verifyCopiedText();
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify Location name, Address and timezone on Location details page")
