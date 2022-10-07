@@ -128,7 +128,6 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 		String fileType = "image/png";
 		updateBrandingLogoApiResponse = brandsInfo.updateBrandLogo_Null_BrandId_BL(
 				testData.getProperty("api.logo.type"), testData.getProperty("api.alt.text"), file, fileType);
-		CCUtils.responseTimeValidation(updateBrandingLogoApiResponse);
 		CCUtils.assertEquals(updateBrandingLogoApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageIfClientIdIsNull(updateBrandingLogoApiResponse);
 	}

@@ -1014,4 +1014,9 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.DELETE_PROVIDER_FOR_LOCATION_BL(locationId, practiceId, providerId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+
+	public Response deleteProviderForLocation_DL(int locationId, int practiceId, int providerId) {
+		String url = ApiPath.DELETE_PROVIDER_FOR_LOCATION_DL(locationId, practiceId, providerId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
 }
