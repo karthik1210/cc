@@ -1019,4 +1019,81 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.DELETE_PROVIDER_FOR_LOCATION_DL(locationId, practiceId, providerId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+
+	public Response enableDisableSolutionForLocation_DL(int practiceId, int locationId, int solutionId,
+			boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response enableDisableSolutionForLocation_DL_NULL_SOLUTIONID(int practiceId, int locationId,
+			boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForLocation_NULL_solutionId(
+				active);
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response enableDisableSolutionForLocation_DL_NULL_Active(int practiceId, int locationId, int solutionId) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForLocation_NULL_Active(
+				solutionId);
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response enableDisableSolutionForLocation_DL_NULL_SOLUTIONID_ACTIVE(int practiceId, int locationId) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForLocation_NULL_Active_SolutionId();
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	public Response enableDisableSolutionForLocation_DL_INVALID_Method_Call(int practiceId, int locationId,
+			int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().patch(url).then().extract()
+				.response();
+	}
+	
+	public Response enableDisableSolutionForLocation_DL_INVALID_URL(int practiceId, int locationId,
+			int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL_INVALID_URL(locationId, practiceId);
+		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().patch(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> enableOrDisableSolutionsForLocation_NULL_solutionId(boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourceMap = new HashMap<String, Object>();
+		EnableOrDisableSolutionsForResourceMap.put("solutionId", null);
+		EnableOrDisableSolutionsForResourceMap.put("active", active);
+		return EnableOrDisableSolutionsForResourceMap;
+	}
+
+	private Map<String, Object> enableOrDisableSolutionsForLocation_NULL_Active(int solutionId) {
+		Map<String, Object> EnableOrDisableSolutionsForResourceMap = new HashMap<String, Object>();
+		EnableOrDisableSolutionsForResourceMap.put("solutionId", solutionId);
+		EnableOrDisableSolutionsForResourceMap.put("active", null);
+		return EnableOrDisableSolutionsForResourceMap;
+	}
+
+	private Map<String, Object> enableOrDisableSolutionsForLocation_NULL_Active_SolutionId() {
+		Map<String, Object> EnableOrDisableSolutionsForResourceMap = new HashMap<String, Object>();
+		EnableOrDisableSolutionsForResourceMap.put("solutionId", null);
+		EnableOrDisableSolutionsForResourceMap.put("active", null);
+		return EnableOrDisableSolutionsForResourceMap;
+	}
+
+	public Response getSolutionForLocation_DL(int practiceId, int locationId) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

@@ -3154,32 +3154,34 @@ public class Validations {
 			}
 		}
 	}
-	
-	public void verifySaveDisplayInfoForPracticeApiResponseBody(Response response, String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime, String enDirection,
-			String esDirection) throws IOException {
+
+	public void verifySaveDisplayInfoForPracticeApiResponseBody(Response response, String enDisplayName,
+			String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime,
+			String enDirection, String esDirection) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Map<String, String> dsName = jsonpath.getMap("displayName");
 		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
 		CCUtils.assertEquals(dsName.get("es").toString(), esDisplayName);
 		CCUtils.assertEquals(jsonpath.get("addressExtension"), addressExtension);
-		CCUtils.assertEquals(jsonpath.getString("phoneNumber"),phoneNumber);
-		Map<String,String> officeTimings= jsonpath.getMap("officeHours");
+		CCUtils.assertEquals(jsonpath.getString("phoneNumber"), phoneNumber);
+		Map<String, String> officeTimings = jsonpath.getMap("officeHours");
 		CCUtils.assertEquals(officeTimings.get("startTime").toString(), startTime);
 		CCUtils.assertEquals(officeTimings.get("endTime").toString(), endTime);
-		Map<String,String> diectionInfo=jsonpath.getMap("direction");
+		Map<String, String> diectionInfo = jsonpath.getMap("direction");
 		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
 		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
 	}
-	
-	public void verifySaveDisplayInfoForSelectivePayloadApiResponseBody(Response response, String enDisplayName, String esDisplayName, String addressExtension, String phoneNumber, String enDirection,
-			String esDirection) throws IOException {
+
+	public void verifySaveDisplayInfoForSelectivePayloadApiResponseBody(Response response, String enDisplayName,
+			String esDisplayName, String addressExtension, String phoneNumber, String enDirection, String esDirection)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Map<String, String> dsName = jsonpath.getMap("displayName");
 		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
 		CCUtils.assertEquals(dsName.get("es").toString(), esDisplayName);
 		CCUtils.assertEquals(jsonpath.get("addressExtension"), addressExtension);
-		CCUtils.assertEquals(jsonpath.getString("phoneNumber"),phoneNumber);
-		Map<String,String> diectionInfo=jsonpath.getMap("direction");
+		CCUtils.assertEquals(jsonpath.getString("phoneNumber"), phoneNumber);
+		Map<String, String> diectionInfo = jsonpath.getMap("direction");
 		CCUtils.assertEquals(diectionInfo.get("en"), enDirection);
 		CCUtils.assertEquals(diectionInfo.get("es"), esDirection);
 	}
@@ -3195,14 +3197,13 @@ public class Validations {
 		CCUtils.assertEquals(jsonPath.get("name"), touName);
 	}
 
-	public void getTouIdValidation( Response getTouApiResponse,  String actualName, int practiceId)
-	{
+	public void getTouIdValidation(Response getTouApiResponse, String actualName, int practiceId) {
 		List<String> touIds = getTouApiResponse.jsonPath().get("touId");
 		for (int i = 0; i < touIds.size(); i++) {
 			int touId = getTouApiResponse.jsonPath().get("touId[" + i + "]");
 			String name = getTouApiResponse.jsonPath().get("name[" + i + "]");
 			if (name.equalsIgnoreCase(actualName)) {
-				Log4jUtil.log( touId+ " added/fetched/updated successfully for " + practiceId);
+				Log4jUtil.log(touId + " added/fetched/updated successfully for " + practiceId);
 			}
 		}
 	}

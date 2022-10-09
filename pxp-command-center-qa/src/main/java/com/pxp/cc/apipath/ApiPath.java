@@ -1608,4 +1608,8 @@ public class ApiPath {
 	public static final String DELETE_PROVIDER_FOR_LOCATION_DL(int locationId, int practiceId, int providerId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers/" + providerId;
 	}
+	
+	public static final String UPDATE_SOLUTION_FOR_LOCATION_DL_INVALID_URL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutionsinvalidurl";
+	}
 }
