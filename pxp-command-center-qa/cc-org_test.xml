@@ -22,13 +22,13 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePrivacySettingApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer" />
-			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" /> -->
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer" />
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer" />
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer" />
 			<class

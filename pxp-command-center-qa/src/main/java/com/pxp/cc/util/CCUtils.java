@@ -434,11 +434,6 @@ public class CCUtils {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(
 					"//tbody[@role='rowgroup']//tr[@id='locationList']//td[@class='mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted']")));
-			try {
-				Thread.sleep(2300);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }
