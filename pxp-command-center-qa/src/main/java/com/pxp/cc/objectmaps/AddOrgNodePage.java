@@ -676,6 +676,14 @@ public class AddOrgNodePage extends CCMainPage {
 		log("Clicked on expand Arrow button");
 	}
 
+	public void clickOnExpandArrow(String orgName) {
+		CCUtils.verifyAndWaitForElement(expandArrow, driver);
+		if (expandArrow.getAttribute("aria-label").contains(orgName)) {
+			javascriptClick(expandArrow);
+		}
+		log("Clicked on expand Arrow button for Org : "+orgName);
+	}
+
 	public void clickOnAddSystem() {
 		CCUtils.verifyAndWaitForElement(btnAddSystem, driver);
 		javascriptClick(btnAddSystem);
@@ -692,7 +700,7 @@ public class AddOrgNodePage extends CCMainPage {
 		btnSave.click();
 	}
 
-	public void addNewSystem(String systemName) {
+	public void systemName(String systemName) {
 		clickOnAddSystem();
 		enterNewSystemDetails(systemName);
 	}
@@ -738,6 +746,11 @@ public class AddOrgNodePage extends CCMainPage {
 	public void addNewPractice(String practiceName) throws InterruptedException {
 		clickOnAddPractice();
 		enterNewPracticeDetails(practiceName);
+	}
+
+	public void addNewSystem(String systemName) {
+		clickOnAddSystem();
+		enterNewSystemDetails(systemName);
 	}
 
 	public void verifyAddSystemButton() {
@@ -844,9 +857,9 @@ public class AddOrgNodePage extends CCMainPage {
 		log("Box text for Enterprise name textbox field is " + textboxName.getAttribute("placeholder").trim());
 	}
 
-	public void addNewEnterprise() throws InterruptedException {
+	public void addNewEnterprise(String enterpriseName) throws InterruptedException {
 		clickOnAddEnterprise();
-		enterNewEnterpriseDetails("EnterpriseForDemo");
+		enterNewEnterpriseDetails(enterpriseName);
 	}
 
 	public void clickOnAddEnterprise() {

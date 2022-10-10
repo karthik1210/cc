@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.hamcrest.Matchers;
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
@@ -428,4 +429,11 @@ public class CCUtils {
 		}
 	}
 
+	public static void verifyAndWaitForPresenceOfListOfElement(List<WebElement> web, WebDriver driver) {
+		for (int i = 0; i < web.size(); i++) {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(
+					"//tbody[@role='rowgroup']//tr[@id='locationList']//td[1]")));
+		}
+	}
 }
