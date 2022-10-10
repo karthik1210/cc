@@ -11,6 +11,7 @@
 	<groupId>com.pxp.cc</groupId>
 	<artifactId>pxp-command-center-qa</artifactId>
 	<version>1.160.0</version>
+	<packaging>jar</packaging>
 	<repositories>
 		<repository>
 			<id>IHG-nexus</id>
