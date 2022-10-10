@@ -171,24 +171,24 @@ public class LocationsInfo extends BaseRest {
 	}
 
 	public Response createLocation_BL(String clientId, String name, String addressLine1, String addressLine2,
-			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
-			throws IOException {
+			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode,
+			String displayName) throws IOException {
 		String url = ApiPath.LOCATION_FOR_CLIENT_BL(clientId);
 		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
 				lat, lng);
 		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(createLocationPayload).when().post(url).then().extract().response();
 	}
 
 	public Response createLocation_DL(String clientId, String name, String addressLine1, String addressLine2,
-			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
-			throws IOException {
+			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode,
+			String displayName) throws IOException {
 		String url = ApiPath.LOCATION_FOR_CLIENT_DL(clientId);
 		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
 				lat, lng);
 		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(createLocationPayload).when().post(url).then().extract().response();
 	}
 
@@ -206,9 +206,10 @@ public class LocationsInfo extends BaseRest {
 	}
 
 	private Map<String, Object> postLocationApiPayload(String name, Map<String, Object> address, int externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		Map<String, Object> createLocationMap = new HashMap<String, Object>();
 		createLocationMap.put("name", name);
+		createLocationMap.put("displayName", displayName);
 		createLocationMap.put("address", address);
 		createLocationMap.put("externalId", externalId);
 		createLocationMap.put("timezoneCode", timezoneCode);

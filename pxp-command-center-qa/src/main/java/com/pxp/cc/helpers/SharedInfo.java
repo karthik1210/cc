@@ -546,12 +546,13 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response createNewLocation_BL(int clientId, String addressLine1, String addressLine2, String city,
-			String state, String zipcode, float lat, float lng, String name, String externalId, String timezoneCode) {
+			String state, String zipcode, float lat, float lng, String name, String externalId, String timezoneCode,
+			String displayName) {
 		String url = ApiPath.CREATE_LOCATION_BL(clientId);
 		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
 	}
 
@@ -569,9 +570,10 @@ public class SharedInfo extends BaseRest {
 	}
 
 	private Map<String, Object> createNewLocationPayload(Map<String, Object> address, String name, String externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		Map<String, Object> createLocationMap = new HashMap<String, Object>();
 		createLocationMap.put("name", name);
+		createLocationMap.put("displayName", displayName);
 		createLocationMap.put("address", address);
 		createLocationMap.put("externalId", externalId);
 		createLocationMap.put("timezoneCode", timezoneCode);
@@ -585,55 +587,56 @@ public class SharedInfo extends BaseRest {
 
 	public Response createNewLocationUsingInvalidUrl_BL(int clientId, String addressLine1, String addressLine2,
 			String city, String state, String zipcode, float lat, float lng, String name, String externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		String url = ApiPath.INVALID_PATH_CREATE_LOCATION_BL(clientId);
 		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
 	}
 
 	public Response createNewLocationUsingInvalidMethod_BL(int clientId, String addressLine1, String addressLine2,
 			String city, String state, String zipcode, float lat, float lng, String name, String externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		String url = ApiPath.CREATE_LOCATION_BL(clientId);
 		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().put(url).then().extract().response();
 	}
 
 	public Response createNewLocation_DL(int clientId, String addressLine1, String addressLine2, String city,
-			String state, String zipcode, float lat, float lng, String name, String externalId, String timezoneCode) {
+			String state, String zipcode, float lat, float lng, String name, String externalId, String timezoneCode,
+			String displayName) {
 		String url = ApiPath.CREATE_LOCATION_DL(clientId);
 		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
 	}
 
 	public Response createNewLocationUsingInvalidUrl_DL(int clientId, String addressLine1, String addressLine2,
 			String city, String state, String zipcode, float lat, float lng, String name, String externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		String url = ApiPath.INVALID_PATH_CREATE_LOCATION_DL(clientId);
 		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
 	}
 
 	public Response createNewLocationUsingInvalidMethod_DL(int clientId, String addressLine1, String addressLine2,
 			String city, String state, String zipcode, float lat, float lng, String name, String externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		String url = ApiPath.CREATE_LOCATION_DL(clientId);
 		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().put(url).then().extract().response();
 	}
 
@@ -1058,17 +1061,17 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
 		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForResource(solutionId,
 				active);
-		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().patch(url).then().extract()
-				.response();
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().patch(url).then()
+				.extract().response();
 	}
-	
-	public Response enableDisableSolutionForLocation_DL_INVALID_URL(int practiceId, int locationId,
-			int solutionId, boolean active) {
+
+	public Response enableDisableSolutionForLocation_DL_INVALID_URL(int practiceId, int locationId, int solutionId,
+			boolean active) {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL_INVALID_URL(locationId, practiceId);
 		Map<String, Object> enableDisableSolutionForLocationPayload = enableOrDisableSolutionsForResource(solutionId,
 				active);
-		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().patch(url).then().extract()
-				.response();
+		return given().spec(requestSpec).body(enableDisableSolutionForLocationPayload).when().patch(url).then()
+				.extract().response();
 	}
 
 	private Map<String, Object> enableOrDisableSolutionsForLocation_NULL_solutionId(boolean active) {
