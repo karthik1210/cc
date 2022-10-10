@@ -88,7 +88,7 @@ public class GetLocationByPracticeApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		return createNewLocationApiResponse.jsonPath().getInt("id");
 	}
 

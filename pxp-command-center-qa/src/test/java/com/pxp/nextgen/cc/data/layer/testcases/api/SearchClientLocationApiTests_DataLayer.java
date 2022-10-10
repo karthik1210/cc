@@ -105,7 +105,7 @@ public class SearchClientLocationApiTests_DataLayer extends BaseRest {
 		int externalId = Integer.parseInt(testData.getProperty("api.external.id"));
 		String timezoneCode = testData.getProperty("timezone.code");
 		createLocationApiResponse = locationInfo.createLocation_DL(String.valueOf(clientId), name, addressLine1,
-				addressLine2, city, state, zipcode, lat, lng, externalId, timezoneCode);
+				addressLine2, city, state, zipcode, lat, lng, externalId, timezoneCode, "");
 		return createLocationApiResponse.jsonPath().get("id");
 	}
 

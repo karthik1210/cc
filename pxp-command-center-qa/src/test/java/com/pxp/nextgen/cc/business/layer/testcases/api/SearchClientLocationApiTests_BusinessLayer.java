@@ -105,7 +105,7 @@ public class SearchClientLocationApiTests_BusinessLayer extends BaseRest {
 		int externalId = Integer.parseInt(testData.getProperty("api.external.id"));
 		String timezoneCode = testData.getProperty("timezone.code");
 		createLocationApiResponse = locationInfo.createLocation_BL(String.valueOf(clientId), name, addressLine1,
-				addressLine2, city, state, zipcode, lat, lng, externalId, timezoneCode);
+				addressLine2, city, state, zipcode, lat, lng, externalId, timezoneCode, "");
 		return createLocationApiResponse.jsonPath().get("id");
 	}
 
@@ -154,7 +154,7 @@ public class SearchClientLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(searchLocationsResult.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for client using SolutionId",enabled = false)
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  location for client using SolutionId", enabled = false)
 	public void testSearchLocationUsingSolutionId() throws IOException {
 		logStep("Purchase solution for practice node");
 		int solutionId = Integer.parseInt(testData.getProperty("api.solution.id"));
