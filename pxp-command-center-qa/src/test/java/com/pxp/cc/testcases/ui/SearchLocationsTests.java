@@ -4,7 +4,6 @@ package com.pxp.cc.testcases.ui;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -140,7 +139,7 @@ public class SearchLocationsTests extends CommandCenterGenericTest {
 		return locationName;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a location")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the visibility and presence of web elements of search location screen")
 	public void testSearchLocationScreenWebElements() throws Exception {
 		searchLocationPage = new SearchLocationPage(driver);
 		searchLocationPage.verifySearchTextBoxAndPlaceholderIsDisplayed();
@@ -154,7 +153,7 @@ public class SearchLocationsTests extends CommandCenterGenericTest {
 		searchLocationPage.clearApplyDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a location")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify after clicking hide button filter section should not get displayed")
 	public void testFunctionalityOfHideFiltersButtonOnLocationScreen() throws Exception {
 		searchLocationPage = new SearchLocationPage(driver);
 		searchLocationPage.verifyFilterLabel();

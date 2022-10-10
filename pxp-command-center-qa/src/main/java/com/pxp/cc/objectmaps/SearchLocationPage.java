@@ -1,18 +1,14 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-
-import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -154,7 +150,6 @@ public class SearchLocationPage extends CCMainPage {
 	}
 
 	public void searchLocationAndVerifyResult(String locationName) throws AWTException {
-		
 		enterLocationInSearchTextBox(locationName);
 		clickToSearchButton();
 		List<String> listOfLocName = new ArrayList<String>();

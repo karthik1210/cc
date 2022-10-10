@@ -165,11 +165,6 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "(//input[@type='text'])[3]")
 	private WebElement enterEhrPractice;
 
-	/*
-	 * @FindBy(xpath = "//button[@id='treeExpandBtn']") private WebElement
-	 * expandArrow;
-	 */
-
 	@FindBy(xpath = "//div[@class='mat-tree-node-click bordernode']//mat-icon[@role='img'][normalize-space()='keyboard_arrow_right']")
 	private WebElement expandArrow;
 
