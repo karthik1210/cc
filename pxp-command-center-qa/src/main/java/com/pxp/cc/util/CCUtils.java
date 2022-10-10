@@ -433,7 +433,7 @@ public class CCUtils {
 		for (int i = 0; i < web.size(); i++) {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(
-					"//tbody[@role='rowgroup']//tr[@id='locationList']//td[@class='mat-cell cdk-cell cdk-column-name mat-column-name ng-star-inserted']")));
+					"//tbody[@role='rowgroup']//tr[@id='locationList']//td[1]")));
 		}
 	}
 }
