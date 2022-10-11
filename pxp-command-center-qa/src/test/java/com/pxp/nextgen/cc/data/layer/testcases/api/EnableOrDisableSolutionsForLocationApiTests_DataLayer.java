@@ -80,12 +80,12 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 		log("create a location within a client");
 		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
 		externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
-		createNewLocationApiResponse = sharedInfo.createNewLocation_DL(clientId,
+		createNewLocationApiResponse = sharedInfo.createNewLocationWintinClient_DL(clientId,
 				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"),locationName);
 		return createNewLocationApiResponse.jsonPath().get("id");
 	}
 
@@ -99,11 +99,11 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
 		List<OrgSolutions> productList = Arrays.asList(
-				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
-				new OrgSolutions(testData.getProperty("engage.id"), testData.getProperty("status.newly.purchased")));
+				new OrgSolutions(testData.getProperty("Portal.id").trim(), testData.getProperty("status.newly.purchased").trim()),
+				new OrgSolutions(testData.getProperty("engage.id").trim(), testData.getProperty("status.newly.purchased").trim()));
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, agPracticeId);
 		enableDisableSolutionForLocation = sharedInfo.enableDisableSolutionForLocation_DL(agPracticeId, locationId,
-				Integer.parseInt(testData.getProperty("Portal.id")), true);
+				Integer.parseInt(testData.getProperty("Portal.id").trim()), true);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(enableDisableSolutionForLocation);
 		CCUtils.assertEquals(enableDisableSolutionForLocation.getStatusCode(), 200);
@@ -122,13 +122,13 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
 		List<OrgSolutions> productList = Arrays.asList(
-				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")),
-				new OrgSolutions(testData.getProperty("engage.id"), testData.getProperty("status.newly.purchased")));
+				new OrgSolutions(testData.getProperty("Portal.id").trim(), testData.getProperty("status.newly.purchased").trim()),
+				new OrgSolutions(testData.getProperty("engage.id").trim(), testData.getProperty("status.newly.purchased").trim()));
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, agPracticeId);
 		enableDisableSolutionForLocation = sharedInfo.enableDisableSolutionForLocation_DL(agPracticeId, locationId,
-				Integer.parseInt(testData.getProperty("Portal.id")), true);
+				Integer.parseInt(testData.getProperty("Portal.id").trim()), true);
 		enableDisableSolutionForLocation = sharedInfo.enableDisableSolutionForLocation_DL(agPracticeId, locationId,
-				Integer.parseInt(testData.getProperty("Portal.id")), false);
+				Integer.parseInt(testData.getProperty("Portal.id").trim()), false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(enableDisableSolutionForLocation);
 		CCUtils.assertEquals(enableDisableSolutionForLocation.getStatusCode(), 200);
