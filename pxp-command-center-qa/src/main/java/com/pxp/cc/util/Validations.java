@@ -3208,4 +3208,17 @@ public class Validations {
 		}
 	}
 
+	public void getTouIdDetailValidation( Response getTouApiResponse,  int practiceId, int touId, String actualName, String englishContent, String spanishContent )
+	{
+		String expectedName = getTouApiResponse.jsonPath().get("name");
+		String expectedEnglishContent = getTouApiResponse.jsonPath().get("content.en");
+		String expectedSpanishContent = getTouApiResponse.jsonPath().get("content.es");
+		if (expectedName.equalsIgnoreCase(actualName) && englishContent.equalsIgnoreCase(expectedEnglishContent) && spanishContent.equalsIgnoreCase(expectedSpanishContent) ) {
+			Log4jUtil.log( touId+ " updated successfully for " + practiceId);
+		}
+		else {
+			Log4jUtil.log( touId+ " is not updated successfully for " + practiceId);
+		}
+	}
+
 }
