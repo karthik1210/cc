@@ -580,17 +580,6 @@ public class SharedInfo extends BaseRest {
 		return createLocationMap;
 	}
 	
-	private Map<String, Object> createNewLocationWithinClientPayload(Map<String, Object> address, String name, String externalId,
-			String timezoneCode,String displayName) {
-		Map<String, Object> createLocationMap = new HashMap<String, Object>();
-		createLocationMap.put("name", name);
-		createLocationMap.put("address", address);
-		createLocationMap.put("externalId", externalId);
-		createLocationMap.put("timezoneCode", timezoneCode);
-		createLocationMap.put("displayName", displayName);
-		return createLocationMap;
-	}
-
 	public Response getLocationDetails(int locationId) {
 		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -626,16 +615,6 @@ public class SharedInfo extends BaseRest {
 				lng);
 		Map<String, Object> addNewLocationPayload = createNewLocationPayload(addressPayload, name, externalId,
 				timezoneCode, displayName);
-		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
-	}
-	
-	public Response createNewLocationWintinClient_DL(int clientId, String addressLine1, String addressLine2, String city,
-			String state, String zipcode, float lat, float lng, String name, String externalId, String timezoneCode,String displayName) {
-		String url = ApiPath.CREATE_LOCATION_DL(clientId);
-		Map<String, Object> addressPayload = createAddressPayload(addressLine1, addressLine2, city, state, zipcode, lat,
-				lng);
-		Map<String, Object> addNewLocationPayload = createNewLocationWithinClientPayload(addressPayload, name, externalId,
-				timezoneCode,displayName);
 		return given().spec(requestSpec).body(addNewLocationPayload).when().post(url).then().extract().response();
 	}
 

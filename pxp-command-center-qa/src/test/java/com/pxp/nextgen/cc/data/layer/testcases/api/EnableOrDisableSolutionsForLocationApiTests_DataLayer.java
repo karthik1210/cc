@@ -80,7 +80,7 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 		log("create a location within a client");
 		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
 		externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
-		createNewLocationApiResponse = sharedInfo.createNewLocationWintinClient_DL(clientId,
+		createNewLocationApiResponse = sharedInfo.createNewLocation_DL(clientId,
 				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
