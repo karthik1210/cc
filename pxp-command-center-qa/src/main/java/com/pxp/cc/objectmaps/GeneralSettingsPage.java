@@ -933,4 +933,16 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelNodeNameRightPanel, driver);
 		CCUtils.assertEquals(labelNodeNameRightPanel.isDisplayed(), true);
 	}
+	
+	public void clickFirstOption() {
+		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
+		if (selectFirstInAutoSuggestion.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			javascriptClick(selectFirstInAutoSuggestion);
+
+		} else {
+			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present in client");
+		}
+	}
 }
