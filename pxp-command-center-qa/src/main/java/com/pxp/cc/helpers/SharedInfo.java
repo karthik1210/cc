@@ -579,7 +579,7 @@ public class SharedInfo extends BaseRest {
 		createLocationMap.put("timezoneCode", timezoneCode);
 		return createLocationMap;
 	}
-
+	
 	public Response getLocationDetails(int locationId) {
 		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
