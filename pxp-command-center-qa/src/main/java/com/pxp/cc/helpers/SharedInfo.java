@@ -1099,4 +1099,9 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getSolutionForLocationForNullValue_DL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
