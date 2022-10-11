@@ -823,67 +823,6 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
 	}
 
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(int practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_BL(int practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practicesssss/" + practiceId + "/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_BL(String practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_BL() {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_INVALID_URI_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practicesssss/" + practiceId + "/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String FETCH_LIST_OF_TOU_FOR_A_PRACTICE_WITH_EMPTYVALUE_ON_PRACTICEID_DL() {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous";
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(int practiceId,
-			int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, String touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, String touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_BL(int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_BL() {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/tous";
-	}
-
 	public static final String GET_RESOURCE_DETAILS_BL(int resourceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId;
 	}
@@ -896,77 +835,6 @@ public class ApiPath {
 
 	public static final String CREATE_RESOURCE_DETAILS_BL(int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources";
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId,
-			int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, String touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, String touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_VALID_TOUID_DL(int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous/" + touId;
-	}
-
-	public static final String FETCH_PRIVACYSETTING_WITHOUT_PRACTICEID_AND_TOUID_DL() {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/tous";
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_BL(int practiceId,
-			int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, String touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(int practiceId, String touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_BL(String practiceId, int touId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_WITH_INVALID_URI_DL(int practiceId,
-			int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, String touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(int practiceId, String touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String DELETE_PRIVACYSETTING_BY_PRACTICEID_AND_TOUID_DL(String practiceId, int touId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
 	}
 
 	public static final String GET_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
@@ -1044,38 +912,6 @@ public class ApiPath {
 			return SERVICE_ORG_BL + "/v1/practice-website/practices/null/sites";
 		else
 			return SERVICE_ORG_DL + "/v1/practice-website/practices/null/sites";
-	}
-
-	public static final String ADDTOU_BL(int practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String INVALIDURI_ADDTOU_BL(int practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practicesss/" + practiceId + "/tous";
-	}
-
-	public static final String INVALID_DATATYPE_ADDTOU_BL(String practiceId) {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String NULL_PRACTICEID_ADDTOU_BL() {
-		return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous";
-	}
-
-	public static final String ADDTOU_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String INVALIDURI_ADDTOU_DL(int practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practicesss/" + practiceId + "/tous";
-	}
-
-	public static final String INVALID_DATATYPE_ADDTOU_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous";
-	}
-
-	public static final String NULL_PRACTICEID_ADDTOU_DL() {
-		return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous";
 	}
 
 	public static final String UPDATE_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
@@ -1215,41 +1051,6 @@ public class ApiPath {
 
 	public static final String LOCATION_FOR_CLIENT_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/clients/null/locations";
-	}
-
-	public static final String UPDATE_TOU(String serviceLayer, int practiceId, int touId) {
-		if (serviceLayer.equalsIgnoreCase("BL"))
-			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-		else
-			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String UPDATE_TOU_WITHOUT_PRACTICEID(String serviceLayer) {
-		if (serviceLayer.equalsIgnoreCase("BL"))
-			return SERVICE_ORG_BL + "/v1/practice-tou/practices//tous/";
-		else
-			return SERVICE_ORG_DL + "/v1/practice-tou/practices//tous/";
-	}
-
-	public static final String UPDATE_TOU_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId, String touId) {
-		if (serviceLayer.equalsIgnoreCase("BL"))
-			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-		else
-			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
-	}
-
-	public static final String UPDATE_TOU_WITH_INVLAID_URI(String serviceLayer, int practiceId, int touId) {
-		if (serviceLayer.equalsIgnoreCase("BL"))
-			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
-		else
-			return SERVICE_ORG_DL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
-	}
-
-	public static final String NULL_UPDATE_TOU(String serviceLayer) {
-		if (serviceLayer.equalsIgnoreCase("BL"))
-			return SERVICE_ORG_BL + "/v1/practice-tou/practices/null/tous/null";
-		else
-			return SERVICE_ORG_DL + "/v1/practice-tou/practices/null/tous/null";
 	}
 
 	public static final String ASSOCIATEDISASSOCIATE_BRAND_FOR_CLIENTORORG__NULL_VALUE_BL() {
