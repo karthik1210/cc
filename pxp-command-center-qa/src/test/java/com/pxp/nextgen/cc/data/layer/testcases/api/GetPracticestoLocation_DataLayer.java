@@ -1,6 +1,7 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
+
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -11,14 +12,14 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 import com.pxp.cc.helpers.*;
 
-public class GetPracticestoLocation_DataLayer extends BaseRest  {
+public class GetPracticestoLocation_DataLayer extends BaseRest {
 	private LocationsInfo locationInfo;
 	private ClientInfo clientInfo;
 	private SharedInfo sharedInfo;
 	int clientId, systemId, enterpriseId, practiceId, locationId;
 	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
-			 createLocationApiResponse, updateLocationForPracticesResponse,getPracticeForLocationApi;
+			createLocationApiResponse, updateLocationForPracticesResponse, getPracticeForLocationApi;
 	private Validations validation;
 	private OrgInfo orgInfo;
 
@@ -93,43 +94,41 @@ public class GetPracticestoLocation_DataLayer extends BaseRest  {
 		int externalId = Integer.parseInt(testData.getProperty("api.external.id"));
 		String timezoneCode = testData.getProperty("timezone.code");
 		createLocationApiResponse = locationInfo.createLocation_DL(String.valueOf(clientId), name, addressLine1,
-				addressLine2, city, state, zipcode, lat, lng, externalId, timezoneCode);
+				addressLine2, city, state, zipcode, lat, lng, externalId, timezoneCode, "");
 		return createLocationApiResponse.jsonPath().get("id");
 	}
- 
-    @Test(priority =1 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17718_Get a practice by providing valid location id for practices")
-    public void getPracticeForLocationWithValidURLAndValidInput()throws IOException {
-    	logStep("Associate practices for locations");
+
+	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17718_Get a practice by providing valid location id for practices")
+	public void getPracticeForLocationWithValidURLAndValidInput() throws IOException {
+		logStep("Associate practices for locations");
 		updateLocationForPracticesResponse = locationInfo.locationAssociateToPractice_DL(locationId, practiceId, true);
 		CCUtils.assertEquals(updateLocationForPracticesResponse.getStatusCode(), 200);
-        logStep(" initiating....Verify the Response code as 200, when user provided valid locationid");
-        getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithExistingOrNonExistingInput(locationId);
-        CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(),200);
-    }
+		logStep(" initiating....Verify the Response code as 200, when user provided valid locationid");
+		getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithExistingOrNonExistingInput(locationId);
+		CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(), 200);
+	}
 
-    @Test (priority =2 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17756_Get a practice bu providing Invalid URL")
-    public void getPracticeForLocationWithValidURLAndInvalidInput()throws IOException{
-        logStep(" initiating...Verify the Response code as 404, when user provides Invalid URL");
-        getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithInvalidInput(locationId);
-        CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(),404);
-        validation.verifyErrorInResponseForInvalidUrl(getPracticeForLocationApi);
-    }
+	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17756_Get a practice bu providing Invalid URL")
+	public void getPracticeForLocationWithValidURLAndInvalidInput() throws IOException {
+		logStep(" initiating...Verify the Response code as 404, when user provides Invalid URL");
+		getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithInvalidInput(locationId);
+		CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(), 404);
+		validation.verifyErrorInResponseForInvalidUrl(getPracticeForLocationApi);
+	}
 
-    @Test (priority =3 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17722_Get a practice bu providing Invalid locationId")
-    public void getPracticeForLocationWithIncorrectInput()throws IOException{
-        logStep(" initiating...Verify the Response code as 204, when user provides Invalid locationid");
-        getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithExistingOrNonExistingInput(Integer.parseInt(testData.getProperty("api.invalid.location.id")));
-        CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(),204);
-    }
+	@Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17722_Get a practice bu providing Invalid locationId")
+	public void getPracticeForLocationWithIncorrectInput() throws IOException {
+		logStep(" initiating...Verify the Response code as 204, when user provides Invalid locationid");
+		getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithExistingOrNonExistingInput(
+				Integer.parseInt(testData.getProperty("api.invalid.location.id")));
+		CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(), 204);
+	}
 
-    @Test (priority =4 ,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17723_Make a POST call Instead of GET by providing valid locationId")
-    public  void getPracticeForLocationWithInvalidPost()throws IOException{
-        logStep(" initiating...Verify the Response code as 405, when user makes Incorrect CALL");
-        getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithValidInputForPost(locationId);
-        CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(),405);
-        validation.verifyErrorMessageInResponseForInvalidPostMethodCall(getPracticeForLocationApi);
-    }
+	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-17723_Make a POST call Instead of GET by providing valid locationId")
+	public void getPracticeForLocationWithInvalidPost() throws IOException {
+		logStep(" initiating...Verify the Response code as 405, when user makes Incorrect CALL");
+		getPracticeForLocationApi = sharedInfo.getPracticeForLocationWithValidInputForPost(locationId);
+		CCUtils.assertEquals(getPracticeForLocationApi.getStatusCode(), 405);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(getPracticeForLocationApi);
+	}
 }
-
-
-
