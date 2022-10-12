@@ -29,7 +29,7 @@ public class AddNewResourcePage extends CCMainPage {
 	@FindBy(id = "selectStatus")
 	private WebElement textboxConnectedProvider;
 
-	@FindBy(id = "addNewProviderSave")
+	@FindBy(xpath = "//button[@id='addNewProviderSave']/span")
 	private WebElement saveButton;
 
 	@FindBy(id = "ExternalIdInput")
@@ -38,7 +38,7 @@ public class AddNewResourcePage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Select Resource Type']//following::div[@role='combobox']/input")
 	private WebElement dropdownResourceType;
 
-	@FindBy(id = "searchValues")
+	@FindBy(xpath = "(//span[@class='mat-option-text'])[1]")
 	private WebElement selectFirstOption;
 
 	public void clickOnResourcesTab() {
@@ -111,10 +111,11 @@ public class AddNewResourcePage extends CCMainPage {
 	public void clickOnSaveAndAddButton() {
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		saveButton.click();
+		logStep("Clicked on Save and add button");
 	}
 
 	public void clickFirstInAutoSuggestion() {
 		CCUtils.verifyAndWaitForElement(selectFirstOption, driver);
-		selectFirstOption.click();
+		javascriptClick(selectFirstOption);
 	}
 }

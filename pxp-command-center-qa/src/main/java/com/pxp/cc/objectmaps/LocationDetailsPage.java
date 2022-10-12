@@ -20,7 +20,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Resource']")
 	private WebElement labelResource;
 
-	@FindBy(id = "resourceInput")
+	@FindBy(xpath = "//div[@role='combobox']")
 	private WebElement textboxResource;
 
 	@FindBy(xpath = "(//div[@role='option'])[1]")
@@ -148,7 +148,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Solutions Display Info')]")
 	private WebElement labelSolutionsSection;
-	
+
 	@FindBy(xpath = "//div[contains(text(),'Location Info')]")
 	private WebElement labelLocationInfoSection;
 
@@ -197,6 +197,45 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@class='row'])[8]")
 	private WebElement timeZone;
 
+	@FindBy(xpath = "(//input[@id='directorySearchInput'])[2]")
+	private WebElement textboxSearchResources;
+
+	@FindBy(xpath = "(//span[@id='directoryToggleIcon'])[2]")
+	private WebElement buttonSearchResources;
+
+	@FindBy(xpath = "//span[contains(text(),'CLEAR')]")
+	private WebElement clearButton;
+
+	@FindBy(xpath = "(//div[contains(text(),'No data to display')])[2]")
+	private WebElement noResultFoundInResources;
+
+	@FindBy(xpath = "(//td[@role='gridcell'])[1]")
+	private WebElement tableResourceNameInSearchResult;
+
+	@FindBy(xpath = "(//span[contains(text(),'10')])[2]")
+	private WebElement defaultItemsPerPage;
+
+	@FindBy(xpath = "(//div[@class='mat-paginator-range-label'])[2]")
+	private WebElement displayPagination;
+
+	@FindBy(xpath = "(//button[@aria-label='First page'])[2]")
+	private WebElement buttonFirstPage;
+
+	@FindBy(xpath = "(//button[@aria-label='Next page'])[2]")
+	private WebElement buttonNextPage;
+
+	@FindBy(xpath = "(//button[@aria-label='Last page'])[2]")
+	private WebElement buttonLastPage;
+
+	@FindBy(xpath = "(//button[@aria-label='Previous page'])[2]")
+	private WebElement buttonPreviousPage;
+
+	@FindBy(xpath = "(//input[@id='directorySearchInput'])[2]")
+	private WebElement searchTextBox;
+
+	@FindBy(xpath = "(//span[@id='directoryToggleIcon'])[2]")
+	private WebElement searchButton;
+
 	public void verifyLocationDetailsTitle() {
 		CCUtils.verifyAndWaitForElement(titleLocationDetails, driver);
 		log("Verifying Location Details Title");
@@ -241,8 +280,13 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void clickOnAddToSave() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(clickAdd, driver);
-		clickAdd.click();
+		javascriptClick(clickAdd);
+		log("Clicked on Add button");
+	}
+
+	public void VerifyAddToSaveIsDisplayed() throws InterruptedException {
+		CCUtils.assertEquals(clickAdd.isDisplayed(), true);
+		log("Add button is displayed");
 	}
 
 	public void verifyAddResourcePopupTitle() {
@@ -269,7 +313,8 @@ public class LocationDetailsPage extends CCMainPage {
 
 	public void enterResourceName(String input) {
 		CCUtils.verifyAndWaitForElement(textboxResource, driver);
-		textboxResource.sendKeys(input);
+		CCUtils.assertEquals(textboxResource.isEnabled(), true);
+		textboxResource.click();
 		log("Entered input for Resource Name : " + input);
 	}
 
@@ -544,7 +589,7 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(saveSolutionInfo, driver);
 		CCUtils.assertEquals(saveSolutionInfo.isEnabled(), false);
 	}
-	
+
 	public void verifyLocationInfoSection() throws InterruptedException, AWTException {
 		log("Verifying Location Info Section");
 		verifyLocationLabel();
@@ -647,5 +692,153 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(timeZone, driver);
 		CCUtils.assertTrue(timeZone.isDisplayed(), "timeZone is displayed");
 	}
-}
 
+	public void verifySearchButtonFunctionality(String searchResource) {
+		CCUtils.verifyAndWaitForElement(textboxSearchResources, driver);
+		log("Default text in Resources search is : " + textboxSearchResources.getAttribute("placeholder"));
+		CCUtils.assertTrue(textboxSearchResources.getAttribute("placeholder").contains("Search"), "");
+		CCUtils.assertEquals(buttonSearchResources.getText(), "SEARCH");
+		log("Default text present in Search button in search textbox : " + buttonSearchResources.getText());
+		searchResource(searchResource);
+		clickSearchButton();
+		CCUtils.assertEquals(buttonSearchResources.getText(), "CLEAR");
+		log("Text present in Resources search button after it is clicked is : " + buttonSearchResources.getText());
+	}
+
+	public void verifyClearButtonFunctionality(String searchResource) {
+		CCUtils.verifyAndWaitForElement(textboxSearchResources, driver);
+		log("Default text in Resources search is : " + textboxSearchResources.getAttribute("placeholder"));
+		CCUtils.assertTrue(textboxSearchResources.getAttribute("placeholder").contains("Search"), "");
+		CCUtils.assertEquals(buttonSearchResources.getText(), "SEARCH");
+		log("Default text present in Search button in search textbox : " + buttonSearchResources.getText());
+		searchResource(searchResource);
+		clickSearchButton();
+		CCUtils.assertEquals(buttonSearchResources.getText(), "CLEAR");
+		log("Text present in Resources search button after it is clicked is : " + buttonSearchResources.getText());
+		clickClearButton();
+		log("Clicked on CLEAR button");
+	}
+
+	public void searchResource(String searchResourceName) {
+		CCUtils.verifyAndWaitForElement(textboxSearchResources, driver);
+		textboxSearchResources.sendKeys(searchResourceName);
+		log("Entered text in Resources Search is : " + searchResourceName);
+	}
+
+	public void clickSearchButton() {
+		CCUtils.verifyAndWaitForElement(buttonSearchResources, driver);
+		javascriptClick(buttonSearchResources);
+		log("Clicked on Search button");
+	}
+
+	public void clickClearButton() {
+		CCUtils.verifyAndWaitForElement(clearButton, driver);
+		javascriptClick(clearButton);
+		log("Clicked on Clear button");
+	}
+
+	public boolean testToCheckNoResultsFound() {
+		CCUtils.verifyAndWaitForElement(noResultFoundInResources, driver);
+		if (noResultFoundInResources.getText().equals("No data to display")) {
+			return true;
+		}
+		log("Search result found " + noResultFoundInResources.getText());
+		return false;
+	}
+
+	public void verifySearchResult(String searchResourceName) {
+		log("Verifying searched Connected Scheduling Resource in list");
+		CCUtils.verifyAndWaitForElement(tableResourceNameInSearchResult, driver);
+		CCUtils.assertEquals(newResource.isDisplayed(), true);
+	}
+
+	public void verifySearchTextBoxAndPlaceholderIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(searchTextBox, driver);
+		log("Verifying search textbox is present on locations deatils page");
+		if (searchTextBox.isDisplayed() == true) {
+			log("Verifying search textbox is enabled");
+			CCUtils.assertTrue(searchTextBox.isEnabled(), "search button is disabled");
+			CCUtils.assertEquals(searchTextBox.getAttribute("placeholder"), "Search");
+			log("Verified search text and it's placeholder");
+		} else {
+			log("Search button is not displayed on search options popup");
+		}
+	}
+
+	public void verifySearchButtonIsDisplayed() {
+		log("Verifying search button is displayed on locations search page");
+		CCUtils.verifyAndWaitForElement(searchTextBox, driver);
+		searchTextBox.sendKeys("ResourcesSearchInput");
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
+		if (searchButton.isDisplayed() == true) {
+			log("Verifying search button is enabled");
+			CCUtils.assertTrue(searchButton.isEnabled(), "search button is disabled");
+			log("Verifying search button text");
+			CCUtils.assertEquals(searchButton.getText().trim(), "SEARCH");
+		} else {
+			log("Search button is not displayed on search options popup");
+		}
+	}
+
+	public String getDefaultItemsPerPage() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
+		highlightElement(defaultItemsPerPage);
+		return defaultItemsPerPage.getText().toString();
+	}
+
+	public String getDefaultPagination() {
+		String s1 = displayPagination.getText().toString();
+		String[] words = s1.split("of", 0);
+		String data = null;
+		for (String w : words) {
+			data = w.trim();
+			log("Print the value of default Pagination : " + w.trim());
+			break;
+		}
+		return data.trim();
+	}
+
+	public void isFirstPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
+		CCUtils.assertEquals(buttonFirstPage.isEnabled(), false);
+	}
+
+	public void isPreviousPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonPreviousPage, driver);
+		CCUtils.assertEquals(buttonPreviousPage.isEnabled(), false);
+	}
+
+	public void isNextPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
+		CCUtils.assertEquals(buttonNextPage.isEnabled(), false);
+	}
+
+	public void isLastPageButtonDisabled() {
+		CCUtils.verifyAndWaitForElement(buttonLastPage, driver);
+		CCUtils.assertEquals(buttonLastPage.isEnabled(), false);
+	}
+
+	public void clickNextPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
+		log("click to Next Page button");
+		buttonNextPage.click();
+	}
+
+	public void clickLastPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonLastPage, driver);
+		log("click to Last Page button");
+		buttonLastPage.click();
+	}
+
+	public void clickPreviousPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonPreviousPage, driver);
+		log("click to Previous Page button");
+		buttonPreviousPage.click();
+	}
+
+	public void clickFirstPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
+		log("click to First Page button");
+		buttonFirstPage.click();
+	}
+}
