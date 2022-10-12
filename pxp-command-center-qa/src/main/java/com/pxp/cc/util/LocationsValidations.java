@@ -286,7 +286,7 @@ public class LocationsValidations {
 		}
 	}
 
-	public void verifygetResourceForLocation(Response response) {
+	public void verifyGetResourceForLocation(Response response) {
 		JsonPath jsonPath = new JsonPath(response.asString());
 		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("totalCount"));
 		Log4jUtil.log("Categories in response body : " + jsonPath.get("items"));

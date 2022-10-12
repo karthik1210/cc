@@ -108,7 +108,7 @@ public class GetResourcesForLocationApiTests_BusinessLayer extends BaseRest {
 				resourceIds, "SUCCESS");
 		getResourceForLocationApiResponse = locationsInfo.getResourceForLocation_BL(locationId, practiceId);
 		CCUtils.assertEquals(getResourceForLocationApiResponse.getStatusCode(), 200);
-		locationsValidations.verifygetResourceForLocation(getResourceForLocationApiResponse);
+		locationsValidations.verifyGetResourceForLocation(getResourceForLocationApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId and nonexisting locationId and verify response code")

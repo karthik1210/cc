@@ -101,7 +101,7 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteProviderForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForLocationApiTests_BusinessLayer" />
-				<class
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForLocationApiTests_BusinessLayer" />
 		</classes>
 	</test>
