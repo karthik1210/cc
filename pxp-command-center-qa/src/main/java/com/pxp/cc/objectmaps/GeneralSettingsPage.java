@@ -216,6 +216,27 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "manageAccountsIcon")
 	private WebElement tabProvidersAndResources;
 
+	@FindBy(xpath = "//span[@class='purchaseTitle']")
+	private WebElement availableToPurchaseTitle;
+	
+	@FindBy(id = "purchasedSolutionOrg")
+	private WebElement purchaseSolutionsTitle;
+	
+	@FindBy(id = "unsavedConfirmBtn")
+	private WebElement YesActivateButton;
+	
+	@FindBy(id = "unsavedCancelBtn")
+	private WebElement activatePopupCancelbutton;
+
+	private String availableToPurchaseActivateButton(String solutionImageIcon) {
+		return "//div//span//mat-icon[contains(text(),'" + solutionImageIcon
+				+ "')]//following::div[@id='activateLabel']";
+	}
+	
+	private String purchaseActivateButton(String solutionImageIcon) {
+		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//mat-icon[contains(text(),'"+solutionImageIcon+"')]";
+	}
+
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	List<String> activeSolutionName = new ArrayList<String>();
@@ -933,7 +954,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelNodeNameRightPanel, driver);
 		CCUtils.assertEquals(labelNodeNameRightPanel.isDisplayed(), true);
 	}
-	
+
 	public void clickFirstOption() {
 		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
 		if (selectFirstInAutoSuggestion.isDisplayed()) {
@@ -944,5 +965,40 @@ public class GeneralSettingsPage extends CCMainPage {
 			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
 			CCUtils.assertTrue(false, "Searched text not present in client");
 		}
+	}
+
+	public void verifyAvailableToPurchaseSection() {
+		log("Verify 'Available To Purchase' section on General Settings page");
+		CCUtils.verifyAndWaitForElement(availableToPurchaseTitle, driver);
+		CCUtils.assertEquals(availableToPurchaseTitle.isDisplayed(), true);
+	}
+	
+	public void verifyPurchaseSolutionsSection() {
+		log("Verify 'Purchase Solutions' section on General Settings page");
+		CCUtils.verifyAndWaitForElement(purchaseSolutionsTitle, driver);
+		CCUtils.scrollPageViaElement(driver, purchaseSolutionsTitle);
+		CCUtils.assertEquals(purchaseSolutionsTitle.isDisplayed(), true);
+	}
+	
+	public void clickToActivateButtonOfSpecificSolution(String solutionImageIcon) {
+		WebElement element = driver.findElement(By.xpath(availableToPurchaseActivateButton(solutionImageIcon)));
+		CCUtils.verifyAndWaitForElement(element, driver);
+		
+		element.click();
+		log("clicked to activate button");
+	}
+	
+	public void verifySolutionIsPresentInPurchasedSolutions(String solutionImageIcon) {
+		WebElement element = driver.findElement(By.xpath(purchaseActivateButton(solutionImageIcon)));
+		CCUtils.verifyAndWaitForElement(element, driver);
+		CCUtils.scrollPageViaElement(driver, element);
+		element.click();
+		log("Verified that desired solution is within purchased solutions section");
+	}
+	
+	public void clickToYesActivateButtonInActivateSolutions() {
+		CCUtils.verifyAndWaitForElement(YesActivateButton, driver);
+		YesActivateButton.click();
+		log("click to Yes,Activate Button in Activate solutions popup");
 	}
 }

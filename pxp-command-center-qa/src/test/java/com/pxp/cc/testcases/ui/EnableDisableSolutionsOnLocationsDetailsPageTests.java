@@ -2,7 +2,12 @@
 
 package com.pxp.cc.testcases.ui;
 
+import java.awt.AWTException;
+
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.AddLocationPage;
 import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
@@ -141,23 +146,30 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		return locationName;
 	}
 	
+	public void addSolutionsWithinPractice(String practiceName) throws AWTException {
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.enterSearchText(practiceName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		CCUtils.scrollPageToEnd();
+		generalSettingsPage.verifyAvailableToPurchaseSection();
+		generalSettingsPage.clickToActivateButtonOfSpecificSolution(testData.getProperty("engage.image"));
+		generalSettingsPage.clickToYesActivateButtonInActivateSolutions();
+		String actualMessage = commonMethods.getToasterMessage(); 
+		logStep("Verify success toaster message");
+		CCUtils.assertEquals(actualMessage, "Success! Solution has been successfully updated");
+		generalSettingsPage.clickToActivateButtonOfSpecificSolution(testData.getProperty("pss.image"));
+		generalSettingsPage.clickToYesActivateButtonInActivateSolutions();
+		String actualMsg = commonMethods.getToasterMessage(); 
+		logStep("Verify success toaster message");
+		CCUtils.assertEquals(actualMsg, "Success! Solution has been successfully updated");
+		generalSettingsPage.verifyPurchaseSolutionsSection();
+		generalSettingsPage.verifySolutionIsPresentInPurchasedSolutions(testData.getProperty("engage.image"));
+		generalSettingsPage.verifySolutionIsPresentInPurchasedSolutions(testData.getProperty("pss.image"));
+	}
+	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
 	public void testToEnableLocationForNGPractice() throws Exception {
-		locationDetailsPage = searchLocationPage.clickToLocation("asdf");
-		locationDetailsPage.verifyLocationDetailsTitle();
-		locationDetailsPage.clickToSytemTab("NEWLY SYSTEM");
-		locationDetailsPage.clickToEnterpriseTabPracticeAndToggleOn("My New Enterprise","My New Practice 2");
-		locationDetailsPage.clickToBackButton();
-		searchLocationPage = new SearchLocationPage(driver);
-		searchLocationPage.enterLocationInSearchTextBox("asdf");
-		List<String> listOfLocName = new ArrayList<String>();
-		listOfLocName.add("asdf");
-		searchLocationPage.clickToEnterpriseFilter();
-		searchLocationPage.selectFilter("My New Enterprise");
-		searchLocationPage.clickToPracticeFilter();
-		searchLocationPage.selectFilter("My New Practice 2");
-		searchLocationPage.clickToApplyFilterButton();
-		searchLocationPage.verifySearchLocationFound(listOfLocName);
 	}
 
 }
