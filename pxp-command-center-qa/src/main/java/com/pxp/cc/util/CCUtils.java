@@ -432,8 +432,14 @@ public class CCUtils {
 	public static void verifyAndWaitForPresenceOfListOfElement(List<WebElement> web, WebDriver driver) {
 		for (int i = 0; i < web.size(); i++) {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
-			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(
-					"//tbody[@role='rowgroup']//tr[@id='locationList']//td[1]")));
+			wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+					By.xpath("//tbody[@role='rowgroup']//tr[@id='locationList']//td[1]")));
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
+
 	}
 }
