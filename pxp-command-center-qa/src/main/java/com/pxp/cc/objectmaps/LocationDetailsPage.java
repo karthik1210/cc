@@ -4,7 +4,6 @@ package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -760,7 +759,7 @@ public class LocationDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void clickToEnterpriseTabPracticeAndToggleOFF(String enterpriseName, String practiceName)
+	public void clickToEnterpriseTabPracticeAndToggleOff(String enterpriseName, String practiceName)
 			throws AWTException {
 		log("entered to ent prac tab");
 		for (WebElement element : listOfEntTabs) {
@@ -794,7 +793,7 @@ public class LocationDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void clickToPracticeTabAndToggleON(String practiceName) throws AWTException {
+	public void clickToPracticeTabAndToggleOn(String practiceName) throws AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
 		for (WebElement ele : listOfPracTabs) {
@@ -816,7 +815,7 @@ public class LocationDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void clickToPracticeTabAndToggleOFF(String practiceName) throws AWTException {
+	public void clickToPracticeTabAndToggleOff(String practiceName) throws AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
 		for (WebElement ele : listOfPracTabs) {
