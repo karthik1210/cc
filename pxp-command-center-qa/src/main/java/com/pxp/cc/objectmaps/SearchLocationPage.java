@@ -9,6 +9,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -113,7 +115,7 @@ public class SearchLocationPage extends CCMainPage {
 		searchButton.click();
 		log("clicked to search button");
 	}
-	
+
 	public void clickToHideFiltersButton() {
 		CCUtils.verifyAndWaitForElement(hideFiltersButton, driver);
 		hideFiltersButton.click();
@@ -267,23 +269,33 @@ public class SearchLocationPage extends CCMainPage {
 			log("FILTERS text is successfully verified");
 		}
 	}
-	
+
 	public void clearButtonDisplayed() {
 		CCUtils.verifyAndWaitForElement(filterClearButton, driver);
 		CCUtils.assertTrue(filterClearButton.isDisplayed(), "verifying clear button is dispalyed or not");
 		log("Verified clear button is present on location search page");
 	}
-	
+
 	public void clearApplyDisplayed() {
 		CCUtils.verifyAndWaitForElement(filterApplyButton, driver);
 		CCUtils.assertTrue(filterApplyButton.isDisplayed(), "verifying clear button is dispalyed or not");
 		log("Verified apply button is present on location search page");
 	}
-	
+
 	public void verifyAllElementsOfFilterNotVisible() {
 		CCUtils.verifyAndWaitForElement(hideFiltersButton, driver);
-		if(hideFiltersButton.getText().contains("Show Filters")) {
+		if (hideFiltersButton.getText().contains("Show Filters")) {
 			log("Show filters is displayed instead of hide filters");
 		}
+	}
+
+	public LocationDetailsPage clickToLocation(String locationName) {
+		enterLocationInSearchTextBox(locationName);
+		clickToSearchButton();
+		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfLocationName, driver);
+			CCUtils.assertEquals(listOfLocationName.get(0).getText().toString().trim(), locationName);
+			CCUtils.verifyForElementToBeClickable(listOfLocationName.get(0), driver);
+			javascriptClick(listOfLocationName.get(0));
+		return PageFactory.initElements(super.driver, LocationDetailsPage.class);
 	}
 }
