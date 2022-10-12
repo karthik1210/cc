@@ -53,7 +53,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
@@ -84,10 +84,12 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		String city = CCUtils.generateAlphaNumericString(50);
 		String zipcode = CCUtils.generateAlphaNumericString(50);
 		externalId = CCUtils.generateAlphaNumericString(50);
+		String displayName = CCUtils.getName(CCUtils.generateStringWithSpace(
+				testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(95))));
 		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId, addressLine1, addressLine2, city,
 				testData.getProperty("location.state"), zipcode, Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), displayName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
@@ -114,7 +116,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 400);
@@ -129,7 +131,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), testData.getProperty("location.name"),
-				testData.getProperty("location.external.id"), testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.external.id"), testData.getProperty("location.timezonecode"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 400);
@@ -140,7 +142,8 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatoty field and verify error response body")
 	public void testRequiredErrorMessageForMandatoryFields() throws IOException {
 		logStep("Enter null value in mandatoty field and verify error response body");
-		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId, "", "", "", "", "", 0, 0, "", "", "");
+		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId, "", "", "", "", "", 0, 0, "", "", "",
+				"");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 400);
@@ -158,7 +161,8 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
-				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId, invalidTimezoneId);
+				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId, invalidTimezoneId,
+				"");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 400);
@@ -171,7 +175,8 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		String invalidValue = CCUtils.generateAlphaNumericString(101);
 		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId, invalidValue, invalidValue,
 				invalidValue, invalidValue, invalidValue, Float.parseFloat(testData.getProperty("location.lat")),
-				Float.parseFloat(testData.getProperty("location.lng")), invalidValue, invalidValue, invalidValue);
+				Float.parseFloat(testData.getProperty("location.lng")), invalidValue, invalidValue, invalidValue,
+				invalidValue);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 400);
@@ -188,7 +193,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 404);
@@ -205,7 +210,7 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 405);

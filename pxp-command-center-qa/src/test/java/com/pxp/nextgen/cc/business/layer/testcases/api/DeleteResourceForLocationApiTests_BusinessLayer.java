@@ -102,7 +102,7 @@ public class DeleteResourceForLocationApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);

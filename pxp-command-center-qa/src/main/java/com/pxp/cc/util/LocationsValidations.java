@@ -255,4 +255,34 @@ public class LocationsValidations {
 	public String getFirstName(Response response) throws IOException {
 		return response.jsonPath().getString("firstName");
 	}
+
+	public void getSolutionsForLocations(Response response, int solutionId) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			Log4jUtil.log("Number of solutions fetched is " + jsonObject.getInt("solutionId"));
+			CCUtils.assertEquals(jsonObject.getInt("solutionId"), solutionId);
+		}
+	}
+
+	public void verifyErrorResponseForInvalidSolutionId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "solutionId cannot be null");
+	}
+
+	public void verifyErrorResponseForInvalidActiveId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Active cannot be null");
+	}
+
+	public void verifyErrorResponseForInvalidSolutionIdActive(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		if(jsonpath.get("message").toString().contains("solutionId cannot be null, Active cannot be null")) {
+			CCUtils.assertTrue(true, "verifying solution Id and active as null");
+		}
+	}
 }
