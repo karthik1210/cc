@@ -21,7 +21,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
     String systemName, enterpriseName, clientName, practiceName;
     PracticeLinksPage practiceLinksPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void loginToCommandCenterPortal() throws Exception {
         logStep("Login to command center portal");
         cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
@@ -35,7 +35,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         createNewActivePractice();
     }
 
-    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present in UI or not")
+    @Test(priority = 1, groups = {"smoke"},retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present in UI or not")
     public void verifyPracticeLinkSectionAvailability() throws InterruptedException, AWTException {
         logStep("TC001 Verify that user can navigate to Practice Links section in Command Center Application");
         practiceLinksPage = new PracticeLinksPage(driver);
@@ -61,7 +61,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.verifyExternalUrlIsDisplayed();
         practiceLinksPage.verifyNoExternalUrlConfigureLabelIsDisplayed();
         practiceLinksPage.verifyExternalUrlEditIsDisplayed();
-        practiceLinksPage.clickOnPracticeWebsiteEditButton();
+        practiceLinksPage.clickOnExternalUrlEditButton();
         practiceLinksPage.verifyExternalUrlAddIsDisplayed();
     }
 
@@ -729,7 +729,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
     }
 
-    private void createNewActiveClient() throws Exception {
+    public void createNewActiveClient() throws Exception {
         createClientPage = new CreateClientPage(driver);
         logStep("Select create client button from new dropdown");
         createClientPage.clickCreateClient();
@@ -759,7 +759,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         generalSettingsPage.verifyClientNodeIsSelected();
     }
 
-    private void createNewActiveSystem() throws NullPointerException, InterruptedException {
+    public void createNewActiveSystem() throws NullPointerException, InterruptedException {
         addOrgNodePage = new AddOrgNodePage(driver);
         logStep("Verify manage client button is displayed");
         addOrgNodePage.verifyManageClientButton();
@@ -778,7 +778,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         addOrgNodePage.verifyToasterMessage("Changes updated successfully");
     }
 
-    private void createNewActiveEnterprise() throws NullPointerException, InterruptedException {
+    public void createNewActiveEnterprise() throws NullPointerException, InterruptedException {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         logStep("Verify general settings page title");
@@ -806,7 +806,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         addOrgNodePage.verifyToasterMessage("Changes updated successfully");
     }
 
-    private void createNewActivePractice() throws NullPointerException, InterruptedException {
+    public void createNewActivePractice() throws NullPointerException, InterruptedException {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         addOrgNodePage = new AddOrgNodePage(driver);
