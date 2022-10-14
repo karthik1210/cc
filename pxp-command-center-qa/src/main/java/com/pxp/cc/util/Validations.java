@@ -2911,7 +2911,7 @@ public class Validations {
 
 	public void verifyErrorResponseBodyForInvalidData(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Address Line1 size maximum 100 characters, State size maximum 2 characters, Address Line2 size maximum 100 characters, City size maximum 50 characters, Zipcode size maximum 50 characters, Name size maximum 100 characters";
+		String actual = "Address Line1 size maximum 100 characters, Address Line2 size maximum 100 characters, City size maximum 50 characters, Display Name size maximum 100 characters, Name size maximum 100 characters, State size maximum 2 characters, Zipcode size maximum 50 characters";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -3205,6 +3205,19 @@ public class Validations {
 			if (name.equalsIgnoreCase(actualName)) {
 				Log4jUtil.log(touId + " added/fetched/updated successfully for " + practiceId);
 			}
+		}
+	}
+
+	public void getTouIdDetailValidation( Response getTouApiResponse,  int practiceId, int touId, String actualName, String englishContent, String spanishContent )
+	{
+		String expectedName = getTouApiResponse.jsonPath().get("name");
+		String expectedEnglishContent = getTouApiResponse.jsonPath().get("content.en");
+		String expectedSpanishContent = getTouApiResponse.jsonPath().get("content.es");
+		if (expectedName.equalsIgnoreCase(actualName) && englishContent.equalsIgnoreCase(expectedEnglishContent) && spanishContent.equalsIgnoreCase(expectedSpanishContent) ) {
+			Log4jUtil.log( touId+ " updated successfully for " + practiceId);
+		}
+		else {
+			Log4jUtil.log( touId+ " is not updated successfully for " + practiceId);
 		}
 	}
 

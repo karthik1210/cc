@@ -171,24 +171,24 @@ public class LocationsInfo extends BaseRest {
 	}
 
 	public Response createLocation_BL(String clientId, String name, String addressLine1, String addressLine2,
-			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
-			throws IOException {
+			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode,
+			String displayName) throws IOException {
 		String url = ApiPath.LOCATION_FOR_CLIENT_BL(clientId);
 		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
 				lat, lng);
 		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(createLocationPayload).when().post(url).then().extract().response();
 	}
 
 	public Response createLocation_DL(String clientId, String name, String addressLine1, String addressLine2,
-			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode)
-			throws IOException {
+			String city, String state, int zipcode, int lat, int lng, int externalId, String timezoneCode,
+			String displayName) throws IOException {
 		String url = ApiPath.LOCATION_FOR_CLIENT_DL(clientId);
 		Map<String, Object> createAddressPayload = postAddressLocation(addressLine1, addressLine2, city, state, zipcode,
 				lat, lng);
 		Map<String, Object> createLocationPayload = postLocationApiPayload(name, createAddressPayload, externalId,
-				timezoneCode);
+				timezoneCode, displayName);
 		return given().spec(requestSpec).body(createLocationPayload).when().post(url).then().extract().response();
 	}
 
@@ -206,9 +206,10 @@ public class LocationsInfo extends BaseRest {
 	}
 
 	private Map<String, Object> postLocationApiPayload(String name, Map<String, Object> address, int externalId,
-			String timezoneCode) {
+			String timezoneCode, String displayName) {
 		Map<String, Object> createLocationMap = new HashMap<String, Object>();
 		createLocationMap.put("name", name);
+		createLocationMap.put("displayName", displayName);
 		createLocationMap.put("address", address);
 		createLocationMap.put("externalId", externalId);
 		createLocationMap.put("timezoneCode", timezoneCode);
@@ -447,5 +448,20 @@ public class LocationsInfo extends BaseRest {
 	public Response associateProvidersToLocation_DL(int locationId, int practiceId, List<Integer> providerIdList) {
 		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
 		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
+	}
+
+	public Response getSolutionStatusApiResponseNullValue_BL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES_USING_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getResourceForLocation_BL(int locationId, int practiceId) {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_BL(locationId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getResourceForLocationNullValue_BL() {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }

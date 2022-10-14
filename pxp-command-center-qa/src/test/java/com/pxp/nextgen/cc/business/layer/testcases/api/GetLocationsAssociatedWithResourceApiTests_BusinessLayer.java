@@ -27,7 +27,8 @@ public class GetLocationsAssociatedWithResourceApiTests_BusinessLayer extends Ba
 	private Validations validation;
 	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
 			createEnterpriseApiResponse, createResourceApiResponse, createNewLocationApiResponse,
-			associateDeassociatePracticesForLocationApiResponse, addResourceForLocationApiResponse,getLocationsForResourseResponse;
+			associateDeassociatePracticesForLocationApiResponse, addResourceForLocationApiResponse,
+			getLocationsForResourseResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, locationId;
 	String clientName, clientSapNumber, externalId, firstName, lastName;
 
@@ -89,7 +90,7 @@ public class GetLocationsAssociatedWithResourceApiTests_BusinessLayer extends Ba
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"));
+				testData.getProperty("location.timezonecode"), "");
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
 		locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 	}
@@ -103,13 +104,15 @@ public class GetLocationsAssociatedWithResourceApiTests_BusinessLayer extends Ba
 		logStep("Add one Resource for Location");
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(resourceId);
-		addResourceForLocationApiResponse = locationsInfo.addResourceForLocation_BL(locationId, practiceId,resourceIds);
+		addResourceForLocationApiResponse = locationsInfo.addResourceForLocation_BL(locationId, practiceId,
+				resourceIds);
 		logStep("Enter resourceId and practiceId");
 		getLocationsForResourseResponse = locationsInfo.getLocationsForResource_BL(resourceId, practiceId);
 		CCUtils.responseTimeValidation(getLocationsForResourseResponse);
 		CCUtils.assertEquals(getLocationsForResourseResponse.getStatusCode(), 200);
 		String locationID = getLocationsForResourseResponse.jsonPath().getString("locationId");
-		locationsValidations.verifyResponseBodyForLocationAssociatedWithResourses(getLocationsForResourseResponse,locationID);
+		locationsValidations.verifyResponseBodyForLocationAssociatedWithResourses(getLocationsForResourseResponse,
+				locationID);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing resourceId and existing practiceId and verify response code")

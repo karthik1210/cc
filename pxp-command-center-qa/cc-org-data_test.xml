@@ -24,18 +24,16 @@
 				-->
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
 				/> -->
-			<!-- TOU test classes are disabled due to enhancement of privacy policies.
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePrivacySettingApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" /> 	-->
-
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer" />
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" />
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
 			<class
