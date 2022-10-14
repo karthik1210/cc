@@ -579,7 +579,7 @@ public class SharedInfo extends BaseRest {
 		createLocationMap.put("timezoneCode", timezoneCode);
 		return createLocationMap;
 	}
-	
+
 	public Response getLocationDetails(int locationId) {
 		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -1099,9 +1099,58 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getSolutionForLocationForNullValue_DL() {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_RESOURCES__NULL_VALUE_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPractice_DL(int locationId, int practiceId, String enDisplayName,
+			String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime,
+			String enDirection, String esDirection) {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_DL(locationId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createTimePayload, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPracticeUsingNullValues_DL(String enDisplayName, String esDisplayName,
+			String addressExtension, String phoneNumber, String startTime, String endTime, String enDirection,
+			String esDirection) {
+		String url = ApiPath.SAVE_LOCATION_INFO_FOR_PRACTICE_USING_NULL_VALUES_DL();
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createTimePayload = createOfficeHoursPayload(startTime, endTime);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = saveLocationInfoForPracticeApiPayload(
+				createEnESDisplayNamePayload, addressExtension, phoneNumber, createTimePayload, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	public Response saveLocationInfoForPracticeWithoutMandatoryParametersInPayload_DL(int locationId, int practiceId,
+			String enDisplayName, String esDisplayName, String addressExtension, String enDirection,
+			String esDirection) {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_DL(locationId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		Map<String, Object> createDirectionPayload = createDirectionPayload(enDirection, esDirection);
+		Map<String, Object> saveLocationInfoPayload = (Map<String, Object>) saveLocationInfoForPracticeNonMandatoryParametersApiPayload(
+				createEnESDisplayNamePayload, addressExtension, createDirectionPayload);
+		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
+	}
+
+	public Map<String, Object> saveLocationInfoForPracticeNonMandatoryParametersApiPayload(Map<String, Object> displayName,
+			String addressExtension, Map<String, Object> createDirectionPayload) {
+		Map<String, Object> saveLocationInfoDetailsMap = new HashMap<String, Object>();
+		saveLocationInfoDetailsMap.put("displayName", displayName);
+		saveLocationInfoDetailsMap.put("addressExtension", addressExtension);
+		saveLocationInfoDetailsMap.put("direction", createDirectionPayload);
+		return saveLocationInfoDetailsMap;
+	}
+	
+	public Response saveLocationInfoForPracticeWithNullPayload_DL(int locationId, int practiceId) {
+		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_DL(locationId, practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }

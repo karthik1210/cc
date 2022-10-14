@@ -1413,4 +1413,8 @@ public class ApiPath {
 	public static final String UPDATE_SOLUTION_FOR_LOCATION_DL_INVALID_URL(int locationId, int practiceId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutionsinvalidurl";
 	}
+	
+	public static final String SAVE_LOCATION_INFO_FOR_PRACTICE_USING_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/locations/" + null + "/practices/" + null;
+	}
 }
