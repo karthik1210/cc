@@ -103,6 +103,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForLocationApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
