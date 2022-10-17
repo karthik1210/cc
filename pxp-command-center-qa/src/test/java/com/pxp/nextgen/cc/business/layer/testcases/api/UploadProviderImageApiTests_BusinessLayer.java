@@ -103,7 +103,7 @@ public class UploadProviderImageApiTests_BusinessLayer extends BaseRest {
 		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
 		CCUtils.assertEquals(getProviderDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify imageurl is present for selected provider");
-		Boolean value = sharedServiceApiValidations.validateInageUrlValueIsNull(getProviderDetailsApiResponse);
+		Boolean value = sharedServiceApiValidations.validateImageUrlValueIsNull(getProviderDetailsApiResponse);
 		CCUtils.assertEquals(value, false);
 	}
 
@@ -116,6 +116,7 @@ public class UploadProviderImageApiTests_BusinessLayer extends BaseRest {
 		addProviderImageApiResponse = sharedInfo.addProviderImage_BL(providerId, file, fileType);
 		CCUtils.responseTimeValidation(addProviderImageApiResponse);
 		CCUtils.assertEquals(addProviderImageApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageForInvalidImage(addProviderImageApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing providerid with valid image format to add provider image and verify response code")

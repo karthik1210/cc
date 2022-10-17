@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 
 public class SharedServiceApiValidations {
 
-	public Boolean validateInageUrlValueIsNull(Response response) {
+	public Boolean validateImageUrlValueIsNull(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		if (Objects.isNull(jsonpath.get("imageUrl"))) {
 			Log4jUtil.log("imageUrl is null");

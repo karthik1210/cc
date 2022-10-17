@@ -2375,7 +2375,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageForInvalidBrandImage(Response response) throws IOException {
+	public void verifyErrorMessageForInvalidImage(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid file");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
