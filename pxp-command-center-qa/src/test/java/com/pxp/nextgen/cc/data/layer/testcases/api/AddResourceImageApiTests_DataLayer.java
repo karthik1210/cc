@@ -89,7 +89,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 		getResourceDetailsApiResponse = sharedInfo
 				.getResourceDetails_DL(resourceId);
 		logStep("Verify imageurl is not present for selected resource");
-		Boolean value = sharedServiceApiValidations.validateInageUrlValueIsNull(getResourceDetailsApiResponse);
+		Boolean value = sharedServiceApiValidations.validateImageUrlValueIsNull(getResourceDetailsApiResponse);
 		if (value.equals(false)) {
 			logStep("delete resource imageurl");
 			deleteResourceImageApiResponse = sharedInfo
@@ -97,7 +97,7 @@ public class AddResourceImageApiTests_DataLayer extends BaseRest {
 			logStep("Resource image url is deleted");
 			getResourceDetailsApiResponse = sharedInfo
 					.getResourceDetails_DL(resourceId);
-			CCUtils.assertTrue(sharedServiceApiValidations.validateInageUrlValueIsNull(getResourceDetailsApiResponse),
+			CCUtils.assertTrue(sharedServiceApiValidations.validateImageUrlValueIsNull(getResourceDetailsApiResponse),
 					"imageUrl is present");
 		}
 		logStep("Add Resouce image url");
