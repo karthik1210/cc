@@ -1422,14 +1422,18 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/images";
 	}
 
-	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String uriType, int practiceId) {
-		if(uriType.equalsIgnoreCase("Valid"))
-			return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+	public static final String GET_STATES(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/states";
 		else
-			return SERVICE_ORG_DL + "/v1/practicesssss/"+practiceId+"/patient-access-settings";
-		}
-
-	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+			return SERVICE_COMMONS_DL + "/v1/states";
 	}
+
+	public static final String GET_STATES_WITH_INVLAID_URI(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/statesss";
+		else
+			return SERVICE_COMMONS_DL + "/v1/statesss";
+	}
+
 }
