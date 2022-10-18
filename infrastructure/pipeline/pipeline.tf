@@ -48,6 +48,12 @@ module "pipeline" {
   ]
   codebuild_environment_privileged_mode = true
 
+  codebuild_vpc_config = {
+    vpc_id             = data.aws_vpc.build_account.id
+    subnets            = data.aws_subnets.build_account_private.ids
+    security_group_ids = [data.aws_security_group.codebuild.id]
+  }
+
   common_tags = {
     "nextgen.automation"          = "true"
     "nextgen.environment"         = "pipeline"

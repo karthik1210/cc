@@ -7,3 +7,13 @@ provider "aws" {
     role_arn = "arn:aws:iam::997401518295:role/NextGenAdminAccess"
   }
 }
+
+locals {
+  account_info = {
+    "build" = {
+      role_arn = "arn:aws:iam::997401518295:role/NextGenAdminAccess"
+      region   = "us-east-2"
+      vpc_name = "main"
+    }
+  }
+}
