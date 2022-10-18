@@ -54,6 +54,6 @@ public class GetStatesApiTests_DataLayer extends BaseRest {
         getStatesApiResponse = commonsInfo.getStatesResponse("", "DL");
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getStatesApiResponse);
-        validation.verifyErrorMessageInResponseForInvalidMethod(getStatesApiResponse);
+        validation.verifyErrorMessageInResponseForInvalidMethod(getStatesApiResponse,"PATCH");
     }
 }
