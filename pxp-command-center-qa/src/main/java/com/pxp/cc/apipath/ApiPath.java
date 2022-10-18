@@ -1421,4 +1421,15 @@ public class ApiPath {
 	public static final String UPLOAD_PROVIDER_IMAGE(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/images";
 	}
+
+	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String uriType, int practiceId) {
+		if(uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/"+practiceId+"/patient-access-settings";
+		}
+
+	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+	}
 }
