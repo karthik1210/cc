@@ -1421,4 +1421,19 @@ public class ApiPath {
 	public static final String UPLOAD_PROVIDER_IMAGE(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/images";
 	}
+
+	public static final String GET_STATES(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/states";
+		else
+			return SERVICE_COMMONS_DL + "/v1/states";
+	}
+
+	public static final String GET_STATES_WITH_INVLAID_URI(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/statesss";
+		else
+			return SERVICE_COMMONS_DL + "/v1/statesss";
+	}
+
 }
