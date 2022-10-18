@@ -10,7 +10,7 @@ data "aws_vpc" "build_account" {
   provider = aws
 
   tags = {
-    Name = local.account_info.build.vpc_name
+    Name = local.vpc_name
   }
 }
 
@@ -33,4 +33,3 @@ data "aws_security_group" "codebuild" {
 
   name = "codebuild"
 }
-
