@@ -3221,4 +3221,23 @@ public class Validations {
 		}
 	}
 
+	public void verifyGetStatesDetails(Response getStateApiResponse) {
+		List<String> stateCodes = Arrays.asList("AA", "AE", "AK", "AL", "AP", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+				"MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "OU", "PA", "PR", "RI", "SC", "SD", "TN", "TX",
+				"UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY");
+		List<String> stateNames = Arrays.asList("Armed Forces - Americas", "Armed Forces - Other", "Alaska", "Alabama", "Armed Forces - Pacific", "Arkansas", "American Samoa", "Arizona", "California", "Colorado", "Connecticut", "District of Columbia", "Delaware",
+				"Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Northern Mariana Islands",
+				"Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Outside_US", "Pennsylvania", "Puerto Rico", "Rhode Island",
+				"South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "US Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming");
+		List<String> stateCodeCount = getStateApiResponse.jsonPath().get("stateCode");
+		for (int i = 0; i < stateCodeCount.size(); i++) {
+				String responseName = getStateApiResponse.jsonPath().get("name[" + i + "]");
+				String expectedName = stateNames.get(i).toString();
+				String responseStateCode = getStateApiResponse.jsonPath().get("stateCode[" + i + "]");
+				String expectedStateCode = stateCodes.get(i).toString();
+				if (responseStateCode.equalsIgnoreCase(expectedStateCode)) {
+					CCUtils.assertEquals(responseName,expectedName);
+				}
+		}
+	}
 }
