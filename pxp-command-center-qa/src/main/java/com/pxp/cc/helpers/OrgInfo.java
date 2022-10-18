@@ -1076,4 +1076,25 @@ public class OrgInfo extends BaseRest {
 		String url = ApiPath.ORGS_SOLUTION_BL + orgId + "/solutions";
 		return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
 	}
+
+	public Response getPatientAccessSettings_DataLayer(String urlType, int practiceId) {
+		if(urlType.equalsIgnoreCase("valid")) {
+			String url = ApiPath.GET_PATIENT_ACCESS_SETTINGS_DL("Valid", practiceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		}
+		else if(urlType.equalsIgnoreCase("Invalid")) {
+			String url = ApiPath.GET_PATIENT_ACCESS_SETTINGS_DL("Invalid", practiceId);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		}
+
+		else {
+			String url = ApiPath.GET_PATIENT_ACCESS_SETTINGS_DL("Valid", practiceId);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getPatientAccessSettings_DataLayer(String practiceId) {
+		String url = ApiPath.GET_PATIENT_ACCESS_SETTINGS_DL(practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

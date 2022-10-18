@@ -1436,4 +1436,14 @@ public class ApiPath {
 			return SERVICE_COMMONS_DL + "/v1/statesss";
 	}
 
+	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String uriType, int practiceId) {
+		if(uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/"+practiceId+"/patient-access-settings";
+	}
+
+	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+	}
 }
