@@ -78,6 +78,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForLocationApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SaveLocationDisplayInfoForPracticeApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SavePracticeProviderApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
