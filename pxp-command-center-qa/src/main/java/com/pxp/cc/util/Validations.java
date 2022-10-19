@@ -3246,4 +3246,21 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method '"+httpMethod+"' not supported");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
+
+	public void verifyOutputFromValidInputForGetPatientAccessSettings(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("linkAccounts").toString(), "true");
+		CCUtils.assertEquals(jsonPath.get("autoAgeout").toString(), "true");
+	}
+
+	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("featureId"), true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("featureName"), true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("access"), true);
+	}
 }

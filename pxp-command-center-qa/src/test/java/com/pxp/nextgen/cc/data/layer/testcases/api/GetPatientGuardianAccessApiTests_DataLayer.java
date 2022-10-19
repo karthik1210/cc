@@ -50,6 +50,7 @@ public class GetPatientGuardianAccessApiTests_DataLayer extends BaseRest {
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPatientGuardianAccessResponse);
         CCUtils.assertEquals(getPatientGuardianAccessResponse.getStatusCode(), 200);
+        validations.verifyOutputFromValidInputForGetPatientGuardianAccess(getPatientGuardianAccessResponse);
     }
 
     @Test(priority = 2, dataProvider = "invalidOrNullPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "Verifying error code 400 and error message when user enters invalid/incorrect/null practice Id")
