@@ -1173,4 +1173,28 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPLOAD_PROVIDER_IMAGE(providerId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+
+	public Response savePracticeProvider_DL(int practiceId, int providerId, String en, String es, String email,
+			String mobile) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderNullPayload_DL(int practiceId, int providerId) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderNullValues_DL() {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getPracticeProviderDetails_DL(int practiceId, int providerId) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
