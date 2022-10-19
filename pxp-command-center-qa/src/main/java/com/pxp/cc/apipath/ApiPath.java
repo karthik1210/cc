@@ -1437,13 +1437,21 @@ public class ApiPath {
 	}
 
 	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String uriType, int practiceId) {
-		if(uriType.equalsIgnoreCase("Valid"))
-			return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access-settings";
 		else
-			return SERVICE_ORG_DL + "/v1/practicesssss/"+practiceId+"/patient-access-settings";
+			return SERVICE_ORG_DL + "/v1/practicesssss/" + practiceId + "/patient-access-settings";
 	}
 
 	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-access-settings";
+		return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access-settings";
+	}
+
+	public static final String SAVE_PRACTICE_PROVIDER_DL(int practiceId, int providerId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/providers/" + providerId;
+	}
+
+	public static final String SAVE_PRACTICE_PROVIDER_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/providers/null";
 	}
 }
