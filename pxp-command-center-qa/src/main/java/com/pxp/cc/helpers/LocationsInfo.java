@@ -464,4 +464,16 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getResourceForLocation_DL(int locationId, int practiceId,String name) {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).queryParam("name",name).when().get(url).then().extract()
+				.response();
+	}
+	
+	public Response getResourceForLocationNullValue_DL() {
+		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().get(url).then().extract()
+				.response();
+	}
 }

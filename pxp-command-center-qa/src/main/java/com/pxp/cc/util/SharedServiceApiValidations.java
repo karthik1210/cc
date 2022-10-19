@@ -32,4 +32,9 @@ public class SharedServiceApiValidations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyErrorResponseForImageField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Image not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
