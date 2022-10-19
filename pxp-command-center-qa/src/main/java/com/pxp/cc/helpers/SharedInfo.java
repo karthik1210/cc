@@ -1168,4 +1168,9 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpecification).contentType("multipart/form-data").multiPart("file", file, fileType)
 				.post(url).then().extract().response();
 	}
+
+	public Response deleteProviderImage_BL(int providerId) {
+		String url = ApiPath.UPLOAD_PROVIDER_IMAGE(providerId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
 }
