@@ -3240,4 +3240,10 @@ public class Validations {
 				}
 		}
 	}
+
+	public void verifyErrorMessageInResponseForInvalidMethod(Response response, String httpMethod) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method '"+httpMethod+"' not supported");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+	}
 }
