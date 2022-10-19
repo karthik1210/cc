@@ -294,7 +294,7 @@ public class LocationsValidations {
 	
 	public void verifyGetResourcesForLocationApiResponseBody(Response response) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.asString());
-		Log4jUtil.log("AppointmentType status in response body : " + jsonPath.get("totalCount"));
+		Log4jUtil.log("Resources count in response body : " + jsonPath.get("totalCount"));
 		Log4jUtil.log("Categories in response body : " + jsonPath.get("items"));
 		}
 }
