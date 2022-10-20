@@ -1221,5 +1221,5 @@ public class SharedInfo extends BaseRest {
 	public Response getLocationForPractice_NullValue() {
 		String url = ApiPath.GET_LOCATION_BY_PRACTICE_DL();
 		return given().spec(requestSpec).get(url).then().extract().response();
-	}
+	}	
 }
