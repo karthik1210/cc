@@ -107,6 +107,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsByPracticeApiTests_Businesslayer" />
 		</classes>
 	</test>
 </suite>
