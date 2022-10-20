@@ -1465,4 +1465,15 @@ public class ApiPath {
 	public static final String GET_PATIENT_GUARDIAN_ACCESS_DL(String practiceId) {
 		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-guardian-access";
 	}
+
+	public static final String GET_PATIENT_AGEOUT_DL(String uriType, int practiceId) {
+		if(uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-ageout";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/"+practiceId+"/patient-ageout";
+	}
+
+	public static final String GET_PATIENT_AGEOUT_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-ageout";
+	}
 }

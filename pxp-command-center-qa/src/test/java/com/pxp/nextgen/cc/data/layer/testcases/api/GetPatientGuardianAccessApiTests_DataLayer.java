@@ -43,7 +43,7 @@ public class GetPatientGuardianAccessApiTests_DataLayer extends BaseRest {
                 {Integer.parseInt(testData.getProperty("api.valid.practice.id.not.having.patient.guardian.access")), "PXPP-24340 Verify 200 response code when practice id is valid and not having patient guardian access"}};
     }
 
-    @Test(priority = 1, dataProvider = "practiceIdHasOrNotHavingPatientGuardianAccess", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-24337 Fetching Patient Guardian Access details with valid practice id")
+    @Test(priority = 1, dataProvider = "practiceIdHasOrNotHavingPatientGuardianAccess", retryAnalyzer = RetryAnalyzer.class, description = "Fetching Patient Guardian Access details with valid practice id")
     public void getPatientGuardianAccessWithValidPracticeIdApiTestSuccess(int practiceId, String testCaseName) throws IOException {
         logStep(testCaseName);
         getPatientGuardianAccessResponse = orgInfo.getPatientGuardianAccess_DataLayer("Valid", practiceId);
