@@ -39,7 +39,7 @@ public class GetPatientAccessSettingsApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-24318 Fetching Patient Access settings details with valid practice id")
     public void getPatientAccessSettingsWithValidPracticeIdApiTestSuccess() throws IOException {
-        logStep("PXPP-24318 TC 001_verify response code 200 and response body, when user enters valid practice Id to Get Practice Access Detail by using GET Request [DL]");
+        logStep("TC 001_verify response code 200 and response body, when user enters valid practice Id to Get Practice Access Detail by using GET Request [DL]");
         practiceId = Integer.parseInt(testData.getProperty("api.valid.practice.id.patient.access.settings"));
         getPatientAccessSettingsResponse = orgInfo.getPatientAccessSettings_DataLayer("Valid", practiceId);
         logStep("Validating response information");
@@ -76,5 +76,16 @@ public class GetPatientAccessSettingsApiTests_DataLayer extends BaseRest {
         CCUtils.responseTimeValidation(getPatientAccessSettingsResponse);
         CCUtils.assertEquals(getPatientAccessSettingsResponse.getStatusCode(), 405);
         validations.verifyErrorMessageInResponseForInvalidMethodCall(getPatientAccessSettingsResponse);
+    }
+
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-25010 Fetching Patient Access settings details with valid practice id which don't have patient access settings")
+    public void getPatientAccessSettingsWithValidPracticeIdNotHavingPatientAccessSettings() throws IOException {
+        logStep("TC 008_verify response code 200 and response body, when user enters valid practice Id which don't have patient access settings");
+        practiceId = Integer.parseInt(testData.getProperty("api.valid.practice.id.not.having.patient.access.settings"));
+        getPatientAccessSettingsResponse = orgInfo.getPatientAccessSettings_DataLayer("Valid", practiceId);
+        logStep("Validating response information");
+        CCUtils.responseTimeValidation(getPatientAccessSettingsResponse);
+        CCUtils.assertEquals(getPatientAccessSettingsResponse.getStatusCode(), 200);
+        validations.verifyOutputFromValidInputForNotHavingPatientAccessSettings(getPatientAccessSettingsResponse);
     }
 }

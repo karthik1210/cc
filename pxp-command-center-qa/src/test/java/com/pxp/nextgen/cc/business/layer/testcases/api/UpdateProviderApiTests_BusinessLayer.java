@@ -123,36 +123,4 @@ public class UpdateProviderApiTests_BusinessLayer extends BaseRest{
 		CCUtils.assertEquals(updateProviderDetailsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(updateProviderDetailsApiResponse);
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorResponseCodeForInvalidUrl() throws IOException {
-		logStep("Enter existing providerId");
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
-		String externalId = CCUtils.generateAlphaNumericString(10);
-		String gender=testData.getProperty("provider.gender");
-		String credentials=testData.getProperty("provider.credentials");
-		updateProviderDetailsApiResponse = sharedInfo.updateProviderDetailsInvalidUrl_BL(providerId,
-			firstName,lastName,gender, externalId, credentials);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateProviderDetailsApiResponse);
-		CCUtils.assertEquals(updateProviderDetailsApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(updateProviderDetailsApiResponse);
-    }
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if POST is used instead of PUT")
-	public void testErrorResponseCodeForInvalidMethodCall() throws IOException {
-		logStep("Enter existing providerId");
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
-		String externalId = CCUtils.generateAlphaNumericString(10);
-		String gender=testData.getProperty("provider.gender");
-		String credentials=testData.getProperty("provider.credentials");
-		updateProviderDetailsApiResponse = sharedInfo.updateProviderDetailsInvalidMethod_BL(providerId,
-			firstName,lastName,gender, externalId, credentials);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateProviderDetailsApiResponse);
-		CCUtils.assertEquals(updateProviderDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateProviderDetailsApiResponse);
-	}	
 }

@@ -3253,6 +3253,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonPath.get("autoAgeout").toString(), "true");
 	}
 
+	public void verifyOutputFromValidInputForNotHavingPatientAccessSettings(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("linkAccounts").toString(), "false");
+		CCUtils.assertEquals(jsonPath.get("autoAgeout").toString(), "false");
+	}
+
 	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response response) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
@@ -3262,5 +3268,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("featureId"), true);
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("featureName"), true);
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("access"), true);
+	}
+
+	public void verifyOutputFromValidInputForGetPatientAgeout(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("defaultAgeout").toString(), "18");
 	}
 }
