@@ -1,3 +1,5 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -43,6 +45,7 @@ public class GetPatientAccessSettingsApiTests_DataLayer extends BaseRest {
         logStep("Validating response information");
         CCUtils.responseTimeValidation(getPatientAccessSettingsResponse);
         CCUtils.assertEquals(getPatientAccessSettingsResponse.getStatusCode(), 200);
+        validations.verifyOutputFromValidInputForGetPatientAccessSettings(getPatientAccessSettingsResponse);
     }
 
     @Test(priority = 2, dataProvider = "invalidOrNullPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "Verifying error code 400 and error message when user enters invalid/incorrect/null practice Id")
@@ -64,7 +67,7 @@ public class GetPatientAccessSettingsApiTests_DataLayer extends BaseRest {
             validations.verifyErrorInResponseForInvalidUrl(getPatientAccessSettingsResponse);
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-24328 TC 007_verify response code 405 and error message when user enters valid practice Id with Invalid PATCH method for [DL]")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-24328 verify response code 405 and error message when user enters valid practice Id with Invalid PATCH method for [DL]")
     public void getPatientAccessSettingsWithInvalidMethod() throws IOException {
         logStep("TC 007_verify response code 405 and error message when user enters valid practice Id with Invalid PATCH method for [DL]");
         practiceId = Integer.parseInt(testData.getProperty("api.valid.practice.id.patient.access.settings"));
