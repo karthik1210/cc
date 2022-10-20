@@ -1476,4 +1476,15 @@ public class ApiPath {
     public static final String GET_PATIENT_AGEOUT_DL(String practiceId) {
         return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-ageout";
     }
+
+    public static final String GET_PATIENT_ACCESS_BL(String uriType, int practiceId) {
+        if (uriType.equalsIgnoreCase("Valid"))
+            return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+        else
+            return SERVICE_ORG_BL + "/v1/practicesssss/" + practiceId + "/patient-access";
+    }
+
+    public static final String GET_PATIENT_ACCESS_BL(String practiceId) {
+        return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+    }
 }
