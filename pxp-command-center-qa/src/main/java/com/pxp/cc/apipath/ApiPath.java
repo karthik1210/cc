@@ -1491,4 +1491,16 @@ public class ApiPath {
 	public static final String GET_LOCATIONS_BY_PRACTICE_BL() {
 		return SERVICE_SHARED_BL + "/v1/practices/null/locations";
 	}
+	
+	public static final String UPDATE_SOLUTIONS_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String GET_LOCATION_BY_PRACTICE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATION_BY_PRACTICE_DL() {
+		return SHARED_DL + "/v1/practices/null/locations";
+	}
 }
