@@ -1197,4 +1197,28 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response updateProviderDetails_BL(int providerId,String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).body(createProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response updateProviderDetailsInvalidUrl_BL(int providerId,String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		String url = ApiPath.PROVIDER_DETAILS_INVALID_URL_BL(providerId);
+		return given().spec(requestSpec).body(createProviderPayload).when().put(url).then().extract().response();
+    }
+	
+	public Response updateProviderDetailsInvalidMethod_BL(int providerId,String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).body(createProviderPayload).when().post(url).then().extract().response();
+	}
 }
