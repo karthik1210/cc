@@ -39,7 +39,7 @@ public class GetPatientAgeoutApiTests_DataLayer extends BaseRest {
 
     @DataProvider(name = "practiceIdHasOrNotHavingPatientAgeout")
     public Object[][] practiceIdHasOrNotHavingPatientAgeout() throws Exception {
-        return new Object[][] {{Integer.parseInt(testData.getProperty("api.valid.practice.id.patient.ageout")), "PXPP-24329 Verify 200 response code when practice id is valid and having patient ageout"},
+        return new Object[][]{{Integer.parseInt(testData.getProperty("api.valid.practice.id.patient.ageout")), "PXPP-24329 Verify 200 response code when practice id is valid and having patient ageout"},
                 {Integer.parseInt(testData.getProperty("api.valid.practice.id.not.having.patient.ageout")), "PXPP-24330 Verify 200 response code when practice id is valid and not having patient ageout"}};
     }
 

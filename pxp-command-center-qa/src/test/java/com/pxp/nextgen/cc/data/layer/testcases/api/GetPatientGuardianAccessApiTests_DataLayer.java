@@ -39,7 +39,7 @@ public class GetPatientGuardianAccessApiTests_DataLayer extends BaseRest {
 
     @DataProvider(name = "practiceIdHasOrNotHavingPatientGuardianAccess")
     public Object[][] practiceIdHasOrNotHavingPatientGuardianAccess() throws Exception {
-        return new Object[][] {{Integer.parseInt(testData.getProperty("api.valid.practice.id.patient.guardian.access")), "PXPP-24377 Verify 200 response code when practice id is valid and having patient guardian access"},
+        return new Object[][]{{Integer.parseInt(testData.getProperty("api.valid.practice.id.patient.guardian.access")), "PXPP-24377 Verify 200 response code when practice id is valid and having patient guardian access"},
                 {Integer.parseInt(testData.getProperty("api.valid.practice.id.not.having.patient.guardian.access")), "PXPP-24340 Verify 200 response code when practice id is valid and not having patient guardian access"}};
     }
 
