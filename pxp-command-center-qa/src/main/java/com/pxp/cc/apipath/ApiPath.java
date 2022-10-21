@@ -1503,4 +1503,8 @@ public class ApiPath {
 	public static final String GET_LOCATION_BY_PRACTICE_DL() {
 		return SHARED_DL + "/v1/practices/null/locations";
 	}
+
+	public static final String PROVIDER_DETAILS_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null";
+	}
 }

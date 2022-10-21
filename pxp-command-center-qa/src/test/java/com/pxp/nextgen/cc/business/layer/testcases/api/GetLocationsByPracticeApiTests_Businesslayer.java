@@ -151,7 +151,6 @@ public class GetLocationsByPracticeApiTests_Businesslayer extends BaseRest {
 				solutionId, true);
 		CCUtils.assertEquals(updateSolutionForProviders.getStatusCode(), 200);
 		logStep("Associate location for provider");
-		logStep("Add valid location id for existing providerId and practiceId");
 		locationIdone = Arrays.asList(new Locations(locationId, true));
 		updateLocationForProvider = sharedInfo.addOrRemoveLocationForProvider_BL(providerId, practiceId, locationIdone);
 		CCUtils.assertEquals(updateLocationForProvider.getStatusCode(), 207);
