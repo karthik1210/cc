@@ -1130,4 +1130,22 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.GET_PATIENT_AGEOUT_DL(practiceId);
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
+
+    public Response getPatientAccess_BusinessLayer(String urlType, int practiceId) {
+        if (urlType.equalsIgnoreCase("valid")) {
+            String url = ApiPath.GET_PATIENT_ACCESS_BL("Valid", practiceId);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        } else if (urlType.equalsIgnoreCase("Invalid")) {
+            String url = ApiPath.GET_PATIENT_ACCESS_BL("Invalid", practiceId);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        } else {
+            String url = ApiPath.GET_PATIENT_ACCESS_BL("Valid", practiceId);
+            return given().spec(requestSpec).when().patch(url).then().extract().response();
+        }
+    }
+
+    public Response getPatientAccess_BusinessLayer(String practiceId) {
+        String url = ApiPath.GET_PATIENT_ACCESS_BL(practiceId);
+        return given().spec(requestSpec).when().get(url).then().extract().response();
+    }
 }
