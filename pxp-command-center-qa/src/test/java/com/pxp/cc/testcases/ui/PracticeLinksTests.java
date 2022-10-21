@@ -57,6 +57,8 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.clickOnExternalUrlEditButton();
         practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
+        practiceLinksPage.verifyHyperLinkText();
+        practiceLinksPage.verifyWebsiteUrl();
         practiceLinksPage.clickOnExternalUrlCancelButton();
         logStep("PXPP-20482 TC021 Verify the Social Media by default 1st time in Practice Links section");
         practiceLinksPage.verifySocialMediaLabel();

@@ -196,6 +196,28 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//div[@class='col-8']/a")
     private List<WebElement> listOfSocialMediaUrlsDisplay;
 
+    @FindBy(xpath = "//div[@class='col-6']/label[contains(text(),'Hyperlink Text')]")
+    private WebElement hyperlinkText;
+
+    @FindBy(xpath = "//div[@class='col-6']/label[contains(text(),'Website URL')]")
+    private WebElement websiteUrl;
+
+    public void verifyHyperLinkText() throws InterruptedException, AWTException {
+        CCUtils.scrollPageViaElement(driver, hyperlinkText);
+        CCUtils.verifyAndWaitForElement(hyperlinkText, driver);
+        log("Verifying Hyperlink text title is available or not");
+        CCUtils.assertEquals(hyperlinkText.getText().equalsIgnoreCase("Hyperlink Text"), true);
+        log("Successfully hyperlink text title displayed");
+    }
+
+    public void verifyWebsiteUrl() throws InterruptedException, AWTException {
+        CCUtils.scrollPageViaElement(driver, websiteUrl);
+        CCUtils.verifyAndWaitForElement(websiteUrl, driver);
+        log("Verifying Website Url title is available or not");
+        CCUtils.assertEquals(websiteUrl.getText().equalsIgnoreCase("Website URL"), true);
+        log("Successfully website url title displayed");
+    }
+
     public void clickOnExternalUrlRearrangeButton() throws InterruptedException, AWTException {
         CCUtils.scrollPageViaElement(driver, externalUrlRearrangeButton);
         CCUtils.verifyAndWaitForElement(externalUrlRearrangeButton, driver);
