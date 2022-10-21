@@ -267,16 +267,29 @@ public class PracticeLinksPage extends CCMainPage {
             log("Already practice website added, cannot add more than one");
     }
 
-    public void updatePracticeWebsite(String practiceWebsite) throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, practiceWebsiteTextBox);
-        CCUtils.verifyAndWaitForElement(practiceWebsiteTextBox, driver);
-        if (!practiceWebsiteTextBox.getText().isEmpty()) {
-            log("Entering value for practice website");
-            practiceWebsiteTextBox.clear();
-            practiceWebsiteTextBox.sendKeys(practiceWebsite);
-            log("Entered practice website as" + practiceWebsite);
-        } else
-            log("Practice website is not available to update");
+    public void updateWithActionForPracticeWebsite(String practiceWebsite, String action) throws InterruptedException, AWTException {
+        CCUtils.scrollPageViaElement(driver, practiceWebsiteDisplayArea);
+        CCUtils.verifyAndWaitForElement(practiceWebsiteDisplayArea, driver);
+        if (action.equalsIgnoreCase("cancel")) {
+            if (!practiceWebsiteDisplayArea.getText().isEmpty()) {
+                javascriptClick(practiceWebsiteEdit);
+                Thread.sleep(2000);
+                javascriptClick(cancelButtonForPracticeWebsite);
+            }
+            else
+                log("Practice website is not available to update");
+        } else if (action.equalsIgnoreCase("Save")) {
+            if (!practiceWebsiteDisplayArea.getText().isEmpty() || practiceWebsiteDisplayArea.getText().isEmpty()) {
+                javascriptClick(practiceWebsiteEdit);
+                log("Entering value for practice website");
+                practiceWebsiteTextBox.clear();
+                Thread.sleep(3000);
+                practiceWebsiteTextBox.sendKeys(practiceWebsite);
+                log("Entered practice website as" + practiceWebsite);
+                javascriptClick(saveButtonForPracticeWebsite);
+            } else
+                log("Practice website is not available to update");
+        }
     }
 
     public void checkPracticeWebsiteIsEmptyOrNot() throws InterruptedException, AWTException {
