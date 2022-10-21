@@ -1202,4 +1202,47 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_PROVIDER_IMAGE(imageId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	public Response updateProviderDetails_BL(int providerId, String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).body(createProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForProvider_DL(int ProviderId, int practiceId, int solutionId,
+			boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_DL(ProviderId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response addOrRemoveLocationForProviders(int providerId, int practiceId, int location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationForPractice(int practiceId, int providerId, String solutionName, String en) {
+		String url = ApiPath.GET_LOCATION_BY_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("providerId", providerId).header("x-product", solutionName)
+				.header("x-language", en).get(url).then().extract().response();
+	}
+
+	public Response getLocationForPractice_NullValue() {
+		String url = ApiPath.GET_LOCATION_BY_PRACTICE_DL();
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+
+	public Response updateProviderDetails_NullPayload_BL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response updateProviderDetails_NullValues_BL() {
+		String url = ApiPath.PROVIDER_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }

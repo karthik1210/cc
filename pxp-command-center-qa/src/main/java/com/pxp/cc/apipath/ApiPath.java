@@ -1469,4 +1469,42 @@ public class ApiPath {
 	public static final String GET_PROVIDER_IMAGE(String imageId) {
 		return SERVICE_SHARED_BL + "/v1/providers/image/" + imageId;
 	}
+
+	public static final String GET_PATIENT_AGEOUT_DL(String uriType, int practiceId) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-ageout";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/" + practiceId + "/patient-ageout";
+	}
+
+	public static final String GET_PATIENT_AGEOUT_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-ageout";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String GET_LOCATION_BY_PRACTICE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATION_BY_PRACTICE_DL() {
+		return SHARED_DL + "/v1/practices/null/locations";
+	}
+
+	public static final String PROVIDER_DETAILS_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null";
+	}
+
+	public static final String GET_PATIENT_ACCESS_BL(String uriType, int practiceId) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+		else
+			return SERVICE_ORG_BL + "/v1/practicesssss/" + practiceId + "/patient-access";
+	}
+
+	public static final String GET_PATIENT_ACCESS_BL(String practiceId) {
+		return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+	}
 }
