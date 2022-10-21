@@ -1197,4 +1197,9 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
+	public Response getProviderImage_BL(String imageId) {
+		String url = ApiPath.GET_PROVIDER_IMAGE(imageId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

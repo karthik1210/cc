@@ -1456,13 +1456,17 @@ public class ApiPath {
 	}
 
 	public static final String GET_PATIENT_GUARDIAN_ACCESS_DL(String uriType, int practiceId) {
-		if(uriType.equalsIgnoreCase("Valid"))
-			return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-guardian-access";
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-guardian-access";
 		else
-			return SERVICE_ORG_DL + "/v1/practicesssss/"+practiceId+"/patient-guardian-access";
+			return SERVICE_ORG_DL + "/v1/practicesssss/" + practiceId + "/patient-guardian-access";
 	}
 
 	public static final String GET_PATIENT_GUARDIAN_ACCESS_DL(String practiceId) {
-		return SERVICE_ORG_DL + "/v1/practices/"+practiceId+"/patient-guardian-access";
+		return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-guardian-access";
+	}
+
+	public static final String GET_PROVIDER_IMAGE(String imageId) {
+		return SERVICE_SHARED_BL + "/v1/providers/image/" + imageId;
 	}
 }
