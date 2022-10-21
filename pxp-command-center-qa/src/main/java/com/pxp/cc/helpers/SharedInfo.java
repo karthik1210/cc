@@ -1198,6 +1198,11 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
+	public Response getProviderImage_BL(String imageId) {
+		String url = ApiPath.GET_PROVIDER_IMAGE(imageId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response updateProviderDetails_BL(int providerId, String firstName, String lastName, String gender,
 			String externalId, String credentials) {
 		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,

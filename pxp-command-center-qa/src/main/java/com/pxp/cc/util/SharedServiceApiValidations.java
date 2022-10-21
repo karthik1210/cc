@@ -37,4 +37,14 @@ public class SharedServiceApiValidations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Image not found");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+
+	public String getImageUrl(Response response) {
+		return response.jsonPath().getString("imageUrl");
+	}
+
+	public void verifyErrorResponseForInvalidImageId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Error while download the file");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
