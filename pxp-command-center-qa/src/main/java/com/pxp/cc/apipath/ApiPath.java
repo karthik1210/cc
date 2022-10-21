@@ -3,7 +3,6 @@
 package com.pxp.cc.apipath;
 
 public class ApiPath {
-
 	public static final String BEARER_TYPE = "Bearer ";
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String CONTENT_TYPE = "application/json";
@@ -1495,6 +1494,22 @@ public class ApiPath {
 
 	public static final String PROVIDER_DETAILS_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/providers/null";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATIONS_BY_PRACTICE_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATIONS_BY_PRACTICE_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/locations";
 	}
 
 	public static final String GET_PATIENT_ACCESS_BL(String uriType, int practiceId) {
