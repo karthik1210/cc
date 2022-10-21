@@ -71,9 +71,9 @@ public class GetPracticeAccessApiTests_BusinessLayer extends BaseRest {
         validations.verifyErrorInResponseForInvalidUrl(getPracticeAccessApiResponse);
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-24272 verify response code 405 and error message when user enters valid practice Id with Invalid PATCH method for [DL]")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-24272 verify response code 405 and error message when user enters valid practice Id with Invalid PATCH method for [BL]")
     public void getPatientAccessWithInvalidMethod() throws IOException {
-        logStep("TC 007_verify response code 405 and error message when user enters valid practice Id instead of get with patch method [DL]");
+        logStep("TC 007_verify response code 405 and error message when user enters valid practice Id instead of get with patch method [BL]");
         practiceId = Integer.parseInt(testData.getProperty("api.valid.practice.id.practice.access"));
         getPracticeAccessApiResponse = orgInfo.getPatientAccess_BusinessLayer("InvalidMethod", practiceId);
         logStep("Validating response information");
