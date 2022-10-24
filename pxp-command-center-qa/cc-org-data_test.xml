@@ -58,6 +58,12 @@
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteAnInterfaceApiTests_DataLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetByInterfaceApiTests_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAccessSettingsApiTests_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientGuardianAccessApiTests_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAgeoutApiTests_DataLayer"/>
         </classes>
     </test>
 </suite>

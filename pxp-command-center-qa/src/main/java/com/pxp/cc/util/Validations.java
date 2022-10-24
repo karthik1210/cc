@@ -2375,7 +2375,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageForInvalidBrandImage(Response response) throws IOException {
+	public void verifyErrorMessageForInvalidImage(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid file");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -3221,4 +3221,57 @@ public class Validations {
 		}
 	}
 
+	public void verifyGetStatesDetails(Response getStateApiResponse) {
+		List<String> stateCodes = Arrays.asList("AA", "AE", "AK", "AL", "AP", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
+				"MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "OU", "PA", "PR", "RI", "SC", "SD", "TN", "TX",
+				"UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY");
+		List<String> stateNames = Arrays.asList("Armed Forces - Americas", "Armed Forces - Other", "Alaska", "Alabama", "Armed Forces - Pacific", "Arkansas", "American Samoa", "Arizona", "California", "Colorado", "Connecticut", "District of Columbia", "Delaware",
+				"Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Northern Mariana Islands",
+				"Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Outside_US", "Pennsylvania", "Puerto Rico", "Rhode Island",
+				"South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "US Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming");
+		List<String> stateCodeCount = getStateApiResponse.jsonPath().get("stateCode");
+		for (int i = 0; i < stateCodeCount.size(); i++) {
+				String responseName = getStateApiResponse.jsonPath().get("name[" + i + "]");
+				String expectedName = stateNames.get(i).toString();
+				String responseStateCode = getStateApiResponse.jsonPath().get("stateCode[" + i + "]");
+				String expectedStateCode = stateCodes.get(i).toString();
+				if (responseStateCode.equalsIgnoreCase(expectedStateCode)) {
+					CCUtils.assertEquals(responseName,expectedName);
+				}
+		}
+	}
+
+	public void verifyErrorMessageInResponseForInvalidMethod(Response response, String httpMethod) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method '"+httpMethod+"' not supported");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
+	}
+
+	public void verifyOutputFromValidInputForGetPatientAccessSettings(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("linkAccounts").toString(), "true");
+		CCUtils.assertEquals(jsonPath.get("autoAgeout").toString(), "true");
+	}
+
+	public void verifyOutputFromValidInputForNotHavingPatientAccessSettings(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("linkAccounts").toString(), "false");
+		CCUtils.assertEquals(jsonPath.get("autoAgeout").toString(), "false");
+	}
+
+	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("featureId"), true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("featureName"), true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("access"), true);
+	}
+
+	public void verifyOutputFromValidInputForGetPatientAgeout(Response response) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("defaultAgeout").toString(), "18");
+	}
 }

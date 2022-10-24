@@ -3,7 +3,6 @@
 package com.pxp.cc.apipath;
 
 public class ApiPath {
-
 	public static final String BEARER_TYPE = "Bearer ";
 	public static final String AUTHORIZATION = "Authorization";
 	public static final String CONTENT_TYPE = "application/json";
@@ -1409,12 +1408,118 @@ public class ApiPath {
 	public static final String DELETE_PROVIDER_FOR_LOCATION_DL(int locationId, int practiceId, int providerId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers/" + providerId;
 	}
-	
+
 	public static final String UPDATE_SOLUTION_FOR_LOCATION_DL_INVALID_URL(int locationId, int practiceId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutionsinvalidurl";
 	}
-	
+
 	public static final String SAVE_LOCATION_INFO_FOR_PRACTICE_USING_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/locations/" + null + "/practices/" + null;
+	}
+
+	public static final String UPLOAD_PROVIDER_IMAGE(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/images";
+	}
+
+	public static final String GET_STATES(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/states";
+		else
+			return SERVICE_COMMONS_DL + "/v1/states";
+	}
+
+	public static final String GET_STATES_WITH_INVLAID_URI(String serviceLayer) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/statesss";
+		else
+			return SERVICE_COMMONS_DL + "/v1/statesss";
+	}
+
+	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String uriType, int practiceId) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access-settings";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/" + practiceId + "/patient-access-settings";
+	}
+
+	public static final String GET_PATIENT_ACCESS_SETTINGS_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access-settings";
+	}
+
+	public static final String SAVE_PRACTICE_PROVIDER_DL(int practiceId, int providerId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/providers/" + providerId;
+	}
+
+	public static final String SAVE_PRACTICE_PROVIDER_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/providers/null";
+	}
+
+	public static final String GET_PATIENT_GUARDIAN_ACCESS_DL(String uriType, int practiceId) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-guardian-access";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/" + practiceId + "/patient-guardian-access";
+	}
+
+	public static final String GET_PATIENT_GUARDIAN_ACCESS_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-guardian-access";
+	}
+
+	public static final String GET_PROVIDER_IMAGE(String imageId) {
+		return SERVICE_SHARED_BL + "/v1/providers/image/" + imageId;
+	}
+
+	public static final String GET_PATIENT_AGEOUT_DL(String uriType, int practiceId) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-ageout";
+		else
+			return SERVICE_ORG_DL + "/v1/practicesssss/" + practiceId + "/patient-ageout";
+	}
+
+	public static final String GET_PATIENT_AGEOUT_DL(String practiceId) {
+		return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-ageout";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String GET_LOCATION_BY_PRACTICE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATION_BY_PRACTICE_DL() {
+		return SHARED_DL + "/v1/practices/null/locations";
+	}
+
+	public static final String PROVIDER_DETAILS_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATIONS_BY_PRACTICE_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/locations";
+	}
+
+	public static final String GET_LOCATIONS_BY_PRACTICE_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/locations";
+	}
+
+	public static final String GET_PATIENT_ACCESS_BL(String uriType, int practiceId) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+		else
+			return SERVICE_ORG_BL + "/v1/practicesssss/" + practiceId + "/patient-access";
+	}
+
+	public static final String GET_PATIENT_ACCESS_BL(String practiceId) {
+		return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
 	}
 }

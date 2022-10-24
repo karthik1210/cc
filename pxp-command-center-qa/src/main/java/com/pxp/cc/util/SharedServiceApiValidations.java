@@ -10,7 +10,7 @@ import io.restassured.response.Response;
 
 public class SharedServiceApiValidations {
 
-	public Boolean validateInageUrlValueIsNull(Response response) {
+	public Boolean validateImageUrlValueIsNull(Response response) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		if (Objects.isNull(jsonpath.get("imageUrl"))) {
 			Log4jUtil.log("imageUrl is null");
@@ -32,4 +32,19 @@ public class SharedServiceApiValidations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyErrorResponseForImageField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Image not found");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public String getImageUrl(Response response) {
+		return response.jsonPath().getString("imageUrl");
+	}
+
+	public void verifyErrorResponseForInvalidImageId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Error while download the file");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }

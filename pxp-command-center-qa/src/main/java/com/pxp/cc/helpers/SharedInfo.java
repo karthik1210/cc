@@ -3,6 +3,7 @@
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,9 +12,15 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.AppointmentTypeDetails;
 import com.pxp.cc.pojos.Locations;
 import com.pxp.cc.pojos.ResourceDetails;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 public class SharedInfo extends BaseRest {
+	public static RequestSpecification requestSpecification;
+
 	public Response getBrandDetails(int brandId) {
 		String url = ApiPath.BRAND_DETAILS_BL(brandId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -1140,17 +1147,133 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(saveLocationInfoPayload).when().put(url).then().extract().response();
 	}
 
-	public Map<String, Object> saveLocationInfoForPracticeNonMandatoryParametersApiPayload(Map<String, Object> displayName,
-			String addressExtension, Map<String, Object> createDirectionPayload) {
+	public Map<String, Object> saveLocationInfoForPracticeNonMandatoryParametersApiPayload(
+			Map<String, Object> displayName, String addressExtension, Map<String, Object> createDirectionPayload) {
 		Map<String, Object> saveLocationInfoDetailsMap = new HashMap<String, Object>();
 		saveLocationInfoDetailsMap.put("displayName", displayName);
 		saveLocationInfoDetailsMap.put("addressExtension", addressExtension);
 		saveLocationInfoDetailsMap.put("direction", createDirectionPayload);
 		return saveLocationInfoDetailsMap;
 	}
-	
+
 	public Response saveLocationInfoForPracticeWithNullPayload_DL(int locationId, int practiceId) {
 		String url = ApiPath.FETCH_LOCATION_BY_PRACTICE_DL(locationId, practiceId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response addProviderImage_BL(int providerId, File file, String fileType) {
+		String url = ApiPath.UPLOAD_PROVIDER_IMAGE(providerId);
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data").multiPart("file", file, fileType)
+				.post(url).then().extract().response();
+	}
+
+	public Response deleteProviderImage_BL(int providerId) {
+		String url = ApiPath.UPLOAD_PROVIDER_IMAGE(providerId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response savePracticeProvider_DL(int practiceId, int providerId, String en, String es, String email,
+			String mobile) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		Map<String, Object> savePracticeProviderPayload = savePracticeProviderApiPayload(createPracticeresourcePayload,
+				email, mobile);
+		return given().spec(requestSpec).body(savePracticeProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderNullPayload_DL(int practiceId, int providerId) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response savePracticeProviderNullValues_DL() {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getPracticeProviderDetails_DL(int practiceId, int providerId) {
+		String url = ApiPath.SAVE_PRACTICE_PROVIDER_DL(practiceId, providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getProviderImage_BL(String imageId) {
+		String url = ApiPath.GET_PROVIDER_IMAGE(imageId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response updateProviderDetails_BL(int providerId, String firstName, String lastName, String gender,
+			String externalId, String credentials) {
+		Map<String, Object> createProviderPayload = createProviderRequestPayload(firstName, lastName, gender,
+				externalId, credentials);
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).body(createProviderPayload).when().put(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForProvider_DL(int ProviderId, int practiceId, int solutionId,
+			boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_DL(ProviderId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response addOrRemoveLocationForProviders(int providerId, int practiceId, int location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationForPractice(int practiceId, int providerId, String solutionName, String en) {
+		String url = ApiPath.GET_LOCATION_BY_PRACTICE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("providerId", providerId).header("x-product", solutionName)
+				.header("x-language", en).get(url).then().extract().response();
+	}
+
+	public Response getLocationForPractice_NullValue() {
+		String url = ApiPath.GET_LOCATION_BY_PRACTICE_DL();
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+
+	public Response updateProviderDetails_NullPayload_BL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response updateProviderDetails_NullValues_BL() {
+		String url = ApiPath.PROVIDER_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response updateProviderDetails_BL(int providerId, String practiceId, String active) {
+		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
+		return given().spec(requestSpec).body(providerDetailsPayload).when().put(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForProvider_BL(int ProviderId, int practiceId, int solutionId,
+			boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(ProviderId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response addOrRemoveLocationForProvider_BL(int providerId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+
+	public Response getLocationForPractice_BL(int practiceId, int providerId, String solutionName, String en) {
+		String url = ApiPath.GET_LOCATIONS_BY_PRACTICE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("providerId", providerId).header("x-product", solutionName)
+				.header("x-language", en).get(url).then().extract().response();
+	}
+	
+	public Response getLocationForPractice_NullValues_BL() {
+		String url = ApiPath.GET_LOCATIONS_BY_PRACTICE_BL();
+		return given().spec(requestSpec).get(url).then().extract().response();
 	}
 }
