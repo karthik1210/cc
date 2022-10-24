@@ -301,7 +301,7 @@ public class PracticeLinksPage extends CCMainPage {
             else
                 log("Practice website is not available to update");
         } else if (action.equalsIgnoreCase("Save")) {
-            if (!practiceWebsiteDisplayArea.getText().isEmpty() || practiceWebsiteDisplayArea.getText().isEmpty()) {
+            if (!practiceWebsiteDisplayArea.getText().isEmpty()) {
                 javascriptClick(practiceWebsiteEdit);
                 log("Entering value for practice website");
                 practiceWebsiteTextBox.clear();
