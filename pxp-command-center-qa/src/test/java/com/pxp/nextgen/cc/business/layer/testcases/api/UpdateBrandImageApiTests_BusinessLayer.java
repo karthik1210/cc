@@ -157,6 +157,6 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("api.alt.text"), file, fileType);
 		CCUtils.responseTimeValidation(updateBrandingLogoApiResponse);
 		CCUtils.assertEquals(updateBrandingLogoApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForInvalidBrandImage(updateBrandingLogoApiResponse);
+		validation.verifyErrorMessageForInvalidImage(updateBrandingLogoApiResponse);
 	}
 }

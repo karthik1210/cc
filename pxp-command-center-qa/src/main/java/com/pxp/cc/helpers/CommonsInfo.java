@@ -52,4 +52,17 @@ public class CommonsInfo extends BaseRest {
 			return given().spec(requestSpec).when().put(url).then().extract().response();
 		}
 	}
+
+	public Response getStatesResponse(String validURI, String serviceLayer) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_STATES(serviceLayer);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_STATES_WITH_INVLAID_URI(serviceLayer);
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+		} else  {
+			String url = ApiPath.GET_STATES(serviceLayer);
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
 }
