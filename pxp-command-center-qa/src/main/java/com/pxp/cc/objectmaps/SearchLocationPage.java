@@ -352,7 +352,7 @@ public class SearchLocationPage extends CCMainPage {
 		return data.trim();
 	}
 
-	public String getTotalNoOfClients() {
+	public String getTotalNoOfLocations() {
 		CCUtils.verifyAndWaitForElement(displayPagination, driver);
 		CCUtils.scrollPageViaElement(driver, displayPagination);
 		String s1 = displayPagination.getText().toString();
@@ -459,7 +459,7 @@ public class SearchLocationPage extends CCMainPage {
 	
 	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
 		if (noOfClients >= itemsPerPageValue) {
 			clickLastPageButton();
 			log("verifying RHS Pagination value : " + Integer.parseInt(getRHSPagination())
@@ -480,7 +480,7 @@ public class SearchLocationPage extends CCMainPage {
 	
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
 		log("Total number of clients is : " + noOfClients);
 		if (noOfClients >= itemsPerPageValue) {
 			checkNextPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
@@ -503,7 +503,7 @@ public class SearchLocationPage extends CCMainPage {
 
 	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
 		log("Total number of clients is : " + noOfClients);
 		checkLastPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
 		if (isFirstPageButtonDisabled() == true) {
@@ -523,7 +523,7 @@ public class SearchLocationPage extends CCMainPage {
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		CCUtils.scrollPageToEnd();
-		int noOfClients = Integer.valueOf(getTotalNoOfClients());
+		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
 		log("Total number of clients is : " + noOfClients);
 		if (noOfClients >= itemsPerPageValue) {
 			int LHSPaginationValue = 1;

@@ -94,7 +94,7 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		CCUtils.scrollPageToEnd();
 		CCUtils.assertEquals(searchLocationPage.getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(searchLocationPage.getDefaultPagination(), "1 – 10");
-		String noOfClients = searchLocationPage.getTotalNoOfClients();
+		String noOfClients = searchLocationPage.getTotalNoOfLocations();
 		logStep("Get the Total No of Clients : " + noOfClients);
 		int getNoOfRowsPagination = Integer.parseInt(searchLocationPage.getNoOfRowsPagination());
 		logStep("value of no of rows effected in Pagination : " + getNoOfRowsPagination);
@@ -113,7 +113,7 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
 		CCUtils.assertEquals(searchLocationPage.getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(searchLocationPage.getDefaultPagination(), "1 – 10");
-		String noOfClients = searchLocationPage.getTotalNoOfClients();
+		String noOfClients = searchLocationPage.getTotalNoOfLocations();
 		logStep("Get the Total No of Clients : " + noOfClients);
 		searchLocationPage.clickNextPageButton();
 		searchLocationPage.clickNextPageButton();
