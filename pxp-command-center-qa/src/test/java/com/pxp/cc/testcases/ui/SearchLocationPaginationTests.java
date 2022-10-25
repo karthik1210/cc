@@ -6,7 +6,6 @@ import java.awt.AWTException;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.pxp.cc.objectmaps.AddLocationPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
@@ -28,7 +27,6 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 	@BeforeMethod
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		commonMethods = new CommonMethods(driver);
 		createClientPage = new CreateClientPage(driver);

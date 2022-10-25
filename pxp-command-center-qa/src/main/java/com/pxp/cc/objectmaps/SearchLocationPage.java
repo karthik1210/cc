@@ -459,17 +459,17 @@ public class SearchLocationPage extends CCMainPage {
 	
 	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
-		if (noOfClients >= itemsPerPageValue) {
+		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		if (noOfLocations >= itemsPerPageValue) {
 			clickLastPageButton();
 			log("verifying RHS Pagination value : " + Integer.parseInt(getRHSPagination())
-					+ "should be equal to Number of Clients : " + noOfClients);
-			CCUtils.assertEquals(Integer.parseInt(getRHSPagination()), noOfClients);
+					+ "should be equal to Number of Clients : " + noOfLocations);
+			CCUtils.assertEquals(Integer.parseInt(getRHSPagination()), noOfLocations);
 			log("verifying after clicking to Last Page Button, Last Page and Next Page button should get disabled.");
 			CCUtils.assertTrue((isLastPageButtonDisabled() == false), "Last Page Button should get disabled");
 			CCUtils.assertTrue(isNextPageButtonDisabled() == false, "Next Page Button should get disabled");
 		} else {
-			log("Veriyfing all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			log("Veriyfing all the Paginations should be disabled Toal number of locations is less that Items per page so all locations displayed in 1st slot.");
 			CCUtils.assertTrue((isLastPageButtonDisabled() == false), "Last Page Button should get disabled");
 			CCUtils.assertTrue(isNextPageButtonDisabled() == false, "Next Page Button should get disabled");
 			CCUtils.assertTrue(isFirstPageButtonDisabled() == false, "First Page Button should get disabled");
@@ -480,9 +480,9 @@ public class SearchLocationPage extends CCMainPage {
 	
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
-		log("Total number of clients is : " + noOfClients);
-		if (noOfClients >= itemsPerPageValue) {
+		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		log("Total number of locations is : " + noOfLocations);
+		if (noOfLocations >= itemsPerPageValue) {
 			checkNextPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
 			int LHSPaginationValue = Integer.parseInt(getLHSPagination());
 			while (isPreviousPageButtonDisabled()) {
@@ -493,7 +493,7 @@ public class SearchLocationPage extends CCMainPage {
 				CCUtils.assertEquals(Integer.parseInt(getLHSPagination()), LHSPaginationValue);
 			}
 		} else {
-			log("Verifying all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			log("Verifying all the Paginations should be disabled Toal number of locations is less that Items per page so all locations displayed in 1st slot.");
 			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
@@ -503,8 +503,8 @@ public class SearchLocationPage extends CCMainPage {
 
 	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
-		log("Total number of clients is : " + noOfClients);
+		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		log("Total number of clients is : " + noOfLocations);
 		checkLastPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
 		if (isFirstPageButtonDisabled() == true) {
 			clickFirstPageButton();
@@ -512,7 +512,7 @@ public class SearchLocationPage extends CCMainPage {
 			CCUtils.assertEquals(getDefaultPagination(), expectedPagination);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 		} else {
-			log("Verifying all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			log("Verifying all the Paginations should be disabled Toal number of locations is less that Items per page so all locations displayed in 1st slot.");
 			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
@@ -523,9 +523,9 @@ public class SearchLocationPage extends CCMainPage {
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		CCUtils.scrollPageToEnd();
-		int noOfClients = Integer.valueOf(getTotalNoOfLocations());
-		log("Total number of clients is : " + noOfClients);
-		if (noOfClients >= itemsPerPageValue) {
+		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		log("Total number of clients is : " + noOfLocations);
+		if (noOfLocations >= itemsPerPageValue) {
 			int LHSPaginationValue = 1;
 			while (isNextPageButtonDisabled()) {
 				clickNextPageButton();
@@ -535,7 +535,7 @@ public class SearchLocationPage extends CCMainPage {
 				CCUtils.assertEquals(Integer.parseInt(getLHSPagination()), LHSPaginationValue);
 			}
 		} else {
-			log("Verifying all the Paginations should be disabled Toal number of clients is less that Items per page so all clients displayed in 1st slot.");
+			log("Verifying all the Paginations should be disabled Toal number of locations is less that Items per page so all locations displayed in 1st slot.");
 			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
