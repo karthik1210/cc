@@ -20,6 +20,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
     public AddOrgNodePage addOrgNodePage;
     String systemName, enterpriseName, clientName, practiceName;
     PracticeLinksPage practiceLinksPage;
+    public NGHierarchyClientCreation ngHierarchyClientCreation;
 
     @BeforeMethod(alwaysRun = true)
     public void loginToCommandCenterPortal() throws Exception {
@@ -29,10 +30,18 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         createClientPage = new CreateClientPage(driver);
         logStep("Select create client button from new dropdown");
         commonMethods = new CommonMethods(driver);
-        createNewActiveClient();
-        createNewActiveSystem();
-        createNewActiveEnterprise();
-        createNewActivePractice();
+        ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
+        String clientNam = testData.getProperty("new.client.name2").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+        String clientSap = testData.getProperty("new.client.sap").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+        String clientType = testData.getProperty("new.client.type");
+        String timeZone = testData.getProperty("new.client.timezone");
+        String systemOrEnterprise = testData.getProperty("new.system");
+        String timeZoneDisplayName = testData.getProperty("new.timezone.display.name");
+        String solution = testData.getProperty("solution.forms");
+        ngHierarchyClientCreation.createNewActiveClient(clientNam, clientSap, clientType, timeZone);
+        ngHierarchyClientCreation.createNewActiveSystem(systemOrEnterprise, systemOrEnterprise);
+        ngHierarchyClientCreation.createNewActiveEnterprise(systemOrEnterprise, systemOrEnterprise, timeZoneDisplayName);
+        ngHierarchyClientCreation.createNewActivePractice(systemOrEnterprise, systemOrEnterprise, timeZoneDisplayName, solution);
     }
 
     @Test(priority = 1, groups = {"smoke"},retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present in UI or not with Cancel functionality and basic functionality check")
@@ -84,19 +93,19 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.clickOnSocialMediaCancel();
         logStep("PXPP-20288 TC003 Verify that user can add practice website in Practice Links section with Cancel and Save by using Edit button");
         practiceLinksPage.clickOnPracticeWebsiteEditButton();
-        practiceLinksPage.enterPracticeWebsite("https://www."+practiceName+".com");
+        practiceLinksPage.enterPracticeWebsite("https://www."+ngHierarchyClientCreation.practiceName+".com");
         practiceLinksPage.clickOnPracticeWebsiteCancelButton();
-        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+practiceName+".com");
+        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+ngHierarchyClientCreation.practiceName+".com");
         practiceLinksPage.clickOnPracticeWebsiteEditButton();
-        practiceLinksPage.enterPracticeWebsite("https://www."+practiceName+".com");
+        practiceLinksPage.enterPracticeWebsite("https://www."+ngHierarchyClientCreation.practiceName+".com");
         practiceLinksPage.clickOnPracticeWebsiteSaveButton();
-        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+practiceName+".com");
+        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+ngHierarchyClientCreation.practiceName+".com");
         logStep("PXPP-20330 TC006 Verify that whether user is able to update and cancel the Practice website in Practice Links section at practice level");
-        practiceLinksPage.updateWithActionForPracticeWebsite("https://www."+practiceName+"update.com", "Cancel");
-        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+practiceName+"update.com");
+        practiceLinksPage.updateWithActionForPracticeWebsite("https://www."+ngHierarchyClientCreation.practiceName+"update.com", "Cancel");
+        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+ngHierarchyClientCreation.practiceName+"update.com");
         logStep("PXPP-20291 TC005 Verify that whether user is able to update and save the Practice website in Practice Links section at practice level");
-        practiceLinksPage.updateWithActionForPracticeWebsite("https://www."+practiceName+"update.com", "Save");
-        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+practiceName+"update.com");
+        practiceLinksPage.updateWithActionForPracticeWebsite("https://www."+ngHierarchyClientCreation.practiceName+"update.com", "Save");
+        practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+ngHierarchyClientCreation.practiceName+"update.com");
         logStep("PXPP-20290 TC004 Verify that user can't add more than one practice website in Practice Links section in Command Center Application");
         practiceLinksPage.checkPracticeWebsiteIsEmptyOrNot();
         Thread.sleep(3000);
