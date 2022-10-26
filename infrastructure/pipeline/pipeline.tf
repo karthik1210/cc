@@ -32,7 +32,7 @@ module "pipeline" {
     },
     {
       name  = "APPLICATION_NAME"
-      value = "cc-ui"
+      value = local.test_ui_regression
       type  = "PLAINTEXT"
     },
     {
@@ -48,7 +48,7 @@ module "pipeline" {
     {
       name  = "ENVIRONMENT"
       type  = "PLAINTEXT"
-      value = "qa"
+      value = local.qa_environment
     }
   ]
   codebuild_environment_privileged_mode = true
