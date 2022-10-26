@@ -1278,7 +1278,7 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response associateProvidersToLocation_DL(int locationId, int practiceId, List<Integer> providerIdList) {
-		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
+		String url = ApiPath.PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
 		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
 	}
 

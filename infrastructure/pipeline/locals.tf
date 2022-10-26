@@ -10,4 +10,10 @@ locals {
   git_branch_trigger_pipeline = "main"
 
   source_buildspec = "testspec_automation.yml"
+
+  vpc_name = "main"
+
+  qa_environment = "qa"
+
+  test_ui_regression = "cc-ui"
 }
