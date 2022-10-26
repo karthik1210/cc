@@ -2,7 +2,6 @@
 
 package com.pxp.cc.testcases.ui;
 
-import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.List;
 import org.testng.annotations.BeforeMethod;
@@ -142,12 +141,11 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		return locationName;
 	}
 
-	public void addSolutionsWithinPractice(String practiceName) throws AWTException {
+	public void addSolutionsWithinPractice(String practiceName) {
 		generalSettingsPage.clickSearchIcon();
 		generalSettingsPage.enterSearchText(practiceName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		CCUtils.scrollPageToEnd();
 		generalSettingsPage.verifyAvailableToPurchaseSection();
 		generalSettingsPage.clickToActivateButtonOfChatSolution();
 		generalSettingsPage.clickToYesActivateButtonInActivateSolutions();
