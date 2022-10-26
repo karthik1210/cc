@@ -7,36 +7,57 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
-import com.pxp.cc.pojos.*;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.io.IOException;
-import java.util.List;
-
 public class CreateUpdatePracticePatientAccessApiTests_DataLayer extends BaseRest {
-    private OrgInfo orgInfo;
-    private Validations validations;
+
     private CreateNGHierachyClientCreation_DataLayer createPracticeObj;
-    Response createUpdatePatientAccessApiResponse;
+    Response createUpdatePatientAccessApiResponse, fetchOrgSolutionDetailsApiResponse, updateSolutionsApiResponse, createClientApiResponse, createPracticeApiResponse, createSystemApiResponse, createEnterpriseApiResponse;
     int practiceId;
+    String clientName, clientSapNumber, testFlag, clientTimezoneId;
+    private OrgInfo orgInfo;
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
         setupServiceRequestSpecificationBuilderForDataLayer();
-        orgInfo = new OrgInfo();
-        validations = new Validations();
         createPracticeObj=new CreateNGHierachyClientCreation_DataLayer();
+        orgInfo = new OrgInfo();
     }
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-21242_Add Draft tou for practice")
-    public void addDraftTouToPracticeSuccess() throws IOException {
-        logStep("TC_01_Verify the Response code as 200, when user try to add Privacy settings by using POST Request [BL/DL]");
+    public void addDraftTouToPracticeSuccess() throws Exception {
+        clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
+                .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
+        clientSapNumber = CCUtils
+                .getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
+                        .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
+        testFlag = testData.getProperty("api.client.testclient");
+        clientTimezoneId = testData.getProperty("api.client.timezoneid");
+        String status = testData.getProperty("api.client.active");
+        int clientType = Integer.parseInt(testData.getProperty("api.client.type"));
+        String systemName = testData.getProperty("api.system.name");
+        String orgType = testData.getProperty("api.system.orgtype");
+        String parentType = testData.getProperty("api.parenttype");
+        int ehrIdentifier = Integer.parseInt(testData.getProperty("ehr.identifier"));
+        int pmIdentifier = Integer.parseInt(testData.getProperty("pm.identifier"));
+        String enterpriseName = testData.getProperty("api.enterprise.name");
+        String enterpriseType = testData.getProperty("api.enterprise.orgtype");
+        String enterpriseParentType = testData.getProperty("api.enterprise.parenttype");
+        String enterpriseTimeZone = testData.getProperty("api.enterprise.timezoneid");
+        String practiceDisplayName = testData.getProperty("api.practice.displayname");
+        String practiceName = testData.getProperty("api.practice.name");
+        String practiceOrgType = testData.getProperty("api.practice.orgtype");
+        String practiceParentType = testData.getProperty("api.practice.parenttype");
+        String practiceTimeZone = testData.getProperty("api.practice.timezoneid");
+        practiceId = createPracticeObj.createPractice(status,clientName,clientSapNumber,testFlag,clientType,clientTimezoneId,systemName, orgType, parentType,
+                ehrIdentifier, pmIdentifier, enterpriseName, enterpriseType,enterpriseParentType, enterpriseTimeZone,practiceDisplayName, practiceName,
+                practiceOrgType,practiceParentType, practiceTimeZone);
 
-        practiceId = createPracticeObj.createPractice();
+        log(String.valueOf(practiceId));
 
     }
 }

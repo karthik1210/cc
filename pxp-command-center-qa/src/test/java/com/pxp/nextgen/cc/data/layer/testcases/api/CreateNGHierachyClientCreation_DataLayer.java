@@ -25,53 +25,36 @@ public class CreateNGHierachyClientCreation_DataLayer extends BaseRest {
     @BeforeClass()
     public void setBaseUri() throws Exception {
         setupServiceRequestSpecificationBuilderForDataLayer();
-        orgInfo = new OrgInfo();
-        clientInfo = new ClientInfo();
-        validations = new Validations();
+
     }
 
-    @Test(enabled=true)
-       public int createPractice() throws IOException {
+        @Test(enabled=true)
+       public int createPractice(String status, String clientName, String clientSapNumber, String testFlag, int clientType, String clientTimezoneId,
+                                 String systemName, String sysOrgType, String sysParentType, int ehrIdentifier, int pmIdentifier,
+                                 String enterpriseName, String enterpriseType,String enterpriseParentType,String enterpriseTimeZone,
+                                 String practiceDisplayName, String practiceName, String practiceOrgType, String practiceParentType, String practiceTimeZone) throws IOException {
         logStep("Create nge practice below the client with valid details");
-        clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-                .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-        clientSapNumber = CCUtils
-                .getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-                        .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-        testFlag = testData.getProperty("api.client.testclient");
-        clientTimezoneId = testData.getProperty("api.client.timezoneid");
-        createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-                clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-                clientTimezoneId);
+            orgInfo = new OrgInfo();
+            clientInfo = new ClientInfo();
+            validations = new Validations();
+        createClientApiResponse = clientInfo.createNewClient_DataLayer(status,clientName,clientSapNumber,testFlag,clientType,clientTimezoneId);
         int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
         logStep("Create a new system below client.");
-        createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-                testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-                testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-                Integer.parseInt(testData.getProperty("pm.identifier")));
+        createSystemApiResponse = orgInfo.createOrg_DataLayer(status, "", systemName, sysOrgType, clientId, sysParentType, "", ehrIdentifier, pmIdentifier);
         int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
 
         logStep("Create a new enterprise below system.");
-        createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
-                testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), systemId,
-                testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-                Integer.parseInt(testData.getProperty("ehr.identifier")),
-                Integer.parseInt(testData.getProperty("pm.identifier")));
+        createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(status, "", enterpriseName, enterpriseType, systemId, enterpriseParentType, enterpriseTimeZone, ehrIdentifier, pmIdentifier);
         int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
 
         logStep("Create a new practice below enterprise.");
-        createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-                testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-                testData.getProperty("api.practice.orgtype"), enterpriseId,
-                testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-                Integer.parseInt(testData.getProperty("ehr.identifier")),
-                Integer.parseInt(testData.getProperty("pm.identifier")));
+        createPracticeApiResponse = orgInfo.createOrg_DataLayer(status, practiceDisplayName, practiceName, practiceOrgType, enterpriseId, practiceParentType, practiceTimeZone, ehrIdentifier, pmIdentifier);
         logStep("Validating Response Information");
         CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
         CCUtils.responseTimeValidation(createPracticeApiResponse);
         validations.verifyCreatePracticeResponseBody(createPracticeApiResponse,
-                testData.getProperty("api.practice.name"));
+                practiceName);
         int orgId = createPracticeApiResponse.jsonPath().get("orgId");
         return orgId;
     }
