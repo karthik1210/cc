@@ -84,6 +84,9 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForLocationApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationsForPracticeApiTests_Datalayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateProvidersToLocationApiTests_DataLayer"></class>
+				
 		</classes>
 	</test>
 

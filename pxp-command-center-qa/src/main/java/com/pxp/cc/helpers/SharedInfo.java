@@ -1245,7 +1245,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PROVIDER_DETAILS_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateProviderDetails_BL(int providerId, String practiceId, String active) {
 		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
@@ -1271,9 +1271,19 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("providerId", providerId).header("x-product", solutionName)
 				.header("x-language", en).get(url).then().extract().response();
 	}
-	
+
 	public Response getLocationForPractice_NullValues_BL() {
 		String url = ApiPath.GET_LOCATIONS_BY_PRACTICE_BL();
 		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocation_DL(int locationId, int practiceId, List<Integer> providerIdList) {
+		String url = ApiPath.GET_PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocation_DL() {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 }
