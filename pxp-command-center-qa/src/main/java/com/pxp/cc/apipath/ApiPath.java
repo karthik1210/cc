@@ -1522,4 +1522,12 @@ public class ApiPath {
 	public static final String GET_PATIENT_ACCESS_BL(String practiceId) {
 		return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
 	}
+	
+	public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/locations/null/practices/null/providers";
+	}
+	
+	public static final String PROVIDERS_FOR_LOCATION_DL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
+	}
 }

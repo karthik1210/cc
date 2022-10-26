@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
@@ -24,12 +22,12 @@ import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.OrgHierarchyDetails;
 import com.pxp.cc.pojos.OrgNode;
 import com.pxp.cc.pojos.OrgSolutions;
+import com.pxp.cc.pojos.ProviderStatus;
 import com.pxp.cc.pojos.ResourceStatus;
 import com.pxp.cc.pojos.Solutions;
 import com.pxp.cc.pojos.Timezone;
 import com.pxp.cc.pojos.UserRoles;
 import com.pxp.cc.pojos.UserStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -2911,7 +2909,7 @@ public class Validations {
 
 	public void verifyErrorResponseBodyForInvalidData(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Address Line1 size maximum 100 characters, Address Line2 size maximum 100 characters, City size maximum 50 characters, Display Name size maximum 100 characters, Name size maximum 100 characters, State size maximum 2 characters, Zipcode size maximum 50 characters";
+		String actual = "Address Line1 size maximum 100 characters, Address Line2 size maximum 100 characters, City size maximum 50 characters, Display Name size maximum 100 characters, Name size maximum 100 characters, State size maximum 2 characters, ExternalId size maximum 50 characters, Zipcode size maximum 50 characters";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
@@ -3208,42 +3206,48 @@ public class Validations {
 		}
 	}
 
-	public void getTouIdDetailValidation( Response getTouApiResponse,  int practiceId, int touId, String actualName, String englishContent, String spanishContent )
-	{
+	public void getTouIdDetailValidation(Response getTouApiResponse, int practiceId, int touId, String actualName,
+			String englishContent, String spanishContent) {
 		String expectedName = getTouApiResponse.jsonPath().get("name");
 		String expectedEnglishContent = getTouApiResponse.jsonPath().get("content.en");
 		String expectedSpanishContent = getTouApiResponse.jsonPath().get("content.es");
-		if (expectedName.equalsIgnoreCase(actualName) && englishContent.equalsIgnoreCase(expectedEnglishContent) && spanishContent.equalsIgnoreCase(expectedSpanishContent) ) {
-			Log4jUtil.log( touId+ " updated successfully for " + practiceId);
-		}
-		else {
-			Log4jUtil.log( touId+ " is not updated successfully for " + practiceId);
+		if (expectedName.equalsIgnoreCase(actualName) && englishContent.equalsIgnoreCase(expectedEnglishContent)
+				&& spanishContent.equalsIgnoreCase(expectedSpanishContent)) {
+			Log4jUtil.log(touId + " updated successfully for " + practiceId);
+		} else {
+			Log4jUtil.log(touId + " is not updated successfully for " + practiceId);
 		}
 	}
 
 	public void verifyGetStatesDetails(Response getStateApiResponse) {
-		List<String> stateCodes = Arrays.asList("AA", "AE", "AK", "AL", "AP", "AR", "AS", "AZ", "CA", "CO", "CT", "DC", "DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA",
-				"MA", "MD", "ME", "MI", "MN", "MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "OU", "PA", "PR", "RI", "SC", "SD", "TN", "TX",
-				"UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY");
-		List<String> stateNames = Arrays.asList("Armed Forces - Americas", "Armed Forces - Other", "Alaska", "Alabama", "Armed Forces - Pacific", "Arkansas", "American Samoa", "Arizona", "California", "Colorado", "Connecticut", "District of Columbia", "Delaware",
-				"Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Northern Mariana Islands",
-				"Mississippi", "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada", "New York", "Ohio", "Oklahoma", "Oregon", "Outside_US", "Pennsylvania", "Puerto Rico", "Rhode Island",
-				"South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "US Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming");
+		List<String> stateCodes = Arrays.asList("AA", "AE", "AK", "AL", "AP", "AR", "AS", "AZ", "CA", "CO", "CT", "DC",
+				"DE", "FL", "GA", "GU", "HI", "IA", "ID", "IL", "IN", "KS", "KY", "LA", "MA", "MD", "ME", "MI", "MN",
+				"MO", "MP", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV", "NY", "OH", "OK", "OR", "OU", "PA",
+				"PR", "RI", "SC", "SD", "TN", "TX", "UT", "VA", "VI", "VT", "WA", "WI", "WV", "WY");
+		List<String> stateNames = Arrays.asList("Armed Forces - Americas", "Armed Forces - Other", "Alaska", "Alabama",
+				"Armed Forces - Pacific", "Arkansas", "American Samoa", "Arizona", "California", "Colorado",
+				"Connecticut", "District of Columbia", "Delaware", "Florida", "Georgia", "Guam", "Hawaii", "Iowa",
+				"Idaho", "Illinois", "Indiana", "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine",
+				"Michigan", "Minnesota", "Missouri", "Northern Mariana Islands", "Mississippi", "Montana",
+				"North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New Jersey", "New Mexico", "Nevada",
+				"New York", "Ohio", "Oklahoma", "Oregon", "Outside_US", "Pennsylvania", "Puerto Rico", "Rhode Island",
+				"South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Virginia", "US Virgin Islands",
+				"Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming");
 		List<String> stateCodeCount = getStateApiResponse.jsonPath().get("stateCode");
 		for (int i = 0; i < stateCodeCount.size(); i++) {
-				String responseName = getStateApiResponse.jsonPath().get("name[" + i + "]");
-				String expectedName = stateNames.get(i).toString();
-				String responseStateCode = getStateApiResponse.jsonPath().get("stateCode[" + i + "]");
-				String expectedStateCode = stateCodes.get(i).toString();
-				if (responseStateCode.equalsIgnoreCase(expectedStateCode)) {
-					CCUtils.assertEquals(responseName,expectedName);
-				}
+			String responseName = getStateApiResponse.jsonPath().get("name[" + i + "]");
+			String expectedName = stateNames.get(i).toString();
+			String responseStateCode = getStateApiResponse.jsonPath().get("stateCode[" + i + "]");
+			String expectedStateCode = stateCodes.get(i).toString();
+			if (responseStateCode.equalsIgnoreCase(expectedStateCode)) {
+				CCUtils.assertEquals(responseName, expectedName);
+			}
 		}
 	}
 
 	public void verifyErrorMessageInResponseForInvalidMethod(Response response, String httpMethod) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method '"+httpMethod+"' not supported");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Request method '" + httpMethod + "' not supported");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Method Not Allowed");
 	}
 
@@ -3273,5 +3277,25 @@ public class Validations {
 	public void verifyOutputFromValidInputForGetPatientAgeout(Response response) {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("defaultAgeout").toString(), "18");
+	}
+
+	public void verifyAssociateProvidersForLocationApiResponseBody(Response response, List<Integer> providerIds,
+			String status, String message) throws IOException {
+		List<ProviderStatus> actualProvidersStatusList = new ArrayList<ProviderStatus>();
+		for (int i = 0; i < providerIds.size(); i++) {
+			actualProvidersStatusList.add(new ProviderStatus(providerIds.get(i), status, message));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Providers list is empty");
+		CCUtils.assertTrue(actualProvidersStatusList.size() == responseBody.length(),
+				"Size of actual Providers list and expected Providers list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualProvidersStatusList.contains(new ProviderStatus(jsonObject.getInt("providerId"),
+							jsonObject.getString("status"), jsonObject.get("message"))),
+					"Provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
+		}
 	}
 }
