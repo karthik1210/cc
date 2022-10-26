@@ -102,11 +102,9 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(searchLocationPage.isLastPageButtonDisabled(), true);
 		clientDirectoryPage.clickUserIcon();
 		clientDirectoryPage.clickLogout();
-
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
 	public void testAllPaginationButtonsClickable() throws InterruptedException, AWTException {
 		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
 		CCUtils.assertEquals(searchLocationPage.getDefaultItemsPerPage(), "10");
@@ -121,8 +119,7 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		searchLocationPage.clickFirstPageButton();
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
 	public void testNextPageButtonWhenItemsPerPageValueisTen() throws InterruptedException, AWTException {
 		String defaultItemsPerPage = searchLocationPage.getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
@@ -145,8 +142,7 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		searchLocationPage.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
 	public void testNextPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException, AWTException {
 		searchLocationPage.clickItemsPerPageDropdown();
 		String itemsPerPageHundred = searchLocationPage.clickHundredItemsPerPage();
@@ -170,8 +166,7 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		searchLocationPage.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Last Button functionality when Items Per Page value is = 20.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Last Button functionality when Items Per Page value is = 20.")
 
 	public void testLastPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
 		searchLocationPage.clickItemsPerPageDropdown();
@@ -240,8 +235,7 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		searchLocationPage.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 200.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 200.")
 	public void testPreviousPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
 		searchLocationPage.clickItemsPerPageDropdown();
 		String itemsPerPage = searchLocationPage.clickTwoHundredItemsPerPage();
@@ -280,13 +274,11 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		searchLocationPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
-	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 200.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 200.")
 	public void testFirstPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException, AWTException {
 		searchLocationPage.clickItemsPerPageDropdown();
 		String itemsPerPage = searchLocationPage.clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "200");
 		searchLocationPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
-
 }

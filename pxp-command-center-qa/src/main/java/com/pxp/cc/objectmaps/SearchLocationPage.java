@@ -10,7 +10,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -476,7 +475,6 @@ public class SearchLocationPage extends CCMainPage {
 			CCUtils.assertTrue(isPreviousPageButtonDisabled() == false, "Previous Page Button should get disabled");
 		}
 	}
-
 	
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
