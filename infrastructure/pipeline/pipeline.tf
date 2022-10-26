@@ -32,7 +32,7 @@ module "pipeline" {
     },
     {
       name  = "APPLICATION_NAME"
-      value = local.application_name
+      value = "cc-ui"
       type  = "PLAINTEXT"
     },
     {
@@ -44,6 +44,11 @@ module "pipeline" {
       name  = "REGION"
       value = data.aws_region.current.name
       type  = "PLAINTEXT"
+    },
+    {
+      name  = "ENVIRONMENT"
+      type  = "PLAINTEXT"
+      value = "qa"
     }
   ]
   codebuild_environment_privileged_mode = true
