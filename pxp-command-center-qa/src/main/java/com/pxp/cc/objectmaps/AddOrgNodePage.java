@@ -168,6 +168,12 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='mat-tree-node-click bordernode']//mat-icon[@role='img'][normalize-space()='keyboard_arrow_right']")
 	private WebElement expandArrow;
 
+	@FindBy(xpath = "//div[@class='mat-tree-node2 bordernode']/button/span/mat-icon")
+	private WebElement expandSystemArrow;
+
+	@FindBy(xpath = "//div[@class='mat-tree-node2 treenodespace']/button/span/mat-icon")
+	private WebElement expandEnterpriseArrow;
+
 	@FindBy(id = "//span[text()='PM System *']")
 	private WebElement labelPm;
 
@@ -674,6 +680,18 @@ public class AddOrgNodePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(expandArrow, driver);
 		javascriptClick(expandArrow);
 		log("Clicked on expand Arrow button");
+	}
+
+	public void clickOnSystemExpandArrow() {
+		CCUtils.verifyAndWaitForElement(expandSystemArrow, driver);
+		javascriptClick(expandSystemArrow);
+		log("Clicked on expand Arrow button for System");
+	}
+
+	public void clickOnEnterpriseExpandArrow() {
+		CCUtils.verifyAndWaitForElement(expandEnterpriseArrow, driver);
+		javascriptClick(expandEnterpriseArrow);
+		log("Clicked on expand Arrow button for Enterprise");
 	}
 
 	public void clickOnExpandArrow(String orgName) {
