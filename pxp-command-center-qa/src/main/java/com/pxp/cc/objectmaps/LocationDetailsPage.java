@@ -275,6 +275,21 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//input[@type='text']")
 	private WebElement textboxProvider;
 
+	@FindBy(xpath = "(//div[contains(text(),'No data to display')])[1]")
+	private WebElement noResultFoundInProviders;
+
+	@FindBy(xpath = "(//button[@aria-label='First page'])[1]")
+	private WebElement buttonProvidersFirstPage;
+
+	@FindBy(xpath = "(//button[@aria-label='Next page'])[2]")
+	private WebElement buttonProvidersNextPage;
+
+	@FindBy(xpath = "(//button[@aria-label='Last page'])[3]")
+	private WebElement buttonProvidersLastPage;
+
+	@FindBy(xpath = "(//button[@aria-label='Previous page'])[4]")
+	private WebElement buttonProvidersPreviousPage;
+
 	@FindBy(xpath = "//label[@id='resourceName']")
 	private WebElement clickOnFirstOption;
 
@@ -1113,11 +1128,121 @@ public class LocationDetailsPage extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-	
+
 	public void enterNonExistingProviderName(String input) {
 		CCUtils.verifyAndWaitForElement(textboxProvider, driver);
 		CCUtils.assertEquals(textboxProvider.isEnabled(), true);
 		textboxProvider.sendKeys(input);
 		log("Entered text in search :" + input);
+	}
+
+	public void verifyConnectedProvidersSearchButtonFunctionality(String searchProviders) {
+		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
+		log("Default text in Providers search is : " + textboxSearchProviders.getAttribute("placeholder"));
+		CCUtils.assertTrue(textboxSearchProviders.getAttribute("placeholder").contains("Search"), "");
+		CCUtils.assertEquals(buttonSearchProviders.getText(), "SEARCH");
+		log("Default text present in Search button in search textbox : " + buttonSearchProviders.getText());
+		searchProviders(searchProviders);
+		clickProvidersSearchButton();
+	}
+
+	public void searchProviders(String searchProvidersName) {
+		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
+		textboxSearchProviders.sendKeys(searchProvidersName);
+		log("Entered text in Providers Search is : " + searchProvidersName);
+	}
+
+	public void clickProvidersSearchButton() {
+		CCUtils.verifyAndWaitForElement(buttonSearchProviders, driver);
+		javascriptClick(buttonSearchProviders);
+		log("Clicked on Search button");
+	}
+
+	public void verifySearchedResult(String searchProvidersName) {
+		log("Verifying searched Connected Providers in list");
+		CCUtils.verifyAndWaitForElement(tableResourceNameInSearchResult, driver);
+		CCUtils.assertEquals(newResource.isDisplayed(), true);
+		log("Verified Searched result");
+	}
+
+	public void verifyProvidersClearButtonFunctionality(String searchProviders) {
+		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
+		log("Default text in Providers search is : " + textboxSearchProviders.getAttribute("placeholder"));
+		CCUtils.assertTrue(textboxSearchProviders.getAttribute("placeholder").contains("Search"), "");
+		CCUtils.assertEquals(buttonSearchProviders.getText(), "SEARCH");
+		log("Default text present in Search button in search textbox : " + buttonSearchProviders.getText());
+		searchProviders(searchProviders);
+		clickProvidersSearchButton();
+		CCUtils.assertEquals(buttonSearchProviders.getText(), "CLEAR");
+		log("Text present in Providers search button after it is clicked is : " + buttonSearchProviders.getText());
+		clickClearButton();
+		log("Clicked on CLEAR button");
+	}
+
+	public boolean testToCheckNoResultsFoundMessage() {
+		CCUtils.verifyAndWaitForElement(noResultFoundInProviders, driver);
+		if (noResultFoundInProviders.getText().equals("No data to display")) {
+			return true;
+		}
+		log("Search result found " + noResultFoundInProviders.getText());
+		return false;
+	}
+
+	public void verifyProvidersSearchTextBoxAndPlaceholderIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
+		log("Verifying search textbox is present on locations deatils page");
+		if (textboxSearchProviders.isDisplayed() == true) {
+			log("Verifying search textbox is enabled");
+			CCUtils.assertTrue(textboxSearchProviders.isEnabled(), "search button is disabled");
+			CCUtils.assertEquals(textboxSearchProviders.getAttribute("placeholder"), "Search");
+			log("Verified search text and it's placeholder");
+		} else {
+			log("Search button is not displayed on search options popup");
+		}
+	}
+
+	public void verifyProvidersSearchButtonIsDisplayed() {
+		log("Verifying search button is displayed on locations search page");
+		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
+		textboxSearchProviders.sendKeys("ProvidersSearchInput");
+		CCUtils.verifyAndWaitForElement(buttonSearchProviders, driver);
+		if (buttonSearchProviders.isDisplayed() == true) {
+			log("Verifying search button is enabled");
+			CCUtils.assertTrue(buttonSearchProviders.isEnabled(), "search button is disabled");
+			log("Verifying search button text");
+			CCUtils.assertEquals(buttonSearchProviders.getText().trim(), "SEARCH");
+		} else {
+			log("Search button is not displayed on search options popup");
+		}
+	}
+
+	public void clickProvidersNextPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
+		log("click to Next Page button");
+		buttonNextPage.click();
+	}
+
+	public void clickProvidersLastPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonLastPage, driver);
+		log("click to Last Page button");
+		buttonLastPage.click();
+	}
+
+	public void clickProvidersPreviousPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonPreviousPage, driver);
+		log("click to Previous Page button");
+		buttonPreviousPage.click();
+	}
+
+	public void clickProvidersFirstPageButton() {
+		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
+		log("click to First Page button");
+		buttonFirstPage.click();
+	}
+
+	public void addConnectedProviders(String input) throws Exception {
+		clickOnAdd();
+		enterProviderName(input);
+		clickOnAddToSave();
 	}
 }
