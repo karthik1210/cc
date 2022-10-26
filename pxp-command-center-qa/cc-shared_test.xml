@@ -101,6 +101,18 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteProviderForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForLocationApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForLocationApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsByPracticeApiTests_Businesslayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateProviderApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

@@ -281,8 +281,20 @@ public class LocationsValidations {
 	public void verifyErrorResponseForInvalidSolutionIdActive(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
-		if(jsonpath.get("message").toString().contains("solutionId cannot be null, Active cannot be null")) {
+		if (jsonpath.get("message").toString().contains("solutionId cannot be null, Active cannot be null")) {
 			CCUtils.assertTrue(true, "verifying solution Id and active as null");
 		}
 	}
+
+	public void verifyGetResourceForLocation(Response response) {
+		JsonPath jsonPath = new JsonPath(response.asString());
+		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("totalCount"));
+		Log4jUtil.log("Categories in response body : " + jsonPath.get("items"));
+	}
+	
+	public void verifyGetResourcesForLocationApiResponseBody(Response response) throws IOException {
+		JsonPath jsonPath = new JsonPath(response.asString());
+		Log4jUtil.log("Resources count in response body : " + jsonPath.get("totalCount"));
+		Log4jUtil.log("Categories in response body : " + jsonPath.get("items"));
+		}
 }

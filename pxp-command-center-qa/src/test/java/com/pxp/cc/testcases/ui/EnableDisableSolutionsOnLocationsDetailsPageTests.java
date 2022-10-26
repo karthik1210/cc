@@ -163,8 +163,8 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		generalSettingsPage.verifySolutionIsPresentInPurchasedSolutions(testData.getProperty("solution.engage"));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
-	public void testToEnableLocationForAgnosticPractice() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable solution of associated agnostic practice of location")
+	public void testToEnableSolutionForLocationForAgnosticPractice() throws Exception {
 		systemNameOne = createSystem();
 		agPracticeNameOne = createAgnosticPractice(systemNameOne);
 		addSolutionsWithinPractice(agPracticeNameOne);
@@ -191,8 +191,8 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		searchLocationPage.verifyListOfLocationMatchedSearchResult(listOfLocations);
 	}
 
-	@Test(enabled = true, dependsOnMethods = "testToEnableLocationForAgnosticPractice", retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
-	public void testToDisableLocationForAgnosticPractice() throws Exception {
+	@Test(enabled = true, dependsOnMethods = "testToEnableLocationForAgnosticPractice", retryAnalyzer = RetryAnalyzer.class, description = "Verify disable solution of associated agnostic practice of location")
+	public void testToDisableSolutionForLocationForAgnosticPractice() throws Exception {
 		locationDetailsPage = searchLocationPage.clickToLocation(aglocOne);
 		locationDetailsPage.verifyLocationDetailsTitle();
 		locationDetailsPage.clickToSytemTab(systemNameOne);
@@ -211,8 +211,8 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		searchLocationPage.searchNonExistingLocationAndVerifyResult(aglocOne);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
-	public void testToEnableLocationForNGPractice() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable solution of associated ng practice of location")
+	public void testToEnableSolutionForLocationForNGPractice() throws Exception {
 		systemNameTwo = createSystem();
 		enterpriseTwo = createEnterprise(systemNameTwo);
 		practiceNameTwo = createPractice(systemNameTwo, enterpriseTwo);
@@ -242,8 +242,8 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		searchLocationPage.verifyListOfLocationMatchedSearchResult(listOfLocations);
 	}
 
-	@Test(enabled = true, dependsOnMethods = "testToEnableLocationForNGPractice", retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
-	public void testToDisableLocationForNGPractice() throws Exception {
+	@Test(enabled = true, dependsOnMethods = "testToEnableLocationForNGPractice", retryAnalyzer = RetryAnalyzer.class, description = "Verify disable solution of associated ng practice of location")
+	public void testToDisableSolutionForLocationForNGPractice() throws Exception {
 		locationDetailsPage = searchLocationPage.clickToLocation(locOne);
 		locationDetailsPage.verifyLocationDetailsTitle();
 		locationDetailsPage.clickToSytemTab(systemNameTwo);

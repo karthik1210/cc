@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 
 public class LocationDetailsPage extends CCMainPage {
@@ -278,7 +279,49 @@ public class LocationDetailsPage extends CCMainPage {
 	
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Chat')]//following::mat-slide-toggle[1]")
 	private WebElement ChatToggle;
-	
+
+	@FindBy(xpath = "//div[contains(text(),'Connected Providers')]")
+	private WebElement labelProvidersSection;
+
+	@FindBy(xpath = "//div[contains(text(),'Provider Name')]")
+	private WebElement labelProviderNameColumn;
+
+	@FindBy(xpath = "(//button[contains(text(),'+ ADD')])[1]")
+	private WebElement buttonAdd;
+
+	@FindBy(xpath = "//div[text()='Provider']")
+	private WebElement labelProvider;
+
+	@FindBy(xpath = "//input[@type='text']")
+	private WebElement textboxProvider;
+
+	@FindBy(xpath = "//label[@id='resourceName']")
+	private WebElement clickOnFirstOption;
+
+	@FindBy(xpath = "(//td[@role='gridcell'])[1]")
+	private WebElement addedProvider;
+
+	@FindBy(xpath = "(//tr[@role='row'])[2]")
+	private WebElement providerInList;
+
+	@FindBy(xpath = "(//mat-icon[@mattooltip='Remove Connection'])[1]")
+	private WebElement btnRemoveConnection;
+
+	@FindBy(xpath = "(//tbody[@role='rowgroup']//tr[@role='row']//td[1])[1]")
+	private List<WebElement> listOfProviderName;
+
+	@FindBy(xpath = "(//input[@id='directorySearchInput'])[1]")
+	private WebElement textboxSearchProviders;
+
+	@FindBy(xpath = "(//span[@id='directoryToggleIcon'])[1]")
+	private WebElement buttonSearchProviders;
+
+	@FindBy(id = "treeNodeName")
+	private WebElement nodePractice;
+
+	@FindBy(xpath = "//span[contains(text(),'Successfully added provider')]")
+	private WebElement successToasterMessage;
+
 	public void verifyLocationDetailsTitle() {
 		CCUtils.verifyAndWaitForElement(titleLocationDetails, driver);
 		log("Verifying Location Details Title");
@@ -352,6 +395,7 @@ public class LocationDetailsPage extends CCMainPage {
 	public void verifyAddButtonIsDisabled() {
 		CCUtils.verifyAndWaitForElement(clickAdd, driver);
 		CCUtils.assertEquals(clickAdd.isEnabled(), false);
+		log("Add button is disabled");
 	}
 
 	public void enterResourceName(String input) {
@@ -1037,5 +1081,100 @@ public class LocationDetailsPage extends CCMainPage {
 			engageToggle.click();
 			log("clicked to Engage Toggle OFF button");
 		}
+	}
+
+	public void verifyConnectedProvidersSection() throws InterruptedException, AWTException {
+		log("Verifying Connected Providers Section");
+		verifyConnectedProvidersLabel();
+		verifyProviderNameColumnLabel();
+		verifyAddProviderButtonLabel();
+	}
+
+	public void verifyConnectedProvidersLabel() {
+		CCUtils.verifyAndWaitForElement(labelProvidersSection, driver);
+		log("Verifying Connected Providers Label");
+		CCUtils.assertEquals(labelProvidersSection.getText().trim(), "Connected Providers");
+	}
+
+	public void verifyProviderNameColumnLabel() {
+		CCUtils.verifyAndWaitForElement(labelProviderNameColumn, driver);
+		log("Verifying Provider Name Column Label");
+		CCUtils.assertEquals(labelProviderNameColumn.getText().trim(), "Provider Name");
+	}
+
+	public void verifyAddProviderButtonLabel() {
+		CCUtils.verifyAndWaitForElement(buttonAdd, driver);
+		log("Verifying Add Button Label");
+		CCUtils.assertEquals(buttonAdd.getText().trim(), "+ ADD");
+	}
+
+	public void clickOnAdd() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(buttonAdd, driver);
+		buttonAdd.click();
+	}
+
+	public void verifyAddProviderPopupTitle() {
+		CCUtils.verifyAndWaitForElement(popupTitle, driver);
+		log("Verifying Add Resource Popup title");
+		CCUtils.assertEquals(popupTitle.getText().trim(), "Add Provider(s)");
+	}
+
+	public void verifyProviderNameLabelTextAndTextboxDefaultValue() {
+		CCUtils.verifyAndWaitForElement(labelProvider, driver);
+		log("Verifying Provider name label text");
+		CCUtils.assertEquals(labelProvider.getText().trim(), "Provider");
+		log("Provider name label text is " + labelProvider.getText().trim());
+	}
+
+	public void enterProviderName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxProvider, driver);
+		CCUtils.assertEquals(textboxProvider.isEnabled(), true);
+		textboxProvider.sendKeys(input);
+		selectFirstOption();
+		log("Entered input for Provider Name : " + input);
+	}
+
+	public void selectFirstOption() {
+		javascriptClick(clickOnFirstOption);
+		log("Clicked on first option");
+	}
+
+	public void verifyRemoveConnectionButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(btnRemoveConnection, driver);
+		CCUtils.assertEquals(btnRemoveConnection.isDisplayed(), true);
+	}
+
+	public void clickOnRemoveConnection() {
+		CCUtils.verifyAndWaitForElement(btnRemoveConnection, driver);
+		btnRemoveConnection.click();
+		log("Clicked on Remove Connection Button");
+	}
+
+	public void enterSearchText(String firstName) {
+		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
+		textboxSearchProviders.sendKeys(firstName);
+		log("Entered text in search :" + firstName);
+	}
+
+	public void clickOnPracticeNode() {
+		CCUtils.verifyAndWaitForElement(nodePractice, driver);
+		nodePractice.click();
+		log("Clicked on practice node");
+	}
+
+	public void verifySuccessToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(successToasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (successToasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(successToasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+	
+	public void enterNonExistingProviderName(String input) {
+		CCUtils.verifyAndWaitForElement(textboxProvider, driver);
+		CCUtils.assertEquals(textboxProvider.isEnabled(), true);
+		textboxProvider.sendKeys(input);
+		log("Entered text in search :" + input);
 	}
 }
