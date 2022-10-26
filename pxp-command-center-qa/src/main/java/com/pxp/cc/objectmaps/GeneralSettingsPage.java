@@ -227,14 +227,27 @@ public class GeneralSettingsPage extends CCMainPage {
 	
 	@FindBy(id = "unsavedCancelBtn")
 	private WebElement activatePopupCancelbutton;
-
-	private String availableToPurchaseActivateButton(String solutionImageIcon) {
-		return "//div//span//mat-icon[contains(text(),'" + solutionImageIcon
-				+ "')]//following::div[@id='activateLabel']";
-	}
+	
+	@FindBy(xpath = "//div//span//mat-icon[contains(text(),'chat')]//following::div[@id='activateLabel'][1]")
+	private WebElement chatActivateButton;
+	
+	@FindBy(xpath = "(//div//span//mat-icon[text()='campaign']//following::div[@id='activateLabel'])[1]")
+	private WebElement engageActivateButton;
+	
+	@FindBy(xpath = "(//div//span//mat-icon[text()='videocam']//following::div[@id='activateLabel'])[1]")
+	private WebElement virtualVisitsActivateButton;
+	
+	@FindBy(xpath = "(//div//span//mat-icon[text()='attach_money']//following::div[@id='activateLabel'])[1]")
+	private WebElement payActivateButton;
+	
+	@FindBy(xpath = "(//div//span//mat-icon[text()='person']//following::div[@id='activateLabel'])[1]")
+	private WebElement portalActivateButton;
+	
+	@FindBy(xpath = "(//div//span[contains(text(),'PSS')]//following::div[@id='activateLabel'])[1]")
+	private WebElement pSSActivateButton;
 	
 	private String purchaseActivateButton(String solutionImageIcon) {
-		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//mat-icon[contains(text(),'"+solutionImageIcon+"')]";
+		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//span[contains(text(),'"+solutionImageIcon+"')]";
 	}
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
@@ -980,12 +993,40 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(purchaseSolutionsTitle.isDisplayed(), true);
 	}
 	
-	public void clickToActivateButtonOfSpecificSolution(String solutionImageIcon) {
-		WebElement element = driver.findElement(By.xpath(availableToPurchaseActivateButton(solutionImageIcon)));
-		CCUtils.verifyAndWaitForElement(element, driver);
-		
-		element.click();
-		log("clicked to activate button");
+	public void clickToActivateButtonOfVirtualVisitsSolution() {
+		CCUtils.verifyAndWaitForElement(virtualVisitsActivateButton, driver);
+		virtualVisitsActivateButton.click();
+		log("clicked to activate button of Virtual visits");
+	}
+	
+	public void clickToActivateButtonOfPaySolution() {
+		CCUtils.verifyAndWaitForElement(payActivateButton, driver);
+		payActivateButton.click();
+		log("clicked to activate button of Pay");
+	}
+	
+	public void clickToActivateButtonOfEngageSolution() {
+		CCUtils.verifyAndWaitForElement(engageActivateButton, driver);
+		engageActivateButton.click();
+		log("clicked to activate button of Engage");
+	}
+	
+	public void clickToActivateButtonOfChatSolution() {
+		CCUtils.verifyAndWaitForElement(chatActivateButton, driver);
+		chatActivateButton.click();
+		log("clicked to activate button of Chat");
+	}
+	
+	public void clickToActivateButtonOfPortalSolution() {
+		CCUtils.verifyAndWaitForElement(portalActivateButton, driver);
+		portalActivateButton.click();
+		log("clicked to activate button of Portal");
+	}
+	
+	public void clickToActivateButtonOfPSSSolution() {
+		CCUtils.verifyAndWaitForElement(pSSActivateButton, driver);
+		pSSActivateButton.click();
+		log("clicked to activate button of PSS");
 	}
 	
 	public void verifySolutionIsPresentInPurchasedSolutions(String solutionImageIcon) {
@@ -993,7 +1034,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(element, driver);
 		CCUtils.scrollPageViaElement(driver, element);
 		element.click();
-		log("Verified that desired solution is within purchased solutions section");
+		log("Verified that desired solution "+solutionImageIcon+" is within purchased solutions section");
 	}
 	
 	public void clickToYesActivateButtonInActivateSolutions() {

@@ -3,10 +3,10 @@
 package com.pxp.cc.testcases.ui;
 
 import java.awt.AWTException;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.AddLocationPage;
 import com.pxp.cc.objectmaps.AddOrgNodePage;
@@ -29,46 +29,42 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 	private AddOrgNodePage addOrgNodePage;
 	private SearchLocationPage searchLocationPage;
 	private LocationDetailsPage locationDetailsPage;
-	public String systemNameOne, systemNameTwo, agPracticeNameOne, practiceNameTwo, enterpriseOne, practiceNameThree;
-	String aglocOne, agLocTwo, locOne, locTwo, locThree, locFour;
+	public String systemNameOne, systemNameTwo, agPracticeNameOne, practiceNameTwo, enterpriseTwo;
+	String aglocOne, locOne;
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		commonMethods = new CommonMethods(driver);
-		/*
-		 * createClientPage = new CreateClientPage(driver);
-		 * 
-		 * logStep("Select create client button from new dropdown");
-		 * createClientPage.clickCreateClient(); commonMethods = new
-		 * CommonMethods(driver); logStep("Enter valid details in mandatory fields");
-		 * String clientName = testData.getProperty("new.client.name")
-		 * .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20)); String
-		 * clientSapNumber = testData.getProperty("new.client.sap")
-		 * .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-		 * createClientPage.createNewClient(clientName, clientSapNumber,
-		 * testData.getProperty("new.client.type"),
-		 * testData.getProperty("new.client.timezone"));
-		 * logStep("Verify active radio button is by default selected on the create client popup"
-		 * ); createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
-		 * logStep("Click on create button on the create client popup");
-		 * createClientPage.clickConfirmPopup(); String actualMessage =
-		 * commonMethods.getToasterMessage(); logStep("Verify success toaster message");
-		 * CCUtils.assertEquals(actualMessage, "Success! " + clientName +
-		 * " has been successfully created");
-		 */
+		clientDirectoryPage = new ClientDirectoryPage(driver);
+		createClientPage = new CreateClientPage(driver);
+		logStep("Select create client button from new dropdown");
+		createClientPage.clickCreateClient();
+		commonMethods = new CommonMethods(driver);
+		logStep("Enter valid details in mandatory fields");
+		String clientName = testData.getProperty("new.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientSapNumber = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
+				testData.getProperty("new.client.timezone"));
+		logStep("Verify active radio button is by default selected on the create client popup");
+		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
+		logStep("Click on create button on the create client popup");
+		createClientPage.clickConfirmPopup();
+		String actualMessage = commonMethods.getToasterMessage();
+		logStep("Verify success toaster message");
+		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
 		logStep("Searching a created client in client directory");
-		clientDirectoryPage.searchNode("Aa_qa_shippuden");
+		clientDirectoryPage.searchNode(clientName);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyClientNodeIsSelected();
-		generalSettingsPage.verifyLocationsTab();
-		generalSettingsPage.clickOnLocationsTab();
 		searchLocationPage = new SearchLocationPage(driver);
 	}
-	
+
 	public String createSystem() throws InterruptedException {
 		addOrgNodePage = new AddOrgNodePage(driver);
 		addOrgNodePage.clickOnManageClient();
@@ -145,7 +141,7 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		addLocationPage.verifyToasterMessage("Success! New location has been successfully created");
 		return locationName;
 	}
-	
+
 	public void addSolutionsWithinPractice(String practiceName) throws AWTException {
 		generalSettingsPage.clickSearchIcon();
 		generalSettingsPage.enterSearchText(practiceName);
@@ -153,23 +149,118 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 		CCUtils.pressEnterKey();
 		CCUtils.scrollPageToEnd();
 		generalSettingsPage.verifyAvailableToPurchaseSection();
-		generalSettingsPage.clickToActivateButtonOfSpecificSolution(testData.getProperty("engage.image"));
+		generalSettingsPage.clickToActivateButtonOfChatSolution();
 		generalSettingsPage.clickToYesActivateButtonInActivateSolutions();
-		String actualMessage = commonMethods.getToasterMessage(); 
+		String actualMessage = commonMethods.getToasterMessage();
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! Solution has been successfully updated");
-		generalSettingsPage.clickToActivateButtonOfSpecificSolution(testData.getProperty("pss.image"));
+		generalSettingsPage.clickToActivateButtonOfEngageSolution();
 		generalSettingsPage.clickToYesActivateButtonInActivateSolutions();
-		String actualMsg = commonMethods.getToasterMessage(); 
+		String actualMsg = commonMethods.getToasterMessage();
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMsg, "Success! Solution has been successfully updated");
 		generalSettingsPage.verifyPurchaseSolutionsSection();
-		generalSettingsPage.verifySolutionIsPresentInPurchasedSolutions(testData.getProperty("engage.image"));
-		generalSettingsPage.verifySolutionIsPresentInPurchasedSolutions(testData.getProperty("pss.image"));
-	}
-	
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
-	public void testToEnableLocationForNGPractice() throws Exception {
+		generalSettingsPage.verifySolutionIsPresentInPurchasedSolutions(testData.getProperty("solution.engage"));
 	}
 
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
+	public void testToEnableLocationForAgnosticPractice() throws Exception {
+		systemNameOne = createSystem();
+		agPracticeNameOne = createAgnosticPractice(systemNameOne);
+		addSolutionsWithinPractice(agPracticeNameOne);
+		generalSettingsPage.verifyLocationsTab();
+		generalSettingsPage.clickOnLocationsTab();
+		aglocOne = createLocation();
+		locationDetailsPage = searchLocationPage.clickToLocation(aglocOne);
+		locationDetailsPage.verifyLocationDetailsTitle();
+		locationDetailsPage.clickToSytemTab(systemNameOne);
+		locationDetailsPage.clickToPracticeTabAndToggleOn(agPracticeNameOne);
+		locationDetailsPage.clickToPracticeTab(agPracticeNameOne);
+		locationDetailsPage.verifyConnectedSolutionsTitle();
+		locationDetailsPage.toggleOnEngage();
+		locationDetailsPage.clickToBackButton();
+		searchLocationPage.clickToSolutionFilter();
+		searchLocationPage.selectFilter(testData.getProperty("solution.engage"));
+		searchLocationPage.clickToPracticeFilter();
+		searchLocationPage.selectFilter(agPracticeNameOne);
+		searchLocationPage.clickToSystemFilter();
+		searchLocationPage.selectFilter(systemNameOne);
+		searchLocationPage.clickToApplyFilterButton();
+		List<String> listOfLocations = new ArrayList<String>();
+		listOfLocations.add(aglocOne);
+		searchLocationPage.verifyListOfLocationMatchedSearchResult(listOfLocations);
+	}
+
+	@Test(enabled = true, dependsOnMethods = "testToEnableLocationForAgnosticPractice", retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
+	public void testToDisableLocationForAgnosticPractice() throws Exception {
+		locationDetailsPage = searchLocationPage.clickToLocation(aglocOne);
+		locationDetailsPage.verifyLocationDetailsTitle();
+		locationDetailsPage.clickToSytemTab(systemNameOne);
+		locationDetailsPage.clickToPracticeTabAndToggleOn(agPracticeNameOne);
+		locationDetailsPage.clickToPracticeTab(agPracticeNameOne);
+		locationDetailsPage.verifyConnectedSolutionsTitle();
+		locationDetailsPage.toggleOffEngage();
+		locationDetailsPage.clickToBackButton();
+		searchLocationPage.clickToSolutionFilter();
+		searchLocationPage.selectFilter(testData.getProperty("solution.engage"));
+		searchLocationPage.clickToPracticeFilter();
+		searchLocationPage.selectFilter(agPracticeNameOne);
+		searchLocationPage.clickToSystemFilter();
+		searchLocationPage.selectFilter(systemNameOne);
+		searchLocationPage.clickToApplyFilterButton();
+		searchLocationPage.searchNonExistingLocationAndVerifyResult(aglocOne);
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
+	public void testToEnableLocationForNGPractice() throws Exception {
+		systemNameTwo = createSystem();
+		enterpriseTwo = createEnterprise(systemNameTwo);
+		practiceNameTwo = createPractice(systemNameTwo, enterpriseTwo);
+		addSolutionsWithinPractice(practiceNameTwo);
+		generalSettingsPage.verifyLocationsTab();
+		generalSettingsPage.clickOnLocationsTab();
+		locOne = createLocation();
+		locationDetailsPage = searchLocationPage.clickToLocation(locOne);
+		locationDetailsPage.verifyLocationDetailsTitle();
+		locationDetailsPage.clickToSytemTab(systemNameTwo);
+		locationDetailsPage.clickToEnterpriseTabPracticeAndToggleOn(enterpriseTwo, practiceNameTwo);
+		locationDetailsPage.clickToPracticeTab(practiceNameTwo);
+		locationDetailsPage.verifyConnectedSolutionsTitle();
+		locationDetailsPage.toggleOnEngage();
+		locationDetailsPage.clickToBackButton();
+		searchLocationPage.clickToSolutionFilter();
+		searchLocationPage.selectFilter(testData.getProperty("solution.engage"));
+		searchLocationPage.clickToEnterpriseFilter();
+		searchLocationPage.selectFilter(enterpriseTwo);
+		searchLocationPage.clickToPracticeFilter();
+		searchLocationPage.selectFilter(practiceNameTwo);
+		searchLocationPage.clickToSystemFilter();
+		searchLocationPage.selectFilter(systemNameTwo);
+		searchLocationPage.clickToApplyFilterButton();
+		List<String> listOfLocations = new ArrayList<String>();
+		listOfLocations.add(locOne);
+		searchLocationPage.verifyListOfLocationMatchedSearchResult(listOfLocations);
+	}
+
+	@Test(enabled = true, dependsOnMethods = "testToEnableLocationForNGPractice", retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search location screen")
+	public void testToDisableLocationForNGPractice() throws Exception {
+		locationDetailsPage = searchLocationPage.clickToLocation(locOne);
+		locationDetailsPage.verifyLocationDetailsTitle();
+		locationDetailsPage.clickToSytemTab(systemNameTwo);
+		locationDetailsPage.clickToEnterpriseTabPracticeAndToggleOn(enterpriseTwo, practiceNameTwo);
+		locationDetailsPage.clickToPracticeTab(practiceNameTwo);
+		locationDetailsPage.verifyConnectedSolutionsTitle();
+		locationDetailsPage.toggleOffEngage();
+		locationDetailsPage.clickToBackButton();
+		searchLocationPage.clickToSolutionFilter();
+		searchLocationPage.selectFilter(testData.getProperty("solution.engage"));
+		searchLocationPage.clickToEnterpriseFilter();
+		searchLocationPage.selectFilter(enterpriseTwo);
+		searchLocationPage.clickToPracticeFilter();
+		searchLocationPage.selectFilter(practiceNameTwo);
+		searchLocationPage.clickToSystemFilter();
+		searchLocationPage.selectFilter(systemNameTwo);
+		searchLocationPage.clickToApplyFilterButton();
+		searchLocationPage.searchNonExistingLocationAndVerifyResult(locOne);
+	}
 }
