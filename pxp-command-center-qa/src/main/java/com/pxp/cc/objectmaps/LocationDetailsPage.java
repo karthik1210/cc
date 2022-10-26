@@ -3,7 +3,6 @@
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
-import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -259,6 +258,27 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//span[@id='directoryToggleIcon'])[2]")
 	private WebElement searchButton;
+	
+	@FindBy(xpath = "//p[@class='connected-solution-header']")
+	private WebElement connectedSolutionsTitle;
+	
+	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Portal')]//following::mat-slide-toggle[1]")
+	private WebElement portalToggle;
+	
+	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Virtual Visits')]//following::mat-slide-toggle[1]")
+	private WebElement virtualVisitslToggle;
+	
+	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'PSS')]//following::mat-slide-toggle[1]")
+	private WebElement  pSSToggle;
+	
+	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Pay')]//following::mat-slide-toggle[1]")
+	private WebElement payToggle;
+	
+	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Engage')]//following::mat-slide-toggle[1]")
+	private WebElement engageToggle;
+	
+	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Chat')]//following::mat-slide-toggle[1]")
+	private WebElement ChatToggle;
 
 	@FindBy(xpath = "//div[contains(text(),'Connected Providers')]")
 	private WebElement labelProvidersSection;
@@ -1039,6 +1059,43 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonFirstPage, driver);
 		log("click to First Page button");
 		buttonFirstPage.click();
+	}
+
+	public void clickToPracticeTab(String practiceName) {
+		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
+		for (WebElement ele : listOfPracTabs) {
+			if (ele.getText().toString().equals(practiceName)) {
+				ele.click();
+				log("click to the practice : "+ele.getText().toString()+" tab");
+			}		
+		}
+	}
+	
+	public void verifyConnectedSolutionsTitle() {
+		CCUtils.verifyAndWaitForElement(connectedSolutionsTitle, driver);
+		CCUtils.assertTrue(connectedSolutionsTitle.isDisplayed(), "verifying connected solutions title");
+		log("Verifying connected solutions Title");
+	}
+	
+	public void toggleOnChats() {
+		CCUtils.verifyAndWaitForElement(ChatToggle, driver);
+		log(ChatToggle.getCssValue("background-color"));
+	}
+	
+	public void toggleOnEngage() {
+		CCUtils.verifyAndWaitForElement(engageToggle, driver);
+		if(ChatToggle.getCssValue("background-color").toString().trim().equals("rgba(0, 0, 0, 0)")) {
+			engageToggle.click();
+			log("clicked to Engage Toggle ON button");
+		}
+	}
+	
+	public void toggleOffEngage() {
+		CCUtils.verifyAndWaitForElement(engageToggle, driver);
+		if(ChatToggle.getCssValue("background-color").toString().trim().equals("rgba(91, 51, 162, 0.16)")) {
+			engageToggle.click();
+			log("clicked to Engage Toggle OFF button");
+		}
 	}
 
 	public void verifyConnectedProvidersSection() throws InterruptedException, AWTException {
