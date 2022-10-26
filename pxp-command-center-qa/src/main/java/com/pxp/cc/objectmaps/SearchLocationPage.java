@@ -102,6 +102,12 @@ public class SearchLocationPage extends CCMainPage {
 	@FindBy(xpath = "//div//span//following::span[contains(text(),'10')]")
 	private WebElement defaultItemsPerPage;
 	
+	@FindBy(xpath = "//th[@aria-sort='ascending']")
+	private WebElement locationNameAscSort;
+	
+	@FindBy(xpath = "//th[@aria-sort='descending']")
+	private WebElement locationNameDscSort;
+	
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	private WebElement prepareDynamicXpath(String xpathValue, String substitutionValue) {
@@ -575,5 +581,27 @@ public class SearchLocationPage extends CCMainPage {
 		currentItemPerPage = itemsPerPageTwoHundred.getText().toString();
 		itemsPerPageTwoHundred.click();
 		return currentItemPerPage;
+	}
+	
+	public void clickAscLocationNameSortToDsc() {
+		CCUtils.verifyAndWaitForElement(locationNameAscSort, driver);
+		locationNameAscSort.click();
+		log("clicked to ascending location name sort");
+	}
+	
+	public void verifyDescendingSortIsVisible() {
+		CCUtils.verifyAndWaitForElement(locationNameDscSort, driver);
+		log("verified after clicking to acsendig sort location name sort arrow goes downwards to descending sort");
+	}
+	
+	public void clickDscLocationNameSortToAsc() {
+		CCUtils.verifyAndWaitForElement(locationNameDscSort, driver);
+		locationNameDscSort.click();
+		log("clicked to descending location name sort");
+	}
+	
+	public void verifyAscendingSortIsVisible() {
+		CCUtils.verifyAndWaitForElement(locationNameAscSort, driver);
+		log("verified after clicking to descendig sort location name sort arrow goes upwards to ascending sort");
 	}
 }

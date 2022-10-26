@@ -14,7 +14,7 @@ import com.pxp.cc.objectmaps.SearchLocationPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
-public class SearchLocationPaginationTests extends CommandCenterGenericTest {
+public class SearchLocationSortPaginationTests extends CommandCenterGenericTest {
 
 	private ClientDirectoryPage clientDirectoryPage;
 	public CreateClientPage createClientPage;
@@ -280,5 +280,17 @@ public class SearchLocationPaginationTests extends CommandCenterGenericTest {
 		String itemsPerPage = searchLocationPage.clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "200");
 		searchLocationPage.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+	}
+	
+	@Test(priority = 1,enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check location name sorting from ascending to descending")
+	public void testLocationNameSortingToDescending() throws InterruptedException, AWTException {
+		searchLocationPage.clickAscLocationNameSortToDsc();
+		searchLocationPage.verifyDescendingSortIsVisible();
+	}
+	
+	@Test(priority = 2,enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check location name sorting from ascending to descending")
+	public void testLocationNameSortingToAscending() throws InterruptedException, AWTException {
+		searchLocationPage.clickDscLocationNameSortToAsc();
+		searchLocationPage.verifyAscendingSortIsVisible();
 	}
 }
