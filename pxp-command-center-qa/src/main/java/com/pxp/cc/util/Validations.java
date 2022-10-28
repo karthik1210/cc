@@ -2909,7 +2909,7 @@ public class Validations {
 
 	public void verifyErrorResponseBodyForInvalidData(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		String actual = "Address Line1 size maximum 100 characters, Address Line2 size maximum 100 characters, City size maximum 50 characters, Display Name size maximum 100 characters, Name size maximum 100 characters, State size maximum 2 characters, ExternalId size maximum 50 characters, Zipcode size maximum 50 characters";
+		String actual = "Address Line1 size maximum 100 characters, Address Line2 size maximum 100 characters, Display Name size maximum 100 characters, Zipcode size maximum 50 characters, City size maximum 50 characters, State size maximum 2 characters, Name size maximum 100 characters";
 		List<String> actualValue = new ArrayList<String>();
 		for (String val : Arrays.asList(actual.split(","))) {
 			actualValue.add(val.trim());
