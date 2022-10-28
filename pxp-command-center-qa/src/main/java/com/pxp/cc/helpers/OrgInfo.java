@@ -15,7 +15,6 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.OrgWebsites;
 import com.pxp.cc.pojos.SavePracticeWebsite;
-import com.pxp.cc.pojos.UpdateTou;
 import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.pojos.PracticeSocials;
 import com.pxp.cc.pojos.*;
@@ -1147,5 +1146,23 @@ public class OrgInfo extends BaseRest {
     public Response getPatientAccess_BusinessLayer(String practiceId) {
         String url = ApiPath.GET_PATIENT_ACCESS_BL(practiceId);
         return given().spec(requestSpec).when().get(url).then().extract().response();
+    }
+
+    public Response createUpdatePracticePatientAccessResponse(String validURI, String serviceLayer, int practiceId, PatientAccessDetails createUpdatePatientAccessDetails) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS(serviceLayer,"Valid", practiceId);
+            return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS(serviceLayer,"InValid", practiceId);
+            return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
+        } else {
+            String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS(serviceLayer,"Valid", practiceId);
+            return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().patch(url).then().extract().response();
+        }
+    }
+
+    public Response createUpdatePracticePatientAccessInvaliDatatypeResponse(String serviceLayer, String practiceId,PatientAccessDetails createUpdatePatientAccessDetails) {
+        String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+        return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
     }
 }
