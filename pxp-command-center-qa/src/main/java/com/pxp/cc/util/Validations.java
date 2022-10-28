@@ -13,22 +13,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import com.pxp.cc.pojos.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
-import com.pxp.cc.pojos.ClientOrg;
-import com.pxp.cc.pojos.ClientTypes;
-import com.pxp.cc.pojos.OrgDetails;
-import com.pxp.cc.pojos.OrgHierarchyDetails;
-import com.pxp.cc.pojos.OrgNode;
-import com.pxp.cc.pojos.OrgSolutions;
-import com.pxp.cc.pojos.ResourceStatus;
-import com.pxp.cc.pojos.Solutions;
-import com.pxp.cc.pojos.Timezone;
-import com.pxp.cc.pojos.UserRoles;
-import com.pxp.cc.pojos.UserStatus;
 
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -3273,5 +3263,52 @@ public class Validations {
 	public void verifyOutputFromValidInputForGetPatientAgeout(Response response) {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("defaultAgeout").toString(), "18");
+	}
+
+	public void verifyOutputFromValidInputForGetPatientAccessSettings(Response getPatientAccessSettingApiResponse, boolean linkAccounts, boolean autoAgeout) {
+		boolean actualLinkAccounts=getPatientAccessSettingApiResponse.jsonPath().get("linkAccounts");
+		boolean actualAutoAgeout=getPatientAccessSettingApiResponse.jsonPath().get("autoAgeout");
+		CCUtils.assertEquals(actualLinkAccounts,linkAccounts);
+		CCUtils.assertEquals(actualAutoAgeout,autoAgeout);
+	}
+
+	public void verifyOutputFromValidInputForGetPatientAgeOutAccess(Response getPatientAccessAgeOutApiResponse, int defaultAgeout, ArrayList<PatientAccessAgeoutRules> patientAccessAgeoutRulesList, int accessTillAge) {
+		int actualDefaultAgeout = getPatientAccessAgeOutApiResponse.jsonPath().get("defaultAgeout");
+		int actualAccessTillAge = getPatientAccessAgeOutApiResponse.jsonPath().get("accessTillAge");
+		CCUtils.assertEquals(actualDefaultAgeout, defaultAgeout);
+		CCUtils.assertEquals(actualAccessTillAge, accessTillAge);
+		List<String> statesIds = getPatientAccessAgeOutApiResponse.jsonPath().get("ageoutRules.state");
+		for (int i = 0; i < statesIds.size(); i++) {
+			for (int j = 0; j < statesIds.size(); j++) {
+				int actualAge = getPatientAccessAgeOutApiResponse.jsonPath().get("ageoutRules.age[" + j + "]");
+				int expectedAge = patientAccessAgeoutRulesList.get(i).getAge();
+				String actualState = getPatientAccessAgeOutApiResponse.jsonPath().get("ageoutRules.state[" + j + "]");
+				String expectedState = patientAccessAgeoutRulesList.get(i).getState().toString();
+				if (expectedState.equalsIgnoreCase(actualState)) {
+					CCUtils.assertEquals(actualAge, expectedAge);
+					CCUtils.assertEquals(actualState, expectedState);
+					break;
+				}
+			}
+		}
+	}
+
+	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response getPatientAccessGaurdianApiResponse, ArrayList<PatientAccessPermission> patientAccessPermissionList) {
+		List<String> featureIds = getPatientAccessGaurdianApiResponse.jsonPath().get("featureId");
+		for (int i = 0; i < featureIds.size(); i++) {
+			for (int j = 0; j < featureIds.size(); j++) {
+				int actualFeatureId = getPatientAccessGaurdianApiResponse.jsonPath().get("featureId[" + j + "]");
+				int expectedFeatureId = patientAccessPermissionList.get(i).getFeatureId();
+				String actualFeatureName = getPatientAccessGaurdianApiResponse.jsonPath().get("featureName[" + j + "]");
+				String expectedFeatureName = patientAccessPermissionList.get(i).getFeatureName();
+				String actualAccess = getPatientAccessGaurdianApiResponse.jsonPath().get("access[" + j + "]");
+				String expectedAccess = patientAccessPermissionList.get(i).getAccess().toString();
+				if (expectedFeatureId==actualFeatureId) {
+					CCUtils.assertEquals(actualFeatureName, expectedFeatureName);
+					CCUtils.assertEquals(actualAccess, expectedAccess);
+					break;
+				}
+			}
+		}
 	}
 }
