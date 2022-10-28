@@ -1522,11 +1522,30 @@ public class ApiPath {
 	public static final String GET_PATIENT_ACCESS_BL(String practiceId) {
 		return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
 	}
-	
+
+	public static final String CREATE_UPDATE_PATIENT_ACCESS(String serviceLayer, String uriType, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+			else return SERVICE_ORG_BL + "/v1/practicesss/" + practiceId + "/patient-access";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access";
+			else return SERVICE_ORG_DL + "/v1/practicesss/" + practiceId + "/patient-access";
+		}
+	}
+
+	public static final String CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+		else return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access";
+	}
+
+
 	public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/locations/null/practices/null/providers";
 	}
-	
+
 	public static final String PROVIDERS_FOR_LOCATION_DL(int locationId, int practiceId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
