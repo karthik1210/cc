@@ -27,7 +27,7 @@
             			<class name="com.pxp.cc.testcases.ui.DeactivateUserTests" />
             			<class name="com.pxp.cc.testcases.ui.EditInternalUserTests" />
             			<class name="com.pxp.cc.testcases.ui.SearchOptionsTests" />
-             <!--class name="com.pxp.cc.testcases.ui.PracticeLinksTests" /-->
+             			<class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
         </classes>
     </test>
 </suite>
