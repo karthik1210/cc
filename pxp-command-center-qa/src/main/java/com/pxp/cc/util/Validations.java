@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.ClientOrg;
+import com.pxp.cc.pojos.*;
 import com.pxp.cc.pojos.ClientTypes;
 import com.pxp.cc.pojos.OrgDetails;
 import com.pxp.cc.pojos.OrgHierarchyDetails;
@@ -3337,10 +3338,12 @@ public class Validations {
 				String expectedFeatureName = patientAccessPermissionList.get(i).getFeatureName();
 				String actualAccess = getPatientAccessGaurdianApiResponse.jsonPath().get("access[" + j + "]");
 				String expectedAccess = patientAccessPermissionList.get(i).getAccess().toString();
-				if (expectedFeatureId==actualFeatureId) {
+				if (expectedFeatureId == actualFeatureId) {
 					CCUtils.assertEquals(actualFeatureName, expectedFeatureName);
 					CCUtils.assertEquals(actualAccess, expectedAccess);
 					break;
 				}
 			}
+		}
+	}
 }
