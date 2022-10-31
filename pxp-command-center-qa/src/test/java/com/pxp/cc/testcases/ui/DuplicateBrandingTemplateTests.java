@@ -65,9 +65,9 @@ public class DuplicateBrandingTemplateTests extends CommandCenterGenericTest {
 		String altText = testData.getProperty("new.client.name");
 		brandingTemplatesPage.enterAltText(altText);
 		brandingTemplatesPage.verifyAndClickSaveButton();
+		brandingTemplatesPage.clickOnExpandArrow();
 		logStep("Verify branding status is active");
 		brandingTemplatesPage.VerifyBrandingNameIsActive();
-		logStep("Create Duplicate Branding");
 		logStep("Click on kebab menu");
 		brandingTemplatesPage.clickOnKebabMenu();
 		logStep("Click on Duplicate option");
@@ -92,9 +92,9 @@ public class DuplicateBrandingTemplateTests extends CommandCenterGenericTest {
 		String altText = testData.getProperty("new.client.name");
 		brandingTemplatesPage.enterAltText(altText);
 		brandingTemplatesPage.verifyAndClickSaveButton();
+		brandingTemplatesPage.clickOnExpandArrow();
 		logStep("Verify branding status is active");
 		brandingTemplatesPage.VerifyBrandingNameIsActive();
-		logStep("Create Duplicate Branding");
 		logStep("Click on kebab menu");
 		brandingTemplatesPage.clickOnKebabMenu();
 		logStep("Click on Duplicate option");
@@ -119,9 +119,9 @@ public class DuplicateBrandingTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.enterAltText(altText);
 		brandingTemplatesPage.verifyAndClickSaveButton();
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
+		brandingTemplatesPage.clickOnExpandArrow();
 		logStep("Verify branding status is Inactive");
 		brandingTemplatesPage.VerifyBrandingNameIsInactive();
-		logStep("Create Duplicate Branding Template");
 		logStep("Click on kebab menu");
 		brandingTemplatesPage.clickOnKebabMenu();
 		logStep("Click on Duplicate option");
