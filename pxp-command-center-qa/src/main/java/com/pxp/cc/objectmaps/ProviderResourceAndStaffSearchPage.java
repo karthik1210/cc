@@ -1,0 +1,73 @@
+package com.pxp.cc.objectmaps;
+
+import java.util.List;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+import com.pxp.cc.util.CCUtils;
+
+import org.openqa.selenium.WebElement;
+
+public class ProviderResourceAndStaffSearchPage extends CCMainPage {
+
+	@FindBy(id = "generalLabel")
+	private WebElement lableProvidersAndResourcesPageTitle;
+
+	@FindBy(xpath = "//div[@role='tab']//div[text()='Providers']")
+	private WebElement tabProvider;
+
+	@FindBy(xpath = "//div[@role='tab']//div[text()='Resources']")
+	private WebElement tabResources;
+
+	@FindBy(xpath = "//div[@role='tab']//div[text()='Staff']")
+	private WebElement tabStaff;
+
+	@FindBy(id = "searchOrgInput")
+	private WebElement searchTextbox;
+
+	@FindBy(xpath = "//tbody[@role='rowgroup']//tr[@role='row']//td[1]")
+	private WebElement listOfProviderFirstName;
+
+	@FindBy(id = "searchButton")
+	private WebElement searchButton;
+
+	public ProviderResourceAndStaffSearchPage(WebDriver driver) {
+		super(driver);
+	}
+
+	public void verifyProvidersAndResourcesPageTitle() {
+		CCUtils.verifyAndWaitForElement(lableProvidersAndResourcesPageTitle, driver);
+		CCUtils.assertEquals(lableProvidersAndResourcesPageTitle.getText().trim(), "Providers, Resources & Staff");
+		log("lableProvidersAndResourcesPageTitle page title is displayed");
+	}
+
+	public void verifyProviderByDefaultSelected() {
+		CCUtils.verifyAndWaitForElement(tabProvider, driver);
+		CCUtils.assertEquals(tabProvider.getAttribute("aria-selected").toString(), "true");
+		log("verified that provider tab b ydefault selected");
+	}
+
+	public void enterProviderInSearchTextbox(String providerName) {
+		CCUtils.verifyAndWaitForElement(searchTextbox, driver);
+		searchTextbox.sendKeys(providerName);
+		log("provider name entered in search textbox");
+	}
+
+	public void clickToSearchButton() {
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
+		searchButton.click();
+		log("clicked to search button");
+	}
+
+	public void verifySearchProviderFound(String listOfProvider) {
+		log("Entered in a search provider loop");
+		CCUtils.scrollPageViaElement(driver, listOfProviderFirstName);
+		log("scroll page");
+		log("get the text of list : " + listOfProviderFirstName.getText().toString());
+		log("verified presence of list provider");
+		CCUtils.verifyAndWaitForElement(listOfProviderFirstName, driver);
+		CCUtils.assertEquals(listOfProviderFirstName.getText().toString().trim(), listOfProvider.trim());
+		listOfProviderFirstName.click();
+	}
+}
