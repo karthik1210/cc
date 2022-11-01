@@ -1286,4 +1286,9 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
+	
+	public Response getLocationsForProviderForNullValues_BL() {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
