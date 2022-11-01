@@ -182,7 +182,6 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForInvalidData(createNewLocationApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error response body for invalid url")
