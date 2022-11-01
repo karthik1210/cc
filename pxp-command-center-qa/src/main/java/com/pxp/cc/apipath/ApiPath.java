@@ -1551,6 +1551,6 @@ public class ApiPath {
 	}
 	
 	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL() {
-		return SERVICE_SHARED_BL + "/v1/providers/null/practices//locations";
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations";
 	}
 }
