@@ -1549,4 +1549,8 @@ public class ApiPath {
 	public static final String PROVIDERS_FOR_LOCATION_DL(int locationId, int practiceId) {
 		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
 	}
+	
+	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices//locations";
+	}
 }
