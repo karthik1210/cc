@@ -1291,4 +1291,14 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+	
+	public Response getSolutionsForProviders_BL(int providerId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForProviders_BL_NullValues() {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_PROVIDERS_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
