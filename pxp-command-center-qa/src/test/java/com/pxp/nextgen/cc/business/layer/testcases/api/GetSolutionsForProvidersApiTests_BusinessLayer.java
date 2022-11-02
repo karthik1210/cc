@@ -12,7 +12,6 @@ import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.LocationsValidations;
-import com.pxp.cc.util.PracticeAppointmentTypeValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 

@@ -1300,5 +1300,15 @@ public class SharedInfo extends BaseRest {
 	public Response getSolutionsForProviders_BL_NullValues() {
 		String url = ApiPath.FETCH_SOLUTIONS_FOR_PROVIDERS_BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+		}
+	
+	public Response getSolutionsForProviders_DL(int providerId, int practiceId) {
+		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForProviders_DL_NullValues() {
+		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDERS_DL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
