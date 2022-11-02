@@ -1,13 +1,11 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.objectmaps;
 
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.FindBy;
-
-import com.pxp.cc.util.CCUtils;
-
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import com.pxp.cc.util.CCUtils;
 
 public class ProviderResourceAndStaffSearchPage extends CCMainPage {
 
@@ -58,6 +56,18 @@ public class ProviderResourceAndStaffSearchPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
 		searchButton.click();
 		log("clicked to search button");
+	}
+
+	public void clickToResourcesTab() {
+		CCUtils.verifyAndWaitForElement(tabResources, driver);
+		tabResources.click();
+		log("clicked to resource tab");
+	}
+
+	public void clickToProvidersTab() {
+		CCUtils.verifyAndWaitForElement(tabProvider, driver);
+		tabProvider.click();
+		log("clicked to provider tab");
 	}
 
 	public void verifySearchProviderFound(String listOfProvider) {
