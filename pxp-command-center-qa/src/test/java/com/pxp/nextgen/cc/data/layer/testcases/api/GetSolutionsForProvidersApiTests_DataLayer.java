@@ -20,11 +20,11 @@ public class GetSolutionsForProvidersApiTests_DataLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validations;
-	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId;
+	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId, practiceIdOne, providerIdOne;
 	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
 			updateSolutionsApiResponse, createClientApiResponse, updateSolutionForProvider, getSolutionForProvider,
-			createProviderApiResponse, fetchSolutionsForProviders;
+			createProviderApiResponse, fetchSolutionsForProviders, createPracticeOneApiResponse, createProviderOneApiResponse;
 	private PracticeAppointmentTypeValidations practiceAppointmentTypeValidations;
 
 	@BeforeClass()
@@ -78,6 +78,17 @@ public class GetSolutionsForProvidersApiTests_DataLayer extends BaseRest {
 		updateSolutionForProvider = sharedInfo.enableOrDisableSolutionsForProvider_DL(providerId, practiceId,
 				solutionId, true);
 		CCUtils.assertEquals(updateSolutionForProvider.getStatusCode(), 200);
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), enterpriseId,
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		practiceIdOne = createPracticeApiResponse.jsonPath().get("orgId");
+		createProviderApiResponse = sharedInfo.createProvider_DL(practiceIdOne, firstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
+		providerIdOne = createProviderApiResponse.jsonPath().getInt("providerId");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, providerId to get solutions and verify response body")
@@ -91,9 +102,7 @@ public class GetSolutionsForProvidersApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, providerId to get solutions but with no associated solution and verify response code")
 	public void testGetSolutionsForExistingPracticeIdAndProviderIdWithNoAssociatedSolution() throws IOException {
-		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_DL(
-				Integer.parseInt(testData.getProperty("no.solu.providers.provider.id")),
-				Integer.parseInt(testData.getProperty("no.solu.providers.prac.id")));
+		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_DL(providerIdOne, practiceIdOne);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
 		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 204);
