@@ -1311,4 +1311,24 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDERS_DL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getPracticeLocation_BL(int practiceId, int locationId, String solutionName, String en) {
+		String url = ApiPath.GET_PRACTICE_LOCATION_BL(practiceId, locationId);
+		return given().spec(requestSpec).queryParam("locationId", locationId).header("x-product", solutionName)
+				.header("x-language", en).get(url).then().extract().response();
+	}
+	
+	public Response getPracticeLocation_NullValues_BL() {
+		String url = ApiPath.GET_PRACTICE_LOCATION_BL_NULL_VALUES();
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForLocation_BL(int locationId, int practiceId, int solutionId,
+			boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(locationId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
 }

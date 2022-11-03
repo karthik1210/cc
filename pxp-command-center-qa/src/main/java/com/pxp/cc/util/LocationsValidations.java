@@ -1,4 +1,5 @@
 //Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.util;
 
 import java.io.IOException;
@@ -14,7 +15,6 @@ import com.pxp.cc.objectmaps.LocationStatus;
 import com.pxp.cc.pojos.ProviderStatus;
 import com.pxp.cc.pojos.ResourceStatus;
 import com.pxp.cc.pojos.ResourcesStatus;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -297,4 +297,9 @@ public class LocationsValidations {
 		Log4jUtil.log("Resources count in response body : " + jsonPath.get("totalCount"));
 		Log4jUtil.log("Categories in response body : " + jsonPath.get("items"));
 		}
+	
+	public void verifyGetPracticeLocationDetailsApiResponseBody(Response response, String locationName) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("name"), locationName);
+	}
 }
