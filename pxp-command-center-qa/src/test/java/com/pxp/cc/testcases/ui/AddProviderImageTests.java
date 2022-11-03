@@ -111,7 +111,6 @@ public class AddProviderImageTests extends CommandCenterGenericTest {
 		systemName = createSystem();
 		agPracticeName = createAgnosticPractice(systemName);
 		providerName = createProviderWithinAgPractice();
-		providerResourceStaffSearchPage.clickToResourcesTab();
 		providerResourceStaffSearchPage.clickToProvidersTab();
 		providerResourceStaffSearchPage.enterProviderInSearchTextbox(providerName);
 		providerResourceStaffSearchPage.clickToSearchButton();
@@ -127,7 +126,6 @@ public class AddProviderImageTests extends CommandCenterGenericTest {
 		systemName = createSystem();
 		agPracticeName = createAgnosticPractice(systemName);
 		providerName = createProviderWithinAgPractice();
-		providerResourceStaffSearchPage.clickToResourcesTab();
 		providerResourceStaffSearchPage.clickToProvidersTab();
 		providerResourceStaffSearchPage.enterProviderInSearchTextbox(providerName);
 		providerResourceStaffSearchPage.clickToSearchButton();
@@ -145,7 +143,6 @@ public class AddProviderImageTests extends CommandCenterGenericTest {
 		systemName = createSystem();
 		agPracticeName = createAgnosticPractice(systemName);
 		providerName = createProviderWithinAgPractice();
-		providerResourceStaffSearchPage.clickToResourcesTab();
 		providerResourceStaffSearchPage.clickToProvidersTab();
 		providerResourceStaffSearchPage.enterProviderInSearchTextbox(providerName);
 		providerResourceStaffSearchPage.clickToSearchButton();
