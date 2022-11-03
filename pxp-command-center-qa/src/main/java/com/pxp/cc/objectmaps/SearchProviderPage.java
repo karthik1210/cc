@@ -3,14 +3,10 @@
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
-import java.util.ArrayList;
-import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -136,12 +132,12 @@ public class SearchProviderPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(searchTextBox, driver);
 		searchTextBox.clear();
 		searchTextBox.sendKeys(providerName);
-		log("location name :" + providerName + " entered in serach textbox");
+		log("provider name :" + providerName + " entered in serach textbox");
 	}
 
 	public void verifyNoDataDisplayErrorMessage() {
 		CCUtils.verifyAndWaitForElement(noDataDisplayMessage, driver);
-		CCUtils.assertTrue(noDataDisplayMessage.isDisplayed(), "No Data to Display Error message got displayed");
+		CCUtils.assertTrue(noDataDisplayMessage.isDisplayed(), "No Data to Display");
 		log("No Data to Display error message is displayed");
 	}
 
@@ -158,9 +154,9 @@ public class SearchProviderPage extends CCMainPage {
 	}
 
 	public void verifySearchButtonIsDisplayed() {
-		log("Verifying search button is displayed on locations search page");
+		log("Verifying search button is displayed on providers search page");
 		CCUtils.verifyAndWaitForElement(searchTextBox, driver);
-		searchTextBox.sendKeys("blabla");
+		searchTextBox.sendKeys("abcccccc");
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
 		if (searchButton.isDisplayed() == true) {
 			log("Verifying search button is enabled");
@@ -174,7 +170,7 @@ public class SearchProviderPage extends CCMainPage {
 
 	public void verifySearchTextBoxAndPlaceholderIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(searchTextBox, driver);
-		log("Verifying search textbox is present on locations search page");
+		log("Verifying search textbox is present on providers search page");
 		if (searchTextBox.isDisplayed() == true) {
 			log("Verifying search textbox is enabled");
 			CCUtils.assertTrue(searchTextBox.isEnabled(), "search button is disabled");
@@ -192,7 +188,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertEquals(labelSystem.getText().trim(), "System");
 			log("Sytem filter label text is " + labelSystem.getText().trim());
 		} else {
-			log("Sytem filter label is not displayed  on locations search page");
+			log("Sytem filter label is not displayed  on providers search page");
 		}
 		CCUtils.assertTrue(systemDropdownFilter.isDisplayed(), "verifying system dropdown is present or not");
 		CCUtils.assertEquals(systemDropdownFilter.getAttribute("placeholder"), "Search/Select");
@@ -205,7 +201,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertEquals(labelEnterprise.getText().trim(), "Enterprise");
 			log("Enterprise filter label text is " + labelEnterprise.getText().trim());
 		} else {
-			log("Enterprise filter label is not displayed on locations search page");
+			log("Enterprise filter label is not displayed on providers search page");
 		}
 		CCUtils.assertTrue(enterpriseDropdownFilter.isDisplayed(), "verifying enterprise dropdown is present or not");
 		CCUtils.assertEquals(enterpriseDropdownFilter.getAttribute("placeholder"), "Search/Select");
@@ -218,7 +214,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertEquals(labelPractice.getText().trim(), "Practice");
 			log("Practice filter label text is " + labelPractice.getText().trim());
 		} else {
-			log("Practice filter label is not displayed on locations search page");
+			log("Practice filter label is not displayed on providers search page");
 		}
 		CCUtils.assertTrue(practiceDropdownFilter.isDisplayed(), "verifying practice dropdown is present or not");
 		CCUtils.assertEquals(practiceDropdownFilter.getAttribute("placeholder"), "Search/Select");
@@ -231,7 +227,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertEquals(labelSolution.getText().trim(), "Solution");
 			log("Solution filter label text is " + labelSolution.getText().trim());
 		} else {
-			log("Solution filter label is not displayed on locations search page");
+			log("Solution filter label is not displayed on providers search page");
 		}
 		CCUtils.assertTrue(solutionDropdownFilter.isDisplayed(), "verifying solution dropdown is present or not");
 		CCUtils.assertEquals(solutionDropdownFilter.getAttribute("placeholder"), "Search/Select");
@@ -249,13 +245,13 @@ public class SearchProviderPage extends CCMainPage {
 	public void clearButtonDisplayed() {
 		CCUtils.verifyAndWaitForElement(filterClearButton, driver);
 		CCUtils.assertTrue(filterClearButton.isDisplayed(), "verifying clear button is dispalyed or not");
-		log("Verified clear button is present on location search page");
+		log("Verified clear button is present on provider search page");
 	}
 
 	public void clearApplyDisplayed() {
 		CCUtils.verifyAndWaitForElement(filterApplyButton, driver);
 		CCUtils.assertTrue(filterApplyButton.isDisplayed(), "verifying clear button is dispalyed or not");
-		log("Verified apply button is present on location search page");
+		log("Verified apply button is present on provider search page");
 	}
 
 	public void verifyAllElementsOfFilterNotVisible() {

@@ -14,7 +14,7 @@ import com.pxp.cc.objectmaps.SearchProviderPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
-public class SearchProviderTests extends CommandCenterGenericTest {
+public class SearchAndFilterProviderTests extends CommandCenterGenericTest {
 	private ClientDirectoryPage clientDirectoryPage;
 	public ClientDirectoryPage cchomepage;
 	public CreateClientPage createClientPage;
@@ -29,12 +29,10 @@ public class SearchProviderTests extends CommandCenterGenericTest {
 
 	@BeforeMethod()
 	public void loginToCommandCenterPortal() throws Exception {
-
 		logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		commonMethods = new CommonMethods(driver);
 		createClientPage = new CreateClientPage(driver);
-
 		createClientPage.clickCreateClient();
 		commonMethods = new CommonMethods(driver);
 		logStep("Enter valid details in mandatory fields");
@@ -56,7 +54,6 @@ public class SearchProviderTests extends CommandCenterGenericTest {
 		clientDirectoryPage.clickSearchResult();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyClientNodeIsSelected();
-
 	}
 
 	public String createSystem() throws InterruptedException {
@@ -113,10 +110,11 @@ public class SearchProviderTests extends CommandCenterGenericTest {
 	}
 
 	public String createProvider() throws Exception {
-		 systemNameOne = createSystem(); agPracticeNameOne =
-		 createAgnosticPractice(systemNameOne);
-		 generalSettingsPage.enterSearchText(agPracticeNameOne);
-		 generalSettingsPage.clickFirstInAutoSuggestion(); CCUtils.pressEnterKey();
+		systemNameOne = createSystem();
+		agPracticeNameOne = createAgnosticPractice(systemNameOne);
+		generalSettingsPage.enterSearchText(agPracticeNameOne);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
 		generalSettingsPage.verifyProvidersAndResourcesTab();
 		generalSettingsPage.clickOnProvidersAndResourcesTab();
 		addNewProviderPage = new AddNewProviderPage(driver);
@@ -188,12 +186,12 @@ public class SearchProviderTests extends CommandCenterGenericTest {
 
 	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search provider screen")
 	public void testSearchExistingProviderByFilterSystem() throws Exception {
-		 systemNameOne = createSystem();
-		 agPracticeNameOne = createAgnosticPractice(systemNameOne);
-		 generalSettingsPage.enterSearchText(agPracticeNameOne);
-		 generalSettingsPage.clickFirstInAutoSuggestion();
-		 CCUtils.pressEnterKey();
-		 String createProviderOne = createProvider();
+		systemNameOne = createSystem();
+		agPracticeNameOne = createAgnosticPractice(systemNameOne);
+		generalSettingsPage.enterSearchText(agPracticeNameOne);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String createProviderOne = createProvider();
 		generalSettingsPage.verifyProvidersAndResourcesTab();
 		generalSettingsPage.clickOnProvidersAndResourcesTab();
 		searchProviderPage = new SearchProviderPage(driver);
@@ -205,15 +203,15 @@ public class SearchProviderTests extends CommandCenterGenericTest {
 
 	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply enterprise filter in search provider screen")
 	public void testSearchExistingProviderByFilterEnterprise() throws Exception {
-		 systemNameTwo = createSystem();
-		 enterpriseOne=createEnterprise(systemNameTwo);
-		 generalSettingsPage.enterSearchText(practiceNameTwo);
-		 generalSettingsPage.clickFirstInAutoSuggestion();
-		 CCUtils.pressEnterKey();
-		 generalSettingsPage.enterSearchText(practiceNameThree);
-		 generalSettingsPage.clickFirstInAutoSuggestion();
-		 CCUtils.pressEnterKey();
-		 String createProviderOne = createProvider();
+		systemNameTwo = createSystem();
+		enterpriseOne = createEnterprise(systemNameTwo);
+		generalSettingsPage.enterSearchText(practiceNameTwo);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		generalSettingsPage.enterSearchText(practiceNameThree);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String createProviderOne = createProvider();
 		generalSettingsPage.verifyProvidersAndResourcesTab();
 		generalSettingsPage.clickOnProvidersAndResourcesTab();
 		searchProviderPage = new SearchProviderPage(driver);
@@ -227,13 +225,13 @@ public class SearchProviderTests extends CommandCenterGenericTest {
 	public void testSearchExistingProviderByFilterPractice() throws Exception {
 		systemNameTwo = createSystem();
 		enterpriseOne = createEnterprise(systemNameTwo);
-		 generalSettingsPage.enterSearchText(practiceNameTwo);
-	    generalSettingsPage.clickFirstInAutoSuggestion();
-		 CCUtils.pressEnterKey();
-		 generalSettingsPage.enterSearchText(practiceNameThree);
-		 generalSettingsPage.clickFirstInAutoSuggestion();
-		 CCUtils.pressEnterKey();
-		 String createProviderOne = createProvider();
+		generalSettingsPage.enterSearchText(practiceNameTwo);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		generalSettingsPage.enterSearchText(practiceNameThree);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String createProviderOne = createProvider();
 		generalSettingsPage.verifyProvidersAndResourcesTab();
 		generalSettingsPage.clickOnProvidersAndResourcesTab();
 		searchProviderPage = new SearchProviderPage(driver);
