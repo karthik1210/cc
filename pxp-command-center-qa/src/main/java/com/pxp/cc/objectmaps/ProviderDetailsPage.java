@@ -14,10 +14,10 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//input[@type='file']")
 	private WebElement uploadProviderImage;
 
-	@FindBy(xpath = "//div[@class='active ng-star-inserted']")
+	@FindBy(xpath = "//div//span[contains(text(),'REMOVE IMAGE')]")
 	private WebElement removeImage;
 
-	@FindBy(xpath = "//div[@class='inactive ng-star-inserted']")
+	@FindBy(xpath = "//div[contains(text(),'REMOVE IMAGE')]")
 	private WebElement removeImageInactive;
 
 	@FindBy(xpath = "//p[contains(text(),'Invalid file type')]")

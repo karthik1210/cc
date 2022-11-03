@@ -140,7 +140,7 @@ public class AddProviderImageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage.trim(), "Success! Successfully removed image");
 	}
 
-	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "Verify provider image is successfully removed")
+	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "Verify invalid file type error is displayed when uploading invalid format image file")
 	public void testErrorInvalidFileType() throws Exception {
 		systemName = createSystem();
 		agPracticeName = createAgnosticPractice(systemName);

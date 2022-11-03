@@ -37,13 +37,13 @@ public class ProviderResourceAndStaffSearchPage extends CCMainPage {
 	public void verifyProvidersAndResourcesPageTitle() {
 		CCUtils.verifyAndWaitForElement(lableProvidersAndResourcesPageTitle, driver);
 		CCUtils.assertEquals(lableProvidersAndResourcesPageTitle.getText().trim(), "Providers, Resources & Staff");
-		log("lableProvidersAndResourcesPageTitle page title is displayed");
+		log("Providers,Resources & Staff Title page is displayed");
 	}
 
 	public void verifyProviderByDefaultSelected() {
 		CCUtils.verifyAndWaitForElement(tabProvider, driver);
 		CCUtils.assertEquals(tabProvider.getAttribute("aria-selected").toString(), "true");
-		log("verified that provider tab b ydefault selected");
+		log("verified that provider tab by default selected");
 	}
 
 	public void enterProviderInSearchTextbox(String providerName) {
