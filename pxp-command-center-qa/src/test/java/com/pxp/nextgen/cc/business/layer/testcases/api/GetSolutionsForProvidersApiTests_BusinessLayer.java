@@ -85,16 +85,8 @@ public class GetSolutionsForProvidersApiTests_BusinessLayer extends BaseRest {
 
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing providerId, practiceId with no associating solutions")
-	public void testGetSolutionsForProviders1() throws IOException {
-		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(providerIdOne, practiceIdOne);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
-		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 204);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch all the solutions of a provider of a practice")
-	public void testGetSolutionsForProviders() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, providerId to get solutions and verify response body")
+	public void testGetSolutionsForExistingPracticeIdAndProviderId() throws IOException {
 		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(providerId, practiceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
@@ -102,53 +94,48 @@ public class GetSolutionsForProvidersApiTests_BusinessLayer extends BaseRest {
 		locationsValidations.verifyNoOfSolutionsFetchedSolutionNameandId(fetchSolutionsForProviders);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating status code when fetching solutions of existing a provider Id and practice Id but no solution is associated")
-	public void testResponseCodeForExistingProviderIdAndPracticeIdOfNoAssociatedSolution() throws IOException {
-		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(
-				Integer.parseInt(testData.getProperty("no.solu.resources.resource.id").trim()),
-				Integer.parseInt(testData.getProperty("no.solu.resources.prac.id").trim()));
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, providerId to get solutions but with no associated solution and verify response code")
+	public void testGetSolutionsForExistingPracticeIdAndProviderIdWithNoAssociatedSolution() throws IOException {
+		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(providerIdOne, practiceIdOne);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
 		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating status code when fetching solutions of existing provider Id and non-existing practice Id")
-	public void testErrorMessageForExistingResourceIdandNonexistingPracticeId() throws IOException {
-		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(
-				Integer.parseInt(testData.getProperty("get.solu.resources.resource.id").trim()),
-				Integer.parseInt(testData.getProperty("non.existing.solu.resources.prac.id").trim()));
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, non-existing providerId to get solutions and verify response code")
+	public void testErrorMessageForExistingPracticeIdAndNonExistingProviderId() throws IOException {
+		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(practiceId,
+				Integer.parseInt(testData.getProperty("non.existing.provider.id").trim()));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
 		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating status code when fetching provider of non-existing practice Id and existing solution Id")
-	public void testErrorMessageForNonExistingResourceIdandExistingPracticeId() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceId, existing providerId to get solutions and verify response code")
+	public void testErrorMessageForNonExistingPracticeIdAndExistingProviderId() throws IOException {
 		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(
-				Integer.parseInt(testData.getProperty("non.existing.solu.resources.resource.id").trim()),
-				Integer.parseInt(testData.getProperty("get.solu.resources.prac.id").trim()));
+				Integer.parseInt(testData.getProperty("non.existing.practice.id")), providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
 		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating status code when fetching solutions of both non-existing provider Id and practice Id")
-	public void testErrorMessageForBothNonExistingResourceIdandPracticeId() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceId, non-existing providerId to get solutions and verify response code")
+	public void testErrorMessageForBothNonExistingPracticeIdAndProviderId() throws IOException {
 		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL(
-				Integer.parseInt(testData.getProperty("non.existing.solu.resources.resource.id").trim()),
-				Integer.parseInt(testData.getProperty("non.existing.solu.resources.prac.id").trim()));
+				Integer.parseInt(testData.getProperty("non.existing.practice.id")),
+				Integer.parseInt(testData.getProperty("non.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
 		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validating error message when fetching solutions with provider id and null and practice Id as null")
-	public void testErrorMessageForNullValuesInPracticeIdAndAppointmentTypeId() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practiceId and providerId as null and verify response code")
+	public void testErrorMessageForNullValuesInPracticeIdAndProviderId() throws IOException {
 		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_BL_NullValues();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchSolutionsForProviders);
 		CCUtils.assertEquals(fetchSolutionsForProviders.getStatusCode(), 400);
 		validation.verifyErrorMessageIfClientIdIsNull(fetchSolutionsForProviders);
 	}
-
 }
