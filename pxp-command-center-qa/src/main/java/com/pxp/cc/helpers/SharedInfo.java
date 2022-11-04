@@ -1331,4 +1331,9 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
 				.extract().response();
 	}
+	
+	public Response getProviderDetails_BL(int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
