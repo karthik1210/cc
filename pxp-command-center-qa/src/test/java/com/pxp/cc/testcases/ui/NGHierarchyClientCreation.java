@@ -106,10 +106,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         addOrgNodePage.clickOnManageClient();
         logStep("Click on arrow");
         addOrgNodePage.clickOnSystemExpandArrow();
-//        driver.navigate().refresh();
-//        logStep("Click on manage client button");
-//        addOrgNodePage.clickOnManageClient();
-//        addOrgNodePage.clickOnSystemExpandArrow();
         addOrgNodePage.clickOnEnterpriseExpandArrow();
         logStep("Verify add new practice page");
         addOrgNodePage.verifyAddPracticeButton();
