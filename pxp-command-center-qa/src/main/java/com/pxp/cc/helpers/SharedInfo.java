@@ -1331,4 +1331,18 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
 				.extract().response();
 	}
+	
+	public Response getExternalInternalMap_DL(int practiceId, String externalsystem, String identifier, String type,
+			String maptype) {
+		String url = ApiPath.GET_EXTERNAL_INTERNAL_MAP_DL(practiceId);
+		return given().spec(requestSpec).queryParam("externalsystem", externalsystem).queryParam("identifier", identifier)
+				.queryParam("type", type).queryParam("maptype", maptype).when().get(url).then().extract().response();
+	}
+	
+	public Response getExternalInternalMap_NullValues_DL(String externalsystem, String identifier, String type,
+			String maptype) {
+		String url = ApiPath.GET_EXTERNAL_INTERNAL_MAP_NULL_VALUES_DL();
+		return given().spec(requestSpec).queryParam("externalsystem", externalsystem).queryParam("identifier", identifier)
+				.queryParam("type", type).queryParam("maptype", maptype).when().get(url).then().extract().response();
+	}
 }

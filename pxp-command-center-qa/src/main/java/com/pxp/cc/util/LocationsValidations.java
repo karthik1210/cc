@@ -302,4 +302,32 @@ public class LocationsValidations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("name"), locationName);
 	}
+	
+	public void verifyGetExternalMapApiResponseBody(Response response, String externalId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("id"), externalId);
+	}
+	
+	public void verifyGetInternalMapApiResponseBody(Response response, String locationId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("id"), locationId);
+	}
+	
+	public void verifyErrorResponseForInvalidExternalId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "External Id not found");
+	}
+	
+	public void verifyErrorResponseForInvalidType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid type");
+	}
+	
+	public void verifyErrorResponseForInvalidMapType(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid maptype");
+	}
 }
