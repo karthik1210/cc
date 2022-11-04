@@ -88,6 +88,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateProvidersToLocationApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForProvidersApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetExternalInternalMapApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
