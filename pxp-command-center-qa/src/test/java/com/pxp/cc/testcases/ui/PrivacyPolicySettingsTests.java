@@ -61,7 +61,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements and basic functionalities in Privacy Policies Section at practice level")
     public void verifyPrivacyPolicyElementsAndBasicFunctionality() throws InterruptedException, AWTException {
         privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
-        logStep("PXPP-20371 TC_001_Verify that user can able to see privacy policy details section under practices in Command Center Application");
+        /*logStep("PXPP-20371 TC_001_Verify that user can able to see privacy policy details section under practices in Command Center Application");
         logStep("Verify Privacy Policies section is displayed at practice level");
         privacyPolicySettingsPage.verifyPrivacyPoliciesLabel();
         logStep("PXPP-24829 TC_002_Verify the Privacy Policies section, when Practice don't have any policies");
@@ -151,11 +151,11 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickOnBackButton();
         Thread.sleep(5000);
         privacyPolicySettingsPage.clickDisregardChanges();
-        Thread.sleep(5000);
+        Thread.sleep(5000);*/
         privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
         Thread.sleep(5000);
-        privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("pxpp.17898.policy.name"));
-        Thread.sleep(5000);
+        /*privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("pxpp.17898.policy.name"));
+        Thread.sleep(5000);*/
         logStep("PXPP-23494 TC_016_Verify that user is able to add new privacy policy with draft status to the practice in command center Application");
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         Thread.sleep(5000);
@@ -185,7 +185,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Delete");
         privacyPolicySettingsPage.clickKebabMenuOptions("Preview");
         Thread.sleep(5000);
-        privacyPolicySettingsPage.verifySolutionLabel("Virtual Visits");
+        /*privacyPolicySettingsPage.verifySolutionLabel("Virtual Visits");
         privacyPolicySettingsPage.verifySolutionLabel("Pay");
         privacyPolicySettingsPage.verifySolutionLabel("Portal");
         privacyPolicySettingsPage.verifySolutionLabel("PSS");
@@ -196,14 +196,14 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickOnLanguageTab("Spanish");
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifySpanishContent(testData.getProperty("pxpp.17898.Spanish.partial.content"));
-        Thread.sleep(5000);
+        Thread.sleep(5000);*/
         logStep("PXPP-23498 TC_019_Verify the Edit functionality from Preview PopUp for draft Privacy policy with changing the PolicyName and Policy Language");
         privacyPolicySettingsPage.verifyPreviewEdit();
         privacyPolicySettingsPage.clickPreviewEdit();
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name"));
         String updatedPrivacyPolicy = testData.getProperty("pxpp.17898.policy.name").concat(CCUtils.generateAlphaNumericString(3));
         privacyPolicySettingsPage.enterPolicyName(updatedPrivacyPolicy);
         privacyPolicySettingsPage.updateLanguageContent("English");
@@ -239,7 +239,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
         privacyPolicySettingsPage.updateLanguageContent("English");
         Thread.sleep(5000);
         privacyPolicySettingsPage.clickOnEditSaveButton();
@@ -257,7 +257,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
         privacyPolicySettingsPage.clickOnRadioButtonEnabled("Active");
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
@@ -297,7 +297,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickKebabMenuOptions("EDIT");
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name1"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name1"));
         updatedPrivacyPolicy = testData.getProperty("pxpp.17898.policy.name1").concat(CCUtils.generateAlphaNumericString(3));
         privacyPolicySettingsPage.enterPolicyName(updatedPrivacyPolicy);
         privacyPolicySettingsPage.updateLanguageContent("English");
@@ -316,7 +316,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
         privacyPolicySettingsPage.verifyEnglishContent(testData.getProperty("pxpp.17898.updated.English.content"));
         Thread.sleep(5000);
         privacyPolicySettingsPage.updateLanguageContent("English");
@@ -334,7 +334,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(updatedPrivacyPolicy);
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         privacyPolicySettingsPage.clickOnRadioButtonEnabled("Active");
         Thread.sleep(5000);
@@ -389,7 +389,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Delete");
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name"));
         privacyPolicySettingsPage.toggleSwitchClick("virtual visits");
         privacyPolicySettingsPage.toggleSwitchClick("Pay");
         privacyPolicySettingsPage.toggleSwitchClick("Portal");
@@ -473,7 +473,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         logStep("PXPP-22938 TC_031_Verify the Edit functionality from Preview Pop Up for active Privacy policy with changing the PolicyName  and Policy Language");
         privacyPolicySettingsPage.clickPreviewEdit();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name2"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name2"));
         privacyPolicySettingsPage.enterPolicyName(testData.getProperty("pxpp.17898.policy.name3"));
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
         privacyPolicySettingsPage.updateLanguageContent("English");
@@ -497,7 +497,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         Thread.sleep(5000);
         privacyPolicySettingsPage.clickPreviewEdit();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name3"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name3"));
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
         privacyPolicySettingsPage.updateLanguageContent("English");
         Thread.sleep(5000);
@@ -520,7 +520,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         Thread.sleep(5000);
         privacyPolicySettingsPage.clickPreviewEdit();
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name3"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name3"));
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
         privacyPolicySettingsPage.clickOnRadioButtonEnabled("InActive");
         privacyPolicySettingsPage.clickOnEditSaveButton();
@@ -568,7 +568,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Edit");
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name4"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name4"));
         privacyPolicySettingsPage.enterPolicyName(testData.getProperty("pxpp.17898.policy.name5"));
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
         privacyPolicySettingsPage.clickOnEditSaveButton();
@@ -584,7 +584,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Edit");
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name5"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name5"));
         privacyPolicySettingsPage.updatePolicyName();
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
         privacyPolicySettingsPage.updateLanguageContent("English");
@@ -606,7 +606,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Edit");
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name5")+"_Update");
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name5")+"_Update");
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Active");
         privacyPolicySettingsPage.updateLanguageContent("English");
         Thread.sleep(5000);
@@ -701,7 +701,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Edit");
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name1"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name1"));
         privacyPolicySettingsPage.verifyRadioButtonEnabled("Draft");
         privacyPolicySettingsPage.clickOnRadioButtonEnabled("Active");
         privacyPolicySettingsPage.clickOnEditSaveButton();
@@ -768,7 +768,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickPolicyKebabMenu(testData.getProperty("pxpp.17898.policy.name3"));
         privacyPolicySettingsPage.clickKebabMenuOptions("Edit");
         Thread.sleep(5000);
-        //privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name3"));
+        privacyPolicySettingsPage.verifyingPolicyNameTextBox(testData.getProperty("pxpp.17898.policy.name3"));
         privacyPolicySettingsPage.clickOnRadioButtonEnabled("Active");
         privacyPolicySettingsPage.clickOnEditSaveButton();
         Thread.sleep(5000);

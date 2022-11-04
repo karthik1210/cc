@@ -350,9 +350,8 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     public void verifyingPolicyNameTextBox(String policyName) {
         CCUtils.scrollPageViaElement(driver, policyNameTextBox);
         CCUtils.verifyAndWaitForElement(policyNameTextBox, driver);
-        log(policyNameTextBox.getText());
         log("Verifying whether Policy Name Text box present or not and displaying "+policyName +" as Policy Name");
-        CCUtils.assertEquals(policyNameTextBox.getText().contains(policyName), true);
+        CCUtils.assertEquals(policyNameTextBox.getAttribute("value").contains(policyName), true);
         log(policyName+" as Policy Name successfully displayed in text box");
     }
 
