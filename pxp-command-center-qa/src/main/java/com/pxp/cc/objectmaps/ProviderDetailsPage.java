@@ -29,7 +29,6 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//img[@alt='prs-image']")
 	private WebElement blankImage;
 
-
 	@FindBy(id = "searchOrgInput")
 	private WebElement Searchicon;
 
@@ -149,6 +148,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		uploadProviderImage.sendKeys(projectpath + invalidImagePath);
 		log("Verifying provider image uploaded");
 	}
+	
 	public void clickSearchIcon() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(Searchicon, driver);
 		Searchicon.click();
@@ -301,7 +301,6 @@ public class ProviderDetailsPage extends CCMainPage {
 		btnCancel.click();
 		log("Clicked on Cancel Button");
 	}
-
 }
 
 

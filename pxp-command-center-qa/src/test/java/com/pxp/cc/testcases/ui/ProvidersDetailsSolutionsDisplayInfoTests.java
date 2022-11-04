@@ -23,64 +23,59 @@ public class ProvidersDetailsSolutionsDisplayInfoTests extends CommandCenterGene
 	private AddNewProviderPage addNewProviderPage;
 	private AddOrgNodePage addOrgNodePage;
 	private ProviderDetailsPage providerDetailsPage;
-	public String systemNameOne, agPracticeNameOne,
-			providerFirstName;
+	public String systemNameOne, agPracticeNameOne, providerFirstName, clientName;
+
 	@BeforeMethod()
-	public void loginToCommandCenterPortal() throws Exception {	
-	  logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" +
-	  ccuser.getPassword()); clientDirectoryPage = login(ccuser.getUrl(),
-	  ccuser.getUsername(), ccuser.getPassword()); commonMethods = new
-	  CommonMethods(driver); createClientPage = new CreateClientPage(driver);
-	  logStep("Select create client button from new dropdown");
-	  createClientPage.clickCreateClient(); commonMethods = new
-	  CommonMethods(driver); logStep("Enter valid details in mandatory fields");
-	  String clientName = testData.getProperty("new.client.name")
-	  .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20)); String
-	  clientSapNumber = testData.getProperty("new.client.sap")
-	  .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-	  createClientPage.createNewClient(clientName, clientSapNumber,
-	  testData.getProperty("new.client.type"),
-	  testData.getProperty("new.client.timezone"));
-	  logStep("Verify active radio button is by default selected on the create client popup"
-	  ); createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
-	  logStep("Click on create button on the create client popup");
-	  createClientPage.clickConfirmPopup(); String actualMessage =
-	  commonMethods.getToasterMessage(); logStep("Verify success toaster message");
-	  CCUtils.assertEquals(actualMessage, "Success! " + clientName +
-	  " has been successfully created");
-	  logStep("Searching a created client in client directory");
-	  clientDirectoryPage.searchNode(clientName);
-	  clientDirectoryPage.clickSearchButton();
-	  clientDirectoryPage.clickSearchResult(); generalSettingsPage = new
-	  GeneralSettingsPage(driver);
-	  generalSettingsPage.verifyClientNodeIsSelected();
-	  logStep("Verify Providers And Resources tab is displayed");
-	  generalSettingsPage.verifyProvidersAndResourcesTab();
-	  generalSettingsPage.clickOnProvidersAndResourcesTab(); addNewProviderPage =
-	  new AddNewProviderPage(driver);
-	  addNewProviderPage.verifyProvidersAndResourcesTitle(); }
-	  
-	  public String createSystem() throws InterruptedException { addOrgNodePage =
-	  new AddOrgNodePage(driver); addOrgNodePage.clickOnManageClient();
-	  addOrgNodePage.clickOnAddSystem(); String sysName =
-	  "SystemDemo".concat(CCUtils.generateAlphaNumericString(8));
-	  addOrgNodePage.enterNewSystemDetails(sysName);
-	  generalSettingsPage.clickSearchIcon();
-	  generalSettingsPage.enterSearchText(sysName);
-	  generalSettingsPage.clickFirstInAutoSuggestion(); CCUtils.pressEnterKey();
-	  return sysName; }
-	  
-	  public String createAgnosticPractice(String orgName) throws
-	  InterruptedException { addOrgNodePage = new AddOrgNodePage(driver);
-	  addOrgNodePage.clickOnManageClient();
-	  addOrgNodePage.clickOnExpandArrow(orgName); String practiceName =
-	  "PracticeForDemo".concat(CCUtils.generateAlphaNumericString(8));
-	  addOrgNodePage.addNewPractice(practiceName);
-	  generalSettingsPage.clickSearchIcon();
-	  generalSettingsPage.enterSearchText(practiceName);
-	  generalSettingsPage.clickFirstInAutoSuggestion(); CCUtils.pressEnterKey();
-	  return practiceName; }
-	 
+	public void loginToCommandCenterPortal() throws Exception {
+		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
+		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
+		commonMethods = new CommonMethods(driver);
+		createClientPage = new CreateClientPage(driver);
+		createClientPage.clickCreateClient();
+		commonMethods = new CommonMethods(driver);
+		clientName = testData.getProperty("new.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientSapNumber = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
+				testData.getProperty("new.client.timezone"));
+		createClientPage.clickConfirmPopup();
+		clientDirectoryPage.searchAndSelectClientNameInClientTable(clientName);
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.verifyClientNodeIsSelected();
+		logStep("Verify Providers And Resources tab is displayed");
+		generalSettingsPage.verifyProvidersAndResourcesTab();
+		generalSettingsPage.clickOnProvidersAndResourcesTab();
+		addNewProviderPage = new AddNewProviderPage(driver);
+		addNewProviderPage.verifyProvidersAndResourcesTitle();
+	}
+
+	public String createSystem() throws InterruptedException {
+		addOrgNodePage = new AddOrgNodePage(driver);
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnAddSystem();
+		String sysName = "SystemDemo".concat(CCUtils.generateAlphaNumericString(8));
+		addOrgNodePage.enterNewSystemDetails(sysName);
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.enterSearchText(sysName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		return sysName;
+	}
+
+	public String createAgnosticPractice(String orgName) throws InterruptedException {
+		addOrgNodePage = new AddOrgNodePage(driver);
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow(orgName);
+		String practiceName = "PracticeForDemo".concat(CCUtils.generateAlphaNumericString(8));
+		addOrgNodePage.addNewPractice(practiceName);
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.enterSearchText(practiceName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		return practiceName;
+	}
+
 	public String createProvider() throws Exception {
 		systemNameOne = createSystem();
 		agPracticeNameOne = createAgnosticPractice(systemNameOne);
