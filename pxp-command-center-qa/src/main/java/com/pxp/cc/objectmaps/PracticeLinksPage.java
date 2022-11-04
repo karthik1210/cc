@@ -49,7 +49,7 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//span[contains(text(),'CANCEL')]")
     private WebElement cancelButtonForPracticeWebsite;
 
-    @FindBy(xpath = "//div/label[@class='content-header ng-star-inserted']")
+    @FindBy(xpath = "//div/span[@class='content-header ng-star-inserted']")
     private WebElement practiceWebsiteDisplayArea;
 
     @FindBy(xpath = "//span[contains(text(),'SAVE')]")
