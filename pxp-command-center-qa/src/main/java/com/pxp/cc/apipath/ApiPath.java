@@ -1579,4 +1579,12 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
 	}
 
+	public static final String GET_EXTERNAL_INTERNAL_MAP_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/map";
+	}
+	
+	public static final String GET_EXTERNAL_INTERNAL_MAP_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/map";
+	}
+	
 }
