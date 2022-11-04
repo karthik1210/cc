@@ -61,7 +61,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements and basic functionalities in Privacy Policies Section at practice level")
     public void verifyPrivacyPolicyElementsAndBasicFunctionality() throws InterruptedException, AWTException {
         privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
-        /*logStep("PXPP-20371 TC_001_Verify that user can able to see privacy policy details section under practices in Command Center Application");
+        logStep("PXPP-20371 TC_001_Verify that user can able to see privacy policy details section under practices in Command Center Application");
         logStep("Verify Privacy Policies section is displayed at practice level");
         privacyPolicySettingsPage.verifyPrivacyPoliciesLabel();
         logStep("PXPP-24829 TC_002_Verify the Privacy Policies section, when Practice don't have any policies");
@@ -151,11 +151,11 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickOnBackButton();
         Thread.sleep(5000);
         privacyPolicySettingsPage.clickDisregardChanges();
-        Thread.sleep(5000);*/
+        Thread.sleep(5000);
         privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
         Thread.sleep(5000);
-        /*privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("pxpp.17898.policy.name"));
-        Thread.sleep(5000);*/
+        privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("pxpp.17898.policy.name"));
+        Thread.sleep(5000);
         logStep("PXPP-23494 TC_016_Verify that user is able to add new privacy policy with draft status to the practice in command center Application");
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         Thread.sleep(5000);
@@ -185,7 +185,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyKebabMenuOptions("Delete");
         privacyPolicySettingsPage.clickKebabMenuOptions("Preview");
         Thread.sleep(5000);
-        /*privacyPolicySettingsPage.verifySolutionLabel("Virtual Visits");
+        privacyPolicySettingsPage.verifySolutionLabel("Virtual Visits");
         privacyPolicySettingsPage.verifySolutionLabel("Pay");
         privacyPolicySettingsPage.verifySolutionLabel("Portal");
         privacyPolicySettingsPage.verifySolutionLabel("PSS");
@@ -196,7 +196,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickOnLanguageTab("Spanish");
         Thread.sleep(5000);
         privacyPolicySettingsPage.verifySpanishContent(testData.getProperty("pxpp.17898.Spanish.partial.content"));
-        Thread.sleep(5000);*/
+        Thread.sleep(5000);
         logStep("PXPP-23498 TC_019_Verify the Edit functionality from Preview PopUp for draft Privacy policy with changing the PolicyName and Policy Language");
         privacyPolicySettingsPage.verifyPreviewEdit();
         privacyPolicySettingsPage.clickPreviewEdit();
