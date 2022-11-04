@@ -32,7 +32,7 @@ module "pipeline" {
     },
     {
       name  = "APPLICATION_NAME"
-      value = local.application_name
+      value = local.test_ui_regression
       type  = "PLAINTEXT"
     },
     {
@@ -44,9 +44,20 @@ module "pipeline" {
       name  = "REGION"
       value = data.aws_region.current.name
       type  = "PLAINTEXT"
+    },
+    {
+      name  = "ENVIRONMENT"
+      type  = "PLAINTEXT"
+      value = local.qa_environment
     }
   ]
   codebuild_environment_privileged_mode = true
+
+  codebuild_vpc_config = {
+    vpc_id             = data.aws_vpc.build_account.id
+    subnets            = data.aws_subnets.build_account_private.ids
+    security_group_ids = [data.aws_security_group.codebuild.id]
+  }
 
   common_tags = {
     "nextgen.automation"          = "true"

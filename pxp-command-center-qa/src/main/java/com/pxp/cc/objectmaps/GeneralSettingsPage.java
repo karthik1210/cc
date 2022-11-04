@@ -216,6 +216,41 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "manageAccountsIcon")
 	private WebElement tabProvidersAndResources;
 
+	@FindBy(xpath = "//span[@class='purchaseTitle']")
+	private WebElement availableToPurchaseTitle;
+
+	@FindBy(id = "purchasedSolutionOrg")
+	private WebElement purchaseSolutionsTitle;
+
+	@FindBy(id = "unsavedConfirmBtn")
+	private WebElement YesActivateButton;
+
+	@FindBy(id = "unsavedCancelBtn")
+	private WebElement activatePopupCancelbutton;
+
+	@FindBy(xpath = "//div//span//mat-icon[contains(text(),'chat')]//following::div[@id='activateLabel'][1]")
+	private WebElement chatActivateButton;
+
+	@FindBy(xpath = "(//div//span//mat-icon[text()='campaign']//following::div[@id='activateLabel'])[1]")
+	private WebElement engageActivateButton;
+
+	@FindBy(xpath = "(//div//span//mat-icon[text()='videocam']//following::div[@id='activateLabel'])[1]")
+	private WebElement virtualVisitsActivateButton;
+
+	@FindBy(xpath = "(//div//span//mat-icon[text()='attach_money']//following::div[@id='activateLabel'])[1]")
+	private WebElement payActivateButton;
+
+	@FindBy(xpath = "(//div//span//mat-icon[text()='person']//following::div[@id='activateLabel'])[1]")
+	private WebElement portalActivateButton;
+
+	@FindBy(xpath = "(//div//span[contains(text(),'PSS')]//following::div[@id='activateLabel'])[1]")
+	private WebElement pSSActivateButton;
+
+	private String purchaseActivateButton(String solutionImageIcon) {
+		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//span[contains(text(),'"
+				+ solutionImageIcon + "')]";
+	}
+
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	List<String> activeSolutionName = new ArrayList<String>();
@@ -933,7 +968,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelNodeNameRightPanel, driver);
 		CCUtils.assertEquals(labelNodeNameRightPanel.isDisplayed(), true);
 	}
-	
+
 	public void clickFirstOption() {
 		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
 		if (selectFirstInAutoSuggestion.isDisplayed()) {
@@ -944,5 +979,69 @@ public class GeneralSettingsPage extends CCMainPage {
 			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
 			CCUtils.assertTrue(false, "Searched text not present in client");
 		}
+	}
+
+	public void verifyAvailableToPurchaseSection() {
+		log("Verify 'Available To Purchase' section on General Settings page");
+		CCUtils.scrollPageViaElement(driver, availableToPurchaseTitle);
+		CCUtils.verifyAndWaitForElement(availableToPurchaseTitle, driver);
+		CCUtils.assertEquals(availableToPurchaseTitle.isDisplayed(), true);
+	}
+
+	public void verifyPurchaseSolutionsSection() {
+		log("Verify 'Purchase Solutions' section on General Settings page");
+		CCUtils.scrollPageViaElement(driver, purchaseSolutionsTitle);
+		CCUtils.verifyAndWaitForElement(purchaseSolutionsTitle, driver);
+		CCUtils.assertEquals(purchaseSolutionsTitle.isDisplayed(), true);
+	}
+
+	public void clickToActivateButtonOfVirtualVisitsSolution() {
+		CCUtils.verifyAndWaitForElement(virtualVisitsActivateButton, driver);
+		virtualVisitsActivateButton.click();
+		log("clicked to activate button of Virtual visits");
+	}
+
+	public void clickToActivateButtonOfPaySolution() {
+		CCUtils.verifyAndWaitForElement(payActivateButton, driver);
+		payActivateButton.click();
+		log("clicked to activate button of Pay");
+	}
+
+	public void clickToActivateButtonOfEngageSolution() {
+		CCUtils.verifyAndWaitForElement(engageActivateButton, driver);
+		engageActivateButton.click();
+		log("clicked to activate button of Engage");
+	}
+
+	public void clickToActivateButtonOfChatSolution() {
+		CCUtils.verifyAndWaitForElement(chatActivateButton, driver);
+		chatActivateButton.click();
+		log("clicked to activate button of Chat");
+	}
+
+	public void clickToActivateButtonOfPortalSolution() {
+		CCUtils.verifyAndWaitForElement(portalActivateButton, driver);
+		portalActivateButton.click();
+		log("clicked to activate button of Portal");
+	}
+
+	public void clickToActivateButtonOfPSSSolution() {
+		CCUtils.verifyAndWaitForElement(pSSActivateButton, driver);
+		pSSActivateButton.click();
+		log("clicked to activate button of PSS");
+	}
+
+	public void verifySolutionIsPresentInPurchasedSolutions(String solutionImageIcon) {
+		WebElement element = driver.findElement(By.xpath(purchaseActivateButton(solutionImageIcon)));
+		CCUtils.verifyAndWaitForElement(element, driver);
+		CCUtils.scrollPageViaElement(driver, element);
+		element.click();
+		log("Verified that desired solution " + solutionImageIcon + " is within purchased solutions section");
+	}
+
+	public void clickToYesActivateButtonInActivateSolutions() {
+		CCUtils.verifyAndWaitForElement(YesActivateButton, driver);
+		YesActivateButton.click();
+		log("click to Yes,Activate Button in Activate solutions popup");
 	}
 }

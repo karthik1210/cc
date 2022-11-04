@@ -1245,7 +1245,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PROVIDER_DETAILS_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateProviderDetails_BL(int providerId, String practiceId, String active) {
 		Map<String, Object> providerDetailsPayload = updateProvider(practiceId, active);
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
@@ -1271,9 +1271,64 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("providerId", providerId).header("x-product", solutionName)
 				.header("x-language", en).get(url).then().extract().response();
 	}
-	
+
 	public Response getLocationForPractice_NullValues_BL() {
 		String url = ApiPath.GET_LOCATIONS_BY_PRACTICE_BL();
 		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocation_DL(int locationId, int practiceId, List<Integer> providerIdList) {
+		String url = ApiPath.PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
+		return given().spec(requestSpec).body(providerIdList).when().post(url).then().extract().response();
+	}
+
+	public Response associateProvidersToLocation_DL() {
+		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().post(url).then().extract().response();
+	}
+	
+	public Response getLocationsForProviderForNullValues_BL() {
+		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForProviders_BL(int providerId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForProviders_BL_NullValues() {
+		String url = ApiPath.FETCH_SOLUTIONS_FOR_PROVIDERS_BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+		}
+	
+	public Response getSolutionsForProviders_DL(int providerId, int practiceId) {
+		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForProviders_DL_NullValues() {
+		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDERS_DL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getPracticeLocation_BL(int practiceId, int locationId, String solutionName, String en) {
+		String url = ApiPath.GET_PRACTICE_LOCATION_BL(practiceId, locationId);
+		return given().spec(requestSpec).queryParam("locationId", locationId).header("x-product", solutionName)
+				.header("x-language", en).get(url).then().extract().response();
+	}
+	
+	public Response getPracticeLocation_NullValues_BL() {
+		String url = ApiPath.GET_PRACTICE_LOCATION_BL_NULL_VALUES();
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForLocation_BL(int locationId, int practiceId, int solutionId,
+			boolean active) {
+		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
+				active);
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(locationId, practiceId);
+		return given().spec(requestSpec).body(EnableOrDisableSolutionsForResourcePayload).when().put(url).then()
+				.extract().response();
 	}
 }

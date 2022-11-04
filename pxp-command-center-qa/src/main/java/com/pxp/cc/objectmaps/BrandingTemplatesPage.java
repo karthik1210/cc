@@ -24,10 +24,10 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(id = "uploadText1")
 	private WebElement altTextBox;
-	
+
 	@FindBy(id = "uploadText0")
 	private WebElement altTextFaviconBox;
-	
+
 	@FindBy(id = "uploadText2")
 	private WebElement altTextPatientCommunicationBox;
 
@@ -99,40 +99,69 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'Maximum characters reached')]")
 	private WebElement errorMaxCharacterReached;
-	
+
 	@FindBy(xpath = "(//button[@id='removeImageButton'])[2]")
 	private WebElement removeSolutionsLogo;
-	
+
 	@FindBy(xpath = "(//button[@id='removeImageButton'])")
 	private WebElement removePatientCommunicationsLogo;
-	
+
 	@FindBy(xpath = "(//button[@id='removeImageButton'])[1]")
 	private WebElement removeFaviconLogo;
-	
+
 	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[1]")
 	private WebElement faviconNoFileUploaded;
-	
+
 	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[2]")
 	private WebElement solutionsNoFileUploaded;
-	
+
 	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[3]")
 	private WebElement patientCommunicationsNoFileUploaded;
 
 	@FindBy(id = "mat-radio-9")
 	private WebElement logoRadioButton;
-	
+
 	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[1]")
 	private WebElement faviconMaxCharReached;
-	
+
 	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[2]")
 	private WebElement solutionsLogoMaxCharReached;
-	
+
 	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[3]")
 	private WebElement patientCommunicationsLogoMaxCharReached;
-	
+
 	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
 
 	public String validImagePath = "\\src\\test\\resources\\data-driven\\images\\logo.png";
+
+	public String editValidImagePath = "\\src\\test\\resources\\data-driven\\images\\leaf.svg";
+
+	@FindBy(id = "activate")
+	private WebElement makeActiveButton;
+
+	@FindBy(xpath = "//mat-icon[contains(text(),'expand_less')]")
+	private WebElement expandArrow;
+
+	@FindBy(id = "save-icon")
+	private WebElement saveButtonOnConfirmationDialogBox;
+
+	@FindBy(xpath = "//h3[contains(text(),'Are you sure you want to apply these changes?')]")
+	private WebElement confirmationDialogBoxTitle;
+
+	@FindBy(xpath = "//p[@class='pt-3']")
+	private WebElement confirmationDialogSubText;
+
+	@FindBy(id = "cancel-icon")
+	private WebElement cancelButton;
+
+	@FindBy(id = "close-icon")
+	private WebElement crossIcon;
+
+	@FindBy(xpath = "(//span[@class='titleName'])[2]")
+	private WebElement newlyCreatedBrandName;
+
+	@FindBy(id = "editBrandButton")
+	private WebElement editSaveButton;
 
 	public BrandingTemplatesPage(WebDriver driver) {
 		super(driver);
@@ -213,13 +242,13 @@ public class BrandingTemplatesPage extends CCMainPage {
 		altTextBox.sendKeys(altText);
 		log("Entered text in Version name field : " + altText);
 	}
-	
+
 	public void enterAltTextForPatientCommunication(String altText) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
 		altTextPatientCommunicationBox.sendKeys(altText);
 		log("Entered text in Alt Text field of Patient Communication is : " + altText);
 	}
-	
+
 	public void enterAltTextForFavicon(String altText) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(altTextFaviconBox, driver);
 		altTextFaviconBox.sendKeys(altText);
@@ -252,7 +281,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void clickOnDelete() throws InterruptedException {
-		// CCUtils.verifyAndWaitForElement(deleteButton, driver);
+		CCUtils.verifyAndWaitForElement(deleteButton, driver);
 		javascriptClick(deleteButton);
 		log("Clicked on delete");
 	}
@@ -404,15 +433,14 @@ public class BrandingTemplatesPage extends CCMainPage {
 			CCUtils.assertTrue(true, "Maximum characters reached error message got displayed");
 		}
 	}
-	
+
 	public void verifyNoFileUploadedFaviconIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(faviconNoFileUploaded, driver);
-		if (faviconNoFileUploaded.isDisplayed()
-				&& faviconNoFileUploaded.getText().trim().equals("No File Uploaded")) {
+		if (faviconNoFileUploaded.isDisplayed() && faviconNoFileUploaded.getText().trim().equals("No File Uploaded")) {
 			CCUtils.assertTrue(true, "No File Uploaded message got displayed");
 		}
 	}
-	
+
 	public void verifyNoFileUploadedSolutionIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(solutionsNoFileUploaded, driver);
 		if (solutionsNoFileUploaded.isDisplayed()
@@ -420,7 +448,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 			CCUtils.assertTrue(true, "No File Uploaded message got displayed");
 		}
 	}
-	
+
 	public void verifyNoFileUploadedPatientCommunicationIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(patientCommunicationsNoFileUploaded, driver);
 		if (patientCommunicationsNoFileUploaded.isDisplayed()
@@ -428,7 +456,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 			CCUtils.assertTrue(true, "No File Uploaded message got displayed");
 		}
 	}
-	
+
 	public void verifyPatientCommunicationMaxCharReachedErrorIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(patientCommunicationsLogoMaxCharReached, driver);
 		if (patientCommunicationsLogoMaxCharReached.isDisplayed()
@@ -436,7 +464,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 			CCUtils.assertTrue(true, "Patient Communication Max character reached message got displayed");
 		}
 	}
-	
+
 	public void verifySolutionsLogoMaxCharReachedErrorIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(solutionsLogoMaxCharReached, driver);
 		if (solutionsLogoMaxCharReached.isDisplayed()
@@ -444,7 +472,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 			CCUtils.assertTrue(true, "Solutions Logo Max character reached message got displayed");
 		}
 	}
-	
+
 	public void verifyFaviconLogoMaxCharReachedErrorIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(faviconMaxCharReached, driver);
 		if (faviconMaxCharReached.isDisplayed()
@@ -452,28 +480,162 @@ public class BrandingTemplatesPage extends CCMainPage {
 			CCUtils.assertTrue(true, "Favicon Max character reached message got displayed");
 		}
 	}
-	
+
 	public void clickToRemoveButtonOfSolutionsLogo() {
 		CCUtils.verifyAndWaitForElement(removeSolutionsLogo, driver);
 		removeSolutionsLogo.click();
 		log("clicked to remove button of Solutions Logo");
 	}
-	
+
 	public void clickToRemoveButtonOfFaviconLogo() {
 		CCUtils.verifyAndWaitForElement(removeFaviconLogo, driver);
 		removeFaviconLogo.click();
 		log("clicked to remove button of Favicon Logo");
 	}
-	
+
 	public void clickToRemoveButtonOfPatientCommunicationsLogo() throws AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForElement(removePatientCommunicationsLogo, driver);
 		removePatientCommunicationsLogo.click();
 		log("clicked to remove button of Patient Communications Logo");
 	}
-	
+
 	public void clickToLogoRadioButton() {
 		CCUtils.verifyAndWaitForElement(logoRadioButton, driver);
 		logoRadioButton.click();
+	}
+
+	public void clickOnMakeActive() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(makeActiveButton, driver);
+		javascriptClick(makeActiveButton);
+		log("Clicked on Make Active");
+	}
+
+	public void clickOnEdit() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(editButton, driver);
+		javascriptClick(editButton);
+		log("Clicked on Edit button");
+	}
+
+	public void clickOnExpandArrow() throws InterruptedException {
+		javascriptClick(expandArrow);
+		log("Clicked on expand Arrow");
+	}
+
+	public void editBrandVersionName(String newVersion) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxVersion, driver);
+		textboxVersion.clear();
+		CCUtils.verifyAndWaitForElement(textboxVersion, driver);
+		textboxVersion.sendKeys(newVersion);
+		log("Entered text in Version name field : " + newVersion);
+	}
+
+	public void editFaviconLogoValidImage() throws InterruptedException, AWTException {
+		javascriptClick(browseFaviconLogo);
+		log("Clicked on Favicon BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseFaviconLogo.sendKeys(projectpath + editValidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void editSolutionLogoImage() throws InterruptedException, AWTException {
+		javascriptClick(browseSolLogo);
+		log("Clicked on BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browseSolLogo.sendKeys(projectpath + editValidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void editPatientCommunicationsLogoValidImage() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		javascriptClick(browsePatientCommunicationLogo);
+		log("Clicked on Patient Communication BROWSE");
+		String projectpath = System.getProperty("user.dir");
+		browsePatientCommunicationLogo.sendKeys(projectpath + editValidImagePath);
+		log("Verifying Image uploaded");
+	}
+
+	public void editAltTextForSolutionsLogo(String altText) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextBox, driver);
+		textboxVersion.clear();
+		CCUtils.verifyAndWaitForElement(altTextBox, driver);
+		altTextBox.sendKeys(altText);
+		log("Entered text in Version name field : " + altText);
+	}
+
+	public void editAltTextForPatientCommunicationsLogo(String altText) throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
+		textboxVersion.clear();
+		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
+		altTextPatientCommunicationBox.sendKeys(altText);
+		log("Entered text in Alt Text field of Patient Communication is : " + altText);
+		CCUtils.scrollPageToStart();
+	}
+
+	public void editAltTextForFaviconLogo(String altText) throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextFaviconBox, driver);
+		textboxVersion.clear();
+		CCUtils.verifyAndWaitForElement(altTextFaviconBox, driver);
+		altTextFaviconBox.sendKeys(altText);
+		log("Entered text in Alt Text field of Favicon is : " + altText);
+	}
+
+	public void clickSaveOnConfirmationDialogBox() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(saveButtonOnConfirmationDialogBox, driver);
+		javascriptClick(saveButtonOnConfirmationDialogBox);
+		log("Clicked on Save ButtonOnConfirmationPopup");
+	}
+
+	public void verifyConfirmationDialogBoxTitleLabel() {
+		CCUtils.verifyAndWaitForElement(confirmationDialogBoxTitle, driver);
+		CCUtils.assertTrue(confirmationDialogBoxTitle.isDisplayed(), "Are you sure you want to apply these changes?");
+	}
+
+	public void verifyConfirmationDialogBoxSubText() {
+		CCUtils.verifyAndWaitForElement(confirmationDialogSubText, driver);
+		CCUtils.assertTrue(confirmationDialogSubText.isDisplayed(),
+				"Changes will be applied to the following entities actively using this template:");
+	}
+
+	public void verifyConfirmationDialogBoxSaveButton() {
+		CCUtils.verifyAndWaitForElement(saveButtonOnConfirmationDialogBox, driver);
+		CCUtils.assertEquals(saveButtonOnConfirmationDialogBox.isDisplayed(), true);
+	}
+
+	public void verifyConfirmationDialogBoxCancelButton() {
+		CCUtils.verifyAndWaitForElement(cancelButton, driver);
+		CCUtils.assertEquals(cancelButton.isDisplayed(), true);
+	}
+
+	public void verifyConfirmationDialogBoxCrossIcon() {
+		CCUtils.verifyAndWaitForElement(crossIcon, driver);
+		CCUtils.assertEquals(crossIcon.isDisplayed(), true);
+	}
+
+	public void clickCancelOnConfirmationDialogBox() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(cancelButton, driver);
+		javascriptClick(cancelButton);
+		log("Clicked on cancel Button On Confirmation DialogBox");
+	}
+
+	public void clickCrossIconOnConfirmationDialogBox() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(crossIcon, driver);
+		javascriptClick(crossIcon);
+		log("Clicked on crossIcon On Confirmation DialogBox");
+	}
+
+	public void VerifyNewlyCreatedBrandingTemplate(String input) throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(newlyCreatedBrandName, driver);
+		log("Verifying newly Created Brand Name");
+		CCUtils.assertEquals(newlyCreatedBrandName.getText().trim(), input);
+	}
+
+	public void verifyAndClickEditSaveButton() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElement(editSaveButton, driver);
+		log("Verifying SAVE is displayed");
+		CCUtils.assertEquals(editSaveButton.getText().trim(), "Save");
+		CCUtils.verifyAndWaitForElement(editSaveButton, driver);
+		javascriptClick(editSaveButton);
+		log("Clicked on SAVE");
 	}
 }

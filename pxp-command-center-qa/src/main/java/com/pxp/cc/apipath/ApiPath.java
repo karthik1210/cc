@@ -1522,4 +1522,61 @@ public class ApiPath {
 	public static final String GET_PATIENT_ACCESS_BL(String practiceId) {
 		return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
 	}
+
+	public static final String CREATE_UPDATE_PATIENT_ACCESS(String serviceLayer, String uriType, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+			else
+				return SERVICE_ORG_BL + "/v1/practicesss/" + practiceId + "/patient-access";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access";
+			else
+				return SERVICE_ORG_DL + "/v1/practicesss/" + practiceId + "/patient-access";
+		}
+	}
+
+	public static final String CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE(String serviceLayer,
+			String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
+		else
+			return SERVICE_ORG_DL + "/v1/practices/" + practiceId + "/patient-access";
+	}
+
+	public static final String ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/locations/null/practices/null/providers";
+	}
+
+	public static final String PROVIDERS_FOR_LOCATION_DL(int locationId, int practiceId) {
+		return SHARED_DL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations";
+	}
+
+	public static final String FETCH_SOLUTIONS_FOR_PROVIDERS_BL_NULL_VALUES = SERVICE_SHARED_BL
+			+ "/v1/resources/null/practices/null/solutions";
+
+	public static final String GET_SOLUTIONS_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
+	
+	public static final String GET_SOLUTIONS_FOR_PROVIDERS_DL_NULL_VALUES = SHARED_DL
+			+ "/v1/providers/null/practices/null/solutions";
+	
+	public static final String GET_PRACTICE_LOCATION_BL(int practiceId, int locationId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/locations/" + locationId;
+	}
+	
+	public static String GET_PRACTICE_LOCATION_BL_NULL_VALUES() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/locations/null";
+	}
+	
+	public static final String UPDATE_SOLUTIONS_FOR_Location_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/solutions";
+	}
+
 }

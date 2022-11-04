@@ -442,4 +442,10 @@ public class CCUtils {
 		}
 
 	}
+	
+	public static void scrollPageToStart() throws AWTException {
+		Robot robot = new Robot();
+		robot.keyPress(KeyEvent.VK_PAGE_UP);
+		robot.keyRelease(KeyEvent.VK_PAGE_UP);
+	}
 }
