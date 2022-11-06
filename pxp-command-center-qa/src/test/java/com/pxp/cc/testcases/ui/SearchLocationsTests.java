@@ -28,7 +28,7 @@ public class SearchLocationsTests extends CommandCenterGenericTest {
 	public String systemNameOne, systemNameTwo, agPracticeNameOne, practiceNameTwo, enterpriseOne, practiceNameThree;
 	String aglocOne, agLocTwo, locOne, locTwo, locThree, locFour;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

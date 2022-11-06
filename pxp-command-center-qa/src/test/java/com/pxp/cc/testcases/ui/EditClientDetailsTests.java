@@ -16,7 +16,7 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	GeneralSettingsPage generalSettingsPage;
 	CreateClientPage createClientPage;
 	
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -136,7 +136,7 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify client edited details are reflected")
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify client edited details are reflected")
 	public void testToVerifyEditedChanges() throws Exception {
 		logStep("Login to Command Center");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

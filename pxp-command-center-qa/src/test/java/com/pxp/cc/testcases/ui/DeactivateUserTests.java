@@ -59,7 +59,7 @@ public class DeactivateUserTests extends CommandCenterGenericTest {
 		}
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check status changed to deactivate for multiple user")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Test to check status changed to deactivate for multiple user")
 	public void testBulkUser() throws Exception {
 		logStep("Login to Command Center");
 		cchomepage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

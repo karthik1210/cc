@@ -24,7 +24,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public List<String> userStatusList = null;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -145,7 +145,7 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user functionality")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user functionality")
 	public void testInternalUserDeactivateFunctionality() throws Exception {
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");

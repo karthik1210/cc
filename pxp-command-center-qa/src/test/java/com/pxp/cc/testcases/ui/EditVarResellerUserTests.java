@@ -20,7 +20,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 	public VarResellerUserDetailsPage varResellerUserDetailsPage;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -52,7 +52,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		varResellerUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
 	public void testEditVarResellerUser() throws Exception {
 		logStep("Modifying editable fields detail");
 		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);

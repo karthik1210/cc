@@ -31,7 +31,7 @@ public class ApplyToInheritFromTests extends CommandCenterGenericTest {
 	public String practiceNameThree;
 	List<String> appliedPractices = new ArrayList<String>();
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 		logStep("Search Client " + testData.getProperty("apply.inherit.client")

@@ -26,8 +26,9 @@ public class CreateClientTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Create a new active client using valid client details and verify success toaster message")
-	public void testNewActiveClientCreation() throws Exception {
+	@Test(enabled = true, groups = 
+		{"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Create a new active client using valid client details and verify success toaster message")
+	public void testNewActiveClientCreation()  throws Exception {
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));

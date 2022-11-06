@@ -19,7 +19,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 	public InternalUsersPage internalUsersPage;
 	public SearchOptionsPage searchOptionsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -106,7 +106,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 		searchOptionsPage.verifySearchFilterCrossIcon();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		searchOptionsPage.verifyClearAllButtonFunctionalityWithAllFields(testData.getProperty("valid.user.first.name"),
 				testData.getProperty("valid.user.last.name"), testData.getProperty("valid.user.client.name"),

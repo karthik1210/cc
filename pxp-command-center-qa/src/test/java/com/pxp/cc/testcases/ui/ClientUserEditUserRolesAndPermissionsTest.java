@@ -22,7 +22,7 @@ public class ClientUserEditUserRolesAndPermissionsTest extends CommandCenterGene
 	public ClientUserDetailsPage clientUserDetailsPage;
 	public EditUserRolesAndPermissionsPage editUserRolesAndPermissionsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to Command Center portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

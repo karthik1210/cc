@@ -21,7 +21,7 @@ public class ClientUserNoneConnectTests extends CommandCenterGenericTest {
 	public ClientUserNoneConnectPage clientUserNoneConnectPage;
 	public String clientName;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to Command Center portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

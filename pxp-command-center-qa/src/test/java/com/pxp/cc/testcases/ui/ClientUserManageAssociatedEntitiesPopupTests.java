@@ -19,7 +19,7 @@ public class ClientUserManageAssociatedEntitiesPopupTests extends CommandCenterG
 	public ClientUserDetailsPage clientUserDetailsPage;
 	public ManageAssociatedEntitiesPage manageAssociatedEntitiesPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to Command Center portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
