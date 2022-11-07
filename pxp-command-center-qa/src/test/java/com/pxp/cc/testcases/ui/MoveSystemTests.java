@@ -19,7 +19,7 @@ public class MoveSystemTests extends CommandCenterGenericTest {
 	public MoveSystemPage moveSystemPage;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

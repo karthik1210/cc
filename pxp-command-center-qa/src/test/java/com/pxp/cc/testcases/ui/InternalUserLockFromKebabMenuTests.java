@@ -28,7 +28,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 	public CommonMethods commonMethods;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -43,7 +43,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
+	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {"smoke"}, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
 	public void testInternalUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
 		logStep("Create New Active Internal User");
 		String firstName = "ActiveUser" + CCUtils.generateAlphaNumericString(3).concat("'s");

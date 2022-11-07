@@ -31,7 +31,7 @@ public class EnableDisablePracticesOnLocationsDetailsPageTests extends CommandCe
 			practiceNameTwo, enterpriseOne, enterpriseTwo, agPracticeNameTwo;
 	String aglocOne, agLocTwo, locOne, locTwo;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

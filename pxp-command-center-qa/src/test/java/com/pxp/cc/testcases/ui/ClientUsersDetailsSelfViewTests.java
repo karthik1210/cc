@@ -24,7 +24,7 @@ public class ClientUsersDetailsSelfViewTests extends CommandCenterGenericTest {
 	public List<String> userStatusList = null;
 	public AddUserRolesAndPermissionsPage addUserRolesAndPermissionsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

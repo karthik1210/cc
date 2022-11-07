@@ -17,7 +17,7 @@ public class ClientDropdownGeneralSettings extends CommandCenterGenericTest {
 	public ClientDirectoryPage clientDirectoryPage;
 	public GeneralSettingsPage generalSettingsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),

@@ -22,7 +22,7 @@ public class UpdateInternalUserRolesTests extends CommandCenterGenericTest {
 	public InternalUserDetailsPage internalUserDetailsPage;
 	public List<String> userStatusList = null;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

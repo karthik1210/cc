@@ -16,7 +16,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	GeneralSettingsPage generalSettingsPage;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
@@ -64,7 +64,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node functionality in Client's General settings page")
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node functionality in Client's General settings page")
 	public void testNodeSearch() throws Exception {
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(ccuser.searchNodeInGeneralSetting);

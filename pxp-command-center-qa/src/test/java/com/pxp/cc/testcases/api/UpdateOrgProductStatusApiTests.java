@@ -29,7 +29,7 @@ public class UpdateOrgProductStatusApiTests extends BaseRest {
 	public int practiceId = 0;
 	List<Integer> pracSolutionList = Arrays.asList(1101, 1102, 1103);
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilder();
 		clientInfo = new ClientInfo();

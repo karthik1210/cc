@@ -24,7 +24,7 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 	public ClientUsersPage clientUserPage;
 	public SearchOptionsPage searchOptionsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -156,7 +156,7 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 		clientUserPage.clickOnClearAllButton();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled & 'CLEAR All' button clicked after search result")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		List<String> enrollmentStatusList = new ArrayList<String>();
 		enrollmentStatusList.add(testData.getProperty("enrollment.status.notsent"));
