@@ -10,6 +10,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.awt.*;
 import java.util.List;
@@ -21,31 +22,46 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//div[@class='cardHeader pl-3' and contains(text(),'Privacy Policies')]")
+    @FindBy(xpath = "//div[text()='Privacy Policies']")
     private WebElement privacyPoliciesLabel;
 
-    @FindBy(xpath = "//div[@class='col-2 text-right']/button/following-sibling::span")
+    @FindBy(xpath = "//div[text()='Privacy Policies']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down ']")
     private WebElement privacyPolicyExpandButton;
 
-    @FindBy(xpath = "//div[@class='col-2 text-right']/button")
+    @FindBy(xpath = "//div[text()='Privacy Policies']/../following-sibling::div/button[@aria-label='Add']")
     private WebElement privacyPolicyAddButton;
 
-    @FindBy(xpath = "//span[contains(text(),'No Privacy Policies')]")
+    @FindBy(xpath = "//span[text()='No Privacy Policies added.']")
     private WebElement noPrivacyPoliciesText;
 
-    @FindBy(xpath = "//div[text()=' Purchased Solutions ']//following::div/following::div/div/following::div/div/div/parent::div/p/mat-icon/following-sibling::span")
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']")
     private WebElement availableForPurchaseLabel;
 
-    @FindBy(xpath = "(//span[contains(text(),' Virtual Visits ')]/following::span[contains(text(),'ACTIVATE')])[1]")
-    private WebElement activate1;
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Virtual Visits']/../following-sibling::div/span[text()='ACTIVATE']")
+    private WebElement virtualVisitsActivate;
 
-    @FindBy(xpath = "//button[contains(text(),' Yes, Activate ')]")
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Pay']/../following-sibling::div/span[text()='ACTIVATE']")
+    private WebElement payActivate;
+
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Portal']/../following-sibling::div/span[text()='ACTIVATE']")
+    private WebElement portalActivate;
+
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
+    private WebElement pssActivate;
+
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Chat']/../following-sibling::div/span[text()='ACTIVATE']")
+    private WebElement chatActivate;
+
+    @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Engage']/../following-sibling::div/span[text()='ACTIVATE']")
+    private WebElement engageActivate;
+
+    @FindBy(xpath = "//button[text()=' Yes, Activate ']")
     private WebElement yesActivateButton;
 
-    @FindBy(xpath = "//div[@class='col-2 text-right']/button/following-sibling::span")
+    @FindBy(xpath = "//div[text()='Privacy Policies']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up ']")
     private WebElement privacyPolicyCollapseButton;
 
-    @FindBy(xpath = "//label[contains(text(),'Policy Name')]")
+    @FindBy(xpath = "//label[text()=' Policy Name * ']")
     private WebElement policyNameLabel;
 
     @FindBy(xpath = "//input[@id='policyName']")
@@ -57,19 +73,19 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(id = "backNavButton")
     private WebElement privacyPolicyBackOrCancelButton;
 
-    @FindBy(xpath = "//label[contains(text(),' Policy Language ')]")
+    @FindBy(xpath = "//label[text()=' Policy Language ']")
     private WebElement privacyPolicyLanguageLabel;
 
-    @FindBy(xpath = "//div[contains(text(),'English')]")
+    @FindBy(xpath = "//div[text()='English']")
     private WebElement privacyPolicyEnglishLanguageTab;
 
-    @FindBy(xpath = "//div[contains(text(),'SPANISH')]")
+    @FindBy(xpath = "//div[text()='SPANISH']")
     private WebElement privacyPolicySpanishLanguageTab;
 
-    @FindBy(xpath = "//div[contains(text(),' Policy name is required ')]")
+    @FindBy(xpath = "//div[text()=' Policy name is required ']")
     private WebElement policyNameEmptyErrorMessage;
 
-    @FindBy(xpath = "//p[contains(text(),'Status')]")
+    @FindBy(xpath = "//p[text()='Status']")
     private WebElement statusLabel;
 
     @FindBy(xpath = "//input[@value='Draft']")
@@ -81,61 +97,76 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//input[@value='Inactive']")
     private WebElement inactiveRadioButton;
 
-    @FindBy(xpath = "//div[contains(text(),' Draft ')]")
+    @FindBy(xpath = "//div[text()=' Draft ']")
     private WebElement draftLabel;
 
-    @FindBy(xpath = "//div[contains(text(),' Active ')]")
+    @FindBy(xpath = "//div[text()=' Active ']")
     private WebElement activeLabel;
 
-    @FindBy(xpath = "//p[contains(text(),'Solutions')]")
+    @FindBy(xpath = "//p[text()='Solutions']")
     private WebElement solutionsLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Virtual Visits')]")
+    @FindBy(xpath = "//span[text()='Virtual Visits']")
     private WebElement virtualVisitsLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Pay')]")
+    @FindBy(xpath = "//span[text()='Pay']")
     private WebElement payLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Portal')]")
+    @FindBy(xpath = "//span[text()='Portal']")
     private WebElement portalLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'PSS')]")
+    @FindBy(xpath = "//span[text()='PSS']")
     private WebElement pssLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Chat')]")
+    @FindBy(xpath = "//span[text()='Chat']")
     private WebElement chatLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Engage')]")
+    @FindBy(xpath = "//span[text()='Engage']")
     private WebElement engageLabel;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),' videocam ')]")
+    @FindBy(xpath = "//mat-icon[text()=' videocam ']")
     private WebElement virtualVisitsIcon;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),' attach_money ')]")
+    @FindBy(xpath = "//mat-icon[text()=' attach_money ']")
     private WebElement payIcon;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),' person ')]")
+    @FindBy(xpath = "//mat-icon[text()=' person ']")
     private WebElement portalIcon;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),' event ')]")
+    @FindBy(xpath = "//mat-icon[text()=' event ']")
     private WebElement pssIcon;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),' chat ')]")
+    @FindBy(xpath = "//mat-icon[text()=' chat ')]")
     private WebElement chatIcon;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),' campaign ')]")
+    @FindBy(xpath = "//mat-icon[text()=' campaign ']")
     private WebElement engageIcon;
 
-    @FindBy(xpath = "//mat-slide-toggle")
-    private List<WebElement> solutionToggleButtons;
+    @FindBy(xpath = "//input[@aria-label='Virtual Visits']/following-sibling::div")
+    private WebElement virtualVisitsToggleButton;
 
-    @FindBy(xpath = "//div[contains(text(),'Maximum characters reached')]")
+    @FindBy(xpath = "//input[@aria-label='Pay']/following-sibling::div")
+    private WebElement payToggleButton;
+
+    @FindBy(xpath = "//input[@aria-label='Portal']/following-sibling::div")
+    private WebElement portalToggleButton;
+
+    @FindBy(xpath = "//input[@aria-label='PSS']/following-sibling::div")
+    private WebElement pssToggleButton;
+
+    @FindBy(xpath = "//input[@aria-label='Chat']/following-sibling::div")
+    private WebElement chatToggleButton;
+
+    @FindBy(xpath = "//input[@aria-label='Engage']/following-sibling::div")
+    private WebElement engageToggleButton;
+
+    @FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
     private WebElement maximumCharacterError;
 
-    @FindBy(xpath = "//span[contains(text(),'Disregard Changes')]")
+    @FindBy(xpath = "//span[text()='Disregard Changes']")
     private WebElement disregardChanges;
 
-    @FindBy(xpath = "//button[contains(text(),' Return to Page ')]")
+    @FindBy(xpath = "//button[text()=' Return to Page ']")
     private WebElement returnToPage;
 
     @FindBy(xpath = "//div[contains(text(), 'STATEMENT OF PRIVACY POLICY')]")
@@ -147,37 +178,34 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//span[@class='content']")
     private List<WebElement> policyList;
 
-    @FindBy(xpath = "//button[@id='IconContainer']")
-    private List<WebElement> policyListOfKebabMenu;
-
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div/following::div/div/span/span/span/following::span[contains(text(),'Virtual Visits')]")
+    @FindBy(xpath = "//span[text()='Virtual Visits']")
     private WebElement previewVirtualVisitsLabel;
 
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div/following::div/div/span/span/span/following::span[contains(text(),'Pay')]")
+    @FindBy(xpath = "//span[text()='Pay']")
     private WebElement previewPayLabel;
 
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div/following::div/div/span/span/span/following::span[contains(text(),'Portal')]")
+    @FindBy(xpath = "//span[text()='Portal']")
     private WebElement previewPortalLabel;
 
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div/following::div/div/span/span/span/following::span[contains(text(),'PSS')]")
+    @FindBy(xpath = "//span[text()='PSS']")
     private WebElement previewPSSLabel;
 
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div/following::div/div/span/span/span/following::span[contains(text(),'Chat')]")
+    @FindBy(xpath = "//span[text()='Chat']")
     private WebElement previewChatLabel;
 
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div/following::div/div/span/span/span/following::span[contains(text(),'Engage')]")
+    @FindBy(xpath = "//span[text()='Engage']")
     private WebElement previewEngageLabel;
 
-    @FindBy(xpath = "//button[contains(text(),' Preview')]")
+    @FindBy(xpath = "//button[normalize-space(text())='Preview']")
     private WebElement kebabPreview;
 
-    @FindBy(xpath = "//button[contains(text(),' Edit')]")
+    @FindBy(xpath = "//button[normalize-space(text())='Edit']")
     private WebElement kebabEdit;
 
-    @FindBy(xpath = "//button[contains(text(),' Delete')]")
+    @FindBy(xpath = "//button[normalize-space(text())='Delete']")
     private WebElement kebabDelete;
 
-    @FindBy(xpath = "//div[@class='d-flex flex-column h-100']/div/div//button/span[contains(text(),'Edit')]")
+    @FindBy(xpath = "//button[@id='edit']")
     private WebElement previewEdit;
 
     @FindBy(id = "editPrivacyPolicyButton")
@@ -186,34 +214,34 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//i[contains(text(),'DRAFT')]")
     private WebElement draftStatusInPrivacyPoliciesSection;
 
-    @FindBy(xpath = "//span[contains(text(),'Are you sure you want to delete this item?')]")
+    @FindBy(xpath = "//span[text()='Are you sure you want to delete this item?']")
     private WebElement deleteConfirmationMessage;
 
-    @FindBy(xpath = "//button[contains(text(),' Yes, Delete ')]")
+    @FindBy(xpath = "//button[text()=' Yes, Delete ']")
     private WebElement yesDelete;
 
-    @FindBy(xpath = "(//div[@id='purchasedSolutionOrg']/following-sibling::div/button/mat-icon)[1]")
+    @FindBy(xpath = "//div[text()=' Purchased Solutions ']/following-sibling::div/button/mat-icon[text()='keyboard_arrow_down']")
     private WebElement expandButtonForPurchaseSolutions;
 
-    @FindBy(xpath = "//button[contains(text(),' Yes, Continue')]")
+    @FindBy(xpath = "//button[text()=' Yes, Continue ']")
     private WebElement yesContinueButton;
 
-    @FindBy(xpath = "//span[contains(text(),'By making this Privacy Policy inactive, it will no longer display in any of the associated products.  Do you want to proceed?')]")
+    @FindBy(xpath = "//span[text()='By making this Privacy Policy inactive, it will no longer display in any of the associated products.  Do you want to proceed?']")
     private WebElement noActivePopUpMessage;
 
-    @FindBy(xpath = "//span[contains(text(),'Cancel')]")
+    @FindBy(xpath = "//span[text()='Cancel']")
     private WebElement cancelPopUp;
 
-    @FindBy(xpath = "//span[contains(text(),' clear ')]")
+    @FindBy(xpath = "//span[text()=' clear ']")
     private WebElement clearButton;
 
-    @FindBy(xpath = "//span[contains(text(),'The following solutions will no longer display Privacy Policy.')]")
+    @FindBy(xpath = "//span[text()='The following solutions will no longer display Privacy Policy.']")
     private WebElement solutionMissingError;
 
-    @FindBy(xpath = "//p[contains(text(),' Hide Inactive')]/mat-icon[contains(text(),'expand_less')]")
+    @FindBy(xpath = "//p[normalize-space(text())='Hide Inactive']")
     private WebElement hideInactive;
 
-    @FindBy(xpath = "//p[contains(text(),' Show Inactive')]/mat-icon[contains(text(),'expand_more')]")
+    @FindBy(xpath = "//p[normalize-space(text())='Show Inactive']")
     private WebElement showInactive;
 
     @FindBy(xpath = "//span[@mattooltip='Privacy Policy is active']")
@@ -225,7 +253,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//button[@mattooltip='Edit Policy to Activate']")
     private WebElement draftToolTip;
 
-    @FindBy(xpath = "//div[contains(text(),' Must add Privacy Policy language ')]")
+    @FindBy(xpath = "//div[text()=' Must add Privacy Policy language ']")
     private WebElement mustAddLanguageError;
 
     @FindBy(xpath = "//div[@class='angular-editor-textarea']")
@@ -308,17 +336,37 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("Available for Purchase Label successfully displayed");
     }
 
-    public void clickOnActivateSolutionButton() {
-        CCUtils.scrollPageViaElement(driver, activate1);
-        CCUtils.verifyAndWaitForElement(activate1, driver);
-        log("Clicking on Activate Solution Button");
-        javascriptClick(activate1);
-        log("Successfully clicked on Activate Solution button");
+    public void clickOnActivateSolutionButton(String solution) {
+        if(solution.equalsIgnoreCase("Virtual Visits")) {
+            CCUtils.verifyAndWaitForElement(virtualVisitsActivate, driver);
+            new Actions(driver).moveToElement(virtualVisitsActivate).click().build().perform();
+        }
+        else  if(solution.equalsIgnoreCase("Pay")) {
+            CCUtils.verifyAndWaitForElement(payActivate, driver);
+            new Actions(driver).moveToElement(payActivate).click().build().perform();
+        }
+        else  if(solution.equalsIgnoreCase("Portal")) {
+            CCUtils.verifyAndWaitForElement(portalActivate, driver);
+            new Actions(driver).moveToElement(portalActivate).click().build().perform();
+        }
+        else  if(solution.equalsIgnoreCase("PSS")) {
+            CCUtils.verifyAndWaitForElement(pssActivate, driver);
+            new Actions(driver).moveToElement(pssActivate).click().build().perform();
+        }
+        else  if(solution.equalsIgnoreCase("Chat")) {
+            CCUtils.verifyAndWaitForElement(chatActivate, driver);
+            new Actions(driver).moveToElement(chatActivate).click().build().perform();
+        }
+        else  if(solution.equalsIgnoreCase("Engage")) {
+            CCUtils.verifyAndWaitForElement(engageActivate, driver);
+            new Actions(driver).moveToElement(engageActivate).click().build().perform();
+        }
     }
 
     public void clickOnYesActivateButton() {
         CCUtils.scrollPageViaElement(driver, yesActivateButton);
         CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()=' Yes, Activate ']")));
         log("Clicking on yes activate Button");
         javascriptClick(yesActivateButton);
         log("Successfully clicked on yes activate button");
@@ -535,11 +583,13 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void verifyRadioButtonEnabled(String status) {
         if (status.equalsIgnoreCase("Draft")) {
+            CCUtils.verifyAndWaitForElement(draftRadioButton, driver);
             new Actions(driver).moveToElement(draftRadioButton).build().perform();
             CCUtils.assertEquals(draftRadioButton.isSelected(), true);
             log(status + " Radio button is enabled");
         }
         else if(status.equalsIgnoreCase("Active")) {
+            CCUtils.verifyAndWaitForElement(activeRadioButton, driver);
             new Actions(driver).moveToElement(activeRadioButton).build().perform();
             CCUtils.assertEquals(activeRadioButton.isSelected(), true);
             log(status + " Radio button is enabled");
@@ -556,14 +606,17 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void clickOnRadioButtonEnabled(String status) {
         if (status.equalsIgnoreCase("Draft") && !draftRadioButton.isSelected()) {
+            CCUtils.verifyAndWaitForElement(draftRadioButton, driver);
             new Actions(driver).moveToElement(draftRadioButton).pause(2000).click().build().perform();
             log(status + " Radio button is selected");
         }
         else if(status.equalsIgnoreCase("Active") && !activeRadioButton.isSelected()) {
+            CCUtils.verifyAndWaitForElement(activeRadioButton, driver);
             new Actions(driver).moveToElement(activeRadioButton).pause(2000).click().build().perform();
             log(status + " Radio button is selected");
         }
         else if(status.equalsIgnoreCase("Inactive") && !inactiveRadioButton.isSelected()) {
+            CCUtils.verifyAndWaitForElement(inactiveRadioButton, driver);
             new Actions(driver).moveToElement(inactiveRadioButton).pause(2000).click().build().perform();
             log(status + " Radio button is selected");
         }
@@ -587,39 +640,49 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void verifyToggleOff() {
         log("Verifying Toggle button off");
-        CCUtils.assertEquals(driver.findElement(By.xpath("(//mat-slide-toggle)[1]")).isSelected(),false);
+        CCUtils.verifyAndWaitForElement(virtualVisitsToggleButton, driver);
+        CCUtils.assertEquals(virtualVisitsToggleButton.isSelected(),false);
         log("Virtual Visits toggle off");
-        CCUtils.assertEquals(driver.findElement(By.xpath("(//mat-slide-toggle)[2]")).isSelected(),false);
+        CCUtils.verifyAndWaitForElement(payToggleButton, driver);
+        CCUtils.assertEquals(payToggleButton.isSelected(),false);
         log("Pay toggle off");
-        CCUtils.assertEquals(driver.findElement(By.xpath("(//mat-slide-toggle)[3]")).isSelected(),false);
-        log("Portal toggle off");
-        CCUtils.assertEquals(driver.findElement(By.xpath("(//mat-slide-toggle)[4]")).isSelected(),false);
+        /*CCUtils.verifyAndWaitForElement(portalToggleButton, driver);
+        CCUtils.assertEquals(portalToggleButton.isSelected(),false);
+        log("Portal toggle off");*/
+        CCUtils.verifyAndWaitForElement(pssToggleButton, driver);
+        CCUtils.assertEquals(pssToggleButton.isSelected(),false);
         log("PSS toggle off");
-        CCUtils.assertEquals(driver.findElement(By.xpath("(//mat-slide-toggle)[5]")).isSelected(),false);
-        log("Chat toggle off");
-        CCUtils.assertEquals(driver.findElement(By.xpath("(//mat-slide-toggle)[6]")).isSelected(),false);
+        /*CCUtils.verifyAndWaitForElement(chatToggleButton, driver);
+        CCUtils.assertEquals(chatToggleButton.isSelected(),false);
+        log("Chat toggle off");*/
+        CCUtils.verifyAndWaitForElement(engageToggleButton, driver);
+        CCUtils.assertEquals(engageToggleButton.isSelected(),false);
         log("Engage toggle off");
     }
 
     public void clickOnLanguageTab(String language) {
         log("clicking on "+language+" Language tab");
-        if(language.equalsIgnoreCase("English"))
+        if(language.equalsIgnoreCase("English")) {
+            CCUtils.verifyAndWaitForElement(privacyPolicyEnglishLanguageTab, driver);
             new Actions(driver).moveToElement(privacyPolicyEnglishLanguageTab).pause(2000).click().build().perform();
-        else if(language.equalsIgnoreCase("Spanish"))
+        }
+        else if(language.equalsIgnoreCase("Spanish")) {
+            CCUtils.verifyAndWaitForElement(privacyPolicySpanishLanguageTab, driver);
             new Actions(driver).moveToElement(privacyPolicySpanishLanguageTab).pause(2000).click().build().perform();
+        }
         log("Successfully clicked on "+language+" Language tab");
     }
 
     public void verifyEnglishContent(String value) {
         log("Verifying English content of Privacy policy");
-        System.out.println(englishContent.getText().trim());
+        CCUtils.verifyAndWaitForElement(englishContent, driver);
         CCUtils.assertEquals(englishContent.getText().trim().equalsIgnoreCase(value), true);
         log("Successfully verified English content of privacy policy");
     }
 
     public void verifySpanishContent(String value) {
         log("Verifying Spanish content of Privacy policy");
-        System.out.println(spanishContent.getText().trim());
+        CCUtils.verifyAndWaitForElement(spanishContent, driver);
         System.out.println(value);
         CCUtils.assertEquals(spanishContent.getText().trim().contains(value), true);
         log("Successfully verified Spanish content of privacy policy");
@@ -627,22 +690,28 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void toggleSwitchClick(String solutionName) throws InterruptedException, AWTException {
         if (solutionName.equalsIgnoreCase("Virtual Visits")) {
-            driver.findElement(By.xpath("(//mat-slide-toggle)[1]")).click();
+            CCUtils.verifyAndWaitForElement(virtualVisitsToggleButton, driver);
+            virtualVisitsToggleButton.click();
             log(solutionName + " toggle on");
         } else if (solutionName.equalsIgnoreCase("Pay")) {
-            driver.findElement(By.xpath("(//mat-slide-toggle)[2]")).click();
+            CCUtils.verifyAndWaitForElement(payToggleButton, driver);
+            payToggleButton.click();
             log(solutionName + " toggle on");
         } else if (solutionName.equalsIgnoreCase("Portal")) {
-            driver.findElement(By.xpath("(//mat-slide-toggle)[3]")).click();
+            CCUtils.verifyAndWaitForElement(portalToggleButton, driver);
+            portalToggleButton.click();
             log(solutionName + " toggle on");
         } else if (solutionName.equalsIgnoreCase("PSS")) {
-            driver.findElement(By.xpath("(//mat-slide-toggle)[4]")).click();
+            CCUtils.verifyAndWaitForElement(pssToggleButton, driver);
+            pssToggleButton.click();
             log(solutionName + " toggle on");
         } else if (solutionName.equalsIgnoreCase("Chat")) {
-            driver.findElement(By.xpath("(//mat-slide-toggle)[5]")).click();
+            CCUtils.verifyAndWaitForElement(chatToggleButton, driver);
+            chatToggleButton.click();
             log(solutionName + " toggle on");
         } else if (solutionName.equalsIgnoreCase("Engage")) {
-            driver.findElement(By.xpath("(//mat-slide-toggle)[6]")).click();
+            CCUtils.verifyAndWaitForElement(engageToggleButton, driver);
+            engageToggleButton.click();
             log(solutionName + " toggle on");
         }
     }
@@ -662,12 +731,10 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void verifyPolicyKebabMenu(String policyName) {
         int flag = 0;
-        int j;
-        for(int i=0;i<policyList.size();i++) {
-            if(policyList.get(i).getText().contains(policyName)) {
+        for(WebElement eachElement : policyList) {
+            if(eachElement.getText().contains(policyName)) {
                 flag = 1;
-                j = i + 1;
-                WebElement kebabMenu = driver.findElement(By.xpath("(//button[@id='IconContainer'])[" + j + "]"));
+                WebElement kebabMenu = driver.findElement(By.xpath("//span[contains(text(),' "+policyName+" ')]/ancestor::div[1]/following-sibling::div/following-sibling::div/following-sibling::div/button[@id='IconContainer']"));
                 new Actions(driver).moveToElement(kebabMenu).build().perform();
                 CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
                 log(policyName + " kebab Menu is available in privacy policies section");
@@ -680,12 +747,10 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void clickPolicyKebabMenu(String policyName) {
         int flag = 0;
-        int j;
-        for(int i=0;i<policyList.size();i++) {
-            if(policyList.get(i).getText().contains(policyName)) {
+        for(WebElement eachElement : policyList) {
+            if(eachElement.getText().contains(policyName)) {
                 flag = 1;
-                j = i + 1;
-                WebElement kebabMenu = driver.findElement(By.xpath("(//button[@id='IconContainer'])[" + j + "]"));
+                WebElement kebabMenu = driver.findElement(By.xpath("//span[contains(text(),' "+policyName+" ')]/ancestor::div[1]/following-sibling::div/following-sibling::div/following-sibling::div/button[@id='IconContainer']"));
                 new Actions(driver).moveToElement(kebabMenu).pause(2000).click().build().perform();
                 log(policyName + " kebab Menu is Clicked in privacy policies section");
                 break;
@@ -696,36 +761,60 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     }
 
     public void verifySolutionLabel(String labelName) {
-        if(labelName.equalsIgnoreCase("Virtual Visits"))
-            CCUtils.assertEquals(previewVirtualVisitsLabel.isDisplayed(),true);
-        else if(labelName.equalsIgnoreCase("Pay"))
-            CCUtils.assertEquals(previewPayLabel.isDisplayed(),true);
-        else if(labelName.equalsIgnoreCase("Portal"))
-            CCUtils.assertEquals(previewPortalLabel.isDisplayed(),true);
-        else if(labelName.equalsIgnoreCase("PSS"))
-            CCUtils.assertEquals(previewPSSLabel.isDisplayed(),true);
-        else if(labelName.equalsIgnoreCase("Chat"))
-            CCUtils.assertEquals(previewChatLabel.isDisplayed(),true);
-        else if(labelName.equalsIgnoreCase("Engage"))
-            CCUtils.assertEquals(previewEngageLabel.isDisplayed(),true);
+        if(labelName.equalsIgnoreCase("Virtual Visits")) {
+            CCUtils.verifyAndWaitForElement(previewVirtualVisitsLabel, driver);
+            CCUtils.assertEquals(previewVirtualVisitsLabel.isDisplayed(), true);
+        }
+        else if(labelName.equalsIgnoreCase("Pay")) {
+            CCUtils.verifyAndWaitForElement(previewPayLabel, driver);
+            CCUtils.assertEquals(previewPayLabel.isDisplayed(), true);
+        }
+        else if(labelName.equalsIgnoreCase("Portal")) {
+            CCUtils.verifyAndWaitForElement(previewPortalLabel, driver);
+            CCUtils.assertEquals(previewPortalLabel.isDisplayed(), true);
+        }
+        else if(labelName.equalsIgnoreCase("PSS")) {
+            CCUtils.verifyAndWaitForElement(previewPSSLabel, driver);
+            CCUtils.assertEquals(previewPSSLabel.isDisplayed(), true);
+        }
+        else if(labelName.equalsIgnoreCase("Chat")) {
+            CCUtils.verifyAndWaitForElement(previewChatLabel, driver);
+            CCUtils.assertEquals(previewChatLabel.isDisplayed(), true);
+        }
+        else if(labelName.equalsIgnoreCase("Engage")) {
+            CCUtils.verifyAndWaitForElement(previewEngageLabel, driver);
+            CCUtils.assertEquals(previewEngageLabel.isDisplayed(), true);
+        }
     }
 
     public void verifyKebabMenuOptions(String option) {
-        if(option.equalsIgnoreCase("Preview"))
+        if(option.equalsIgnoreCase("Preview")) {
+            CCUtils.verifyAndWaitForElement(kebabPreview, driver);
             CCUtils.assertEquals(kebabPreview.isDisplayed(), true);
-        else if(option.equalsIgnoreCase("Edit"))
+        }
+        else if(option.equalsIgnoreCase("Edit")) {
+            CCUtils.verifyAndWaitForElement(kebabEdit, driver);
             CCUtils.assertEquals(kebabEdit.isDisplayed(), true);
-        else if(option.equalsIgnoreCase("Delete"))
+        }
+        else if(option.equalsIgnoreCase("Delete")) {
+            CCUtils.verifyAndWaitForElement(kebabDelete, driver);
             CCUtils.assertEquals(kebabDelete.isDisplayed(), true);
+        }
     }
 
     public void clickKebabMenuOptions(String option) {
-        if(option.equalsIgnoreCase("Preview"))
+        if(option.equalsIgnoreCase("Preview")) {
+            CCUtils.verifyAndWaitForElement(kebabPreview, driver);
             new Actions(driver).moveToElement(kebabPreview).pause(2000).click().build().perform();
-        else if(option.equalsIgnoreCase("Edit"))
+        }
+        else if(option.equalsIgnoreCase("Edit")) {
+            CCUtils.verifyAndWaitForElement(kebabEdit, driver);
             new Actions(driver).moveToElement(kebabEdit).pause(2000).click().build().perform();
-        else if(option.equalsIgnoreCase("Delete"))
+        }
+        else if(option.equalsIgnoreCase("Delete")) {
+            CCUtils.verifyAndWaitForElement(kebabDelete, driver);
             new Actions(driver).moveToElement(kebabDelete).pause(2000).click().build().perform();
+        }
     }
 
     public void verifyPreviewEdit() {
@@ -777,62 +866,30 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("successfully clicked on save button");
     }
 
-    public void verifyStatusInPrivacyPoliciesSection(String policyName, String status, int activeAvailable) {
+    public void verifyStatusInPrivacyPoliciesSection(String policyName, String status) {
         int flag = 0;
-        int j;
-        for(int i=0;i<policyList.size();i++) {
-            if(policyList.get(i).getText().contains(policyName) && status.equalsIgnoreCase("DRAFT")) {
+        for (WebElement eachElement : policyList) {
+            if (eachElement.getText().contains(policyName) && status.equalsIgnoreCase("DRAFT")) {
                 flag = 1;
-                if(activeAvailable == 0) {
-                    j = i + 1;
-                    WebElement draftStatus = driver.findElement(By.xpath("(//i[contains(text(),'DRAFT')])[" + j + "]"));
-                    new Actions(driver).moveToElement(draftStatus).build().perform();
-                    CCUtils.assertEquals(draftStatus.isDisplayed(), true);
-                    log("Draft Status is available for "+ policyName +" in privacy policies section");
-                }
-                else if(activeAvailable == 1) {
-                    j = i;
-                    WebElement draftStatus = driver.findElement(By.xpath("(//i[contains(text(),'DRAFT')])[" + j + "]"));
-                    new Actions(driver).moveToElement(draftStatus).build().perform();
-                    CCUtils.assertEquals(draftStatus.isDisplayed(), true);
-                    log("Draft Status is available for "+ policyName +" in privacy policies section");
-                }
+                WebElement draftStatus = driver.findElement(By.xpath("//span[contains(text(),' " + policyName + " ')]/ancestor::div[1]/following-sibling::div/following-sibling::div/button/span/i[text()='DRAFT']"));
+                new Actions(driver).moveToElement(draftStatus).build().perform();
+                CCUtils.assertEquals(draftStatus.isDisplayed(), true);
+                log("Draft Status is available for " + policyName + " in privacy policies section");
+                break;
+            } else if (eachElement.getText().contains(policyName) && status.equalsIgnoreCase("INACTIVE")) {
+                flag = 1;
+                WebElement inactiveStatus = driver.findElement(By.xpath("//span[contains(text(),' " + policyName + " ')]/ancestor::div[1]/following-sibling::div/following-sibling::div/span[normalize-space(text())='INACTIVE']"));
+                new Actions(driver).moveToElement(inactiveStatus).build().perform();
+                CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
+                log("Inactive Status is available for " + policyName + " in privacy policies section");
                 break;
             }
-
-            else if(policyList.get(i).getText().contains(policyName) && status.equalsIgnoreCase("INACTIVE")) {
+            else if (eachElement.getText().contains(policyName) && status.equalsIgnoreCase("ACTIVE")) {
                 flag = 1;
-                if(activeAvailable == 0) {
-                    j = i + 1;
-                    WebElement inactiveStatus = driver.findElement(By.xpath("(//span[contains(text(),' INACTIVE ')])[" + j + "]"));
-                    new Actions(driver).moveToElement(inactiveStatus).build().perform();
-                    CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
-                    log("Inactive Status is available for " + policyName + " in privacy policies section");
-                }
-                else if(activeAvailable == 1) {
-                    j = i;
-                    WebElement inactiveStatus = driver.findElement(By.xpath("(//span[contains(text(),' INACTIVE ')])[" + j + "]"));
-                    new Actions(driver).moveToElement(inactiveStatus).build().perform();
-                    CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
-                    log("Inactive Status is available for " + policyName + " in privacy policies section");
-                }
-                else if(activeAvailable == 2) {
-                    j = i-1;
-                    WebElement inactiveStatus = driver.findElement(By.xpath("(//span[contains(text(),' INACTIVE ')])[" + j + "]"));
-                    new Actions(driver).moveToElement(inactiveStatus).build().perform();
-                    CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
-                    log("Inactive Status is available for " + policyName + " in privacy policies section");
-                }
-                break;
-            }
-
-            else if(policyList.get(i).getText().contains(policyName) && status.equalsIgnoreCase("ACTIVE")) {
-                flag = 1;
-                j = i + 1;
-                WebElement activeStatus = driver.findElement(By.xpath("(//span[contains(text(),'ACTIVE')])[" + j + "]"));
+                WebElement activeStatus = driver.findElement(By.xpath("//span[contains(text(),' "+policyName+" ')]/ancestor::div[1]/following-sibling::div/following-sibling::div/span[normalize-space(text())='ACTIVE']"));
                 new Actions(driver).moveToElement(activeStatus).build().perform();
                 CCUtils.assertEquals(activeStatus.isDisplayed(), true);
-                log("Active Status is available for "+ policyName +" in privacy policies section");
+                log("Active Status is available for " + policyName + " in privacy policies section");
                 break;
             }
         }
@@ -938,14 +995,17 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void verifyToolTip(String status) {
         if(status.equalsIgnoreCase("Active")) {
+            CCUtils.verifyAndWaitForElement(activeToolTip, driver);
             CCUtils.assertEquals(activeToolTip.isDisplayed(), true);
             log("Successfully verified the tool tip of " + status);
         }
         else if(status.equalsIgnoreCase("Inactive")) {
+            CCUtils.verifyAndWaitForElement(inactiveToolTip, driver);
             CCUtils.assertEquals(inactiveToolTip.isDisplayed(), true);
             log("Successfully verified the tool tip of " + status);
         }
         else if(status.equalsIgnoreCase("Draft")) {
+            CCUtils.verifyAndWaitForElement(draftToolTip, driver);
             CCUtils.assertEquals(draftToolTip.isDisplayed(), true);
             log("Successfully verified the tool tip of " + status);
         }
@@ -953,13 +1013,17 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void emptyLanguageContent(String language) {
         if(language.equalsIgnoreCase("English")) {
+            CCUtils.verifyAndWaitForElement(englishContent, driver);
             englishContent.clear();
+            CCUtils.verifyAndWaitForElement(languageContentTextArea, driver);
             new Actions(driver).moveToElement(languageContentTextArea).pause(2000).click().build().perform();
             languageContentTextArea.sendKeys(Keys.SPACE);
             languageContentTextArea.sendKeys(Keys.BACK_SPACE);
         }
         else if(language.equalsIgnoreCase("Spanish")) {
+            CCUtils.verifyAndWaitForElement(spanishContent, driver);
             spanishContent.clear();
+            CCUtils.verifyAndWaitForElement(languageContentTextArea, driver);
             new Actions(driver).moveToElement(languageContentTextArea).pause(2000).click().build().perform();
             languageContentTextArea.sendKeys(Keys.SPACE);
             languageContentTextArea.sendKeys(Keys.BACK_SPACE);

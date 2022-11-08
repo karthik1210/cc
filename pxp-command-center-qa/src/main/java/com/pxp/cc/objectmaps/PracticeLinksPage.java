@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import com.google.sitebricks.client.Web;
 import com.pxp.cc.util.CCUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,187 +20,208 @@ public class PracticeLinksPage extends CCMainPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//div[contains(text(),'Practice Links')]")
+    @FindBy(xpath = "//div[text()='Practice Links']")
     private WebElement practiceLinksLabel;
 
-    @FindBy(xpath = "//b[contains(text(),'PRACTICE WEBSITE')]")
+    @FindBy(xpath = "//b[text()='PRACTICE WEBSITE']")
     private WebElement practiceWebsiteLabel;
 
-    @FindBy(xpath = "//mat-icon[@class='mat-icon notranslate pr-2 material-icons mat-icon-no-color']")
+    @FindBy(xpath = "//div[text()='Practice Links']/../following-sibling::div/../following-sibling::div/app-practice-website/div/div/div/mat-icon[text()='link']")
     private WebElement practiceWebsiteLinkIcon;
 
-    @FindBy(xpath = "//button[@class='mat-focus-indicator secondary-button mat-stroked-button mat-button-base mat-primary']/span[contains(text(),'EDIT')]")
+    @FindBy(xpath = "//b[text()='PRACTICE WEBSITE']/../following-sibling::div/following-sibling::div/span/button/span[text()=' EDIT ']")
     private WebElement practiceWebsiteEdit;
 
-    @FindBy(xpath = "//b[contains(text(),'EXTERNAL URLS')]")
+    @FindBy(xpath = "//b[text()='EXTERNAL URLS']")
     private WebElement externalUrlLabel;
 
-    @FindBy(xpath = "//button[@class = 'mat-focus-indicator secondary-button mat-stroked-button mat-button-base mat-primary ng-star-inserted']/span[contains(text(),'EDIT')]")
+    @FindBy(xpath = "//b[text()='EXTERNAL URLS']/../following-sibling::div/div/button/span[text()=' EDIT ']")
     private WebElement externalUrlEdit;
 
-    @FindBy(xpath = "//button[@class = 'mat-focus-indicator secondary-button mat-stroked-button mat-button-base mat-primary']/span[contains(text(),'ADD')]")
+    @FindBy(xpath = "//b[text()='EXTERNAL URLS']/../following-sibling::div/following::div/div/following::span[text()=' ADD ']")
     private WebElement externalUrlAdd;
 
-    @FindBy(xpath = "//label[contains(text(),'No external URLs configured. Click EDIT to add.')]")
+    @FindBy(xpath = "//label[text()='No external URLs configured. Click EDIT to add.']")
     private WebElement noExternalUrlConfigureLabel;
 
-    @FindBy(xpath = "//form[@id='submit']/div/input")
+    @FindBy(xpath = "//input[@aria-label='Practice Website']")
     private WebElement practiceWebsiteTextBox;
 
-    @FindBy(xpath = "//span[contains(text(),'CANCEL')]")
+    @FindBy(xpath = "//span[normalize-space(text())='CANCEL']")
     private WebElement cancelButtonForPracticeWebsite;
 
-    @FindBy(xpath = "//div/span[@class='content-header ng-star-inserted']")
+    @FindBy(xpath = "//b[text()='PRACTICE WEBSITE']/../following-sibling::div/span[@class='content-header ng-star-inserted']")
     private WebElement practiceWebsiteDisplayArea;
 
-    @FindBy(xpath = "//span[contains(text(),'SAVE')]")
+    @FindBy(xpath = "//span[text()=' SAVE ']")
     private WebElement saveButtonForPracticeWebsite;
 
-    @FindBy(xpath = "//div[@class='col-1 text-right']/span/button/mat-icon[contains(text(),' keyboard_arrow_down ')]")
+    @FindBy(xpath = "//div[text()='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down ']")
     private WebElement practiceWebsiteExpandArrow;
 
-    @FindBy(xpath = "//div[@class='col-1 text-right']/span/button/mat-icon[contains(text(),' keyboard_arrow_up ')]")
+    @FindBy(xpath = "//div[text()='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up ']")
     private WebElement practiceWebsiteCollapseArrow;
 
     @FindBy(xpath = "//span/input")
     private List<WebElement> listOfexternalUrlHyperLinkTexts;
 
+    @FindBy(xpath = "//input[@aria-label='en']")
+    private List<WebElement> englishHyperLinkTextBox;
+
+    @FindBy(xpath = "//input[@aria-label='es']")
+    private List<WebElement> spanishHyperLinkTextBox;
+
+    @FindBy(xpath = "//input[@aria-label='Website Url']")
+    private WebElement websiteExternalUrl;
+
     @FindBy(xpath = "//div[@class='leftColumn col-lg-11 col-md-11 ml-3']/input")
     private List<WebElement> listOfExternalUrls;
 
-    @FindBy(xpath = "//button[@id='saveDetailsBtn']/span[contains(text(),'SAVE')]")
+    @FindBy(xpath = "//span[text()=' SAVE ']")
     private WebElement externalUrlSaveButton;
 
-    @FindBy(xpath = "//button/span[contains(text(),'CANCEL')]")
+    @FindBy(xpath = "//span[text()=' CANCEL ']")
     private WebElement externalUrlCancelButton;
 
-    @FindBy(xpath = "//div[@class='col-6']/a[@target='_blank']")
+    @FindBy(xpath = "//a[@class='link']")
     private List<WebElement> listOfExternalUrlsDisplayArea;
 
-    @FindBy(xpath = "//span[contains(text(),'drag')]")
+    @FindBy(xpath = "//span[text()='drag_indicator']")
     private List<WebElement> listOfDragElements;
 
-    @FindBy(xpath = "//button/span[contains(text(),'REARRANGE')]")
+    @FindBy(xpath = "//span[text()=' REARRANGE ']")
     private WebElement externalUrlRearrangeButton;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),'remove_circle')]")
+    @FindBy(xpath = "//mat-icon[text()='remove_circle']")
     private List<WebElement> listOfDeleteExternalUrlIcon;
 
-    @FindBy(xpath = "//mat-icon[contains(text(),'remove_circle')]")
+    @FindBy(xpath = "//mat-icon[text()='remove_circle']")
     private WebElement deleteExternalUrlIcon;
 
-    @FindBy(xpath = "//div[contains(text(),'Maximum characters reached')]")
+    @FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
     private WebElement maximumCharacterError;
 
     @FindBy(xpath = "//span[@class='content']/label")
     private List<WebElement> listOfDisplayText;
 
-    @FindBy(xpath = "//div[contains(text(),'SOCIAL MEDIA')]")
+    @FindBy(xpath = "//div[text()='SOCIAL MEDIA']")
     private WebElement socialMediaLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Twitter')]")
+    @FindBy(xpath = "//span[text()='Twitter']")
     private WebElement twitterLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Facebook')]")
+    @FindBy(xpath = "//span[text()='Facebook']")
     private WebElement facebookLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'Linkedin')]")
+    @FindBy(xpath = "//span[text()='Linkedin']")
     private WebElement linkedinLabel;
 
-    @FindBy(xpath = "//span[contains(text(),'YouTube')]")
+    @FindBy(xpath = "//span[text()='YouTube']")
     private WebElement youtubeLabel;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted']/child::div/span[contains(text(),'Twitter')]/parent::div/following-sibling::div")
+    @FindBy(xpath = "//span[text()='Twitter']/../following-sibling::div")
     private WebElement twitterUrl;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted']/child::div/span[contains(text(),'Facebook')]/parent::div/following-sibling::div")
+    @FindBy(xpath = "//span[text()='Facebook']/../following-sibling::div")
     private WebElement facebookUrl;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted']/child::div/span[contains(text(),'Linkedin')]/parent::div/following-sibling::div")
+    @FindBy(xpath = "//span[text()='Linkedin']/../following-sibling::div")
     private WebElement linkedinUrl;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted']/child::div/span[contains(text(),'YouTube')]/parent::div/following-sibling::div")
+    @FindBy(xpath = "//span[text()='YouTube']/../following-sibling::div")
     private WebElement youtubeUrl;
 
-    @FindBy(xpath = "//button[@class = 'mat-focus-indicator secondary-button mat-stroked-button mat-button-base mat-primary ng-star-inserted']/span[contains(text(),'Edit')]")
+    @FindBy(xpath = "//div[text()='SOCIAL MEDIA']/../following-sibling::div/button/span[text()=' Edit ']")
     private WebElement socialMediaEdit;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Twitter')]/parent::div/following-sibling::div[@class='col-7 mr-0']")
+    @FindBy(xpath = "//input[@aria-label='Twitter']")
     private WebElement twitterUrlEditTextBox;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Twitter')]/parent::div/following-sibling::div[@class='col-1 text-center pl-0']")
+    @FindBy(xpath = "//input[@aria-label='Twitter']/../following-sibling::div/mat-slide-toggle/label/div/input/following-sibling::div")
     private WebElement twitterToggleButton;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Facebook')]/parent::div/following-sibling::div[@class='col-7 mr-0']")
+    @FindBy(xpath = "//input[@aria-label='Facebook']")
     private WebElement facebookUrlEditTextBox;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Facebook')]/parent::div/following-sibling::div[@class='col-1 text-center pl-0']")
+    @FindBy(xpath = "//input[@aria-label='Facebook']/../following-sibling::div/mat-slide-toggle/label/div/input/following-sibling::div")
     private WebElement facebookToggleButton;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Linkedin')]/parent::div/following-sibling::div[@class='col-7 mr-0']")
+    @FindBy(xpath = "//input[@aria-label='Linkedin']")
     private WebElement linkedinUrlEditTextBox;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Linkedin')]/parent::div/following-sibling::div[@class='col-1 text-center pl-0']")
+    @FindBy(xpath = "//input[@aria-label='Linkedin']/../following-sibling::div/mat-slide-toggle/label/div/input/following-sibling::div")
     private WebElement linkedinToggleButton;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'YouTube')]/parent::div/following-sibling::div[@class='col-7 mr-0']")
+    @FindBy(xpath = "//input[@aria-label='YouTube']")
     private WebElement youtubeUrlEditTextBox;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'YouTube')]/parent::div/following-sibling::div[@class='col-1 text-center pl-0']")
+    @FindBy(xpath = "//input[@aria-label='YouTube']/../following-sibling::div/mat-slide-toggle/label/div/input/following-sibling::div")
     private WebElement youtubeToggleButton;
 
-    @FindBy(xpath = "//div[@class='ng-star-inserted']/span[contains(text(),'CANCEL')]")
+    @FindBy(xpath = "//span[normalize-space(text())='CANCEL']")
     private WebElement socialMediaCancelButton;
 
-    @FindBy(xpath = "//button[@class='savebutton mx-3' and contains(text(),'SAVE')]")
+    @FindBy(xpath = "//button[normalize-space(text())='SAVE']")
     private WebElement socialMediaSaveButton;
 
-    @FindBy(xpath = "//div[contains(text(),'URL cannot be blank if enabled.')]")
+    @FindBy(xpath = "//div[text()='URL cannot be blank if enabled.']")
     private WebElement socialMediaError;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'Twitter')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='Twitter']")
     private WebElement twitterEditBoxWhenToggleOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'Facebook')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='Facebook']")
     private WebElement facebookEditBoxWhenToggleOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'Linkedin')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='Linkedin']")
     private WebElement linkedinEditBoxWhenToggleOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'YouTube')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='YouTube']")
     private WebElement youtubeEditBoxWhenToggleOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Twitter')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='Twitter']")
     private WebElement twitterTextBoxWhenWebsiteAvailable;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Facebook')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='Facebook']")
     private WebElement facebookTextBoxWhenWebsiteAvailable;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'Linkedin')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='Linkedin']")
     private WebElement linkedinTextBoxWhenWebsiteAvailable;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-untouched ng-pristine ng-valid ng-star-inserted']/child::div/span[contains(text(),'YouTube')]/parent::div/following-sibling::div/input")
+    @FindBy(xpath = "//input[@aria-label='YouTube']")
     private WebElement youtubeTextBoxWhenWebsiteAvailable;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'YouTube')]/parent::div/following-sibling::div/following-sibling::div/mat-slide-toggle/label/div")
+    @FindBy(xpath = "//input[@aria-label='YouTube']/../following-sibling::div/mat-slide-toggle/label/div/input[@type='checkbox']")
     private WebElement youtubeToggleButtonWhenOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'Linkedin')]/parent::div/following-sibling::div/following-sibling::div/mat-slide-toggle/label/div")
+    @FindBy(xpath = "//input[@aria-label='Linkedin']/../following-sibling::div/mat-slide-toggle/label/div/input[@type='checkbox']")
     private WebElement linkedinToggleButtonWhenOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'Facebook')]/parent::div/following-sibling::div/following-sibling::div/mat-slide-toggle/label/div")
+    @FindBy(xpath = "//input[@aria-label='Facebook']/../following-sibling::div/mat-slide-toggle/label/div/input[@type='checkbox']")
     private WebElement facebookToggleButtonWhenOn;
 
-    @FindBy(xpath = "//div[@class='row socialContent px-0 ng-star-inserted ng-dirty ng-invalid ng-touched']/child::div/span[contains(text(),'Twitter')]/parent::div/following-sibling::div/following-sibling::div/mat-slide-toggle/label/div")
+    @FindBy(xpath = "//input[@aria-label='Twitter']/../following-sibling::div/mat-slide-toggle/label/div/input[@type='checkbox']")
     private WebElement twitterToggleButtonWhenOn;
 
     @FindBy(xpath = "//div[@class='col-8']/a")
     private List<WebElement> listOfSocialMediaUrlsDisplay;
 
-    @FindBy(xpath = "//div[@class='col-6']/label[contains(text(),'Hyperlink Text')]")
+    @FindBy(xpath = "//span[text()='Twitter']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    private WebElement twitterUrlDisplay;
+
+    @FindBy(xpath = "//span[text()='Facebook']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    private WebElement facebookUrlDisplay;
+
+    @FindBy(xpath = "//span[text()='Linkedin']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    private WebElement linkedinUrlDisplay;
+
+    @FindBy(xpath = "//span[text()='YouTube']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    private WebElement youTubeUrlDisplay;
+
+    @FindBy(xpath = "//label[text()='Hyperlink Text']")
     private WebElement hyperlinkText;
 
-    @FindBy(xpath = "//div[@class='col-6']/label[contains(text(),'Website URL')]")
+    @FindBy(xpath = "//label[text()='Website URL']")
     private WebElement websiteUrl;
 
     public void verifyHyperLinkText() throws InterruptedException, AWTException {
@@ -295,7 +317,7 @@ public class PracticeLinksPage extends CCMainPage {
         if (action.equalsIgnoreCase("cancel")) {
             if (!practiceWebsiteDisplayArea.getText().isEmpty()) {
                 javascriptClick(practiceWebsiteEdit);
-                Thread.sleep(2000);
+                CCUtils.verifyAndWaitForElement(cancelButtonForPracticeWebsite, driver);
                 javascriptClick(cancelButtonForPracticeWebsite);
             }
             else
@@ -305,7 +327,7 @@ public class PracticeLinksPage extends CCMainPage {
                 javascriptClick(practiceWebsiteEdit);
                 log("Entering value for practice website");
                 practiceWebsiteTextBox.clear();
-                Thread.sleep(3000);
+                CCUtils.verifyAndWaitForElement(practiceWebsiteTextBox, driver);
                 practiceWebsiteTextBox.sendKeys(practiceWebsite);
                 log("Entered practice website as" + practiceWebsite);
                 javascriptClick(saveButtonForPracticeWebsite);
@@ -410,17 +432,18 @@ public class PracticeLinksPage extends CCMainPage {
         CCUtils.scrollPageViaElement(driver, externalUrlAdd);
         CCUtils.verifyAndWaitForElement(externalUrlAdd, driver);
         log("Clicking on External Url Add button with + symbol");
-        javascriptClick(externalUrlAdd);
+        new Actions(driver).moveToElement(externalUrlAdd).click().build().perform();
         log("Clicked successfully on external url Add button");
     }
 
     public void enterExternalUrlHyperLinkText(String hyperLinkNameEN, String hyperLinkNameES) throws InterruptedException, AWTException {
-        listOfexternalUrlHyperLinkTexts.get(listOfexternalUrlHyperLinkTexts.size() - 2).sendKeys(hyperLinkNameEN);
-        listOfexternalUrlHyperLinkTexts.get(listOfexternalUrlHyperLinkTexts.size() - 1).sendKeys(hyperLinkNameES);
+        englishHyperLinkTextBox.get(englishHyperLinkTextBox.size() -1).sendKeys(hyperLinkNameEN);
+        spanishHyperLinkTextBox.get(spanishHyperLinkTextBox.size() - 1).sendKeys(hyperLinkNameES);
         log("HyperLink Text added successfully");
     }
 
     public void enterExternalUrl(String externalWebsite) throws InterruptedException, AWTException {
+        listOfExternalUrls.get(listOfExternalUrls.size() - 1).clear();
         listOfExternalUrls.get(listOfExternalUrls.size() - 1).sendKeys(externalWebsite);
         log("External url added successfully");
     }
@@ -429,7 +452,7 @@ public class PracticeLinksPage extends CCMainPage {
         CCUtils.scrollPageViaElement(driver, externalUrlEdit);
         CCUtils.verifyAndWaitForElement(externalUrlEdit, driver);
         log("Clicking on Edit button in External Url");
-        javascriptClick(externalUrlEdit);
+        new Actions(driver).moveToElement(externalUrlEdit).click().build().perform();
         log("Successfully clicked on External Url Edit button");
     }
 
@@ -480,7 +503,7 @@ public class PracticeLinksPage extends CCMainPage {
                 int j = i + 1;
                 javascriptClick(externalUrlEdit);
                 Thread.sleep(3000);
-                WebElement deleteIcon = driver.findElement(By.xpath("(//mat-icon[contains(text(),'remove_circle')])[" + j + "]"));
+                WebElement deleteIcon = driver.findElement(By.xpath("(//mat-icon[text()='remove_circle'])[" + j + "]"));
                 Actions actions = new Actions(driver);
                 actions.moveToElement(deleteIcon).pause(3000).build().perform();
                 actions.click(deleteIcon).build().perform();
@@ -493,12 +516,10 @@ public class PracticeLinksPage extends CCMainPage {
 
     public void dragAndDropExternalUrl(int currentPosition, int targetPosition) throws InterruptedException, AWTException {
         Actions actions = new Actions(driver);
-        WebElement from = driver.findElement(By.xpath("(//div[@class='cdk-drag row ng-star-inserted'])[" + currentPosition + "]"));
-        WebElement to = driver.findElement(By.xpath("(//div[@class='cdk-drag row ng-star-inserted'])[" + targetPosition + "]"));
+        WebElement from = driver.findElement(By.xpath("(//span[text()='drag_indicator'])[" + currentPosition + "]"));
+        WebElement to = driver.findElement(By.xpath("(//span[text()='drag_indicator'])[" + targetPosition + "]"));
         CCUtils.verifyAndWaitForElement(from, driver);
         CCUtils.verifyAndWaitForElement(to, driver);
-        actions.dragAndDrop(from, to).build().perform();
-        Thread.sleep(5000);
         actions.clickAndHold(from).build().perform();
         actions.moveToElement(to).pause(3000).build().perform();
         actions.release(to).build().perform();
@@ -515,18 +536,18 @@ public class PracticeLinksPage extends CCMainPage {
     public void enterValueOnExistingValueOnDisplayText(String value) throws InterruptedException, AWTException {
         for (int i = 0; i < listOfExternalUrlsDisplayArea.size(); i++)
             if (listOfExternalUrlsDisplayArea.get(i).getText().equalsIgnoreCase(value)) {
-                int j = i * 2 + 1;
-                int k = j + 1;
-                String displayText = listOfDisplayText.get(j).getText() + CCUtils.generateAlphaNumericString(3);
+                int k = i + 1;
                 javascriptClick(externalUrlEdit);
-                WebElement elementEN = driver.findElement(By.xpath("(//span/input)[" + j + "]"));
-                WebElement elementES = driver.findElement(By.xpath("(//span/input)[" + k + "]"));
+                String displayTextEn = englishHyperLinkTextBox.get(i).getAttribute("value") + CCUtils.generateAlphaNumericString(3);
+                String displayTextEs = spanishHyperLinkTextBox.get(i).getAttribute("value") + CCUtils.generateAlphaNumericString(3);
+                WebElement elementEN = driver.findElement(By.xpath("(//input[@aria-label='en'])[" + k + "]"));
+                WebElement elementES = driver.findElement(By.xpath("(//input[@aria-label='es'])[" + k + "]"));
                 elementEN.clear();
                 new Actions(driver).moveToElement(elementEN).pause(3000).click().build().perform();
-                elementEN.sendKeys(displayText);
+                elementEN.sendKeys(displayTextEn);
                 elementES.clear();
                 new Actions(driver).moveToElement(elementES).pause(3000).click().build().perform();
-                elementES.sendKeys(displayText);
+                elementES.sendKeys(displayTextEs);
                 break;
             }
     }
@@ -611,13 +632,13 @@ public class PracticeLinksPage extends CCMainPage {
     }
 
     public void verifyEditTextBoxUrlEmpty() throws InterruptedException, AWTException {
-        CCUtils.assertEquals(twitterUrlEditTextBox.getText().isEmpty(),true);
+        CCUtils.assertEquals(twitterUrlEditTextBox.getAttribute("value").isEmpty(),true);
         log("Twitter edit text box empty");
-        CCUtils.assertEquals(facebookUrlEditTextBox.getText().isEmpty(),true);
+        CCUtils.assertEquals(facebookUrlEditTextBox.getAttribute("value").isEmpty(),true);
         log("Facebook edit text box empty");
-        CCUtils.assertEquals(linkedinUrlEditTextBox.getText().isEmpty(),true);
+        CCUtils.assertEquals(linkedinUrlEditTextBox.getAttribute("value").isEmpty(),true);
         log("Linkedin edit text box empty");
-        CCUtils.assertEquals(youtubeUrlEditTextBox.getText().isEmpty(),true);
+        CCUtils.assertEquals(youtubeUrlEditTextBox.getAttribute("value").isEmpty(),true);
         log("Youtube edit text box empty");
     }
 
@@ -642,24 +663,24 @@ public class PracticeLinksPage extends CCMainPage {
 
     public void enterValueOnSocialMedia(String socialMediaName, String url) throws InterruptedException, AWTException {
         if(socialMediaName.equalsIgnoreCase("Twitter")){
-            WebElement twitter = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[1]"));
-            if(twitter.getText().isEmpty())
-                twitter.sendKeys(url);
+            CCUtils.verifyAndWaitForElement(twitterUrlEditTextBox, driver);
+            if(twitterUrlEditTextBox.getAttribute("value").isEmpty())
+                twitterUrlEditTextBox.sendKeys(url);
         }
         else if(socialMediaName.equalsIgnoreCase("Facebook")){
-            WebElement facebook = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[2]"));
-            if(facebook.getText().isEmpty())
-                facebook.sendKeys(url);
+            CCUtils.verifyAndWaitForElement(facebookUrlEditTextBox, driver);
+            if(facebookUrlEditTextBox.getAttribute("value").isEmpty())
+                facebookUrlEditTextBox.sendKeys(url);
         }
         else if(socialMediaName.equalsIgnoreCase("Linkedin")){
-            WebElement linkedin = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[3]"));
-            if(linkedin.getText().isEmpty())
-                linkedin.sendKeys(url);
+            CCUtils.verifyAndWaitForElement(linkedinUrlEditTextBox, driver);
+            if(linkedinUrlEditTextBox.getAttribute("value").isEmpty())
+                linkedinUrlEditTextBox.sendKeys(url);
         }
-        else {
-            WebElement youtube = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[4]"));
-            if(youtube.getText().isEmpty())
-                youtube.sendKeys(url);
+        else if(socialMediaName.equalsIgnoreCase("YouTube")){
+            CCUtils.verifyAndWaitForElement(youtubeUrlEditTextBox, driver);
+            if(youtubeUrlEditTextBox.getAttribute("value").isEmpty())
+                youtubeUrlEditTextBox.sendKeys(url);
         }
     }
 
@@ -689,21 +710,18 @@ public class PracticeLinksPage extends CCMainPage {
     }
 
     public void updateValueOnSocialMedia(String socialMediaName, String url) throws InterruptedException, AWTException {
-        if(socialMediaName.equalsIgnoreCase("Twitter")){
-            WebElement twitter = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[1]"));
-                twitter.sendKeys("update");
-        }
-        else if(socialMediaName.equalsIgnoreCase("Facebook")){
-            WebElement facebook = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[2]"));
-                facebook.sendKeys("update");
-        }
-        else if(socialMediaName.equalsIgnoreCase("Linkedin")){
-            WebElement linkedin = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[3]"));
-                linkedin.sendKeys("update");
-        }
-        else {
-            WebElement youtube = driver.findElement(By.xpath("(//div[@class='col-7 mr-0']/input)[4]"));
-                youtube.sendKeys("update");
+        if (socialMediaName.equalsIgnoreCase("Twitter")) {
+            CCUtils.verifyAndWaitForElement(twitterUrlEditTextBox, driver);
+            twitterUrlEditTextBox.sendKeys("update");
+        } else if (socialMediaName.equalsIgnoreCase("Facebook")) {
+            CCUtils.verifyAndWaitForElement(facebookUrlEditTextBox, driver);
+            facebookUrlEditTextBox.sendKeys("update");
+        } else if (socialMediaName.equalsIgnoreCase("Linkedin")) {
+            CCUtils.verifyAndWaitForElement(linkedinUrlEditTextBox, driver);
+            linkedinUrlEditTextBox.sendKeys("update");
+        } else if(socialMediaName.equalsIgnoreCase("YouTube")) {
+            CCUtils.verifyAndWaitForElement(youtubeUrlEditTextBox, driver);
+            youtubeUrlEditTextBox.sendKeys("update");
         }
     }
 
