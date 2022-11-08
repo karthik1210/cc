@@ -1165,4 +1165,22 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
         return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
     }
+
+    public Response createUpdatePracticePatientAccessResponseBL(String validURI, int practiceId, PatientAccessDetailsBusinessLayer createUpdatePatientAccessDetails) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS("BL", "Valid", practiceId);
+            return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS("BL", "InValid", practiceId);
+            return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
+        } else {
+            String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS("BL", "Valid", practiceId);
+            return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().patch(url).then().extract().response();
+        }
+    }
+
+    public Response createUpdatePracticePatientAccessInvaliDatatypeResponseBL(String practiceId, PatientAccessDetailsBusinessLayer createUpdatePatientAccessDetails) {
+        String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE("BL", practiceId);
+        return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
+    }
 }
