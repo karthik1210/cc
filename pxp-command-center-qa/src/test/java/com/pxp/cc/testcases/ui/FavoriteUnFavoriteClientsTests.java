@@ -13,7 +13,7 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 
 	ClientDirectoryPage clientDirectoryPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -31,7 +31,7 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 		return listOfFavoritingClient;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
 	public void testFavoriteClient() throws Exception {
 		logStep("Verfying whether favorited client count is equal or less than five");
 		boolean value = clientDirectoryPage.getNoOfFavoriteClients();

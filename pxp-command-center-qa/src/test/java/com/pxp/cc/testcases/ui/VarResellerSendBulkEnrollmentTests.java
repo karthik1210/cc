@@ -31,7 +31,7 @@ public class VarResellerSendBulkEnrollmentTests extends CommandCenterGenericTest
 	String autogeneratePassword = PasswordResetPage.genPassword(random);
 	public SearchOptionsPage searchOptionsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

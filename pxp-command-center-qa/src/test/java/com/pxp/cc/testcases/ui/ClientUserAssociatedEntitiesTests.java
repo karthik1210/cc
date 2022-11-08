@@ -16,7 +16,7 @@ public class ClientUserAssociatedEntitiesTests extends CommandCenterGenericTest 
 	public ClientUsersPage clientUsersPage;
 	public ClientUserDetailsPage clientUserDetailsPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to Command Center portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

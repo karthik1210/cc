@@ -20,7 +20,7 @@ public class AddNewLocationTests extends CommandCenterGenericTest {
 	private GeneralSettingsPage generalSettingsPage;
 	private AddLocationPage addLocationPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -78,7 +78,7 @@ public class AddNewLocationTests extends CommandCenterGenericTest {
 		addLocationPage.verifyLocationsPageTitle();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add new location functionality with valid details in all input fields")
+	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {"smoke"}, description = "Verify add new location functionality with valid details in all input fields")
 	public void testAddNewLocationFunctionalityWithAllValidDetails() throws Exception {
 		logStep("Enter data in all input fields");
 		addLocationPage.enterLocationName(CCUtils.generateAlphaNumericString(18));

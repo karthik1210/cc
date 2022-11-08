@@ -23,7 +23,7 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 	public AddNewInternalUsersPage addNewInternalUsersPage;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -53,7 +53,7 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
 	public void testEditInternalUser() throws Exception {
 		logStep("Modifying editable fields detail");
 		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);

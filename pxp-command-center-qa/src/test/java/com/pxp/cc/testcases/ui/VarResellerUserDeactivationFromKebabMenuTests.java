@@ -24,7 +24,7 @@ public class VarResellerUserDeactivationFromKebabMenuTests extends CommandCenter
 	public List<String> userStatusList = null;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -150,7 +150,7 @@ public class VarResellerUserDeactivationFromKebabMenuTests extends CommandCenter
 		VarResellerUserDetailsPage.verifyVarResellerUserDetailsPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user functionality")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user functionality")
 	public void testVarResellerUserDeactivateFunctionality() throws Exception {
 		commandCenterUsersPage.clickOnVarResellerUsersTab();
 		searchOptionsPage = VarResellerUsersPage.clickOnSearchOptionPage();

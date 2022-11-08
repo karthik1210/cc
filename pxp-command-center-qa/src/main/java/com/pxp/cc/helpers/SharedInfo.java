@@ -1286,43 +1286,43 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.ASSOCIATE_PROVIDERS_TO_LOCATION_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
-	
+
 	public Response getLocationsForProviderForNullValues_BL() {
 		String url = ApiPath.UPDATE_LOCATION_FOR_PROVIDER__NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getSolutionsForProviders_BL(int providerId, int practiceId) {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getSolutionsForProviders_BL_NullValues() {
 		String url = ApiPath.FETCH_SOLUTIONS_FOR_PROVIDERS_BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
-		}
-	
+	}
+
 	public Response getSolutionsForProviders_DL(int providerId, int practiceId) {
 		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDER_DL(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getSolutionsForProviders_DL_NullValues() {
 		String url = ApiPath.GET_SOLUTIONS_FOR_PROVIDERS_DL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getPracticeLocation_BL(int practiceId, int locationId, String solutionName, String en) {
 		String url = ApiPath.GET_PRACTICE_LOCATION_BL(practiceId, locationId);
 		return given().spec(requestSpec).queryParam("locationId", locationId).header("x-product", solutionName)
 				.header("x-language", en).get(url).then().extract().response();
 	}
-	
+
 	public Response getPracticeLocation_NullValues_BL() {
 		String url = ApiPath.GET_PRACTICE_LOCATION_BL_NULL_VALUES();
 		return given().spec(requestSpec).get(url).then().extract().response();
 	}
-	
+
 	public Response enableOrDisableSolutionsForLocation_BL(int locationId, int practiceId, int solutionId,
 			boolean active) {
 		Map<String, Object> EnableOrDisableSolutionsForResourcePayload = enableOrDisableSolutionsForResource(solutionId,
@@ -1336,18 +1336,41 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getExternalInternalMap_DL(int practiceId, String externalsystem, String identifier, String type,
 			String maptype) {
 		String url = ApiPath.GET_EXTERNAL_INTERNAL_MAP_DL(practiceId);
-		return given().spec(requestSpec).queryParam("externalsystem", externalsystem).queryParam("identifier", identifier)
-				.queryParam("type", type).queryParam("maptype", maptype).when().get(url).then().extract().response();
+		return given().spec(requestSpec).queryParam("externalsystem", externalsystem)
+				.queryParam("identifier", identifier).queryParam("type", type).queryParam("maptype", maptype).when()
+				.get(url).then().extract().response();
 	}
-	
+
 	public Response getExternalInternalMap_NullValues_DL(String externalsystem, String identifier, String type,
 			String maptype) {
 		String url = ApiPath.GET_EXTERNAL_INTERNAL_MAP_NULL_VALUES_DL();
-		return given().spec(requestSpec).queryParam("externalsystem", externalsystem).queryParam("identifier", identifier)
-				.queryParam("type", type).queryParam("maptype", maptype).when().get(url).then().extract().response();
+		return given().spec(requestSpec).queryParam("externalsystem", externalsystem)
+				.queryParam("identifier", identifier).queryParam("type", type).queryParam("maptype", maptype).when()
+				.get(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForProviderNullRequestBody_DL(int ProviderId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_DL(ProviderId, practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForNullProviderIdAndPracticeId_DL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+   public Response getPracticeLocation_DL(int practiceId, int locationId, String solutionName, String en) {
+		String url = ApiPath.GET_PRACTICE_LOCATION_DL(practiceId, locationId);
+		return given().spec(requestSpec).queryParam("locationId", locationId).header("x-product", solutionName)
+				.header("x-language", en).get(url).then().extract().response();
+	}
+	
+	public Response getPracticeLocation_NullValues_DL() {
+		String url = ApiPath.GET_PRACTICE_LOCATION_DL_NULL_VALUES();
+		return given().spec(requestSpec).get(url).then().extract().response();
 	}
 }

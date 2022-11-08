@@ -38,7 +38,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		return obj;
 	}
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -153,7 +153,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.verifyInternalUsersPageTitle();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
 	public void testCreateActiveInternalUserWithoutRole() throws Exception {
 		logStep("Create a new internal user without adding user role and verify success toaster");
 		commonMethods = new CommonMethods(driver);
@@ -181,7 +181,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
 	public void testCreateActiveInternalUserWithRoles() throws Exception {
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);

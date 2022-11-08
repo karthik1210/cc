@@ -17,7 +17,7 @@ public class ResetPasswordTests extends BaseRest {
 	private PasswordPage passwordPage;
 	Response resetPasswordApiResponse, forgotPasswordApiResponse;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecBuilderWithoutAuthorization();
 		passwordPage = new PasswordPage();

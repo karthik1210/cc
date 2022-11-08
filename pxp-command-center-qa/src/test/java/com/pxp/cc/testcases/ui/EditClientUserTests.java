@@ -37,7 +37,7 @@ public class EditClientUserTests extends CommandCenterGenericTest {
 		return obj;
 	}
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -70,7 +70,7 @@ public class EditClientUserTests extends CommandCenterGenericTest {
 		clientUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
 	public void testEditClientUser() throws Exception {
 		logStep("Modifying editable fields detail");
 		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
