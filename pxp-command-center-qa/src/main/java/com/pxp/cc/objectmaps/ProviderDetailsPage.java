@@ -3,11 +3,15 @@
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class ProviderDetailsPage extends CCMainPage {
 
@@ -88,12 +92,45 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'valid Phone Number')]")
 	private WebElement errorMessagePhoneNumber;
-	
+
 	@FindBy(id = "cancelBtn")
 	private WebElement btnCancel;
+
+	@FindBy(xpath = "//div[@role='tab']//div")
+	private List<WebElement> listOfSystemTabs;
+
+	@FindBy(id = "treeNodeName")
+	private List<WebElement> listOfPracTabs;
+
+	@FindBy(xpath = "//div[text()='Connected Scheduling Resources']")
+	private WebElement labelConnectedResources;
+
+	@FindBy(id = "inputCheckbox")
+	private WebElement resourceCheckBox;
+
+	@FindBy(xpath = "//button[text()='+ ADD']")
+	private WebElement connectedResourcesAdd;
+
+	@FindBy(xpath = "//div[@class='title']")
+	private WebElement addResourceTitle;
+
+	@FindBy(xpath = "//input[id='Resource']")
+	private WebElement inputTextResource;
 	
+	@FindBy(id = "save-icon")
+	private WebElement addButtonResource;
+
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
+	}
+
+	public String finalResourceTableXpath(String data) {
+		return "//td[@role='gridcell']//div[contains(text(),'" + data + "')]";
+	}
+
+	public String removeParticularResource(String data) {
+		return "(//td[@role='gridcell']//div[contains(text(),'" + data
+				+ "')]//following::td//div//button[@id='removeResourceBtn'])[1]";
 	}
 
 	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
@@ -101,6 +138,11 @@ public class ProviderDetailsPage extends CCMainPage {
 	public void verifyImageIsAlreadyUploaded() {
 		CCUtils.verifyAndWaitForElement(removeImage, driver);
 		log("Image is already uploaded");
+	}
+
+	public String xpathRequiredClientType(String practiceName) {
+		return "//mat-tree-node//p[contains(text(),'" + practiceName
+				+ "')]//following::div[1]//label[@class='switch']//span";
 	}
 
 	public void verifyProviderDetailsTitle() {
@@ -148,7 +190,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		uploadProviderImage.sendKeys(projectpath + invalidImagePath);
 		log("Verifying provider image uploaded");
 	}
-	
+
 	public void clickSearchIcon() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(Searchicon, driver);
 		Searchicon.click();
@@ -301,6 +343,100 @@ public class ProviderDetailsPage extends CCMainPage {
 		btnCancel.click();
 		log("Clicked on Cancel Button");
 	}
+
+	public void clickToSytemTab(String systemName) {
+		for (WebElement element : listOfSystemTabs) {
+			if (element.getText().toString().contains(systemName)) {
+				CCUtils.verifyAndWaitForElement(element, driver);
+				javascriptClick(element);
+				log("clicked to system : " + systemName + " tab in location details page");
+			}
+		}
+	}
+
+	public void clickToPracticeTabAndToggleOn(String practiceName) throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
+		for (WebElement ele : listOfPracTabs) {
+			log(ele.getText().toString());
+			if (ele.getText().toString().trim().equals(practiceName)) {
+				log("actual practice : " + ele.getText().toString() + " is equal to " + practiceName);
+				if (ele.getAttribute("class").toString().trim().equals("treenode no-event")) {
+					WebElement toggleButtonSpecific = driver
+							.findElement(By.xpath(xpathRequiredClientType(practiceName)));
+					CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+					toggleButtonSpecific.click();
+					log("clicked on toggle button");
+					log("Toggle ON button of practice : " + ele.getText() + " tab");
+					CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+				}
+			} else
+				log("either practice " + ele.getText() + " does not match with " + practiceName
+						+ " or toggle button for " + ele.getText() + " is already ON");
+		}
+	}
+
+	public void clickToPracticeTabAndToggleOff(String practiceName) throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
+		for (WebElement ele : listOfPracTabs) {
+			if ((ele.getText().toString().equals(practiceName))
+					&& (ele.getAttribute("class").toString().equals("treenode cursor"))) {
+				WebElement toggleButtonSpecific = driver.findElement(By.xpath(xpathRequiredClientType(practiceName)));
+				CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+				toggleButtonSpecific.click();
+				log("clicked on toggle button");
+				log("clicked to toggle OFF button of practice : " + ele.getText() + " tab");
+				CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+			} else
+				log("toggle button is already OFF for practice " + ele.getText());
+		}
+	}
+
+	public void verifyLabelConnectedSchedulingResources() {
+		CCUtils.verifyAndWaitForElement(labelConnectedResources, driver);
+		log("label Connected scheduling resources is present");
+	}
+
+	public void verifyDesiredResourceInWebTable(String resourceName) {
+		WebElement resourceData = driver.findElement(By.xpath(finalResourceTableXpath(resourceName)));
+		CCUtils.verifyAndWaitForElement(resourceData, driver);
+		log("Resource data : " + resourceName + " is present in connected scheduling resource table");
+	}
+
+	public void clickToRemoveParticularResouurce(String resourceName) {
+		WebElement resourceData = driver.findElement(By.xpath(removeParticularResource(resourceName)));
+		CCUtils.verifyAndWaitForElement(resourceData, driver);
+		resourceData.click();
+		log("clicked to remove resource icon for resource : " + resourceName);
+	}
+
+	public void clickToResourceAddButton() {
+		CCUtils.verifyAndWaitForElement(connectedResourcesAdd, driver);
+		connectedResourcesAdd.click();
+		log("clicked to + ADD button");
+	}
+
+	public void verifyAddResourceTitle() {
+		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		log("verify add resource title is displayed");
+	}
+
+	public void enterResourceNameinInputText(String resourceName) {
+		CCUtils.verifyAndWaitForElement(inputTextResource, driver);
+		inputTextResource.sendKeys(resourceName);
+		log("entered resource name in input text");
+	}
+
+	public void clickToResourceCheckBox() {
+		CCUtils.verifyAndWaitForElement(resourceCheckBox, driver);
+		resourceCheckBox.click();
+		log("desired resource selected");
+	}
+	
+	public void clickToAddResourceButton() {
+		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		addButtonResource.click();
+		log("clicked to Add button of resource pop up");
+	}
 }
-
-
