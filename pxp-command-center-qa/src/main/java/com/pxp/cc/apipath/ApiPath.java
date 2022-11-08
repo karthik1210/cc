@@ -1599,7 +1599,7 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/null/locations/null";
 	}
 
-	public static final String UPDATE_ORG_SOLUTIONS_NULL_VALUES_DL() {
+	public static final String GET_ORG_SOLUTIONS_NULL_VALUES_DL() {
 		return SERVICE_ORG_DL + "/v1/orgs/null/solutions";
 	}
 }

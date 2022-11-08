@@ -1172,7 +1172,7 @@ public class OrgInfo extends BaseRest {
     }
     
     public Response getOrgsSolutionsNullValues_DataLayer() throws IOException {
-        String url = ApiPath.UPDATE_ORG_SOLUTIONS_NULL_VALUES_DL();
+        String url = ApiPath.GET_ORG_SOLUTIONS_NULL_VALUES_DL();
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
 }
