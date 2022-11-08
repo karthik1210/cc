@@ -476,4 +476,9 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract()
 				.response();
 	}
+	public Response toggleSolutionStatusApiResponse_DL(int locationId, int practiceId, int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
+		Map<String, Object> toggleSolutionStatusPayload = toggleSolutionStatus(solutionId, active);
+		return given().spec(requestSpec).body(toggleSolutionStatusPayload).when().put(url).then().extract().response();
+	}
 }
