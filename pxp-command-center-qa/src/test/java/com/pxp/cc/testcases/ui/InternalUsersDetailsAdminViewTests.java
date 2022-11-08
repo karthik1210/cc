@@ -23,7 +23,7 @@ public class InternalUsersDetailsAdminViewTests extends CommandCenterGenericTest
 	public List<String> userStatusList = null;
 	public List<String> enrollmentStatusList = null;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

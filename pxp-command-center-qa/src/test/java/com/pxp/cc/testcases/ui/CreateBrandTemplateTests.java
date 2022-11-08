@@ -70,7 +70,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage, "Success! Successfully Created Brand");
 	}
 
-	@Test(priority = 1,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with all logos Favicon,Solutions,Patient Communication logo gets uploaded")
+	@Test(priority = 1,enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with all logos Favicon,Solutions,Patient Communication logo gets uploaded")
 	public void testCreateBrandAtClientLevelUploadingAllLogoImages() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);

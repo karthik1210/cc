@@ -20,7 +20,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 	public AddNewVarResellerUserPage addNewVarResellerUserPage;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -164,7 +164,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 				"Only alphanumeric and special characters .,!@#$%&*_- allowed");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active VAR/Reseller user functionality")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active VAR/Reseller user functionality")
 	public void testActiveVarResellerUser() throws Exception {
 		logStep("Enter data in mandatory fields");
 		addNewVarResellerUserPage.searchAndSelectVarReseller(testData.getProperty("var.reseller.name"));

@@ -1165,4 +1165,14 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
         return given().spec(requestSpec).body(createUpdatePatientAccessDetails).when().post(url).then().extract().response();
     }
+    
+    public Response getOrgsSolutions_DataLayer( int orgId,String type) throws IOException {
+        String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
+        return given().spec(requestSpec).queryParams("type",type).when().get(url).then().extract().response();
+    }
+    
+    public Response getOrgsSolutionsNullValues_DataLayer() throws IOException {
+        String url = ApiPath.GET_ORG_SOLUTIONS_NULL_VALUES_DL();
+        return given().spec(requestSpec).when().get(url).then().extract().response();
+    }
 }

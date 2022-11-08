@@ -31,7 +31,7 @@ public class EnableDisableSolutionsOnLocationsDetailsPageTests extends CommandCe
 	public String systemNameOne, systemNameTwo, agPracticeNameOne, practiceNameTwo, enterpriseTwo;
 	String aglocOne, locOne;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal with url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

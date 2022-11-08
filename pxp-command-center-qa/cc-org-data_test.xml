@@ -48,7 +48,7 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddUpdatePracticeSocialsApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeSocialsApiTests_DataLayer" />
-				  <class
+		    <class
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer"/>
             <class
                     name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer"/>
@@ -66,6 +66,8 @@
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAgeoutApiTests_DataLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUpdatePracticePatientAccessApiTests_DataLayer"/>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrgSolutionsApiTests_DataLayer" />
         </classes>
     </test>
 </suite>

@@ -35,7 +35,7 @@ public class ClientUserDeactivationFromKebabMenuTests extends CommandCenterGener
 
 	String firstName, clientName;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),

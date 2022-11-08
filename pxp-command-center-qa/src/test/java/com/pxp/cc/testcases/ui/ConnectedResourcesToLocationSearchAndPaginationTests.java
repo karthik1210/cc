@@ -31,7 +31,7 @@ public class ConnectedResourcesToLocationSearchAndPaginationTests extends Comman
 
 	String locationName, providerFirstName, resourceName, clientName, externalId, resourceNameOne, resourceNameTwo;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());

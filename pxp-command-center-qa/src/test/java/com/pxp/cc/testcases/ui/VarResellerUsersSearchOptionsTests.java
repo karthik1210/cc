@@ -41,7 +41,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		return obj;
 	}
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -132,7 +132,7 @@ public class VarResellerUsersSearchOptionsTests extends CommandCenterGenericTest
 		varResellerUsersPage.verifyClearAllButtonIsDisplayed();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled ")
+	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields with multiple checkboxes are filled ")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		List<String> enrollmentStatusList = new ArrayList<String>();
 		enrollmentStatusList.add(testData.getProperty("enrollment.status.pending"));

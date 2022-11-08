@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -65,6 +66,15 @@ public class SearchProviderPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),'FILTERS')]")
 	private WebElement labelFilter;
+
+	@FindBy(xpath = "(//tr[@role='row'])[2]")
+	private WebElement selectProvider;
+
+	@FindBy(xpath = "(//div[@role='combobox'])[3]")
+	private WebElement selectPracticeFilter;
+
+	@FindBy(xpath = "(//div[@role='option'])[1]")
+	private WebElement selectPractice;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -132,7 +142,7 @@ public class SearchProviderPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(searchTextBox, driver);
 		searchTextBox.clear();
 		searchTextBox.sendKeys(providerName);
-		log("provider name :" + providerName + " entered in serach textbox");
+		log("provider name : " + providerName + " entered in serach textbox");
 	}
 
 	public void verifyNoDataDisplayErrorMessage() {
@@ -261,4 +271,27 @@ public class SearchProviderPage extends CCMainPage {
 		}
 	}
 
+	public ProviderDetailsPage clickToProvider(String providerName) throws InterruptedException {
+		enterProviderInSearchTextBox(providerName);
+		clickToSearchButton();
+		selectProvider();
+		return PageFactory.initElements(super.driver, ProviderDetailsPage.class);
+	}
+
+	public void selectProvider() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(selectProvider, driver);
+		selectProvider.click();
+		log("Clicked on first Provider");
+	}
+
+	public void selectPracticeFilter(String filterName) {
+		CCUtils.verifyAndWaitForElement(selectPracticeFilter, driver);
+		selectPracticeFilter.click();
+		log("clicked to select Practice Filter");
+	}
+
+	public void clickToFirstPracticeOption() {
+		CCUtils.verifyAndWaitForElement(selectPractice, driver);
+		selectPractice.click();
+	}
 }
