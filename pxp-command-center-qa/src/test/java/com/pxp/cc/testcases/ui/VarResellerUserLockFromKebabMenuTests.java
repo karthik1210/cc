@@ -26,7 +26,7 @@ public class VarResellerUserLockFromKebabMenuTests extends CommandCenterGenericT
 	public SearchOptionsPage searchOptionsPage;
 	public AddNewVarResellerUserPage addNewVarResellerUserPage;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
@@ -42,7 +42,7 @@ public class VarResellerUserLockFromKebabMenuTests extends CommandCenterGenericT
 		commonMethods = new CommonMethods(driver);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active user and Verify lock button is not displayed in kebab menu for locked user")
+	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {"smoke"}, description = "Verify user able to lock and unlock active user and Verify lock button is not displayed in kebab menu for locked user")
 	public void testVarResellerUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
 		logStep("create New Active VAR/Reseller User");
 		addNewVarResellerUserPage.searchAndSelectVarReseller(testData.getProperty("api.client.three.type"));

@@ -14,14 +14,14 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 
 	private ClientDirectoryPage clientDirectoryPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
 	public void testClientNameSearch() throws Exception {
 		logStep("Searching a client in client directory");
 		clientDirectoryPage.searchNode(testData.getProperty("search.client.in.client.directory"));
@@ -58,7 +58,7 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, groups = {
-			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check results after ClientType filter is applied")
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check results after ClientType filter is applied")
 	public void testClientTypeFilters() throws Exception {
 		logStep("Apply Client Type Filter in Client Directory.");
 		clientDirectoryPage.selectClientTypeDropDown();

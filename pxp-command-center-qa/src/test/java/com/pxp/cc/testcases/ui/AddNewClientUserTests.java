@@ -35,7 +35,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 	public AddOrgNodePage addOrgNodePage;
 	String firstName, clientName;
 
-	@BeforeMethod()
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
@@ -361,7 +361,7 @@ public class AddNewClientUserTests extends CommandCenterGenericTest {
 		clientUsersPage.verifyClientUsersPageTitle();
 	}
 
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active client user functionality")
+	@Test(priority = 9, enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active client user functionality")
 	public void testCreateActiveClientUser() throws Exception {
 		createActiveClientUser();
 	}
