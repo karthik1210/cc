@@ -37,7 +37,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		commonMethods = new CommonMethods(driver);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & after clicking on edit button fields available for editing")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & after clicking on edit button fields available for editing")
 	public void testEditMode() throws Exception {
 		logStep("Verify after clicking on edit button, save and cancel button is displayed on VAR/Reseller user details page");
 		varResellerUserDetailsPage.verifyCancelButtonIsDisplayed();
@@ -52,7 +52,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		varResellerUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
+	@Test(enabled = false, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to modify first name, last name, username, email and mobile number fields")
 	public void testEditVarResellerUser() throws Exception {
 		logStep("Modifying editable fields detail");
 		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
@@ -75,7 +75,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getMobileNumber().replaceAll("-", ""), mobileNumberValueInEditMode.trim());
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in edit mode")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in edit mode")
 	public void testRequiredErrorMessageInEditMode() throws Exception {
 		logStep("Modifying editable fields detail");
 		commonMethods.clearFirstNameField();
@@ -88,7 +88,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getRequiredErrorForUsernameField(), "Username is required");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum characters error message for editable fields")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify maximum characters error message for editable fields")
 	public void testMaximumCharacterErrorInEditMode() throws Exception {
 		logStep("Enter more than 100 characters in first name field and verify maximum characters error message");
 		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(101));
@@ -121,7 +121,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		return obj;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in editable fields and verify valid error message for editable fields")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidTestData", description = "Enter invalid data in editable fields and verify valid error message for editable fields")
 	public void testEnterValidDetailErrorInEditMode(String[] getTestData) throws Exception {
 		logStep("Enter invalid data in first name, last name, email,username and mobile number fields and verify error message");
 		commonMethods.enterFirstName(getTestData[0]);
@@ -137,7 +137,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getValidErrorForUsernameField(), "Please enter valid username");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
 	public void testUniqueErrorMssageInEditMode() throws Exception {
 		logStep("Enter existing value in username, email and mobile number fields and verify error message");
 		commonMethods.enterMobileNumber(testData.getProperty("var.reseller.user.existing.mobile.number"));
@@ -151,7 +151,7 @@ public class EditVarResellerUserTests extends CommandCenterGenericTest {
 
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in username field and verify error and tooltip text for username field")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in username field and verify error and tooltip text for username field")
 	public void testTooltipForUsernameField() throws Exception {
 		logStep("Enter invalid username in username field");
 		commonMethods.enterUserName(testData.getProperty("invalid.username.one"));
