@@ -75,7 +75,7 @@ public class AddRemoveConnectedResourcesInProvidersDetailsPageTests extends Comm
 		CCUtils.pressEnterKey();
 		return sysName;
 	}
-	
+
 	public String createAgnosticPractice(String orgName) throws InterruptedException {
 		addOrgNodePage = new AddOrgNodePage(driver);
 		addOrgNodePage.clickOnManageClient();
@@ -163,7 +163,7 @@ public class AddRemoveConnectedResourcesInProvidersDetailsPageTests extends Comm
 		providerDetailsPage.verifyDesiredResourceInWebTable(resourceName);
 		commonMethods.verifyToasterMessage("Successfully removed resources");
 	}
-	
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test can able to add connected scheduling resources from providers details page")
 	public void testAddResourceFromProviderDetailsPage() throws Exception {
 		logStep("Searching a client in client directory");
@@ -204,6 +204,89 @@ public class AddRemoveConnectedResourcesInProvidersDetailsPageTests extends Comm
 		providerDetailsPage.enterResourceNameinInputText(resourceName);
 		providerDetailsPage.clickToResourceCheckBox();
 		providerDetailsPage.clickToAddResourceButton();
-		commonMethods.verifyToasterMessage("Changes updated successfully");  
+		commonMethods.verifyToasterMessage("Changes updated successfully");
 	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to validate add resources pop up elements")
+	public void testAddResourcePopupWebElements() throws Exception {
+		logStep("Searching a client in client directory");
+		clientDirectoryPage.searchNode("Testfavclient");
+		clientDirectoryPage.clickSearchButton();
+		clientDirectoryPage.clickSearchResult();
+		logStep("Navigating To General Settings page");
+		systemName = createSystem();
+		practiceName = createAgnosticPractice(systemName);
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.enterSearchText(practiceName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String actualData = generalSettingsPage.returnGeneralSettingTitle();
+		CCUtils.assertEquals(actualData, practiceName);
+		logStep("Verify Providers And Resources tab is displayed");
+		generalSettingsPage.verifyProvidersAndResourcesTab();
+		generalSettingsPage.clickOnProvidersAndResourcesTab();
+		providerResourceAndStaffPage = new ProviderResourceAndStaffSearchPage(driver);
+		providerResourceAndStaffPage.verifyProvidersAndResourcesPageTitle();
+		logStep("Verify ADD button is enabled for client level on provider page");
+		addNewProviderPage.verifyAddButtonIsEnabled();
+		addNewProviderPage.clickOnAddProviderButton();
+		String providerName = createProvider();
+		providerResourceAndStaffPage.clickToResourcesTab();
+		String resourceName = createResource(providerName);
+		providerResourceAndStaffPage.clickToProvidersTab();
+		providerResourceAndStaffPage.enterProviderInSearchTextbox(providerName);
+		providerResourceAndStaffPage.clickToSearchButton();
+		providerResourceAndStaffPage.verifySearchProviderFound(providerName);
+		providerDetailsPage.verifyProviderDetailsTitle();
+		providerDetailsPage.clickToResourceAddButton();
+		providerDetailsPage.verifyAddResourceTitle();
+		providerDetailsPage.verifyResourceLabel();
+		providerDetailsPage.verifyCancelButton();
+		providerDetailsPage.verifyAddButton();
+		providerDetailsPage.verifyCrossIcon();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check no items found error message when enter non existing resource in Add resource pop up")
+	public void testAddResourcePopupNoItemsFoundResourceListSuggestionMessage() throws Exception {
+		logStep("Searching a client in client directory");
+		clientDirectoryPage.searchNode("Testfavclient");
+		clientDirectoryPage.clickSearchButton();
+		clientDirectoryPage.clickSearchResult();
+		logStep("Navigating To General Settings page");
+		systemName = createSystem();
+		practiceName = createAgnosticPractice(systemName);
+		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.enterSearchText(practiceName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String actualData = generalSettingsPage.returnGeneralSettingTitle();
+		CCUtils.assertEquals(actualData, practiceName);
+		logStep("Verify Providers And Resources tab is displayed");
+		generalSettingsPage.verifyProvidersAndResourcesTab();
+		generalSettingsPage.clickOnProvidersAndResourcesTab();
+		providerResourceAndStaffPage = new ProviderResourceAndStaffSearchPage(driver);
+		providerResourceAndStaffPage.verifyProvidersAndResourcesPageTitle();
+		logStep("Verify ADD button is enabled for client level on provider page");
+		addNewProviderPage.verifyAddButtonIsEnabled();
+		addNewProviderPage.clickOnAddProviderButton();
+		String providerName = createProvider();
+		providerResourceAndStaffPage.clickToResourcesTab();
+		String resourceName = createResource(providerName);
+		providerResourceAndStaffPage.clickToProvidersTab();
+		providerResourceAndStaffPage.enterProviderInSearchTextbox(providerName);
+		providerResourceAndStaffPage.clickToSearchButton();
+		providerResourceAndStaffPage.verifySearchProviderFound(providerName);
+		providerDetailsPage.verifyProviderDetailsTitle();
+		providerDetailsPage.clickToSytemTab(systemName);
+		providerDetailsPage.clickToPracticeTabAndToggleOn(practiceName);
+		providerDetailsPage.verifyDesiredResourceInWebTable(resourceName);
+		commonMethods.verifyToasterMessage("Successfully removed resources");
+		providerDetailsPage.clickToResourceAddButton();
+		providerDetailsPage.verifyAddResourceTitle();
+		providerDetailsPage.enterResourceNameinInputText("nonexistingresource");
+		providerDetailsPage.verifyNoItemsFound();
+		providerDetailsPage.verifyCancelButton();
+		providerDetailsPage.verifyAddButton();
+	}
+
 }

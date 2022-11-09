@@ -4,14 +4,12 @@ package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 
 public class ProviderDetailsPage extends CCMainPage {
 
@@ -116,9 +114,21 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//input[id='Resource']")
 	private WebElement inputTextResource;
-	
+
 	@FindBy(id = "save-icon")
 	private WebElement addButtonResource;
+
+	@FindBy(xpath = "//label[text()='Resource']")
+	private WebElement popupLabelResource;
+
+	@FindBy(id = "cancel-icon")
+	private WebElement cancelPopupButton;
+
+	@FindBy(xpath = "//span[text()=' clear ']")
+	private WebElement crossPopupIcon;
+
+	@FindBy(xpath = "//div[text()='No items found']")
+	private WebElement noItemsFound;
 
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
@@ -404,7 +414,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		log("Resource data : " + resourceName + " is present in connected scheduling resource table");
 	}
 
-	public void clickToRemoveParticularResouurce(String resourceName) {
+	public void clickToRemoveParticularResource(String resourceName) {
 		WebElement resourceData = driver.findElement(By.xpath(removeParticularResource(resourceName)));
 		CCUtils.verifyAndWaitForElement(resourceData, driver);
 		resourceData.click();
@@ -433,10 +443,36 @@ public class ProviderDetailsPage extends CCMainPage {
 		resourceCheckBox.click();
 		log("desired resource selected");
 	}
-	
+
 	public void clickToAddResourceButton() {
 		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
 		addButtonResource.click();
 		log("clicked to Add button of resource pop up");
+	}
+
+	public void verifyResourceLabel() {
+		CCUtils.verifyAndWaitForElement(popupLabelResource, driver);
+		log("label resource is displayed in pop up");
+	}
+
+	public void verifyCancelButton() {
+		CCUtils.verifyAndWaitForElement(cancelPopupButton, driver);
+		log("cancel button is displayed in pop up");
+	}
+
+	public void verifyAddButton() {
+		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		CCUtils.assertEquals(addButtonResource.getAttribute("disabled"), "true");
+		log("cancel button is displayed in pop up");
+	}
+
+	public void verifyCrossIcon() {
+		CCUtils.verifyAndWaitForElement(crossPopupIcon, driver);
+		log("cross icon is displayed in pop up");
+	}
+
+	public void verifyNoItemsFound() {
+		CCUtils.verifyAndWaitForElement(noItemsFound, driver);
+		log("no items found message found in resource lists");
 	}
 }
