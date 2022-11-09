@@ -19,7 +19,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
     public CommonMethods commonMethods;
     public AddOrgNodePage addOrgNodePage;
     String systemName, enterpriseName, clientName, practiceName;
-    PracticeLinksPage practiceLinksPage;
+    public PracticeLinksPage practiceLinksPage;
     public NGHierarchyClientCreation ngHierarchyClientCreation;
 
     @BeforeMethod(alwaysRun = true)
@@ -88,7 +88,6 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.verifySocialMediaEditButton();
         practiceLinksPage.clickOnSocialMediaEdit();
         practiceLinksPage.toggleSwitchClick("Facebook");
-        Thread.sleep(3000);
         practiceLinksPage.verifySocialMediaError();
         practiceLinksPage.clickOnSocialMediaCancel();
         logStep("PXPP-20288 TC003 Verify that user can add practice website in Practice Links section with Cancel and Save by using Edit button");
@@ -108,10 +107,8 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.verifyPracticeWebsiteDisplayArea("https://www."+ngHierarchyClientCreation.practiceName+"update.com");
         logStep("PXPP-20290 TC004 Verify that user can't add more than one practice website in Practice Links section in Command Center Application");
         practiceLinksPage.checkPracticeWebsiteIsEmptyOrNot();
-        Thread.sleep(3000);
         logStep("PXPP-20463 TC009 Verify the Edit and Cancel functionality for External URLS in Practice Links section for the 1st time");
         practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
         practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN1"),testData.getProperty("PXPP.17867.external.url.ES1"));
         List<String> externalWebsite = new ArrayList<String>();
@@ -121,10 +118,9 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.verifyExternalUrlDisplay(externalWebsite);
         logStep("PXPP-20480 TC019 Verify the Edit and Cancel functionality for existing External URLs in Practice Links section");
         practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
         practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN1"),testData.getProperty("PXPP.17867.external.url.ES1"));
-        externalWebsite.add("https://www."+testData.getProperty("PXPP.17867.external.url.EN1").substring(0,4).concat(CCUtils.generateAlphaNumericString(3))+".org/us");
+        //externalWebsite.add("https://www."+testData.getProperty("PXPP.17867.external.url.EN1").substring(0,4).concat(CCUtils.generateAlphaNumericString(3))+".org/us");
         practiceLinksPage.enterExternalUrl(externalWebsite.get(0));
         practiceLinksPage.clickOnExternalUrlAddButton();
         practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN2"),testData.getProperty("PXPP.17867.external.url.ES2"));
@@ -146,9 +142,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.printListOfDisplayText();
         logStep("PXPP-20478 TC017 Verify the Length of the Display Text is allowed only 100 characters for the EXTERNAL URLs ");
         practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
-        practiceLinksPage.verifyExternalUrlDeleteIconIsDisplayed();
         practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.100.length.text"),testData.getProperty("PXPP.17867.external.url.100.length.text"));
         practiceLinksPage.enterExternalUrl(testData.getProperty("PXPP.17867.external.url.100.length.url"));
         practiceLinksPage.clickOnExternalUrlSaveButton();
@@ -156,12 +150,9 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.printListOfExternalUrls();
         logStep("20479 TC018 Verify that Application should thrown error when user entered 101 characters for the Display Text in EXTERNAL URLs at Practice Links section");
         practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
-        practiceLinksPage.verifyExternalUrlDeleteIconIsDisplayed();
         practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.101.length.text"),testData.getProperty("PXPP.17867.external.url.101.length.text"));
         practiceLinksPage.verifyMaximumCharacterError();
-        Thread.sleep(3000);
         practiceLinksPage.clickOnExternalUrlCancelButton();
         logStep("PXPP-20484 TC022 Verify the Edit and Cancel functionality for Social Media in Practice Links section for the 1st time");
         practiceLinksPage.clickOnSocialMediaEdit();
@@ -182,33 +173,39 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.toggleSwitchClick("Youtube");
         practiceLinksPage.enterValueOnSocialMedia("Youtube", "https://www.youtube.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
         practiceLinksPage.clickOnSocialMediaCancel();
-        Thread.sleep(3000);
         practiceLinksPage.verifySocialMediaUrlEmpty();
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Edit and Save functionality for External URLs in Practice Links section")
     public void verifyEditAndSaveForExternalUrl() throws InterruptedException, AWTException {
+        logStep("PXPP-20492 TC030 Verify the Rearrange button Functionality for EXTERNAL URLS");
         logStep("PXPP-20347 TC010 Verify the Edit and Save functionality for External URLs in Practice Links section for the 1st time");
         practiceLinksPage = new PracticeLinksPage(driver);
+        List<String> externalWebsite = new ArrayList<String>();
+        practiceLinksPage.verifyPracticeLinksLabelIsDisplayed();
+        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
         practiceLinksPage.verifyPracticeWebsiteExpandArrowIsDisplayed();
         practiceLinksPage.clickOnPracticeWebsiteExpandButton();
         practiceLinksPage.verifyExternalUrlEditIsDisplayed();
         practiceLinksPage.clickOnExternalUrlEditButton();
+        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
         practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
-        practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN1"),testData.getProperty("PXPP.17867.external.url.ES1"));
-        List<String> externalWebsite = new ArrayList<String>();
-        externalWebsite.add("https://www."+testData.getProperty("PXPP.17867.external.url.EN1").substring(0,4).concat(CCUtils.generateAlphaNumericString(3))+".org/us");
+        practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN1"), testData.getProperty("PXPP.17867.external.url.ES1"));
+        externalWebsite.add("https://www." + testData.getProperty("PXPP.17867.external.url.EN1").substring(0, 4).concat(CCUtils.generateAlphaNumericString(3)) + ".org/us");
         practiceLinksPage.enterExternalUrl(externalWebsite.get(0));
         practiceLinksPage.clickOnExternalUrlSaveButton();
-        practiceLinksPage.verifyExternalUrlDisplay(externalWebsite);
-        logStep("PXPP-20465 TC011 Verify the Edit and Save functionality for multiple External URLs in Practice Links section");
+        commonMethods.verifyToasterMessage("Success! External URLs saved successfully");
+        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
         practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.verifyExternalUrlAddIsDisplayed();
         practiceLinksPage.clickOnExternalUrlAddButton();
-        practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN2"),testData.getProperty("PXPP.17867.external.url.ES2"));
-        externalWebsite.add("https://www."+testData.getProperty("PXPP.17867.external.url.EN2").substring(0,4).concat(CCUtils.generateAlphaNumericString(3))+".org/us");
+        practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN2"), testData.getProperty("PXPP.17867.external.url.ES2"));
+        externalWebsite.add("https://www." + testData.getProperty("PXPP.17867.external.url.EN2").substring(0, 4).concat(CCUtils.generateAlphaNumericString(3)) + ".org/us");
         practiceLinksPage.enterExternalUrl(externalWebsite.get(1));
+        practiceLinksPage.clickOnExternalUrlSaveButton();
+        commonMethods.verifyToasterMessage("Success! External URLs saved successfully");
+        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
+        practiceLinksPage.clickOnExternalUrlEditButton();
         practiceLinksPage.clickOnExternalUrlAddButton();
         practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN3"),testData.getProperty("PXPP.17867.external.url.ES3"));
         externalWebsite.add("https://www."+testData.getProperty("PXPP.17867.external.url.EN3").substring(0,4).concat(CCUtils.generateAlphaNumericString(3))+".org/us");
@@ -281,7 +278,9 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.printListOfDisplayText();
         practiceLinksPage.enterValueOnExistingValueOnDisplayText(externalWebsite.get(2));
         practiceLinksPage.clickOnExternalUrlSaveButton();
-        Thread.sleep(3000);
+        commonMethods.verifyToasterMessage("Success! External URLs saved successfully");
+        practiceLinksPage.printListOfExternalUrls();
+        practiceLinksPage.printListOfDisplayText();
         practiceLinksPage.enterValueOnExistingValueOnExternalUrl(testData.getProperty("PXPP.17867.external.url.EN1"));
         practiceLinksPage.clickOnExternalUrlSaveButton();
         commonMethods.verifyToasterMessage("Success! External URLs saved successfully");
@@ -319,13 +318,11 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.enterValueOnSocialMedia("Youtube", "https://www.youtube.com/"+testData.getProperty("PXPP.17867.external.url.EN3").replaceAll("\\s", ""));
         practiceLinksPage.clickOnSocialMediaSave();
         commonMethods.verifyToasterMessage("Successfully Updated Social Media.");
-        Thread.sleep(3000);
         practiceLinksPage.printSocialMediaUrl();
         logStep("PXPP-20488 TC027 Verify the Edit and Cancel functionality for updating existing social media with Toggle on/off in Practice Links section");
         practiceLinksPage.clickOnSocialMediaEdit();
         practiceLinksPage.updateValueOnSocialMedia("Facebook", "https://www.facebook.com/"+testData.getProperty("PXPP.17867.external.url.EN3").replaceAll("\\s", ""));
         practiceLinksPage.clickOnSocialMediaCancel();
-        Thread.sleep(3000);
         practiceLinksPage.printSocialMediaUrl();
         practiceLinksPage.clickOnSocialMediaEdit();
         practiceLinksPage.toggleSwitchClick("Facebook");
@@ -335,43 +332,11 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         practiceLinksPage.updateValueOnSocialMedia("Facebook", "https://www.facebook.com/"+testData.getProperty("PXPP.17867.external.url.EN3").replaceAll("\\s", ""));
         practiceLinksPage.clickOnSocialMediaSave();
         commonMethods.verifyToasterMessage("Successfully Updated Social Media.");
-        Thread.sleep(3000);
         practiceLinksPage.printSocialMediaUrl();
         practiceLinksPage.clickOnSocialMediaEdit();
         practiceLinksPage.toggleSwitchClick("Facebook");
         practiceLinksPage.clickOnSocialMediaSave();
         commonMethods.verifyToasterMessage("Successfully Updated Social Media.");
         practiceLinksPage.printSocialMediaUrl();
-    }
-
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-20492 TC030 Verify the Rearrange button Functionality for EXTERNAL URLS")
-    public void verifyRearrangeButtonInExternalUrl() throws InterruptedException, AWTException {
-        logStep("TC030 Verify the Rearrange button Functionality for EXTERNAL URLS");
-        practiceLinksPage = new PracticeLinksPage(driver);
-        commonMethods = new CommonMethods(driver);
-        List<String> externalWebsite = new ArrayList<String>();
-        practiceLinksPage.verifyPracticeLinksLabelIsDisplayed();
-        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
-        practiceLinksPage.verifyPracticeWebsiteExpandArrowIsDisplayed();
-        practiceLinksPage.clickOnPracticeWebsiteExpandButton();
-        practiceLinksPage.verifyExternalUrlEditIsDisplayed();
-        practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
-        practiceLinksPage.verifyExternalUrlAddIsDisplayed();
-        practiceLinksPage.clickOnExternalUrlAddButton();
-        practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN1"), testData.getProperty("PXPP.17867.external.url.ES1"));
-        externalWebsite.add("https://www." + testData.getProperty("PXPP.17867.external.url.EN1").substring(0, 4).concat(CCUtils.generateAlphaNumericString(3)) + ".org/us");
-        practiceLinksPage.enterExternalUrl(externalWebsite.get(0));
-        practiceLinksPage.clickOnExternalUrlSaveButton();
-        commonMethods.verifyToasterMessage("Success! External URLs saved successfully");
-        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
-        practiceLinksPage.clickOnExternalUrlEditButton();
-        practiceLinksPage.clickOnExternalUrlAddButton();
-        practiceLinksPage.enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN2"), testData.getProperty("PXPP.17867.external.url.ES2"));
-        externalWebsite.add("https://www." + testData.getProperty("PXPP.17867.external.url.EN2").substring(0, 4).concat(CCUtils.generateAlphaNumericString(3)) + ".org/us");
-        practiceLinksPage.enterExternalUrl(externalWebsite.get(1));
-        practiceLinksPage.clickOnExternalUrlSaveButton();
-        commonMethods.verifyToasterMessage("Success! External URLs saved successfully");
-        practiceLinksPage.verifyRearrangeButtonOnExternalUrl();
     }
 }
