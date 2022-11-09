@@ -16,7 +16,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	GeneralSettingsPage generalSettingsPage;
 	public CommonMethods commonMethods;
 
-	@BeforeMethod(alwaysRun = true)
+	@BeforeMethod(alwaysRun = false)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to CC portal");
 		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
@@ -31,7 +31,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickSearchIcon();
 	}
 
-	@Test(enabled = true, groups = {
+	@Test(enabled = false, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
 		logStep("Verifying default text");
@@ -43,7 +43,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyAutoSuggestionList(ccuser.searchNodeInGeneralSetting);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
 	public void testAutoSuggestionForSingleCharacterSearch() throws Exception {
 		logStep("Searching for nodes with single character name in General settings search");
 		generalSettingsPage.enterSearchText(ccuser.searchSymbolInGeneralSetting);
@@ -53,7 +53,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchResult(actualTitle, ccuser.searchClientInClientDirectory);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
 	public void testAutoSuggestionForNumbersSearch() throws Exception {
 		logStep("Searching for nodes with number in General settings search");
 		generalSettingsPage.enterSearchText(ccuser.searchNumberInGeneralSetting);
@@ -63,7 +63,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchResult(actualTitle, ccuser.searchClientInClientDirectory);
 	}
 
-	@Test(enabled = true, groups = {
+	@Test(enabled = false, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node functionality in Client's General settings page")
 	public void testNodeSearch() throws Exception {
 		logStep("Searching a node under client in general settings page");
@@ -74,7 +74,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchResultFunctionality(nodesInClient, ccuser.searchClientInClientDirectory);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
 	public void testNoResultFound() throws Exception {
 		logStep("Searching invalid node under client in general settings page, to check client details are highlighted");
 		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
