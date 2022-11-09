@@ -98,22 +98,47 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='tab']//div")
 	private List<WebElement> listOfSystemTabs;
 
-	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button/following-sibling::p")
-	private List<WebElement> listOfEntTabs;
-
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> listOfPracTabs;
+
+	@FindBy(xpath = "//div[text()='Connected Scheduling Resources']")
+	private WebElement labelConnectedResources;
+
+	@FindBy(id = "inputCheckbox")
+	private WebElement resourceCheckBox;
+
+	@FindBy(xpath = "//button[text()='+ ADD']")
+	private WebElement connectedResourcesAdd;
+
+	@FindBy(xpath = "//div[@class='title']")
+	private WebElement addResourceTitle;
+
+	@FindBy(xpath = "//input[id='Resource']")
+	private WebElement inputTextResource;
+
+	@FindBy(id = "save-icon")
+	private WebElement addButtonResource;
+
+	@FindBy(xpath = "//label[text()='Resource']")
+	private WebElement popupLabelResource;
+
+	@FindBy(id = "cancel-icon")
+	private WebElement cancelPopupButton;
+
+	@FindBy(xpath = "//span[text()=' clear ']")
+	private WebElement crossPopupIcon;
+
+	@FindBy(xpath = "//div[text()='No items found']")
+	private WebElement noItemsFound;
+
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button/following-sibling::p")
+	private List<WebElement> listOfEntTabs;
 
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
 	private WebElement arrowEntPractice;
 
 	@FindBy(xpath = "//mat-icon[@mattooltip='Back']")
 	private WebElement backIcon;
-
-	public String xpathRequiredClientType(String practiceName) {
-		return "//mat-tree-node//p[contains(text(),'" + practiceName
-				+ "')]//following::div[1]//label[@class='switch']//span";
-	}
 
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
@@ -122,11 +147,25 @@ public class ProviderDetailsPage extends CCMainPage {
 		super(driver);
 	}
 
+	public String finalResourceTableXpath(String data) {
+		return "//td[@role='gridcell']//div[contains(text(),'" + data + "')]";
+	}
+
+	public String removeParticularResource(String data) {
+		return "(//td[@role='gridcell']//div[contains(text(),'" + data
+				+ "')]//following::td//div//button[@id='removeResourceBtn'])[1]";
+	}
+
 	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
 
 	public void verifyImageIsAlreadyUploaded() {
 		CCUtils.verifyAndWaitForElement(removeImage, driver);
 		log("Image is already uploaded");
+	}
+
+	public String xpathRequiredClientType(String practiceName) {
+		return "//mat-tree-node//p[contains(text(),'" + practiceName
+				+ "')]//following::div[1]//label[@class='switch']//span";
 	}
 
 	public void verifyProviderDetailsTitle() {
@@ -333,9 +372,122 @@ public class ProviderDetailsPage extends CCMainPage {
 			if (element.getText().toString().contains(systemName)) {
 				CCUtils.verifyAndWaitForElement(element, driver);
 				javascriptClick(element);
-				log("clicked to system : " + systemName + " tab in provider details page");
+
+				log("clicked to system : " + systemName + " tab in location details page");
 			}
 		}
+	}
+
+	public void clickToPracticeTabAndToggleOn(String practiceName) throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
+		for (WebElement ele : listOfPracTabs) {
+			log(ele.getText().toString());
+			if (ele.getText().toString().trim().equals(practiceName)) {
+				log("actual practice : " + ele.getText().toString() + " is equal to " + practiceName);
+				if (ele.getAttribute("class").toString().trim().equals("treenode no-event")) {
+					WebElement toggleButtonSpecific = driver
+							.findElement(By.xpath(xpathRequiredClientType(practiceName)));
+					CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+					toggleButtonSpecific.click();
+					log("clicked on toggle button");
+					log("Toggle ON button of practice : " + ele.getText() + " tab");
+					CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+				}
+			} else
+				log("either practice " + ele.getText() + " does not match with " + practiceName
+						+ " or toggle button for " + ele.getText() + " is already ON");
+		}
+	}
+
+	public void clickToPracticeTabAndToggleOff(String practiceName) throws AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
+		for (WebElement ele : listOfPracTabs) {
+			if ((ele.getText().toString().equals(practiceName))
+					&& (ele.getAttribute("class").toString().equals("treenode cursor"))) {
+				WebElement toggleButtonSpecific = driver.findElement(By.xpath(xpathRequiredClientType(practiceName)));
+				CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+				toggleButtonSpecific.click();
+				log("clicked on toggle button");
+				log("clicked to toggle OFF button of practice : " + ele.getText() + " tab");
+				CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+			} else
+				log("toggle button is already OFF for practice " + ele.getText());
+		}
+	}
+
+	public void verifyLabelConnectedSchedulingResources() {
+		CCUtils.verifyAndWaitForElement(labelConnectedResources, driver);
+		log("label Connected scheduling resources is present");
+	}
+
+	public void verifyDesiredResourceInWebTable(String resourceName) {
+		WebElement resourceData = driver.findElement(By.xpath(finalResourceTableXpath(resourceName)));
+		CCUtils.verifyAndWaitForElement(resourceData, driver);
+		log("Resource data : " + resourceName + " is present in connected scheduling resource table");
+	}
+
+	public void clickToRemoveParticularResource(String resourceName) {
+		WebElement resourceData = driver.findElement(By.xpath(removeParticularResource(resourceName)));
+		CCUtils.verifyAndWaitForElement(resourceData, driver);
+		resourceData.click();
+		log("clicked to remove resource icon for resource : " + resourceName);
+	}
+
+	public void clickToResourceAddButton() {
+		CCUtils.verifyAndWaitForElement(connectedResourcesAdd, driver);
+		connectedResourcesAdd.click();
+		log("clicked to + ADD button");
+	}
+
+	public void verifyAddResourceTitle() {
+		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		log("verify add resource title is displayed");
+	}
+
+	public void enterResourceNameinInputText(String resourceName) {
+		CCUtils.verifyAndWaitForElement(inputTextResource, driver);
+		inputTextResource.sendKeys(resourceName);
+		log("entered resource name in input text");
+	}
+
+	public void clickToResourceCheckBox() {
+		CCUtils.verifyAndWaitForElement(resourceCheckBox, driver);
+		resourceCheckBox.click();
+		log("desired resource selected");
+	}
+
+	public void clickToAddResourceButton() {
+		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		addButtonResource.click();
+		log("clicked to Add button of resource pop up");
+	}
+
+	public void verifyResourceLabel() {
+		CCUtils.verifyAndWaitForElement(popupLabelResource, driver);
+		log("label resource is displayed in pop up");
+	}
+
+	public void verifyCancelButton() {
+		CCUtils.verifyAndWaitForElement(cancelPopupButton, driver);
+		log("cancel button is displayed in pop up");
+	}
+
+	public void verifyAddButton() {
+		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		CCUtils.assertEquals(addButtonResource.getAttribute("disabled"), "true");
+		log("cancel button is displayed in pop up");
+	}
+
+	public void verifyCrossIcon() {
+		CCUtils.verifyAndWaitForElement(crossPopupIcon, driver);
+		log("cross icon is displayed in pop up");
+	}
+
+	public void verifyNoItemsFound() {
+		CCUtils.verifyAndWaitForElement(noItemsFound, driver);
+		log("no items found message found in resource lists");
 	}
 
 	public void clickToEnterpriseTabPracticeAndToggleOn(String enterpriseName, String practiceName)
@@ -414,44 +566,5 @@ public class ProviderDetailsPage extends CCMainPage {
 			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
 		else
 			Log4jUtil.log("Success toaster is not displayed");
-	}
-
-	public void clickToPracticeTabAndToggleOff(String practiceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
-		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
-		for (WebElement ele : listOfPracTabs) {
-			if ((ele.getText().toString().equals(practiceName))
-					&& (ele.getAttribute("class").toString().equals("treenode cursor"))) {
-				WebElement toggleButtonSpecific = driver.findElement(By.xpath(xpathRequiredClientType(practiceName)));
-				CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
-				toggleButtonSpecific.click();
-				log("clicked on toggle button");
-				log("clicked to toggle OFF button of practice : " + ele.getText() + " tab");
-				CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
-			} else
-				log("toggle button is already OFF for practice " + ele.getText());
-		}
-	}
-
-	public void clickToPracticeTabAndToggleOn(String practiceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
-		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
-		for (WebElement ele : listOfPracTabs) {
-			log(ele.getText().toString());
-			if (ele.getText().toString().trim().equals(practiceName)) {
-				log("actual practice : " + ele.getText().toString() + " is equal to " + practiceName);
-				if (ele.getAttribute("class").toString().trim().equals("treenode no-event")) {
-					WebElement toggleButtonSpecific = driver
-							.findElement(By.xpath(xpathRequiredClientType(practiceName)));
-					CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
-					toggleButtonSpecific.click();
-					log("clicked on toggle button");
-					log("Toggle ON button of practice : " + ele.getText() + " tab");
-					CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
-				}
-			} else
-				log("either practice " + ele.getText() + " does not match with " + practiceName
-						+ " or toggle button for " + ele.getText() + " is already ON");
-		}
 	}
 }
