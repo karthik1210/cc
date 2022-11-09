@@ -33,6 +33,8 @@
             <class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
             <class name="com.pxp.cc.testcases.ui.VarResellerUsersSearchOptionsTests" />
             <class name="com.pxp.cc.testcases.ui.EditVarResellerUserTests" />
+            <class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
+            <class name="com.pxp.cc.testcases.ui.PrivacyPolicySettingsTests" />
         </classes>
     </test>
 </suite>
