@@ -27,16 +27,15 @@
 				/> <class <class name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateUsersApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateVAResellerUsersApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchInternalUsersStatusApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchUserApiTest_BusinessLayer" 
 				/> -->
 
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchUserApiTest_BusinessLayer" />
-			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAssociateEntitiesTests_BusinessLayer" />
-				<!-- Enable test class once below issue is resolved. -->
+			<!-- Enable test class once below issue is resolved. -->
 			<!-- Jira PXPP-20816 -->
-			<!-- <class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ManageAssociateEntitiesTests_BusinessLayer" /> -->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.ManageAssociateEntitiesTests_BusinessLayer" 
+				/> -->
 
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListRoleLocationsApiTests_BusinessLayer" />
