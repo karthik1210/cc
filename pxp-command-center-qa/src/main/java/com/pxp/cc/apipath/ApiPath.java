@@ -1602,4 +1602,12 @@ public class ApiPath {
 	public static final String GET_ORG_SOLUTIONS_NULL_VALUES_DL() {
 		return SERVICE_ORG_DL + "/v1/orgs/null/solutions";
 	}
+	
+	public static final String CREATE_APPOINTMENT_TYPE_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types";
+	}
+	
+	public static final String GET_APPOINTMENT_TYPES_FOR_RESOURCE_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/resources/null/practices/null/appointment-types";
+	}
 }

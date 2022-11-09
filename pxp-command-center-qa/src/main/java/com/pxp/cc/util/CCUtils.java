@@ -38,6 +38,7 @@ public class CCUtils {
 			+ "abcdefghijklmnopqrstuvxyz" + ".,!@#$%&*_-";
 	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 	public static SoftAssert softAssert = new SoftAssert();
+	private static String numericString =  "0123456789";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -448,4 +449,14 @@ public class CCUtils {
 		robot.keyPress(KeyEvent.VK_PAGE_UP);
 		robot.keyRelease(KeyEvent.VK_PAGE_UP);
 	}
+	
+	public static String generateNumericString(int n) {
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0; i < n; i++) {
+			int index = (int) (numericString.length() * Math.random());
+			sb.append(numericString.charAt(index));
+		}
+		return sb.toString();
+	}
+
 }
