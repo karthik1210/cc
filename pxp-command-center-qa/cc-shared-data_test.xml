@@ -92,6 +92,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetExternalInternalMapApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForProviderApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeLocationApiTests_DataLayer"></class>
 		</classes>
 	</test>
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 
 public class ProviderDetailsPage extends CCMainPage {
@@ -129,6 +130,18 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[text()='No items found']")
 	private WebElement noItemsFound;
+
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button/following-sibling::p")
+	private List<WebElement> listOfEntTabs;
+
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
+	private WebElement arrowEntPractice;
+
+	@FindBy(xpath = "//mat-icon[@mattooltip='Back']")
+	private WebElement backIcon;
+
+	@FindBy(xpath = "//div[@class='flex']/span")
+	private WebElement toasterMessage;
 
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
@@ -359,6 +372,7 @@ public class ProviderDetailsPage extends CCMainPage {
 			if (element.getText().toString().contains(systemName)) {
 				CCUtils.verifyAndWaitForElement(element, driver);
 				javascriptClick(element);
+
 				log("clicked to system : " + systemName + " tab in location details page");
 			}
 		}
@@ -474,5 +488,83 @@ public class ProviderDetailsPage extends CCMainPage {
 	public void verifyNoItemsFound() {
 		CCUtils.verifyAndWaitForElement(noItemsFound, driver);
 		log("no items found message found in resource lists");
+	}
+
+	public void clickToEnterpriseTabPracticeAndToggleOn(String enterpriseName, String practiceName)
+			throws AWTException {
+		for (WebElement element : listOfEntTabs) {
+			CCUtils.verifyAndWaitForElement(element, driver);
+			CCUtils.scrollPageToEnd();
+			if (element.getText().toString().trim().equals(enterpriseName.trim())) {
+				if (arrowEntPractice.getText().contains("chevron_right")) {
+					arrowEntPractice.click();
+					log("clicked to arrow practice : " + arrowEntPractice.getText() + " tab");
+				} else
+					log("enterprise " + element.getText() + " is already expanded");
+				for (WebElement ele : listOfPracTabs) {
+					log("get the class of ele: " + ele.getAttribute("class").toString());
+					if (ele.getText().toString().trim().equals(practiceName.trim())
+							&& ele.getAttribute("class").toString().trim().equals("treenode no-event")) {
+						WebElement toggleButtonSpecific = driver
+								.findElement(By.xpath(xpathRequiredClientType(practiceName)));
+						CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+						toggleButtonSpecific.click();
+						log("clicked to toggle ON button of practice : " + ele.getText() + " tab");
+					} else if (ele.getText().toString().contains(practiceName)
+							&& ele.getAttribute("class").toString().contains("treenode cursor")) {
+						log("toggle for this practice :" + ele.getText() + "is already ON");
+					}
+				}
+			}
+		}
+	}
+
+	public void clickToBackButton() {
+		CCUtils.verifyAndWaitForElement(backIcon, driver);
+		backIcon.click();
+		log("clicked on Back Arrow");
+	}
+
+	public void clickToEnterpriseTabPracticeAndToggleOff(String enterpriseName, String practiceName)
+			throws AWTException {
+		log("entered to ent prac tab");
+		for (WebElement element : listOfEntTabs) {
+			log("entered to ent tab");
+			CCUtils.verifyAndWaitForElement(element, driver);
+			CCUtils.scrollPageToEnd();
+			if (element.getText().toString().contains(enterpriseName)) {
+				log("if ent tab contains desired ent");
+				log("get the text of arrow : " + arrowEntPractice.getText());
+				if (arrowEntPractice.getText().equals("chevron_right")) {
+					arrowEntPractice.click();
+					log("clicked to arrow practice : " + arrowEntPractice.getText() + " tab");
+				} else
+					log("enterprise " + element.getText() + " is already expanded");
+				for (WebElement ele : listOfPracTabs) {
+					log("entered to prac tab");
+					log("get the class of ele: " + ele.getAttribute("class").toString());
+					if (ele.getText().toString().contains(practiceName)
+							&& ele.getAttribute("class").toString().contains("treenode cursor")) {
+						WebElement toggleButtonSpecific = driver
+								.findElement(By.xpath(xpathRequiredClientType(practiceName)));
+						CCUtils.verifyAndWaitForElement(toggleButtonSpecific, driver);
+						toggleButtonSpecific.click();
+						log("clicked to toggle OFF button of practice : " + ele.getText() + " tab");
+					} else if (ele.getText().toString().contains(practiceName)
+							&& ele.getAttribute("class").toString().contains("treenode no-event")) {
+						log("toggle for this practice :" + ele.getText() + "is already OFF");
+					}
+				}
+			}
+		}
+	}
+
+	public void verifyToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
 	}
 }

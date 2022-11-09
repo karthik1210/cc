@@ -3346,4 +3346,15 @@ public class Validations {
 			}
 		}
 	}
+
+	public void verifyPatientAccessGetBL(Response getPatientAccessDetailApiResponse, boolean linkAccounts, boolean autoAgeout, int defaultAgeout) {
+		boolean actualLinkAccounts = getPatientAccessDetailApiResponse.jsonPath().get("settings.linkAccounts");
+		boolean actualAutoAgeout = getPatientAccessDetailApiResponse.jsonPath().get("ageout.autoAgeout");
+		int actualDefaultAgeout = getPatientAccessDetailApiResponse.jsonPath().get("ageout.defaultAgeout");
+		int actualAccessTillAge = getPatientAccessDetailApiResponse.jsonPath().get("guardianAccess.accessTillAge");
+		CCUtils.assertEquals(actualLinkAccounts, linkAccounts);
+		CCUtils.assertEquals(actualAutoAgeout, autoAgeout);
+		CCUtils.assertEquals(actualDefaultAgeout, defaultAgeout);
+		CCUtils.assertEquals(actualAccessTillAge, defaultAgeout);
+	}
 }
