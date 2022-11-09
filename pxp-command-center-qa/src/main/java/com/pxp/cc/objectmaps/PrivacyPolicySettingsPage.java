@@ -22,16 +22,16 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//div[text()='Privacy Policies']")
+    @FindBy(xpath = "//div[normalize-space(text())='Privacy Policies']")
     private WebElement privacyPoliciesLabel;
 
-    @FindBy(xpath = "//div[text()='Privacy Policies']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Privacy Policies']/../following-sibling::div/span/button/mat-icon[normalize-space(text())='keyboard_arrow_down']")
     private WebElement privacyPolicyExpandButton;
 
-    @FindBy(xpath = "//div[text()='Privacy Policies']/../following-sibling::div/button[@aria-label='Add']")
+    @FindBy(xpath = "//div[normalize-space(text())='Privacy Policies']/../following-sibling::div/button[@aria-label='Add']")
     private WebElement privacyPolicyAddButton;
 
-    @FindBy(xpath = "//span[text()='No Privacy Policies added.']")
+    @FindBy(xpath = "//span[normalize-space(text())='No Privacy Policies added.']")
     private WebElement noPrivacyPoliciesText;
 
     @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']")
@@ -55,13 +55,13 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Engage']/../following-sibling::div/span[text()='ACTIVATE']")
     private WebElement engageActivate;
 
-    @FindBy(xpath = "//button[text()=' Yes, Activate ']")
+    @FindBy(xpath = "//button[normalize-space(text())='Yes, Activate']")
     private WebElement yesActivateButton;
 
-    @FindBy(xpath = "//div[text()='Privacy Policies']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Privacy Policies']/../following-sibling::div/span/button/mat-icon[normalize-space(text())='keyboard_arrow_up']")
     private WebElement privacyPolicyCollapseButton;
 
-    @FindBy(xpath = "//label[text()=' Policy Name * ']")
+    @FindBy(xpath = "//label[normalize-space(text())='Policy Name *']")
     private WebElement policyNameLabel;
 
     @FindBy(xpath = "//input[@id='policyName']")
@@ -73,19 +73,19 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(id = "backNavButton")
     private WebElement privacyPolicyBackOrCancelButton;
 
-    @FindBy(xpath = "//label[text()=' Policy Language ']")
+    @FindBy(xpath = "//label[normalize-space(text())='Policy Language']")
     private WebElement privacyPolicyLanguageLabel;
 
-    @FindBy(xpath = "//div[text()='English']")
+    @FindBy(xpath = "//div[normalize-space(text())='English']")
     private WebElement privacyPolicyEnglishLanguageTab;
 
-    @FindBy(xpath = "//div[text()='SPANISH']")
+    @FindBy(xpath = "//div[normalize-space(text())='SPANISH']")
     private WebElement privacyPolicySpanishLanguageTab;
 
-    @FindBy(xpath = "//div[text()=' Policy name is required ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Policy name is required']")
     private WebElement policyNameEmptyErrorMessage;
 
-    @FindBy(xpath = "//p[text()='Status']")
+    @FindBy(xpath = "//p[normalize-space(text())='Status']")
     private WebElement statusLabel;
 
     @FindBy(xpath = "//input[@value='Draft']")
@@ -97,49 +97,49 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//input[@value='Inactive']")
     private WebElement inactiveRadioButton;
 
-    @FindBy(xpath = "//div[text()=' Draft ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Draft']")
     private WebElement draftLabel;
 
-    @FindBy(xpath = "//div[text()=' Active ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Active']")
     private WebElement activeLabel;
 
-    @FindBy(xpath = "//p[text()='Solutions']")
+    @FindBy(xpath = "//p[normalize-space(text())='Solutions']")
     private WebElement solutionsLabel;
 
-    @FindBy(xpath = "//span[text()='Virtual Visits']")
+    @FindBy(xpath = "//span[normalize-space(text())='Virtual Visits']")
     private WebElement virtualVisitsLabel;
 
-    @FindBy(xpath = "//span[text()='Pay']")
+    @FindBy(xpath = "//span[normalize-space(text())='Pay']")
     private WebElement payLabel;
 
-    @FindBy(xpath = "//span[text()='Portal']")
+    @FindBy(xpath = "//span[normalize-space(text())='Portal']")
     private WebElement portalLabel;
 
-    @FindBy(xpath = "//span[text()='PSS']")
+    @FindBy(xpath = "//span[normalize-space(text())='PSS']")
     private WebElement pssLabel;
 
-    @FindBy(xpath = "//span[text()='Chat']")
+    @FindBy(xpath = "//span[normalize-space(text())='Chat']")
     private WebElement chatLabel;
 
-    @FindBy(xpath = "//span[text()='Engage']")
+    @FindBy(xpath = "//span[normalize-space(text())='Engage']")
     private WebElement engageLabel;
 
-    @FindBy(xpath = "//mat-icon[text()=' videocam ']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='videocam']")
     private WebElement virtualVisitsIcon;
 
-    @FindBy(xpath = "//mat-icon[text()=' attach_money ']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='attach_money']")
     private WebElement payIcon;
 
-    @FindBy(xpath = "//mat-icon[text()=' person ']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='person']")
     private WebElement portalIcon;
 
-    @FindBy(xpath = "//mat-icon[text()=' event ']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='event']")
     private WebElement pssIcon;
 
-    @FindBy(xpath = "//mat-icon[text()=' chat ')]")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='chat')]")
     private WebElement chatIcon;
 
-    @FindBy(xpath = "//mat-icon[text()=' campaign ']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='campaign']")
     private WebElement engageIcon;
 
     @FindBy(xpath = "//input[@aria-label='Virtual Visits']/following-sibling::div")
@@ -163,10 +163,10 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
     private WebElement maximumCharacterError;
 
-    @FindBy(xpath = "//span[text()='Disregard Changes']")
+    @FindBy(xpath = "//span[normalize-space(text())='Disregard Changes']")
     private WebElement disregardChanges;
 
-    @FindBy(xpath = "//button[text()=' Return to Page ']")
+    @FindBy(xpath = "//button[normalize-space(text())=' Return to Page ']")
     private WebElement returnToPage;
 
     @FindBy(xpath = "//div[contains(text(), 'STATEMENT OF PRIVACY POLICY')]")
@@ -178,22 +178,22 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//span[@class='content']")
     private List<WebElement> policyList;
 
-    @FindBy(xpath = "//span[text()='Virtual Visits']")
+    @FindBy(xpath = "//span[normalize-space(text())='Virtual Visits']")
     private WebElement previewVirtualVisitsLabel;
 
-    @FindBy(xpath = "//span[text()='Pay']")
+    @FindBy(xpath = "//span[normalize-space(text())='Pay']")
     private WebElement previewPayLabel;
 
-    @FindBy(xpath = "//span[text()='Portal']")
+    @FindBy(xpath = "//span[normalize-space(text())='Portal']")
     private WebElement previewPortalLabel;
 
-    @FindBy(xpath = "//span[text()='PSS']")
+    @FindBy(xpath = "//span[normalize-space(text())='PSS']")
     private WebElement previewPSSLabel;
 
-    @FindBy(xpath = "//span[text()='Chat']")
+    @FindBy(xpath = "//span[normalize-space(text())='Chat']")
     private WebElement previewChatLabel;
 
-    @FindBy(xpath = "//span[text()='Engage']")
+    @FindBy(xpath = "//span[normalize-space(text())='Engage']")
     private WebElement previewEngageLabel;
 
     @FindBy(xpath = "//button[normalize-space(text())='Preview']")
@@ -211,31 +211,31 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(id = "editPrivacyPolicyButton")
     private WebElement editPrivacyPolicySaveButton;
 
-    @FindBy(xpath = "//i[contains(text(),'DRAFT')]")
+    @FindBy(xpath = "//i[normalize-space(text())='DRAFT']")
     private WebElement draftStatusInPrivacyPoliciesSection;
 
-    @FindBy(xpath = "//span[text()='Are you sure you want to delete this item?']")
+    @FindBy(xpath = "//span[normalize-space(text())='Are you sure you want to delete this item?']")
     private WebElement deleteConfirmationMessage;
 
-    @FindBy(xpath = "//button[text()=' Yes, Delete ']")
+    @FindBy(xpath = "//button[normalize-space(text())='Yes, Delete']")
     private WebElement yesDelete;
 
-    @FindBy(xpath = "//div[text()=' Purchased Solutions ']/following-sibling::div/button/mat-icon[text()='keyboard_arrow_down']")
+    @FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']/following-sibling::div/button/mat-icon[normalize-space(text())='keyboard_arrow_down']")
     private WebElement expandButtonForPurchaseSolutions;
 
-    @FindBy(xpath = "//button[text()=' Yes, Continue ']")
+    @FindBy(xpath = "//button[normalize-space(text())='Yes, Continue']")
     private WebElement yesContinueButton;
 
-    @FindBy(xpath = "//span[text()='By making this Privacy Policy inactive, it will no longer display in any of the associated products.  Do you want to proceed?']")
+    @FindBy(xpath = "//span[normalize-space(text())='By making this Privacy Policy inactive, it will no longer display in any of the associated products.  Do you want to proceed?']")
     private WebElement noActivePopUpMessage;
 
-    @FindBy(xpath = "//span[text()='Cancel']")
+    @FindBy(xpath = "//span[normalize-space(text())='Cancel']")
     private WebElement cancelPopUp;
 
-    @FindBy(xpath = "//span[text()=' clear ']")
+    @FindBy(xpath = "//span[normalize-space(text())='clear']")
     private WebElement clearButton;
 
-    @FindBy(xpath = "//span[text()='The following solutions will no longer display Privacy Policy.']")
+    @FindBy(xpath = "//span[normalize-space(text())='The following solutions will no longer display Privacy Policy.']")
     private WebElement solutionMissingError;
 
     @FindBy(xpath = "//p[normalize-space(text())='Hide Inactive']")
@@ -253,7 +253,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//button[@mattooltip='Edit Policy to Activate']")
     private WebElement draftToolTip;
 
-    @FindBy(xpath = "//div[text()=' Must add Privacy Policy language ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Must add Privacy Policy language']")
     private WebElement mustAddLanguageError;
 
     @FindBy(xpath = "//div[@class='angular-editor-textarea']")

@@ -20,28 +20,28 @@ public class PracticeLinksPage extends CCMainPage {
         PageFactory.initElements(driver, this);
     }
 
-    @FindBy(xpath = "//div[text()='Practice Links']")
+    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']")
     private WebElement practiceLinksLabel;
 
-    @FindBy(xpath = "//b[text()='PRACTICE WEBSITE']")
+    @FindBy(xpath = "//b[normalize-space(text())='PRACTICE WEBSITE']")
     private WebElement practiceWebsiteLabel;
 
-    @FindBy(xpath = "//div[text()='Practice Links']/../following-sibling::div/../following-sibling::div/app-practice-website/div/div/div/mat-icon[text()='link']")
+    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/../following-sibling::div/app-practice-website/div/div/div/mat-icon[text()='link']")
     private WebElement practiceWebsiteLinkIcon;
 
-    @FindBy(xpath = "//b[text()='PRACTICE WEBSITE']/../following-sibling::div/following-sibling::div/span/button/span[text()=' EDIT ']")
+    @FindBy(xpath = "//b[normalize-space(text())='PRACTICE WEBSITE']/../following-sibling::div/following-sibling::div/span/button/span[text()=' EDIT ']")
     private WebElement practiceWebsiteEdit;
 
-    @FindBy(xpath = "//b[text()='EXTERNAL URLS']")
+    @FindBy(xpath = "//b[normalize-space(text())='EXTERNAL URLS']")
     private WebElement externalUrlLabel;
 
-    @FindBy(xpath = "//b[text()='EXTERNAL URLS']/../following-sibling::div/div/button/span[text()=' EDIT ']")
+    @FindBy(xpath = "//b[normalize-space(text())='EXTERNAL URLS']/../following-sibling::div/div/button/span[text()=' EDIT ']")
     private WebElement externalUrlEdit;
 
-    @FindBy(xpath = "//b[text()='EXTERNAL URLS']/../following-sibling::div/following::div/div/following::span[text()=' ADD ']")
+    @FindBy(xpath = "//b[normalize-space(text())='EXTERNAL URLS']/../following-sibling::div/following::div/div/following::span[text()=' ADD ']")
     private WebElement externalUrlAdd;
 
-    @FindBy(xpath = "//label[text()='No external URLs configured. Click EDIT to add.']")
+    @FindBy(xpath = "//label[normalize-space(text())='No external URLs configured. Click EDIT to add.']")
     private WebElement noExternalUrlConfigureLabel;
 
     @FindBy(xpath = "//input[@aria-label='Practice Website']")
@@ -50,16 +50,16 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='CANCEL']")
     private WebElement cancelButtonForPracticeWebsite;
 
-    @FindBy(xpath = "//b[text()='PRACTICE WEBSITE']/../following-sibling::div/span[@class='content-header ng-star-inserted']")
+    @FindBy(xpath = "//b[normalize-space(text())='PRACTICE WEBSITE']/../following-sibling::div/span[@class='content-header ng-star-inserted']")
     private WebElement practiceWebsiteDisplayArea;
 
-    @FindBy(xpath = "//span[text()=' SAVE ']")
+    @FindBy(xpath = "//span[normalize-space(text())='SAVE']")
     private WebElement saveButtonForPracticeWebsite;
 
-    @FindBy(xpath = "//div[text()='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down ']")
     private WebElement practiceWebsiteExpandArrow;
 
-    @FindBy(xpath = "//div[text()='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up ']")
     private WebElement practiceWebsiteCollapseArrow;
 
     @FindBy(xpath = "//span/input")
@@ -77,25 +77,25 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//div[@class='leftColumn col-lg-11 col-md-11 ml-3']/input")
     private List<WebElement> listOfExternalUrls;
 
-    @FindBy(xpath = "//span[text()=' SAVE ']")
+    @FindBy(xpath = "//span[normalize-space(text())='SAVE']")
     private WebElement externalUrlSaveButton;
 
-    @FindBy(xpath = "//span[text()=' CANCEL ']")
+    @FindBy(xpath = "//span[normalize-space(text())='CANCEL']")
     private WebElement externalUrlCancelButton;
 
     @FindBy(xpath = "//a[@class='link']")
     private List<WebElement> listOfExternalUrlsDisplayArea;
 
-    @FindBy(xpath = "//span[text()='drag_indicator']")
+    @FindBy(xpath = "//span[normalize-space(text())='drag_indicator']")
     private List<WebElement> listOfDragElements;
 
-    @FindBy(xpath = "//span[text()=' REARRANGE ']")
+    @FindBy(xpath = "//span[normalize-space(text())='REARRANGE']")
     private WebElement externalUrlRearrangeButton;
 
-    @FindBy(xpath = "//mat-icon[text()='remove_circle']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='remove_circle']")
     private List<WebElement> listOfDeleteExternalUrlIcon;
 
-    @FindBy(xpath = "//mat-icon[text()='remove_circle']")
+    @FindBy(xpath = "//mat-icon[normalize-space(text())='remove_circle']")
     private WebElement deleteExternalUrlIcon;
 
     @FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
@@ -104,34 +104,34 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//span[@class='content']/label")
     private List<WebElement> listOfDisplayText;
 
-    @FindBy(xpath = "//div[text()='SOCIAL MEDIA']")
+    @FindBy(xpath = "//div[normalize-space(text())='SOCIAL MEDIA']")
     private WebElement socialMediaLabel;
 
-    @FindBy(xpath = "//span[text()='Twitter']")
+    @FindBy(xpath = "//span[normalize-space(text())='Twitter']")
     private WebElement twitterLabel;
 
-    @FindBy(xpath = "//span[text()='Facebook']")
+    @FindBy(xpath = "//span[normalize-space(text())='Facebook']")
     private WebElement facebookLabel;
 
-    @FindBy(xpath = "//span[text()='Linkedin']")
+    @FindBy(xpath = "//span[normalize-space(text())='Linkedin']")
     private WebElement linkedinLabel;
 
-    @FindBy(xpath = "//span[text()='YouTube']")
+    @FindBy(xpath = "//span[normalize-space(text())='YouTube']")
     private WebElement youtubeLabel;
 
-    @FindBy(xpath = "//span[text()='Twitter']/../following-sibling::div")
+    @FindBy(xpath = "//span[normalize-space(text())='Twitter']/../following-sibling::div")
     private WebElement twitterUrl;
 
-    @FindBy(xpath = "//span[text()='Facebook']/../following-sibling::div")
+    @FindBy(xpath = "//span[normalize-space(text())='Facebook']/../following-sibling::div")
     private WebElement facebookUrl;
 
-    @FindBy(xpath = "//span[text()='Linkedin']/../following-sibling::div")
+    @FindBy(xpath = "//span[normalize-space(text())='Linkedin']/../following-sibling::div")
     private WebElement linkedinUrl;
 
-    @FindBy(xpath = "//span[text()='YouTube']/../following-sibling::div")
+    @FindBy(xpath = "//span[normalize-space(text())='YouTube']/../following-sibling::div")
     private WebElement youtubeUrl;
 
-    @FindBy(xpath = "//div[text()='SOCIAL MEDIA']/../following-sibling::div/button/span[text()=' Edit ']")
+    @FindBy(xpath = "//div[normalize-space(text())='SOCIAL MEDIA']/../following-sibling::div/button/span[text()=' Edit ']")
     private WebElement socialMediaEdit;
 
     @FindBy(xpath = "//input[@aria-label='Twitter']")
@@ -164,7 +164,7 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//button[normalize-space(text())='SAVE']")
     private WebElement socialMediaSaveButton;
 
-    @FindBy(xpath = "//div[text()='URL cannot be blank if enabled.']")
+    @FindBy(xpath = "//div[normalize-space(text())='URL cannot be blank if enabled.']")
     private WebElement socialMediaError;
 
     @FindBy(xpath = "//input[@aria-label='Twitter']")
@@ -206,22 +206,22 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//div[@class='col-8']/a")
     private List<WebElement> listOfSocialMediaUrlsDisplay;
 
-    @FindBy(xpath = "//span[text()='Twitter']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    @FindBy(xpath = "//span[normalize-space(text())='Twitter']/../following-sibling::div/a[@class='link ng-star-inserted']")
     private WebElement twitterUrlDisplay;
 
-    @FindBy(xpath = "//span[text()='Facebook']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    @FindBy(xpath = "//span[normalize-space(text())='Facebook']/../following-sibling::div/a[@class='link ng-star-inserted']")
     private WebElement facebookUrlDisplay;
 
-    @FindBy(xpath = "//span[text()='Linkedin']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    @FindBy(xpath = "//span[normalize-space(text())='Linkedin']/../following-sibling::div/a[@class='link ng-star-inserted']")
     private WebElement linkedinUrlDisplay;
 
-    @FindBy(xpath = "//span[text()='YouTube']/../following-sibling::div/a[@class='link ng-star-inserted']")
+    @FindBy(xpath = "//span[normalize-space(text())='YouTube']/../following-sibling::div/a[@class='link ng-star-inserted']")
     private WebElement youTubeUrlDisplay;
 
-    @FindBy(xpath = "//label[text()='Hyperlink Text']")
+    @FindBy(xpath = "//label[normalize-space(text())='Hyperlink Text']")
     private WebElement hyperlinkText;
 
-    @FindBy(xpath = "//label[text()='Website URL']")
+    @FindBy(xpath = "//label[normalize-space(text())='Website URL']")
     private WebElement websiteUrl;
 
     public void verifyHyperLinkText() throws InterruptedException, AWTException {
