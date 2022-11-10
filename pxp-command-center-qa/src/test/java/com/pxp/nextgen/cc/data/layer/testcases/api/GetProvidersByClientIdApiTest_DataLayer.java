@@ -3,6 +3,9 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -22,7 +25,7 @@ public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
 	Response createProviderApiResponse, createClientApiResponse, createSystemApiResponse, createPracticeApiResponse,
 			createEnterpriseApiResponse, fetchProviderDetailsApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId;
-	String providerName;
+	String providerName, firstName,lastName;
 	
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -64,13 +67,14 @@ public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		practiceId = createPracticeApiResponse.jsonPath().get("orgId");	
 		logStep("Create new provider");
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		 firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		 lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		String externalId = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProvider_DL(practiceId, firstName, lastName,
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
 		providerName = createProviderApiResponse.jsonPath().getString("firstName");	
+		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 		}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing Providername, ClientId to get one Provider and verify status code and response body")
@@ -79,7 +83,10 @@ public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderByClientId_DL(clientId,providerName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
-		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);	
+		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
+		ArrayList<Integer> providerIds = new ArrayList<Integer>();
+        providerIds.add(providerId);
+		validation.verifyGetProvidersByClientIdResponseBody(fetchProviderDetailsApiResponse,providerIds,firstName,lastName);
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing ClientId, existing ProviderName and validate status code")
