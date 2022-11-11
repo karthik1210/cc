@@ -1,3 +1,5 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.testcases.ui;
 
 import com.pxp.cc.objectmaps.*;
@@ -15,13 +17,14 @@ public class NGHierarchyClientCreation extends CCMainPage {
     public CommonMethods commonMethods;
     public AddOrgNodePage addOrgNodePage;
     String systemName, enterpriseName, clientName, practiceName;
+    public PrivacyPolicySettingsPage privacyPolicySettingsPage;
 
     public NGHierarchyClientCreation(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
     }
 
-    public void createNewActiveClient(String clientNam, String clientSap, String clientType, String clientTimeZone) throws Exception {
+    public String createNewActiveClient(String clientNam, String clientSap, String clientType, String clientTimeZone) throws Exception {
         createClientPage = new CreateClientPage(driver);
         logStep("Select create client button from new dropdown");
         createClientPage.clickCreateClient();
@@ -47,9 +50,10 @@ public class NGHierarchyClientCreation extends CCMainPage {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         generalSettingsPage.verifyClientNodeIsSelected();
+        return clientName;
     }
 
-    public void createNewActiveSystem(String system, String enterprise) throws NullPointerException, InterruptedException {
+    public String createNewActiveSystem(String system, String enterprise) throws NullPointerException, InterruptedException {
         addOrgNodePage = new AddOrgNodePage(driver);
         logStep("Verify manage client button is displayed");
         addOrgNodePage.verifyManageClientButton();
@@ -66,9 +70,10 @@ public class NGHierarchyClientCreation extends CCMainPage {
         addOrgNodePage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
         addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+        return systemName;
     }
 
-    public void createNewActiveEnterprise(String system, String enterprise, String timeZone) throws NullPointerException, InterruptedException {
+    public String createNewActiveEnterprise(String system, String enterprise, String timeZone) throws NullPointerException, InterruptedException {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         logStep("Verify general settings page title");
@@ -94,9 +99,10 @@ public class NGHierarchyClientCreation extends CCMainPage {
         addOrgNodePage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
         addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+        return enterpriseName;
     }
 
-    public void createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws NullPointerException, InterruptedException {
+    public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws NullPointerException, InterruptedException {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         addOrgNodePage = new AddOrgNodePage(driver);
@@ -111,7 +117,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
         addOrgNodePage.verifyAddPracticeButton();
         addOrgNodePage.clickOnAddPracticeButton();
         logStep("Enter data in all input fields");
-        practiceName = CCUtils.generateAlphaNumericString(18);
+        practiceName = CCUtils.generateNumericString(10);
         addOrgNodePage.enterPracticeName(practiceName);
         addOrgNodePage.addPracticePmSystemAndEhrSystem(system, enterprise);
         addOrgNodePage.addTimezone(timeZone);
@@ -121,7 +127,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         addOrgNodePage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
         addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+        return practiceName;
     }
-
-
 }

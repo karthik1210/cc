@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import com.google.sitebricks.client.Web;
 import com.pxp.cc.util.CCUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -226,7 +227,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//button[normalize-space(text())='Yes, Continue']")
     private WebElement yesContinueButton;
 
-    @FindBy(xpath = "//span[normalize-space(text())='By making this Privacy Policy inactive, it will no longer display in any of the associated products.  Do you want to proceed?']")
+    @FindBy(xpath = "//span[text()='By making this Privacy Policy inactive, it will no longer display in any of the associated products.  Do you want to proceed?']")
     private WebElement noActivePopUpMessage;
 
     @FindBy(xpath = "//span[normalize-space(text())='Cancel']")
@@ -363,6 +364,33 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         }
     }
 
+    public void activateAllSolutions() {
+        CCUtils.verifyAndWaitForElement(virtualVisitsActivate, driver);
+        new Actions(driver).moveToElement(virtualVisitsActivate).click().build().perform();
+        CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        new Actions(driver).moveToElement(yesActivateButton).click().build().perform();
+        CCUtils.verifyAndWaitForElement(payActivate, driver);
+        new Actions(driver).moveToElement(payActivate).click().build().perform();
+        CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        new Actions(driver).moveToElement(yesActivateButton).click().build().perform();
+        /*CCUtils.verifyAndWaitForElement(portalActivate, driver);
+        new Actions(driver).moveToElement(portalActivate).click().build().perform();
+        CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        new Actions(driver).moveToElement(yesActivateButton).click().build().perform();*/
+        CCUtils.verifyAndWaitForElement(pssActivate, driver);
+        new Actions(driver).moveToElement(pssActivate).click().build().perform();
+        CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        new Actions(driver).moveToElement(yesActivateButton).click().build().perform();
+        /*CCUtils.verifyAndWaitForElement(chatActivate, driver);
+        new Actions(driver).moveToElement(chatActivate).click().build().perform();
+        CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        new Actions(driver).moveToElement(yesActivateButton).click().build().perform();*/
+        CCUtils.verifyAndWaitForElement(engageActivate, driver);
+        new Actions(driver).moveToElement(engageActivate).click().build().perform();
+        CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
+        new Actions(driver).moveToElement(yesActivateButton).click().build().perform();
+    }
+
     public void clickOnYesActivateButton() {
         CCUtils.scrollPageViaElement(driver, yesActivateButton);
         CCUtils.verifyAndWaitForElement(yesActivateButton, driver);
@@ -446,6 +474,22 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         new Actions(driver).moveToElement(virtualVisitsLabel).build().perform();
         CCUtils.assertEquals(virtualVisitsLabel.isDisplayed(), true);
         log("Virtual Visits Label successfully displayed");
+    }
+
+    public void verifyAllSolutionLabel() {
+        CCUtils.verifyAndWaitForElement(virtualVisitsLabel, driver);
+        CCUtils.assertEquals(virtualVisitsLabel.isDisplayed(), true);
+        CCUtils.verifyAndWaitForElement(payLabel, driver);
+        CCUtils.assertEquals(payLabel.isDisplayed(), true);
+        /*CCUtils.verifyAndWaitForElement(portalLabel, driver);
+        CCUtils.assertEquals(portalLabel.isDisplayed(), true);*/
+        CCUtils.verifyAndWaitForElement(pssLabel, driver);
+        CCUtils.assertEquals(pssLabel.isDisplayed(), true);
+        /*CCUtils.verifyAndWaitForElement(chatLabel, driver);
+        CCUtils.assertEquals(chatLabel.isDisplayed(), true);*/
+        CCUtils.verifyAndWaitForElement(engageLabel, driver);
+        CCUtils.assertEquals(engageLabel.isDisplayed(), true);
+
     }
 
     public void verifyPayLabel() {
@@ -714,6 +758,15 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
             engageToggleButton.click();
             log(solutionName + " toggle on");
         }
+    }
+
+    public void toggleOnAllSolutions() {
+        virtualVisitsToggleButton.click();
+        payToggleButton.click();
+        /*portalToggleButton.click();*/
+        pssToggleButton.click();
+        /*chatToggleButton.click();*/
+        engageToggleButton.click();
     }
 
     public void verifyPolicyName(String policyName) {
@@ -1037,5 +1090,29 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         new Actions(driver).moveToElement(mustAddLanguageError).build().perform();
         CCUtils.assertEquals(mustAddLanguageError.isDisplayed(), true);
         log("Must add Language content error message successfully displayed");
+    }
+
+    public void clickOnSystemArrow(String systemName) {
+        WebElement systemArrow = driver.findElement(By.xpath("//button[@aria-label='toggle "+systemName+"']/span/mat-icon[normalize-space(text())='keyboard_arrow_right']"));
+        CCUtils.verifyAndWaitForElement(systemArrow, driver);
+        log("clicking on system level");
+        new Actions(driver).moveToElement(systemArrow).click().build().perform();
+        log("Successfully system has been viewed");
+    }
+
+    public void clickOnEnterpriseArrow(String enterpriseName) {
+        WebElement enterpriseArrow = driver.findElement(By.xpath("//button[@aria-label='toggle "+enterpriseName+"']/span/mat-icon[normalize-space(text())='keyboard_arrow_right']"));
+        CCUtils.verifyAndWaitForElement(enterpriseArrow, driver);
+        log("clicking on Enterprise level");
+        new Actions(driver).moveToElement(enterpriseArrow).click().build().perform();
+        log("Successfully Enterprise has been viewed");
+    }
+
+    public void clickOnPracticeLevel(String practiceName) {
+        WebElement practiceLevel = driver.findElement(By.xpath("//span[normalize-space(text())='"+practiceName+"']"));
+        CCUtils.verifyAndWaitForElement(practiceLevel, driver);
+        log("clicking on Practice level");
+        new Actions(driver).moveToElement(practiceLevel).click().build().perform();
+        log("Successfully Practice has been viewed");
     }
 }
