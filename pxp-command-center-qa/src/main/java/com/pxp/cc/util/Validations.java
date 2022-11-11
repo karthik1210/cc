@@ -3360,9 +3360,9 @@ public class Validations {
 	
 	public void verifyGetProvidersByClientIdResponseBody(Response response, List<Integer> providerId,
             String firstname, String lastname) throws IOException {
-        List<Providers> actualRProvidersList = new ArrayList<Providers>();
+        List<Provider> actualRProvidersList = new ArrayList<Provider>();
         for (int i = 0; i < providerId.size(); i++) {
-            actualRProvidersList.add(new Providers(providerId.get(i), firstname, lastname));
+            actualRProvidersList.add(new Provider(providerId.get(i), firstname, lastname));
         }
         JSONArray responseBody = new JSONArray(response.getBody().asString());
         JSONObject jsonObject;
@@ -3372,7 +3372,7 @@ public class Validations {
         for (int i = 0; i < responseBody.length(); i++) {
             jsonObject = responseBody.getJSONObject(i);
             CCUtils.assertTrue(
-                    actualRProvidersList.contains(new Providers(jsonObject.getInt("providerId"),
+                    actualRProvidersList.contains(new Provider(jsonObject.getInt("providerId"),
                             jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
                     "provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
         }

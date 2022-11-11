@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Providers {
+public class Provider {
     private Integer providerId;
     private String firstname;
     private String lastname;
