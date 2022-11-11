@@ -94,8 +94,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForProviderApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeLocationApiTests_DataLayer"></class>
-				<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProvidersByClientIdApiTest_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderByClientIdApiTest_DataLayer"></class>
 		</classes>
 	</test>
 

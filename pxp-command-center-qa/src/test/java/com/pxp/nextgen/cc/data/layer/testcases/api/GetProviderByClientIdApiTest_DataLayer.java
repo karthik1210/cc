@@ -4,7 +4,6 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -16,7 +15,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
+public class GetProviderByClientIdApiTest_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private ClientInfo clientInfo;
@@ -77,7 +76,7 @@ public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
 		}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing Providername, ClientId to get one Provider and verify status code and response body")
-	public void testGetProviderForClientIdForExistingProvidernameAndClientId() throws IOException {
+	public void testGetProviderForClientIdForExistingProviderNameAndClientId() throws IOException {
 		logStep("fetch newly created provider details using provider name and ClientId");
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderByClientId_DL(clientId,providerName);
 		logStep("Validating response information");
@@ -89,7 +88,7 @@ public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing ClientId, existing ProviderName and validate status code")
-	public void testErrorResponseCodeForNonExistingProviderId() throws IOException {
+	public void testErrorResponseCodeForNonExistingClientId() throws IOException {
 		logStep("Enter non existing ClientId");
 		int clientId = Integer.parseInt(testData.getProperty("api.nonexisting.client.id"));
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderByClientId_DL(clientId,providerName);
@@ -120,7 +119,7 @@ public class GetProvidersByClientIdApiTest_DataLayer extends BaseRest {
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter ClientId & ProviderName as null and verify status code and response body")
-	public void testErrorMessageForNullValuesInPracticeIdAndLocationId() throws IOException {
+	public void testErrorMessageForNullValuesInClientIdAndProviderName() throws IOException {
 		logStep("Enter ClientId & ProviderName as null");
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderByClientId_NullValues_DL();
 		logStep("Validating response information");
