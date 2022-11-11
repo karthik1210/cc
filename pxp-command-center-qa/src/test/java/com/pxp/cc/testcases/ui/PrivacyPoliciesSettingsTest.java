@@ -69,18 +69,8 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         logStep("PXPP-22262 TC_005_Verify the Field attributes on the right side on the new page when user clicks on \"+ADD \" under privacy policies section");
-        privacyPolicySettingsPage.verifyPolicyNameLabel();
-        privacyPolicySettingsPage.verifyPolicyNameTextBox();
-        privacyPolicySettingsPage.verifyStatusLabel();
-        privacyPolicySettingsPage.verifyActiveLabel();
-        privacyPolicySettingsPage.verifyDraftLabel();
-        privacyPolicySettingsPage.verifySolutionsLabel();
+        privacyPolicySettingsPage.verifyAllElementsInPrivacyCreationPage();
         privacyPolicySettingsPage.verifyAllSolutionLabel();
-        privacyPolicySettingsPage.verifyPolicyLanguageLabel();
-        privacyPolicySettingsPage.verifyEnglishTab();
-        privacyPolicySettingsPage.verifySpanishTab();
-        privacyPolicySettingsPage.verifySaveButton();
-        privacyPolicySettingsPage.verifyBackButton();
         logStep("PXPP-22263 TC_006_ Verify that user can notify with error “Policy name is required” when user save the Policy without entering Policy Name value");
         privacyPolicySettingsPage.clickOnSaveButton();
         privacyPolicySettingsPage.verifyPolicyNameError();
@@ -241,9 +231,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ngHierarchyClientCreate();
         privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
         logStep("PXPP-24814 TC_026_Verify that user is able to add new privacy policy with Draft status & without enabling the solution");
-        privacyPolicySettingsPage.verifyPrivacyPolicyExpandButton();
         privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
-        privacyPolicySettingsPage.verifyPrivacyPolicyAddButton();
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         privacyPolicySettingsPage.enterPolicyName(testData.getProperty("pxpp.17898.policy.name2"));
         privacyPolicySettingsPage.verifyToggleOff();
@@ -268,7 +256,6 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("pxpp.17898.policy.name2") + " [v1]");
         privacyPolicySettingsPage.verifyStatusInPrivacyPoliciesSection(testData.getProperty("pxpp.17898.policy.name2"), "Draft");
         logStep("PXPP-24813 TC_027_Verify that user is able to add new privacy policy with Active status & without enabling the solution");
-        privacyPolicySettingsPage.verifyPrivacyPolicyAddButton();
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         privacyPolicySettingsPage.enterPolicyName(testData.getProperty("pxpp.17898.policy.name3"));
         privacyPolicySettingsPage.verifyToggleOff();
