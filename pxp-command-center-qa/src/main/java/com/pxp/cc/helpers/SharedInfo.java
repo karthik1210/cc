@@ -1381,7 +1381,7 @@ public class SharedInfo extends BaseRest {
 	}
 	
 	public Response getProviderByClientId_NullValues_DL() {
-		String url=ApiPath.GET_PROVIDER_BY_CLIENTID_NULL_VALUES_DL();
+		String url=ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
 		return given().spec(requestSpec).queryParam("name", "null")
 				.queryParam("clientId","null").when().get(url).then().extract().response();
 	}

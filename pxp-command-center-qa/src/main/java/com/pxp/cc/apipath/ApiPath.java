@@ -1614,8 +1614,4 @@ public class ApiPath {
 	public static String GET_PROVIDER_BY_CLIENTID_DL() {
 		return SHARED_DL + "/v1/providers/";
 	}
-	
-	public static String GET_PROVIDER_BY_CLIENTID_NULL_VALUES_DL() {
-		return SHARED_DL + "/v1/providers/";
-	}
 }
