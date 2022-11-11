@@ -3300,14 +3300,16 @@ public class Validations {
 		}
 	}
 
-	public void verifyOutputFromValidInputForGetPatientAccessSettings(Response getPatientAccessSettingApiResponse, boolean linkAccounts, boolean autoAgeout) {
-		boolean actualLinkAccounts=getPatientAccessSettingApiResponse.jsonPath().get("linkAccounts");
-		boolean actualAutoAgeout=getPatientAccessSettingApiResponse.jsonPath().get("autoAgeout");
-		CCUtils.assertEquals(actualLinkAccounts,linkAccounts);
-		CCUtils.assertEquals(actualAutoAgeout,autoAgeout);
+	public void verifyOutputFromValidInputForGetPatientAccessSettings(Response getPatientAccessSettingApiResponse,
+			boolean linkAccounts, boolean autoAgeout) {
+		boolean actualLinkAccounts = getPatientAccessSettingApiResponse.jsonPath().get("linkAccounts");
+		boolean actualAutoAgeout = getPatientAccessSettingApiResponse.jsonPath().get("autoAgeout");
+		CCUtils.assertEquals(actualLinkAccounts, linkAccounts);
+		CCUtils.assertEquals(actualAutoAgeout, autoAgeout);
 	}
 
-	public void verifyOutputFromValidInputForGetPatientAgeOutAccess(Response getPatientAccessAgeOutApiResponse, int defaultAgeout, ArrayList<PatientAccessAgeoutRules> patientAccessAgeoutRulesList, int accessTillAge) {
+	public void verifyOutputFromValidInputForGetPatientAgeOutAccess(Response getPatientAccessAgeOutApiResponse,
+			int defaultAgeout, ArrayList<PatientAccessAgeoutRules> patientAccessAgeoutRulesList, int accessTillAge) {
 		int actualDefaultAgeout = getPatientAccessAgeOutApiResponse.jsonPath().get("defaultAgeout");
 		int actualAccessTillAge = getPatientAccessAgeOutApiResponse.jsonPath().get("accessTillAge");
 		CCUtils.assertEquals(actualDefaultAgeout, defaultAgeout);
@@ -3328,7 +3330,8 @@ public class Validations {
 		}
 	}
 
-	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response getPatientAccessGaurdianApiResponse, ArrayList<PatientAccessPermission> patientAccessPermissionList) {
+	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response getPatientAccessGaurdianApiResponse,
+			ArrayList<PatientAccessPermission> patientAccessPermissionList) {
 		List<String> featureIds = getPatientAccessGaurdianApiResponse.jsonPath().get("featureId");
 		for (int i = 0; i < featureIds.size(); i++) {
 			for (int j = 0; j < featureIds.size(); j++) {
@@ -3347,7 +3350,8 @@ public class Validations {
 		}
 	}
 
-	public void verifyPatientAccessGetBL(Response getPatientAccessDetailApiResponse, boolean linkAccounts, boolean autoAgeout, int defaultAgeout) {
+	public void verifyPatientAccessGetBL(Response getPatientAccessDetailApiResponse, boolean linkAccounts,
+			boolean autoAgeout, int defaultAgeout) {
 		boolean actualLinkAccounts = getPatientAccessDetailApiResponse.jsonPath().get("settings.linkAccounts");
 		boolean actualAutoAgeout = getPatientAccessDetailApiResponse.jsonPath().get("ageout.autoAgeout");
 		int actualDefaultAgeout = getPatientAccessDetailApiResponse.jsonPath().get("ageout.defaultAgeout");
@@ -3357,24 +3361,33 @@ public class Validations {
 		CCUtils.assertEquals(actualDefaultAgeout, defaultAgeout);
 		CCUtils.assertEquals(actualAccessTillAge, defaultAgeout);
 	}
-	
-	public void verifyGetProvidersByClientIdResponseBody(Response response, List<Integer> providerId,
-            String firstname, String lastname) throws IOException {
-        List<Provider> actualRProvidersList = new ArrayList<Provider>();
-        for (int i = 0; i < providerId.size(); i++) {
-            actualRProvidersList.add(new Provider(providerId.get(i), firstname, lastname));
-        }
-        JSONArray responseBody = new JSONArray(response.getBody().asString());
-        JSONObject jsonObject;
-        CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
-        CCUtils.assertTrue(actualRProvidersList.size() == responseBody.length(),
-                "Size of actual privider list and expected providers list is not same");
-        for (int i = 0; i < responseBody.length(); i++) {
-            jsonObject = responseBody.getJSONObject(i);
-            CCUtils.assertTrue(
-                    actualRProvidersList.contains(new Provider(jsonObject.getInt("providerId"),
-                            jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
-                    "provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
-        }
-    }
+
+	public void verifyErrorMessageForInvalidPracticeId(Response response, int practiceId, int providerId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Org staff not found by orgId=" + practiceId + " and " + "staffId=" + providerId);
+	}
+
+	public void verifyGetProvidersByClientIdResponseBody(Response response, List<Integer> providerId, String firstname,
+			String lastname) throws IOException {
+		List<Provider> actualRProvidersList = new ArrayList<Provider>();
+		for (int i = 0; i < providerId.size(); i++) {
+			actualRProvidersList.add(new Provider(providerId.get(i), firstname, lastname));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
+		CCUtils.assertTrue(actualRProvidersList.size() == responseBody.length(),
+				"Size of actual privider list and expected providers list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualRProvidersList.contains(new Provider(jsonObject.getInt("providerId"),
+							jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
+					"provider Id " + jsonObject.getInt("providerId") + " doesn't exist");
+		}
+
+	}
 }

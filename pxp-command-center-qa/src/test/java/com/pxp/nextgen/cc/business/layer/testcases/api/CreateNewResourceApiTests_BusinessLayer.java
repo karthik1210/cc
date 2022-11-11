@@ -23,9 +23,8 @@ public class CreateNewResourceApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private ResourceValidations resourceValidation;
 	private Validations validation;
-	Response  getResourceDetailsApiResponse, createClientApiResponse,
-			createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse, createEnterpriseApiResponse,
-			createResourceApiResponse;
+	Response getResourceDetailsApiResponse, createClientApiResponse, createProviderApiResponse, createSystemApiResponse,
+			createPracticeApiResponse, createEnterpriseApiResponse, createResourceApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId;
 	String clientName, clientSapNumber;
 
@@ -105,7 +104,7 @@ public class CreateNewResourceApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
 				testData.getProperty("resource.link.type"));
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForBlankField(createResourceApiResponse);
+		validation.verifyErrorMessageForInvalidPracticeId(createResourceApiResponse, practiceId, providerId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test maximum character functionality for mandatory field")
@@ -119,7 +118,7 @@ public class CreateNewResourceApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 400);
 		resourceValidation.verifyErrorResponseForMaxCharacterLimit(createResourceApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid linktype in request payload and verify error response body")
 	public void testErrorResponseForInvalidLinkType() throws IOException {
 		logStep("Enter valid data in mandatory field and non existing timezone in timezone field");
