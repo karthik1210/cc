@@ -3357,4 +3357,10 @@ public class Validations {
 		CCUtils.assertEquals(actualDefaultAgeout, defaultAgeout);
 		CCUtils.assertEquals(actualAccessTillAge, defaultAgeout);
 	}
+	
+	public void verifyErrorMessageForInvalidPracticeId(Response response, int practiceId, int providerId ) throws IOException {
+        JsonPath jsonpath = new JsonPath(response.getBody().asString());
+        CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+        CCUtils.assertEquals(jsonpath.get("message").toString(), "Org staff not found by orgId="+practiceId+" and "+"staffId="+providerId);
+    }
 }
