@@ -91,12 +91,6 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ngHierarchyClientCreate();
         privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
         privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
-        privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
-        privacyPolicySettingsPage.enterPolicyName(testData.getProperty("PXPP.17898.policy.name.50.length.text"));
-        privacyPolicySettingsPage.clickOnSaveButton();
-        commonMethods.verifyToasterMessage("Success! New Privacy Policy has been successfully created");
-        privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
-        privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("PXPP.17898.policy.name.50.length.text"));
         logStep("PXPP-20528 TC_008_ Verify that user can able to enter Policy name with 51 characters in Policy Name * section");
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         privacyPolicySettingsPage.enterPolicyName(testData.getProperty("PXPP.17898.policy.name.51.length.text"));
@@ -125,8 +119,19 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         logStep("PXPP-20724 TC_014_verify the cancel functionality while adding Privacy policies for Draft/Active");
         privacyPolicySettingsPage.clickOnBackButton();
         privacyPolicySettingsPage.clickDisregardChanges();
+    }
+
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Preview, Edit and Delete functionalities in Privacy Policies Section at practice level")
+    public void verifyingEditAndDeleteFunctionalityOfPrivacyPolicies() throws Exception {
+        ngHierarchyClientCreate();
+        privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
         privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
-        privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("pxpp.17898.policy.name"));
+        privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
+        privacyPolicySettingsPage.enterPolicyName(testData.getProperty("PXPP.17898.policy.name.50.length.text"));
+        privacyPolicySettingsPage.clickOnSaveButton();
+        commonMethods.verifyToasterMessage("Success! New Privacy Policy has been successfully created");
+        privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
+        privacyPolicySettingsPage.verifyPolicyName(testData.getProperty("PXPP.17898.policy.name.50.length.text"));
         logStep("PXPP-23494 TC_016_Verify that user is able to add new privacy policy with draft status to the practice in command center Application");
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         privacyPolicySettingsPage.enterPolicyName(testData.getProperty("pxpp.17898.policy.name"));
@@ -167,12 +172,6 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         privacyPolicySettingsPage.updateLanguageContent("English");
         privacyPolicySettingsPage.clickOnEditSaveButton();
         commonMethods.verifyToasterMessage("Changes updated successfully");
-    }
-
-    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Preview, Edit and Delete functionalities in Privacy Policies Section at practice level")
-    public void verifyingEditAndDeleteFunctionalityOfPrivacyPolicies() throws Exception {
-        ngHierarchyClientCreate();
-        privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
         privacyPolicySettingsPage.clickPrivacyPolicyExpandButton();
         logStep("PXPP-23499 TC_021_Verify the  Edit functionality from Preview Popup for draft Privacy policy with changing the Policy status");
         privacyPolicySettingsPage.verifyStatusInPrivacyPoliciesSection(updatedPrivacyPolicy, "Draft");
