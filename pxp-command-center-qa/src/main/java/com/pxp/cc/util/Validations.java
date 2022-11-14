@@ -2962,7 +2962,7 @@ public class Validations {
 	public void verifyErrorResponseForInvalidMobileNumber(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Maximum mobile number size is 30 characters");
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Only numeric values are allowed, Mobile number should be 10 digits");
 	}
 
 	public void verifyErrorResponseForTimezoneCodeField(Response response, String timezoneCode) throws IOException {
