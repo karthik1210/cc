@@ -8,11 +8,9 @@ import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
-import com.pxp.cc.helpers.PracticeProviderInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.PracticeProviderValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -28,8 +26,6 @@ public class GetPracticeProviderApiTests_DataLayer extends BaseRest {
 	private Validations validation;
 	private OrgInfo orgInfo;
 	private SharedInfo sharedInfo;
-	private PracticeProviderInfo practiceProviderInfo;
-	private PracticeProviderValidations practiceProviderValidation;
 	String providerFirstName, providerLastName;
 
 	@BeforeClass()
@@ -39,8 +35,6 @@ public class GetPracticeProviderApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 		orgInfo = new OrgInfo();
 		sharedInfo = new SharedInfo();
-		practiceProviderInfo = new PracticeProviderInfo();
-		practiceProviderValidation = new PracticeProviderValidations();
 		clientId = createClient(ccUser.getClientOneType());
 		systemId = createSystemNode(clientId);
 		enterpriseId = createEnterpriseNode(systemId);
@@ -100,30 +94,33 @@ public class GetPracticeProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test get provider for a practice and a provider")
 	public void testGetPracticeProvider() throws IOException {
-		getPracticeProviderResponse = practiceProviderInfo.getPracticeProvder_DL(practiceId, providerId);
+		getPracticeProviderResponse = sharedInfo.getPracticeProvder_DL(practiceId, providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getPracticeProviderResponse);
 		CCUtils.assertEquals(getPracticeProviderResponse.getStatusCode(), 200);
 		String providerName = providerFirstName + " " + providerLastName;
-		practiceProviderValidation.validateGetPracticeProviderResponseBody(getPracticeProviderResponse, providerName);
+		validation.validateGetPracticeProviderResponseBody(getPracticeProviderResponse, providerName);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test to update provider with email and mobile and provider for a practice and a provider")
 	public void testGetPracticeProviderDetailsWithEmailId() throws IOException {
-		putPracticeProviderResponse = practiceProviderInfo.putPracticeProvder_DL(practiceId, providerId,
-				providerFirstName, providerLastName," ","bla@gmail.com", "9876543210");
+		putPracticeProviderResponse = sharedInfo.putPracticeProvder_DL(practiceId, providerId, providerFirstName,
+				providerLastName, " ", testData.getProperty("api.full.email.id"),
+				testData.getProperty("api.client.mobile"));
 		CCUtils.assertEquals(putPracticeProviderResponse.getStatusCode(), 200);
-		getPracticeProviderResponse = practiceProviderInfo.getPracticeProvder_DL(practiceId, providerId);
+		getPracticeProviderResponse = sharedInfo.getPracticeProvder_DL(practiceId, providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getPracticeProviderResponse);
 		CCUtils.assertEquals(getPracticeProviderResponse.getStatusCode(), 200);
 		String providerName = providerFirstName + " " + providerLastName;
-		practiceProviderValidation.validateGetPracticeProviderResponseBodyWithEmailAndMobile(getPracticeProviderResponse, providerName,"bla@gmail.com", "9876543210");
+		validation.validateGetPracticeProviderResponseBodyWithEmailAndMobile(getPracticeProviderResponse, providerName,
+				testData.getProperty("api.full.email.id"), testData.getProperty("api.client.mobile"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify 'Invalid input' message when enter non existing practice Id and existing provider id")
 	public void testErrorMessageForNonExistingPracticeIdAndExistingProviderId() throws IOException {
-		getPracticeProviderResponse = practiceProviderInfo.getPracticeProvder_DL(65484, providerId);
+		getPracticeProviderResponse = sharedInfo
+				.getPracticeProvder_DL(Integer.parseInt(testData.getProperty("non.existing.org.id")), providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getPracticeProviderResponse);
 		CCUtils.assertEquals(getPracticeProviderResponse.getStatusCode(), 400);
@@ -132,7 +129,8 @@ public class GetPracticeProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify 'Invalid input' message when enter existing practice Id and non-existing provider id")
 	public void testErrorMessageForExistingPracticeIdAndNonExistingProviderId() throws IOException {
-		getPracticeProviderResponse = practiceProviderInfo.getPracticeProvder_DL(practiceId, 789616);
+		getPracticeProviderResponse = sharedInfo.getPracticeProvder_DL(practiceId,
+				Integer.parseInt(testData.getProperty("non.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getPracticeProviderResponse);
 		CCUtils.assertEquals(getPracticeProviderResponse.getStatusCode(), 400);
@@ -141,7 +139,9 @@ public class GetPracticeProviderApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify 'Invalid input' message when enter both non existing practice Id and provider id")
 	public void testErrorMessageForBothNonExistingPracticeIdAndProviderId() throws IOException {
-		getPracticeProviderResponse = practiceProviderInfo.getPracticeProvder_DL(786584, 789616);
+		getPracticeProviderResponse = sharedInfo.getPracticeProvder_DL(
+				Integer.parseInt(testData.getProperty("non.existing.org.id")),
+				Integer.parseInt(testData.getProperty("non.existing.provider.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getPracticeProviderResponse);
 		CCUtils.assertEquals(getPracticeProviderResponse.getStatusCode(), 400);
@@ -151,7 +151,7 @@ public class GetPracticeProviderApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter locationId and practiceId as null to get Practice Location and verify response body")
 	public void testGetProviderForPracticeIdAndProviderIdAsNull() throws IOException {
 		logStep("Get Practice Location");
-		getPracticeProviderResponse = practiceProviderInfo.getPracticeProvder_NullValues();
+		getPracticeProviderResponse = sharedInfo.getPracticeProvder_NullValues();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getPracticeProviderResponse);
 		CCUtils.assertEquals(getPracticeProviderResponse.getStatusCode(), 400);
