@@ -300,11 +300,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void verfiySearchResultForClientType(String resultClientType) {
-		log("webdriverwait initiated");
-		WebDriverWait wait = new WebDriverWait(driver, 10);
-		wait.until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='table']"))));
-		log("webdriverwait Completed and tableClientTypeInSearchResult validation");
-		CCUtils.verifyAndWaitForListOfElement(tableClientTypeInSearchResult, driver);
+		CCUtils.verifyAndWaitForTableList(tableClientTypeInSearchResult.get(0), driver);
 		log("number of matching results for searched text :" + tableClientTypeInSearchResult.size());
 		for (int listOfClient = 0; listOfClient <= tableClientTypeInSearchResult.size(); listOfClient++) {
 			CCUtils.assertTrue(tableClientTypeInSearchResult.get(listOfClient).getText().contains(resultClientType),
