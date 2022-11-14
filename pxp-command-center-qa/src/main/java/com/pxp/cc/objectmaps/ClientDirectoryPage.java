@@ -54,7 +54,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "directoryClearButton")
 	private WebElement buttonClearClientFilter;
 
-	@FindBy(className = "confirmbutton")
+	@FindBy(xpath = "//button[@class = 'confirmbutton']/span[text()='APPLY']")
 	private WebElement buttonApplyClientFilter;
 
 	@FindBy(xpath = "//div[@class='tableborder']")
