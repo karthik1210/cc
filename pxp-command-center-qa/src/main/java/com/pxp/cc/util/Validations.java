@@ -3405,4 +3405,15 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("mobile").toString().trim(), mobile.trim());
 		CCUtils.assertEquals(jsonpath.get("email").toString().trim(), email.trim());
 	}
+	
+	public void validateGetConnectedPracticeProvidersResponseBody(Response response,int providerId,String providerName) {
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.getInt("providerId"),providerId);
+			CCUtils.assertEquals(jsonObject.get("firstName"),providerName);
+		}
+	}
 }

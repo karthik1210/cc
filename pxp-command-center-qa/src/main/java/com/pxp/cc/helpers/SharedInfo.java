@@ -1362,30 +1362,30 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
-   public Response getPracticeLocation_DL(int practiceId, int locationId, String solutionName, String en) {
+
+	public Response getPracticeLocation_DL(int practiceId, int locationId, String solutionName, String en) {
 		String url = ApiPath.GET_PRACTICE_LOCATION_DL(practiceId, locationId);
 		return given().spec(requestSpec).queryParam("locationId", locationId).header("x-product", solutionName)
 				.header("x-language", en).get(url).then().extract().response();
 	}
-	
+
 	public Response getPracticeLocation_NullValues_DL() {
 		String url = ApiPath.GET_PRACTICE_LOCATION_DL_NULL_VALUES();
 		return given().spec(requestSpec).get(url).then().extract().response();
 	}
-	
-	public Response getProviderByClientId_DL(int clientId,String providerName) {
-		String url=ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
-		return given().spec(requestSpec).queryParam("name",providerName)
-		.queryParam("clientId", clientId).when().get(url).then().extract().response();
+
+	public Response getProviderByClientId_DL(int clientId, String providerName) {
+		String url = ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
+		return given().spec(requestSpec).queryParam("name", providerName).queryParam("clientId", clientId).when()
+				.get(url).then().extract().response();
 	}
-	
+
 	public Response getProviderByClientId_NullValues_DL() {
-		String url=ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
-		return given().spec(requestSpec).queryParam("name", "null")
-				.queryParam("clientId","null").when().get(url).then().extract().response();
+		String url = ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
+		return given().spec(requestSpec).queryParam("name", "null").queryParam("clientId", "null").when().get(url)
+				.then().extract().response();
 	}
-	
+
 	public Response getPracticeProvder_DL(int practiceId, int providerId) {
 		String url = ApiPath.GET_PRACTICES_PROVIDERS(practiceId, providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -1422,5 +1422,15 @@ public class SharedInfo extends BaseRest {
 		createDisplayNameMap.put("additionalProp2", additionalProp2);
 		createDisplayNameMap.put("additionalProp3", additionalProp3);
 		return createDisplayNameMap;
+	}
+
+	public Response getConnectedPracticeProvider_BL(int practiceId, String providerName) {
+		String url = ApiPath.GET_CONNECTED_PRACTICE_PROVIDER_BL(practiceId);
+		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
+	}
+	
+	public Response getConnectedPracticeProvider_BL_Null_Values() {
+		String url = ApiPath.GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
