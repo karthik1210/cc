@@ -1620,4 +1620,16 @@ public class ApiPath {
 	public static String GET_PROVIDER_BY_CLIENTID_DL() {
 		return SHARED_DL + "/v1/providers/";
 	}
+	
+	public static final String PROVIDER_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/providers";
+	}
+	
+	public static final String UPDATE_PROVIDER_FOR_PRACTICE_BL(int providerId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices";
+	}
+	
+	public static final String UPDATE_SOLUTION_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
+	}
 }
