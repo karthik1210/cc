@@ -1433,4 +1433,41 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getProvidersForClient_BL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.PROVIDER_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response practicesAssociateToPractice_BL(int providerId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_PROVIDER_FOR_PRACTICE_BL(providerId);
+		Map<String, Object> providerAssociateToPracticePayload = providerAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(providerAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}
+	
+	private Map<String, Object> providerAssociateToPractice(Integer practiceId, Boolean active) {
+		Map<String, Object> providerassociatetoPracticeMap = new HashMap<String, Object>();
+		providerassociatetoPracticeMap.put("practiceId", practiceId);
+		providerassociatetoPracticeMap.put("active", active);
+		return providerassociatetoPracticeMap;
+	}
+	
+	public Response solutionAssociateToProvider_BL(int providerId, int practiceId, int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_PROVIDER_BL(providerId, practiceId);
+		Map<String, Object> solutionAssociateToProviderPayload = solutionAssociateToProvider(solutionId, active);
+		return given().spec(requestSpec).body(solutionAssociateToProviderPayload).when().put(url).then().extract()
+				.response();
+	}
+	
+	private Map<String, Object> solutionAssociateToProvider(Integer solutionId, Boolean active) {
+		Map<String, Object> solutionAssociateToProviderMap = new HashMap<String, Object>();
+		solutionAssociateToProviderMap.put("solutionId", solutionId);
+		solutionAssociateToProviderMap.put("active", active);
+		return solutionAssociateToProviderMap;
+	}
 }
