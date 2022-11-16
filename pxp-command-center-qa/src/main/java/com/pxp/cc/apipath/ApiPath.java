@@ -1616,10 +1616,16 @@ public class ApiPath {
 	}
 
 	public static final String GET_PRACTICES_PROVIDERS_NULL_VALUES = SHARED_DL + "/v1/practices/null/providers/null";
-	
+
 	public static String GET_PROVIDER_BY_CLIENTID_DL() {
 		return SHARED_DL + "/v1/providers/";
 	}
+
+	public static String GET_CONNECTED_PRACTICE_PROVIDER_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
+	}
+	
+	public static final String GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES = SERVICE_SHARED_BL + "/v1/practices/null/providers?name=null";
 	
 	public static final String PROVIDER_FOR_CLIENT_BL(String clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/providers";
