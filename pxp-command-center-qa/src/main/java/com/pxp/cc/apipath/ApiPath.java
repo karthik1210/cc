@@ -1638,4 +1638,13 @@ public class ApiPath {
 	public static final String UPDATE_SOLUTION_FOR_PROVIDER_BL(int providerId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
 	}
+	
+	public static final String UPDATE_RESOURCES_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+	
+	public static final String UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/resources";
+	}
+
 }
