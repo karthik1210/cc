@@ -1470,4 +1470,15 @@ public class SharedInfo extends BaseRest {
 		solutionAssociateToProviderMap.put("active", active);
 		return solutionAssociateToProviderMap;
 	}
+	
+	public Response addOrRemoveResourcesForProvider_BL(int providerId, int practiceId, List<ResourceDetails> resourceList) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).body(resourceList).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getResourcesForProviderForNullValues_BL() {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }

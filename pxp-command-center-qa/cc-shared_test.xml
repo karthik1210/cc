@@ -125,6 +125,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientProviderApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
