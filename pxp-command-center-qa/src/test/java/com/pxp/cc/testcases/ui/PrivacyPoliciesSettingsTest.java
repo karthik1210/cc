@@ -33,8 +33,8 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         logStep("Select create client button from new dropdown");
         commonMethods = new CommonMethods(driver);
         ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
-        String clientNam = testData.getProperty("new.client.name2").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-        String clientSap = testData.getProperty("new.client.sap").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+        String clientNam = testData.getProperty("new.client.name2").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25)).trim();
+        String clientSap = testData.getProperty("new.client.sap").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25));
         String clientType = testData.getProperty("new.client.type");
         String timeZone = testData.getProperty("new.client.timezone");
         String systemOrEnterprise = testData.getProperty("new.system");
@@ -47,6 +47,8 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
         privacyPolicySettingsPage.clickPurchasedSolutionsExpandButton();
         privacyPolicySettingsPage.activateAllSolutions();
+        commonMethods.verifyToasterMessage("Success! Solution has been successfully updated");
+
     }
 
     @Test(priority = 1, groups = "smoke", retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")

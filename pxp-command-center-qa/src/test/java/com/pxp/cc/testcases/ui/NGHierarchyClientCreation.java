@@ -10,14 +10,10 @@ import org.openqa.selenium.support.PageFactory;
 
 public class NGHierarchyClientCreation extends CCMainPage {
 
-    public CommandCenterGenericTest commandCenterGenericTest;
-    public ClientDirectoryPage clientDirectoryPage;
     public GeneralSettingsPage generalSettingsPage;
-    public CreateClientPage createClientPage;
     public CommonMethods commonMethods;
-    public AddOrgNodePage addOrgNodePage;
     String systemName, enterpriseName, clientName, practiceName;
-    public PrivacyPolicySettingsPage privacyPolicySettingsPage;
+    public NGHierarchyClientCreationPage ngHierarchyClientCreationPage;
 
     public NGHierarchyClientCreation(WebDriver driver) {
         super(driver);
@@ -25,28 +21,26 @@ public class NGHierarchyClientCreation extends CCMainPage {
     }
 
     public String createNewActiveClient(String clientNam, String clientSap, String clientType, String clientTimeZone) throws Exception {
-        createClientPage = new CreateClientPage(driver);
+        ngHierarchyClientCreationPage = new NGHierarchyClientCreationPage(driver);
         logStep("Select create client button from new dropdown");
-        createClientPage.clickCreateClient();
+        ngHierarchyClientCreationPage.clickCreateClient();
         commonMethods = new CommonMethods(driver);
-        commandCenterGenericTest = new CommandCenterGenericTest();
         logStep("Enter valid details in mandatory fields");
         clientName = clientNam;
         String clientSapNumber = clientSap;
-        createClientPage.createNewClient(clientName, clientSapNumber, clientType, clientTimeZone);
+        ngHierarchyClientCreationPage.createNewClient(clientName, clientSapNumber, clientType, clientTimeZone);
         logStep("Verify active radio button is by default selected on the create client popup");
-        createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
         logStep("Click on create button on the create client popup");
-        createClientPage.clickConfirmPopup();
+        ngHierarchyClientCreationPage.clickConfirmPopup();
         String actualMessage = commonMethods.getToasterMessage();
         logStep("Verify success toaster message");
         CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
         commonMethods = new CommonMethods(driver);
-        clientDirectoryPage = new ClientDirectoryPage(driver);
         logStep("Searching a client in client directory");
-        clientDirectoryPage.searchNode(clientName);
-        clientDirectoryPage.clickSearchButton();
-        clientDirectoryPage.clickSearchResult();
+        ngHierarchyClientCreationPage.searchNode(clientName);
+        ngHierarchyClientCreationPage.clickSearchButton();
+        ngHierarchyClientCreationPage.clickSearchResult();
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         generalSettingsPage.verifyClientNodeIsSelected();
@@ -54,22 +48,21 @@ public class NGHierarchyClientCreation extends CCMainPage {
     }
 
     public String createNewActiveSystem(String system, String enterprise) throws NullPointerException, InterruptedException {
-        addOrgNodePage = new AddOrgNodePage(driver);
         logStep("Verify manage client button is displayed");
-        addOrgNodePage.verifyManageClientButton();
+        ngHierarchyClientCreationPage.verifyManageClientButton();
         logStep("Click on manage client button");
-        addOrgNodePage.clickOnManageClient();
-        addOrgNodePage.verifyAddSystemButton();
-        addOrgNodePage.clickOnAddSystem();
+        ngHierarchyClientCreationPage.clickOnManageClient();
+        ngHierarchyClientCreationPage.verifyAddSystemButton();
+        ngHierarchyClientCreationPage.clickOnAddSystem();
         logStep("Enter data in all input fields");
         systemName = CCUtils.generateAlphaNumericString(18);
-        addOrgNodePage.enterSystemName(systemName);
-        addOrgNodePage.addPmSystemAndEhrSystem(system, enterprise);
-        addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+        ngHierarchyClientCreationPage.enterSystemName(systemName);
+        ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(system, enterprise);
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
         logStep("Click on save and add button");
-        addOrgNodePage.clickOnSaveAndAddButton();
+        ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
-        addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+        ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
         return systemName;
     }
 
@@ -78,55 +71,53 @@ public class NGHierarchyClientCreation extends CCMainPage {
         generalSettingsPage = new GeneralSettingsPage(driver);
         logStep("Verify general settings page title");
         generalSettingsPage.verifyGeneralSettingsPageTitle();
-        addOrgNodePage = new AddOrgNodePage(driver);
         logStep("Verify manage client button is displayed");
-        addOrgNodePage.verifyManageClientButton();
+        ngHierarchyClientCreationPage.verifyManageClientButton();
         logStep("Click on manage client button");
-        addOrgNodePage.clickOnManageClient();
-        addOrgNodePage.clickOnExpandArrow();
+        ngHierarchyClientCreationPage.clickOnManageClient();
+        ngHierarchyClientCreationPage.clickOnExpandArrow();
         logStep("Verify add new Enterprise page");
         driver.navigate().refresh();
-        addOrgNodePage.clickOnManageClient();
-        addOrgNodePage.clickOnExpandArrow();
-        addOrgNodePage.verifyAddEnterpriseButton();
-        addOrgNodePage.clickOnAddEnterprise();
+        ngHierarchyClientCreationPage.clickOnManageClient();
+        ngHierarchyClientCreationPage.clickOnExpandArrow();
+        ngHierarchyClientCreationPage.verifyAddEnterpriseButton();
+        ngHierarchyClientCreationPage.clickOnAddEnterprise();
         logStep("Enter data in all input fields");
         enterpriseName = CCUtils.generateAlphaNumericString(18);
-        addOrgNodePage.enterEnterpriseName(enterpriseName);
-        addOrgNodePage.addPmSystemAndEhrSystem(system, enterprise);
-        addOrgNodePage.addTimezone(timeZone);
+        ngHierarchyClientCreationPage.enterEnterpriseName(enterpriseName);
+        ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(system, enterprise);
+        ngHierarchyClientCreationPage.addTimezone(timeZone);
         logStep("Click on save and add button");
-        addOrgNodePage.clickOnSaveAndAddButton();
+        ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
-        addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+        ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
         return enterpriseName;
     }
 
     public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws NullPointerException, InterruptedException {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
-        addOrgNodePage = new AddOrgNodePage(driver);
         logStep("Verify manage client button is displayed");
-        addOrgNodePage.verifyManageClientButton();
+        ngHierarchyClientCreationPage.verifyManageClientButton();
         logStep("Click on manage client button");
-        addOrgNodePage.clickOnManageClient();
+        ngHierarchyClientCreationPage.clickOnManageClient();
         logStep("Click on arrow");
-        addOrgNodePage.clickOnSystemExpandArrow();
-        addOrgNodePage.clickOnEnterpriseExpandArrow();
+        ngHierarchyClientCreationPage.clickOnSystemExpandArrow();
+        ngHierarchyClientCreationPage.clickOnEnterpriseExpandArrow();
         logStep("Verify add new practice page");
-        addOrgNodePage.verifyAddPracticeButton();
-        addOrgNodePage.clickOnAddPracticeButton();
+        ngHierarchyClientCreationPage.verifyAddPracticeButton();
+        ngHierarchyClientCreationPage.clickOnAddPracticeButton();
         logStep("Enter data in all input fields");
         practiceName = CCUtils.generateNumericString(10);
-        addOrgNodePage.enterPracticeName(practiceName);
-        addOrgNodePage.addPracticePmSystemAndEhrSystem(system, enterprise);
-        addOrgNodePage.addTimezone(timeZone);
-        addOrgNodePage.enterSolutionsDisplayName(solution);
-        addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+        ngHierarchyClientCreationPage.enterPracticeName(practiceName);
+        ngHierarchyClientCreationPage.addPracticePmSystemAndEhrSystem(system, enterprise);
+        ngHierarchyClientCreationPage.addTimezone(timeZone);
+        ngHierarchyClientCreationPage.enterSolutionsDisplayName(solution);
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
         logStep("Click on save and add button");
-        addOrgNodePage.clickOnSaveAndAddButton();
+        ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
-        addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+        ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
         return practiceName;
     }
 }

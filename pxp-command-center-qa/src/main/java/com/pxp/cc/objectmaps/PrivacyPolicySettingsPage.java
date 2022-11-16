@@ -664,6 +664,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     }
 
     public void toggleOnAllSolutions() {
+        CCUtils.verifyAndWaitForElementPresence(virtualVisitsToggleButton, driver);
         virtualVisitsToggleButton.click();
         payToggleButton.click();
         /*portalToggleButton.click();*/
@@ -745,7 +746,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public void verifyKebabMenuOptions(String option) {
         if(option.equalsIgnoreCase("Preview")) {
-            CCUtils.verifyAndWaitForElement(kebabPreview, driver);
+            CCUtils.verifyAndWaitForElementPresence(kebabPreview, driver);
             CCUtils.assertEquals(kebabPreview.isDisplayed(), true);
         }
         else if(option.equalsIgnoreCase("Edit")) {
@@ -774,16 +775,16 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     }
 
     public void verifyPreviewEdit() {
+        CCUtils.verifyAndWaitForElementPresence(previewEdit, driver);
         CCUtils.scrollPageViaElement(driver, previewEdit);
-        CCUtils.verifyAndWaitForElement(previewEdit, driver);
         log("Verifying Edit button in preview");
         CCUtils.assertEquals(previewEdit.isDisplayed(), true);
         log("Successfully verified Edit button in preview");
     }
 
     public void clickPreviewEdit() {
+        CCUtils.verifyAndWaitForElementPresence(previewEdit, driver);
         CCUtils.scrollPageViaElement(driver, previewEdit);
-        CCUtils.verifyAndWaitForElement(previewEdit, driver);
         log("Clicking Edit button in preview");
         new Actions(driver).moveToElement(previewEdit).pause(2000).click().build().perform();
         log("Successfully clicked on Edit button in preview");

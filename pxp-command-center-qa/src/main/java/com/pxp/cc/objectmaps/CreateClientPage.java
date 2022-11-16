@@ -3,6 +3,7 @@
 package com.pxp.cc.objectmaps;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,7 +29,7 @@ public class CreateClientPage extends CCMainPage {
 	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement buttonConfirm;
 
-	@FindBy(xpath = "//input[@name='name']")
+	@FindBy(xpath = "//input[@id='clientNameInput']")
 	private WebElement textboxClientName;
 
 	@FindBy(xpath = "//input[@name='sapNumber']")
