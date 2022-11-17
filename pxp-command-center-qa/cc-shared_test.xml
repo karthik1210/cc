@@ -127,6 +127,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientProviderApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_BusinessLayer" />
+				<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleProviderAssociationToPracticeApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

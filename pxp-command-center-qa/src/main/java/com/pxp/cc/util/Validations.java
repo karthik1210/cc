@@ -3437,4 +3437,19 @@ public class Validations {
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
 	}
+	
+	public void verifyGetPracticesAssociatedToProviderApiResponseBody(Response response, List<Integer> practiceIds)
+			throws IOException {
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(responseBody.length() > 0, "practice Id list is empty");
+		CCUtils.assertTrue(practiceIds.size() == responseBody.length(),
+				"Size of actual practice list and expected practice list is not same");
+		List<Integer> data = new ArrayList<Integer>();
+		for (int i = 0; i < responseBody.length(); i++) {
+			data.add(Integer.valueOf(responseBody.getInt(i)));
+		}
+		Collections.sort(practiceIds);
+		Collections.sort(data);
+		CCUtils.assertEquals(practiceIds, data);
+	}
 }
