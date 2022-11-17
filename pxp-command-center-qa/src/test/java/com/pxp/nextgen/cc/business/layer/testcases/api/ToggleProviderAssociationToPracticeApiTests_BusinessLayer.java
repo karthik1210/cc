@@ -113,7 +113,7 @@ public class ToggleProviderAssociationToPracticeApiTests_BusinessLayer extends B
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociatePracticesForProviderApiResponse);
 		CCUtils.assertEquals(associateDeassociatePracticesForProviderApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForNonExistingProviderId(associateDeassociatePracticesForProviderApiResponse);
+		validation.verifyErrorMessageForBlankField(associateDeassociatePracticesForProviderApiResponse);
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid provider in provider id field and non existing practice id in practice id field and verify response body")
@@ -124,7 +124,7 @@ public class ToggleProviderAssociationToPracticeApiTests_BusinessLayer extends B
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociatePracticesForProviderApiResponse);
 		CCUtils.assertEquals(associateDeassociatePracticesForProviderApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseForNonExistingPracticeId(associateDeassociatePracticesForProviderApiResponse);
+		validation.verifyErrorMessageForBlankField(associateDeassociatePracticesForProviderApiResponse);
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank payload and verify response body")
