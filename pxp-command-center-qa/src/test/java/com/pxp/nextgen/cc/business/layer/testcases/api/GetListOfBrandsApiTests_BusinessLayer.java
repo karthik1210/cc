@@ -7,6 +7,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.BrandsValidations;
 import com.pxp.cc.util.CCUtils;
@@ -15,23 +17,66 @@ import io.restassured.response.Response;
 
 public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 
-	private BrandsInfo brandsInfo;
+	private BrandsInfo brandInfo;
+	private Validations validation;
+	Response getListofBrandsResponse, createClientApiResponse, createBrandApiResponse;
+	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId;
+	String clientName, clientSapNumber;
+	private ClientInfo clientInfo;
 	private BrandsValidations brandValidations;
-	Response getListofBrandsResponse;
-	private Validations validations;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		brandsInfo = new BrandsInfo();
-		brandValidations = new BrandsValidations();
-		validations = new Validations();
+		brandInfo = new BrandsInfo();
+		new SharedInfo();
+		validation = new Validations();
+		brandValidations= new BrandsValidations();
+		clientInfo = new ClientInfo();
+		clientId = createClient();
+	}
+
+	public int createClient() throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		logStep("Create a new client");
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create Branding Template at Client Level and fetch newly created brand details using brandId")
+	public void testCreateBrandAtClientLevel() throws IOException {
+		logStep("Enter valid values in request payload to create branding template at client level");
+		String name = testData.getProperty("client.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = testData.getProperty("client.brand.color");
+		createBrandApiResponse = brandInfo.createBrandingTemplate(String.valueOf(clientId), name, "true", color);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		String brandId = createBrandApiResponse.jsonPath().getString("brandId");
+		validation.verifyUpdateBrandingDetails(createBrandApiResponse, brandId, name);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "get list of org brands for existing org id")
 	public void testResponseCodeForGetListOfBrands() throws IOException {
-		getListofBrandsResponse = brandsInfo
-				.fetchListOfBrands_BL(Integer.parseInt(testData.getProperty("get.list.org.brands")));
+		logStep("Enter valid values in request payload to create branding template at client level");
+		String name = testData.getProperty("client.org.brand.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		String color = testData.getProperty("client.brand.color");
+		createBrandApiResponse = brandInfo.createBrandingTemplate(String.valueOf(clientId), name, "true", color);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createBrandApiResponse);
+		CCUtils.assertEquals(createBrandApiResponse.getStatusCode(), 200);
+		String brandId = createBrandApiResponse.jsonPath().getString("brandId");
+		validation.verifyUpdateBrandingDetails(createBrandApiResponse, brandId, name);
+		getListofBrandsResponse = brandInfo
+				.fetchListOfBrands_BL(clientId);
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 200);
 		brandValidations.verifyNoOfBrandsInResponseForExistingOrgId(getListofBrandsResponse);
@@ -39,7 +84,7 @@ public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 400 and error message for fetching brands for non-existing org id")
 	public void tesResponseCodeForGetListOfBrandsForNonExistingOrgId() throws IOException {
-		getListofBrandsResponse = brandsInfo
+		getListofBrandsResponse = brandInfo
 				.fetchListOfBrands_BL(Integer.parseInt(testData.getProperty("get.list.non.existing.org.brands")));
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 400);
@@ -49,37 +94,37 @@ public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 400 for fetching brands for invalid org id")
 	public void testErrorResponseCodeForGetListOfBrandsForInvalidOrgId() throws IOException {
-		getListofBrandsResponse = brandsInfo
+		getListofBrandsResponse = brandInfo
 				.fetchListOfBrandsInvalidOrgId_BL(Integer.parseInt(testData.getProperty("get.list.org.brands")));
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 400);
-		validations.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getListofBrandsResponse);
+		validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getListofBrandsResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 400 for fetching brands for entering org id as null")
 	public void testErrorResponseCodeForGetListOfBrandsForNullOrgId() throws IOException {
-		getListofBrandsResponse = brandsInfo
+		getListofBrandsResponse = brandInfo
 				.fetchListOfBrandsInvalidOrgId_BL(Integer.parseInt(testData.getProperty("get.list.org.brands")));
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 400);
-		validations.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getListofBrandsResponse);
+		validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getListofBrandsResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 405 for fetching brands for existing org id for invalid HTTP Method")
 	public void testErrorResponseCodeForGetListOfBrandsForInvalidMethodCall() throws IOException {
-		getListofBrandsResponse = brandsInfo
+		getListofBrandsResponse = brandInfo
 				.fetchListOfBrandsInvalidHTTPMethod_BL(Integer.parseInt(testData.getProperty("get.list.org.brands")));
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 405);
-		validations.verifyErrorMessageInResponseForInvalidPostMethodCall(getListofBrandsResponse);
+		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(getListofBrandsResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "validate status code 404 for fetching brands for existing org id for invalid url")
 	public void testErrorResponseCodeForGetListOfBrandsForInvalidUrl() throws IOException {
-		getListofBrandsResponse = brandsInfo
+		getListofBrandsResponse = brandInfo
 				.fetchListOfBrandsInvalidUrl_BL(Integer.parseInt(testData.getProperty("get.list.org.brands")));
 		CCUtils.responseTimeValidation(getListofBrandsResponse);
 		CCUtils.assertEquals(getListofBrandsResponse.getStatusCode(), 404);
-		validations.verifyErrorInResponseForInvalidUrl(getListofBrandsResponse);
+		validation.verifyErrorInResponseForInvalidUrl(getListofBrandsResponse);
 	}
 }
