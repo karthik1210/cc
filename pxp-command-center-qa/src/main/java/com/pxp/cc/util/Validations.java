@@ -2766,14 +2766,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response) {
-		JsonPath jsonPath = new JsonPath(response.asString());
-		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("name"));
-		Log4jUtil.log("AppointmentType externalId in response body : " + jsonPath.get("externalId"));
-		Log4jUtil.log("AppointmentType duration in response body : " + jsonPath.get("duration"));
-		Log4jUtil.log("AppointmentType durationUnit in response body : " + jsonPath.get("durationUnit"));
-		Log4jUtil.log("AppointmentType status in response body : " + jsonPath.get("status"));
-		Log4jUtil.log("Categories in response body : " + jsonPath.get("categories"));
+	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response, String name, String externalId,
+			String duration) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("name"), name);
+		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
+		CCUtils.assertEquals(jsonpath.get("duration").toString(), duration);
 	}
 
 	public void verifyBrandingDetails_BL(Response response, int orgId, String orgType, String name, String showLogo,
@@ -3417,18 +3415,19 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("mobile").toString().trim(), mobile.trim());
 		CCUtils.assertEquals(jsonpath.get("email").toString().trim(), email.trim());
 	}
-	
-	public void validateGetConnectedPracticeProvidersResponseBody(Response response,int providerId,String providerName) {
+
+	public void validateGetConnectedPracticeProvidersResponseBody(Response response, int providerId,
+			String providerName) {
 		JSONArray responseBody = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
 		CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
 		for (int i = 0; i < responseBody.length(); i++) {
 			jsonObject = responseBody.getJSONObject(i);
-			CCUtils.assertEquals(jsonObject.getInt("providerId"),providerId);
-			CCUtils.assertEquals(jsonObject.get("firstName"),providerName);
+			CCUtils.assertEquals(jsonObject.getInt("providerId"), providerId);
+			CCUtils.assertEquals(jsonObject.get("firstName"), providerName);
 		}
 	}
-	
+
 	public void verifyAddOrRemoveResourcesApiResponseBody(Response response, int resourceId) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
@@ -3437,7 +3436,7 @@ public class Validations {
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
 	}
-	
+
 	public void verifyGetPracticesAssociatedToProviderApiResponseBody(Response response, List<Integer> practiceIds)
 			throws IOException {
 		JSONArray responseBody = new JSONArray(response.getBody().asString());
@@ -3451,5 +3450,25 @@ public class Validations {
 		Collections.sort(practiceIds);
 		Collections.sort(data);
 		CCUtils.assertEquals(practiceIds, data);
+	}
+
+	public void verifyAddOrRemoveMultipleResourcesApiResponseBody(Response response, ArrayList<Integer> resourceIds)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
+	}
+
+	public void verifyAddOrRemoveAppointmentIdApiResponseBody(Response response, int appointmentTypeId)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("appointmentTypeId"), true);
 	}
 }
