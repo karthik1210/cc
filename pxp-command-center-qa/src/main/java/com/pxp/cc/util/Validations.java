@@ -2766,16 +2766,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response,String name,String externalId,String duration) {
-	
-		
-		
+	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response, String name, String externalId,
+			String duration) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("name"), name);
-		
 		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
 		CCUtils.assertEquals(jsonpath.get("duration").toString(), duration);
-		
 	}
 
 	public void verifyBrandingDetails_BL(Response response, int orgId, String orgType, String name, String showLogo,

@@ -23,11 +23,11 @@ import io.restassured.response.Response;
 public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer extends BaseRest {
 	List<AppointmentTypeDetails> appointmentTypeList;
 	private ClientInfo clientInfo;
-	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId, resourceId,appointmentTypeId;
+	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId, resourceId, appointmentTypeId;
 	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
-			createProviderApiResponse, createResourceApiResponse, getResourceDetailsApiResponse,createAppointmentTypeApiResponse,
-			AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse;
+			createProviderApiResponse, createResourceApiResponse, getResourceDetailsApiResponse,
+			createAppointmentTypeApiResponse, AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse;
 	private Validations validation;
 	private OrgInfo orgInfo;
 	private SharedInfo sharedInfo;
@@ -74,20 +74,21 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 		appointmentTypeId = createNewAppointmentType();
-		resourceId=createNewResource();
-		}
+		resourceId = createNewResource();
+	}
 
-		public int createNewAppointmentType() {
-			logStep("Create new AppointmentType");
-			String name = CCUtils.generateAlphaNumericString(10);
-			String externalId = CCUtils.generateAlphaNumericString(4);
-			String duration = CCUtils.generateNumericString(2);
-			String categoryId = CCUtils.generateNumericString(5);
-			createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, name, externalId,
-					duration, categoryId, name, externalId);
-			CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
-			return createAppointmentTypeApiResponse.jsonPath().getInt("id");
-		}
+	public int createNewAppointmentType() {
+		logStep("Create new AppointmentType");
+		String name = CCUtils.generateAlphaNumericString(10);
+		String externalId = CCUtils.generateAlphaNumericString(4);
+		String duration = CCUtils.generateNumericString(2);
+		String categoryId = CCUtils.generateNumericString(5);
+		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, name, externalId,
+				duration, categoryId, name, externalId);
+		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
+		return createAppointmentTypeApiResponse.jsonPath().getInt("id");
+	}
+
 	public int createNewResource() {
 		logStep("Create new resource");
 		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
@@ -109,7 +110,8 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 		CCUtils.assertEquals(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse.getStatusCode(), 207);
 		ArrayList<Integer> appointmentTypeIds = new ArrayList<Integer>();
 		appointmentTypeIds.add(appointmentTypeId);
-		validation.verifyAddOrRemoveAppointmentIdApiResponseBody(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeId);
+		validation.verifyAddOrRemoveAppointmentIdApiResponseBody(
+				AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid practice id in practiceId field and verify response body")
@@ -142,8 +144,7 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add/Remove single appointment type id for resource and verify response body")
 	public void testAddOrRemoveResourcesFunctionalityUsingSingleResourceId() throws IOException {
 		logStep("Add valid appointment type id for resource");
-		appointmentTypeList = Arrays.asList(
-				new AppointmentTypeDetails(appointmentTypeId, true));
+		appointmentTypeList = Arrays.asList(new AppointmentTypeDetails(appointmentTypeId, true));
 		AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse = sharedInfo
 				.addOrRemoveAppoinmentTypesAssociatedWithResources_BL(practiceId, resourceId, appointmentTypeList);
 		logStep("Validating response information");
@@ -151,16 +152,17 @@ public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessL
 		CCUtils.assertEquals(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse.getStatusCode(), 207);
 		ArrayList<Integer> appointmentTypeIds = new ArrayList<Integer>();
 		appointmentTypeIds.add(appointmentTypeId);
-		validation.verifyAddOrRemoveAppointmentIdApiResponseBody(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeId);
+		validation.verifyAddOrRemoveAppointmentIdApiResponseBody(
+				AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeId);
 		logStep("Remove valid appointment type id for resource");
-		appointmentTypeList = Arrays.asList(
-				new AppointmentTypeDetails(appointmentTypeId, false));
+		appointmentTypeList = Arrays.asList(new AppointmentTypeDetails(appointmentTypeId, false));
 		AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse = sharedInfo
 				.addOrRemoveAppoinmentTypesAssociatedWithResources_BL(practiceId, resourceId, appointmentTypeList);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse);
 		CCUtils.assertEquals(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse.getStatusCode(), 207);
-		validation.verifyAddOrRemoveAppointmentIdApiResponseBody(AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeId);
+		validation.verifyAddOrRemoveAppointmentIdApiResponseBody(
+				AddOrRemoveAppointmentTypesAssociatedWithResourceApiResponse, appointmentTypeId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank list in payload and verify response body")
