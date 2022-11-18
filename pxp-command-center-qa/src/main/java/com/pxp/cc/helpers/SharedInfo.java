@@ -1501,4 +1501,20 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(associateDeassociatePracticeForProviderPayload ).when().put(url).then()
 				.extract().response();
 	}
+	
+	public Response getProvidersForClient_DL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.PROVIDER_FOR_CLIENT_DL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+	
+	public Response practicesAssociateToPractice_DL(int providerId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_PROVIDER_FOR_PRACTICE_DL(providerId);
+		Map<String, Object> providerAssociateToPracticePayload = providerAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(providerAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}	
 }
