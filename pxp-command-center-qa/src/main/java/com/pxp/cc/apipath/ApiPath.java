@@ -1650,8 +1650,5 @@ public class ApiPath {
 	public static final String PROVIDER_FOR_CLIENT_DL(String clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
 	}
-	
-	public static final String UPDATE_PROVIDER_FOR_PRACTICE_DL(int providerId) {
-		return SHARED_DL + "/v1/providers/" + providerId + "/practices";
-	}
+
 }

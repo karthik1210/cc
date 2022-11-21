@@ -18,21 +18,16 @@ public class SearchClientProviderApiTests_DataLayer extends BaseRest {
 	private OrgInfo orgInfo;
 	private SharedInfo sharedInfo;
 	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, searchProvidersResult, updateProviderForPracticesResponse,
-			updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse, updateSolutionsForProviderResponse;
-	int clientId, systemId, enterpriseId, practiceId, solutionId, providerId;
+			createEnterpriseApiResponse, searchProvidersResult, updateProviderForPracticesResponse;
+	int clientId, systemId, enterpriseId, practiceId, providerId;
 	String clientName, clientSapNumber, systemName, enterpriseName, practiceName, firstName, lastName;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
-		
-		sharedInfo = new SharedInfo();
-		
-
+		orgInfo = new OrgInfo();		
+		sharedInfo = new SharedInfo();		
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
 		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
@@ -113,7 +108,7 @@ public class SearchClientProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(searchProvidersResult);
 		CCUtils.assertEquals(searchProvidersResult.getStatusCode(), 200);
 		logStep("Deassociate practices for provider");
-		updateProviderForPracticesResponse = sharedInfo.practicesAssociateToPractice_DL(providerId, practiceId, false);
+		updateProviderForPracticesResponse = sharedInfo.practicesAssociateToProvider_DL(providerId, practiceId, false);
 		CCUtils.assertEquals(updateProviderForPracticesResponse.getStatusCode(), 200);
 		logStep("Search providerId for client using valid input");
 		searchProvidersResult = sharedInfo.getProvidersForClient_DL(String.valueOf(clientId), null, null, null,
