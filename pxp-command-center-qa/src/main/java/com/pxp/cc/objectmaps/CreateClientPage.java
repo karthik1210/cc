@@ -37,7 +37,7 @@ public class CreateClientPage extends CCMainPage {
 	@FindBy(id = "clientTypeSelect")
 	private WebElement dropdownClientType;
 
-	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//span[@class='ng-arrow-wrapper']")
+	@FindBy(id = "timezoneSelect")
 	private WebElement dropdownTimezone;
 
 	@FindBy(xpath = "//input[@value='true']")
