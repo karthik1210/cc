@@ -818,7 +818,7 @@ public class SharedInfo extends BaseRest {
 				.extract().response();
 	}
 
-	private Map<String, Object> associateDeassociatePracticeToProvider(Integer PracticeId, Boolean active) {
+	private Map<String, Object> associateDeassociatePracticeToProvider(int PracticeId, Boolean active) {
 		Map<String, Object> associateDeassociatePracticeToProviderMap = new HashMap<String, Object>();
 		associateDeassociatePracticeToProviderMap.put("PracticeId", PracticeId);
 		associateDeassociatePracticeToProviderMap.put("active", active);
@@ -1428,12 +1428,12 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_CONNECTED_PRACTICE_PROVIDER_BL(practiceId);
 		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getConnectedPracticeProvider_BL_Null_Values() {
 		String url = ApiPath.GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getProvidersForClient_BL(String clientId, String name, String systemid, String enterpriseid,
 			String practiceid, String solutionid, String pagesize) {
 		String url = ApiPath.PROVIDER_FOR_CLIENT_BL(clientId);
@@ -1449,39 +1449,39 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(providerAssociateToPracticePayload).when().put(url).then().extract()
 				.response();
 	}
-	
+
 	private Map<String, Object> providerAssociateToPractice(Integer practiceId, Boolean active) {
 		Map<String, Object> providerassociatetoPracticeMap = new HashMap<String, Object>();
 		providerassociatetoPracticeMap.put("practiceId", practiceId);
 		providerassociatetoPracticeMap.put("active", active);
 		return providerassociatetoPracticeMap;
 	}
-	
+
 	public Response solutionAssociateToProvider_BL(int providerId, int practiceId, int solutionId, boolean active) {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_PROVIDER_BL(providerId, practiceId);
 		Map<String, Object> solutionAssociateToProviderPayload = solutionAssociateToProvider(solutionId, active);
 		return given().spec(requestSpec).body(solutionAssociateToProviderPayload).when().put(url).then().extract()
 				.response();
 	}
-	
+
 	private Map<String, Object> solutionAssociateToProvider(Integer solutionId, Boolean active) {
 		Map<String, Object> solutionAssociateToProviderMap = new HashMap<String, Object>();
 		solutionAssociateToProviderMap.put("solutionId", solutionId);
 		solutionAssociateToProviderMap.put("active", active);
 		return solutionAssociateToProviderMap;
 	}
-	
-	public Response addOrRemoveResourcesForProvider_BL(int providerId, int practiceId, List<ResourceDetails> resourceList) {
+
+	public Response addOrRemoveResourcesForProvider_BL(int providerId, int practiceId,
+			List<ResourceDetails> resourceList) {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_BL(providerId, practiceId);
-		return given().spec(requestSpec).body(resourceList).when().put(url).then()
-				.extract().response();
+		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
 	}
 
 	public Response getResourcesForProviderForNullValues_BL() {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response associateDeassociatePracticeForProvider_BL(int ProviderId, int practiceId, boolean active) {
 		String url = ApiPath.UPDATE_PROVIDER_FOR_PRACTICE_BL(ProviderId);
 		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
@@ -1489,16 +1489,33 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
 				.extract().response();
 	}
-	
+
 	public Response getPracticesAssociatedToProvider_BL(int ProviderId) {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(ProviderId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response associateDeassociatePracticeForProviderWithEmptyPayload_BL(int providerId) {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
 		Map<String, Object> associateDeassociatePracticeForProviderPayload = new HashMap<String, Object>();
-		return given().spec(requestSpec).body(associateDeassociatePracticeForProviderPayload ).when().put(url).then()
+		return given().spec(requestSpec).body(associateDeassociatePracticeForProviderPayload).when().put(url).then()
 				.extract().response();
 	}
+
+	public Response getProvidersForClient_DL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.PROVIDER_FOR_CLIENT_DL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response practicesAssociateToProvider_DL(int providerId, int practiceId, boolean active) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		Map<String, Object> providerAssociateToPracticePayload = providerAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(providerAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}
+
 }

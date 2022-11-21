@@ -1646,4 +1646,9 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/resources";
 	}
+	
+	public static final String PROVIDER_FOR_CLIENT_DL(String clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
+	}
+
 }
