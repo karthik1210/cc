@@ -818,7 +818,7 @@ public class SharedInfo extends BaseRest {
 				.extract().response();
 	}
 
-	private Map<String, Object> associateDeassociatePracticeToProvider(Integer PracticeId, Boolean active) {
+	private Map<String, Object> associateDeassociatePracticeToProvider(int PracticeId, Boolean active) {
 		Map<String, Object> associateDeassociatePracticeToProviderMap = new HashMap<String, Object>();
 		associateDeassociatePracticeToProviderMap.put("PracticeId", PracticeId);
 		associateDeassociatePracticeToProviderMap.put("active", active);
@@ -1362,27 +1362,160 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
-   public Response getPracticeLocation_DL(int practiceId, int locationId, String solutionName, String en) {
+
+	public Response getPracticeLocation_DL(int practiceId, int locationId, String solutionName, String en) {
 		String url = ApiPath.GET_PRACTICE_LOCATION_DL(practiceId, locationId);
 		return given().spec(requestSpec).queryParam("locationId", locationId).header("x-product", solutionName)
 				.header("x-language", en).get(url).then().extract().response();
 	}
-	
+
 	public Response getPracticeLocation_NullValues_DL() {
 		String url = ApiPath.GET_PRACTICE_LOCATION_DL_NULL_VALUES();
 		return given().spec(requestSpec).get(url).then().extract().response();
 	}
-	
-	public Response getProviderByClientId_DL(int clientId,String providerName) {
-		String url=ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
-		return given().spec(requestSpec).queryParam("name",providerName)
-		.queryParam("clientId", clientId).when().get(url).then().extract().response();
+
+	public Response getProviderByClientId_DL(int clientId, String providerName) {
+		String url = ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
+		return given().spec(requestSpec).queryParam("name", providerName).queryParam("clientId", clientId).when()
+				.get(url).then().extract().response();
 	}
-	
+
 	public Response getProviderByClientId_NullValues_DL() {
-		String url=ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
-		return given().spec(requestSpec).queryParam("name", "null")
-				.queryParam("clientId","null").when().get(url).then().extract().response();
+		String url = ApiPath.GET_PROVIDER_BY_CLIENTID_DL();
+		return given().spec(requestSpec).queryParam("name", "null").queryParam("clientId", "null").when().get(url)
+				.then().extract().response();
 	}
+
+	public Response getPracticeProvder_DL(int practiceId, int providerId) {
+		String url = ApiPath.GET_PRACTICES_PROVIDERS(practiceId, providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeProvder_NullValues() {
+		String url = ApiPath.GET_PRACTICES_PROVIDERS_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response putPracticeProvder_DL(int practiceId, int providerId, String additionalProp1,
+			String additionalProp2, String additionalProp3, String emailId, String mobile) {
+		String url = ApiPath.GET_PRACTICES_PROVIDERS(practiceId, providerId);
+		Map<String, Object> createPayLoad = createPutProviderRequestPayload(additionalProp1, additionalProp2,
+				additionalProp3, emailId, mobile);
+		return given().spec(requestSpec).body(createPayLoad).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> createPutProviderRequestPayload(String additionalProp1, String additionalProp2,
+			String additionalProp3, String emailId, String mobile) {
+		Map<String, Object> createProviderMap = new HashMap<String, Object>();
+		Map<String, Object> createPutProviderMap = createPutProviderRequestPayload(additionalProp1, additionalProp2,
+				additionalProp3);
+		createProviderMap.put("displayName", createPutProviderMap);
+		createProviderMap.put("email", emailId);
+		createProviderMap.put("mobile", mobile);
+		return createProviderMap;
+	}
+
+	private Map<String, Object> createPutProviderRequestPayload(String additionalProp1, String additionalProp2,
+			String additionalProp3) {
+		Map<String, Object> createDisplayNameMap = new HashMap<String, Object>();
+		createDisplayNameMap.put("additionalProp1", additionalProp1);
+		createDisplayNameMap.put("additionalProp2", additionalProp2);
+		createDisplayNameMap.put("additionalProp3", additionalProp3);
+		return createDisplayNameMap;
+	}
+
+	public Response getConnectedPracticeProvider_BL(int practiceId, String providerName) {
+		String url = ApiPath.GET_CONNECTED_PRACTICE_PROVIDER_BL(practiceId);
+		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
+	}
+
+	public Response getConnectedPracticeProvider_BL_Null_Values() {
+		String url = ApiPath.GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getProvidersForClient_BL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.PROVIDER_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response practicesAssociateToPractice_BL(int providerId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_PROVIDER_FOR_PRACTICE_BL(providerId);
+		Map<String, Object> providerAssociateToPracticePayload = providerAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(providerAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> providerAssociateToPractice(Integer practiceId, Boolean active) {
+		Map<String, Object> providerassociatetoPracticeMap = new HashMap<String, Object>();
+		providerassociatetoPracticeMap.put("practiceId", practiceId);
+		providerassociatetoPracticeMap.put("active", active);
+		return providerassociatetoPracticeMap;
+	}
+
+	public Response solutionAssociateToProvider_BL(int providerId, int practiceId, int solutionId, boolean active) {
+		String url = ApiPath.UPDATE_SOLUTION_FOR_PROVIDER_BL(providerId, practiceId);
+		Map<String, Object> solutionAssociateToProviderPayload = solutionAssociateToProvider(solutionId, active);
+		return given().spec(requestSpec).body(solutionAssociateToProviderPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> solutionAssociateToProvider(Integer solutionId, Boolean active) {
+		Map<String, Object> solutionAssociateToProviderMap = new HashMap<String, Object>();
+		solutionAssociateToProviderMap.put("solutionId", solutionId);
+		solutionAssociateToProviderMap.put("active", active);
+		return solutionAssociateToProviderMap;
+	}
+
+	public Response addOrRemoveResourcesForProvider_BL(int providerId, int practiceId,
+			List<ResourceDetails> resourceList) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
+	}
+
+	public Response getResourcesForProviderForNullValues_BL() {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeForProvider_BL(int ProviderId, int practiceId, boolean active) {
+		String url = ApiPath.UPDATE_PROVIDER_FOR_PRACTICE_BL(ProviderId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = associateDeassociatePracticeMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getPracticesAssociatedToProvider_BL(int ProviderId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(ProviderId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeForProviderWithEmptyPayload_BL(int providerId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_BL(providerId);
+		Map<String, Object> associateDeassociatePracticeForProviderPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForProviderPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response getProvidersForClient_DL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.PROVIDER_FOR_CLIENT_DL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
+
+	public Response practicesAssociateToProvider_DL(int providerId, int practiceId, boolean active) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_PROVIDER_DL(providerId);
+		Map<String, Object> providerAssociateToPracticePayload = providerAssociateToPractice(practiceId, active);
+		return given().spec(requestSpec).body(providerAssociateToPracticePayload).when().put(url).then().extract()
+				.response();
+	}
+
 }

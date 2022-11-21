@@ -78,9 +78,6 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyResponseBodyForProviderDetails(fetchProviderDetailsApiResponse,
-				testData.getProperty("provider.firstname"), testData.getProperty("provider.lastname"),
-				testData.getProperty("provider.gender"), testData.getProperty("provider.status"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing providerId in providerId field and validate status code")
