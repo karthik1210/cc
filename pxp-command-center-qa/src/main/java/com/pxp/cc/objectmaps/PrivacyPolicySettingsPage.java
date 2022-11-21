@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 public class PrivacyPolicySettingsPage extends CCMainPage {
@@ -260,22 +261,51 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//div[@class='angular-editor-textarea']")
     private WebElement languageContentTextArea;
 
-    public void verifyPrivacyPoliciesLabel() {
-        CCUtils.scrollPageViaElement(driver, privacyPoliciesLabel);
-        CCUtils.verifyAndWaitForElement(privacyPoliciesLabel, driver);
-        log("Verifying whether Privacy Policies Label present or not");
-        new Actions(driver).moveToElement(privacyPoliciesLabel).build().perform();
-        CCUtils.assertEquals(privacyPoliciesLabel.isDisplayed(), true);
-        log("Privacy Policies Label successfully displayed");
+    public HashMap<String,Boolean> verifyPrivacyPocilyBasicElements(){
+        HashMap<String,Boolean> result = new HashMap<String, Boolean>();
+        result.put("verifyPrivacyPoliciesLabel",verifyPrivacyPoliciesLabel());
+        result.put("verifyPrivacyPolicyAddButton",verifyPrivacyPolicyAddButton());
+        result.put("verifyPrivacyPolicyExpandButton",verifyPrivacyPolicyExpandButton());
+        clickPrivacyPolicyExpandButton();
+        result.put("verifyNoPrivacyPoliciesText",verifyNoPrivacyPoliciesText());
+        result.put("verifyPrivacyPolicyCollapseButton",verifyPrivacyPolicyCollapseButton());
+        clickPrivacyPolicyCollapseButton();
+        result.put("verifyPrivacyPolicyExpandButton",verifyPrivacyPolicyExpandButton());
+        clickPrivacyPolicyAddButton();
+        result.put("verifyURLOfPolicyCreationPage",verifyUrlForPrivacyPolicyPage());
+        result.put("verifyingAllElementsInPrivacyCreation",verifyAllElementsInPrivacyCreationPage());
+        result.put("verifyAllSolutions", verifyAllSolutionLabel());
+        clickOnSaveButton();
+        result.put("verifyPolicyNameError", verifyPolicyNameError());
+        return result;
     }
 
-    public void verifyPrivacyPolicyExpandButton() {
-        CCUtils.scrollPageViaElement(driver, privacyPolicyExpandButton);
-        CCUtils.verifyAndWaitForElement(privacyPolicyExpandButton, driver);
-        log("Verifying whether Privacy Policy Expand Button present or not");
-        new Actions(driver).moveToElement(privacyPolicyExpandButton).build().perform();
-        CCUtils.assertEquals(privacyPolicyExpandButton.isDisplayed(), true);
-        log("Privacy Policy Expand Button successfully displayed");
+    public boolean verifyPrivacyPoliciesLabel() {
+        try {
+            CCUtils.verifyAndWaitForElement(privacyPoliciesLabel, driver);
+            CCUtils.scrollPageViaElement(driver, privacyPoliciesLabel);
+            log("Verifying whether Privacy Policies Label present or not");
+            new Actions(driver).moveToElement(privacyPoliciesLabel).build().perform();
+            CCUtils.assertEquals(privacyPoliciesLabel.isDisplayed(), true);
+            log("Privacy Policies Label successfully displayed");
+            return true;
+        }catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public boolean verifyPrivacyPolicyExpandButton() {
+        try {
+            CCUtils.scrollPageViaElement(driver, privacyPolicyExpandButton);
+            CCUtils.verifyAndWaitForElement(privacyPolicyExpandButton, driver);
+            log("Verifying whether Privacy Policy Expand Button present or not");
+            new Actions(driver).moveToElement(privacyPolicyExpandButton).build().perform();
+            CCUtils.assertEquals(privacyPolicyExpandButton.isDisplayed(), true);
+            log("Privacy Policy Expand Button successfully displayed");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void clickPrivacyPolicyExpandButton() {
@@ -286,13 +316,18 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("Successfully clicked on privacy policy Expand button");
     }
 
-    public void verifyPrivacyPolicyCollapseButton() {
-        CCUtils.scrollPageViaElement(driver, privacyPolicyCollapseButton);
-        CCUtils.verifyAndWaitForElement(privacyPolicyCollapseButton, driver);
-        log("Verifying whether Privacy Policy Collapse Button present or not");
-        new Actions(driver).moveToElement(privacyPolicyCollapseButton).build().perform();
-        CCUtils.assertEquals(privacyPolicyCollapseButton.isDisplayed(), true);
-        log("Privacy Policy Collapse Button successfully displayed");
+    public boolean verifyPrivacyPolicyCollapseButton() {
+        try {
+            CCUtils.scrollPageViaElement(driver, privacyPolicyCollapseButton);
+            CCUtils.verifyAndWaitForElement(privacyPolicyCollapseButton, driver);
+            log("Verifying whether Privacy Policy Collapse Button present or not");
+            new Actions(driver).moveToElement(privacyPolicyCollapseButton).build().perform();
+            CCUtils.assertEquals(privacyPolicyCollapseButton.isDisplayed(), true);
+            log("Privacy Policy Collapse Button successfully displayed");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void clickPrivacyPolicyCollapseButton() {
@@ -303,13 +338,18 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("Successfully clicked on privacy policy Collapse button");
     }
 
-    public void verifyPrivacyPolicyAddButton() {
-        CCUtils.scrollPageViaElement(driver, privacyPolicyAddButton);
-        CCUtils.verifyAndWaitForElement(privacyPolicyAddButton, driver);
-        log("Verifying whether Privacy Policy Add Button present or not");
-        new Actions(driver).moveToElement(privacyPolicyAddButton).build().perform();
-        CCUtils.assertEquals(privacyPolicyAddButton.isDisplayed(), true);
-        log("Privacy Policy Add Button successfully displayed");
+    public boolean verifyPrivacyPolicyAddButton() {
+        try {
+            CCUtils.scrollPageViaElement(driver, privacyPolicyAddButton);
+            CCUtils.verifyAndWaitForElement(privacyPolicyAddButton, driver);
+            log("Verifying whether Privacy Policy Add Button present or not");
+            new Actions(driver).moveToElement(privacyPolicyAddButton).build().perform();
+            CCUtils.assertEquals(privacyPolicyAddButton.isDisplayed(), true);
+            log("Privacy Policy Add Button successfully displayed");
+            return true;
+        } catch(Exception exception) {
+            return false;
+        }
     }
 
     public void clickPrivacyPolicyAddButton() {
@@ -320,21 +360,31 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("Successfully clicked on privacy policy Add button");
     }
 
-    public void verifyNoPrivacyPoliciesText() {
-        CCUtils.scrollPageViaElement(driver, noPrivacyPoliciesText);
-        CCUtils.verifyAndWaitForElement(noPrivacyPoliciesText, driver);
-        log("Verifying whether No Privacy Policies Text present or not");
-        new Actions(driver).moveToElement(noPrivacyPoliciesText).build().perform();
-        CCUtils.assertEquals(noPrivacyPoliciesText.getText().equalsIgnoreCase("No Privacy Policies added."), true);
-        log("No Privacy Policies Text successfully displayed");
+    public boolean verifyNoPrivacyPoliciesText() {
+        try {
+            CCUtils.scrollPageViaElement(driver, noPrivacyPoliciesText);
+            CCUtils.verifyAndWaitForElement(noPrivacyPoliciesText, driver);
+            log("Verifying whether No Privacy Policies Text present or not");
+            new Actions(driver).moveToElement(noPrivacyPoliciesText).build().perform();
+            CCUtils.assertEquals(noPrivacyPoliciesText.getText().equalsIgnoreCase("No Privacy Policies added."), true);
+            log("No Privacy Policies Text successfully displayed");
+            return true;
+        } catch(Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyAvailableForPurchaseLabel() {
-        CCUtils.scrollPageViaElement(driver, availableForPurchaseLabel);
-        CCUtils.verifyAndWaitForElement(availableForPurchaseLabel, driver);
-        log("Verifying whether Available for Purchase Label present or not");
-        CCUtils.assertEquals(availableForPurchaseLabel.isDisplayed(), true);
-        log("Available for Purchase Label successfully displayed");
+    public boolean verifyAvailableForPurchaseLabel() {
+        try {
+            CCUtils.scrollPageViaElement(driver, availableForPurchaseLabel);
+            CCUtils.verifyAndWaitForElement(availableForPurchaseLabel, driver);
+            log("Verifying whether Available for Purchase Label present or not");
+            CCUtils.assertEquals(availableForPurchaseLabel.isDisplayed(), true);
+            log("Available for Purchase Label successfully displayed");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void clickOnActivateSolutionButton(String solution) {
@@ -400,67 +450,77 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("Successfully clicked on yes activate button");
     }
 
-    public void verifyUrlForPrivacyPolicyPage() {
-        CCUtils.assertEquals(driver.getCurrentUrl().contains("privacypolicy"), true);
-        log("We have successfully navigated to Privacy policy creation page");
+    public boolean verifyUrlForPrivacyPolicyPage() {
+        try {
+            CCUtils.assertEquals(driver.getCurrentUrl().contains("privacypolicy"), true);
+            log("We have successfully navigated to Privacy policy creation page");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyAllElementsInPrivacyCreationPage() {
-        CCUtils.verifyAndWaitForElement(policyNameLabel, driver);
-        log("Verifying whether Policy Name Label present or not");
-        new Actions(driver).moveToElement(policyNameLabel).build().perform();
-        CCUtils.assertEquals(policyNameLabel.isDisplayed(), true);
-        log("Policy Name Label successfully displayed");
-        CCUtils.verifyAndWaitForElement(policyNameTextBox, driver);
-        log("Verifying whether Policy Name Text box present or not");
-        new Actions(driver).moveToElement(policyNameTextBox).build().perform();
-        CCUtils.assertEquals(policyNameTextBox.isDisplayed(), true);
-        log("Policy Name Text box successfully displayed");
-        CCUtils.verifyAndWaitForElement(statusLabel, driver);
-        log("Verifying whether Status Label present or not");
-        new Actions(driver).moveToElement(statusLabel).build().perform();
-        CCUtils.assertEquals(statusLabel.isDisplayed(), true);
-        log("Status Label successfully displayed");
-        CCUtils.verifyAndWaitForElement(activeLabel, driver);
-        log("Verifying whether Active Label present or not");
-        new Actions(driver).moveToElement(activeLabel).build().perform();
-        CCUtils.assertEquals(activeLabel.isDisplayed(), true);
-        log("Active Label successfully displayed");
-        CCUtils.verifyAndWaitForElement(draftLabel, driver);
-        log("Verifying whether Draft Label present or not");
-        new Actions(driver).moveToElement(draftLabel).build().perform();
-        CCUtils.assertEquals(draftLabel.isDisplayed(), true);
-        log("Draft Label successfully displayed");
-        CCUtils.verifyAndWaitForElement(solutionsLabel, driver);
-        log("Verifying whether Solutions Label present or not");
-        new Actions(driver).moveToElement(solutionsLabel).build().perform();
-        CCUtils.assertEquals(solutionsLabel.isDisplayed(), true);
-        log("Solutions Label successfully displayed");
-        CCUtils.verifyAndWaitForElement(privacyPolicyLanguageLabel, driver);
-        log("Verifying whether Policy Language Label present or not");
-        new Actions(driver).moveToElement(privacyPolicyLanguageLabel).build().perform();
-        CCUtils.assertEquals(privacyPolicyLanguageLabel.isDisplayed(), true);
-        log("Policy Language Label successfully displayed");
-        CCUtils.verifyAndWaitForElement(privacyPolicyEnglishLanguageTab, driver);
-        log("Verifying whether English Language Tab present or not");
-        new Actions(driver).moveToElement(privacyPolicyEnglishLanguageTab).build().perform();
-        CCUtils.assertEquals(privacyPolicyEnglishLanguageTab.isDisplayed(), true);
-        log("English Language Tab successfully displayed");
-        CCUtils.verifyAndWaitForElement(privacyPolicySpanishLanguageTab, driver);
-        log("Verifying whether Spanish Language Tab present or not");
-        new Actions(driver).moveToElement(privacyPolicySpanishLanguageTab).build().perform();
-        CCUtils.assertEquals(privacyPolicySpanishLanguageTab.isDisplayed(), true);
-        log("Spanish Language Tab successfully displayed");
-        CCUtils.verifyAndWaitForElement(createPrivacyPolicySaveButton, driver);
-        log("Verifying whether Save Button present or not");
-        new Actions(driver).moveToElement(createPrivacyPolicySaveButton).build().perform();
-        CCUtils.assertEquals(createPrivacyPolicySaveButton.isDisplayed(), true);
-        log("Save Button successfully displayed");
-        CCUtils.verifyAndWaitForElement(privacyPolicyBackOrCancelButton, driver);
-        log("Verifying whether Back Arrow present or not");
-        new Actions(driver).moveToElement(privacyPolicyBackOrCancelButton).build().perform();
-        CCUtils.assertEquals(privacyPolicyBackOrCancelButton.isDisplayed(), true);
-        log("Back Arrow successfully displayed");
+    public boolean verifyAllElementsInPrivacyCreationPage() {
+        try {
+            CCUtils.verifyAndWaitForElement(policyNameLabel, driver);
+            log("Verifying whether Policy Name Label present or not");
+            new Actions(driver).moveToElement(policyNameLabel).build().perform();
+            CCUtils.assertEquals(policyNameLabel.isDisplayed(), true);
+            log("Policy Name Label successfully displayed");
+            CCUtils.verifyAndWaitForElement(policyNameTextBox, driver);
+            log("Verifying whether Policy Name Text box present or not");
+            new Actions(driver).moveToElement(policyNameTextBox).build().perform();
+            CCUtils.assertEquals(policyNameTextBox.isDisplayed(), true);
+            log("Policy Name Text box successfully displayed");
+            CCUtils.verifyAndWaitForElement(statusLabel, driver);
+            log("Verifying whether Status Label present or not");
+            new Actions(driver).moveToElement(statusLabel).build().perform();
+            CCUtils.assertEquals(statusLabel.isDisplayed(), true);
+            log("Status Label successfully displayed");
+            CCUtils.verifyAndWaitForElement(activeLabel, driver);
+            log("Verifying whether Active Label present or not");
+            new Actions(driver).moveToElement(activeLabel).build().perform();
+            CCUtils.assertEquals(activeLabel.isDisplayed(), true);
+            log("Active Label successfully displayed");
+            CCUtils.verifyAndWaitForElement(draftLabel, driver);
+            log("Verifying whether Draft Label present or not");
+            new Actions(driver).moveToElement(draftLabel).build().perform();
+            CCUtils.assertEquals(draftLabel.isDisplayed(), true);
+            log("Draft Label successfully displayed");
+            CCUtils.verifyAndWaitForElement(solutionsLabel, driver);
+            log("Verifying whether Solutions Label present or not");
+            new Actions(driver).moveToElement(solutionsLabel).build().perform();
+            CCUtils.assertEquals(solutionsLabel.isDisplayed(), true);
+            log("Solutions Label successfully displayed");
+            CCUtils.verifyAndWaitForElement(privacyPolicyLanguageLabel, driver);
+            log("Verifying whether Policy Language Label present or not");
+            new Actions(driver).moveToElement(privacyPolicyLanguageLabel).build().perform();
+            CCUtils.assertEquals(privacyPolicyLanguageLabel.isDisplayed(), true);
+            log("Policy Language Label successfully displayed");
+            CCUtils.verifyAndWaitForElement(privacyPolicyEnglishLanguageTab, driver);
+            log("Verifying whether English Language Tab present or not");
+            new Actions(driver).moveToElement(privacyPolicyEnglishLanguageTab).build().perform();
+            CCUtils.assertEquals(privacyPolicyEnglishLanguageTab.isDisplayed(), true);
+            log("English Language Tab successfully displayed");
+            CCUtils.verifyAndWaitForElement(privacyPolicySpanishLanguageTab, driver);
+            log("Verifying whether Spanish Language Tab present or not");
+            new Actions(driver).moveToElement(privacyPolicySpanishLanguageTab).build().perform();
+            CCUtils.assertEquals(privacyPolicySpanishLanguageTab.isDisplayed(), true);
+            log("Spanish Language Tab successfully displayed");
+            CCUtils.verifyAndWaitForElement(createPrivacyPolicySaveButton, driver);
+            log("Verifying whether Save Button present or not");
+            new Actions(driver).moveToElement(createPrivacyPolicySaveButton).build().perform();
+            CCUtils.assertEquals(createPrivacyPolicySaveButton.isDisplayed(), true);
+            log("Save Button successfully displayed");
+            CCUtils.verifyAndWaitForElement(privacyPolicyBackOrCancelButton, driver);
+            log("Verifying whether Back Arrow present or not");
+            new Actions(driver).moveToElement(privacyPolicyBackOrCancelButton).build().perform();
+            CCUtils.assertEquals(privacyPolicyBackOrCancelButton.isDisplayed(), true);
+            log("Back Arrow successfully displayed");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void verifyingPolicyNameTextBox(String policyName) {
@@ -471,19 +531,24 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log(policyName+" as Policy Name successfully displayed in text box");
     }
 
-    public void verifyAllSolutionLabel() {
-        CCUtils.verifyAndWaitForElement(virtualVisitsLabel, driver);
-        CCUtils.assertEquals(virtualVisitsLabel.isDisplayed(), true);
-        CCUtils.verifyAndWaitForElement(payLabel, driver);
-        CCUtils.assertEquals(payLabel.isDisplayed(), true);
+    public boolean verifyAllSolutionLabel() {
+        try {
+            CCUtils.verifyAndWaitForElement(virtualVisitsLabel, driver);
+            CCUtils.assertEquals(virtualVisitsLabel.isDisplayed(), true);
+            CCUtils.verifyAndWaitForElement(payLabel, driver);
+            CCUtils.assertEquals(payLabel.isDisplayed(), true);
         /*CCUtils.verifyAndWaitForElement(portalLabel, driver);
         CCUtils.assertEquals(portalLabel.isDisplayed(), true);*/
-        CCUtils.verifyAndWaitForElement(pssLabel, driver);
-        CCUtils.assertEquals(pssLabel.isDisplayed(), true);
+            CCUtils.verifyAndWaitForElement(pssLabel, driver);
+            CCUtils.assertEquals(pssLabel.isDisplayed(), true);
         /*CCUtils.verifyAndWaitForElement(chatLabel, driver);
         CCUtils.assertEquals(chatLabel.isDisplayed(), true);*/
-        CCUtils.verifyAndWaitForElement(engageLabel, driver);
-        CCUtils.assertEquals(engageLabel.isDisplayed(), true);
+            CCUtils.verifyAndWaitForElement(engageLabel, driver);
+            CCUtils.assertEquals(engageLabel.isDisplayed(), true);
+            return true;
+        }catch (Exception exception) {
+            return false;
+        }
     }
     public void clickOnSaveButton() {
         CCUtils.scrollPageViaElement(driver, createPrivacyPolicySaveButton);
@@ -493,13 +558,19 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
         log("successfully clicked on save button");
     }
 
-    public void verifyPolicyNameError() {
-        CCUtils.scrollPageViaElement(driver, policyNameEmptyErrorMessage);
-        CCUtils.verifyAndWaitForElement(policyNameEmptyErrorMessage, driver);
-        log("Verifying whether Error Message present when policy name is empty");
-        new Actions(driver).moveToElement(policyNameEmptyErrorMessage).build().perform();
-        CCUtils.assertEquals(policyNameEmptyErrorMessage.isDisplayed(), true);
-        log("Error message successfully displayed");
+    public boolean verifyPolicyNameError() {
+        try {
+            CCUtils.scrollPageViaElement(driver, policyNameEmptyErrorMessage);
+            CCUtils.verifyAndWaitForElement(policyNameEmptyErrorMessage, driver);
+            log("Verifying whether Error Message present when policy name is empty");
+            new Actions(driver).moveToElement(policyNameEmptyErrorMessage).build().perform();
+            CCUtils.assertEquals(policyNameEmptyErrorMessage.isDisplayed(), true);
+            log("Error message successfully displayed");
+            return true;
+        }
+        catch (Exception exception) {
+            return false;
+        }
     }
 
     public void verifyMaximumCharacterError() {

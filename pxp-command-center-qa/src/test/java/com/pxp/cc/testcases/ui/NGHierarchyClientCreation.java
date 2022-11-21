@@ -12,7 +12,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
 
     public GeneralSettingsPage generalSettingsPage;
     public CommonMethods commonMethods;
-    String systemName, enterpriseName, clientName, practiceName;
+    public static String systemName, enterpriseName, clientName, practiceName;
     public NGHierarchyClientCreationPage ngHierarchyClientCreationPage;
 
     public NGHierarchyClientCreation(WebDriver driver) {
