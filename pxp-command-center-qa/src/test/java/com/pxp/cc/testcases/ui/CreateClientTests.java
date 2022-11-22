@@ -31,7 +31,7 @@ public class CreateClientTests extends CommandCenterGenericTest {
 	public void testNewActiveClientCreation()  throws Exception {
 		logStep("Enter valid details in mandatory fields");
 		String clientName = testData.getProperty("new.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25));
 		String clientSapNumber = testData.getProperty("new.client.sap")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
 		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),

@@ -44,18 +44,7 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
         privacyPolicySettingsPage.clickPurchasedSolutionsExpandButton();
         privacyPolicySettingsPage.verifyAvailableForPurchaseLabel();
-        privacyPolicySettingsPage.clickOnActivateSolutionButton("Virtual Visits");
-        privacyPolicySettingsPage.clickOnYesActivateButton();
-        privacyPolicySettingsPage.clickOnActivateSolutionButton("Pay");
-        privacyPolicySettingsPage.clickOnYesActivateButton();
-        /*privacyPolicySettingsPage.clickOnActivateSolutionButton("Portal");
-        privacyPolicySettingsPage.clickOnYesActivateButton();*/
-        privacyPolicySettingsPage.clickOnActivateSolutionButton("PSS");
-        privacyPolicySettingsPage.clickOnYesActivateButton();
-        /*privacyPolicySettingsPage.clickOnActivateSolutionButton("Chat");
-        privacyPolicySettingsPage.clickOnYesActivateButton();*/
-        privacyPolicySettingsPage.clickOnActivateSolutionButton("Engage");
-        privacyPolicySettingsPage.clickOnYesActivateButton();
+        privacyPolicySettingsPage.activateAllSolutions();
     }
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements and basic functionalities in Privacy Policies Section at practice level")
@@ -77,23 +66,8 @@ public class PrivacyPolicySettingsTests extends CommandCenterGenericTest {
         privacyPolicySettingsPage.clickPrivacyPolicyAddButton();
         privacyPolicySettingsPage.verifyUrlForPrivacyPolicyPage();
         logStep("PXPP-22262 TC_005_Verify the Field attributes on the right side on the new page when user clicks on \"+ADD \" under privacy policies section");
-        privacyPolicySettingsPage.verifyPolicyNameLabel();
-        privacyPolicySettingsPage.verifyPolicyNameTextBox();
-        privacyPolicySettingsPage.verifyStatusLabel();
-        privacyPolicySettingsPage.verifyActiveLabel();
-        privacyPolicySettingsPage.verifyDraftLabel();
-        privacyPolicySettingsPage.verifySolutionsLabel();
-        privacyPolicySettingsPage.verifyVirtualVisitsLabel();
-        privacyPolicySettingsPage.verifyPayLabel();
-        //privacyPolicySettingsPage.verifyPortalLabel();
-        privacyPolicySettingsPage.verifyPSSLabel();
-        //privacyPolicySettingsPage.verifyChatLabel();
-        privacyPolicySettingsPage.verifyEngageLabel();
-        privacyPolicySettingsPage.verifyPolicyLanguageLabel();
-        privacyPolicySettingsPage.verifyEnglishTab();
-        privacyPolicySettingsPage.verifySpanishTab();
-        privacyPolicySettingsPage.verifySaveButton();
-        privacyPolicySettingsPage.verifyBackButton();
+        privacyPolicySettingsPage.verifyAllElementsInPrivacyCreationPage();
+        privacyPolicySettingsPage.verifyAllSolutionLabel();
         logStep("PXPP-22263 TC_006_ Verify that user can notify with error “Policy name is required” when user save the Policy without entering Policy Name value");
         privacyPolicySettingsPage.clickOnSaveButton();
         privacyPolicySettingsPage.verifyPolicyNameError();
