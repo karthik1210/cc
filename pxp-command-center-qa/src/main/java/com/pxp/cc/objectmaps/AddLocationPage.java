@@ -88,10 +88,10 @@ public class AddLocationPage extends CCMainPage {
 	@FindBy(id = "cancel-text")
 	private WebElement crossIcon;
 
-	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//span[@class='ng-arrow-wrapper']")
+	@FindBy(id = "timezoneSelect")
 	private WebElement dropdownTimezone;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
+	@FindBy(xpath = "//span[contains(text(),'Success! New location has been successfully created')]")
 	private WebElement toasterMessage;
 
 	@FindBy(id = "maxlocationNameError")

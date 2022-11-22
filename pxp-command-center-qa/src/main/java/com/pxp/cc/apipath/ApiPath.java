@@ -1650,5 +1650,12 @@ public class ApiPath {
 	public static final String PROVIDER_FOR_CLIENT_DL(String clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
 	}
-
+	
+	public static final String GET_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
+	}
+	
+	public static final String GET_LOCATION_FOR_PROVIDER_DL_NULL_VALUES() {
+		return SHARED_DL + "/v1/providers/null/practices/null/locations";
+	}
 }
