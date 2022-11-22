@@ -432,6 +432,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name11"));
         ccui.getPrivacyPolicySettingsPage().clickOnRadioButtonEnabled("Active");
+        ccui.getPrivacyPolicySettingsPage().toggleOnAllSolutions();
         ccui.getPrivacyPolicySettingsPage().emptyLanguageContent("English");
         ccui.getPrivacyPolicySettingsPage().verifyMustAddLanguageContentErrorMessage();
         ccui.getPrivacyPolicySettingsPage().clickOnLanguageTab("Spanish");
