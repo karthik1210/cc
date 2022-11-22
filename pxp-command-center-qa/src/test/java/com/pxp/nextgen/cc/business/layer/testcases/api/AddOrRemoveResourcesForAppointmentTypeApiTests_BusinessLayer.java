@@ -9,6 +9,10 @@ import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.AppointmentTypeInfo;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.OrgInfo;
+import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.ResourceDetails;
@@ -17,21 +21,86 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer extends BaseRest {
-	private SharedInfo sharedInfo;
+	private ClientInfo clientInfo;
+	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId, resourceId, appointmentTypeId;
+	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
+	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
+			createProviderApiResponse, createResourceApiResponse, getResourceDetailsApiResponse,
+			createAppointmentTypeApiResponse, addOrRemoveResourcesForAppointmentTypeApiResponse;
 	private Validations validation;
-	Response addOrRemoveResourcesForAppointmentTypeApiResponse;
-	List<ResourceDetails> resourceList;
+	private OrgInfo orgInfo;
+	private SharedInfo sharedInfo;
+	private ResourceInfo resourceInfo;
+	private AppointmentTypeInfo appointmentTypeInfo;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
+		clientInfo = new ClientInfo();
+		orgInfo = new OrgInfo();
+		resourceInfo = new ResourceInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		appointmentTypeInfo = new AppointmentTypeInfo();
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		clientId = createClientApiResponse.jsonPath().getInt("clientId");
+		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
+		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
+		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
+				enterpriseId, testData.getProperty("api.practice.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		String externalId = CCUtils.generateAlphaNumericString(10);
+		createProviderApiResponse = sharedInfo.createProvider_BL(practiceId, firstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
+		appointmentTypeId = createNewAppointmentType();
+		resourceId = createNewResource();
+	}
+
+	public int createNewAppointmentType() {
+		logStep("Create new AppointmentType");
+		String name = CCUtils.generateAlphaNumericString(10);
+		String externalId = CCUtils.generateAlphaNumericString(4);
+		String duration = CCUtils.generateNumericString(2);
+		String categoryId = CCUtils.generateNumericString(5);
+		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, name, externalId,
+				duration, categoryId, name, externalId);
+		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
+		return createAppointmentTypeApiResponse.jsonPath().getInt("id");
+	}
+
+	public int createNewResource() {
+		logStep("Create new resource");
+		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
+		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, testData.getProperty("resource.name"),
+				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
+				testData.getProperty("resource.link.type"));
+		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
+		return createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid resource id in ResourceId field and verify response body")
 	public void testResponseBodyForInvalidResourceId() throws IOException {
-		resourceList = Arrays
+		List<ResourceDetails> resourceList = Arrays
 				.asList(new ResourceDetails(Integer.parseInt(testData.getProperty("non.existing.resource.id")), true));
 		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
 				Integer.parseInt(testData.getProperty("valid.practice.id")),
@@ -41,111 +110,58 @@ public class AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer extend
 		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
 		resourceIds.add(Integer.parseInt(testData.getProperty("non.existing.resource.id")));
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "ERROR", "Invalid ResourceId");
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid practice id in practiceId field and verify response body")
-	public void testResponseBodyForInvalidPracticeId() throws IOException {
-		resourceList = Arrays.asList(
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true),
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.two")), false));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
-				Integer.parseInt(testData.getProperty("non.existing.practice.id")),
-				Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
-		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
-		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.one")));
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "ERROR", "Invalid ResourceId");
+		validation.verifyAddOrRemoveResourcesApiResponseBody(addOrRemoveResourcesForAppointmentTypeApiResponse,
+				Integer.parseInt(testData.getProperty("non.existing.resource.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid appointment type id in appointmentTypeId field and verify response body")
 	public void testResponseBodyForInvalidAppointmentTypeId() throws IOException {
-		resourceList = Arrays.asList(
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true),
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.two")), false));
+		int resourceIdone = createNewResource();
+		int resourceIdTwo = createNewResource();
+		List<ResourceDetails> resourceList = Arrays.asList(new ResourceDetails(resourceIdone, true),
+				new ResourceDetails(resourceIdTwo, false));
 		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
 				Integer.parseInt(testData.getProperty("valid.practice.id")),
 				Integer.parseInt(testData.getProperty("non.existing.appointment.type.id")), resourceList);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
 		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
+
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.one")));
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "ERROR", "Invalid ResourceId");
+		resourceIds.add(resourceIdone);
+		resourceIds.add(resourceIdTwo);
+		validation.verifyAddOrRemoveMultipleResourcesApiResponseBody(addOrRemoveResourcesForAppointmentTypeApiResponse,
+				resourceIds);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add/Remove single resource id for appointment type and verify response body")
 	public void testAddOrRemoveResourcesFunctionalityUsingSingleResourceId() throws IOException {
 		logStep("Add valid resource id for appointment type");
-		resourceList = Arrays
-				.asList(new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
-				Integer.parseInt(testData.getProperty("valid.practice.id")),
-				Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
+		List<ResourceDetails> resourceList = Arrays.asList(new ResourceDetails(resourceId, true));
+		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(practiceId,
+				appointmentTypeId, resourceList);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
 		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
 		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.one")));
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "SUCCESS", null);
-
+		resourceIds.add(resourceId);
+		validation.verifyAddOrRemoveResourcesApiResponseBody(addOrRemoveResourcesForAppointmentTypeApiResponse,
+				resourceId);
 		logStep("Remove valid resource id for appointment type");
-		resourceList = Arrays
-				.asList(new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), false));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
-				Integer.parseInt(testData.getProperty("valid.practice.id")),
-				Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
+		List<ResourceDetails> resourceListone = Arrays.asList(new ResourceDetails(resourceId, false));
+		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(practiceId,
+				appointmentTypeId, resourceListone);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
 		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "SUCCESS", null);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add/Remove multiple resource id for appointment type and verify response body")
-	public void testAddOrRemoveResourcesFunctionalityUsingMultipleResourceId() throws IOException {
-		logStep("Add valid resource ids for appointment type");
-		resourceList = Arrays.asList(
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true),
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.two")), true));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
-				Integer.parseInt(testData.getProperty("valid.practice.id")),
-				Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
-		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
-		ArrayList<Integer> resourceIds = new ArrayList<Integer>();
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.one")));
-		resourceIds.add(Integer.parseInt(testData.getProperty("valid.resource.id.two")));
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "SUCCESS", null);
-
-		logStep("Remove valid resource ids for appointment type");
-		resourceList = Arrays.asList(
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), false),
-				new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.two")), false));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
-				Integer.parseInt(testData.getProperty("valid.practice.id")),
-				Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
-		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 207);
-		validation.verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(
-				addOrRemoveResourcesForAppointmentTypeApiResponse, resourceIds, "SUCCESS", null);
+		validation.verifyAddOrRemoveResourcesApiResponseBody(addOrRemoveResourcesForAppointmentTypeApiResponse,
+				resourceId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank list in payload and verify response body")
 	public void testErrorMessageForBlankPayload() throws IOException {
 		logStep("Add valid resource ids for appointment type");
-		resourceList = Arrays.asList();
+		List<ResourceDetails> resourceList = Arrays.asList();
 		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(
 				Integer.parseInt(testData.getProperty("valid.practice.id")),
 				Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
@@ -154,34 +170,4 @@ public class AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer extend
 		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForBlankField(addOrRemoveResourcesForAppointmentTypeApiResponse);
 	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Make a POST call instead of PUT and verify response body")
-	public void testErrorMessageForInvalidMethodCall() throws IOException {
-		resourceList = Arrays
-				.asList(new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo
-				.invalidMethodCallForAddOrRemoveResourcesForAppoinmentType(
-						Integer.parseInt(testData.getProperty("valid.practice.id")),
-						Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
-		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(
-				addOrRemoveResourcesForAppointmentTypeApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorMessageForInvalidUrl() throws IOException {
-		resourceList = Arrays
-				.asList(new ResourceDetails(Integer.parseInt(testData.getProperty("valid.resource.id.one")), true));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo
-				.addOrRemoveResourcesForAppoinmentTypeUsingInvalidUrl(
-						Integer.parseInt(testData.getProperty("valid.practice.id")),
-						Integer.parseInt(testData.getProperty("valid.appointment.type.id")), resourceList);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(addOrRemoveResourcesForAppointmentTypeApiResponse);
-		CCUtils.assertEquals(addOrRemoveResourcesForAppointmentTypeApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(addOrRemoveResourcesForAppointmentTypeApiResponse);
-	}
-
 }

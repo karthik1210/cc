@@ -2766,14 +2766,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response) {
-		JsonPath jsonPath = new JsonPath(response.asString());
-		Log4jUtil.log("AppointmentType name in response body : " + jsonPath.get("name"));
-		Log4jUtil.log("AppointmentType externalId in response body : " + jsonPath.get("externalId"));
-		Log4jUtil.log("AppointmentType duration in response body : " + jsonPath.get("duration"));
-		Log4jUtil.log("AppointmentType durationUnit in response body : " + jsonPath.get("durationUnit"));
-		Log4jUtil.log("AppointmentType status in response body : " + jsonPath.get("status"));
-		Log4jUtil.log("Categories in response body : " + jsonPath.get("categories"));
+	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response, String name, String externalId,
+			String duration) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.getString("name"), name);
+		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
+		CCUtils.assertEquals(jsonpath.get("duration").toString(), duration);
 	}
 
 	public void verifyBrandingDetails_BL(Response response, int orgId, String orgType, String name, String showLogo,
@@ -2961,8 +2959,20 @@ public class Validations {
 
 	public void verifyErrorResponseForInvalidMobileNumber(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Only numeric values are allowed, Mobile number should be 10 digits");
+		String actual = "Only numeric values are allowed, Mobile number should be 10 digits";
+		List<String> actualValue = new ArrayList<String>();
+		for (String val : Arrays.asList(actual.split(","))) {
+			actualValue.add(val.trim());
+		}
+		Collections.sort(actualValue);
+		String expected = jsonpath.get("message").toString();
+		List<String> expectedValue = new ArrayList<String>();
+		for (String val : Arrays.asList(expected.split(","))) {
+			expectedValue.add(val.trim());
+		}
+		Collections.sort(expectedValue);
+		CCUtils.assertEquals(actualValue, expectedValue);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorResponseForTimezoneCodeField(Response response, String timezoneCode) throws IOException {
@@ -3405,15 +3415,60 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("mobile").toString().trim(), mobile.trim());
 		CCUtils.assertEquals(jsonpath.get("email").toString().trim(), email.trim());
 	}
-	
-	public void validateGetConnectedPracticeProvidersResponseBody(Response response,int providerId,String providerName) {
+
+	public void validateGetConnectedPracticeProvidersResponseBody(Response response, int providerId,
+			String providerName) {
 		JSONArray responseBody = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
 		CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
 		for (int i = 0; i < responseBody.length(); i++) {
 			jsonObject = responseBody.getJSONObject(i);
-			CCUtils.assertEquals(jsonObject.getInt("providerId"),providerId);
-			CCUtils.assertEquals(jsonObject.get("firstName"),providerName);
+			CCUtils.assertEquals(jsonObject.getInt("providerId"), providerId);
+			CCUtils.assertEquals(jsonObject.get("firstName"), providerName);
 		}
+	}
+
+	public void verifyAddOrRemoveResourcesApiResponseBody(Response response, int resourceId) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
+	}
+
+	public void verifyGetPracticesAssociatedToProviderApiResponseBody(Response response, List<Integer> practiceIds)
+			throws IOException {
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(responseBody.length() > 0, "practice Id list is empty");
+		CCUtils.assertTrue(practiceIds.size() == responseBody.length(),
+				"Size of actual practice list and expected practice list is not same");
+		List<Integer> data = new ArrayList<Integer>();
+		for (int i = 0; i < responseBody.length(); i++) {
+			data.add(Integer.valueOf(responseBody.getInt(i)));
+		}
+		Collections.sort(practiceIds);
+		Collections.sort(data);
+		CCUtils.assertEquals(practiceIds, data);
+	}
+
+	public void verifyAddOrRemoveMultipleResourcesApiResponseBody(Response response, ArrayList<Integer> resourceIds)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("resourceId"), true);
+	}
+
+	public void verifyAddOrRemoveAppointmentIdApiResponseBody(Response response, int appointmentTypeId)
+			throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("appointmentTypeId"), true);
 	}
 }

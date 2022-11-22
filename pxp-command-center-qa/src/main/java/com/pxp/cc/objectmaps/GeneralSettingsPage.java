@@ -257,6 +257,45 @@ public class GeneralSettingsPage extends CCMainPage {
 				+ solutionImageIcon + "')]";
 	}
 
+	@FindBy(xpath = "(//span[@class='value'])[2]")
+	private WebElement duplicateSapId;
+
+	@FindBy(xpath = "(//span[@class='info ng-star-inserted'])[1]")
+	private WebElement duplicateClientName;
+
+	@FindBy(id = "detailNameInput")
+	private WebElement textboxClientName;
+
+	@FindBy(id = "detailSapInput")
+	private WebElement textboxSapId;
+
+	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//div[@class='ng-select-container ng-has-value']")
+	private WebElement dropdownClientType;
+
+	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//div[@class='ng-select-container ng-has-value']")
+	private WebElement dropdownTimezone;
+
+	@FindBy(id = "detailActiveRadio")
+	private WebElement radiobuttonActive;
+
+	@FindBy(id = "detailInactiveRadio")
+	private WebElement radiobuttonInactive;
+
+	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
+	private WebElement buttonCancel;
+
+	@FindBy(xpath = "//span[normalize-space()='SAVE']")
+	private WebElement buttonSave;
+
+	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
+	private WebElement labelSolutionsActive;
+
+	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
+	private WebElement textboxError;
+
+	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
+	private WebElement clientTab;
+
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	List<String> activeSolutionName = new ArrayList<String>();
@@ -659,45 +698,6 @@ public class GeneralSettingsPage extends CCMainPage {
 			return false;
 	}
 
-	@FindBy(xpath = "(//span[@class='value'])[2]")
-	private WebElement duplicateSapId;
-
-	@FindBy(xpath = "(//span[@class='info ng-star-inserted'])[1]")
-	private WebElement duplicateClientName;
-
-	@FindBy(id = "detailNameInput")
-	private WebElement textboxClientName;
-
-	@FindBy(id = "detailSapInput")
-	private WebElement textboxSapId;
-
-	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//div[@class='ng-select-container ng-has-value']")
-	private WebElement dropdownClientType;
-
-	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//div[@class='ng-select-container ng-has-value']")
-	private WebElement dropdownTimezone;
-
-	@FindBy(id = "detailActiveRadio")
-	private WebElement radiobuttonActive;
-
-	@FindBy(id = "detailInactiveRadio")
-	private WebElement radiobuttonInactive;
-
-	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
-	private WebElement buttonCancel;
-
-	@FindBy(xpath = "//span[normalize-space()='SAVE']")
-	private WebElement buttonSave;
-
-	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
-	private WebElement labelSolutionsActive;
-
-	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
-	private WebElement textboxError;
-
-	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
-	private WebElement clientTab;
-
 	public void clickClientDirectory() {
 		CCUtils.verifyAndWaitForElement(clientTab, driver);
 		clientTab.click();
@@ -926,6 +926,11 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void verifySearchResult(String actualTitle, String expectedTitle) {
 		CCUtils.assertTrue(actualTitle.contains(expectedTitle), "Searched node not selected. Title not found");
+	}
+
+	public void verifySearchedResult() {
+		CCUtils.verifyAndWaitForElement(clientNodeTitle, driver);
+		CCUtils.assertEquals(clientNodeTitle.isDisplayed(), true);
 	}
 
 	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
