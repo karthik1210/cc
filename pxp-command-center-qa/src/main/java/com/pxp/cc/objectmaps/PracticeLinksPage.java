@@ -11,6 +11,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import java.awt.*;
+import java.util.HashMap;
 import java.util.List;
 
 public class PracticeLinksPage extends CCMainPage {
@@ -29,7 +30,7 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/../following-sibling::div/app-practice-website/div/div/div/mat-icon[text()='link']")
     private WebElement practiceWebsiteLinkIcon;
 
-    @FindBy(xpath = "//b[normalize-space(text())='PRACTICE WEBSITE']/../following-sibling::div/following-sibling::div/span/button/span[text()=' EDIT ']")
+    @FindBy(xpath = "//b[normalize-space(text())='PRACTICE WEBSITE']/../following-sibling::div/following-sibling::div/span/button/span[normalize-space(text())='EDIT']")
     private WebElement practiceWebsiteEdit;
 
     @FindBy(xpath = "//b[normalize-space(text())='EXTERNAL URLS']")
@@ -224,20 +225,75 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//label[normalize-space(text())='Website URL']")
     private WebElement websiteUrl;
 
-    public void verifyHyperLinkText() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, hyperlinkText);
-        CCUtils.verifyAndWaitForElement(hyperlinkText, driver);
-        log("Verifying Hyperlink text title is available or not");
-        CCUtils.assertEquals(hyperlinkText.getText().equalsIgnoreCase("Hyperlink Text"), true);
-        log("Successfully hyperlink text title displayed");
+    public HashMap<String, Boolean> verifyPracticeLinksElements() throws Exception {
+        HashMap<String, Boolean> result = new HashMap<String, Boolean>();
+        logStep("PXPP-20133 TC001 Verify that user can navigate to Practice Links section in Command Center Application");
+        result.put("verifyPracticeLinksLabel", verifyPracticeLinksLabelIsDisplayed());
+        logStep("PXPP-20286 TC002 Verify that user can collapse and expand Practice Links section in Command Center Application");
+        result.put("verifyingPracticeLinkExpandArrow",verifyPracticeWebsiteExpandArrowIsDisplayed());
+        clickOnPracticeWebsiteExpandButton();
+        result.put("verifyingPracticeLinkCollapseArrow",verifyPracticeWebsiteCollapseArrowIsDisplayed());
+        clickOnPracticeWebsiteCollapseButton();
+        result.put("verifyingPracticeLinkExpandArrow",verifyPracticeWebsiteExpandArrowIsDisplayed());
+        logStep("PXPP-20331 TC007 Verify that whether user is able to see the EXTERNAL URLS in Practice Links section at practice level");
+        clickOnPracticeWebsiteExpandButton();
+        result.put("verifyExternalUrl",verifyExternalUrlIsDisplayed());
+        result.put("verifyEditOnExternalUrl",verifyExternalUrlEditIsDisplayed());
+        logStep("PXPP-20344 TC008 Verify the External URLS by default 1st time in Practice Links section");
+        result.put("verifyNoExternalUrl",verifyNoExternalUrlConfigureLabelIsDisplayed());
+        clickOnExternalUrlEditButton();
+        result.put("verifyAddOnExternalUrl",verifyExternalUrlAddIsDisplayed());
+        clickOnExternalUrlAddButton();
+        result.put("verifyHyperLinkText",verifyHyperLinkText());
+        result.put("verifyWebsiteUrl",verifyWebsiteUrl());
+        clickOnExternalUrlCancelButton();
+        logStep("PXPP-20482 TC021 Verify the Social Media by default 1st time in Practice Links section");
+        result.put("verifySocialMediaLabel",verifySocialMediaLabel());
+        result.put("verifyEditOnSocialMedia",verifySocialMediaEditButton());
+        result.put("verifyAllSocialMediaTitle",verifyAllSocialMediaTitle());
+        clickOnSocialMediaEdit();
+        result.put("verifyToggleOff",verifyToggleOff());
+        result.put("verifyEditTextBoxUrlEmpty",verifyEditTextBoxUrlEmpty());
+        logStep("PXPP-20485 TC024 Verify the Toggle buttons for social media in Practice Links section");
+        result.put("verifyToggleOff",verifyToggleOff());
+        result.put("verifyEditTextBoxUrlEmpty",verifyEditTextBoxUrlEmpty());
+        clickOnSocialMediaCancel();
+        result.put("verifySocialMediaUrlEmpty",verifySocialMediaUrlEmpty());
+        logStep("PXPP-20489 TC028 Verify the Edit and Save functionality for updating existing social media with Toggle on/off in Practice Links section");
+        result.put("verifyEditOnSocialMedia",verifySocialMediaEditButton());
+        clickOnSocialMediaEdit();
+        toggleSwitchClick("Facebook");
+        result.put("verifySocialMediaError",verifySocialMediaError());
+        clickOnSocialMediaCancel();
+        return result;
     }
 
-    public void verifyWebsiteUrl() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, websiteUrl);
-        CCUtils.verifyAndWaitForElement(websiteUrl, driver);
-        log("Verifying Website Url title is available or not");
-        CCUtils.assertEquals(websiteUrl.getText().equalsIgnoreCase("Website URL"), true);
-        log("Successfully website url title displayed");
+
+
+    public boolean verifyHyperLinkText() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, hyperlinkText);
+            CCUtils.verifyAndWaitForElement(hyperlinkText, driver);
+            log("Verifying Hyperlink text title is available or not");
+            CCUtils.assertEquals(hyperlinkText.getText().equalsIgnoreCase("Hyperlink Text"), true);
+            log("Successfully hyperlink text title displayed");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public boolean verifyWebsiteUrl() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, websiteUrl);
+            CCUtils.verifyAndWaitForElement(websiteUrl, driver);
+            log("Verifying Website Url title is available or not");
+            CCUtils.assertEquals(websiteUrl.getText().equalsIgnoreCase("Website URL"), true);
+            log("Successfully website url title displayed");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void clickOnExternalUrlRearrangeButton() throws InterruptedException, AWTException {
@@ -355,18 +411,28 @@ public class PracticeLinksPage extends CCMainPage {
         log("Clicked on Practice Website Edit button");
     }
 
-    public void verifyPracticeWebsiteExpandArrowIsDisplayed() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, practiceWebsiteExpandArrow);
-        CCUtils.verifyAndWaitForElement(practiceWebsiteExpandArrow, driver);
-        log("verifying Practice website expand arrow availability");
-        CCUtils.assertEquals(practiceWebsiteExpandArrow.isDisplayed(), true);
+    public boolean verifyPracticeWebsiteExpandArrowIsDisplayed() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, practiceWebsiteExpandArrow);
+            CCUtils.verifyAndWaitForElement(practiceWebsiteExpandArrow, driver);
+            log("verifying Practice website expand arrow availability");
+            CCUtils.assertEquals(practiceWebsiteExpandArrow.isDisplayed(), true);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyPracticeWebsiteCollapseArrowIsDisplayed() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, practiceWebsiteCollapseArrow);
-        CCUtils.verifyAndWaitForElement(practiceWebsiteCollapseArrow, driver);
-        log("verifying Practice website collapse arrow availability");
-        CCUtils.assertEquals(practiceWebsiteCollapseArrow.isDisplayed(), true);
+    public boolean verifyPracticeWebsiteCollapseArrowIsDisplayed() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, practiceWebsiteCollapseArrow);
+            CCUtils.verifyAndWaitForElement(practiceWebsiteCollapseArrow, driver);
+            log("verifying Practice website collapse arrow availability");
+            CCUtils.assertEquals(practiceWebsiteCollapseArrow.isDisplayed(), true);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void verifyPracticeWebsiteLabelIsDisplayed() throws InterruptedException, AWTException {
@@ -391,41 +457,66 @@ public class PracticeLinksPage extends CCMainPage {
         CCUtils.assertEquals(practiceWebsiteEdit.isDisplayed(), true);
     }
 
-    public void verifyPracticeLinksLabelIsDisplayed() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, practiceLinksLabel);
-        CCUtils.verifyAndWaitForElement(practiceLinksLabel, driver);
-        log("verifying Practice Links label availability");
-        CCUtils.assertEquals(practiceLinksLabel.isDisplayed(), true);
-        CCUtils.assertEquals(practiceLinksLabel.getText().trim(), "Practice Links");
+    public boolean verifyPracticeLinksLabelIsDisplayed() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, practiceLinksLabel);
+            CCUtils.verifyAndWaitForElement(practiceLinksLabel, driver);
+            log("verifying Practice Links label availability");
+            CCUtils.assertEquals(practiceLinksLabel.isDisplayed(), true);
+            CCUtils.assertEquals(practiceLinksLabel.getText().trim(), "Practice Links");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyExternalUrlIsDisplayed() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, externalUrlLabel);
-        CCUtils.verifyAndWaitForElement(externalUrlLabel, driver);
-        log("Verifying EXTERNAL URLS text");
-        CCUtils.assertEquals(externalUrlLabel.isDisplayed(), true);
-        CCUtils.assertEquals(externalUrlLabel.getText().trim(), "EXTERNAL URLS");
+    public boolean verifyExternalUrlIsDisplayed() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, externalUrlLabel);
+            CCUtils.verifyAndWaitForElement(externalUrlLabel, driver);
+            log("Verifying EXTERNAL URLS text");
+            CCUtils.assertEquals(externalUrlLabel.isDisplayed(), true);
+            CCUtils.assertEquals(externalUrlLabel.getText().trim(), "EXTERNAL URLS");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyExternalUrlEditIsDisplayed() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, externalUrlEdit);
-        CCUtils.verifyAndWaitForElement(externalUrlEdit, driver);
-        log("Verifying EXTERNAL URLS EDIT button");
-        CCUtils.assertEquals(externalUrlEdit.isDisplayed(), true);
+    public boolean verifyExternalUrlEditIsDisplayed() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, externalUrlEdit);
+            CCUtils.verifyAndWaitForElement(externalUrlEdit, driver);
+            log("Verifying EXTERNAL URLS EDIT button");
+            CCUtils.assertEquals(externalUrlEdit.isDisplayed(), true);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyNoExternalUrlConfigureLabelIsDisplayed() {
-        CCUtils.scrollPageViaElement(driver, noExternalUrlConfigureLabel);
-        CCUtils.verifyAndWaitForElement(noExternalUrlConfigureLabel, driver);
-        log("Verifying No EXTERNAL URLS CONFIGURE LABEL DISPLAYED");
-        CCUtils.assertEquals(noExternalUrlConfigureLabel.isDisplayed(), true);
+    public boolean verifyNoExternalUrlConfigureLabelIsDisplayed() {
+        try {
+            CCUtils.scrollPageViaElement(driver, noExternalUrlConfigureLabel);
+            CCUtils.verifyAndWaitForElement(noExternalUrlConfigureLabel, driver);
+            log("Verifying No EXTERNAL URLS CONFIGURE LABEL DISPLAYED");
+            CCUtils.assertEquals(noExternalUrlConfigureLabel.isDisplayed(), true);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyExternalUrlAddIsDisplayed() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, externalUrlAdd);
-        CCUtils.verifyAndWaitForElement(externalUrlAdd, driver);
-        log("Verifying EXTERNAL URLS Add button");
-        CCUtils.assertEquals(externalUrlAdd.isDisplayed(), true);
+    public boolean verifyExternalUrlAddIsDisplayed() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, externalUrlAdd);
+            CCUtils.verifyAndWaitForElement(externalUrlAdd, driver);
+            log("Verifying EXTERNAL URLS Add button");
+            CCUtils.assertEquals(externalUrlAdd.isDisplayed(), true);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void clickOnExternalUrlAddButton() throws InterruptedException, AWTException {
@@ -548,6 +639,7 @@ public class PracticeLinksPage extends CCMainPage {
                 elementES.clear();
                 new Actions(driver).moveToElement(elementES).pause(3000).click().build().perform();
                 elementES.sendKeys(displayTextEs);
+                Thread.sleep(3000);
                 break;
             }
     }
@@ -569,11 +661,40 @@ public class PracticeLinksPage extends CCMainPage {
             System.out.println(listOfDisplayText.get(i).getText());
     }
 
-    public void verifySocialMediaLabel() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, socialMediaLabel);
-        CCUtils.verifyAndWaitForElement(socialMediaLabel, driver);
-        log("Verifying social media label availability");
-        CCUtils.assertTrue(socialMediaLabel.isDisplayed(),"Social media label is displayed successfully");
+    public boolean verifySocialMediaLabel() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, socialMediaLabel);
+            CCUtils.verifyAndWaitForElement(socialMediaLabel, driver);
+            log("Verifying social media label availability");
+            CCUtils.assertTrue(socialMediaLabel.isDisplayed(), "Social media label is displayed successfully");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public boolean verifyAllSocialMediaTitle() throws Exception {
+        try {
+            CCUtils.scrollPageViaElement(driver, twitterLabel);
+            CCUtils.verifyAndWaitForElement(twitterLabel, driver);
+            log("Verifying twitter label availability");
+            CCUtils.assertTrue(twitterLabel.isDisplayed(), "Twitter label is displayed successfully");
+            CCUtils.scrollPageViaElement(driver, facebookLabel);
+            CCUtils.verifyAndWaitForElement(facebookLabel, driver);
+            log("Verifying facebook label availability");
+            CCUtils.assertTrue(facebookLabel.isDisplayed(), "Facebook label is displayed successfully");
+            CCUtils.scrollPageViaElement(driver, linkedinLabel);
+            CCUtils.verifyAndWaitForElement(linkedinLabel, driver);
+            log("Verifying Linkedin label availability");
+            CCUtils.assertTrue(linkedinLabel.isDisplayed(), "Linkedin label is displayed successfully");
+            CCUtils.scrollPageViaElement(driver, youtubeLabel);
+            CCUtils.verifyAndWaitForElement(youtubeLabel, driver);
+            log("Verifying youtube label availability");
+            CCUtils.assertTrue(youtubeLabel.isDisplayed(), "Youtube label is displayed successfully");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void verifyTwitterLabel() throws InterruptedException, AWTException {
@@ -604,11 +725,16 @@ public class PracticeLinksPage extends CCMainPage {
         CCUtils.assertTrue(youtubeLabel.isDisplayed(),"Youtube label is displayed successfully");
     }
 
-    public void verifySocialMediaEditButton() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, socialMediaEdit);
-        CCUtils.verifyAndWaitForElement(socialMediaEdit, driver);
-        log("Verifying Social media edit button availability");
-        CCUtils.assertTrue(socialMediaEdit.isDisplayed(),"Socail Media Edit button is displayed successfully");
+    public boolean verifySocialMediaEditButton() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, socialMediaEdit);
+            CCUtils.verifyAndWaitForElement(socialMediaEdit, driver);
+            log("Verifying Social media edit button availability");
+            CCUtils.assertTrue(socialMediaEdit.isDisplayed(), "Socail Media Edit button is displayed successfully");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void clickOnSocialMediaEdit() throws InterruptedException, AWTException {
@@ -619,27 +745,44 @@ public class PracticeLinksPage extends CCMainPage {
         log("successfully clicked on edit in social media section");
     }
 
-    public void verifyToggleOff() throws InterruptedException, AWTException {
-        log("Verifying Toggle button off");
-        CCUtils.assertEquals(twitterToggleButton.isSelected(),false);
-        log("Twitter toggle off");
-        CCUtils.assertEquals(facebookToggleButton.isSelected(),false);
-        log("Facebook toggle off");
-        CCUtils.assertEquals(linkedinToggleButton.isSelected(),false);
-        log("Linkedin toggle off");
-        CCUtils.assertEquals(youtubeToggleButton.isSelected(),false);
-        log("Youtube toggle off");
+    public boolean verifyToggleOff() throws InterruptedException, AWTException {
+        try {
+            log("Verifying Toggle button off");
+            CCUtils.assertEquals(twitterToggleButton.isSelected(), false);
+            log("Twitter toggle off");
+            CCUtils.assertEquals(facebookToggleButton.isSelected(), false);
+            log("Facebook toggle off");
+            CCUtils.assertEquals(linkedinToggleButton.isSelected(), false);
+            log("Linkedin toggle off");
+            CCUtils.assertEquals(youtubeToggleButton.isSelected(), false);
+            log("Youtube toggle off");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyEditTextBoxUrlEmpty() throws InterruptedException, AWTException {
-        CCUtils.assertEquals(twitterUrlEditTextBox.getAttribute("value").isEmpty(),true);
-        log("Twitter edit text box empty");
-        CCUtils.assertEquals(facebookUrlEditTextBox.getAttribute("value").isEmpty(),true);
-        log("Facebook edit text box empty");
-        CCUtils.assertEquals(linkedinUrlEditTextBox.getAttribute("value").isEmpty(),true);
-        log("Linkedin edit text box empty");
-        CCUtils.assertEquals(youtubeUrlEditTextBox.getAttribute("value").isEmpty(),true);
-        log("Youtube edit text box empty");
+    public boolean verifyEditTextBoxUrlEmpty() throws InterruptedException, AWTException {
+        try {
+            CCUtils.assertEquals(twitterUrlEditTextBox.getAttribute("value").isEmpty(), true);
+            log("Twitter edit text box empty");
+            CCUtils.assertEquals(facebookUrlEditTextBox.getAttribute("value").isEmpty(), true);
+            log("Facebook edit text box empty");
+            CCUtils.assertEquals(linkedinUrlEditTextBox.getAttribute("value").isEmpty(), true);
+            log("Linkedin edit text box empty");
+            CCUtils.assertEquals(youtubeUrlEditTextBox.getAttribute("value").isEmpty(), true);
+            log("Youtube edit text box empty");
+            return true;
+        }catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public void toggleAllSocial() {
+        twitterToggleButton.click();
+        facebookToggleButton.click();
+        linkedinToggleButton.click();
+        youtubeToggleButton.click();
     }
 
     public void toggleSwitchClick(String socialMediaName) throws InterruptedException, AWTException {
@@ -705,8 +848,13 @@ public class PracticeLinksPage extends CCMainPage {
             System.out.println(listOfSocialMediaUrlsDisplay.get(i).getText());
     }
 
-    public void verifySocialMediaUrlEmpty() throws InterruptedException, AWTException {
-        CCUtils.assertEquals(listOfSocialMediaUrlsDisplay.isEmpty(),true);
+    public boolean verifySocialMediaUrlEmpty() throws InterruptedException, AWTException {
+        try {
+            CCUtils.assertEquals(listOfSocialMediaUrlsDisplay.isEmpty(), true);
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void updateValueOnSocialMedia(String socialMediaName, String url) throws InterruptedException, AWTException {
@@ -725,12 +873,17 @@ public class PracticeLinksPage extends CCMainPage {
         }
     }
 
-    public void verifySocialMediaError() throws InterruptedException, AWTException {
-        CCUtils.scrollPageViaElement(driver, socialMediaError);
-        CCUtils.verifyAndWaitForElement(socialMediaError, driver);
-        log("verifying social media error");
-        CCUtils.assertEquals(socialMediaError.getText().equalsIgnoreCase("URL cannot be blank if enabled."),true);
-        log("Error message Verified successfully and displayed the message as "+socialMediaError.getText());
+    public boolean verifySocialMediaError() throws InterruptedException, AWTException {
+        try {
+            CCUtils.scrollPageViaElement(driver, socialMediaError);
+            CCUtils.verifyAndWaitForElement(socialMediaError, driver);
+            log("verifying social media error");
+            CCUtils.assertEquals(socialMediaError.getText().equalsIgnoreCase("URL cannot be blank if enabled."), true);
+            log("Error message Verified successfully and displayed the message as " + socialMediaError.getText());
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
     public void verifyRearrangeButtonOnExternalUrl() throws InterruptedException, AWTException {
