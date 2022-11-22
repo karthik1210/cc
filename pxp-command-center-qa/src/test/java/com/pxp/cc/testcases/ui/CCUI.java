@@ -29,6 +29,7 @@ public class CCUI extends CommandCenterGenericTest {
     AddOrgNodePage addOrgNodePage;
     MoveAgnosticPracticePage moveAgnosticPracticePage;
     CommonMethods commonMethods;
+    PracticeLinksPage practiceLinksPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -52,6 +53,13 @@ public class CCUI extends CommandCenterGenericTest {
             commonMethods = new CommonMethods(driver);
         }
         return commonMethods;
+    }
+
+    public PracticeLinksPage getPracticeLinksPage() throws InterruptedException {
+        if(practiceLinksPage==null){
+            practiceLinksPage = new PracticeLinksPage(driver);
+        }
+        return practiceLinksPage;
     }
 
     public ClientDirectoryPage getClientDirectoryPage() throws InterruptedException {
