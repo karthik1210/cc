@@ -168,7 +168,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='Disregard Changes']")
     private WebElement disregardChanges;
 
-    @FindBy(xpath = "//button[normalize-space(text())=' Return to Page ']")
+    @FindBy(xpath = "//button[normalize-space(text())='Return to Page']")
     private WebElement returnToPage;
 
     @FindBy(xpath = "//div[contains(text(), 'STATEMENT OF PRIVACY POLICY')]")
@@ -263,19 +263,25 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
 
     public HashMap<String,Boolean> verifyPrivacyPocilyBasicElements(){
         HashMap<String,Boolean> result = new HashMap<String, Boolean>();
+        logStep("PXPP-20371 TC_001_Verify that user can able to see privacy policy details section under practices in Command Center Application");
         result.put("verifyPrivacyPoliciesLabel",verifyPrivacyPoliciesLabel());
         result.put("verifyPrivacyPolicyAddButton",verifyPrivacyPolicyAddButton());
+        logStep("PXPP-23295 TC_003_Verify Expand functionality for privacy policy details section under practices in Command Center Application");
         result.put("verifyPrivacyPolicyExpandButton",verifyPrivacyPolicyExpandButton());
         clickPrivacyPolicyExpandButton();
+        logStep("PXPP-24829 TC_002_Verify the Privacy Policies section, when Practice don't have any policies");
         result.put("verifyNoPrivacyPoliciesText",verifyNoPrivacyPoliciesText());
         result.put("verifyPrivacyPolicyCollapseButton",verifyPrivacyPolicyCollapseButton());
         clickPrivacyPolicyCollapseButton();
         result.put("verifyPrivacyPolicyExpandButton",verifyPrivacyPolicyExpandButton());
+        logStep("PXPP-20709 TC_004_Verify that user can able to click on the add button in privacy policies section in command center application");
         clickPrivacyPolicyAddButton();
         result.put("verifyURLOfPolicyCreationPage",verifyUrlForPrivacyPolicyPage());
+        logStep("PXPP-22262 TC_005_Verify the Field attributes on the right side on the new page when user clicks on \"+ADD \" under privacy policies section");
         result.put("verifyingAllElementsInPrivacyCreation",verifyAllElementsInPrivacyCreationPage());
         result.put("verifyAllSolutions", verifyAllSolutionLabel());
         clickOnSaveButton();
+        logStep("PXPP-22263 TC_006_ Verify that user can notify with error “Policy name is required” when user save the Policy without entering Policy Name value");
         result.put("verifyPolicyNameError", verifyPolicyNameError());
         return result;
     }

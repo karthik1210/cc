@@ -4,7 +4,9 @@ package com.pxp.cc.testcases.ui;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.util.CCUtils;
 import org.testng.annotations.*;
+
 import java.util.HashMap;
+
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
@@ -28,15 +30,9 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, groups = "smoke", retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
+    @Test(priority = 1, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
     public void verifyingElementsOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
-        logStep("PXPP-20371 TC_001_Verify that user can able to see privacy policy details section under practices in Command Center Application");
-        logStep("PXPP-24829 TC_002_Verify the Privacy Policies section, when Practice don't have any policies");
-        logStep("PXPP-23295 TC_003_Verify Expand functionality for privacy policy details section under practices in Command Center Application");
-        logStep("PXPP-20709 TC_004_Verify that user can able to click on the add button in privacy policies section in command center application");
-        logStep("PXPP-22262 TC_005_Verify the Field attributes on the right side on the new page when user clicks on \"+ADD \" under privacy policies section");
-        logStep("PXPP-22263 TC_006_ Verify that user can notify with error “Policy name is required” when user save the Policy without entering Policy Name value");
         HashMap<String, Boolean> verification =new HashMap<String, Boolean>();
         verification = ccui.getPrivacyPolicySettingsPage().verifyPrivacyPocilyBasicElements();
         runOnce = false;
@@ -436,6 +432,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name11"));
         ccui.getPrivacyPolicySettingsPage().clickOnRadioButtonEnabled("Active");
+        ccui.getPrivacyPolicySettingsPage().toggleOnAllSolutions();
         ccui.getPrivacyPolicySettingsPage().emptyLanguageContent("English");
         ccui.getPrivacyPolicySettingsPage().verifyMustAddLanguageContentErrorMessage();
         ccui.getPrivacyPolicySettingsPage().clickOnLanguageTab("Spanish");
@@ -445,6 +442,8 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ccui.getPrivacyPolicySettingsPage().clickReturnToPage();
         logStep("PXPP-2504 TC_046_Verify that Error Message \"Privacy Policy Name already exists\" ,When user added same policy name which are existing as Active/Draft/Inactive status");
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name8"));
+        ccui.getPrivacyPolicySettingsPage().updateLanguageContent("English");
+        ccui.getPrivacyPolicySettingsPage().updateLanguageContent("Spanish");
         ccui.getPrivacyPolicySettingsPage().clickOnSaveButton();
         ccui.getCommonMethods().verifyToasterMessage("Privacy Policy Name already exists");
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name9"));

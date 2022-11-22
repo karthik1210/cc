@@ -1518,4 +1518,31 @@ public class SharedInfo extends BaseRest {
 				.response();
 	}
 
+	public Response associateDeassociatePracticeForResource_DL(int resourceId, int practiceId, String active) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_DL(resourceId);
+		Map<String, Object> associateDeassociatePracticeForResourcePayload = associateDeassociatePracticeForResourceMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	private Map<String, Object> associateDeassociatePracticeForResourceMapPayload(int practiceId, String active) {
+		Map<String, Object> associateDeassociatePracticeMap = new HashMap<String, Object>();
+		associateDeassociatePracticeMap.put("practiceId", practiceId);
+		associateDeassociatePracticeMap.put("active", active);
+		return associateDeassociatePracticeMap;
+	}
+
+	public Response associateDeassociatePracticeForResourceUsingEmptyPayload_DL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_DL(resourceId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForResourceUsingNullValue_DL() {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 }
