@@ -168,7 +168,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='Disregard Changes']")
     private WebElement disregardChanges;
 
-    @FindBy(xpath = "//button[normalize-space(text())=' Return to Page ']")
+    @FindBy(xpath = "//button[normalize-space(text())='Return to Page']")
     private WebElement returnToPage;
 
     @FindBy(xpath = "//div[contains(text(), 'STATEMENT OF PRIVACY POLICY')]")

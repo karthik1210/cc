@@ -2,10 +2,7 @@
 package com.pxp.cc.testcases.ui;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.objectmaps.ClientDirectoryPage;
-import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 import org.testng.annotations.*;
 
 import java.util.HashMap;
@@ -15,10 +12,6 @@ import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
 public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
 
-    public ClientDirectoryPage clientDirectoryPage;
-    public ClientDirectoryPage cchomepage;
-    public GeneralSettingsPage generalSettingsPage;
-    public CommonMethods commonMethods;
     String updatedPrivacyPolicy;
     static boolean runOnce = true;
     public CCUI ccui;
@@ -37,7 +30,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, groups = "smoke", retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
+    @Test(priority = 1, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
     public void verifyingElementsOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
         HashMap<String, Boolean> verification =new HashMap<String, Boolean>();
@@ -445,12 +438,11 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ccui.getPrivacyPolicySettingsPage().emptyLanguageContent("Spanish");
         ccui.getPrivacyPolicySettingsPage().verifyMustAddLanguageContentErrorMessage();
         ccui.getPrivacyPolicySettingsPage().clickOnBackButton();
-        ccui.getPrivacyPolicySettingsPage().clickDisregardChanges();
+        ccui.getPrivacyPolicySettingsPage().clickReturnToPage();
         logStep("PXPP-2504 TC_046_Verify that Error Message \"Privacy Policy Name already exists\" ,When user added same policy name which are existing as Active/Draft/Inactive status");
-        ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name8"));
-        ccui.getPrivacyPolicySettingsPage().clickOnRadioButtonEnabled("Active");
-        ccui.getPrivacyPolicySettingsPage().toggleOnAllSolutions();
+        ccui.getPrivacyPolicySettingsPage().updateLanguageContent("English");
+        ccui.getPrivacyPolicySettingsPage().updateLanguageContent("Spanish");
         ccui.getPrivacyPolicySettingsPage().clickOnSaveButton();
         ccui.getCommonMethods().verifyToasterMessage("Privacy Policy Name already exists");
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name9"));
