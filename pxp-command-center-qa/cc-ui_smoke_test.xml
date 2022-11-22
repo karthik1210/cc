@@ -34,7 +34,7 @@
             <class name="com.pxp.cc.testcases.ui.VarResellerUsersSearchOptionsTests" />
             <class name="com.pxp.cc.testcases.ui.EditVarResellerUserTests" />
             <class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
-            <class name="com.pxp.cc.testcases.ui.PrivacyPolicySettingsTests" />
+            <class name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
         </classes>
     </test>
 </suite>
