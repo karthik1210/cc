@@ -23,7 +23,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	String systemName, enterpriseName, clientName, practiceName, timeZone, solution;
 	public ClientDirectoryPage cchomepage;
 
-	@BeforeMethod(alwaysRun = true)
+	@BeforeMethod(alwaysRun = false)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to command center portal");
 		cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
@@ -102,7 +102,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
 	}
 
-	@Test(enabled = true, groups = {
+	@Test(enabled = false, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
 		createNewActiveClient();
@@ -118,7 +118,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyAutoSuggestionList(systemName);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
 	public void testAutoSuggestionForSingleCharacterSearch() throws Exception {
 		createNewActiveClient();
 		createNewActiveSystem();
@@ -131,7 +131,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchedResult();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
 	public void testAutoSuggestionForNumbersSearch() throws Exception {
 		createNewActiveClient();
 		logStep("Searching for nodes with number in General settings search");
@@ -143,7 +143,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchedResult();
 	}
 
-	@Test(enabled = true, groups = {
+	@Test(enabled = false, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system node functionality in Client's General settings page")
 	public void testNodeSearch() throws Exception {
 		createNewActiveClient();
@@ -159,7 +159,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchedResult();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search enterprise node functionality in Client's General settings page")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search enterprise node functionality in Client's General settings page")
 	public void testEnterpriseNodeSearch() throws Exception {
 		createNewActiveClient();
 		createNewActiveSystem();
@@ -175,7 +175,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchedResult();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search practice node functionality in Client's General settings page")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search practice node functionality in Client's General settings page")
 	public void testPracticeNodeSearch() throws Exception {
 		createNewActiveClient();
 		createNewActiveSystem();
@@ -192,7 +192,7 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifySearchedResult();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
 	public void testNoResultFound() throws Exception {
 		createNewActiveClient();
 		logStep("Searching invalid node under client in general settings page, to check client details are highlighted");
