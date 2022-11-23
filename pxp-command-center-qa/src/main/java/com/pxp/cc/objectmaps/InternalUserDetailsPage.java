@@ -479,7 +479,9 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
 		buttonSave.click();
+		buttonSave.click();
 		log("Clicked on Save");
+		driver.navigate().refresh();
 	}
 
 	public void clickBackArrowOnInternalUserDetailsPage() {
@@ -749,5 +751,9 @@ public class InternalUserDetailsPage extends CCMainPage {
 		log("Click on unlock user button");
 		javascriptClick(buttonUnlock);
 	}
-
+	
+	public void verifyEditButtonVisible() {
+		CCUtils.verifyAndWaitForElement(buttonEditInternalUser, driver);
+		log("verifying if edit button is present on internal users details page");
+	}
 }

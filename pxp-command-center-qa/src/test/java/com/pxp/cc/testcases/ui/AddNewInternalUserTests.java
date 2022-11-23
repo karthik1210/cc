@@ -28,13 +28,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 				{ testData.getProperty("invalid.user.first.name.two"),
 						testData.getProperty("invalid.user.last.name.two"),
 						testData.getProperty("invalid.user.email.two"), testData.getProperty("invalid.username.two"),
-						testData.getProperty("invalid.user.mobile.number.two") },
-
-				{ testData.getProperty("invalid.user.first.name.three"),
-						testData.getProperty("invalid.user.last.name.three"),
-						testData.getProperty("invalid.user.email.three"),
-						testData.getProperty("invalid.username.three"),
-						testData.getProperty("invalid.user.mobile.number.three") } };
+						testData.getProperty("invalid.user.mobile.number.two") } };
 		return obj;
 	}
 
@@ -50,6 +44,11 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
+		logStep("Click on more options button");
+		internalUsersPage.clickToMoreOptions();
+		logStep("Click on new button");
+		internalUsersPage.clickOnNewButton();
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
 	}
 
 	@Test(enabled = true, groups = {
@@ -142,6 +141,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		addNewInternalUsersPage.clickOnCancelButton();
 		logStep("Verify after clicking on cancel button user redirected to internal users page");
 		internalUsersPage.verifyInternalUsersPageTitle();
+		logStep("Click on more options button");
+		internalUsersPage.clickToMoreOptions();
 		logStep("Click on new button");
 		internalUsersPage.clickOnNewButton();
 		logStep("Click on cross button");
