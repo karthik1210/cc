@@ -11,9 +11,9 @@ import java.util.HashMap;
 
 public class CCUI extends CommandCenterGenericTest {
 
-    PropertyFileLoader testData;
+    public static PropertyFileLoader testData;
     public static WebDriver driver;
-    public CCUI ccui;
+    public static CCUI ccui;
     /////// Constructor
     public CCUI(PropertyFileLoader testData, WebDriver driver) {
         this.testData = testData;
@@ -106,7 +106,7 @@ public class CCUI extends CommandCenterGenericTest {
         return ngHierarchyClientCreation;
     }
 
-    public static HashMap<String,String> getClientSystementErpriseandPractice() throws Exception {
+    public static void getClientSystementErpriseandPractice() throws Exception {
 
         if(clientSystementErpriseandPractice==null){
             clientSystementErpriseandPractice = new HashMap<String, String>();
@@ -122,7 +122,16 @@ public class CCUI extends CommandCenterGenericTest {
             clientSystementErpriseandPractice.put("practiceName",practiceName);
 
         }
-        return clientSystementErpriseandPractice;
+        else {
+            ccui = new CCUI(testData,driver);
+            ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
+            ccui.getNgHierarchyClientCreationPage().clickSearchButton();
+            ccui.getNgHierarchyClientCreationPage().clickSearchResult();
+            ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+            ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
+            ccui.getPrivacyPolicySettingsPage().clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
+            ccui.getPrivacyPolicySettingsPage().clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
+        }
     }
 
     //////// Methods : Test Data Holder Metho
