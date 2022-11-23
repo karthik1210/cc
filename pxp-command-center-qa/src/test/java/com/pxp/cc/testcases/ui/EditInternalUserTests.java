@@ -11,6 +11,7 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.InternalUserDetailsPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
+import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -21,7 +22,9 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 	public InternalUsersPage internalUsersPage;
 	public InternalUserDetailsPage internalUserDetailsPage;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
+	public SearchOptionsPage searchOptionsPage;
 	public CommonMethods commonMethods;
+	String firstName;
 	String firstNameValueInEditMode, lastNameValueInEditMode, emailValueInEditMode, userNameValueInEditMode,
 			mobileNumberValueInEditMode;
 
@@ -34,6 +37,26 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		commandCenterUsersPage = new CommandCenterUsersPage(driver);
 		logStep("Verify user redirected to command center users page");
 		internalUsersPage = new InternalUsersPage(driver);
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
+		logStep("Create a new active internal user with user roles and verify success toaster");
+		commonMethods = new CommonMethods(driver);
+		firstName = CCUtils.generateAlphaNumericString(9).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(9));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(6));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		addNewInternalUsersPage.addUserRoles();
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
+		logStep("Search and select active user");
+		internalUsersPage.searchUser(firstName);
+		searchOptionsPage.clickOnSearchButton();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
 		logStep("Clicked on user to edit");
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
@@ -58,6 +81,9 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
 	public void testEditInternalUser() throws Exception {
+		logStep("Verify selected internal user status is same on internal user details page");
+		internalUserDetailsPage = new InternalUserDetailsPage(driver);
+		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
 		logStep("Modifying editable fields detail");
 		commonMethods = new CommonMethods(driver);
 		firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);

@@ -154,14 +154,17 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
 	public void testCreateActiveInternalUserWithoutRole() throws Exception {
-		logStep("Create a new internal user without adding user role and verify success toaster");
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
+		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);
-		commonMethods.enterFirstName(
-				CCUtils.generateAlphaNumericString(3).concat("-").concat(CCUtils.generateAlphaNumericString(10)));
-		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(5).concat("'s"));
-		commonMethods.enterEmail(CCUtils.generateNewEmail(64));
-		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(6));
-		commonMethods.enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
+		String firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(12));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(12));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericString(20));
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
 		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
@@ -183,12 +186,17 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
 	public void testCreateActiveInternalUserWithRoles() throws Exception {
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);
-		commonMethods.enterFirstName(CCUtils.generateAlphaNumericString(97).concat("'s"));
-		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(99));
-		commonMethods.enterEmail(CCUtils.generateNewEmail(64));
-		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(99));
+		String firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(12));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(12));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(12));
 		addNewInternalUsersPage.addUserRoles();
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
 		commonMethods.verifyToasterMessage("Success! New User has been successfully added");

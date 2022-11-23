@@ -5,44 +5,46 @@ package com.pxp.cc.testcases.ui;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
+import com.pxp.cc.objectmaps.GeneralSettingsPage;
+import com.pxp.cc.objectmaps.PracticeLinksPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
 public class CreateClientTests extends CommandCenterGenericTest {
+	private ClientDirectoryPage clientDirectoryPage;
 	public ClientDirectoryPage cchomepage;
+	private GeneralSettingsPage generalSettingsPage;
 	public CreateClientPage createClientPage;
 	public CommonMethods commonMethods;
+	public AddOrgNodePage addOrgNodePage;
+	String systemName, enterpriseName, clientName, practiceName;
+	public PracticeLinksPage practiceLinksPage;
+	public NGHierarchyClientCreation ngHierarchyClientCreation;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
 		logStep("Login to command center portal");
 		cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
 				testData.getProperty("user.password"));
 		createClientPage = new CreateClientPage(driver);
 		logStep("Select create client button from new dropdown");
-		createClientPage.clickCreateClient();
 		commonMethods = new CommonMethods(driver);
+		ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
 	}
 
-	@Test(enabled = true, groups = 
-		{"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Create a new active client using valid client details and verify success toaster message")
-	public void testNewActiveClientCreation()  throws Exception {
-		logStep("Enter valid details in mandatory fields");
-		String clientName = testData.getProperty("new.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25));
-		String clientSapNumber = testData.getProperty("new.client.sap")
+	@Test(enabled = true, groups = {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Create a new active client using valid client details and verify success toaster message")
+	public void testNewActiveClientCreation() throws Exception {
+		String clientNam = testData.getProperty("new.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
-				testData.getProperty("new.client.timezone"));
-		logStep("Verify active radio button is by default selected on the create client popup");
-		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
-		logStep("Click on create button on the create client popup");
-		createClientPage.clickConfirmPopup();
-		String actualMessage = commonMethods.getToasterMessage();
-		logStep("Verify success toaster message");
-		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
+		String clientSap = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientType = testData.getProperty("new.client.type");
+		String timeZone = testData.getProperty("new.client.timezone");
+		ngHierarchyClientCreation.createNewActiveClient(clientNam, clientSap, clientType, timeZone);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error messages on create client popup")

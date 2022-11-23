@@ -20,11 +20,13 @@
 
         <classes>
             <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
-            <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests" />
-            <class name="com.pxp.cc.testcases.ui.VarResellerUserLockFromKebabMenuTests" />
+              <!-- Enable test class once below issue is resolved  # PXPP-26174-->
+          <!--   <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests" />
+            <class name="com.pxp.cc.testcases.ui.VarResellerUserLockFromKebabMenuTests" /> -->
             <class name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests" />
-            <class name="com.pxp.cc.testcases.ui.EditClientUserTests" />
-            <class name="com.pxp.cc.testcases.ui.ClientUserLockFromKebabMenuTests" />
+            <!-- Enable test class once below issue is resolved  # PXPP-26196-->
+           <!--  <class name="com.pxp.cc.testcases.ui.EditClientUserTests" />
+            <class name="com.pxp.cc.testcases.ui.ClientUserLockFromKebabMenuTests" /> -->
         </classes>
     </test>
 </suite>

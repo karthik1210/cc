@@ -6,12 +6,15 @@ import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddNewClientUserPage;
+import com.pxp.cc.objectmaps.AddNewInternalUsersPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.DeactivateUserConfirmationPage;
 import com.pxp.cc.objectmaps.InternalUserDetailsPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
 import com.pxp.cc.objectmaps.SearchOptionsPage;
+import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
 public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGenericTest {
@@ -23,6 +26,8 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 	public DeactivateUserConfirmationPage deactivateUserConfirmationPage;
 	public List<String> userStatusList = null;
 	public CommonMethods commonMethods;
+	public AddNewInternalUsersPage addNewInternalUsersPage;
+	String firstName;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
@@ -147,9 +152,23 @@ public class InternalUserDeactivationFromKebabMenuTests extends CommandCenterGen
 
 	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user functionality")
 	public void testInternalUserDeactivateFunctionality() throws Exception {
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();		
+		logStep("Create a new active internal user with user roles and verify success toaster");
+		commonMethods = new CommonMethods(driver);
+		firstName =CCUtils.generateAlphaNumericString(9).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(9));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(6));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		addNewInternalUsersPage.addUserRoles();
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");		
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
 		logStep("Search and select active user");
-		internalUsersPage.clickOnActiveCheckbox();
+		internalUsersPage.searchUser(firstName);
 		searchOptionsPage.clickOnSearchButton();
 		internalUsersPage.verifyInternalUsersPageTitle();
 		internalUsersPage.selectInternalUser();

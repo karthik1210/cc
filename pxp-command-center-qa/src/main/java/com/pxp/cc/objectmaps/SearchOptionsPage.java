@@ -177,6 +177,9 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'No roles assigned')]")
 	private WebElement noRolesAssignedCheckbox;
+	
+	@FindBy(xpath = "//span[contains(text(),'Active')]")
+	private WebElement activeCheckbox;
 
 	List<String> actualUserStatusValues = new ArrayList<String>();
 	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
@@ -915,4 +918,4 @@ public class SearchOptionsPage extends CCMainPage {
 		log("Clicked on no roles assigned User Status checkbox on Search Options popup");
 	}
 
-}
+	}
