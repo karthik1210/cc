@@ -10,8 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
-import com.google.sitebricks.client.Web;
 import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -42,6 +40,7 @@ public class CCUtils {
 	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 	public static SoftAssert softAssert = new SoftAssert();
 	private static String numericString =  "0123456789";
+	private static String alphaNumericStringWithoutNumbersAndSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvxyz";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -50,16 +49,6 @@ public class CCUtils {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
-	}
-
-	public static void verifyElementToBeClickable(WebElement we, WebDriver driver) {
-		try {
-			WebDriverWait wait = new WebDriverWait(driver, 10);
-			wait.until(ExpectedConditions.invisibilityOf(we));
-			wait.until(ExpectedConditions.elementToBeClickable(we));
-		}catch (Exception exception) {
-			verifyAndWaitForElement(we, driver);
 		}
 	}
 
@@ -181,6 +170,15 @@ public class CCUtils {
 				return new String(newValue);
 			}
 		}
+	}
+
+	public static String generateRandomStringWithoutSymbolsOrNumbers(int n) {
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0; i < n; i++) {
+			int index = (int) (alphaNumericStringWithoutNumbersAndSpecialCharacters.length() * Math.random());
+			sb.append(alphaNumericStringWithoutNumbersAndSpecialCharacters.charAt(index));
+		}
+		return sb.toString();
 	}
 
 	public static void pressEnterKey() {
