@@ -40,6 +40,7 @@ public class CCUtils {
 	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 	public static SoftAssert softAssert = new SoftAssert();
 	private static String numericString =  "0123456789";
+	private static String alphaNumericStringWithoutNumbersAndSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvxyz";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -169,6 +170,15 @@ public class CCUtils {
 				return new String(newValue);
 			}
 		}
+	}
+
+	public static String generateRandomStringWithoutSymbolsOrNumbers(int n) {
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0; i < n; i++) {
+			int index = (int) (alphaNumericStringWithoutNumbersAndSpecialCharacters.length() * Math.random());
+			sb.append(alphaNumericStringWithoutNumbersAndSpecialCharacters.charAt(index));
+		}
+		return sb.toString();
 	}
 
 	public static void pressEnterKey() {

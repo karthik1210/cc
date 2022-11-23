@@ -94,7 +94,6 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
         logStep("-----Send Enrollment Consumer for VarReseller User Type-----");
         userMap.clear();
         userMap = createNewVarResellerUser(clientOrgId, providerId);
-        ;
         varSellerId = Integer.parseInt(userMap.get("userId").toString());
         String varResellerUserName = userMap.get("username").toString();
         String varResellerEnrollmentId = CCUtils.generateAuthId();

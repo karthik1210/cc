@@ -1805,9 +1805,9 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
         log("Clicked on Manage Client button");
     }
 
-    public void clickOnExpandArrow() {
-        CCUtils.verifyAndWaitForElement(expandArrow, driver);
-        javascriptClick(expandArrow);
+    public void clickOnExpandArrow(String systemName) {
+        WebElement element = driver.findElement(By.xpath("//button[@aria-label='toggle "+systemName+"']/span/mat-icon"));
+        javascriptClick(element);
         log("Clicked on expand Arrow button");
     }
 
@@ -1817,18 +1817,10 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
         log("Clicked on expand Arrow button for System");
     }
 
-    public void clickOnEnterpriseExpandArrow() {
-        CCUtils.verifyAndWaitForElement(expandEnterpriseArrow, driver);
-        javascriptClick(expandEnterpriseArrow);
+    public void clickOnEnterpriseExpandArrow(String enterpriseName) {
+        WebElement element = driver.findElement(By.xpath("//button[@aria-label='toggle "+enterpriseName+"']/span/mat-icon"));
+        javascriptClick(element);
         log("Clicked on expand Arrow button for Enterprise");
-    }
-
-    public void clickOnExpandArrow(String orgName) {
-        CCUtils.verifyAndWaitForElement(expandArrow, driver);
-        if (expandArrow.getAttribute("aria-label").contains(orgName)) {
-            javascriptClick(expandArrow);
-        }
-        log("Clicked on expand Arrow button for Org : "+orgName);
     }
 
     public void clickOnAddSystem() {
