@@ -52,6 +52,17 @@ public class CCUtils {
 		}
 	}
 
+	public static void verifyElementToBeClickable(WebElement we, WebDriver driver) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.invisibilityOf(we));
+			wait.until(ExpectedConditions.elementToBeClickable(we));
+		}catch (Exception exception) {
+			verifyAndWaitForElement(we, driver);
+		}
+	}
+
+
 	public static void verifyAndWaitForElementPresence(WebElement we, WebDriver driver) {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
