@@ -21,32 +21,27 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	public AddOrgNodePage addOrgNodePage;
 	public NGHierarchyClientCreation ngHierarchyClientCreation;
 	String systemName, enterpriseName, clientName, practiceName, timeZone, solution;
+	public ClientDirectoryPage cchomepage;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to CC portal");
-		clientDirectoryPage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
+		logStep("Login to command center portal");
+		cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
 				testData.getProperty("user.password"));
+		createClientPage = new CreateClientPage(driver);
+		logStep("Select create client button from new dropdown");
+		commonMethods = new CommonMethods(driver);
+		ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
 	}
 
 	public void createNewActiveClient() throws Exception {
-		createClientPage = new CreateClientPage(driver);
-		createClientPage.clickCreateClient();
-		commonMethods = new CommonMethods(driver);
 		clientName = testData.getProperty("new.test.client.name").concat("12")
 				.concat(CCUtils.generateAlphaNumericString(10).concat("_"));
-		String clientSapNumber = testData.getProperty("new.client.sap")
+		String clientSap = testData.getProperty("new.client.sap")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
-				testData.getProperty("new.client.timezone"));
-		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
-		createClientPage.clickConfirmPopup();
-		clientDirectoryPage = new ClientDirectoryPage(driver);
-		clientDirectoryPage.searchNode(clientName);
-		clientDirectoryPage.clickSearchButton();
-		clientDirectoryPage.clickSearchResult();
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.verifyClientNodeIsSelected();
+		String clientType = testData.getProperty("new.client.type");
+		String timeZone = testData.getProperty("new.client.timezone");
+		ngHierarchyClientCreation.createNewActiveClient(clientName, clientSap, clientType, timeZone);
 	}
 
 	private void createNewActiveSystem() throws NullPointerException, InterruptedException {
@@ -72,11 +67,11 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 		CCUtils.pressEnterKey();
 		addOrgNodePage = new AddOrgNodePage(driver);
 		addOrgNodePage.verifyManageClientButton();
-        addOrgNodePage.clickOnManageClient();
-        addOrgNodePage.clickOnExpandArrow();
-        driver.navigate().refresh();
-        addOrgNodePage.clickOnManageClient();
-        addOrgNodePage.clickOnExpandArrow();
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
+		driver.navigate().refresh();
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnExpandArrow();
 		addOrgNodePage.verifyAddEnterpriseButton();
 		addOrgNodePage.clickOnAddEnterprise();
 		enterpriseName = CCUtils.generateAlphaNumericString(18);
@@ -88,24 +83,24 @@ public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
 	}
 
 	private void createNewActivePractice() throws NullPointerException, InterruptedException {
-	        generalSettingsPage = new GeneralSettingsPage(driver);
-	        addOrgNodePage = new AddOrgNodePage(driver);
-	        addOrgNodePage.verifyManageClientButton();
-	        addOrgNodePage.clickOnManageClient();
-	        addOrgNodePage.clickOnSystemExpandArrow();
-	        addOrgNodePage.clickOnEnterpriseExpandArrow();
-	        addOrgNodePage.verifyAddPracticeButton();
-	        addOrgNodePage.clickOnAddPracticeButton();
-	        practiceName = CCUtils.generateAlphaNumericString(18);
-	        addOrgNodePage.enterPracticeName(practiceName);
-	        addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
-					testData.getProperty("new.system"));
-			addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
-			addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
-			addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
-			addOrgNodePage.clickOnSaveAndAddButton();
-			addOrgNodePage.verifyToasterMessage("Changes updated successfully");
-		}
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		addOrgNodePage = new AddOrgNodePage(driver);
+		addOrgNodePage.verifyManageClientButton();
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.clickOnSystemExpandArrow();
+		addOrgNodePage.clickOnEnterpriseExpandArrow();
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
+		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+		addOrgNodePage.clickOnSaveAndAddButton();
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality")
