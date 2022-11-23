@@ -562,6 +562,8 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void enterSearchText(String nodeName) {
 		CCUtils.verifyAndWaitForElement(searchIcon, driver);
 		searchIcon.click();
+//		CCUtils.verifyAndWaitForElement(searchIcon,driver);
+//		searchIcon.click();
 		log("click to search icon");
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
