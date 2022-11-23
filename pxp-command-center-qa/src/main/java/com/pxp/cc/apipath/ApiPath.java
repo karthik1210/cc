@@ -1666,4 +1666,33 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/resources/null/practices";
 	}
+
+	public static final String SEND_USER_ENROLLMENT_CONSUMER(String serviceLayer, String uriType, int useId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_BL + "/v1/users/enrollments/" + useId;
+			else
+				return SERVICE_USER_BL + "/v1/users/enrollmentsss/" + useId;
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_DL + "/v1/users/enrollments/" + useId;
+			else
+				return SERVICE_USER_DL + "/v1/users/enrollmentsss/" + useId;
+		}
+	}
+
+	public static final String SEND_USER_ENROLLMENT_CONSUMER_WITH_INVLAID_DATATYPE(String serviceLayer, String useId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_USER_BL + "/v1/users/enrollments/" + useId;
+		else
+			return SERVICE_USER_DL + "/v1/users/enrollments/" + useId;
+	}
+
+	public static final String GET_ENROLLMENT_USER( String uriType, String enrollmentId ) {
+		if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_DL + "/v1/users/enrollments/" + enrollmentId ;
+			else
+				return SERVICE_USER_DL + "/v1/users/enrollmentsss/" + enrollmentId ;
+	}
+
 }

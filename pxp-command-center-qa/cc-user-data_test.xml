@@ -37,8 +37,7 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUsersApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateInternalUsersApiTests_DataLayer" 
 				/> -->
-
-				
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SendUserEnrollmentConsumerApiTests_DataLayer"/>
 		</classes>
 	</test>
 </suite>
