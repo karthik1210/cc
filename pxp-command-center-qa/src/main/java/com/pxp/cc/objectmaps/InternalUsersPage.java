@@ -98,7 +98,7 @@ public class InternalUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
 	private WebElement itemsPerPageTwoHundred;
-	
+
 	@FindBy(id = "IconContainer")
 	private WebElement moreOptionsButton;
 
@@ -429,7 +429,6 @@ public class InternalUsersPage extends CCMainPage {
 		CCUtils.assertEquals(errorToasterMessage.isDisplayed(), true);
 		log("number of results found, please refine search further error message is displayed");
 	}
-<<<<<<< HEAD
 
 	public void clickOnKebabMenuButton() {
 		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
@@ -451,12 +450,12 @@ public class InternalUsersPage extends CCMainPage {
 	public void clickOnBulkDeactivate() {
 		CCUtils.verifyAndWaitForElement(buttonBulkDeactivate, driver);
 		javascriptClick(buttonBulkDeactivate);
-=======
-	
+	}
+
 	public void clickToMoreOptions() {
 		CCUtils.verifyAndWaitForElement(moreOptionsButton, driver);
 		moreOptionsButton.click();
 		log("clicked to more options button");
->>>>>>> b1c904ce16b395da262c73fa3b87434555ffca9c
+
 	}
 }
