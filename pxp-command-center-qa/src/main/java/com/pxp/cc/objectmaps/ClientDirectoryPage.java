@@ -13,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import com.pxp.cc.util.CCUtils;
 
@@ -54,7 +56,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "directoryClearButton")
 	private WebElement buttonClearClientFilter;
 
-	@FindBy(className = "confirmbutton")
+	@FindBy(xpath = "//button[@class = 'confirmbutton']/span[text()='APPLY']")
 	private WebElement buttonApplyClientFilter;
 
 	@FindBy(xpath = "//div[@class='tableborder']")
@@ -298,7 +300,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void verfiySearchResultForClientType(String resultClientType) {
-		CCUtils.verifyAndWaitForElement(tableClientTypeInSearchResult.get(0), driver);
+		CCUtils.verifyAndWaitForTableList(tableClientTypeInSearchResult.get(0), driver);
 		log("number of matching results for searched text :" + tableClientTypeInSearchResult.size());
 		for (int listOfClient = 0; listOfClient <= tableClientTypeInSearchResult.size(); listOfClient++) {
 			CCUtils.assertTrue(tableClientTypeInSearchResult.get(listOfClient).getText().contains(resultClientType),

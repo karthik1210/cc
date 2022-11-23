@@ -139,7 +139,10 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "searchIcon")
 	private WebElement SearchiconInGeneralSetting;
 
-	@FindBy(id = "searchInput")
+	@FindBy(xpath = "//mat-icon[@id='searchIcon']")
+	private WebElement searchIcon;
+	
+	@FindBy(xpath = "//input[@id='searchInput']")
 	private WebElement textboxSearchInGeneralSetting;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
@@ -228,28 +231,70 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "unsavedCancelBtn")
 	private WebElement activatePopupCancelbutton;
 
-	@FindBy(xpath = "//div//span//mat-icon[contains(text(),'chat')]//following::div[@id='activateLabel'][1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Chat']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement chatActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='campaign']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Engage']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement engageActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='videocam']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Virtual Visits']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement virtualVisitsActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='attach_money']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Pay']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement payActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='person']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Portal']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement portalActivateButton;
 
-	@FindBy(xpath = "(//div//span[contains(text(),'PSS')]//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//button[@class='button_arrow'])[1]")
+	private WebElement purchasedSolutionExpandButton;
 
 	private String purchaseActivateButton(String solutionImageIcon) {
 		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//span[contains(text(),'"
 				+ solutionImageIcon + "')]";
 	}
+
+	@FindBy(xpath = "(//span[@class='value'])[2]")
+	private WebElement duplicateSapId;
+
+	@FindBy(xpath = "(//span[@class='info ng-star-inserted'])[1]")
+	private WebElement duplicateClientName;
+
+	@FindBy(id = "detailNameInput")
+	private WebElement textboxClientName;
+
+	@FindBy(id = "detailSapInput")
+	private WebElement textboxSapId;
+
+	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//div[@class='ng-select-container ng-has-value']")
+	private WebElement dropdownClientType;
+
+	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//div[@class='ng-select-container ng-has-value']")
+	private WebElement dropdownTimezone;
+
+	@FindBy(id = "detailActiveRadio")
+	private WebElement radiobuttonActive;
+
+	@FindBy(id = "detailInactiveRadio")
+	private WebElement radiobuttonInactive;
+
+	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
+	private WebElement buttonCancel;
+
+	@FindBy(xpath = "//span[normalize-space()='SAVE']")
+	private WebElement buttonSave;
+
+	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
+	private WebElement labelSolutionsActive;
+
+	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
+	private WebElement textboxError;
+
+	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
+	private WebElement clientTab;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -502,6 +547,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void enterSearchText(String nodeName) {
+//		CCUtils.verifyAndWaitForElement(searchIcon,driver);
+//		searchIcon.click();
+		log("click to search icon");
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
 		log("Entered text in search :" + nodeName);
@@ -649,45 +697,6 @@ public class GeneralSettingsPage extends CCMainPage {
 		else
 			return false;
 	}
-
-	@FindBy(xpath = "(//span[@class='value'])[2]")
-	private WebElement duplicateSapId;
-
-	@FindBy(xpath = "(//span[@class='info ng-star-inserted'])[1]")
-	private WebElement duplicateClientName;
-
-	@FindBy(id = "detailNameInput")
-	private WebElement textboxClientName;
-
-	@FindBy(id = "detailSapInput")
-	private WebElement textboxSapId;
-
-	@FindBy(xpath = "//ng-select[@id='clientTypeSelect']//div[@class='ng-select-container ng-has-value']")
-	private WebElement dropdownClientType;
-
-	@FindBy(xpath = "//ng-select[@id='timezoneSelect']//div[@class='ng-select-container ng-has-value']")
-	private WebElement dropdownTimezone;
-
-	@FindBy(id = "detailActiveRadio")
-	private WebElement radiobuttonActive;
-
-	@FindBy(id = "detailInactiveRadio")
-	private WebElement radiobuttonInactive;
-
-	@FindBy(xpath = "//span[normalize-space()='CANCEL']")
-	private WebElement buttonCancel;
-
-	@FindBy(xpath = "//span[normalize-space()='SAVE']")
-	private WebElement buttonSave;
-
-	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
-	private WebElement labelSolutionsActive;
-
-	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
-	private WebElement textboxError;
-
-	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
-	private WebElement clientTab;
 
 	public void clickClientDirectory() {
 		CCUtils.verifyAndWaitForElement(clientTab, driver);
@@ -919,6 +928,11 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertTrue(actualTitle.contains(expectedTitle), "Searched node not selected. Title not found");
 	}
 
+	public void verifySearchedResult() {
+		CCUtils.verifyAndWaitForElement(clientNodeTitle, driver);
+		CCUtils.assertEquals(clientNodeTitle.isDisplayed(), true);
+	}
+
 	public void verifySearchResultFunctionality(List<String> nodesInClient, String expectedTitle) {
 		if (nodesInClient.contains(expectedTitle)) {
 			log("Node present in client's general setting page");
@@ -1043,5 +1057,12 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(YesActivateButton, driver);
 		YesActivateButton.click();
 		log("click to Yes,Activate Button in Activate solutions popup");
+	}
+	
+	public void clickToExpandPurchaseSolutions() {
+		CCUtils.scrollPageViaElement(driver, purchasedSolutionExpandButton);
+		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton,driver);
+		purchasedSolutionExpandButton.click();
+		log("click to pruchased solution expand button");
 	}
 }

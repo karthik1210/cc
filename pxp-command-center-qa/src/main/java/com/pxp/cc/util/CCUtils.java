@@ -27,6 +27,7 @@ import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.intuit.ifs.csscat.core.wait.WaitForWEIsDisplayed;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
+import org.openqa.selenium.StaleElementReferenceException;
 
 public class CCUtils {
 
@@ -39,6 +40,7 @@ public class CCUtils {
 	private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
 	public static SoftAssert softAssert = new SoftAssert();
 	private static String numericString =  "0123456789";
+	private static String alphaNumericStringWithoutNumbersAndSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvxyz";
 
 	public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
 		WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -47,6 +49,16 @@ public class CCUtils {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void verifyAndWaitForElementPresence(WebElement we, WebDriver driver) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.visibilityOf(we));
+			wait.until(ExpectedConditions.stalenessOf(we));
+		} catch (Exception exception) {
+			verifyAndWaitForElement(we, driver);
 		}
 	}
 
@@ -61,6 +73,19 @@ public class CCUtils {
 			}
 		}
 	}
+
+	public static void verifyAndWaitForTableList(WebElement we, WebDriver driver) {
+		try {
+				Log4jUtil.log("webdriverwait initiated");
+				WebDriverWait wait = new WebDriverWait(driver, 10);
+				wait.until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@id='table']"))));
+				Log4jUtil.log("webdriverwait Completed and tableClientTypeInSearchResult validation");
+				wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
+			} catch (StaleElementReferenceException e) {
+				verifyAndWaitForTableList(we, driver);
+			}
+	}
+
 
 	public static void assertEquals(Object actual, Object expected) throws RuntimeException {
 		try {
@@ -145,6 +170,15 @@ public class CCUtils {
 				return new String(newValue);
 			}
 		}
+	}
+
+	public static String generateRandomStringWithoutSymbolsOrNumbers(int n) {
+		StringBuilder sb = new StringBuilder(n);
+		for (int i = 0; i < n; i++) {
+			int index = (int) (alphaNumericStringWithoutNumbersAndSpecialCharacters.length() * Math.random());
+			sb.append(alphaNumericStringWithoutNumbersAndSpecialCharacters.charAt(index));
+		}
+		return sb.toString();
 	}
 
 	public static void pressEnterKey() {

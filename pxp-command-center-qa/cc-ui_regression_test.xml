@@ -28,7 +28,7 @@
             			<class name="com.pxp.cc.testcases.ui.EditInternalUserTests" />
             			<class name="com.pxp.cc.testcases.ui.SearchOptionsTests" />
              			<class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
-						<class name="com.pxp.cc.testcases.ui.PrivacyPolicySettingsTests" />
+						<class name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
         </classes>
     </test>
 </suite>

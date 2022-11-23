@@ -142,6 +142,24 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Pay ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPay;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Virtual Visits ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolVirtualVisits;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' PSS ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPss;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Portal ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPortal;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolEngage;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
+	private WebElement connectedSolChat;
 
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
@@ -566,5 +584,38 @@ public class ProviderDetailsPage extends CCMainPage {
 			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
 		else
 			Log4jUtil.log("Success toaster is not displayed");
+	}
+	
+	public void clickOnChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"false");
+		log("The toggle is not checked yet as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click to chat toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"true");
+		log("The toggle is checked as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
+	
+	public void clickOffChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"true");
+		log("The toggle is checked as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click to chat toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"false");
+		log("The toggle is not checked yet as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
+	
+	public void clickOnPortalToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPortal);
+		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
+		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(),"false");
+		log("The toggle is not checked yet as aria-checked attribute value is "+connectedSolPortal.getAttribute("aria-checked").toString().trim());
+		log("click to portal toggle");
+		javascriptClick(connectedSolPortal);
+		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(),"true");
+		log("The toggle is checked as aria-checked attribute value is "+connectedSolPortal.getAttribute("aria-checked").toString().trim());
 	}
 }

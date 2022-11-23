@@ -79,7 +79,8 @@ public class ProviderResourceAndStaffSearchPage extends CCMainPage {
 		log("get the text of list : " + listOfProviderFirstName.getText().toString());
 		log("verified presence of list provider");
 		CCUtils.verifyAndWaitForElement(listOfProviderFirstName, driver);
-		CCUtils.assertEquals(listOfProviderFirstName.getText().toString().trim(), listOfProvider.trim());
-		listOfProviderFirstName.click();
+		if ((listOfProviderFirstName.getText().toString().trim()).equalsIgnoreCase(listOfProvider.trim())) {
+			listOfProviderFirstName.click();
+		}
 	}
 }

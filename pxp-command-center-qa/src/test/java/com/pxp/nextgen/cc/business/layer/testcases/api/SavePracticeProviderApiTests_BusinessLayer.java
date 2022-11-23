@@ -186,7 +186,7 @@ public class SavePracticeProviderApiTests_BusinessLayer extends BaseRest {
 	public void testErrorResponseForInvalidMobileNumber() throws IOException {
 		String enDisplayName = testData.getProperty("api.en").concat(CCUtils.generateAlphaNumericString(5));
 		String esDisplayName = testData.getProperty("api.es").concat(CCUtils.generateAlphaNumericString(5));
-		String mobile = "12345678901234556776765658568658865483466877";
+		String mobile = CCUtils.generateAlphaNumericString(20);
 		String email = CCUtils.generateNewEmail(10);
 		logStep("Enter valid details in save practice provider payload");
 		savePracticeProviderApiResponse = sharedInfo.savePracticeProvider_BL(practiceId, providerId, enDisplayName,

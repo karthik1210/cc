@@ -8,9 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import com.pxp.cc.pojos.PatientAccessDetailsBusinessLayer;
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.*;
 
 public class UserInfo extends BaseRest {
 
@@ -118,6 +121,7 @@ public class UserInfo extends BaseRest {
 		createUsertMap.put("email", email);
 		createUsertMap.put("mobile", mobile);
 		createUsertMap.put("userStatus", userStatus);
+		createUsertMap.put("enrollmentStatus", "NOT_SENT");
 		createUsertMap.put("clientId", clientId);
 		createUsertMap.put("resellerId", resellerId);
 		createUsertMap.put("providerId", providerId);
@@ -793,5 +797,36 @@ public class UserInfo extends BaseRest {
 		List<Object> Roles = new ArrayList<Object>();
 		Roles.addAll(roles);
 		return Roles;
+	}
+
+	public Response sendUserEnrollmentConsumerDL(String validURI, int userId, UserSendEnrollmentConsumerDataLayer sendUserEnrollmentConsumerPayload) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.SEND_USER_ENROLLMENT_CONSUMER("DL", "Valid", userId);
+			return given().spec(requestSpec).body(sendUserEnrollmentConsumerPayload).when().patch(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.SEND_USER_ENROLLMENT_CONSUMER("DL", "InValid", userId);
+			return given().spec(requestSpec).body(sendUserEnrollmentConsumerPayload).when().patch(url).then().extract().response();
+		} else {
+			String url = ApiPath.SEND_USER_ENROLLMENT_CONSUMER("DL", "Valid", userId);
+			return given().spec(requestSpec).body(sendUserEnrollmentConsumerPayload).when().delete(url).then().extract().response();
+		}
+	}
+
+	public Response sendUserEnrollmentConsumerInvaliDatatypeResponseDL(String userId, UserSendEnrollmentConsumerDataLayer sendUserEnrollmentConsumerPayload) {
+		String url = ApiPath.SEND_USER_ENROLLMENT_CONSUMER_WITH_INVLAID_DATATYPE("DL", userId);
+		return given().spec(requestSpec).body(sendUserEnrollmentConsumerPayload).when().patch(url).then().extract().response();
+	}
+
+	public Response getUserEnrollmentDL(String validURI, String enrollmentId, String enrollmentStatus) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_ENROLLMENT_USER("Valid", enrollmentId);
+			return given().spec(requestSpec).queryParam("status", enrollmentStatus).when().get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_ENROLLMENT_USER("InValid", enrollmentId);
+			return given().spec(requestSpec).queryParam("status", enrollmentStatus).when().get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_ENROLLMENT_USER("Valid", enrollmentId);
+			return given().spec(requestSpec).queryParam("status", enrollmentStatus).when().delete(url).then().extract().response();
+		}
 	}
 }
