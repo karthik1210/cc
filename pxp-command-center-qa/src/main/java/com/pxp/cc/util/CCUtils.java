@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import com.google.sitebricks.client.Web;
 import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -48,6 +50,26 @@ public class CCUtils {
 			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public static void verifyElementToBeClickable(WebElement we, WebDriver driver) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.invisibilityOf(we));
+			wait.until(ExpectedConditions.elementToBeClickable(we));
+		}catch (Exception exception) {
+			verifyAndWaitForElement(we, driver);
+		}
+	}
+
+	public static void verifyAndWaitForElementPresence(WebElement we, WebDriver driver) {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.visibilityOf(we));
+			wait.until(ExpectedConditions.stalenessOf(we));
+		} catch (Exception exception) {
+			verifyAndWaitForElement(we, driver);
 		}
 	}
 
