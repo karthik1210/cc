@@ -6,22 +6,42 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.util.CommonMethods;
 
 public class EditClientDetailsTests extends CommandCenterGenericTest {
-	ClientDirectoryPage clientDirectoryPage;
-	GeneralSettingsPage generalSettingsPage;
-	CreateClientPage createClientPage;
-	
+	public ClientDirectoryPage cchomepage;
+	public CreateClientPage createClientPage;
+	public CommonMethods commonMethods;
+	public NGHierarchyClientCreation ngHierarchyClientCreation;
+	public GeneralSettingsPage generalSettingsPage;
+	public ClientDirectoryPage clientDirectoryPage;
+	public AddOrgNodePage addOrgNodePage;
+	String clientName;
+
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		clientDirectoryPage = new ClientDirectoryPage(driver);
+		logStep("Login to command center portal");
+		cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
+				testData.getProperty("user.password"));
+
+		createClientPage = new CreateClientPage(driver);
+		logStep("Select create client button from new dropdown");
+		commonMethods = new CommonMethods(driver);
+		ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
+		clientName = testData.getProperty("new.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientSap = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientType = testData.getProperty("new.client.type");
+		String timeZone = testData.getProperty("new.client.timezone");
+		ngHierarchyClientCreation.createNewActiveClient(clientName, clientSap, clientType, timeZone);
 		generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.verifyClientNodeIsSelected();
 	}
 
 	@Test(enabled = true, groups = {
@@ -52,7 +72,7 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify maximum character limit for client name & sap id")
 	public void testMaximumCharcterError() throws Exception {
-		
+
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
@@ -112,7 +132,7 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify client name & sap id are mandatory values")
 	public void testClientNameAndSapAreMandatory() throws Exception {
-		
+
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
@@ -138,82 +158,27 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify client edited details are reflected")
 	public void testToVerifyEditedChanges() throws Exception {
-		logStep("Login to Command Center");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Searching a client in client directory");
-		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
-		clientDirectoryPage.clickSearchButton();
-		clientDirectoryPage.clickSearchResult();
-		logStep("Navigating To General Setting page");
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		String previousClientName = generalSettingsPage.getDuplicateClientName();
-		String previousClientSap = generalSettingsPage.getDuplicateSap();
-		String previousStatus = generalSettingsPage.getClientStatus();
-		String previousTimeZone = generalSettingsPage.getClientTimezone();
-		String previousClientType = generalSettingsPage.getClientType();
-		logStep("Details for Client are as: " + ccuser.searchClientInClientDirectory);
-		log("Client SAP ID: " + previousClientSap);
-		log("Client Type: " + previousClientType);
-		log("Client TimeZone: " + previousTimeZone);
-		log("Client Status: " + previousStatus);
 		logStep("Change above details of client ");
 		generalSettingsPage.clickEditButtonOfClient();
+		String newClientName = CCUtils.generateAlphaNumericString(10);
+		generalSettingsPage.enterClientName(newClientName);
+		generalSettingsPage.changeStatus();
+		logStep("Verify success toaster message");
+		generalSettingsPage.verifyToasterMessage("Changes updated successfully");
 
-		String newClientName = CCUtils.generateAlphaNumericStringIncludingSpecialChar(10);
-		String newClientSap = CCUtils.generateAlphaNumericStringIncludingSpecialChar(12);
-		String newTimeZone = ccuser.getClientTimezone();
-		String newClientType = ccuser.getClientElevenType();
-
-		generalSettingsPage.clearClientNameField();
-		generalSettingsPage.enterNewClientName(newClientName.trim());
-		generalSettingsPage.clearSapField();
-		generalSettingsPage.enterNewClientSap(newClientSap);
-		generalSettingsPage.clickClientType();
-		createClientPage = new CreateClientPage(driver);
-		createClientPage.selectClientType(newClientType);
-		generalSettingsPage.clickTimeZoneDropdown();
-		createClientPage.selectTimeZone(newTimeZone);
-		generalSettingsPage.clickInactiveRadioButtonOfClient();
-		generalSettingsPage.clickSave();
-
-		String savedClientName = generalSettingsPage.getDuplicateClientName();
-		String savedClientSap = generalSettingsPage.getDuplicateSap();
-		String savedStatus = generalSettingsPage.getClientStatus();
-		String savedsTimeZone = generalSettingsPage.getClientTimezone();
-		String savedClientType = generalSettingsPage.getClientType();
-
-		logStep("Verify details of client are changed after save is sucessfull");
-		CCUtils.assertEquals(savedClientName, newClientName);
-		CCUtils.assertEquals(savedClientSap, newClientSap);
-		CCUtils.assertEquals(savedClientType, newClientType);
-		CCUtils.assertEquals(savedsTimeZone, newTimeZone);
-		CCUtils.assertEquals(savedStatus, "inactive");
-
-		logStep("Changing client details to old values");
-		generalSettingsPage.clickEditButtonOfClient();
-		generalSettingsPage.clearClientNameField();
-		generalSettingsPage.enterNewClientName(previousClientName.trim());
-		generalSettingsPage.clearSapField();
-		generalSettingsPage.enterNewClientSap(previousClientSap.trim());
-		generalSettingsPage.clickClientType();
-		createClientPage.selectClientType(previousClientType);
-		generalSettingsPage.clickTimeZoneDropdown();
-		createClientPage.selectTimeZone(previousTimeZone);
-		generalSettingsPage.clickActiveRadioButtonOfClient();
-		generalSettingsPage.clickSave();
 	}
 
 	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to verify cltimezone is not mandatory while editing & saving client detail")
 	public void testTimeZoneIsNotMandatory() throws Exception {
-		
+
 		clientDirectoryPage.searchNode(ccuser.searchClientInClientDirectory);
 		clientDirectoryPage.clickSearchButton();
 		clientDirectoryPage.clickSearchResult();
 		logStep("Navigating To General Setting page");
 		logStep("Change timezone value to Select");
-		String previousTimeZone = generalSettingsPage.getClientTimezone();	
-		logStep("Timezone for client ' " + ccuser.searchClientInClientDirectory + " ' is :"+previousTimeZone);
+		String previousTimeZone = generalSettingsPage.getClientTimezone();
+		logStep("Timezone for client ' " + ccuser.searchClientInClientDirectory + " ' is :" + previousTimeZone);
 		generalSettingsPage.clickEditButtonOfClient();
 		createClientPage = new CreateClientPage(driver);
 		generalSettingsPage.clickTimeZoneDropdown();
@@ -225,5 +190,5 @@ public class EditClientDetailsTests extends CommandCenterGenericTest {
 		generalSettingsPage.clickTimeZoneDropdown();
 		createClientPage.selectTimeZone(previousTimeZone);
 		generalSettingsPage.clickSave();
-	}	
+	}
 }

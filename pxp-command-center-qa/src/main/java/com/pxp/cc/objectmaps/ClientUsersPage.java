@@ -23,7 +23,7 @@ public class ClientUsersPage extends CCMainPage {
 	@FindBy(id = "clientProductIcon")
 	private List<WebElement> listClientUserStatus;
 
-	@FindBy(id = "newButton")
+	@FindBy(id = "addClientUser")
 	private WebElement buttonNew;
 
 	@FindBy(id = "IconContainer")
@@ -107,7 +107,7 @@ public class ClientUsersPage extends CCMainPage {
 
 	public void verifyClientUsersPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		CCUtils.assertEquals(labelPageTitle.getText().trim(), " Client Users ");
+		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Client Users");
 		log("Client users page title is displayed");
 	}
 

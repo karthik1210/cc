@@ -11,6 +11,7 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.InternalUserDetailsPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
+import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -21,7 +22,9 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 	public InternalUsersPage internalUsersPage;
 	public InternalUserDetailsPage internalUserDetailsPage;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
+	public SearchOptionsPage searchOptionsPage;
 	public CommonMethods commonMethods;
+	String firstName;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
@@ -32,6 +35,26 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		commandCenterUsersPage = new CommandCenterUsersPage(driver);
 		logStep("Verify user redirected to command center users page");
 		internalUsersPage = new InternalUsersPage(driver);
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
+		logStep("Create a new active internal user with user roles and verify success toaster");
+		commonMethods = new CommonMethods(driver);
+		firstName = CCUtils.generateAlphaNumericString(9).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(9));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(6));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		addNewInternalUsersPage.addUserRoles();
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
+		logStep("Search and select active user");
+		internalUsersPage.searchUser(firstName);
+		searchOptionsPage.clickOnSearchButton();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
 		logStep("Clicked on user to edit");
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
@@ -53,8 +76,12 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
+	@Test(enabled = true, groups = {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
 	public void testEditInternalUser() throws Exception {
+		logStep("Verify selected internal user status is same on internal user details page");
+		internalUserDetailsPage = new InternalUserDetailsPage(driver);
+		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
 		logStep("Modifying editable fields detail");
 		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
 		commonMethods.enterFirstName(firstNameValueInEditMode);
@@ -68,13 +95,6 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		commonMethods.enterMobileNumber(mobileNumberValueInEditMode);
 		logStep("Click on save button");
 		internalUserDetailsPage.clickSave();
-		logStep("Verify new updated value are displayed in first name, last name, username, email and mobile number fields");
-		CCUtils.assertEquals(commonMethods.getFirstName(), firstNameValueInEditMode.trim());
-		CCUtils.assertEquals(commonMethods.getLastName(), lastNameValueInEditMode.trim());
-		CCUtils.assertEquals(commonMethods.getUserName(), userNameValueInEditMode.trim());
-		CCUtils.assertEquals(commonMethods.getEmailAddress(), emailValueInEditMode.trim());
-		CCUtils.assertEquals(commonMethods.getMobileNumber().replaceAll("-", "").trim(),
-				mobileNumberValueInEditMode.trim());
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify required error message for mandatory fields in edit mode")

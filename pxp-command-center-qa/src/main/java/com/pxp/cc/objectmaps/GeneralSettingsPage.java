@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -85,7 +86,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String clientNameValue;
 	public String flagTest = "flagTest";
 
-	@FindBy(id = "detailEditLabel")
+	@FindBy(id = "displayNameEditBtn")
 	private WebElement editClientButton;
 
 	@FindBy(id = "detailSapInput")
@@ -289,6 +290,18 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
 	private WebElement clientTab;
+
+	@FindBy(xpath = "//mat-select[@role ='combobox']")
+	private WebElement statusArrow;
+
+	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
+	private WebElement inactiveStatus;
+
+	@FindBy(id = "detailSaveBtn")
+	private WebElement saveBtn;
+
+	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
+	private WebElement toasterMessage;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -1048,5 +1061,30 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(YesActivateButton, driver);
 		YesActivateButton.click();
 		log("click to Yes,Activate Button in Activate solutions popup");
+	}
+
+	public void enterClientName(String clientName) {
+		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
+		textboxClientName.clear();
+		textboxClientName.sendKeys(clientName);
+		log("Entered text in Client name field is :" + clientName);
+	}
+
+	public void changeStatus() {
+		CCUtils.verifyAndWaitForElement(statusArrow, driver);
+		statusArrow.click();
+		inactiveStatus.click();
+		log("Clicked on inactive status");
+		saveBtn.click();
+		log("Clicked on save");
+	}
+
+	public void verifyToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
 	}
 }

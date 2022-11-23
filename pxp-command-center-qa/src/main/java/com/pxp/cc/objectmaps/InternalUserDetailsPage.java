@@ -184,7 +184,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//button[contains(text(),'Deactivate User')]")
 	private WebElement buttonDeactivateUser;
 
-	@FindBy(xpath = "//span[@class='pl-3']")
+	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
 	private WebElement inactiveStatus;
 
 	@FindBy(id = "detailSaveBtn")

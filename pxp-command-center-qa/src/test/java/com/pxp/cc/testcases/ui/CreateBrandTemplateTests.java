@@ -5,54 +5,46 @@ package com.pxp.cc.testcases.ui;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.BrandingTemplatesPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CreateClientPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
+import com.pxp.cc.objectmaps.PracticeLinksPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
 public class CreateBrandTemplateTests extends CommandCenterGenericTest {
-
 	private ClientDirectoryPage clientDirectoryPage;
 	private GeneralSettingsPage generalSettingsPage;
 	private BrandingTemplatesPage brandingTemplatesPage;
 	public CommonMethods commonMethods;
 	public CreateClientPage createClientPage;
+	public ClientDirectoryPage cchomepage;
+	public AddOrgNodePage addOrgNodePage;
+	String systemName, enterpriseName, clientName, practiceName;
+	public PracticeLinksPage practiceLinksPage;
+	public NGHierarchyClientCreation ngHierarchyClientCreation;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to CC portal");
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		commonMethods = new CommonMethods(driver);
-		createClientPage = new CreateClientPage(driver);
+		logStep("Login to command center portal");
+		cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
+				testData.getProperty("user.password"));
 		createClientPage = new CreateClientPage(driver);
 		logStep("Select create client button from new dropdown");
-		createClientPage.clickCreateClient();
-		logStep("Enter valid details in mandatory fields");
-		String clientName = testData.getProperty("new.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(15));
-		String clientSapNumber = testData.getProperty("new.client.sap")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(13));
-		createClientPage.createNewClient(clientName, clientSapNumber, testData.getProperty("new.client.type"),
-				testData.getProperty("new.client.timezone"));
-		logStep("Verify active radio button is by default selected on the create client popup");
-		createClientPage.verifyActiveRadioButtonIsByDefaultSelected();
-		logStep("Click on create button on the create client popup");
-		createClientPage.clickConfirmPopup();
-		String actualMessage = commonMethods.getToasterMessage();
-		logStep("Verify success toaster message");
-		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
-		logStep("Searching a created client in client directory");
-		clientDirectoryPage.searchNode(clientName);
-		clientDirectoryPage.clickSearchButton();
-		clientDirectoryPage.clickSearchResult();
 		commonMethods = new CommonMethods(driver);
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.verifyClientNodeIsSelected();
+		ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
+		String clientNam = testData.getProperty("new.client.name2")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientSap = testData.getProperty("new.client.sap")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
+		String clientType = testData.getProperty("new.client.type");
+		String timeZone = testData.getProperty("new.client.timezone");
+		ngHierarchyClientCreation.createNewActiveClient(clientNam, clientSap, clientType, timeZone);
 	}
 
-	@Test(priority = 0,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level")
+	@Test(priority = 0, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level")
 	public void testCreateBrandAtClientLevel() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
@@ -70,7 +62,8 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage, "Success! Successfully Created Brand");
 	}
 
-	@Test(priority = 1,enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with all logos Favicon,Solutions,Patient Communication logo gets uploaded")
+	@Test(priority = 1, enabled = true, groups = {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with all logos Favicon,Solutions,Patient Communication logo gets uploaded")
 	public void testCreateBrandAtClientLevelUploadingAllLogoImages() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
@@ -95,7 +88,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage, "Success! Successfully Created Brand");
 	}
 
-	@Test(priority = 2,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with Display selected as Logo")
+	@Test(priority = 2, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to create brand at Client level with Display selected as Logo")
 	public void testCreateBrandAtClientLevelUploadingAllLogoImagesWithDisplaySelectedLogo() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
@@ -121,7 +114,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(actualMessage, "Success! Successfully Created Brand");
 	}
 
-	@Test(priority = 3,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test 'Version name required' error message when click to save without entering version name")
+	@Test(priority = 3, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test 'Version name required' error message when click to save without entering version name")
 	public void testErrorMessageCreateBrandAtClientLevel() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
@@ -133,8 +126,9 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.verifyVerionNameErrorGotDisplayed();
 	}
 
-	@Test(priority = 4,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test 'Invalid file type' error message while uploading image at Solutions Logo")
-	public void testErrorInvalidFileTypeAtSolutionsFaviconPatientCommunicationsLogoWhileCreateBrandAtClientLevel() throws Exception {
+	@Test(priority = 4, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test 'Invalid file type' error message while uploading image at Solutions Logo")
+	public void testErrorInvalidFileTypeAtSolutionsFaviconPatientCommunicationsLogoWhileCreateBrandAtClientLevel()
+			throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
@@ -150,7 +144,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.verifyInvalidPatientCommunicationsLogoImageErrorGotDisplayed();
 	}
 
-	@Test(priority = 5,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test to check error message when mandatory alt text is not entered while uploading Favicon/Solutions/Patient Communication logo")
+	@Test(priority = 5, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check error message when mandatory alt text is not entered while uploading Favicon/Solutions/Patient Communication logo")
 	public void testErrorAltTextRequiredAtFaviconSolutionsPatientCommunicationsLogo() throws Exception {
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
@@ -172,7 +166,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.verifyAltTextRequiredErrorGotDisplayed();
 	}
 
-	@Test(priority = 6,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test to check Maximum character reached error while entering more than 50 character in Version name")
+	@Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check Maximum character reached error while entering more than 50 character in Version name")
 	public void testErrorMaximumCharacterReachedAtVersionName() throws Exception {
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
@@ -184,7 +178,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.verifyMaxCharacterReachedErrorGotDisplayed();
 	}
 
-	@Test(priority = 7,retryAnalyzer = RetryAnalyzer.class, description = "Test to check remove button is working in Fvaicon Solutions and Patient Communication Logo Section")
+	@Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Test to check remove button is working in Fvaicon Solutions and Patient Communication Logo Section")
 	public void testRemoveFaviconSolutionsPatientCommunicationLogoImage() throws Exception {
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
 		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
@@ -204,7 +198,7 @@ public class CreateBrandTemplateTests extends CommandCenterGenericTest {
 		brandingTemplatesPage.verifyNoFileUploadedPatientCommunicationIsDisplayed();
 	}
 
-	@Test(priority = 8,enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Test to Max Characters Reached Error at all Favicon,Solutions,Patient Communication logo gets uploaded")
+	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to Max Characters Reached Error at all Favicon,Solutions,Patient Communication logo gets uploaded")
 	public void testMaxCharactersReachedErrorAtAltText() throws Exception {
 		logStep("Verify Branding templates displayed at client level");
 		brandingTemplatesPage = new BrandingTemplatesPage(driver);
