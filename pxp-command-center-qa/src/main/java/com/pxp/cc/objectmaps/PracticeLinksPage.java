@@ -639,7 +639,6 @@ public class PracticeLinksPage extends CCMainPage {
                 elementES.clear();
                 new Actions(driver).moveToElement(elementES).pause(3000).click().build().perform();
                 elementES.sendKeys(displayTextEs);
-                Thread.sleep(3000);
                 break;
             }
     }

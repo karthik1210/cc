@@ -2,11 +2,10 @@
 package com.pxp.cc.testcases.ui;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
 import org.testng.annotations.*;
-
 import java.util.HashMap;
-
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
@@ -432,18 +431,17 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name11"));
         ccui.getPrivacyPolicySettingsPage().clickOnRadioButtonEnabled("Active");
-        ccui.getPrivacyPolicySettingsPage().toggleOnAllSolutions();
         ccui.getPrivacyPolicySettingsPage().emptyLanguageContent("English");
         ccui.getPrivacyPolicySettingsPage().verifyMustAddLanguageContentErrorMessage();
         ccui.getPrivacyPolicySettingsPage().clickOnLanguageTab("Spanish");
         ccui.getPrivacyPolicySettingsPage().emptyLanguageContent("Spanish");
         ccui.getPrivacyPolicySettingsPage().verifyMustAddLanguageContentErrorMessage();
         ccui.getPrivacyPolicySettingsPage().clickOnBackButton();
-        ccui.getPrivacyPolicySettingsPage().clickReturnToPage();
+        ccui.getPrivacyPolicySettingsPage().clickDisregardChanges();
         logStep("PXPP-2504 TC_046_Verify that Error Message \"Privacy Policy Name already exists\" ,When user added same policy name which are existing as Active/Draft/Inactive status");
+        ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name8"));
-        ccui.getPrivacyPolicySettingsPage().updateLanguageContent("English");
-        ccui.getPrivacyPolicySettingsPage().updateLanguageContent("Spanish");
+        ccui.getPrivacyPolicySettingsPage().toggleOnAllSolutions();
         ccui.getPrivacyPolicySettingsPage().clickOnSaveButton();
         ccui.getCommonMethods().verifyToasterMessage("Privacy Policy Name already exists");
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name9"));
@@ -460,7 +458,8 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         if (!runOnce) {
             ccui = new CCUI(testData, driver);
             logStep("Login to command center portal");
-            ccui.getClientDirectoryPage();
+            LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
+            loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
             logStep("Select create client button from new dropdown");
             logStep("Searching a client in client directory");
             ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));

@@ -3,6 +3,7 @@
 package com.pxp.cc.testcases.ui;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -279,7 +280,8 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         if (!runOnce) {
             ccui = new CCUI(testData, driver);
             logStep("Login to command center portal");
-            ccui.getClientDirectoryPage();
+            LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
+            loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
             logStep("Select create client button from new dropdown");
             logStep("Searching a client in client directory");
             ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
