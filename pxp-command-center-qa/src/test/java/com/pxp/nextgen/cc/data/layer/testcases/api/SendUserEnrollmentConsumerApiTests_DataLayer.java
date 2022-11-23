@@ -61,15 +61,15 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
         logStep("-----Send Enrollment Consumer for Internal User Type-----");
         userMap.clear();
         userMap = createNewInternalUser();
-        userId=Integer.parseInt(userMap.get("userId").toString());
-        String internalUserName=userMap.get("username").toString();
-        String internalEnrollmentId=CCUtils.generateAuthId();
+        userId = Integer.parseInt(userMap.get("userId").toString());
+        String internalUserName = userMap.get("username").toString();
+        String internalEnrollmentId = CCUtils.generateAuthId();
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(internalEnrollmentId, initiatedTs, expiryTs, "PENDING");
         sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(sendUserEnrollmentConsumerRespose);
         CCUtils.assertEquals(sendUserEnrollmentConsumerRespose.getStatusCode(), 200);
-        getUserEnrollmentRespose=userInfo.getUserEnrollmentDL("Valid", internalEnrollmentId, "PENDING");
+        getUserEnrollmentRespose = userInfo.getUserEnrollmentDL("Valid", internalEnrollmentId, "PENDING");
         CCUtils.assertEquals(getUserEnrollmentRespose.jsonPath().get("userId"), userId);
         CCUtils.assertEquals(getUserEnrollmentRespose.jsonPath().get("username"), internalUserName);
         logStep("-----Send Enrollment Consumer for Client User Type-----");
@@ -80,29 +80,30 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
         providerId = createProvider(practiceId);
         userMap.clear();
         userMap = createNewClientUser(clientOrgId, providerId);
-        clientId=Integer.parseInt(userMap.get("userId").toString());
-        String clientUserName=userMap.get("username").toString();
-        String clientEnrollmentId=CCUtils.generateAuthId();
+        clientId = Integer.parseInt(userMap.get("userId").toString());
+        String clientUserName = userMap.get("username").toString();
+        String clientEnrollmentId = CCUtils.generateAuthId();
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(clientEnrollmentId, initiatedTs, expiryTs, "NOT_SENT");
         sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid", clientId, userSendEnrollmentConsumerPayloadObj);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(sendUserEnrollmentConsumerRespose);
         CCUtils.assertEquals(sendUserEnrollmentConsumerRespose.getStatusCode(), 200);
-        getUserEnrollmentRespose=userInfo.getUserEnrollmentDL("Valid", clientEnrollmentId, "NOT_SENT");
+        getUserEnrollmentRespose = userInfo.getUserEnrollmentDL("Valid", clientEnrollmentId, "NOT_SENT");
         CCUtils.assertEquals(getUserEnrollmentRespose.jsonPath().get("userId"), clientId);
         CCUtils.assertEquals(getUserEnrollmentRespose.jsonPath().get("username"), clientUserName);
         logStep("-----Send Enrollment Consumer for VarReseller User Type-----");
         userMap.clear();
-        userMap = createNewVarResellerUser(clientOrgId, providerId);;
-        varSellerId=Integer.parseInt(userMap.get("userId").toString());
-        String varResellerUserName=userMap.get("username").toString();
-        String varResellerEnrollmentId=CCUtils.generateAuthId();
+        userMap = createNewVarResellerUser(clientOrgId, providerId);
+        ;
+        varSellerId = Integer.parseInt(userMap.get("userId").toString());
+        String varResellerUserName = userMap.get("username").toString();
+        String varResellerEnrollmentId = CCUtils.generateAuthId();
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(varResellerEnrollmentId, initiatedTs, expiryTs, "CONFIRMED");
         sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid", varSellerId, userSendEnrollmentConsumerPayloadObj);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(sendUserEnrollmentConsumerRespose);
         CCUtils.assertEquals(sendUserEnrollmentConsumerRespose.getStatusCode(), 200);
-        getUserEnrollmentRespose=userInfo.getUserEnrollmentDL("Valid", varResellerEnrollmentId, "CONFIRMED");
+        getUserEnrollmentRespose = userInfo.getUserEnrollmentDL("Valid", varResellerEnrollmentId, "CONFIRMED");
         CCUtils.assertEquals(getUserEnrollmentRespose.jsonPath().get("userId"), varSellerId);
         CCUtils.assertEquals(getUserEnrollmentRespose.jsonPath().get("username"), varResellerUserName);
     }
@@ -123,21 +124,21 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
         logStep("TC 003_verify response code 400 and error message when user enters valid user id and invalid payload for send enrollment consumer by using PATCH method");
         userMap.clear();
         userMap = createNewInternalUser();
-        userId=Integer.parseInt(userMap.get("userId").toString());
+        userId = Integer.parseInt(userMap.get("userId").toString());
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(CCUtils.generateAuthId(), "null", expiryTs, "PENDING");
         logStep("Send Enrollment Consumer for Internal User Type");
-        sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid",userId, userSendEnrollmentConsumerPayloadObj);
+        sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(sendUserEnrollmentConsumerRespose);
         CCUtils.assertEquals(sendUserEnrollmentConsumerRespose.getStatusCode(), 400);
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(CCUtils.generateAuthId(), "null", "null", "PENDING");
         logStep("Send Enrollment Consumer for Internal User Type");
-        sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid",userId, userSendEnrollmentConsumerPayloadObj);
+        sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);
         logStep("Validating response Code");
         CCUtils.assertEquals(sendUserEnrollmentConsumerRespose.getStatusCode(), 400);
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(CCUtils.generateAuthId(), initiatedTs, expiryTs, "STARTED");
         logStep("Send Enrollment Consumer for Internal User Type");
-        sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid",userId, userSendEnrollmentConsumerPayloadObj);
+        sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(sendUserEnrollmentConsumerRespose);
         CCUtils.assertEquals(sendUserEnrollmentConsumerRespose.getStatusCode(), 400);
@@ -148,7 +149,7 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
         logStep("TC 005_verify response code 404 and error message when user enters valid user id and valid payload for send enrollment consumer by using PATCH method with Invalid URI");
         userMap.clear();
         userMap = createNewInternalUser();
-        userId=Integer.parseInt(userMap.get("userId").toString());
+        userId = Integer.parseInt(userMap.get("userId").toString());
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(CCUtils.generateAuthId(), initiatedTs, expiryTs, "PENDING");
         logStep("Send Enrollment Consumer for Internal User Type");
         sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("InValid", userId, userSendEnrollmentConsumerPayloadObj);
@@ -162,7 +163,7 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
         logStep("TC 006_verify response code 405 and error message when user enters valid user id and valid payload for send enrollment consumer by using DELETE Method");
         userMap.clear();
         userMap = createNewInternalUser();
-        userId=Integer.parseInt(userMap.get("userId").toString());
+        userId = Integer.parseInt(userMap.get("userId").toString());
         userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(CCUtils.generateAuthId(), initiatedTs, expiryTs, "PENDING");
         logStep("Send Enrollment Consumer for Internal User Type");
         sendUserEnrollmentConsumerRespose = userInfo.sendUserEnrollmentConsumerDL("InValidMethod", userId, userSendEnrollmentConsumerPayloadObj);
@@ -172,7 +173,7 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
     }
 
     @Test(enabled = false)
-    public HashMap<String, Object>  createNewInternalUser() throws IOException {
+    public HashMap<String, Object> createNewInternalUser() throws IOException {
         logStep("Create Internal user using valid details ");
         String authIdOne = CCUtils.generateAuthId();
         List<Integer> roleIds = new ArrayList<Integer>();
@@ -186,7 +187,7 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
                 email, mobileNumber, testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
         userId = createUserApiResponse.jsonPath().getInt("id");
         userMap.clear();
-        userMap.put("userId",userId);
+        userMap.put("userId", userId);
         userMap.put("username", userName);
         return userMap;
     }
@@ -205,7 +206,7 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
                 null, providerId, null, null);
         userId = createUserApiResponse.jsonPath().getInt("id");
         userMap.clear();
-        userMap.put("userId",userId);
+        userMap.put("userId", userId);
         userMap.put("username", userName);
         return userMap;
     }
@@ -226,7 +227,7 @@ public class SendUserEnrollmentConsumerApiTests_DataLayer extends BaseRest {
                 testData.getProperty("api.reseller.id"), providerId, null, roleIds);
         userId = createUserApiResponse.jsonPath().getInt("id");
         userMap.clear();
-        userMap.put("userId",userId);
+        userMap.put("userId", userId);
         userMap.put("username", userName);
         return userMap;
     }
