@@ -140,7 +140,10 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "searchIcon")
 	private WebElement SearchiconInGeneralSetting;
 
-	@FindBy(id = "searchInput")
+	@FindBy(xpath = "//mat-icon[@id='searchIcon']")
+	private WebElement searchIcon;
+
+	@FindBy(xpath = "//input[@id='searchInput']")
 	private WebElement textboxSearchInGeneralSetting;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
@@ -229,23 +232,26 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "unsavedCancelBtn")
 	private WebElement activatePopupCancelbutton;
 
-	@FindBy(xpath = "//div//span//mat-icon[contains(text(),'chat')]//following::div[@id='activateLabel'][1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Chat']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement chatActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='campaign']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Engage']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement engageActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='videocam']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Virtual Visits']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement virtualVisitsActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='attach_money']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Pay']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement payActivateButton;
 
-	@FindBy(xpath = "(//div//span//mat-icon[text()='person']//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Portal']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement portalActivateButton;
 
-	@FindBy(xpath = "(//div//span[contains(text(),'PSS')]//following::div[@id='activateLabel'])[1]")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//button[@class='button_arrow'])[1]")
+	private WebElement purchasedSolutionExpandButton;
 
 	private String purchaseActivateButton(String solutionImageIcon) {
 		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//span[contains(text(),'"
@@ -554,6 +560,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void enterSearchText(String nodeName) {
+		CCUtils.verifyAndWaitForElement(searchIcon, driver);
+		searchIcon.click();
+		log("click to search icon");
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
 		log("Entered text in search :" + nodeName);
@@ -1086,5 +1095,12 @@ public class GeneralSettingsPage extends CCMainPage {
 			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
 		else
 			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void clickToExpandPurchaseSolutions() {
+		CCUtils.scrollPageViaElement(driver, purchasedSolutionExpandButton);
+		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton, driver);
+		purchasedSolutionExpandButton.click();
+		log("click to pruchased solution expand button");
 	}
 }

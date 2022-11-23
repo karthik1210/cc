@@ -165,7 +165,7 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "(//input[@type='text'])[3]")
 	private WebElement enterEhrPractice;
 
-	@FindBy(xpath = "//div[@class='mat-tree-node-click bordernode']//mat-icon[@role='img'][normalize-space()='keyboard_arrow_right']")
+	@FindBy(xpath = "//button[@id='treeExpandBtn']")
 	private WebElement expandArrow;
 
 	@FindBy(xpath = "//div[@class='mat-tree-node2 bordernode']/button/span/mat-icon")
@@ -696,7 +696,7 @@ public class AddOrgNodePage extends CCMainPage {
 
 	public void clickOnExpandArrow(String orgName) {
 		CCUtils.verifyAndWaitForElement(expandArrow, driver);
-		if (expandArrow.getAttribute("aria-label").contains(orgName)) {
+		if (expandArrow.getAttribute("aria-label").equals("toggle "+orgName)) {
 			javascriptClick(expandArrow);
 		}
 		log("Clicked on expand Arrow button for Org : "+orgName);
@@ -1052,5 +1052,12 @@ public class AddOrgNodePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(orgName, driver);
 		CCUtils.assertEquals(orgName.isDisplayed(), true);
 		log("Org node is displayed");
+	}
+	
+	public void createPracticeWithinSystem(String systemName) {
+		clickOnExpandArrow(systemName);
+		driver.navigate().refresh();
+	    clickOnManageClient();
+	    clickOnExpandArrow(systemName);
 	}
 }
