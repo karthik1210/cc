@@ -28,13 +28,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 				{ testData.getProperty("invalid.user.first.name.two"),
 						testData.getProperty("invalid.user.last.name.two"),
 						testData.getProperty("invalid.user.email.two"), testData.getProperty("invalid.username.two"),
-						testData.getProperty("invalid.user.mobile.number.two") },
-
-				{ testData.getProperty("invalid.user.first.name.three"),
-						testData.getProperty("invalid.user.last.name.three"),
-						testData.getProperty("invalid.user.email.three"),
-						testData.getProperty("invalid.username.three"),
-						testData.getProperty("invalid.user.mobile.number.three") } };
+						testData.getProperty("invalid.user.mobile.number.two") } };
 		return obj;
 	}
 
@@ -50,6 +44,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		logStep("Verify internal users tab is by default selected");
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
+		logStep("Click on more options button");
+		internalUsersPage.clickToMoreOptions();
 		logStep("Click on new button");
 		internalUsersPage.clickOnNewButton();
 		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
@@ -145,6 +141,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		addNewInternalUsersPage.clickOnCancelButton();
 		logStep("Verify after clicking on cancel button user redirected to internal users page");
 		internalUsersPage.verifyInternalUsersPageTitle();
+		logStep("Click on more options button");
+		internalUsersPage.clickToMoreOptions();
 		logStep("Click on new button");
 		internalUsersPage.clickOnNewButton();
 		logStep("Click on cross button");
@@ -153,7 +151,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.verifyInternalUsersPageTitle();
 	}
 
-	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
+	@Test(enabled = true, groups = {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
 	public void testCreateActiveInternalUserWithoutRole() throws Exception {
 		logStep("Create a new internal user without adding user role and verify success toaster");
 		commonMethods = new CommonMethods(driver);
@@ -181,7 +180,8 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 	}
 
-	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
+	@Test(enabled = true, groups = {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
 	public void testCreateActiveInternalUserWithRoles() throws Exception {
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);

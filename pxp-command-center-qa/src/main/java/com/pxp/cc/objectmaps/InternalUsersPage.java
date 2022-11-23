@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 
 public class InternalUsersPage extends CCMainPage {
 
-	@FindBy(id = "newButton")
+	@FindBy(id = "addClientUser")
 	private WebElement buttonNew;
 
 	@FindBy(xpath = "//span[text()=' Internal Users ']")
@@ -98,6 +98,9 @@ public class InternalUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
 	private WebElement itemsPerPageTwoHundred;
+	
+	@FindBy(id = "IconContainer")
+	private WebElement moreOptionsButton;
 
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
@@ -416,5 +419,11 @@ public class InternalUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorToasterMessage, driver);
 		CCUtils.assertEquals(errorToasterMessage.isDisplayed(), true);
 		log("number of results found, please refine search further error message is displayed");
+	}
+	
+	public void clickToMoreOptions() {
+		CCUtils.verifyAndWaitForElement(moreOptionsButton, driver);
+		moreOptionsButton.click();
+		log("clicked to more options button");
 	}
 }
