@@ -38,15 +38,16 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		commonMethods = new CommonMethods(driver);
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {
 			"smoke" }, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
 	public void testInternalUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
-		logStep("Click on new button");
-		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
-		internalUsersPage.clickOnKebabMenuButton();
-		internalUsersPage.clickOnNewBtn();
+		
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);
 		firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
