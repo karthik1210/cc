@@ -38,6 +38,7 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateInternalUsersApiTests_DataLayer" 
 				/> -->
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SendUserEnrollmentConsumerApiTests_DataLayer"/>
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer"/>
 		</classes>
 	</test>
 </suite>
