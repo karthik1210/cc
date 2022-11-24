@@ -1,5 +1,8 @@
+// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.objectmaps;
 
+import com.medfusion.common.utils.PropertyFileLoader;
 import com.pxp.cc.util.CCUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +13,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -67,6 +72,12 @@ public class InterfaceSetupPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='Cancel']")
     private WebElement cancelButton;
 
+    @FindBy(xpath = "//span[text()='Cancel']")
+    private WebElement cancelOnDialogBox;
+
+    @FindBy(xpath = "//button[normalize-space(text())='Yes, Delete']")
+    private WebElement yesDelete;
+
     @FindBy(xpath = "//button[normalize-space(text())='Save']")
     private WebElement saveButton;
 
@@ -76,10 +87,10 @@ public class InterfaceSetupPage extends CCMainPage {
     @FindBy(xpath = "//button[normalize-space(text())='SAVE']")
     private WebElement saveButtonOnEdit;
 
-    @FindBy(xpath = "//label[text()='Active']/preceding::input[@type='radio']")
+    @FindBy(xpath = "//label[@for='interface-new-active-input']")
     private WebElement activeRadioButton;
 
-    @FindBy(xpath = "//label[text()='Inactive']/../preceding::input[@type='radio']/following::input[@type='radio']")
+    @FindBy(xpath = "//label[@for='interface-new-inactive-input']")
     private WebElement inactiveRadioButton;
 
     @FindBy(xpath = "//span[normalize-space(text())='MedfusionREST - NextGen']")
@@ -94,6 +105,9 @@ public class InterfaceSetupPage extends CCMainPage {
     @FindBy(xpath = "//span[contains(text(),'NextGen Practice ID')]")
     private WebElement nextgenPracticeId;
 
+    @FindBy(xpath = "//span[contains(text(),'External Practice ID')]")
+    private WebElement externalPracticeId;
+
     @FindBy(xpath = "//input[@aria-label='NextGen Enterprise ID']")
     private WebElement nextgenEnterpriseIdTextBox;
 
@@ -102,6 +116,9 @@ public class InterfaceSetupPage extends CCMainPage {
 
     @FindBy(xpath = "//input[@aria-label='NextGen Practice ID']")
     private WebElement nextgenPracticeIdTextBox;
+
+    @FindBy(xpath = "//input[@aria-label='External Practice ID']")
+    private WebElement externalPracticeIdTextBox;
 
     @FindBy(xpath = "//div[normalize-space(text())='External System']")
     private WebElement externalSystemLabelOnInterfaceSetupSection;
@@ -130,6 +147,13 @@ public class InterfaceSetupPage extends CCMainPage {
     @FindBy(xpath = "//div[normalize-space(text())='Active']/preceding::input[@type='radio']")
     private WebElement activeRadioButtonOnEdit;
 
+    public HashMap<String, Boolean> verifyElementsInInterfaceSetup() {
+        HashMap<String, Boolean> result = new HashMap<String, Boolean>();
+        result.put("verifyingAllElementsInInterfaceSetup", verifyElementsInInterfaceSetUpSection());
+        result.put("verifyingAllElementsInNewInterface", verifyElementsOnNewInterface());
+        return result;
+    }
+
     public void clickOnExpandButtonOfExternalSystem(String externalSystemName) {
         int flag = 0;
         for (int i = 0; i < externalSystemList.size(); i++) {
@@ -150,94 +174,132 @@ public class InterfaceSetupPage extends CCMainPage {
             log(externalSystemName + " Expand Button is not available in Interface section");
     }
 
-    public void verifyElementsInInterfaceSetUpSection() {
-        CCUtils.verifyAndWaitForElement(interfaceSetupLabel, driver);
-        CCUtils.scrollPageViaElement(driver, interfaceSetupLabel);
-        log("Verifying Interface setup Label present or not");
-        CCUtils.assertEquals(interfaceSetupLabel.isDisplayed(), true);
-        log("Interface Setup Label displayed successfully");
-        CCUtils.verifyAndWaitForElement(newButtonForInterfaceSetup, driver);
-        CCUtils.scrollPageViaElement(driver, newButtonForInterfaceSetup);
-        new Actions(driver).moveToElement(newButtonForInterfaceSetup).build().perform();
-        log("Verifying New + button for Interface setup present or not");
-        CCUtils.assertEquals(newButtonForInterfaceSetup.isDisplayed(), true);
-        log("New + Button for Interface Setup displayed successfully");
-        CCUtils.verifyAndWaitForElement(interfaceSetupExpandButton, driver);
-        CCUtils.scrollPageViaElement(driver, interfaceSetupExpandButton);
-        log("Verifying Interface Setup Expand button present or not");
-        CCUtils.assertEquals(interfaceSetupExpandButton.isDisplayed(), true);
-        log("Interface setup Expand button displayed successfully");
-        new Actions(driver).moveToElement(interfaceSetupExpandButton).build().perform();
-        CCUtils.verifyAndWaitForElement(interfaceSetupExpandTooltip, driver);
-        log("Verifying Interface Setup Expand button tooltip present or not");
-        CCUtils.assertEquals(interfaceSetupExpandTooltip.isDisplayed(), true);
-        log("Interface setup Expand button tooltip displayed successfully");
-        new Actions(driver).moveToElement(interfaceSetupExpandButton).click().build().perform();
-        CCUtils.verifyAndWaitForElement(interfaceSetupCollapseButton, driver);
-        log("Verifying Interface Setup Collapse button present or not");
-        CCUtils.assertEquals(interfaceSetupCollapseButton.isDisplayed(), true);
-        log("Interface setup Collapse button displayed successfully");
-        new Actions(driver).moveToElement(interfaceSetupCollapseButton).build().perform();
-        CCUtils.verifyAndWaitForElement(interfaceSetupCollapseTooltip, driver);
-        log("Verifying Interface Setup Collapse button tooltip present or not");
-        CCUtils.assertEquals(interfaceSetupCollapseTooltip.isDisplayed(), true);
-        CCUtils.verifyAndWaitForElement(noInterfaceSetup, driver);
-        CCUtils.scrollPageViaElement(driver, noInterfaceSetup);
-        log("Verifying No Interface setup Label present or not");
-        CCUtils.assertEquals(noInterfaceSetup.isDisplayed(), true);
-        log("NO Interface Setup Label displayed successfully");
+    public boolean verifyElementsInInterfaceSetUpSection() {
+        try {
+            logStep("PXPP-24116 TC001 Verify that User can able to see the interface Setup section in Command Center Application");
+            CCUtils.verifyAndWaitForElement(interfaceSetupLabel, driver);
+            CCUtils.scrollPageViaElement(driver, interfaceSetupLabel);
+            log("Verifying Interface setup Label present or not");
+            CCUtils.assertEquals(interfaceSetupLabel.isDisplayed(), true);
+            log("Interface Setup Label displayed successfully");
+            logStep("PXPP-24148 TC003 Verify that user can able to click on \"+ New \" button under Interface Setup Section");
+            CCUtils.verifyAndWaitForElement(newButtonForInterfaceSetup, driver);
+            CCUtils.scrollPageViaElement(driver, newButtonForInterfaceSetup);
+            new Actions(driver).moveToElement(newButtonForInterfaceSetup).build().perform();
+            log("Verifying New + button for Interface setup present or not");
+            CCUtils.assertEquals(newButtonForInterfaceSetup.isDisplayed(), true);
+            log("New + Button for Interface Setup displayed successfully");
+            logStep("PXPP-25724 TC005 Verify the expand / collapse functionality Interface Setup Section");
+            CCUtils.verifyAndWaitForElement(interfaceSetupExpandButton, driver);
+            CCUtils.scrollPageViaElement(driver, interfaceSetupExpandButton);
+            log("Verifying Interface Setup Expand button present or not");
+            CCUtils.assertEquals(interfaceSetupExpandButton.isDisplayed(), true);
+            log("Interface setup Expand button displayed successfully");
+            new Actions(driver).moveToElement(interfaceSetupExpandButton).build().perform();
+            CCUtils.verifyAndWaitForElement(interfaceSetupExpandTooltip, driver);
+            log("Verifying Interface Setup Expand button tooltip present or not");
+            CCUtils.assertEquals(interfaceSetupExpandTooltip.isDisplayed(), true);
+            log("Interface setup Expand button tooltip displayed successfully");
+            new Actions(driver).moveToElement(interfaceSetupExpandButton).click().build().perform();
+            CCUtils.verifyAndWaitForElement(interfaceSetupCollapseButton, driver);
+            log("Verifying Interface Setup Collapse button present or not");
+            CCUtils.assertEquals(interfaceSetupCollapseButton.isDisplayed(), true);
+            log("Interface setup Collapse button displayed successfully");
+            new Actions(driver).moveToElement(interfaceSetupCollapseButton).build().perform();
+            CCUtils.verifyAndWaitForElement(interfaceSetupCollapseTooltip, driver);
+            log("Verifying Interface Setup Collapse button tooltip present or not");
+            CCUtils.assertEquals(interfaceSetupCollapseTooltip.isDisplayed(), true);
+            logStep("PXPP-24147 TC002 Verify that \"No interfaces setup.” is displayed when practice don't have Interfaces");
+            CCUtils.verifyAndWaitForElement(noInterfaceSetup, driver);
+            CCUtils.scrollPageViaElement(driver, noInterfaceSetup);
+            log("Verifying No Interface setup Label present or not");
+            CCUtils.assertEquals(noInterfaceSetup.isDisplayed(), true);
+            log("NO Interface Setup Label displayed successfully");
+            return true;
+        } catch (Exception exception) {
+            return false;
+        }
     }
 
-    public void verifyElementsOnNewInterface() {
-        CCUtils.verifyAndWaitForElement(newButtonForInterfaceSetup, driver);
-        new Actions(driver).moveToElement(newButtonForInterfaceSetup).click().build().perform();
-        log("successfully clicked on New + button");
-        CCUtils.verifyAndWaitForElement(newInterfaceLabel, driver);
-        log("Verifying New Interface Label present or not");
-        CCUtils.assertEquals(newInterfaceLabel.isDisplayed(), true);
-        log("New Interface label displayed successfully");
-        CCUtils.verifyAndWaitForElement(externalSystemLabel, driver);
-        log("Verifying External System Label present or not");
-        CCUtils.assertEquals(externalSystemLabel.isDisplayed(), true);
-        log("External System label displayed successfully");
-        CCUtils.verifyAndWaitForElement(externalSystemComboBox, driver);
-        log("Verifying External system combo box present or not");
-        CCUtils.assertEquals(externalSystemComboBox.isDisplayed(), true);
-        log("External system combo box displayed successfully");
-        CCUtils.verifyAndWaitForElement(statusLabel, driver);
-        log("Verifying Status Label present or not");
-        CCUtils.assertEquals(statusLabel.isDisplayed(), true);
-        log("Status label displayed successfully");
-        CCUtils.verifyAndWaitForElement(activeLabel, driver);
-        log("Verifying Active Label present or not");
-        CCUtils.assertEquals(activeLabel.isDisplayed(), true);
-        log("Active Label displayed successfully");
-        CCUtils.verifyAndWaitForElement(inactiveLabel, driver);
-        log("Verifying Inactive Label present or not");
-        CCUtils.assertEquals(inactiveLabel.isDisplayed(), true);
-        log("Inactive label displayed successfully");
-        CCUtils.verifyAndWaitForElement(cancelButton, driver);
-        log("Verifying Cancel button present or not");
-        CCUtils.assertEquals(cancelButton.isDisplayed(), true);
-        log("Cancel button displayed successfully");
-        CCUtils.assertEquals(cancelButton.isEnabled(), true);
-        log("Cancel button is enabled for the first time in New Interface");
-        CCUtils.verifyAndWaitForElement(saveButton, driver);
-        log("Verifying Save button present or not");
-        CCUtils.assertEquals(saveButton.isDisplayed(), true);
-        log("Save button displayed successfully");
-        if(driver.findElement(By.xpath("//div[text()='Select']")).getText().equalsIgnoreCase("Select")) {
-            CCUtils.assertEquals(saveButton.isEnabled(), false);
-            log("Save button is disabled for the first time in New Interface");
+    public void clickExpandButtonInInterfaceSetUp() {
+        CCUtils.verifyAndWaitForElement(interfaceSetupExpandButton, driver);
+        CCUtils.scrollPageViaElement(driver, interfaceSetupExpandButton);
+        log("Clicking Interface Setup Expand button");
+        new Actions(driver).moveToElement(interfaceSetupExpandButton).click().build().perform();
+        log("Clicked on Expand Button successfully");
+    }
+
+    public void clickonCancelInDialogBox() {
+        CCUtils.verifyAndWaitForElement(cancelOnDialogBox, driver);
+        CCUtils.scrollPageViaElement(driver, cancelOnDialogBox);
+        log("Clicking Cancel button");
+        new Actions(driver).moveToElement(cancelOnDialogBox).click().build().perform();
+        log("Clicked on Cancel Button successfully");
+    }
+
+    public void clickOnYesDelete() {
+        CCUtils.verifyAndWaitForElement(yesDelete, driver);
+        CCUtils.scrollPageViaElement(driver, yesDelete);
+        log("Clicking Yes, Delete button");
+        new Actions(driver).moveToElement(yesDelete).click().build().perform();
+        log("Clicked on Yes, Delete Button successfully");
+    }
+
+    public boolean verifyElementsOnNewInterface() {
+        try {
+            CCUtils.verifyAndWaitForElement(newButtonForInterfaceSetup, driver);
+            new Actions(driver).moveToElement(newButtonForInterfaceSetup).click().build().perform();
+            log("successfully clicked on New + button");
+            CCUtils.verifyAndWaitForElement(newInterfaceLabel, driver);
+            log("Verifying New Interface Label present or not");
+            CCUtils.assertEquals(newInterfaceLabel.isDisplayed(), true);
+            log("New Interface label displayed successfully");
+            CCUtils.verifyAndWaitForElement(externalSystemLabel, driver);
+            log("Verifying External System Label present or not");
+            CCUtils.assertEquals(externalSystemLabel.isDisplayed(), true);
+            log("External System label displayed successfully");
+            CCUtils.verifyAndWaitForElement(externalSystemComboBox, driver);
+            log("Verifying External system combo box present or not");
+            CCUtils.assertEquals(externalSystemComboBox.isDisplayed(), true);
+            log("External system combo box displayed successfully");
+            CCUtils.verifyAndWaitForElement(statusLabel, driver);
+            log("Verifying Status Label present or not");
+            CCUtils.assertEquals(statusLabel.isDisplayed(), true);
+            log("Status label displayed successfully");
+            CCUtils.verifyAndWaitForElement(activeLabel, driver);
+            log("Verifying Active Label present or not");
+            CCUtils.assertEquals(activeLabel.isDisplayed(), true);
+            log("Active Label displayed successfully");
+            CCUtils.verifyAndWaitForElement(inactiveLabel, driver);
+            log("Verifying Inactive Label present or not");
+            CCUtils.assertEquals(inactiveLabel.isDisplayed(), true);
+            log("Inactive label displayed successfully");
+            CCUtils.verifyAndWaitForElement(cancelButton, driver);
+            log("Verifying Cancel button present or not");
+            CCUtils.assertEquals(cancelButton.isDisplayed(), true);
+            log("Cancel button displayed successfully");
+            CCUtils.assertEquals(cancelButton.isEnabled(), true);
+            log("Cancel button is enabled for the first time in New Interface");
+            CCUtils.verifyAndWaitForElement(saveButton, driver);
+            log("Verifying Save button present or not");
+            CCUtils.assertEquals(saveButton.isDisplayed(), true);
+            log("Save button displayed successfully");
+            if (driver.findElement(By.xpath("//div[text()='Select']")).getText().equalsIgnoreCase("Select")) {
+                CCUtils.assertEquals(saveButton.isEnabled(), false);
+                log("Save button is disabled for the first time in New Interface");
+            }
+            CCUtils.verifyAndWaitForElement(activeRadioButton, driver);
+            log("Verifying active radio button present or not");
+            CCUtils.assertEquals(activeRadioButton.isDisplayed(), true);
+            log("Active Radio button displayed successfully");
+            CCUtils.verifyAndWaitForElement(inactiveRadioButton, driver);
+            log("Verifying Inactive radio button present or not");
+            CCUtils.assertEquals(inactiveRadioButton.isDisplayed(), true);
+            log("Inactive Radio button displayed successfully");
+            return true;
+        } catch (Exception exception) {
+            return false;
         }
-        CCUtils.verifyAndWaitForElement(activeRadioButton, driver);
-        log("Verifying active radio button present or not");
-        CCUtils.assertEquals(activeRadioButton.isDisplayed(), true);
-        log("Active Radio button displayed successfully");
-        CCUtils.verifyAndWaitForElement(inactiveRadioButton, driver);
-        log("Verifying Inactive radio button present or not");
-        CCUtils.assertEquals(inactiveRadioButton.isDisplayed(), true);
-        log("Inactive Radio button displayed successfully");
     }
 
     public void verifyRadioButtonEnabled(String status) {
@@ -245,43 +307,58 @@ public class InterfaceSetupPage extends CCMainPage {
             if (activeRadioButton.isSelected())
                 log("Active Radio button is selected");
             else
-                driver.findElement(By.xpath("//input[@value='false']")).click();
+                activeRadioButton.click();
         }
         else if(status.equalsIgnoreCase("Inactive")) {
             if (inactiveRadioButton.isSelected())
                 log("Inactive Radio button is selected");
             else
-                driver.findElement(By.xpath("//input[@value='false']")).click();
+                inactiveRadioButton.click();
         }
         log(status +" Radio button is displayed and selected");
     }
 
-    public void verifyRadioButtonEnabledOnEdit(String status) {
+    public void verifyRadioButtonEnabledOnEdit(String externalSystem, String status) {
         if(status.equalsIgnoreCase("Active")) {
-            if (activeRadioButtonOnEdit.isSelected())
+            WebElement activeRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-active-input']"));
+            CCUtils.verifyAndWaitForElementPresence(activeRadio, driver);
+            if (activeRadio.isSelected())
                 log("Active Radio button is selected");
-            else {
-                CCUtils.verifyElementToBeClickable(driver.findElement(By.xpath("//input[@type='radio' and @value='false']")), driver);
-                driver.findElement(By.xpath("//input[@type='radio' and @value='false']")).click();
-            }
 
         }
         else if(status.equalsIgnoreCase("Inactive")) {
-            if (inactiveRadioButtonOnEdit.isSelected())
+            WebElement inactiveRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-inactive-input']"));
+            CCUtils.verifyAndWaitForElementPresence(inactiveRadio, driver);
+            if (inactiveRadio.isSelected())
                 log("Inactive Radio button is selected");
-            else {
-                CCUtils.verifyElementToBeClickable(driver.findElement(By.xpath("//input[@type='radio' and @value='false']")), driver);
-                driver.findElement(By.xpath("//input[@type='radio' and @value='false']")).click();
-            }
         }
         log(status +" Radio button is displayed and selected");
     }
 
+    public void clickRadioButton(String externalSystem, String status) {
+        if(status.equalsIgnoreCase("Active")) {
+            WebElement activeRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-active-input']"));
+            CCUtils.verifyAndWaitForElementPresence(activeRadio, driver);
+            activeRadio.click();
+        }
+        else if(status.equalsIgnoreCase("Inactive")) {
+            WebElement inactiveRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-inactive-input']"));
+            CCUtils.verifyAndWaitForElementPresence(inactiveRadio, driver);
+            inactiveRadio.click();
+        }
+    }
 
     public void clickOnNewButton() {
         CCUtils.verifyAndWaitForElement(newButtonForInterfaceSetup, driver);
         CCUtils.scrollPageViaElement(driver, newButtonForInterfaceSetup);
         new Actions(driver).moveToElement(newButtonForInterfaceSetup).click().build().perform();
+        log("Successfully clicked on New + Button");
+    }
+
+    public void verifyNewButton() {
+        CCUtils.verifyAndWaitForElementPresence(newButtonForInterfaceSetup, driver);
+        CCUtils.scrollPageViaElement(driver, newButtonForInterfaceSetup);
+        CCUtils.assertEquals(newButtonForInterfaceSetup.isDisplayed(), true);
         log("Successfully clicked on New + Button");
     }
 
@@ -352,6 +429,22 @@ public class InterfaceSetupPage extends CCMainPage {
             CCUtils.assertEquals(nextgenPracticeIdTextBox.isDisplayed(), true);
             log("NextGen Practice Id Text box displayed successfully");
         }
+        else if(externalSystemName.equalsIgnoreCase("GE Centricity PM")) {
+            CCUtils.verifyAndWaitForElement(externalPracticeId, driver);
+            CCUtils.assertEquals(externalPracticeId.isDisplayed(), true);
+            log("External Practice Id label displayed successfully");
+            CCUtils.verifyAndWaitForElement(externalPracticeIdTextBox, driver);
+            CCUtils.assertEquals(externalPracticeIdTextBox.isDisplayed(), true);
+            log("External Practice Id Text box displayed successfully");
+        }
+        else if(externalSystemName.equalsIgnoreCase("Greenway PrimeSuite EMR")) {
+            CCUtils.verifyAndWaitForElement(externalPracticeId, driver);
+            CCUtils.assertEquals(externalPracticeId.isDisplayed(), true);
+            log("External Practice Id label displayed successfully");
+            CCUtils.verifyAndWaitForElement(externalPracticeIdTextBox, driver);
+            CCUtils.assertEquals(externalPracticeIdTextBox.isDisplayed(), true);
+            log("External Practice Id Text box displayed successfully");
+        }
     }
 
     public void verifyKebabEdit() {
@@ -368,6 +461,14 @@ public class InterfaceSetupPage extends CCMainPage {
         log("verifying Delete button in kebab menu present or not");
         CCUtils.assertEquals(deleteButtonOnKebabMenu.isDisplayed(), true);
         log("Delete button in kebab menu displayed successfully");
+    }
+
+    public void clickOnKebabDelete() {
+        CCUtils.verifyAndWaitForElement(deleteButtonOnKebabMenu, driver);
+        CCUtils.scrollPageViaElement(driver, deleteButtonOnKebabMenu);
+        log("Clicking on Delete button in kebab menu");
+        new Actions(driver).moveToElement(deleteButtonOnKebabMenu).click().build().perform();
+        log("Delete button in kebab menu Clicked successfully");
     }
 
     public void clickOnKebabEdit() {
@@ -392,6 +493,7 @@ public class InterfaceSetupPage extends CCMainPage {
             if(eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
                 WebElement kebabMenu = driver.findElement(By.xpath("//span[normalize-space(text())='"+externalSystemName+"']/../following-sibling::div/../following-sibling::td/div/div/span/mat-icon[text()='more_vert']"));
+                CCUtils.verifyAndWaitForElementPresenceForInterfaceSetup(externalSystemName,kebabMenu, driver);
                 new Actions(driver).moveToElement(kebabMenu).build().perform();
                 CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
                 log(externalSystemName + " kebab Menu is available in Interface section");
@@ -422,10 +524,10 @@ public class InterfaceSetupPage extends CCMainPage {
             log(externalSystemName + " Kebab Menu is not available in Interface section");
     }
 
-    public void verifyEditableContent(List<String> fieldName, List<String> value) {
+    public void verifyEditableContent(String externalSystem, List<String> fieldName, List<String> value) {
         for(int i=0; i<fieldName.size();i++) {
             int flag = 0;
-            WebElement each = driver.findElement(By.xpath("//span[text()='MedfusionREST - NextGen']/following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../div[normalize-space(text())='"+fieldName.get(i)+"']/following-sibling::div"));
+            WebElement each = driver.findElement(By.xpath("//span[text()='"+externalSystem+"']/following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../div[normalize-space(text())='"+fieldName.get(i)+"']/following-sibling::div"));
             for(int j=0;j<value.size();j++) {
                 if (each.getText().equalsIgnoreCase(value.get(j))) {
                     if(i == j)
@@ -447,7 +549,7 @@ public class InterfaceSetupPage extends CCMainPage {
             if(eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
                 WebElement kebabMenu = driver.findElement(By.xpath("//span[normalize-space(text())='"+externalSystemName+"']/../following-sibling::div/../following-sibling::td/div/div/span/mat-icon[text()='more_vert']"));
-                new Actions(driver).moveToElement(kebabMenu).click().build().perform();
+                new Actions(driver).moveToElement(kebabMenu).pause(2000).click().build().perform();
                 CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
                 log(externalSystemName + " kebab Menu clicked successfully");
                 break;
@@ -472,7 +574,4 @@ public class InterfaceSetupPage extends CCMainPage {
         if(flag == 0)
             log(externalSystemName + " status is not available in Interface Setup section");
     }
-
-
-
 }
