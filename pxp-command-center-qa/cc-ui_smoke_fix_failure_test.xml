@@ -20,11 +20,13 @@
 
         <classes>
             <class name="com.pxp.cc.testcases.ui.CreateClientTests" />
-            <class name="com.pxp.cc.testcases.ui.DeactivateUserTests" />
+            <class name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
             <class name="com.pxp.cc.testcases.ui.EditInternalUserTests" />
             <class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
-            <class name="com.pxp.cc.testcases.ui.AddNewClientUserTests" />
-            <class name="com.pxp.cc.testcases.ui.VarResellerUserDeactivationFromKebabMenuTests" />
+            <!-- Enable test class once below issue is resolved  # PXPP-22079--> 
+            <!-- <class name="com.pxp.cc.testcases.ui.AddNewClientUserTests" /> -->
+              <!-- Enable test class once below issue is resolved  # PXPP-26174-->
+            <!--  <class name="com.pxp.cc.testcases.ui.VarResellerUserDeactivationFromKebabMenuTests" /> -->
             <class name="com.pxp.cc.testcases.ui.InternalUserDeactivationFromKebabMenuTests" />
             <class name="com.pxp.cc.testcases.ui.FavoriteUnFavoriteClientsTests" />
             <class name="com.pxp.cc.testcases.ui.EditClientDetailsTests" />

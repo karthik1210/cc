@@ -11,6 +11,7 @@ import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
 import com.pxp.cc.objectmaps.InternalUserDetailsPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
+import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -21,7 +22,11 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 	public InternalUsersPage internalUsersPage;
 	public InternalUserDetailsPage internalUserDetailsPage;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
+	public SearchOptionsPage searchOptionsPage;
 	public CommonMethods commonMethods;
+	String firstName;
+	String firstNameValueInEditMode, lastNameValueInEditMode, emailValueInEditMode, userNameValueInEditMode,
+			mobileNumberValueInEditMode;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
@@ -32,6 +37,26 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		commandCenterUsersPage = new CommandCenterUsersPage(driver);
 		logStep("Verify user redirected to command center users page");
 		internalUsersPage = new InternalUsersPage(driver);
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
+		logStep("Create a new active internal user with user roles and verify success toaster");
+		commonMethods = new CommonMethods(driver);
+		firstName = CCUtils.generateAlphaNumericString(9).concat("'s");
+		commonMethods.enterFirstName(firstName);
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(9));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(6));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
+		addNewInternalUsersPage.addUserRoles();
+		addNewInternalUsersPage.clickOnSaveAndAddButton();
+		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
+		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
+		logStep("Search and select active user");
+		internalUsersPage.searchUser(firstName);
+		searchOptionsPage.clickOnSearchButton();
+		internalUsersPage.verifyInternalUsersPageTitle();
+		internalUsersPage.selectInternalUser();
 		logStep("Clicked on user to edit");
 		internalUsersPage.selectUser();
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
@@ -53,21 +78,32 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
+	@Test(enabled = true, groups = {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
 	public void testEditInternalUser() throws Exception {
+		logStep("Verify selected internal user status is same on internal user details page");
+		internalUserDetailsPage = new InternalUserDetailsPage(driver);
+		internalUserDetailsPage.verifyInternalUserDetailsPageTitle();
 		logStep("Modifying editable fields detail");
-		String firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
+		commonMethods = new CommonMethods(driver);
+		firstNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
+		log("print the value of first name : " + firstNameValueInEditMode);
 		commonMethods.enterFirstName(firstNameValueInEditMode);
-		String lastNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
+		lastNameValueInEditMode = CCUtils.generateAlphaNumericString(18);
+		log("print the value of last name : " + lastNameValueInEditMode);
 		commonMethods.enterLastName(lastNameValueInEditMode);
-		String emailValueInEditMode = CCUtils.generateNewEmail(11);
+		emailValueInEditMode = CCUtils.generateNewEmail(11);
+		log("print the value of email : " + emailValueInEditMode);
 		commonMethods.enterEmail(emailValueInEditMode);
-		String userNameValueInEditMode = CCUtils.generateAlphaNumericStringIncludingSpecialChar(12);
+		userNameValueInEditMode = CCUtils.generateAlphaNumericStringIncludingSpecialChar(12);
+		log("print the value of username : " + userNameValueInEditMode);
 		commonMethods.enterUserName(userNameValueInEditMode);
-		String mobileNumberValueInEditMode = String.valueOf(CCUtils.generateMobileNumber());
+		mobileNumberValueInEditMode = String.valueOf(CCUtils.generateMobileNumber());
+		log("print the value of mobile number : " + mobileNumberValueInEditMode);
 		commonMethods.enterMobileNumber(mobileNumberValueInEditMode);
 		logStep("Click on save button");
 		internalUserDetailsPage.clickSave();
+		internalUserDetailsPage.verifyEditButtonVisible();
 		logStep("Verify new updated value are displayed in first name, last name, username, email and mobile number fields");
 		CCUtils.assertEquals(commonMethods.getFirstName(), firstNameValueInEditMode.trim());
 		CCUtils.assertEquals(commonMethods.getLastName(), lastNameValueInEditMode.trim());
@@ -139,16 +175,16 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(commonMethods.getValidErrorForUsernameField(), "Please enter valid username");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
+	@Test(dependsOnMethods ="testEditInternalUser",enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
 	public void testUniqueErrorMssageInEditMode() throws Exception {
 		logStep("Enter existing value in username, email and mobile number fields and verify error message");
-		commonMethods.enterMobileNumber(testData.getProperty("internal.user.existing.mobile.number"));
+		commonMethods.enterMobileNumber(mobileNumberValueInEditMode);
 		commonMethods.focusOnUserNameField();
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
-		commonMethods.enterUserName(testData.getProperty("internal.user.existing.username"));
+		commonMethods.enterUserName(userNameValueInEditMode);
 		commonMethods.focusOnEmailField();
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForUsernameField(), "Username already in use");
-		commonMethods.enterEmail(testData.getProperty("internal.user.existing.email"));
+		commonMethods.enterEmail(emailValueInEditMode);
 		CCUtils.assertEquals(commonMethods.getDuplicateErrorForEmailField(), "Email already in use");
 	}
 

@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -85,7 +86,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String clientNameValue;
 	public String flagTest = "flagTest";
 
-	@FindBy(id = "detailEditLabel")
+	@FindBy(id = "displayNameEditBtn")
 	private WebElement editClientButton;
 
 	@FindBy(id = "detailSapInput")
@@ -141,7 +142,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-icon[@id='searchIcon']")
 	private WebElement searchIcon;
-	
+
 	@FindBy(xpath = "//input[@id='searchInput']")
 	private WebElement textboxSearchInGeneralSetting;
 
@@ -248,7 +249,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
-	
+
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//button[@class='button_arrow'])[1]")
 	private WebElement purchasedSolutionExpandButton;
 
@@ -295,6 +296,18 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
 	private WebElement clientTab;
+
+	@FindBy(xpath = "//mat-select[@role ='combobox']")
+	private WebElement statusArrow;
+
+	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
+	private WebElement inactiveStatus;
+
+	@FindBy(id = "detailSaveBtn")
+	private WebElement saveBtn;
+
+	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
+	private WebElement toasterMessage;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -547,6 +560,8 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void enterSearchText(String nodeName) {
+		CCUtils.verifyAndWaitForElement(searchIcon, driver);
+		searchIcon.click();
 //		CCUtils.verifyAndWaitForElement(searchIcon,driver);
 //		searchIcon.click();
 		log("click to search icon");
@@ -1058,10 +1073,35 @@ public class GeneralSettingsPage extends CCMainPage {
 		YesActivateButton.click();
 		log("click to Yes,Activate Button in Activate solutions popup");
 	}
-	
+
+	public void enterClientName(String clientName) {
+		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
+		textboxClientName.clear();
+		textboxClientName.sendKeys(clientName);
+		log("Entered text in Client name field is :" + clientName);
+	}
+
+	public void changeStatus() {
+		CCUtils.verifyAndWaitForElement(statusArrow, driver);
+		statusArrow.click();
+		inactiveStatus.click();
+		log("Clicked on inactive status");
+		saveBtn.click();
+		log("Clicked on save");
+	}
+
+	public void verifyToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
 	public void clickToExpandPurchaseSolutions() {
 		CCUtils.scrollPageViaElement(driver, purchasedSolutionExpandButton);
-		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton,driver);
+		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton, driver);
 		purchasedSolutionExpandButton.click();
 		log("click to pruchased solution expand button");
 	}
