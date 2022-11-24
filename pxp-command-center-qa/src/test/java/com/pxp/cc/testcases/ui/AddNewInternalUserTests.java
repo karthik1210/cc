@@ -154,10 +154,6 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
 	public void testCreateActiveInternalUserWithoutRole() throws Exception {
-		logStep("Click on new button");
-		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
-		internalUsersPage.clickOnKebabMenuButton();
-		internalUsersPage.clickOnNewBtn();
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);
 		String firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
@@ -186,10 +182,6 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(with user roles) functionality")
 	public void testCreateActiveInternalUserWithRoles() throws Exception {
-		logStep("Click on new button");
-		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
-		internalUsersPage.clickOnKebabMenuButton();
-		internalUsersPage.clickOnNewBtn();
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);
 		String firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
