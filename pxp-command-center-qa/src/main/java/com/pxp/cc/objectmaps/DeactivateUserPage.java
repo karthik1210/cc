@@ -13,63 +13,75 @@ public class DeactivateUserPage extends CCMainPage {
 		super(driver);
 	}
 
-	@FindBy(className = "mat-icon notranslate mat-list-icon material-icons mat-icon-no-color")
-	private WebElement tabCCUser;
+	@FindBy(xpath = "//span[contains(text(),'SEARCH OPTIONS')]")
+	private WebElement searchOption;
 
-	@FindBy(id = "deactivate")
-	private WebElement buttonDeactivate;
+	@FindBy(id = "searchFirstNameInput")
+	private WebElement textboxFirstName;
 
-	@FindBy(id = "confirm")
-	private WebElement buttonConfirmInDeactivatePopup;
+	@FindBy(id = "filterSearchBtn")
+	private WebElement buttonSearch;
 
-	@FindBy(id = "cancel")
-	private WebElement buttonCancelinDeactivatePopup;
+	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
+	private WebElement clearAllBtn;
 
-	@FindBy(id = "generalToggleIcon-button")
-	private WebElement labelDeactivatePopup;
+	@FindBy(xpath = "//span[contains(text(),'Active')]")
+	private WebElement activeCheckbox;
 
-	@FindBy(id = "userchk")
-	private WebElement selectUser;
+	@FindBy(id = "deactivateBtn")
+	private WebElement deactivateBtn;
 
-	@FindBy(xpath = "userchk/span/div[1]]")
-	private WebElement selectUserTwo;
+	@FindBy(id = "applyBtn")
+	private WebElement applyBtn;
+	
+	@FindBy(xpath = "//td[@id='select_check']")
+	private WebElement checkBox;
 
-	@FindBy(id = "generalToggleIcon-button")
-	private WebElement deactivatePopupMessage;
-
-	public void clickCCUserIcon() {
-		CCUtils.verifyAndWaitForElement(tabCCUser, driver);
-		tabCCUser.click();
+	public void clickOnSearchOption() {
+		CCUtils.verifyAndWaitForElement(searchOption, driver);
+		searchOption.click();
 	}
 
-	public void clickDeactivateButton() {
-		CCUtils.verifyAndWaitForElement(buttonDeactivate, driver);
-		buttonDeactivate.click();
+	public void enterSearchTextInSearchFirstNameFields(String firstName) {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(firstName);
+		log("Entered text in first name field is " + firstName);
 	}
 
-	public void getUserStatus() {
-		CCUtils.verifyAndWaitForElement(buttonDeactivate, driver);
-		buttonDeactivate.click();
+	public void clickOnSearchButton() throws InterruptedException {
+		log("Verifying clear button is displayed on search options popup");
+
+		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
+		buttonSearch.click();
 	}
 
-	public void selectUser() {
-		CCUtils.verifyAndWaitForElement(selectUser, driver);
-		selectUser.click();
+	public void clickOnActiveCheckbox() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, buttonSearch);
+		CCUtils.verifyAndWaitForElement(activeCheckbox, driver);
+		activeCheckbox.click();
+		log("Clicked on active User Status checkbox on Search Options popup");
 	}
 
-	public void selectUserTwo() {
-		CCUtils.verifyAndWaitForElement(selectUser, driver);
-		selectUserTwo.click();
+	public void verifyClearAllButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(clearAllBtn, driver);
+		CCUtils.assertEquals(clearAllBtn.getText().trim(), "CLEAR ALL");
 	}
 
-	public void clickDeactivate() {
-		CCUtils.verifyAndWaitForElement(buttonConfirmInDeactivatePopup, driver);
-		buttonConfirmInDeactivatePopup.click();
+	public void clickOncheckBox() throws InterruptedException {
+
+		CCUtils.verifyAndWaitForElement(checkBox, driver);
+		checkBox.click();
 	}
 
-	public String verifyPopUpMessage() {
-		CCUtils.verifyAndWaitForElement(labelDeactivatePopup, driver);
-		return labelDeactivatePopup.getText();
-	}
+	public void clickOndeactivateBtn() throws InterruptedException {
 
+		CCUtils.verifyAndWaitForElement(deactivateBtn, driver);
+		deactivateBtn.click();
+	}
+	
+	public void clickOnApplyBtn() throws InterruptedException {
+
+		CCUtils.verifyAndWaitForElement(applyBtn, driver);
+		applyBtn.click();
+	}
 }

@@ -210,7 +210,7 @@ public class CommonMethods extends CCMainPage {
 		textboxEmail.clear();
 		textboxEmail.sendKeys(input);
 		CCUtils.verifyAndWaitForElement(textboxUserName, driver);
-		textboxUserName.click();
+		javascriptClick(textboxUserName);
 		log("Entered input for email : " + input);
 	}
 
@@ -444,6 +444,7 @@ public class CommonMethods extends CCMainPage {
 
 	public String getFirstName() {
 		CCUtils.verifyAndWaitForElement(labelFirstNameValue, driver);
+		log("print the value of value of first name : "+labelFirstNameValue.getText().trim());
 		return labelFirstNameValue.getText().trim();
 	}
 

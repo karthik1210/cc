@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 
 public class InternalUsersPage extends CCMainPage {
 
-	@FindBy(id = "newButton")
+	@FindBy(id = "addClientUser")
 	private WebElement buttonNew;
 
 	@FindBy(xpath = "//span[text()=' Internal Users ']")
@@ -98,6 +98,18 @@ public class InternalUsersPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
 	private WebElement itemsPerPageTwoHundred;
+
+	@FindBy(id = "IconContainer")
+	private WebElement moreOptionsButton;
+
+	@FindBy(id = "addClientUser")
+	private WebElement btnNew;
+
+	@FindBy(id = "IconContainer")
+	private WebElement buttonKebabMenu;
+
+	@FindBy(id = "deactivate")
+	private WebElement buttonBulkDeactivate;
 
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
@@ -416,5 +428,34 @@ public class InternalUsersPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorToasterMessage, driver);
 		CCUtils.assertEquals(errorToasterMessage.isDisplayed(), true);
 		log("number of results found, please refine search further error message is displayed");
+	}
+
+	public void clickOnKebabMenuButton() {
+		CCUtils.verifyAndWaitForElement(buttonKebabMenu, driver);
+		javascriptClick(buttonKebabMenu);
+	}
+
+	public void clickOnNewBtn() {
+		CCUtils.verifyAndWaitForElement(btnNew, driver);
+		btnNew.click();
+		log("Clicked on new button in client users page");
+	}
+
+	public void searchUser(String firstName) throws AWTException, InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxFirstName, driver);
+		textboxFirstName.sendKeys(firstName);
+		log("Entered text in first name field is " + firstName);
+	}
+
+	public void clickOnBulkDeactivate() {
+		CCUtils.verifyAndWaitForElement(buttonBulkDeactivate, driver);
+		javascriptClick(buttonBulkDeactivate);
+	}
+
+	public void clickToMoreOptions() {
+		CCUtils.verifyAndWaitForElement(moreOptionsButton, driver);
+		moreOptionsButton.click();
+		log("clicked to more options button");
+
 	}
 }

@@ -27,6 +27,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 	public List<String> enrollmentStatusList = null;
 	public CommonMethods commonMethods;
 	public AddNewInternalUsersPage addNewInternalUsersPage;
+	String firstName;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
@@ -37,22 +38,23 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		commandCenterUsersPage.verifyInternalUsersTabByDefaultSelected();
 		internalUsersPage = new InternalUsersPage(driver);
 		commonMethods = new CommonMethods(driver);
-		logStep("Click on new button");
-		internalUsersPage.clickOnNewButton();
-		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
-
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {"smoke"}, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
+	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {
+			"smoke" }, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
 	public void testInternalUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
-		logStep("Create New Active Internal User");
-		String firstName = "ActiveUser" + CCUtils.generateAlphaNumericString(3).concat("'s");
+		logStep("Click on new button");
+		addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+		internalUsersPage.clickOnKebabMenuButton();
+		internalUsersPage.clickOnNewBtn();
+		logStep("Create a new active internal user with user roles and verify success toaster");
+		commonMethods = new CommonMethods(driver);
+		firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
 		commonMethods.enterFirstName(firstName);
-		String lastName = CCUtils.generateAlphaNumericString(9);
-		commonMethods.enterLastName(lastName);
-		commonMethods.enterEmail(CCUtils.generateNewEmail(10));
-		commonMethods.enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
-		addNewInternalUsersPage.selectUserRole("Super Admin");
+		commonMethods.enterLastName(CCUtils.generateAlphaNumericString(12));
+		commonMethods.enterEmail(CCUtils.generateNewEmail(12));
+		commonMethods.enterUserName(CCUtils.generateAlphaNumericString(20));
+		addNewInternalUsersPage.addUserRoles();
 		addNewInternalUsersPage.clickOnSaveAndAddButton();
 		commonMethods.verifyToasterMessage("Success! New User has been successfully added");
 		searchOptionsPage = internalUsersPage.clickOnSearchOptionPage();
@@ -60,7 +62,7 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		userStatusList = new ArrayList<String>();
 		userStatusList.add(testData.getProperty("user.status.active"));
 		searchOptionsPage.selectUserStatus(userStatusList);
-		searchOptionsPage.enterSearchTextInSearchFields(firstName, lastName, "", "", "");
+		searchOptionsPage.enterSearchTextInSearchFields(firstName, "", "", "", "");
 		searchOptionsPage.clickOnSearchButton();
 		String userStatus = internalUsersPage.getInternalUserStatus();
 		internalUsersPage.selectUser();
@@ -84,7 +86,6 @@ public class InternalUserLockFromKebabMenuTests extends CommandCenterGenericTest
 		internalUserDetailsPage.clickOnUnlockUserButton();
 		logStep("verify success toaster message");
 		commonMethods.verifyToasterMessage("Success! User status has been successfully activated");
-
 	}
 
 	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock no roles assigned user")

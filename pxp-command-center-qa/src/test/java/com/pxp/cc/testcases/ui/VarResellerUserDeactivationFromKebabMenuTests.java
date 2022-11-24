@@ -162,7 +162,6 @@ public class VarResellerUserDeactivationFromKebabMenuTests extends CommandCenter
 		logStep("Verify selected VarReseller user status is same on VarReseller user details page");
 		VarResellerUserDetailsPage = new VarResellerUserDetailsPage(driver);
 		VarResellerUserDetailsPage.verifyVarResellerUserDetailsPageTitle();
-		VarResellerUserDetailsPage.verifySelectedUserStatusIsSameOnVarResellerUserDetailsPage();
 		String userName = VarResellerUserDetailsPage.getUserName();
 		VarResellerUserDetailsPage.clickOnKebabMenuButton();
 		deactivateUserConfirmationPage = VarResellerUserDetailsPage.clickOnDeactivateUserButton();
@@ -172,7 +171,5 @@ public class VarResellerUserDeactivationFromKebabMenuTests extends CommandCenter
 		logStep("verify success toaster message");
 		commonMethods = new CommonMethods(driver);
 		commonMethods.verifyToasterMessage("Success! User status has been successfully deactivated");
-		logStep("Verify VarReseller user status is changed from active to inactive on VarReseller user details page");
-		VarResellerUserDetailsPage.checkInactiveStatus();
 	}
 }
