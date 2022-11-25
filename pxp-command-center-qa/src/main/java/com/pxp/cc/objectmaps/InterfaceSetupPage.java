@@ -174,11 +174,25 @@ public class InterfaceSetupPage extends CCMainPage {
         }
     }
 
-    public void verifyMandatoryValueMissingError() {
-        CCUtils.verifyAndWaitForElement(mandatoryValueMissingError, driver);
-        log("verifying error message");
-        CCUtils.assertEquals(mandatoryValueMissingError.getText().contains("Cannot be empty!"), true);
-        log("Error message verified successfully");
+    public void verifyMandatoryValueMissingError(String externalSystem) {
+        if(externalSystem.equalsIgnoreCase("MedfusionREST - NextGen")) {
+            if (nextgenPracticeId.getText().contains("*")) {
+                CCUtils.verifyAndWaitForElement(mandatoryValueMissingError, driver);
+                log("verifying error message");
+                CCUtils.assertEquals(mandatoryValueMissingError.getText().contains("Cannot be empty!"), true);
+                log("Error message verified successfully");
+            }
+        }
+            else if(externalSystem.equalsIgnoreCase("Greenway PrimeSuite EMR") || externalSystem.equalsIgnoreCase("GE Centricity PM")) {
+                if(externalPracticeId.getText().contains("*")) {
+                    CCUtils.verifyAndWaitForElement(mandatoryValueMissingError, driver);
+                    log("verifying error message");
+                    CCUtils.assertEquals(mandatoryValueMissingError.getText().contains("Cannot be empty!"), true);
+                    log("Error message verified successfully");
+                }
+            }
+            else
+                log("Mandatory field not present in selected External System, Hence unable to verify 'Cannot be empty!' error");
     }
 
     public void clickOnSortingArrow() {
@@ -439,7 +453,7 @@ public class InterfaceSetupPage extends CCMainPage {
         if (!value.isEmpty()) {
             CCUtils.verifyAndWaitForElement(element, driver);
             element.sendKeys(value);
-        } else {
+        } else if(value.isEmpty()){
             CCUtils.verifyAndWaitForElement(element, driver);
             element.sendKeys(Keys.TAB);
         }

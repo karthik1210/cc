@@ -54,11 +54,26 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         logStep("PXPP-25742 TC016 Verify that whether user notified when forgot to add data for required fields for New Interface");
         ccui.getInterfaceSetupPage().clickOnNewButton();
         ccui.getInterfaceSetupPage().clickOnExternalSystemComboBox();
+        if(driver.getCurrentUrl().contains("dev-command-center.dev.pxp-mf-cc.nextgenaws.net")) {
+            ccui.getInterfaceSetupPage().selectExternalSystemInDropDown("MedfusionREST - NextGen");
+            ccui.getInterfaceSetupPage().verifyElementsForExternalSystem("MedfusionREST - NextGen");
+            ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenEnterpriseIdTextBox(), "");
+            ccui.getInterfaceSetupPage().verifyMandatoryValueMissingError("MedfusionREST - NextGen");
+            ccui.getInterfaceSetupPage().clickOnCancelButton();
+        }
+        else if(driver.getCurrentUrl().contains("qa-command-center.dev.pxp-mf-cc.nextgenaws.net"))
+        {
+            ccui.getInterfaceSetupPage().selectExternalSystemInDropDown("Greenway PrimeSuite EMR");
+            ccui.getInterfaceSetupPage().verifyElementsForExternalSystem("Greenway PrimeSuite EMR");
+            ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getExternalPracticeIdTextBox(), "");
+            ccui.getInterfaceSetupPage().verifyMandatoryValueMissingError("Greenway PrimeSuite EMR");
+            ccui.getInterfaceSetupPage().clickOnCancelButton();
+        }
+        logStep("PXPP-25743 TC017 Verify that whether user can create new Interface with Inactive Status.");
+        ccui.getInterfaceSetupPage().clickOnNewButton();
+        ccui.getInterfaceSetupPage().clickOnExternalSystemComboBox();
         ccui.getInterfaceSetupPage().selectExternalSystemInDropDown("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().verifyElementsForExternalSystem("MedfusionREST - NextGen");
-        ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenEnterpriseIdTextBox(), "");
-        ccui.getInterfaceSetupPage().verifyMandatoryValueMissingError();
-        logStep("PXPP-25743 TC017 Verify that whether user can create new Interface with Inactive Status.");
         ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenEnterpriseIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(0));
         ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getApiSiteIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(1));
         ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenPracticeIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(2));
