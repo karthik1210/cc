@@ -58,7 +58,7 @@ public class CCUtils {
 			wait.until(ExpectedConditions.visibilityOf(we));
 			wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
 		} catch (Exception exception) {
-			verifyAndWaitForElement(we, driver);
+			verifyAndWaitForElementPresence(we, driver);
 		}
 	}
 
