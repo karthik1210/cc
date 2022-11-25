@@ -46,7 +46,9 @@
                 <class name="com.pxp.cc.testcases.ui.EditClientDetailsTests" />
               <class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
               <class name="com.pxp.cc.testcases.ui.CreateClientTests" />
-              <class name="com.pxp.cc.testcases.ui.CreateBrandTemplateTests" />
+
+              <!-- its blocked due to path identificationfor image upload in AWS.
+              class name="com.pxp.cc.testcases.ui.CreateBrandTemplateTests" /-->
         </classes>
     </test>
 </suite>
