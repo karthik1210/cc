@@ -87,6 +87,17 @@ public class CCUtils {
 			}
 	}
 
+	public static void verifyAndWaitForUserTableList(WebElement we, WebDriver driver) {
+		try {
+			Log4jUtil.log("webdriverwait initiated");
+			WebDriverWait wait = new WebDriverWait(driver, 10);
+			wait.until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@role='grid']"))));
+			Log4jUtil.log("webdriverwait Completed and tableClientTypeInSearchResult validation");
+			wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
+		} catch (StaleElementReferenceException e) {
+			verifyAndWaitForTableList(we, driver);
+		}
+	}
 
 	public static void assertEquals(Object actual, Object expected) throws RuntimeException {
 		try {
