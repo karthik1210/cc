@@ -445,7 +445,7 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickOnSearchButton() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
+		CCUtils.verifyAndWaitForElementPresence(buttonSearch, driver);
 		CCUtils.scrollPageViaElement(driver, buttonSearch);
 		javascriptClick(buttonSearch);
 	}
@@ -797,7 +797,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 		CCUtils.verifyAndWaitForElement(textboxMobileNumber, driver);
 		textboxMobileNumber.sendKeys(mobileNumber);
-		log("Entered text in email field is " + mobileNumber);
+		log("Entered text in mobile number field is " + mobileNumber);
 	}
 
 	public void selectUserStatus(List<String> userStatusList) {

@@ -56,7 +56,7 @@ public class CCUtils {
 		try {
 			WebDriverWait wait = new WebDriverWait(driver, 10);
 			wait.until(ExpectedConditions.visibilityOf(we));
-			wait.until(ExpectedConditions.stalenessOf(we));
+			wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
 		} catch (Exception exception) {
 			verifyAndWaitForElement(we, driver);
 		}
