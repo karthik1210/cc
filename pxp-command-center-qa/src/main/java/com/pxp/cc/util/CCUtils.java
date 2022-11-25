@@ -63,7 +63,7 @@ public class CCUtils {
 				verifyAndWaitForElementPresence(we, driver);
 			}
 			i++;
-		} while(i<=5)
+		} while(i<=5);
 	}
 
 	public static void verifyAndWaitForListOfElement(List<WebElement> web, WebDriver driver) {
