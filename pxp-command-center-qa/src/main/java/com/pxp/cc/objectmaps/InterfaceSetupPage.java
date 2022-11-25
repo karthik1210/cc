@@ -2,11 +2,14 @@
 
 package com.pxp.cc.objectmaps;
 
+import com.google.common.collect.Comparators;
+import com.google.common.collect.Ordering;
 import com.medfusion.common.utils.PropertyFileLoader;
 import com.pxp.cc.util.CCUtils;
 import lombok.Getter;
 import lombok.Setter;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -14,6 +17,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -147,6 +151,43 @@ public class InterfaceSetupPage extends CCMainPage {
     @FindBy(xpath = "//div[normalize-space(text())='Active']/preceding::input[@type='radio']")
     private WebElement activeRadioButtonOnEdit;
 
+    @FindBy(xpath = "//div[normalize-space(text())='Cannot be empty!']")
+    private WebElement mandatoryValueMissingError;
+
+    @FindBy(xpath = "//div[normalize-space(text())='External System']/../div/div")
+    private WebElement sortingArrow;
+
+    @FindBy(xpath = "//td/div/button/following-sibling::span")
+    private List<WebElement> listOfExternalSystem;
+
+    public void verifySorting(String sortType) {
+        boolean sorted;
+        List<String> externalSystemNames = new ArrayList<String>();
+        for (int i = 0; i < listOfExternalSystem.size(); i++)
+            externalSystemNames.add(listOfExternalSystem.get(i).getText());
+        if (sortType.equalsIgnoreCase("Ascending")) {
+            CCUtils.assertEquals(sorted = Ordering.natural().isOrdered(externalSystemNames), true);
+            log("External Systems are in ascending order");
+        } else if (sortType.equalsIgnoreCase("Descending")) {
+            CCUtils.assertEquals(sorted = Ordering.natural().reverse().isOrdered(externalSystemNames), true);
+            log("External Systems are in descending order");
+        }
+    }
+
+    public void verifyMandatoryValueMissingError() {
+        CCUtils.verifyAndWaitForElement(mandatoryValueMissingError, driver);
+        log("verifying error message");
+        CCUtils.assertEquals(mandatoryValueMissingError.getText().contains("Cannot be empty!"), true);
+        log("Error message verified successfully");
+    }
+
+    public void clickOnSortingArrow() {
+        log("Clicking on sorting Arrow");
+        new Actions(driver).moveToElement(sortingArrow).build().perform();
+        new Actions(driver).moveToElement(sortingArrow).click().build().perform();
+        log("successfully clicked on sorting Arrow");
+    }
+
     public HashMap<String, Boolean> verifyElementsInInterfaceSetup() {
         HashMap<String, Boolean> result = new HashMap<String, Boolean>();
         result.put("verifyingAllElementsInInterfaceSetup", verifyElementsInInterfaceSetUpSection());
@@ -160,9 +201,9 @@ public class InterfaceSetupPage extends CCMainPage {
             if (externalSystemList.get(i).getText().contains(externalSystemName)) {
                 flag = 1;
                 int j = i + 1;
-                CCUtils.verifyAndWaitForElementPresence(driver.findElement(By.xpath("(//tbody[@role='rowgroup']/tr)["+j+"]/td/div/button")), driver);
+                CCUtils.verifyAndWaitForElementPresence(driver.findElement(By.xpath("(//tbody[@role='rowgroup']/tr)[" + j + "]/td/div/button")), driver);
                 //WebElement expandButtonOfExternalSystem = driver.findElement(By.xpath("(//span[normalize-space(text())='" + externalSystemName + "']/preceding::mat-icon[normalize-space(text())='keyboard_arrow_right'])[" + j + "]"));
-                WebElement expandButtonOfExternalSystem = driver.findElement(By.xpath("(//tbody[@role='rowgroup']/tr)["+j+"]/td/div/button"));
+                WebElement expandButtonOfExternalSystem = driver.findElement(By.xpath("(//tbody[@role='rowgroup']/tr)[" + j + "]/td/div/button"));
                 CCUtils.verifyAndWaitForElement(expandButtonOfExternalSystem, driver);
                 new Actions(driver).moveToElement(expandButtonOfExternalSystem).build().perform();
                 javascriptClick(expandButtonOfExternalSystem);
@@ -303,48 +344,45 @@ public class InterfaceSetupPage extends CCMainPage {
     }
 
     public void verifyRadioButtonEnabled(String status) {
-        if(status.equalsIgnoreCase("Active")) {
+        if (status.equalsIgnoreCase("Active")) {
             if (activeRadioButton.isSelected())
                 log("Active Radio button is selected");
             else
                 activeRadioButton.click();
-        }
-        else if(status.equalsIgnoreCase("Inactive")) {
+        } else if (status.equalsIgnoreCase("Inactive")) {
             if (inactiveRadioButton.isSelected())
                 log("Inactive Radio button is selected");
             else
                 inactiveRadioButton.click();
         }
-        log(status +" Radio button is displayed and selected");
+        log(status + " Radio button is displayed and selected");
     }
 
     public void verifyRadioButtonEnabledOnEdit(String externalSystem, String status) {
-        if(status.equalsIgnoreCase("Active")) {
-            WebElement activeRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-active-input']"));
+        if (status.equalsIgnoreCase("Active")) {
+            WebElement activeRadio = driver.findElement(By.xpath("//label[@for='interface-" + externalSystem + "-active-input']"));
             CCUtils.verifyAndWaitForElementPresence(activeRadio, driver);
             if (activeRadio.isSelected())
                 log("Active Radio button is selected");
 
-        }
-        else if(status.equalsIgnoreCase("Inactive")) {
-            WebElement inactiveRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-inactive-input']"));
+        } else if (status.equalsIgnoreCase("Inactive")) {
+            WebElement inactiveRadio = driver.findElement(By.xpath("//label[@for='interface-" + externalSystem + "-inactive-input']"));
             CCUtils.verifyAndWaitForElementPresence(inactiveRadio, driver);
             if (inactiveRadio.isSelected())
                 log("Inactive Radio button is selected");
         }
-        log(status +" Radio button is displayed and selected");
+        log(status + " Radio button is displayed and selected");
     }
 
     public void clickRadioButton(String externalSystem, String status) {
-        if(status.equalsIgnoreCase("Active")) {
-            WebElement activeRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-active-input']"));
+        if (status.equalsIgnoreCase("Active")) {
+            WebElement activeRadio = driver.findElement(By.xpath("//input[@id='interface-" + externalSystem + "-active-input']"));
             CCUtils.verifyAndWaitForElementPresence(activeRadio, driver);
-            activeRadio.click();
-        }
-        else if(status.equalsIgnoreCase("Inactive")) {
-            WebElement inactiveRadio = driver.findElement(By.xpath("//label[@for='interface-"+externalSystem+"-inactive-input']"));
+            new Actions(driver).moveToElement(activeRadio).click().build().perform();
+        } else if (status.equalsIgnoreCase("Inactive")) {
+            WebElement inactiveRadio = driver.findElement(By.xpath("//input[@id='interface-" + externalSystem + "-inactive-input']"));
             CCUtils.verifyAndWaitForElementPresence(inactiveRadio, driver);
-            inactiveRadio.click();
+            new Actions(driver).moveToElement(inactiveRadio).click().build().perform();
         }
     }
 
@@ -398,8 +436,13 @@ public class InterfaceSetupPage extends CCMainPage {
     }
 
     public void enterValue(WebElement element, String value) {
-        CCUtils.verifyAndWaitForElement(element, driver);
-        element.sendKeys(value);
+        if (!value.isEmpty()) {
+            CCUtils.verifyAndWaitForElement(element, driver);
+            element.sendKeys(value);
+        } else {
+            CCUtils.verifyAndWaitForElement(element, driver);
+            element.sendKeys(Keys.TAB);
+        }
     }
 
     public void updateValue(WebElement element, String value) {
@@ -409,7 +452,7 @@ public class InterfaceSetupPage extends CCMainPage {
     }
 
     public void verifyElementsForExternalSystem(String externalSystemName) {
-        if(externalSystemName.equalsIgnoreCase("MedfusionREST -NextGen")) {
+        if (externalSystemName.equalsIgnoreCase("MedfusionREST -NextGen")) {
             CCUtils.verifyAndWaitForElement(nextgenEnterpriseId, driver);
             CCUtils.assertEquals(nextgenEnterpriseId.isDisplayed(), true);
             log("NextGen Enterprise Id label displayed successfully");
@@ -428,16 +471,14 @@ public class InterfaceSetupPage extends CCMainPage {
             CCUtils.verifyAndWaitForElement(nextgenPracticeIdTextBox, driver);
             CCUtils.assertEquals(nextgenPracticeIdTextBox.isDisplayed(), true);
             log("NextGen Practice Id Text box displayed successfully");
-        }
-        else if(externalSystemName.equalsIgnoreCase("GE Centricity PM")) {
+        } else if (externalSystemName.equalsIgnoreCase("GE Centricity PM")) {
             CCUtils.verifyAndWaitForElement(externalPracticeId, driver);
             CCUtils.assertEquals(externalPracticeId.isDisplayed(), true);
             log("External Practice Id label displayed successfully");
             CCUtils.verifyAndWaitForElement(externalPracticeIdTextBox, driver);
             CCUtils.assertEquals(externalPracticeIdTextBox.isDisplayed(), true);
             log("External Practice Id Text box displayed successfully");
-        }
-        else if(externalSystemName.equalsIgnoreCase("Greenway PrimeSuite EMR")) {
+        } else if (externalSystemName.equalsIgnoreCase("Greenway PrimeSuite EMR")) {
             CCUtils.verifyAndWaitForElement(externalPracticeId, driver);
             CCUtils.assertEquals(externalPracticeId.isDisplayed(), true);
             log("External Practice Id label displayed successfully");
@@ -481,7 +522,7 @@ public class InterfaceSetupPage extends CCMainPage {
 
 
     public void selectExternalSystemInDropDown(String externalSystem) {
-        WebElement externalSystemValue = driver.findElement(By.xpath("//span[contains(text(),'"+externalSystem+"')]"));
+        WebElement externalSystemValue = driver.findElement(By.xpath("//span[contains(text(),'" + externalSystem + "')]"));
         CCUtils.verifyAndWaitForElement(externalSystemValue, driver);
         externalSystemValue.click();
         log("Clicked on : " + externalSystem);
@@ -489,27 +530,28 @@ public class InterfaceSetupPage extends CCMainPage {
 
     public void verifyInterfaceSetupKebabMenu(String externalSystemName) {
         int flag = 0;
-        for(WebElement eachElement : externalSystemList) {
-            if(eachElement.getText().contains(externalSystemName)) {
+        for (WebElement eachElement : externalSystemList) {
+            if (eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
-                WebElement kebabMenu = driver.findElement(By.xpath("//span[normalize-space(text())='"+externalSystemName+"']/../following-sibling::div/../following-sibling::td/div/div/span/mat-icon[text()='more_vert']"));
-                CCUtils.verifyAndWaitForElementPresenceForInterfaceSetup(externalSystemName,kebabMenu, driver);
+                WebElement kebabMenu = driver.findElement(By.xpath("//span[text()='" + externalSystemName + "']/../../following-sibling::td//mat-icon[@mattooltip='More Options']"));
+                CCUtils.verifyAndWaitForElementPresenceForInterfaceSetup(externalSystemName, kebabMenu, driver);
                 new Actions(driver).moveToElement(kebabMenu).build().perform();
-                CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
+                //CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
                 log(externalSystemName + " kebab Menu is available in Interface section");
                 break;
             }
         }
-        if(flag == 0)
+        if (flag == 0)
             log(externalSystemName + " Kebab Menu is not available in Interface section");
     }
 
     public void verifyAutoGeneratedFields(String externalSystemName, List<String> fieldName) {
         int flag = 0;
-        for(WebElement eachElement : externalSystemList) {
-            if(eachElement.getText().contains(externalSystemName)) {
+        OuterLoop:
+        for (WebElement eachElement : listOfExternalSystem) {
+            if (eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
-                for(String each : fieldName) {
+                for (String each : fieldName) {
                     CCUtils.verifyAndWaitForElement(driver.findElement(By.xpath("//span[normalize-space(text())='" + externalSystemName + "']/../following-sibling::div/div/div/div/div[normalize-space(text())='" + each + "']/mat-icon[@mattooltip='Automatically Generated']")), driver);
                     WebElement eachField = driver.findElement(By.xpath("//span[normalize-space(text())='" + externalSystemName + "']/../following-sibling::div/div/div/div/div[normalize-space(text())='" + each + "']/mat-icon[@mattooltip='Automatically Generated']"));
                     new Actions(driver).moveToElement(eachField).build().perform();
@@ -517,26 +559,28 @@ public class InterfaceSetupPage extends CCMainPage {
                     log(each + " is auto generated");
                 }
                 log(externalSystemName + " kebab Menu is available in Interface section");
-                break;
             }
+            break OuterLoop;
         }
-        if(flag == 0)
+        if (flag == 0)
             log(externalSystemName + " Kebab Menu is not available in Interface section");
     }
 
     public void verifyEditableContent(String externalSystem, List<String> fieldName, List<String> value) {
-        for(int i=0; i<fieldName.size();i++) {
+        OuterLoop:
+        for (int i = 0; i < fieldName.size(); i++) {
             int flag = 0;
-            WebElement each = driver.findElement(By.xpath("//span[text()='"+externalSystem+"']/following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../div[normalize-space(text())='"+fieldName.get(i)+"']/following-sibling::div"));
-            for(int j=0;j<value.size();j++) {
+            WebElement each = driver.findElement(By.xpath("//span[text()='" + externalSystem + "']/following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../following::div/../div[normalize-space(text())='" + fieldName.get(i) + "']/following-sibling::div"));
+            InnerLoop:
+            for (int j = 0; j < value.size(); j++) {
                 if (each.getText().equalsIgnoreCase(value.get(j))) {
-                    if(i == j)
+                    if (i == j)
                         log("No changes!!!");
                     else
                         log("Changes verified successfully");
                     CCUtils.assertEquals(each.getText().contains(value.get(j)), true);
                     flag = 1;
-                    break;
+                    break InnerLoop;
                 }
             }
         }
@@ -545,33 +589,35 @@ public class InterfaceSetupPage extends CCMainPage {
 
     public void clickOnInterfaceSetupKebabMenu(String externalSystemName) {
         int flag = 0;
-        for(WebElement eachElement : externalSystemList) {
-            if(eachElement.getText().contains(externalSystemName)) {
+        for (WebElement eachElement : externalSystemList) {
+            if (eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
-                WebElement kebabMenu = driver.findElement(By.xpath("//span[normalize-space(text())='"+externalSystemName+"']/../following-sibling::div/../following-sibling::td/div/div/span/mat-icon[text()='more_vert']"));
+                WebElement kebabMenu = driver.findElement(By.xpath("//span[text()='" + externalSystemName + "']/../../following-sibling::td//mat-icon[@mattooltip='More Options']"));
                 new Actions(driver).moveToElement(kebabMenu).pause(2000).click().build().perform();
                 CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
                 log(externalSystemName + " kebab Menu clicked successfully");
                 break;
             }
         }
-        if(flag == 0)
+        if (flag == 0)
             log(externalSystemName + " Kebab Menu is not available in Interface section");
     }
 
     public void verifyInterfaceSetupStatus(String externalSystemName, String status) {
         int flag = 0;
-        for(WebElement eachElement : externalSystemList) {
-            if(eachElement.getText().contains(externalSystemName)) {
+        for (WebElement eachElement : externalSystemList) {
+            if (eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
-                WebElement kebabMenu = driver.findElement(By.xpath("//span[normalize-space(text())='"+externalSystemName+"']/../following-sibling::div/../following-sibling::td/div/div/div/span[normalize-space(text())='"+status.toUpperCase()+"']"));
+                WebElement kebabMenu = driver.findElement(By.xpath("//span[normalize-space(text())='" + externalSystemName + "']/../following-sibling::div/../following-sibling::td/div/div/div/span[normalize-space(text())='" + status.toUpperCase() + "']"));
                 new Actions(driver).moveToElement(kebabMenu).build().perform();
                 CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
-                log(externalSystemName + " with "+status+" status available in Interface Setup section");
+                log(externalSystemName + " with " + status + " status available in Interface Setup section");
                 break;
             }
         }
-        if(flag == 0)
+        if (flag == 0)
             log(externalSystemName + " status is not available in Interface Setup section");
     }
+
+
 }

@@ -6,9 +6,12 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.LoginPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.security.AccessControlContext;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
@@ -35,7 +38,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Interface setup for the first time")
+    @Test(priority = 1, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Interface setup for the first time")
     public void verifyingElementsInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         HashMap<String, Boolean> verification = new HashMap<String, Boolean>();
@@ -44,22 +47,51 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "verifying External System Creation with No Value On Mandatory And Inactive For Interface Setup")
+    public void verifyingExternalSystemCreationWithNoValueOnMandatoryAndInactiveForInterfaceSetup() throws Exception {
+        ngHierarchyClientCreate();
+        initiateData();
+        logStep("PXPP-25742 TC016 Verify that whether user notified when forgot to add data for required fields for New Interface");
+        ccui.getInterfaceSetupPage().clickOnNewButton();
+        ccui.getInterfaceSetupPage().clickOnExternalSystemComboBox();
+        ccui.getInterfaceSetupPage().selectExternalSystemInDropDown("MedfusionREST - NextGen");
+        ccui.getInterfaceSetupPage().verifyElementsForExternalSystem("MedfusionREST - NextGen");
+        ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenEnterpriseIdTextBox(), "");
+        ccui.getInterfaceSetupPage().verifyMandatoryValueMissingError();
+        logStep("PXPP-25743 TC017 Verify that whether user can create new Interface with Inactive Status.");
+        ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenEnterpriseIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(0));
+        ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getApiSiteIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(1));
+        ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getNextgenPracticeIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(2));
+        ccui.getInterfaceSetupPage().clickRadioButton("new", "Inactive");
+        ccui.getInterfaceSetupPage().clickOnSaveButton();
+        ccui.getCommonMethods().verifyToasterMessage("Success! Interface added successfully");
+        ccui.getInterfaceSetupPage().verifyInterfaceSetupStatus("MedfusionREST - NextGen", "Inactive");
+        ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
+        ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
+        ccui.getInterfaceSetupPage().clickOnKebabDelete();
+        ccui.getInterfaceSetupPage().clickOnYesDelete();
+        ccui.getCommonMethods().verifyToasterMessage("Success! Interface has been successfully deleted");
+        runOnce = false;
+    }
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
+
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
     public void verifyingBasicFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         createNewInterface("MedfusionREST - NextGen");
         runOnce = false;
     }
 
-    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit Functionality in Interface setup for the first time")
+
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit Functionality in Interface setup for the first time")
     public void verifyingEditFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
-        if(runOnce == true) {
+        if (runOnce) {
             createNewInterface("MedfusionREST - NextGen");
         }
+        if (!runOnce)
+            ccui.getInterfaceSetupPage().clickExpandButtonInInterfaceSetUp();
         logStep("PXPP-25725 TC007 Verify Kebab menu options for Active Interfaces under Interface Setup Section");
-        ccui.getInterfaceSetupPage().clickExpandButtonInInterfaceSetUp();
         ccui.getInterfaceSetupPage().verifyInterfaceSetupStatus("MedfusionREST - NextGen", "Active");
         ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
@@ -68,7 +100,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         ccui.getInterfaceSetupPage().clickOnExpandButtonOfExternalSystem("MedfusionREST - NextGen");
         logStep("PXPP-25726 TC008 Verify that user can view the auto generated field for \"MedfusionREST -NextGen\" interface under Interface Setup Section");
         ccui.getInterfaceSetupPage().verifyAutoGeneratedFields("MedfusionREST - NextGen", fieldNames);
-        ccui.getInterfaceSetupPage().verifyEditableContent("Greenway PrimeSuite EMR", editableFieldNamesForMedfusionRest_NextGen, editableFieldContentForMedfusionRest_NextGen);
+        ccui.getInterfaceSetupPage().verifyEditableContent("MedfusionREST - NextGen", editableFieldNamesForMedfusionRest_NextGen, editableFieldContentForMedfusionRest_NextGen);
         logStep("PXPP-25728 TC009 Verify that user can able to Edit and Cancel interface \"MedfusionREST -NextGen\" under Interface Setup Section");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnKebabEdit();
@@ -88,7 +120,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         logStep("PXPP-24223 TC011 Verify that whether User can change status from Active to Inactive interface under Interface Setup Section");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnKebabEdit();
-        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen","Inactive");
+        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen", "Inactive");
         ccui.getInterfaceSetupPage().clickOnSaveButtonOnEdit();
         ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
         ccui.getInterfaceSetupPage().verifyInterfaceSetupStatus("MedfusionREST - NextGen", "Inactive");
@@ -99,34 +131,36 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit for Inactive Interface setup")
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit for Inactive Interface setup")
     public void verifyingEditForInactiveInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
-        if (runOnce == true) {
+        if (runOnce) {
             createNewInterface("MedfusionREST - NextGen");
             inactiveExternalSystemInInterfaceSetup("MedfusionREST - NextGen");
         }
         logStep("PXPP-24231 TC013 Verify that whether user can edit Inactive interface and make it activate under Interface Setup Section");
-        /*ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
+        if (!runOnce)
+            ccui.getInterfaceSetupPage().clickExpandButtonInInterfaceSetUp();
+        ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnKebabEdit();
-        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen","Inactive");
-        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen","Active");
+        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen", "Inactive");
+        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen", "Active");
         ccui.getInterfaceSetupPage().clickOnSaveButtonOnEdit();
         ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
         logStep("PXPP-25470 TC014 Verify that whether user can delete the Inactive Interface in Interface Setup Section");
         ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnKebabEdit();
-        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen","Inactive");
+        ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen", "Inactive");
         ccui.getInterfaceSetupPage().clickOnSaveButtonOnEdit();
-        ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");*/
+        ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
         ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnKebabDelete();
         ccui.getInterfaceSetupPage().clickonCancelInDialogBox();
-        /*driver.navigate().refresh();
-        ccui.getInterfaceSetupPage().clickExpandButtonInInterfaceSetUp();*/
+        driver.navigate().refresh();
+        ccui.getInterfaceSetupPage().clickExpandButtonInInterfaceSetUp();
         ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnKebabDelete();
@@ -136,21 +170,20 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         createNewInterface("GE Centricity PM");
         createNewInterface("Greenway PrimeSuite EMR");
         createNewInterface("MedfusionREST - NextGen");
-        ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("MedfusionREST - NextGen");
-        ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().clickOnExpandButtonOfExternalSystem("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().verifyAutoGeneratedFields("MedfusionREST - NextGen", fieldNames);
         ccui.getInterfaceSetupPage().verifyEditableContent("MedfusionREST - NextGen", editableFieldNamesForMedfusionRest_NextGen, editableFieldContentForMedfusionRest_NextGen);
-        ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("GE Centricity PM");
-        ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("GE Centricity PM");
         ccui.getInterfaceSetupPage().clickOnExpandButtonOfExternalSystem("GE Centricity PM");
         ccui.getInterfaceSetupPage().verifyAutoGeneratedFields("GE Centricity PM", fieldNames);
         ccui.getInterfaceSetupPage().verifyEditableContent("GE Centricity PM", editableFieldNamesForGECentricityPM, editableFieldContentForGECentricityPM);
-        ccui.getInterfaceSetupPage().verifyInterfaceSetupKebabMenu("Greenway PrimeSuite EMR");
-        ccui.getInterfaceSetupPage().clickOnInterfaceSetupKebabMenu("Greenway PrimeSuite EMR");
         ccui.getInterfaceSetupPage().clickOnExpandButtonOfExternalSystem("Greenway PrimeSuite EMR");
         ccui.getInterfaceSetupPage().verifyAutoGeneratedFields("Greenway PrimeSuite EMR", fieldNames);
         ccui.getInterfaceSetupPage().verifyEditableContent("Greenway PrimeSuite EMR", editableFieldNamesForGreenwayPrimeSuiteEMR, editableFieldContentForGreenwayPrimeSuiteEMR);
+        ccui.getInterfaceSetupPage().clickOnSortingArrow();
+        ccui.getInterfaceSetupPage().verifySorting("Ascending");
+        ccui.getInterfaceSetupPage().clickOnSortingArrow();
+        ccui.getInterfaceSetupPage().verifySorting("Descending");
+        runOnce = false;
     }
 
     @Test(enabled = false)
@@ -175,20 +208,8 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
 
     @Test(enabled = false)
     public void createNewInterface(String externalSystem) throws InterruptedException {
-        if(externalSystem.equalsIgnoreCase("MedfusionREST - NextGen")) {
-            fieldNames.add("Integration Practice ID");
-            fieldNames.add("Username");
-            fieldNames.add("Password");
-            fieldNames.add("App Token");
-            editableFieldNamesForMedfusionRest_NextGen.add("NextGen Enterprise ID");
-            editableFieldNamesForMedfusionRest_NextGen.add("API Site ID");
-            editableFieldNamesForMedfusionRest_NextGen.add("NextGen Practice ID");
-            editableFieldContentForMedfusionRest_NextGen.add("NextGen Enterprise 001");
-            editableFieldContentForMedfusionRest_NextGen.add("Api Site 001");
-            editableFieldContentForMedfusionRest_NextGen.add("NextGen Practice 001");
-            editableFieldContentForMedfusionRest_NextGen.add("Enterpriseupdate01");
-            editableFieldContentForMedfusionRest_NextGen.add("Apiupdate001");
-            editableFieldContentForMedfusionRest_NextGen.add("Practiceupdate001");
+        initiateData();
+        if (externalSystem.equalsIgnoreCase("MedfusionREST - NextGen")) {
             logStep("PXPP-24189 TC004 Verify that user can able to click on \"+ New \" button and able to select all the fields in new page under Interface Setup Section");
             ccui.getInterfaceSetupPage().clickOnNewButton();
             ccui.getInterfaceSetupPage().clickOnExternalSystemComboBox();
@@ -201,8 +222,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
             ccui.getInterfaceSetupPage().verifyRadioButtonEnabled("Active");
             ccui.getInterfaceSetupPage().clickOnSaveButton();
             ccui.getCommonMethods().verifyToasterMessage("Success! Interface added successfully");
-        }
-        else if(externalSystem.equalsIgnoreCase("GE Centricity PM")) {
+        } else if (externalSystem.equalsIgnoreCase("GE Centricity PM")) {
             editableFieldContentForGECentricityPM.add("External Practice 001");
             editableFieldNamesForGECentricityPM.add("External Practice ID");
             editableFieldContentForGECentricityPM.add("Practiceupdate001");
@@ -210,12 +230,11 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
             ccui.getInterfaceSetupPage().clickOnExternalSystemComboBox();
             ccui.getInterfaceSetupPage().selectExternalSystemInDropDown("GE Centricity PM");
             ccui.getInterfaceSetupPage().verifyElementsForExternalSystem("GE Centricity PM");
-            ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getExternalPracticeIdTextBox(),editableFieldContentForMedfusionRest_NextGen.get(0));
+            ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getExternalPracticeIdTextBox(), editableFieldContentForGECentricityPM.get(0));
             ccui.getInterfaceSetupPage().verifyRadioButtonEnabled("Active");
             ccui.getInterfaceSetupPage().clickOnSaveButton();
             ccui.getCommonMethods().verifyToasterMessage("Success! Interface added successfully");
-        }
-        else if(externalSystem.equalsIgnoreCase("Greenway PrimeSuite EMR")) {
+        } else if (externalSystem.equalsIgnoreCase("Greenway PrimeSuite EMR")) {
             editableFieldNamesForGreenwayPrimeSuiteEMR.add("External Practice ID");
             editableFieldContentForGreenwayPrimeSuiteEMR.add("External Practice 001");
             editableFieldContentForGreenwayPrimeSuiteEMR.add("PracticeUpdate001");
@@ -223,7 +242,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
             ccui.getInterfaceSetupPage().clickOnExternalSystemComboBox();
             ccui.getInterfaceSetupPage().selectExternalSystemInDropDown("Greenway PrimeSuite EMR");
             ccui.getInterfaceSetupPage().verifyElementsForExternalSystem("Greenway PrimeSuite EMR");
-            ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getExternalPracticeIdTextBox(),editableFieldContentForGreenwayPrimeSuiteEMR.get(0));
+            ccui.getInterfaceSetupPage().enterValue(ccui.getInterfaceSetupPage().getExternalPracticeIdTextBox(), editableFieldContentForGreenwayPrimeSuiteEMR.get(0));
             ccui.getInterfaceSetupPage().verifyRadioButtonEnabled("Active");
             ccui.getInterfaceSetupPage().clickOnSaveButton();
             ccui.getCommonMethods().verifyToasterMessage("Success! Interface added successfully");
@@ -239,6 +258,29 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
             ccui.getInterfaceSetupPage().clickRadioButton("MedfusionREST - NextGen", "Inactive");
             ccui.getInterfaceSetupPage().clickOnSaveButtonOnEdit();
             ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
+        }
+    }
+
+    @Test(enabled = false)
+    public void initiateData() {
+        if (fieldNames.isEmpty()) {
+            fieldNames.add("Integration Practice ID");
+            fieldNames.add("Username");
+            fieldNames.add("Password");
+            fieldNames.add("App Token");
+        }
+        if (editableFieldNamesForMedfusionRest_NextGen.isEmpty()) {
+            editableFieldNamesForMedfusionRest_NextGen.add("NextGen Enterprise ID");
+            editableFieldNamesForMedfusionRest_NextGen.add("API Site ID");
+            editableFieldNamesForMedfusionRest_NextGen.add("NextGen Practice ID");
+        }
+        if (editableFieldContentForMedfusionRest_NextGen.isEmpty()) {
+            editableFieldContentForMedfusionRest_NextGen.add("NextGen Enterprise 001");
+            editableFieldContentForMedfusionRest_NextGen.add("Api Site 001");
+            editableFieldContentForMedfusionRest_NextGen.add("NextGen Practice 001");
+            editableFieldContentForMedfusionRest_NextGen.add("Enterpriseupdate01");
+            editableFieldContentForMedfusionRest_NextGen.add("Apiupdate001");
+            editableFieldContentForMedfusionRest_NextGen.add("Practiceupdate001");
         }
     }
 }
