@@ -53,18 +53,14 @@ public class CCUtils {
 	}
 
 	public static void verifyAndWaitForElementPresence(WebElement we, WebDriver driver) {
-		int i=0;
-		do {
-			try {
+		try {
 				WebDriverWait wait = new WebDriverWait(driver, 10);
 				wait.until(ExpectedConditions.visibilityOf(we));
 				wait.until(ExpectedConditions.stalenessOf(we));
-				break;
 			} catch (Exception exception) {
-				exception.printStackTrace();
+			verifyAndWaitForElement(we, driver);
 			}
-			i++;
-		} while(i<=5);
+
 	}
 
 	public static void verifyAndWaitForListOfElement(List<WebElement> web, WebDriver driver) {
