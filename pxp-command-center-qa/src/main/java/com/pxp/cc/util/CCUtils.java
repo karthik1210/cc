@@ -95,7 +95,7 @@ public class CCUtils {
 			Log4jUtil.log("webdriverwait Completed and tableClientTypeInSearchResult validation");
 			wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
 		} catch (StaleElementReferenceException e) {
-			verifyAndWaitForTableList(we, driver);
+			verifyAndWaitForUserTableList(we, driver);
 		}
 	}
 
