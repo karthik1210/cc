@@ -118,7 +118,7 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(id = "filterClearBtn")
 	private WebElement buttonClear;
 
-	@FindBy(xpath = "//button[@id='filterSearchBtn']/span")
+	@FindBy(id = "filterSearchBtn")
 	private WebElement buttonSearch;
 
 	@FindBy(id = "searchFilterBtn")
