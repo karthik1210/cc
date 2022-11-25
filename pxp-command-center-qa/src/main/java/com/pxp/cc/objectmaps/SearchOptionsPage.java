@@ -118,7 +118,7 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(id = "filterClearBtn")
 	private WebElement buttonClear;
 
-	@FindBy(id = "filterSearchBtn")
+	@FindBy(xpath = "//button[@id='filterSearchBtn']/span")
 	private WebElement buttonSearch;
 
 	@FindBy(id = "searchFilterBtn")
@@ -445,8 +445,8 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickOnSearchButton() throws InterruptedException {
-		CCUtils.verifyAndWaitForElementPresence(buttonSearch, driver);
 		CCUtils.scrollPageViaElement(driver, buttonSearch);
+		CCUtils.verifyAndWaitForElementPresence(buttonSearch, driver);
 		javascriptClick(buttonSearch);
 	}
 
