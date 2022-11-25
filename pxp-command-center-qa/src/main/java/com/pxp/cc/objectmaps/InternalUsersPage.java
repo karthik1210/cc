@@ -197,7 +197,7 @@ public class InternalUsersPage extends CCMainPage {
 	}
 
 	public String getInternalUserStatus() {
-		CCUtils.verifyAndWaitForElement(listInternalUserStatus.get(0), driver);
+		CCUtils.verifyAndWaitForElementPresence(listInternalUserStatus.get(0), driver);
 		return listInternalUserStatus.get(0).getText().toString().trim();
 	}
 
