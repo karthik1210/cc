@@ -197,8 +197,7 @@ public class InterfaceSetupPage extends CCMainPage {
 
     public void clickOnSortingArrow() {
         log("Clicking on sorting Arrow");
-        new Actions(driver).moveToElement(sortingArrow).build().perform();
-        new Actions(driver).moveToElement(sortingArrow).click().build().perform();
+        new Actions(driver).moveToElement(sortingArrow).pause(5000).click().build().perform();
         log("successfully clicked on sorting Arrow");
     }
 
