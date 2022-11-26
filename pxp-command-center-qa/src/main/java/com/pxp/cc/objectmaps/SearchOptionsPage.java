@@ -445,8 +445,8 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickOnSearchButton() throws InterruptedException {
-		CCUtils.verifyAndWaitForElementPresence(buttonSearch, driver);
 		CCUtils.scrollPageViaElement(driver, buttonSearch);
+		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
 		javascriptClick(buttonSearch);
 	}
 
