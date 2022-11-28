@@ -30,7 +30,7 @@ import io.restassured.response.ValidatableResponse;
 import org.openqa.selenium.StaleElementReferenceException;
 
 public class CCUtils {
-
+    public static int repeat = 0;
     private static final String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&@?<>~!%#";
     private static final SecureRandom random = new SecureRandom();
     private static String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
