@@ -165,30 +165,30 @@ public class AddNewResourcePage extends CCMainPage {
 	
 	public void verifyAddNewResourcesPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelAddNewResourcePageTitle, driver);
-		log("Verifying add new provider page title");
+		log("Verifying add new resource page title");
 		CCUtils.assertEquals(labelAddNewResourcePageTitle.getText().trim(), "Add a Resource");
 	}
 	
 	public void verifyNameLabelAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelName, driver);
-		log("Verifying first name label text");
+		log("Verifying name label text");
 		CCUtils.assertEquals(labelName.getText().trim(), "Name *");
 		log("Name label text is " + labelName.getText().trim());
 		CCUtils.verifyAndWaitForElement(textboxtName, driver);
 		log("Verifying input text placeholder is displayed for name textbox field");
 		CCUtils.assertEquals(textboxtName.getAttribute("placeholder").trim(), "Input Name");
-		log("Box text for first name textbox field is " + textboxName.getAttribute("placeholder").trim());		
+		log("Box text for name textbox field is " + textboxName.getAttribute("placeholder").trim());		
 	}
 	
 	public void verifyExternalIDLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labeltextboxExternalId, driver);
-		log("Verifying External Id label text");
+		log("Verifying ExternalId label text");
 		CCUtils.assertEquals(labeltextboxExternalId.getText().trim(), "External ID *");
-		log("External Id label text is " + labeltextboxExternalId.getText().trim());
+		log("ExternalId label text is " + labeltextboxExternalId.getText().trim());
 		CCUtils.verifyAndWaitForElement(textboxExternalId, driver);
 		log("Verifying input text placeholder is displayed for External Id textbox field");
 		CCUtils.assertEquals(textboxExternalId.getAttribute("placeholder").trim(), "Input External Id");
-		log("Box text for last name textbox field is " + textboxExternalId.getAttribute("placeholder").trim());
+		log("Box text for ExternalId textbox field is " + textboxExternalId.getAttribute("placeholder").trim());
 	}	
 	
 	public void verifyResourcesTypeLabelTextAndTextboxDefaultValue() {
@@ -210,10 +210,10 @@ public class AddNewResourcePage extends CCMainPage {
 	 }
 	
 	public void verifyFiftyMaximumCharactersReachedErrorMessage(String ExternalId) {
-		log("Enter more than 50 characters in city textbox field and verify error message");
+		log("Enter more than 50 characters in ExternalId textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxExternalId, driver);
 		textboxExternalId.sendKeys(ExternalId);
-		log("Entered text in city field is " + ExternalId);
+		log("Entered text in ExternalId field is " + ExternalId);
 		CCUtils.verifyAndWaitForElement(errorMaximumCharacterExternalId, driver);
 		CCUtils.assertEquals(errorMaximumCharacterExternalId.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for ExternalId field is " + errorMaximumCharacterExternalId.getText().trim());

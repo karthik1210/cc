@@ -1,4 +1,5 @@
 // Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+
 package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.BeforeMethod;
@@ -119,21 +120,21 @@ public class AddNewResourceTests extends CommandCenterGenericTest {
 		addNewProviderPage.verifyProvidersAndResourcesTitle();
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in ResourceName and verify error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in ResourceName and Enter more than 50 characters in ExternalID fields ,verify error message")
 	public void testHundredMaximumCharactersErrorMessageForInputFields() throws Exception {
 		createProvider();
 		logStep("Verify maximum character reached error message for ResourceName");
 		addNewResourcePage.verifyHundredMaximumCharactersReachedErrorMessage(CCUtils.generateAlphaNumericString(101));
-	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 50 characters in ExternalID fields and verify error message")
-	public void testFiftyMaximumCharactersErrorMessageForInputFields() throws Exception {
-		createProvider();
 		logStep("Verify maximum character reached error message for EXternalId fields");
 		addNewResourcePage.verifyFiftyMaximumCharactersReachedErrorMessage(CCUtils.generateAlphaNumericString(51));
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid value on Resource type and verify error message")
+	public void testEnterInvalidResourceTypeErrorMessageForInputFields() throws Exception {
+		createProvider();
 		logStep("Enter invalid value Resource type and verify error message");
 		addNewResourcePage.clickOnResourceType();
-		addNewResourcePage.enterResourceType("abcdef");
+		addNewResourcePage.enterResourceType(testData.getProperty("resource.name"));
 		CCUtils.pressEnterKey();
 		addNewResourcePage.verifyNoItemsFound();
 	}
