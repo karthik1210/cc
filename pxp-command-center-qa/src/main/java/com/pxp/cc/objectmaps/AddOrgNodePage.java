@@ -171,7 +171,7 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='mat-tree-node2 bordernode']/button/span/mat-icon")
 	private WebElement expandSystemArrow;
 
-	@FindBy(xpath = "//div[@class='mat-tree-node2 treenodespace']/button/span/mat-icon")
+	@FindBy(xpath = "(//button[@id='treeExpandBtn'])[2]")
 	private WebElement expandEnterpriseArrow;
 
 	@FindBy(id = "//span[text()='PM System *']")
