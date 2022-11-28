@@ -1624,45 +1624,46 @@ public class ApiPath {
 	public static String GET_CONNECTED_PRACTICE_PROVIDER_BL(int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers";
 	}
-	
-	public static final String GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES = SERVICE_SHARED_BL + "/v1/practices/null/providers?name=null";
-	
+
+	public static final String GET_CONNECTED_PRACTICES_PROVIDERS__BL_NULL_VALUES = SERVICE_SHARED_BL
+			+ "/v1/practices/null/providers?name=null";
+
 	public static final String PROVIDER_FOR_CLIENT_BL(String clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/providers";
 	}
-	
+
 	public static final String UPDATE_PROVIDER_FOR_PRACTICE_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices";
 	}
-	
+
 	public static final String UPDATE_SOLUTION_FOR_PROVIDER_BL(int providerId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/solutions";
 	}
-	
+
 	public static final String UPDATE_RESOURCES_FOR_PROVIDER_BL(int providerId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
-	
+
 	public static final String UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/resources";
 	}
-	
+
 	public static final String PROVIDER_FOR_CLIENT_DL(String clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
 	}
-	
+
 	public static final String GET_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
 	}
-	
+
 	public static final String GET_LOCATION_FOR_PROVIDER_DL_NULL_VALUES() {
 		return SHARED_DL + "/v1/providers/null/practices/null/locations";
 	}
-	
+
 	public static final String UPDATE_RESOURCES_FOR_PRACTICE_DL(int resourceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId + "/practices";
 	}
-	
+
 	public static final String UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/resources/null/practices";
 	}
@@ -1688,11 +1689,17 @@ public class ApiPath {
 			return SERVICE_USER_DL + "/v1/users/enrollments/" + useId;
 	}
 
-	public static final String GET_ENROLLMENT_USER( String uriType, String enrollmentId ) {
+	public static final String GET_ENROLLMENT_USER(String uriType, String enrollmentId) {
 		if (uriType.equalsIgnoreCase("Valid"))
-				return SERVICE_USER_DL + "/v1/users/enrollments/" + enrollmentId ;
-			else
-				return SERVICE_USER_DL + "/v1/users/enrollmentsss/" + enrollmentId ;
+			return SERVICE_USER_DL + "/v1/users/enrollments/" + enrollmentId;
+		else
+			return SERVICE_USER_DL + "/v1/users/enrollmentsss/" + enrollmentId;
 	}
 
+	public static final String GET_PRACTICES_PROVIDERS_BL(int practiceId, int providerId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers/" + providerId;
+	}
+
+	public static final String GET_PRACTICES_PROVIDERS_NULL_VALUES_BL = SERVICE_SHARED_BL
+			+ "/v1/practices/null/providers/null";
 }
