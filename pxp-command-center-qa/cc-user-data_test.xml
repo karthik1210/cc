@@ -39,7 +39,7 @@
 				/> -->
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SendUserEnrollmentConsumerApiTests_DataLayer"/>
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer"/>
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateExpiredStatus" />
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateExpiredStatusApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
