@@ -47,7 +47,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "verifying External System Creation with No Value On Mandatory And Inactive For Interface Setup")
+    @Test(priority = 2, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "verifying External System Creation with No Value On Mandatory And Inactive For Interface Setup")
     public void verifyingExternalSystemCreationWithNoValueOnMandatoryAndInactiveForInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         initiateData();
@@ -90,7 +90,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
     }
 
 
-    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
+    @Test(priority = 3, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
     public void verifyingBasicFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         createNewInterface("MedfusionREST - NextGen");
@@ -98,7 +98,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
     }
 
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit Functionality in Interface setup for the first time")
+    @Test(priority = 4, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit Functionality in Interface setup for the first time")
     public void verifyingEditFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         if (runOnce) {
@@ -150,7 +150,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit for Inactive Interface setup")
+    @Test(priority = 5, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit for Inactive Interface setup")
     public void verifyingEditForInactiveInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         if (runOnce) {

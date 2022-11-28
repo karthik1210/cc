@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -10,7 +10,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -31,9 +30,7 @@ import io.restassured.response.ValidatableResponse;
 import org.openqa.selenium.StaleElementReferenceException;
 
 public class CCUtils {
-
-	public static int repeat = 0;
-
+    public static int repeat = 0;
     private static final String symbols = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$&@?<>~!%#";
     private static final SecureRandom random = new SecureRandom();
     private static String alphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "0123456789"
@@ -42,7 +39,7 @@ public class CCUtils {
             + "abcdefghijklmnopqrstuvxyz" + ".,!@#$%&*_-";
     private static String specialCharactersString = "!@#$%&*()'+,-./:;<=>?[]^_`{|}";
     public static SoftAssert softAssert = new SoftAssert();
-    private static String numericString = "0123456789";
+    private static String numericString =  "0123456789";
     private static String alphaNumericStringWithoutNumbersAndSpecialCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" + "abcdefghijklmnopqrstuvxyz";
 
     public static void verifyAndWaitForElement(WebElement we, WebDriver driver) {
@@ -115,6 +112,17 @@ public class CCUtils {
         }
     }
 
+    public static void verifyAndWaitForUserTableList(WebElement we, WebDriver driver) {
+        try {
+            Log4jUtil.log("webdriverwait initiated");
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.xpath("//table[@role='grid']"))));
+            Log4jUtil.log("webdriverwait Completed and tableClientTypeInSearchResult validation");
+            wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
+        } catch (StaleElementReferenceException e) {
+            verifyAndWaitForUserTableList(we, driver);
+        }
+    }
 
     public static void assertEquals(Object actual, Object expected) throws RuntimeException {
         try {
