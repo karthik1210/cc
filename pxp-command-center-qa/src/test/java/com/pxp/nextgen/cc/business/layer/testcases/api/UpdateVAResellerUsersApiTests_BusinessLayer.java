@@ -18,275 +18,152 @@ public class UpdateVAResellerUsersApiTests_BusinessLayer extends BaseRest {
 
 	private UserInfo userInfo;
 	private Validations validation;
-	Response createUserApiResponse, fetchUserDetailsApiResponse, updateVAResellerUserDetailsApiResponse;
+	Response createUserApiResponse, fetchUserDetailsApiResponse, updateVARResellerUserDetailsApiResponse;
+	public int userId;
+	List<Integer> roleIds;
+	String email, userName;
+	Long mobileNumber;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
+		userId = createUser();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and updated newly created Var/Reseller user details using user id")
-	public void testCreateNewVarResellerUser() throws IOException {
+	public int createUser() throws NullPointerException, IOException {
 		logStep("Create Var/Reseller user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
+		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Modify all the existing details of VAReseller user");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "VAReseller",
+		mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("VARReseller",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null,
+				testData.getProperty("api.resellerId"), null, roleIds, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		return createUserApiResponse.jsonPath().getInt("id");
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Updated newly created Var/Reseller user details using user id")
+	public void testCreateNewVarResellerUser() throws IOException {
+		logStep("Modify all the existing details of VARReseller user");
+		email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		mobileNumber = CCUtils.generateMobileNumber();
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("VARReseller",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
 				email, mobileNumber, testData.getProperty("user.status.active"), null,
-				testData.getProperty("api.clientId.id"), null, null, roleIds, id);
+				testData.getProperty("api.reseller.id"), null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 200);
+
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update null value in mandatory fields then validate error message")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update null value in mandatory fields then validate error message")
 	public void testErrorMessagesForMandatoryFields() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter null value in mandatory fields and validate error message");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "VAReseller", null,
-				null, null, null, null, testData.getProperty("user.status.active"), null,
-				testData.getProperty("api.clientId.id"), null, null, roleIds, id);
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("VARReseller",
+				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), null, null,
+				null, testData.getProperty("user.status.active"), null, null, null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyNullUserErrorMessageResponseBodyForVAResellerUser(updateVAResellerUserDetailsApiResponse);
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorResponseForNullUsernameAndEmailField(updateVARResellerUserDetailsApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user & update the existing username then validate error message")
-	public void testErrorMessagesForDuplicateVAResellerUsername() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Enter existing username details of VAReseller user");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "VAReseller",
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update the existing username then validate error message")
+	public void testErrorMessagesForDuplicateVARResellerUsername() throws IOException {
+		logStep("Enter existing username details of VARReseller user");
+		email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		mobileNumber = CCUtils.generateMobileNumber();
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("VARReseller",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"),
 				testData.getProperty("valid.username"), email, mobileNumber, testData.getProperty("user.status.active"),
-				null, testData.getProperty("api.clientId.id"), null, null, roleIds, id);
+				null, testData.getProperty("api.reseller.id"), null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 409);
-		validation.verifyErrorResponseForDuplicateVAResellerUsername(updateVAResellerUserDetailsApiResponse,
-				testData.getProperty("valid.username"));
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 409);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update existing email then validate error message")
-	public void testErrorMessagesForDuplicateVAResellerUserUserEmailId() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Enter existing email id details of VAReseller user while updating email id");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "VAReseller",
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing email then validate error message")
+	public void testErrorMessagesForDuplicateVARResellerUserUserEmailId() throws IOException {
+		logStep("Enter existing email id details of VARReseller user while updating email id");
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("VARReseller",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
 				testData.getProperty("valid.user.email"), mobileNumber, testData.getProperty("user.status.active"),
-				null, testData.getProperty("api.clientId.id"), null, null, roleIds, id);
+				null, testData.getProperty("api.reseller.id"), null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 409);
-		validation.verifyErrorResponseForDuplicateVAResellerEmailId(updateVAResellerUserDetailsApiResponse,
-				testData.getProperty("valid.user.email"));
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 409);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update existing mobile number then validate error message")
-	public void testErrorMessagesForDuplicateVAResellerUserMobileNumber() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing mobile number then validate error message")
+	public void testErrorMessagesForDuplicateVARResellerUserMobileNumber() throws IOException {
+		logStep("Modify existing mobile nuber details of VARReseller user");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Modify existing mobile nuber details of VAReseller user");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "VAReseller",
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("VARReseller",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
-				email, Long.parseLong(testData.getProperty("valid.user.mobile.number")),
-				testData.getProperty("user.status.active"), null, testData.getProperty("api.clientId.id"), null, null,
-				roleIds, id);
+				email, mobileNumber, testData.getProperty("user.status.active"), null,
+				testData.getProperty("api.reseller.id"), null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 409);
-		validation.verifyErrorResponseForDuplicateVAResellerMobileNumber(updateVAResellerUserDetailsApiResponse,
-				(testData.getProperty("valid.user.mobile.number")));
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 200);
+
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
-	public void testErrorMessagesForInvalidVAResellerUserNameAndMaximumLength() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update more than 100 character with combination of special characters in firstName,lastName & userName field also validate error message")
+	public void testErrorMessagesForInvalidVARResellerUserNameAndMaximumLength() throws IOException {
+		logStep("Enter more than 100 character in firstName lastName & UserName fields and validate error message");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Modify all the existing details of VAReseller user");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "VAReseller",
-				testData.getProperty("api.invalid.varesellerUser.firstName"),
-				testData.getProperty("api.invalid.varesellerUser.lastName"),
-				testData.getProperty("api.invalid.userName"), email, mobileNumber,
-				testData.getProperty("user.status.active"), null, testData.getProperty("api.clientId.id"), null, null,
-				roleIds, id);
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(100));
+		String firstName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(100));
+		String lastName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(100));
+		mobileNumber = CCUtils.generateMobileNumber();
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("VARReseller", firstName, lastName,
+				userName, email, mobileNumber, testData.getProperty("user.status.active"), null,
+				testData.getProperty("api.reseller.id"), null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyMaximumCharactersErrorResponseForFirstNameLastNameAndUsernameField(
-				updateVAResellerUserDetailsApiResponse);
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 400);
+
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update invalid usertype then validate error message")
-	public void testErrorMessagesForVAResellerInvalidUserType() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Modify invalid user type for VAReseller user");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null,
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update invalid usertype then validate error message")
+	public void testErrorMessagesForVARResellerInvalidUserType() throws IOException {
+		logStep("Modify invalid user type for VARReseller user");
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer(
 				testData.getProperty("api.nonexisting.user.type"), testData.getProperty("valid.user.first.name"),
 				testData.getProperty("valid.user.last.name"), userName, email, mobileNumber,
-				testData.getProperty("user.status.active"), null, testData.getProperty("api.clientId.id"), null, null,
-				roleIds, id);
+				testData.getProperty("user.status.active"), null, testData.getProperty("api.reseller.id"), null, null,
+				roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidVAResellerUserType(updateVAResellerUserDetailsApiResponse);
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 400);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update invalid url and validate error status code")
-	public void testErrorMessagesForUpdateVAResellerUserWithInvalidUrl() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Enter invalid url and validate error status code");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayerUsingInvalidUrl(null,
-				"VAReseller", testData.getProperty("valid.user.first.name"),
-				testData.getProperty("valid.user.last.name"), userName, email, mobileNumber,
-				testData.getProperty("user.status.active"), null, testData.getProperty("api.clientId.id"), null, null,
-				roleIds, id);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(updateVAResellerUserDetailsApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Var/Reseller user and update the details with invalid method call then validate error message")
-	public void testErrorForVAResellerUserInvalidMethodCall() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "VAReseller", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("varReseller.user.userStatus"), null, testData.getProperty("api.reseller.id"),
-				null, null, null);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Call api with invalid method type which is POST");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_InvalidPostMethodCall(null, "VAReseller",
-				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
-				email, mobileNumber, testData.getProperty("user.status.active"), null,
-				testData.getProperty("api.clientId.id"), null, null, roleIds, id);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateVAResellerUserDetailsApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Created VAReseller user & update user type as Internal then validate error status code")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update user type as Internal then validate error status code")
 	public void testModifyExistingUserTypeWithDifferentUserType() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		int id = Integer.parseInt(testData.getProperty("existing.user.id"));
-		logStep("Modify existing user type from VAReseller to Internal user");
-		updateVAResellerUserDetailsApiResponse = userInfo.updateVAResellerUser_BusinessLayer(null, "Internal",
+		logStep("Modify existing user type from VARReseller to Internal user");
+		updateVARResellerUserDetailsApiResponse = userInfo.updateUser_BusinessLayer("Internal",
 				testData.getProperty("valid.user.first.name"), testData.getProperty("valid.user.last.name"), userName,
 				email, mobileNumber, testData.getProperty("user.status.active"), null,
-				testData.getProperty("api.clientId.id"), null, null, roleIds, id);
+				testData.getProperty("api.reseller.id"), null, null, roleIds, userId);
 		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateVAResellerUserDetailsApiResponse);
-		CCUtils.assertEquals(updateVAResellerUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForUserIdField(updateVAResellerUserDetailsApiResponse, String.valueOf(id));
+		CCUtils.responseTimeValidation(updateVARResellerUserDetailsApiResponse);
+		CCUtils.assertEquals(updateVARResellerUserDetailsApiResponse.getStatusCode(), 400);
 	}
 
 }

@@ -47,7 +47,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 								testData.getProperty("api.role.name.one")),
 						new UserRoles(Integer.parseInt(testData.getProperty("client.user.role.id.one")),
 								testData.getProperty("api.role.name.two")));
-		validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse, actualUserRolesListByUser);
+		
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing userId & orgId,deactivate role & validate status code and response body")
@@ -68,7 +68,7 @@ public class PatchInternalUserRoleApiTests_DataLayer extends BaseRest {
 						testData.getProperty("api.role.name.one")),
 				new UserRoles(Integer.parseInt(testData.getProperty("client.user.role.id.one")),
 						testData.getProperty("api.role.name.two")));
-		validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse, actualUserRolesListByUser);
+		
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value for roleId and validate error message")

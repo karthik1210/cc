@@ -3,9 +3,15 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.OrgInfo;
+import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -15,20 +21,75 @@ import io.restassured.response.Response;
 public class GetUserDetailsApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	Response fetchUserDetailsApiResponse;
-	int userId;;
+	private OrgInfo orgInfo;
+	private ClientInfo clientInfo;
+	private SharedInfo sharedInfo;
+	Response fetchUserDetailsApiResponse, createUserApiResponse, createSystemApiResponse,
+			createEnterpriseApiResponse, createClientApiResponse, createPracticeApiResponse, createProviderApiResponse;
+	String clientName, clientSapNumber, systemName, enterpriseName, practiceName,firstName,lastName;
+	int clientId, systemId, enterpriseId, practiceId, providerId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
+		orgInfo = new OrgInfo();
+		clientInfo = new ClientInfo();
+		sharedInfo = new SharedInfo();
+	}
+
+	public int createClient(String clientType) throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+		return createClientApiResponse.jsonPath().get("clientId");
+	}
+
+	public int createSystemNode(int clientId) throws Exception {
+		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		return createSystemApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createEnterpriseNode(int SystemId) throws Exception {
+		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createEnterpriseApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createPracticeNode(int enterpriseId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
+				enterpriseId, testData.getProperty("api.practice.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createProvider(int practiceId) throws Exception {
+		logStep("Create provider for providerId");
+		 firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		 lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		String externalId = CCUtils.generateAlphaNumericString(10);
+		createProviderApiResponse = sharedInfo.createProvider_BL(practiceId, firstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		return createProviderApiResponse.jsonPath().get("providerId");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing id in user id field and verify error message for user id field")
 	public void testErrorMessageNonExistingUserIdForUserIdField() throws IOException {
 		logStep("Enter non existing client id");
-		int userId= Integer. parseInt(testData.getProperty("nonexisting.user.id"));
+		int userId = Integer.parseInt(testData.getProperty("nonexisting.user.id"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
@@ -48,55 +109,84 @@ public class GetUserDetailsApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch internal user detail using existing internal user id in userId field ")
-	public void fetchInternalUserDetails() throws NullPointerException {
+	public void fetchInternalUserDetails() throws Exception {
+		logStep("Create internal user using valid details ");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("existing.internal.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Internal",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
+				false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int userId = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Enter  existing internal userid");
-		int userId= Integer. parseInt(testData.getProperty("existing.internal.userid"));
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-		  validation.verifyUserDetailsResponseBodyForBusinessLayer(
-		  fetchUserDetailsApiResponse, testData.getProperty("api.internal.authId"),
-		  "Internal", testData.getProperty("api.internal.firstName"),
-		  testData.getProperty("api.internal.lastName"),
-		  testData.getProperty("api.internal.userName"),
-		  testData.getProperty("api.internal.email"),
-		  testData.getProperty("api.internal.mobile"));  
+		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, "Internal",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email);
 	}
 
-	/*//Enable test  once below issue is resolved. 
-	 * Jira # PXPP-20773
-	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Fetch client user detail using existing client user id in userId field")
-	 * public void fetchClientUserDetails() throws NullPointerException {
-	 * logStep("Enter  existing client userid"); int userId= Integer.
-	 * parseInt(testData.getProperty("existing.client.userid.qa"));
-	 * fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
-	 * logStep("Validating response information");
-	 * CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
-	 * CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-	 * validation.verifyUserDetailsResponseBodyForBusinessLayer(
-	 * fetchUserDetailsApiResponse, testData.getProperty("api.client.authId"),
-	 * "Client", testData.getProperty("api.client.firstName"),
-	 * testData.getProperty("api.client.lastName"),
-	 * testData.getProperty("api.client.userName"),
-	 * testData.getProperty("api.client.email"),
-	 * testData.getProperty("api.client.mobile")); }
-	 */
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch var/reseller user detail using existing internal user id in userId field ")
-	public void fetchvarResellerUserDetails() throws NullPointerException {
-		logStep("Enter  existing var/reseller userid");
-		int userId= Integer. parseInt(testData.getProperty("existing.varReseller.userid"));
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch client user detail using existing client user id in userId field")
+	public void fetchClientUserDetails() throws Exception {
+		logStep("Create client user using valid details ");
+		clientId = createClient(ccUser.getClientOneType());
+		systemId = createSystemNode(clientId);
+		enterpriseId = createEnterpriseNode(systemId);
+		practiceId = createPracticeNode(enterpriseId);
+		providerId = createProvider(practiceId);
+		providerId = createProviderApiResponse.jsonPath().get("providerId");
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Client",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null,
+				false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int userId = createUserApiResponse.jsonPath().getInt("id");
+		logStep("Enter  existing client userid");
 		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
 		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyUserDetailsResponseBodyForBusinessLayer(fetchUserDetailsApiResponse,
-				testData.getProperty("api.varReseller.authId"), "VAReseller",
-				testData.getProperty("api.varReseller.firstName"), testData.getProperty("api.varReseller.lastName"),
-				testData.getProperty("api.varReseller.userName"), testData.getProperty("api.varReseller.email"),
-				testData.getProperty("api.varReseller.mobile"));
+		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, "Client",
+				firstName,lastName, userName, email);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch var/reseller user detail using existing internal user id in userId field ")
+	public void fetchvarResellerUserDetails() throws NullPointerException, IOException {
+		logStep("Create Var/Reseller user using valid details ");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("VARReseller",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, testData.getProperty("api.resellerId"), null, roleIds,
+				false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);	
+		int userId =  createUserApiResponse.jsonPath().getInt("id");
+		fetchUserDetailsApiResponse = userInfo.getUserDetails(userId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchUserDetailsApiResponse);
+		CCUtils.assertEquals(fetchUserDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyUserDetailsResponseBody(fetchUserDetailsApiResponse, "VARReseller",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email);
 	}
 
 }
