@@ -459,7 +459,7 @@ public class InterfaceSetupPage extends CCMainPage {
     }
 
     public void updateValue(WebElement element, String value) {
-        CCUtils.verifyAndWaitForElement(element, driver);
+        CCUtils.verifyAndWaitForElementPresence(element, driver);
         element.clear();
         element.sendKeys(value);
     }
