@@ -30,9 +30,7 @@ public class AddNewResourcePage extends CCMainPage {
 	@FindBy(id = "selectStatus")
 	private WebElement textboxConnectedProvider;
 
-	//@FindBy(id="addNewProviderSave")
 	@FindBy(xpath="//button[@type='submit']")
-	//@FindBy(xpath ="//span[normalize-space(text())='Save & Add']")
 	private WebElement saveButton;
 
 	@FindBy(id = "ExternalIdInput")
@@ -162,9 +160,7 @@ public class AddNewResourcePage extends CCMainPage {
 		verifyResourcesTypeLabelTextAndTextboxDefaultValue();
 		verifyCancelButtonIsDisplayed();
 		verifyCrossIconIsDisplayed();
-		verifySaveAndAddButtonIsDisabled();
-		
-		
+		verifySaveAndAddButtonIsDisabled();	
 	}
 	
 	public void verifyAddNewResourcesPageTitle() {
@@ -203,16 +199,14 @@ public class AddNewResourcePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(dropdownResourceType, driver);
 	}	
 	
-	public void verifyHundredMaximumCharactersReachedErrorMessage(String resourceName)
-	 {
+	public void verifyHundredMaximumCharactersReachedErrorMessage(String resourceName) {
 			log("Enter more than 100 characters in Resource Name textbox field and verify error message");
 			CCUtils.verifyAndWaitForElement(textboxName, driver);
 			textboxName.sendKeys(resourceName);
 			log("Entered text in Resource Name field is " + resourceName);
 			CCUtils.verifyAndWaitForElement(errorMaximumCharacterName, driver);
 			CCUtils.assertEquals(errorMaximumCharacterName.getText().trim(), "Maximum characters reached");
-			log("Error message displayed for Resource Name field is " + errorMaximumCharacterName.getText().trim());
-			
+			log("Error message displayed for Resource Name field is " + errorMaximumCharacterName.getText().trim());		
 	 }
 	
 	public void verifyFiftyMaximumCharactersReachedErrorMessage(String ExternalId) {
@@ -223,16 +217,6 @@ public class AddNewResourcePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMaximumCharacterExternalId, driver);
 		CCUtils.assertEquals(errorMaximumCharacterExternalId.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for ExternalId field is " + errorMaximumCharacterExternalId.getText().trim());
-	}
-	
-	public String getMaximumCharacterErrorForExternalIdField() {
-		CCUtils.verifyAndWaitForElement(errorMaximumCharacterExternalId, driver);
-		return errorMaximumCharacterExternalId.getText().trim();
-	}
-	
-	public String getUniqueErrorMessageForExternalIdField() {
-		CCUtils.verifyAndWaitForElement(errorUniqueExternalId, driver);
-		return errorUniqueExternalId.getText().trim();
 	}
 	
 	public void enterResourceType(String input) {
@@ -261,14 +245,14 @@ public class AddNewResourcePage extends CCMainPage {
 	
 	public void verifyCancelButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		log("Verifying cancel button is displayed on add a provider page");
+		log("Verifying cancel button is displayed on add a Resource page");
 		if (buttonCancel.isDisplayed() == true) {
 			log("Verifying cancel button is enabled");
 			CCUtils.assertTrue(buttonCancel.isEnabled(), "Cancel button is disabled");
 			log("Verifying cancel button text");
 			CCUtils.assertEquals(buttonCancel.getText().trim(), "Cancel");
 		} else {
-			log("Cancel button is not displayed on add a provider page");
+			log("Cancel button is not displayed on add a Resource page");
 		}
 	}
 	
@@ -280,12 +264,12 @@ public class AddNewResourcePage extends CCMainPage {
 	
 	public void verifyCrossIconIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(crossIcon, driver);
-		log("Verifying cross icon is displayed on add a provider page");
+		log("Verifying cross icon is displayed on add a Resource page");
 		if (crossIcon.isDisplayed() == true) {
 			log("Verifying cross icon is enabled");
 			CCUtils.assertTrue(crossIcon.isEnabled(), "Cross icon is disabled");
 		} else {
-			log("cross icon is not displayed on add a provider page");
+			log("cross icon is not displayed on add a Resource page");
 		}
 	}
 	public void verifyAddResourcePopupTitle() {
