@@ -45,8 +45,6 @@ public class PatchUserRoleApiTests_BusinessLayer extends BaseRest {
 			  List<UserRoles> actualUserRolesListByUser = Arrays.asList( new
 			  UserRoles(Integer.parseInt(testData.getProperty("pxpp.17575.cc.roleid")),
 			  testData.getProperty("role.name.one")));
-			  validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse,
-			  actualUserRolesListByUser);
 			 
 	}
 
@@ -66,9 +64,6 @@ public class PatchUserRoleApiTests_BusinessLayer extends BaseRest {
 			  List<UserRoles> actualUserRolesListByUser = Arrays.asList( new
 			  UserRoles(Integer.parseInt(testData.getProperty("pxpp.17575.cc.roleid")),
 			  testData.getProperty("role.name.one")));
-			  validation.verifyGetUserRolesByUserApiResponse(getUserRolesByUserApiResponse,
-			  actualUserRolesListByUser);
-			 
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value for roleId and validate error message")
