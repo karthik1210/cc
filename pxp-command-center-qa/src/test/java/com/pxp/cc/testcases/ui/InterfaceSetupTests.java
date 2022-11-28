@@ -38,7 +38,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Interface setup for the first time")
+    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Interface setup for the first time")
     public void verifyingElementsInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         HashMap<String, Boolean> verification = new HashMap<String, Boolean>();
@@ -47,7 +47,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "verifying External System Creation with No Value On Mandatory And Inactive For Interface Setup")
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "verifying External System Creation with No Value On Mandatory And Inactive For Interface Setup")
     public void verifyingExternalSystemCreationWithNoValueOnMandatoryAndInactiveForInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         initiateData();
@@ -90,7 +90,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
     }
 
 
-    @Test(priority = 3, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
     public void verifyingBasicFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         createNewInterface("MedfusionREST - NextGen");

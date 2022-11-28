@@ -526,8 +526,8 @@ public class InterfaceSetupPage extends CCMainPage {
     }
 
     public void clickOnKebabEdit() {
-        CCUtils.verifyAndWaitForElement(editButtonOnKebabMenu, driver);
         CCUtils.scrollPageViaElement(driver, editButtonOnKebabMenu);
+        CCUtils.verifyAndWaitForElement(editButtonOnKebabMenu, driver);
         log("Clicking on Edit button in kebab menu");
         new Actions(driver).moveToElement(editButtonOnKebabMenu).click().build().perform();
         log("Edit button in kebab menu Clicked successfully");
