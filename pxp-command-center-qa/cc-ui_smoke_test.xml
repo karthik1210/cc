@@ -14,28 +14,27 @@
             </run>
         </groups>
         <classes>
-<!--            <class name="com.pxp.cc.testcases.ui.LoginScreenTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.PasswordResetTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.ClientDirectoryTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.GeneralSettingsSearchTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.AddOrgNodeTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.EditOrgNodeTest"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.SearchOptionsTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.AddNewLocationTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.PracticeLinksTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.EditInternalUserTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.InternalUserDeactivationFromKebabMenuTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.FavoriteUnFavoriteClientsTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.EditClientDetailsTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.CreateClientTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests"/>-->
-<!--            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests"/>-->
-
+            <class name="com.pxp.cc.testcases.ui.LoginScreenTests"/>
+            <class name="com.pxp.cc.testcases.ui.PasswordResetTests"/>
+            <class name="com.pxp.cc.testcases.ui.ClientDirectoryTests"/>
+            <class name="com.pxp.cc.testcases.ui.GeneralSettingsSearchTests"/>
+            <class name="com.pxp.cc.testcases.ui.AddOrgNodeTests"/>
+            <class name="com.pxp.cc.testcases.ui.EditOrgNodeTest"/>
+            <class name="com.pxp.cc.testcases.ui.SearchOptionsTests"/>
+            <class name="com.pxp.cc.testcases.ui.AddNewLocationTests"/>
+            <class name="com.pxp.cc.testcases.ui.PracticeLinksTests"/>
+            <class name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest"/>
+            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests"/>
+            <class name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests"/>
+            <class name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests"/>
+            <class name="com.pxp.cc.testcases.ui.EditInternalUserTests"/>
+            <class name="com.pxp.cc.testcases.ui.InternalUserDeactivationFromKebabMenuTests"/>
+            <class name="com.pxp.cc.testcases.ui.FavoriteUnFavoriteClientsTests"/>
+            <class name="com.pxp.cc.testcases.ui.EditClientDetailsTests"/>
+            <class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests"/>
+            <class name="com.pxp.cc.testcases.ui.CreateClientTests"/>
+            <class name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests"/>
+            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests"/>
             <class name="com.pxp.cc.testcases.ui.InterfaceSetupTests"/>
 
             <!-- Enable test class once below issue is resolved  # PXPP-26174-->
