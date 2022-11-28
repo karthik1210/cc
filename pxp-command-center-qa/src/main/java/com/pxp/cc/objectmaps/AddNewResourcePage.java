@@ -39,7 +39,7 @@ public class AddNewResourcePage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Select Resource Type']//following::div[@role='combobox']/input")
 	private WebElement dropdownResourceType;
 
-	@FindBy(xpath = "(//span[@class='mat-option-text'])[1]")
+	@FindBy(xpath = "//mat-option[@id='searchValues'][1]")
     private WebElement selectFirstOption;
 
 	@FindBy(id = "NameInput")

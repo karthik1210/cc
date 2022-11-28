@@ -97,6 +97,7 @@ public class AddNewResourceTests extends CommandCenterGenericTest {
 		addNewResourcePage.selectResourceType("Person");
 		addNewResourcePage.enterConnectedProvider(firstName);
 		addNewResourcePage.clickFirstInAutoSuggestion();
+		addNewResourcePage.verifySaveAndAddButtonIsEnabled();
 		addNewResourcePage.clickOnSaveAndAddButton();
 		commonMethods.verifyToasterMessage("Success! New Resource has been successfully created");	
 	}
