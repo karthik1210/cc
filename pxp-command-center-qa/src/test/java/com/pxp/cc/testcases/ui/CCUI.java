@@ -30,6 +30,7 @@ public class CCUI extends CommandCenterGenericTest {
     MoveAgnosticPracticePage moveAgnosticPracticePage;
     CommonMethods commonMethods;
     PracticeLinksPage practiceLinksPage;
+    InterfaceSetupPage interfaceSetupPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -96,6 +97,13 @@ public class CCUI extends CommandCenterGenericTest {
             ngHierarchyClientCreationPage = new NGHierarchyClientCreationPage(driver);
         }
         return ngHierarchyClientCreationPage;
+    }
+
+    public InterfaceSetupPage getInterfaceSetupPage() throws InterruptedException {
+        if(interfaceSetupPage==null){
+            interfaceSetupPage = new InterfaceSetupPage(driver);
+        }
+        return interfaceSetupPage;
     }
 
 
