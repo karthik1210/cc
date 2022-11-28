@@ -547,7 +547,7 @@ public class InterfaceSetupPage extends CCMainPage {
             if (eachElement.getText().contains(externalSystemName)) {
                 flag = 1;
                 WebElement kebabMenu = driver.findElement(By.xpath("//span[text()='" + externalSystemName + "']/../../following-sibling::td//mat-icon[@mattooltip='More Options']"));
-                CCUtils.verifyAndWaitForElementPresenceForInterfaceSetup(externalSystemName, kebabMenu, driver);
+                CCUtils.verifyAndWaitForElementPresence(kebabMenu, driver);
                 new Actions(driver).moveToElement(kebabMenu).build().perform();
                 //CCUtils.assertEquals(kebabMenu.isDisplayed(), true);
                 log(externalSystemName + " kebab Menu is available in Interface section");

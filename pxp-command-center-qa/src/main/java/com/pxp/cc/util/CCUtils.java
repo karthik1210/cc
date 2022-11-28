@@ -78,10 +78,10 @@ public class CCUtils {
             try {
                 WebDriverWait wait = new WebDriverWait(driver, 10);
                 wait.until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[text()='"+externalSystemName+"']/../../following-sibling::td//mat-icon[@mattooltip='More Options']"))));
-                wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(we)));
+                wait.until(ExpectedConditions.stalenessOf(we));
                 wait.until(ExpectedConditions.visibilityOf(we));
                 break;
-            } catch (Exception exception) {
+            } catch (StaleElementReferenceException exception) {
 				//verifyAndWaitForElementPresenceForInterfaceSetup(externalSystemName, we, driver);
             }
             repeat++;

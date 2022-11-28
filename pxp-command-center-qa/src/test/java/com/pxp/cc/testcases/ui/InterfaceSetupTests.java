@@ -123,6 +123,8 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         ccui.getInterfaceSetupPage().updateValue(ccui.getInterfaceSetupPage().getNextgenEnterpriseIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(4));
         ccui.getInterfaceSetupPage().updateValue(ccui.getInterfaceSetupPage().getApiSiteIdTextBox(), editableFieldContentForMedfusionRest_NextGen.get(5));
         ccui.getInterfaceSetupPage().clickOnCancelButtonOnEdit();
+        driver.navigate().refresh();
+        ccui.getInterfaceSetupPage().clickExpandButtonInInterfaceSetUp();
         ccui.getInterfaceSetupPage().clickOnExpandButtonOfExternalSystem("MedfusionREST - NextGen");
         ccui.getInterfaceSetupPage().verifyEditableContent("MedfusionREST - NextGen", editableFieldNamesForMedfusionRest_NextGen, editableFieldContentForMedfusionRest_NextGen);
         logStep("PXPP-25738 TC010 Verify that user can able to Edit and Save interface \"MedfusionREST -NextGen\" under Interface Setup Section");
