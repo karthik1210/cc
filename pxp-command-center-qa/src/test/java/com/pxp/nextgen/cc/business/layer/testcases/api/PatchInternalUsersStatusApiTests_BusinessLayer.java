@@ -19,31 +19,40 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response createUserApiResponse, fetchUserDetailsApiResponse, updateInternalUserDetailsApiResponse;
+	int id;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
+		id = createIntenalUser();
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from active to inactive using user id")
-	public void testCreateNewInternalUserAndUpdateUserStatusInactive() throws IOException {
-		logStep("Create new internal user using valid details ");
+	public int createIntenalUser() throws Exception {
+		logStep("Create internal user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
+		roleIds.add(Integer.parseInt(testData.getProperty("existing.internal.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Internal",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
+				false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		return createUserApiResponse.jsonPath().getInt("id");
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from active to inactive using user id")
+	public void testCreateNewInternalUserAndUpdateUserStatusInactive() throws IOException {
+
 		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayer(testData.getProperty("user.status.inactive"), id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("user.status.inactive"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
@@ -51,99 +60,60 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from active to locked using user id")
 	public void testCreateNewInternalUserAndUpdateUserStatusLocked() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayer(testData.getProperty("user.status.lockedout"), id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("user.status.lockedout"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
+
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from active to no role assigned using user id")
 	public void testCreateNewInternalUserAndUpdateUserStatusNoRoleAssigned() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayer(testData.getProperty("user.status.no.roles.assigned"), id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("user.status.no.roles.assigned"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
-		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
+		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidUserStatus(updateInternalUserDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from inactive to active using user id")
 	public void testCreateNewInternalUserAndUpdateUserStatusActive() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("user.status.inactive"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayer(testData.getProperty("user.status.active"), id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("user.status.inactive"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
+		logStep("Modify status of the newly created Internal user");
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("user.status.active"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
+		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
+
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from active to null using user id")
 	public void testCreateNewInternalUserAndUpdateUserStatusNull() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("api.user.userStatus"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(null, id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidInput(updateInternalUserDetailsApiResponse);
+		validation.verifyErrorMessageForInvalidInput(updateInternalUserDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update existing user status using invalid user id")
 	public void testModifyExistingUserStatusWithInvalidUserid() throws IOException {
 		logStep("Update existing user status with non existing user id");
 		int id = Integer.parseInt(testData.getProperty("non.existing.user.id"));
-		logStep("Modify status of the existing Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayer(testData.getProperty("user.status.active"), id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("user.status.inactive"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
@@ -151,69 +121,11 @@ public class PatchInternalUsersStatusApiTests_BusinessLayer extends BaseRest {
 				updateInternalUserDetailsApiResponse, testData.getProperty("non.existing.user.id"));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user with invalid url")
-	public void testErrorMessagesForUpdateInternalUserStatusWithInvalidUrl() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("user.status.inactive"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayerUsingInvalidUrl(testData.getProperty("user.status.active"), id);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
-		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(updateInternalUserDetailsApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status with invalid method call")
-	public void testErrorForInternalUserStatusInvalidMethodCall() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("user.status.inactive"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
-		logStep("Modify status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayerUsingInvalidMethodCall(testData.getProperty("user.status.active"), id);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
-		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(updateInternalUserDetailsApiResponse);
-	}
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update invalid user status of newly created internal user using user id")
 	public void testErrorForInternalUserStatusWithInvalidStatus() throws IOException {
-		logStep("Create new internal user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("api.internalUser.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer(testData.getProperty("api.user.clientId"),
-				testData.getProperty("api.user.poolId"), null, "Internal", testData.getProperty("api.user.firstName"),
-				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
-				testData.getProperty("user.status.inactive"), null, null, null, null, roleIds);
-		int id = createUserApiResponse.jsonPath().getInt("id");
 		logStep("Modify invalid status of the newly created Internal user");
-		updateInternalUserDetailsApiResponse = userInfo
-				.patchInternalUser_BusinessLayer(testData.getProperty("invalid.user.status"), id);
+		updateInternalUserDetailsApiResponse = userInfo.patchInternalUser_BusinessLayer(id,
+				testData.getProperty("api.user.poolId"), testData.getProperty("invalid.user.status"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);

@@ -13,32 +13,40 @@
 	<test name="CC User Data Test">
 		<classes>
 
-			<!-- Enable test class once below issue is resolved. Jira # PXPP-15356 -->
-			<!-- <class -->
-			<!-- name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" 
-				/> -->
-
-			<!-- Enable test class once below issue is resolved. Jira # PXPP-17801 -->
-			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.AddAssociateEntitiesApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAssociateEntitiesTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUserRoleApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateClientUsersApiTests_DataLayer" 
-				/><class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateVAResellerUsersApiTests_DataLayer" 
-				/> Enable test class once below issue is resolved. Jira # PXPP-20816 -->
-			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetInternalUserLoginDetailsApiTests_DataLayer" 
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUsersApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserDetailsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateInternalUsersApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateClientUsersApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateVARResellerUsersApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUsersStatusApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ManageAssociateEntitiesForClientUserTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAssociateEntitiesTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" />
+				
+				 <!-- Enable test class once below issue is resolved  # PXPP-26529-->
+			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUserRoleApiTests_DataLayer" 
+				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetInternalUserLoginDetailsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.ValidateUserDetailsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetVarResellerUserLoginDetailsApiTests_DataLayer" 
-				/> -->
-			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUsersStatusApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserInfoApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserDetailsApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUsersApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateInternalUsersApiTests_DataLayer" 
 				/> -->
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SendUserEnrollmentConsumerApiTests_DataLayer"/>
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer"/>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SendUserEnrollmentConsumerApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
