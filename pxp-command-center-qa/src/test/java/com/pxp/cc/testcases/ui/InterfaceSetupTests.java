@@ -98,7 +98,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
     }
 
 
-    @Test(priority = 4, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit Functionality in Interface setup for the first time")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit Functionality in Interface setup for the first time")
     public void verifyingEditFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         if (runOnce) {
