@@ -1311,25 +1311,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyGetUserRolesByUserApiResponse(Response response, List<UserRoles> userRolesListByUser)
-			throws IOException {
-		JSONArray jsonArray = new JSONArray(response.getBody().asString());
-		JSONObject jsonObject;
-		if (userRolesListByUser.size() == jsonArray.length()) {
-			for (int i = 0; i < jsonArray.length(); i++) {
-				jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertTrue(
-						userRolesListByUser.contains(
-								new UserRoles(jsonObject.getInt("roleId"), jsonObject.get("name").toString())),
-						"User role " + jsonObject.get("name").toString() + " doesn't exist");
-			}
-		} else if (jsonArray.length() == 0) {
-			Log4jUtil.log("User roles list is empty");
-		} else {
-			Log4jUtil.log("Size of actual user roles list and expected user roles list is not same");
-		}
-	}
-
 	public void verifySearchClientOrgHierarchyResponseBody(Response response, List<OrgNode> datalist)
 			throws IOException {
 		List<OrgNode> responseDatalist = new ArrayList<OrgNode>();
@@ -1883,9 +1864,8 @@ public class Validations {
 		return;
 	}
 
-	public void verifyUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
-			String firstName, String lastName, String userName, String email, String mobile)
-			throws NullPointerException {
+	public void verifyUserDetailsResponseBody(Response response, String userType, String firstName, String lastName,
+			String userName, String email) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1893,8 +1873,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
-		CCUtils.assertEquals(jsonpath.get("mobile").toString(), mobile);
-
 	}
 
 	public void verifyErrorResponseForExistingUsername(Response response) throws IOException {
@@ -2136,12 +2114,6 @@ public class Validations {
 	public void verifyErrorMessageInResponseForBlankStatusField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "status cannot be empty or null");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
-	public void verifyErrorMessageInResponseForNonExistingUserId(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "userId doesn't exist");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -3470,5 +3442,25 @@ public class Validations {
 			jsonObject = jsonArray.getJSONObject(i);
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("appointmentTypeId"), true);
+	}
+
+	public void verifyCreatedUserId(Response response, int id) {
+		JsonPath jsonPath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonPath.get("id"), id);
+	}
+
+	public void verifyErrorMessageInResponseForNonExistingUserId(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "User Id doesn't exist");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetUserRolesByUserApiResponse(Response response, List<Integer> roleIds) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("roleId"), true);
 	}
 }
