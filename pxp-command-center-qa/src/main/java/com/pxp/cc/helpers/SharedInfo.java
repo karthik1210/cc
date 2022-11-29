@@ -1545,4 +1545,13 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
+	public Response enableOrDisableSolutionsForProviderForNullPayload_BL(int providerId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForProvidersUsingNullValue_BL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDERS_USING_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
