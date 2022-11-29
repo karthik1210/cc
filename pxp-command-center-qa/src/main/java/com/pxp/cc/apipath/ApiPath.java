@@ -1694,9 +1694,18 @@ public class ApiPath {
 			return SERVICE_USER_DL + "/v1/users/enrollments/" + enrollmentId;
 		else
 			return SERVICE_USER_DL + "/v1/users/enrollmentsss/" + enrollmentId;
+
 	}
 
 	public static final String UPDATE_SOLUTIONS_FOR_PROVIDERS_USING_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/solutions";
 	}
+
+	public static final String GET_PRACTICES_PROVIDERS_BL(int practiceId, int providerId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers/" + providerId;
+	}
+
+	public static final String GET_PRACTICES_PROVIDERS_NULL_VALUES_BL = SERVICE_SHARED_BL
+			+ "/v1/practices/null/providers/null";
+
 }

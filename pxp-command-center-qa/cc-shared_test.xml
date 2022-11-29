@@ -117,6 +117,9 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfBrandsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForProviderApiTests_BusinessLayer" />
+            <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeProviderApiTests_BusinessLayer" />
+
 		</classes>
 	</test>
 </suite>
