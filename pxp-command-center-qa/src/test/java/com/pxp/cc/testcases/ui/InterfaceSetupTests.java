@@ -38,7 +38,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Interface setup for the first time")
+    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Interface setup for the first time")
     public void verifyingElementsInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         HashMap<String, Boolean> verification = new HashMap<String, Boolean>();

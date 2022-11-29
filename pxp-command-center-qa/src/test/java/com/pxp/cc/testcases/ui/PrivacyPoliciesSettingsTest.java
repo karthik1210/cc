@@ -29,7 +29,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
+    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
     public void verifyingElementsOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
         HashMap<String, Boolean> verification =new HashMap<String, Boolean>();
@@ -37,15 +37,9 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verifying basic functionalities in Privacy Policies Section at practice level")
+    @Test(priority = 2, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying basic functionalities in Privacy Policies Section at practice level")
     public void verifyingBasicFunctionalityOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
-        logStep("PXPP-20528 TC_008_ Verify that user can able to enter Policy name with 51 characters in Policy Name * section");
-        ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
-        ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("PXPP.17898.policy.name.51.length.text"));
-        ccui.getPrivacyPolicySettingsPage().verifyMaximumCharacterError();
-        ccui.getPrivacyPolicySettingsPage().clickOnBackButton();
-        ccui.getPrivacyPolicySettingsPage().clickDisregardChanges();
         logStep("PXPP-20728 TC_009_Verify that user can able to see the Draft radio button selected by default in status section");
         ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         logStep("PXPP-20711 TC_010_Verify that user can able to select the Active or Draft radio button");
@@ -73,6 +67,12 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Preview, Edit and Delete functionalities in Privacy Policies Section at practice level")
     public void verifyingEditAndDeleteFunctionalityOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
+        logStep("PXPP-20528 TC_008_ Verify that user can able to enter Policy name with 51 characters in Policy Name * section");
+        ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
+        ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("PXPP.17898.policy.name.51.length.text"));
+        ccui.getPrivacyPolicySettingsPage().verifyMaximumCharacterError();
+        ccui.getPrivacyPolicySettingsPage().clickOnBackButton();
+        ccui.getPrivacyPolicySettingsPage().clickDisregardChanges();
         ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
         ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("PXPP.17898.policy.name.50.length.text"));
         ccui.getPrivacyPolicySettingsPage().clickOnSaveButton();
