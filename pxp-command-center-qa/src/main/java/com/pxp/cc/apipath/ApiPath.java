@@ -1708,4 +1708,17 @@ public class ApiPath {
 	public static final String GET_PRACTICES_PROVIDERS_NULL_VALUES_BL = SERVICE_SHARED_BL
 			+ "/v1/practices/null/providers/null";
 
+	public static final String UPDATE_EXPIRED_STATUS(String serviceLayer, String uriType) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_BL + "/v1/users/enrollments/status";
+			else
+				return SERVICE_USER_BL + "/v1/users/enrollmentsss/status";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_DL + "/v1/users/enrollments/status";
+			else
+				return SERVICE_USER_DL + "/v1/users/enrollmentsss/status";
+		}
+	}
 }
