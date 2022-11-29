@@ -29,7 +29,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 1, groups = {"smoke"},retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present in UI or not with Cancel functionality and basic functionality check")
+    @Test(priority = 1,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present in UI or not with Cancel functionality and basic functionality check")
     public void verifyPracticeLinkSectionAvailability() throws Exception {
         ngHierarchyClientCreate();
         HashMap<String, Boolean> verification = new HashMap<String, Boolean>();
@@ -37,7 +37,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic functionality of Practice Links")
+    @Test(priority = 2, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic functionality of Practice Links")
     public void verifyBasicFunctionalityOfPracticeLinks() throws Exception {
         ngHierarchyClientCreate();
         logStep("PXPP-20288 TC003 Verify that user can add practice website in Practice Links section with Cancel and Save by using Edit button");
@@ -82,28 +82,6 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         ccui.getPracticeLinksPage().enterExternalUrl(externalWebsite.get(2));
         ccui.getPracticeLinksPage().clickOnExternalUrlSaveButton();
         ccui.getPracticeLinksPage().verifyExternalUrlDisplay(externalWebsite);
-        ccui.getPracticeLinksPage().printListOfExternalUrls();
-        ccui.getPracticeLinksPage().printListOfDisplayText();
-        ccui.getPracticeLinksPage().enterValueOnExistingValueOnDisplayText(externalWebsite.get(2));
-        ccui.getPracticeLinksPage().clickOnExternalUrlCancelButton();
-        ccui.getPracticeLinksPage().enterValueOnExistingValueOnExternalUrl(testData.getProperty("PXPP.17867.external.url.EN1"));
-        ccui.getPracticeLinksPage().clickOnExternalUrlCancelButton();
-        ccui.getPracticeLinksPage().printListOfExternalUrls();
-        ccui.getPracticeLinksPage().printListOfDisplayText();
-        logStep("PXPP-20478 TC017 Verify the Length of the Display Text is allowed only 100 characters for the EXTERNAL URLs ");
-        ccui.getPracticeLinksPage().clickOnExternalUrlEditButton();
-        ccui.getPracticeLinksPage().clickOnExternalUrlAddButton();
-        ccui.getPracticeLinksPage().enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.100.length.text"),testData.getProperty("PXPP.17867.external.url.100.length.text"));
-        ccui.getPracticeLinksPage().enterExternalUrl(testData.getProperty("PXPP.17867.external.url.100.length.url"));
-        ccui.getPracticeLinksPage().clickOnExternalUrlSaveButton();
-        ccui.getCommonMethods().verifyToasterMessage("Success! External URLs saved successfully");
-        ccui.getPracticeLinksPage().printListOfExternalUrls();
-        logStep("20479 TC018 Verify that Application should thrown error when user entered 101 characters for the Display Text in EXTERNAL URLs at Practice Links section");
-        ccui.getPracticeLinksPage().clickOnExternalUrlEditButton();
-        ccui.getPracticeLinksPage().clickOnExternalUrlAddButton();
-        ccui.getPracticeLinksPage().enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.101.length.text"),testData.getProperty("PXPP.17867.external.url.101.length.text"));
-        ccui.getPracticeLinksPage().verifyMaximumCharacterError();
-        ccui.getPracticeLinksPage().clickOnExternalUrlCancelButton();
         logStep("PXPP-20484 TC022 Verify the Edit and Cancel functionality for Social Media in Practice Links section for the 1st time");
         ccui.getPracticeLinksPage().clickOnSocialMediaEdit();
         ccui.getPracticeLinksPage().verifyToggleOff();
@@ -127,10 +105,23 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Edit and Save functionality for External URLs in Practice Links section")
     public void verifyEditAndSaveForExternalUrl() throws Exception {
         ngHierarchyClientCreate();
+        ccui.getPracticeLinksPage().clickOnPracticeWebsiteExpandButton();
+        logStep("PXPP-20478 TC017 Verify the Length of the Display Text is allowed only 100 characters for the EXTERNAL URLs ");
+        ccui.getPracticeLinksPage().clickOnExternalUrlEditButton();
+        ccui.getPracticeLinksPage().clickOnExternalUrlAddButton();
+        ccui.getPracticeLinksPage().enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.100.length.text"),testData.getProperty("PXPP.17867.external.url.100.length.text"));
+        ccui.getPracticeLinksPage().enterExternalUrl(testData.getProperty("PXPP.17867.external.url.100.length.url"));
+        ccui.getPracticeLinksPage().clickOnExternalUrlSaveButton();
+        ccui.getCommonMethods().verifyToasterMessage("Success! External URLs saved successfully");
+        logStep("20479 TC018 Verify that Application should thrown error when user entered 101 characters for the Display Text in EXTERNAL URLs at Practice Links section");
+        ccui.getPracticeLinksPage().clickOnExternalUrlEditButton();
+        ccui.getPracticeLinksPage().clickOnExternalUrlAddButton();
+        ccui.getPracticeLinksPage().enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.101.length.text"),testData.getProperty("PXPP.17867.external.url.101.length.text"));
+        ccui.getPracticeLinksPage().verifyMaximumCharacterError();
+        ccui.getPracticeLinksPage().clickOnExternalUrlCancelButton();
         logStep("PXPP-20492 TC030 Verify the Rearrange button Functionality for EXTERNAL URLS");
         logStep("PXPP-20347 TC010 Verify the Edit and Save functionality for External URLs in Practice Links section for the 1st time");
         List<String> externalWebsite = new ArrayList<String>();
-        ccui.getPracticeLinksPage().clickOnPracticeWebsiteExpandButton();
         ccui.getPracticeLinksPage().clickOnExternalUrlEditButton();
         ccui.getPracticeLinksPage().verifyRearrangeButtonOnExternalUrl();
         ccui.getPracticeLinksPage().clickOnExternalUrlAddButton();

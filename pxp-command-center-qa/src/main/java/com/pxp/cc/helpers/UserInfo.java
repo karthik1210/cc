@@ -695,4 +695,37 @@ public class UserInfo extends BaseRest {
 		String url = ApiPath.ADD_USER_BL(id);
 		return given().spec(requestSpec).header("poolId",poolId).body(updateInternalUserPayload).when().patch(url).then().extract().response();
 	}
+
+	public Map<String, Object> updateExpiredStatus_DL(String status, String currentTs) {
+		Map<String, Object> updateExpiredStatusDataFetch = new HashMap<String, Object>();
+		updateExpiredStatusDataFetch.put("status", status);
+		updateExpiredStatusDataFetch.put("currentTs", currentTs);
+		return updateExpiredStatusDataFetch;
+	}
+
+	public Map<String, Object> updateExpiredStatus_BL(String status) {
+		Map<String, Object> updateExpiredStatusDataFetch = new HashMap<String, Object>();
+		updateExpiredStatusDataFetch.put("status", status);
+		return updateExpiredStatusDataFetch;
+	}
+
+	public Response updateExpiredStatus(String serviceLayer, String typeURI, String status, String currentTs) {
+		if (serviceLayer.equalsIgnoreCase("DL")) {
+			if(typeURI.equalsIgnoreCase("valid") || typeURI.equalsIgnoreCase("Invalid")) {
+				String url = ApiPath.UPDATE_EXPIRED_STATUS(serviceLayer, typeURI);
+				return given().spec(requestSpec).body(updateExpiredStatus_DL(status, currentTs)).when().patch(url).then().extract().response();
+			} else {
+				String url = ApiPath.UPDATE_EXPIRED_STATUS(serviceLayer, "Valid");
+				return given().spec(requestSpec).body(updateExpiredStatus_DL(status, currentTs)).when().delete(url).then().extract().response();
+			}
+		} else {
+			if(typeURI.equalsIgnoreCase("valid") || typeURI.equalsIgnoreCase("Invalid")) {
+				String url = ApiPath.UPDATE_EXPIRED_STATUS(serviceLayer, typeURI);
+				return given().spec(requestSpec).body(updateExpiredStatus_BL(status)).when().patch(url).then().extract().response();
+			} else {
+				String url = ApiPath.UPDATE_EXPIRED_STATUS(serviceLayer, "Valid");
+				return given().spec(requestSpec).body(updateExpiredStatus_BL(status)).when().delete(url).then().extract().response();
+			}
+		}
+	}
 }
