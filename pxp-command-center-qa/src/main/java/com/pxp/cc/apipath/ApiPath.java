@@ -1702,4 +1702,16 @@ public class ApiPath {
 
 	public static final String GET_PRACTICES_PROVIDERS_NULL_VALUES_BL = SERVICE_SHARED_BL
 			+ "/v1/practices/null/providers/null";
+    
+    public static final String GET_LOCATION_FOR_PROVIDER_BL(int providerId, int practiceId) {
+	    return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
+     }
+
+    public static final String PROVIDERS_FOR_LOCATION_BL(int locationId, int practiceId) {
+	   return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
+     }
+
+    public static final String GET_LOCATION_FOR_PROVIDER_BL_NULL_VALUES() {
+	 return  SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations";
+    }
 }
