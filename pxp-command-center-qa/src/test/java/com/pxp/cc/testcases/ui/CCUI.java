@@ -72,6 +72,7 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return clientDirectoryPage;
     }
+
     public GeneralSettingsPage getGeneralSettingsPage() throws InterruptedException {
         if(generalSettingsPage==null){
             generalSettingsPage = new GeneralSettingsPage(driver);

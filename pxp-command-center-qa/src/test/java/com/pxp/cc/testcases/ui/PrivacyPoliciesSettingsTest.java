@@ -14,6 +14,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
     String updatedPrivacyPolicy;
     static boolean runOnce = true;
     public CCUI ccui;
+    static int count = 0;
 
     @BeforeMethod(alwaysRun = true)
     public void loginToCommandCenterPortal() throws Exception {
@@ -26,6 +27,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
             ccui.getPrivacyPolicySettingsPage().clickPurchasedSolutionsExpandButton();
             ccui.getPrivacyPolicySettingsPage().activateAllSolutions();
             ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+            count++;
         }
     }
 
@@ -489,6 +491,12 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
             ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
             ccui.getPrivacyPolicySettingsPage().clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
             ccui.getPrivacyPolicySettingsPage().clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
+            if(count == 0) {
+                ccui.getPrivacyPolicySettingsPage().clickPurchasedSolutionsExpandButton();
+                ccui.getPrivacyPolicySettingsPage().activateAllSolutions();
+                ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+                count++;
+            }
         }
     }
 }
