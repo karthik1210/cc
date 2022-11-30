@@ -45,7 +45,7 @@ public class UpdateExpiredStatusApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP- 26019 TC 001_verify response code 200 when user enters valid payload for Update Expired status by using PATCH method")
     public void updateExpiredStatusWithValidPayload() {
-        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus("DL", "Valid", testData.getProperty("pxpp.26403.valid.expired.status"), currentTs);
+        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus_DL("DL", "Valid", testData.getProperty("pxpp.26403.valid.expired.status"), currentTs);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updateExpiredStatusApiResponse);
         CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 200);
@@ -53,7 +53,7 @@ public class UpdateExpiredStatusApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidStatusAndCurrentTs", description = "PXPP-26051 TC 002_verify response code 400 and error message when user enters invalid payload for update Expired status by using PATCH method")
     public void updateExpiredStatusWithInvalidPayload(String status, String currentTsValue) throws IOException {
-        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus("DL", "Valid", status, currentTsValue);
+        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus_DL("DL", "Valid", status, currentTsValue);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updateExpiredStatusApiResponse);
         CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 400);
@@ -62,7 +62,7 @@ public class UpdateExpiredStatusApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26059 TC 003_verify response code 404 and error message, when user enters valid payload for update Expired status by using PATCH method with Invalid URI")
     public void updateExpiredStatusWithInvalidURI() throws IOException {
-        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus("DL", "Invalid", testData.getProperty("pxpp.26403.valid.expired.status"), currentTs);
+        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus_DL("DL", "Invalid", testData.getProperty("pxpp.26403.valid.expired.status"), currentTs);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updateExpiredStatusApiResponse);
         CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 404);
@@ -71,7 +71,7 @@ public class UpdateExpiredStatusApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26060 TC 004_verify response code 405 and error message when user enters valid payload for update Expired status by using DELETE method")
     public void updateExpiredStatusWithInvalidMethod() throws IOException {
-        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus("DL", "", testData.getProperty("pxpp.26403.valid.expired.status"), currentTs);
+        updateExpiredStatusApiResponse = userInfo.updateExpiredStatus_DL("DL", "", testData.getProperty("pxpp.26403.valid.expired.status"), currentTs);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updateExpiredStatusApiResponse);
         CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 405);
