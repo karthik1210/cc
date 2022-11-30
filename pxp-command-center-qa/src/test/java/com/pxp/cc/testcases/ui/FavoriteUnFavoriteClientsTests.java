@@ -70,6 +70,7 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
 	public void testFavoriteClient() throws Exception {
 		clientNameOne = createClient(clientName);
+		driver.navigate().refresh();
 		logStep("Verfying whether favorited client count is equal or less than five");
 		boolean value = clientDirectoryPage.getNoOfFavoriteClients();
 		clientDirectoryPage.verifyNoOfFavoriteClient(value);
