@@ -482,7 +482,7 @@ public class LocationsInfo extends BaseRest {
 		return given().spec(requestSpec).body(toggleSolutionStatusPayload).when().put(url).then().extract().response();
 	}
 	
-	public Response addProviderForLocation_BL(int locationId, int practiceId, ArrayList<Integer> providerIds) {
+	public Response addProviderForLocation_DL(int locationId, int practiceId, List<Integer> providerIds) {
 		String url = ApiPath.PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
 		List<Integer> addProviderForLocationPayload = addResourceForLocation(providerIds);
 		return given().spec(requestSpec).body(addProviderForLocationPayload).when().post(url).then().extract()
@@ -498,4 +498,23 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_DL_NULL_VALUES();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response addProviderForLocation_BL(int locationId, int practiceId, List<Integer> providerIds) {
+		String url = ApiPath.PROVIDERS_FOR_LOCATION_BL(locationId, practiceId);
+		List<Integer> addProviderForLocationPayload = addResourceForLocation(providerIds);
+		return given().spec(requestSpec).body(addProviderForLocationPayload).when().post(url).then().extract()
+				.response();
+	}
+	
+	public Response getLocationsForProvider_BL(int providerId, int practiceId) {
+		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).get(url).then().extract().response();
+	}
+	
+	public Response getLocationsForProviderUsingNullValues_BL() {
+		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_BL_NULL_VALUES();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+
 }
