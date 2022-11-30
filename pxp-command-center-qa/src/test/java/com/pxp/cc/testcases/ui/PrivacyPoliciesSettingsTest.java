@@ -29,6 +29,25 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         }
     }
 
+    @Test(priority = 7, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Smoke test for Privacy Policies")
+    public void verifyingBasicPrivacyPolicies() throws Exception {
+        ngHierarchyClientCreate();
+        logStep("Smoke Validations for Privacy Policies Section at practice level");
+        ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyAddButton();
+        ccui.getPrivacyPolicySettingsPage().clickOnRadioButtonEnabled("Active");
+        ccui.getPrivacyPolicySettingsPage().enterPolicyName(testData.getProperty("pxpp.17898.policy.name"));
+        ccui.getPrivacyPolicySettingsPage().toggleOnAllSolutions();
+        ccui.getPrivacyPolicySettingsPage().clickOnLanguageTab("English");
+        ccui.getPrivacyPolicySettingsPage().verifyEnglishContent(testData.getProperty("PXPP.17898.English.content"));
+        ccui.getPrivacyPolicySettingsPage().clickOnLanguageTab("Spanish");
+        ccui.getPrivacyPolicySettingsPage().verifySpanishContent(testData.getProperty("pxpp.17898.Spanish.partial.content"));
+        ccui.getPrivacyPolicySettingsPage().clickOnSaveButton();
+        ccui.getCommonMethods().verifyToasterMessage("Success! New Privacy Policy has been successfully created");
+        ccui.getPrivacyPolicySettingsPage().clickPrivacyPolicyExpandButton();
+        ccui.getPrivacyPolicySettingsPage().verifyPolicyName(testData.getProperty("pxpp.17898.policy.name"));
+        runOnce = false;
+    }
+
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Elements in Privacy Policies Section at practice level")
     public void verifyingElementsOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
@@ -37,7 +56,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying basic functionalities in Privacy Policies Section at practice level")
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verifying basic functionalities in Privacy Policies Section at practice level")
     public void verifyingBasicFunctionalityOfPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
         logStep("PXPP-20728 TC_009_Verify that user can able to see the Draft radio button selected by default in status section");
