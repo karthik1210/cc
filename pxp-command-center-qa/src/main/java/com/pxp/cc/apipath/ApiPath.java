@@ -1721,4 +1721,12 @@ public class ApiPath {
 				return SERVICE_USER_DL + "/v1/users/enrollmentsss/status";
 		}
 	}
+
+	public static String SEARCH_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations-provider";
+	}
+
+	public static String SEARCH_LOCATION_FOR_PROVIDER_DL() {
+		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
+	}
 }
