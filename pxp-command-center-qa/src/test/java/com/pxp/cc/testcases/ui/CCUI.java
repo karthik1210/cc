@@ -69,13 +69,9 @@ public class CCUI extends CommandCenterGenericTest {
             ClientDirectoryPage clientDirectoryPage = loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
             return clientDirectoryPage;
         }
-        else {
-            LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
-            ClientDirectoryPage clientDirectoryPage = loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
-            return clientDirectoryPage;
-        }
-
+        return clientDirectoryPage;
     }
+
     public GeneralSettingsPage getGeneralSettingsPage() throws InterruptedException {
         if(generalSettingsPage==null){
             generalSettingsPage = new GeneralSettingsPage(driver);
