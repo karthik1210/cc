@@ -130,7 +130,7 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing providerId and practiceId and verify response code")
-	public void testGetLocationUsingNonExistingResourceIdAndPracticeId() throws Exception {
+	public void testGetLocationUsingNonExistingProviderIdAndPracticeId() throws Exception {
 		logStep("Enter non-existing providerId and practiceId");
 		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
