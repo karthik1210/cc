@@ -10,12 +10,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class EditBasicInfoGeneralSettingsPage extends CCMainPage {
 
 	public EditBasicInfoGeneralSettingsPage(WebDriver driver) {
 		super(driver);
+		PageFactory.initElements(driver, this);
 	}
 
 	@FindBy(xpath = "//label[normalize-space(text())='Timezone']")
@@ -107,7 +110,6 @@ public class EditBasicInfoGeneralSettingsPage extends CCMainPage {
 			"Virtual Visits");
 
 	public void verifyEditButtonIsDisplayed() {
-		// CCUtils.scrollPageViaElement(driver, basicInfoEditButton);
 		CCUtils.verifyAndWaitForElement(basicInfoEditButton, driver);
 		log("Verifying search button is displayed on search options popup");
 		if (basicInfoEditButton.isDisplayed() == true) {
@@ -135,7 +137,6 @@ public class EditBasicInfoGeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickSystemOrg() {
-		// CCUtils.scrollPageViaElement(driver, manageClientButton);
 		CCUtils.verifyAndWaitForElement(systemOrg, driver);
 		systemOrg.click();
 		log("Clicked on system org");
@@ -185,7 +186,6 @@ public class EditBasicInfoGeneralSettingsPage extends CCMainPage {
 	}
 
 	public void verifyBasicInfoTitle() {
-		// CCUtils.scrollPageViaElement(driver, labelBasicInfoTitle);
 		CCUtils.verifyAndWaitForElement(labelBasicInfoTitle, driver);
 		CCUtils.assertEquals(labelBasicInfoTitle.getText().trim(), "Basic Info");
 		log("Verified Basic Info title At Practice Level");
@@ -271,7 +271,6 @@ public class EditBasicInfoGeneralSettingsPage extends CCMainPage {
 	}
 
 	public void verifyAPISiteID() {
-		// CCUtils.verifyAndWaitForElement(labelAPISiteID, driver);
 		CCUtils.assertEquals(labelAPISiteID.getText().trim(), "API Site ID info");
 		log("Verified API Site ID");
 	}
@@ -300,7 +299,6 @@ public class EditBasicInfoGeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickOnBasicInfoCollapseButton() throws InterruptedException, AWTException {
-		// CCUtils.scrollPageViaElement(driver, basicInfoCollapseArrow);
 		CCUtils.verifyAndWaitForElement(basicInfoCollapseArrow, driver);
 		log("clicking on basic info collapse arrow");
 		javascriptClick(basicInfoCollapseArrow);
