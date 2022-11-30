@@ -1593,4 +1593,33 @@ public class SharedInfo extends BaseRest {
 		createDisplayNameMap.put("additionalProp3", additionalProp3);
 		return createDisplayNameMap;
 	}
+	
+	public Response updateResourceDetails_DL(int resourceId, String name, String type, String externalId,
+			String linkType, int linkId) {
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId,
+				linkType, linkId);
+		String url = ApiPath.UPDATE_RESOURCE_DETAILS_DL(resourceId);
+		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
+	}
+	
+	private Map<String, Object> createResourceRequestPayload(String name, String type, String externalId,
+			String linkType, int linkId) {
+		Map<String, Object> createResourceMap = new HashMap<String, Object>();
+		createResourceMap.put("name", name);
+		createResourceMap.put("type", type);
+		createResourceMap.put("externalId", externalId);
+		createResourceMap.put("linkType", linkType);
+		createResourceMap.put("linkId", linkId);
+		return createResourceMap;
+	}
+
+	public Response updateResourceDetails_NullPayload_DL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCE_DETAILS_DL(resourceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response updateResourceDetails_NullValues_DL() {
+		String url = ApiPath.UPDATE_RESOURCE_DETAILS_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
