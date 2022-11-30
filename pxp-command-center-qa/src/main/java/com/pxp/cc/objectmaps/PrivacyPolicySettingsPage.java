@@ -222,7 +222,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     @FindBy(xpath = "//button[normalize-space(text())='Yes, Delete']")
     private WebElement yesDelete;
 
-    @FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']/following-sibling::div/button/mat-icon[normalize-space(text())='keyboard_arrow_down']")
+    @FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']/following-sibling::div/button/mat-icon[normalize-space(text())='keyboard_arrow_down']|//div[normalize-space(text())='Purchased Solutions']/..//mat-icon[normalize-space(text())='keyboard_arrow_down']")
     private WebElement expandButtonForPurchaseSolutions;
 
     @FindBy(xpath = "//button[normalize-space(text())='Yes, Continue']")

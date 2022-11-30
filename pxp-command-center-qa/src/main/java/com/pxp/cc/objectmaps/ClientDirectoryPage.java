@@ -673,12 +673,12 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public void unFavoriteAllFavoritedClients() {
 		for (WebElement ele : listOfFavClients) {
-			// CCUtils.verifyAndWaitForElement(ele, driver);
+			 CCUtils.verifyAndWaitForElement(ele, driver);
 			log("unfavoriting fav clients" + ele.getText());
 			javascriptClick(ele);
 		}
 	}
-
+	
 	public void FavoriteAClient() {
 		if (FavoritedStarIcon.isSelected()) {
 			log("client is already favorited");
