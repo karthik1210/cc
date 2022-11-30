@@ -18,7 +18,6 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 	ClientDirectoryPage clientDirectoryPage;
 	public CreateClientPage createClientPage;
 	public CommonMethods commonMethods;
-
 	String clientName, clientSapNumber, externalId, clientNameOne, clientNameTwo, clientNameThree, clientNameFour,
 			clientNamefive, clientNameSix;
 	public AddOrgNodePage addOrgNodePage;
