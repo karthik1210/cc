@@ -1719,6 +1719,7 @@ public class ApiPath {
     public static final String GET_LOCATION_FOR_PROVIDER_BL_NULL_VALUES() {
 	 return  SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations";
     }
+
 	public static final String UPDATE_EXPIRED_STATUS(String serviceLayer, String uriType) {
 		if (serviceLayer.equalsIgnoreCase("BL")) {
 			if (uriType.equalsIgnoreCase("Valid"))
@@ -1731,5 +1732,12 @@ public class ApiPath {
 			else
 				return SERVICE_USER_DL + "/v1/users/enrollmentsss/status";
 		}
+	}
+
+	public static final String UPDATE_PASSWORD_DURING_ENROLLMENT(String uriType, String enrollmentId) {
+		if(uriType.equalsIgnoreCase("valid"))
+			return SERVICE_USER_BL + "/v1/users/enrollments/credentials/" + enrollmentId;
+		else
+			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
 	}
 }
