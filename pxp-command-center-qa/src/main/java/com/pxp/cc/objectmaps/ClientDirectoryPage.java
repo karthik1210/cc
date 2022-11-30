@@ -673,7 +673,6 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public void unFavoriteAllFavoritedClients() {
 		for (WebElement ele : listOfFavClients) {
-			log(ele);
 			CCUtils.verifyAndWaitForElementPresence(ele, driver);
 			log("unfavoriting fav clients" + ele.getText());
 			javascriptClick(ele);
