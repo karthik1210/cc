@@ -1545,4 +1545,52 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
+                                                                                                                                  
+	public Response enableOrDisableSolutionsForProviderForNullPayload_BL(int providerId, int practiceId) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response enableOrDisableSolutionsForProvidersUsingNullValue_BL() {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDERS_USING_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getPracticeProvider_BL(int practiceId, int providerId) {
+		String url = ApiPath.GET_PRACTICES_PROVIDERS_BL(practiceId, providerId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeProvider_NullValues_BL() {
+		String url = ApiPath.GET_PRACTICES_PROVIDERS_NULL_VALUES_BL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response putPracticeProvider_BL(int practiceId, int providerId, String additionalProp1,
+			String additionalProp2, String additionalProp3, String emailId, String mobile) {
+		String url = ApiPath.GET_PRACTICES_PROVIDERS_BL(practiceId, providerId);
+		Map<String, Object> createPayLoad = createPutProviderRequestPayload_BL(additionalProp1, additionalProp2,
+				additionalProp3, emailId, mobile);
+		return given().spec(requestSpec).body(createPayLoad).when().put(url).then().extract().response();
+	}
+
+	private Map<String, Object> createPutProviderRequestPayload_BL(String additionalProp1, String additionalProp2,
+			String additionalProp3, String emailId, String mobile) {
+		Map<String, Object> createProviderMap = new HashMap<String, Object>();
+		Map<String, Object> createPutProviderMap = createPutProviderRequestPayload_BL(additionalProp1, additionalProp2,
+				additionalProp3);
+		createProviderMap.put("displayName", createPutProviderMap);
+		createProviderMap.put("email", emailId);
+		createProviderMap.put("mobile", mobile);
+		return createProviderMap;
+	}
+
+	private Map<String, Object> createPutProviderRequestPayload_BL(String additionalProp1, String additionalProp2,
+			String additionalProp3) {
+		Map<String, Object> createDisplayNameMap = new HashMap<String, Object>();
+		createDisplayNameMap.put("additionalProp1", additionalProp1);
+		createDisplayNameMap.put("additionalProp2", additionalProp2);
+		createDisplayNameMap.put("additionalProp3", additionalProp3);
+		return createDisplayNameMap;
+	}
 }
