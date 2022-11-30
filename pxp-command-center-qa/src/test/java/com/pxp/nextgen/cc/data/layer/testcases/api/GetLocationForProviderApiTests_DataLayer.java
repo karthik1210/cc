@@ -98,7 +98,7 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Add one Provider for Location");
 		ArrayList<Integer> providerIds = new ArrayList<Integer>();
 		providerIds.add(providerId);
-		addProviderForLocationApiResponse = locationsInfo.addProviderForLocation_BL(locationId, practiceId,
+		addProviderForLocationApiResponse = locationsInfo.addProviderForLocation_DL(locationId, practiceId,
 				providerIds);
 		logStep("Enter providerId and practiceId");
 		getLocationsForProviderResponse = locationsInfo.getLocationsForProvider_DL(providerId, practiceId);
@@ -123,7 +123,7 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 	public void testGetLocationUsingExistingProviderIdAndNonExistingPracticeId() throws Exception {
 		logStep("Enter existing ProviderId and non-existing practiceId");
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
-		getLocationsForProviderResponse = locationsInfo.getLocationsForResource_DL(providerId, practiceId);
+		getLocationsForProviderResponse = locationsInfo.getLocationsForProvider_DL(providerId, practiceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getLocationsForProviderResponse);
 		CCUtils.assertEquals(getLocationsForProviderResponse.getStatusCode(), 204);
@@ -134,7 +134,7 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Enter non-existing providerId and practiceId");
 		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
-		getLocationsForProviderResponse = locationsInfo.getLocationsForResource_DL(providerId, practiceId);
+		getLocationsForProviderResponse = locationsInfo.getLocationsForProvider_DL(providerId, practiceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getLocationsForProviderResponse);
 		CCUtils.assertEquals(getLocationsForProviderResponse.getStatusCode(), 204);
