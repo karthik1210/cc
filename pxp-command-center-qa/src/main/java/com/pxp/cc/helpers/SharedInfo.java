@@ -1633,7 +1633,7 @@ public class SharedInfo extends BaseRest {
 	}
 	
 	public Response addOrRemoveLocationForResource_DL(int ResourceId, int practiceId, List<Locations> location) {
-		String url = ApiPath.UPDATE_LOCATION_FOR_Resource_DL(ResourceId, practiceId);
+		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCE_DL(ResourceId, practiceId);
 		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
 	}
 	
