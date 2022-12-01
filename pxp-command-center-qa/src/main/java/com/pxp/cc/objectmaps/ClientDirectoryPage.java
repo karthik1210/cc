@@ -77,7 +77,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
 
-	@FindBy(xpath = "//mat-icon[@id='directoryGradeIcon']")
+	@FindBy(id="directoryStarContainer")
 	private List<WebElement> listOfFavClients;
 
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
@@ -673,7 +673,7 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public void unFavoriteAllFavoritedClients() {
 		for (WebElement ele : listOfFavClients) {
-			 CCUtils.verifyAndWaitForElement(ele, driver);
+			CCUtils.verifyAndWaitForElementPresence(ele, driver);
 			log("unfavoriting fav clients" + ele.getText());
 			javascriptClick(ele);
 		}
