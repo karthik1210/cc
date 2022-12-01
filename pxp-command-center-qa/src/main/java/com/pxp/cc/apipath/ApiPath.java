@@ -1748,4 +1748,9 @@ public class ApiPath {
 	public static String SEARCH_LOCATION_FOR_PROVIDER_DL() {
 		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
 	}
+	
+	public static String GET_PROVIDER_BY_CLIENT_ID_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/";
+	}
+
 }

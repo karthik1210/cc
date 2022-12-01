@@ -16,19 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
-import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.*;
-import com.pxp.cc.pojos.ClientTypes;
-import com.pxp.cc.pojos.OrgDetails;
-import com.pxp.cc.pojos.OrgHierarchyDetails;
-import com.pxp.cc.pojos.OrgNode;
-import com.pxp.cc.pojos.OrgSolutions;
-import com.pxp.cc.pojos.ProviderStatus;
-import com.pxp.cc.pojos.ResourceStatus;
-import com.pxp.cc.pojos.Solutions;
-import com.pxp.cc.pojos.Timezone;
-import com.pxp.cc.pojos.UserRoles;
-import com.pxp.cc.pojos.UserStatus;
+
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -3476,4 +3465,25 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource not found by id=" + resourceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyGetProviderByClientIdApiResponseBody(Response response, List<Integer> providerIds,
+			String firstName, String lastName) throws IOException {
+		List<ProviderInfo> actualProviderInfoList = new ArrayList<ProviderInfo>();
+		for (int i = 0; i < providerIds.size(); i++) {
+			actualProviderInfoList.add(new ProviderInfo(providerIds.get(i), firstName, lastName));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Providers list is empty");
+		CCUtils.assertTrue(actualProviderInfoList.size() == responseBody.length(),
+				"Size of actual Providers list and expected Providers list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualProviderInfoList.contains(
+							new ProviderInfo(jsonObject.getInt("providerId"), jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
+					"providerId" + jsonObject.getInt("providerId") + " doesn't exist");
+		}
+	}
+
 }
