@@ -29,6 +29,34 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         }
     }
 
+    @Test(priority = 5, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Smoke functionality of Practice Links")
+    public void verifyBasicPracticeLinks() throws Exception {
+        ngHierarchyClientCreate();
+        logStep("Smoke Validation for Practice Links");
+        ccui.getPracticeLinksPage().clickOnPracticeWebsiteExpandButton();
+        ccui.getPracticeLinksPage().clickOnPracticeWebsiteEditButton();
+        ccui.getPracticeLinksPage().enterPracticeWebsite("https://www."+clientSystementErpriseandPractice.get("practiceName")+".com");
+        ccui.getPracticeLinksPage().clickOnPracticeWebsiteSaveButton();
+        ccui.getPracticeLinksPage().clickOnExternalUrlEditButton();
+        ccui.getPracticeLinksPage().clickOnExternalUrlAddButton();
+        ccui.getPracticeLinksPage().enterExternalUrlHyperLinkText(testData.getProperty("PXPP.17867.external.url.EN1"),testData.getProperty("PXPP.17867.external.url.ES1"));
+        List<String> externalWebsite = new ArrayList<String>();
+        externalWebsite.add("https://www."+testData.getProperty("PXPP.17867.external.url.EN1").substring(0,4).concat(CCUtils.generateAlphaNumericString(3))+".org/us");
+        ccui.getPracticeLinksPage().enterExternalUrl(externalWebsite.get(0));
+        ccui.getPracticeLinksPage().clickOnExternalUrlSaveButton();
+        ccui.getCommonMethods().verifyToasterMessage("Success! External URLs saved successfully");
+        ccui.getPracticeLinksPage().verifyExternalUrlDisplay(externalWebsite);
+        ccui.getPracticeLinksPage().clickOnSocialMediaEdit();
+        ccui.getPracticeLinksPage().toggleAllSocial();
+        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Facebook", "https://www.facebook.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
+        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Twitter", "https://www.twitter.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
+        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Linkedin", "https://www.linkedin.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
+        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Youtube", "https://www.youtube.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
+        ccui.getPracticeLinksPage().clickOnSocialMediaSave();
+        ccui.getCommonMethods().verifyToasterMessage("Successfully Updated Social Media.");
+        runOnce = false;
+    }
+
     @Test(priority = 1,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present in UI or not with Cancel functionality and basic functionality check")
     public void verifyPracticeLinkSectionAvailability() throws Exception {
         ngHierarchyClientCreate();
@@ -37,7 +65,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic functionality of Practice Links")
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic functionality of Practice Links")
     public void verifyBasicFunctionalityOfPracticeLinks() throws Exception {
         ngHierarchyClientCreate();
         logStep("PXPP-20288 TC003 Verify that user can add practice website in Practice Links section with Cancel and Save by using Edit button");

@@ -31,6 +31,7 @@ public class CCUI extends CommandCenterGenericTest {
     CommonMethods commonMethods;
     PracticeLinksPage practiceLinksPage;
     InterfaceSetupPage interfaceSetupPage;
+    EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -71,6 +72,7 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return clientDirectoryPage;
     }
+
     public GeneralSettingsPage getGeneralSettingsPage() throws InterruptedException {
         if(generalSettingsPage==null){
             generalSettingsPage = new GeneralSettingsPage(driver);
@@ -112,6 +114,13 @@ public class CCUI extends CommandCenterGenericTest {
             ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
         }
         return ngHierarchyClientCreation;
+    }
+    
+    public EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage() throws Exception {
+        if(editBasicInfoGeneralSettingsPage==null){
+        	editBasicInfoGeneralSettingsPage = new EditBasicInfoGeneralSettingsPage(driver);
+        }
+        return editBasicInfoGeneralSettingsPage;
     }
 
     public static void getClientSystementErpriseandPractice() throws Exception {

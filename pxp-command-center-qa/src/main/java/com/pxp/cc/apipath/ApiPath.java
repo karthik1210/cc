@@ -1739,5 +1739,20 @@ public class ApiPath {
 	}
 	
 	public static final String searchResource_Null_BL = SERVICE_SHARED_BL + "/v1/practices/null/resources-location";
+	
+	public static final String UPDATE_RESOURCE_DETAILS_DL(int resourceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId;
+	}
+	
+	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/resources/null";
+	}
 
+	public static String SEARCH_LOCATION_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations-provider";
+	}
+
+	public static String SEARCH_LOCATION_FOR_PROVIDER_DL() {
+		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
+	}
 }
