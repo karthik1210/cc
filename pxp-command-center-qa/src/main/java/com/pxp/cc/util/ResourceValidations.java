@@ -7,6 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -76,4 +80,13 @@ public class ResourceValidations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyGetResourcesApiResponseBody(Response response, int resourceId, String resourceName) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			CCUtils.assertEquals(jsonObject.get("name"), resourceName);
+		}
+	}
 }

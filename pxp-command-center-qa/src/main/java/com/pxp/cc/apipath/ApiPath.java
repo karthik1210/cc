@@ -1708,17 +1708,18 @@ public class ApiPath {
 	public static final String GET_PRACTICES_PROVIDERS_NULL_VALUES_BL = SERVICE_SHARED_BL
 			+ "/v1/practices/null/providers/null";
 
-    public static final String GET_LOCATION_FOR_PROVIDER_BL(int providerId, int practiceId) {
-	    return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
-     }
+	public static final String GET_LOCATION_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations";
+	}
 
-    public static final String PROVIDERS_FOR_LOCATION_BL(int locationId, int practiceId) {
-	   return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
-     }
+	public static final String PROVIDERS_FOR_LOCATION_BL(int locationId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practices/" + practiceId + "/providers";
+	}
 
-    public static final String GET_LOCATION_FOR_PROVIDER_BL_NULL_VALUES() {
-	 return  SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations";
-    }
+	public static final String GET_LOCATION_FOR_PROVIDER_BL_NULL_VALUES() {
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations";
+	}
+
 	public static final String UPDATE_EXPIRED_STATUS(String serviceLayer, String uriType) {
 		if (serviceLayer.equalsIgnoreCase("BL")) {
 			if (uriType.equalsIgnoreCase("Valid"))
@@ -1732,4 +1733,11 @@ public class ApiPath {
 				return SERVICE_USER_DL + "/v1/users/enrollmentsss/status";
 		}
 	}
+
+	public static final String searchResource_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources-location";
+	}
+	
+	public static final String searchResource_Null_BL = SERVICE_SHARED_BL + "/v1/practices/null/resources-location";
+
 }
