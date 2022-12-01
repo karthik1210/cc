@@ -31,6 +31,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
     String initiatedTs = dateFormat.format(date);
     String expiryTs = dateFormat.format(new Date(date.getTime() + (1000 * 60 * 60 * 24)));
     static String internalEnrollmentId, internalUserName;
+    boolean runOnce = true;
 
     @BeforeClass()
     public void setBaseUri() throws Exception {
@@ -41,21 +42,23 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
     @BeforeMethod()
     public void createUserWithSendEnrollment() throws Exception {
         setupServiceRequestSpecificationBuilder();
-        userMap.clear();
-        userMap = createNewInternalUser();
-        userId = Integer.parseInt(userMap.get("userId").toString());
-        internalUserName = userMap.get("username").toString();
-        setupServiceRequestSpecificationBuilderForDataLayer();
-        internalEnrollmentId = CCUtils.generateAuthId();
-        userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(internalEnrollmentId, initiatedTs, expiryTs, "PENDING");
-        sendUserEnrollmentConsumerResponse = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);
-        logStep("Validating response Code");
-        CCUtils.responseTimeValidation(sendUserEnrollmentConsumerResponse);
-        CCUtils.assertEquals(sendUserEnrollmentConsumerResponse.getStatusCode(), 200);
-        getUserEnrollmentResponse = userInfo.getUserEnrollmentDL("Valid", internalEnrollmentId, "PENDING");
-        CCUtils.assertEquals(getUserEnrollmentResponse.jsonPath().get("userId"), userId);
-        CCUtils.assertEquals(getUserEnrollmentResponse.jsonPath().get("username"), internalUserName);
-        setupServiceRequestSpecificationBuilder();
+        if(runOnce) {
+            userMap.clear();
+            userMap = createNewInternalUser();
+            userId = Integer.parseInt(userMap.get("userId").toString());
+            internalUserName = userMap.get("username").toString();
+            setupServiceRequestSpecificationBuilderForDataLayer();
+            internalEnrollmentId = CCUtils.generateAuthId();
+            userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(internalEnrollmentId, initiatedTs, expiryTs, "PENDING");
+            sendUserEnrollmentConsumerResponse = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);
+            logStep("Validating response Code");
+            CCUtils.responseTimeValidation(sendUserEnrollmentConsumerResponse);
+            CCUtils.assertEquals(sendUserEnrollmentConsumerResponse.getStatusCode(), 200);
+            getUserEnrollmentResponse = userInfo.getUserEnrollmentDL("Valid", internalEnrollmentId, "PENDING");
+            CCUtils.assertEquals(getUserEnrollmentResponse.jsonPath().get("userId"), userId);
+            CCUtils.assertEquals(getUserEnrollmentResponse.jsonPath().get("username"), internalUserName);
+            setupServiceRequestSpecificationBuilder();
+        }
     }
 
     @DataProvider(name = "invalidEnrollmentIds")
@@ -86,6 +89,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
         getUserEnrollmentResponse = userInfo.getUserEnrollmentDL("Valid", internalEnrollmentId, "CONFIRMED");
         CCUtils.assertEquals(getUserEnrollmentResponse.jsonPath().get("userId"), userId);
         CCUtils.assertEquals(getUserEnrollmentResponse.jsonPath().get("username"), internalUserName);
+        runOnce = false;
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidEnrollmentIds", description = "Update password during enrollment with invalid enrollment ids")
@@ -97,6 +101,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
         CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);
         CCUtils.assertEquals(updatePasswordDuringEnrollmentApiResponse.getStatusCode(), 400);
         validations.verifyResponseCodeForNonExistingUserType(updatePasswordDuringEnrollmentApiResponse);
+        runOnce = false;
     }
 
     @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, dataProvider = "invalidPasswords", description = "pxpp - 26081 TC 004_verify response code 400 when user enters valid enrollment id and invalid payload for update password during enrollment by using PATCH method")
@@ -106,6 +111,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
         CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);
         CCUtils.assertEquals(updatePasswordDuringEnrollmentApiResponse.getStatusCode(), 400);
         validations.verifyResponseCodeForNonExistingUserType(updatePasswordDuringEnrollmentApiResponse);
+        runOnce = false;
     }
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "pxpp-26082 TC 005_verify response code 404 and error message when user enters valid enrollment id and valid payload for update password during enrollment by using PATCH method with invalid URI")
@@ -117,6 +123,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
         CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);
         CCUtils.assertEquals(updatePasswordDuringEnrollmentApiResponse.getStatusCode(), 404);
         validations.verifyErrorInResponseForInvalidUrl(updatePasswordDuringEnrollmentApiResponse);
+        runOnce = false;
     }
 
     @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "pxpp-26083 TC 006_verify response code 405 and error message when user enters valid enrollment id and valid payload for update password during enrollment by using DELETE method")
@@ -128,6 +135,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
         CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);
         CCUtils.assertEquals(updatePasswordDuringEnrollmentApiResponse.getStatusCode(), 405);
         validations.verifyErrorMessageInResponseForInvalidMethodCall(updatePasswordDuringEnrollmentApiResponse);
+        runOnce = false;
     }
 
     @Test(enabled = false)
