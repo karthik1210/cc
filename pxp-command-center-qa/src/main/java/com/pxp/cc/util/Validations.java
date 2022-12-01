@@ -17,7 +17,6 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.pojos.*;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
