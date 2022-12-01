@@ -1545,7 +1545,6 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
-                                                                                                                                  
 	public Response enableOrDisableSolutionsForProviderForNullPayload_BL(int providerId, int practiceId) {
 		String url = ApiPath.UPDATE_SOLUTIONS_FOR_PROVIDER_BL(providerId, practiceId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
@@ -1592,5 +1591,15 @@ public class SharedInfo extends BaseRest {
 		createDisplayNameMap.put("additionalProp2", additionalProp2);
 		createDisplayNameMap.put("additionalProp3", additionalProp3);
 		return createDisplayNameMap;
+	}
+
+	public Response searchLocationForProvider_DL(int providerId, int practiceId, String providerName) {
+		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
+	}
+
+	public Response searchLocationForProviderForNullValue_DL() {
+		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
