@@ -1748,4 +1748,16 @@ public class ApiPath {
 	public static String SEARCH_LOCATION_FOR_PROVIDER_DL() {
 		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
 	}
+	
+	public static final String UPDATE_RESOURCES_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+	
+	public static String SEARCH_RESOURCES_FOR_PROVIDER_DL(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources-provider";
+	}
+	
+	public static String SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/providers/null/practices/null/resources-provider";
+	}
 }

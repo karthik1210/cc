@@ -1631,4 +1631,21 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response addOrRemoveResourcesForProvider_DL(int providerId, int practiceId,
+			List<ResourceDetails> resourceList) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
+	}
+	
+	public Response searchResourcesToAssociateWithProvider_DL(int providerId, int practiceId, String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+	
+	public Response searchResourcesToAssociateWithProvider_Null_Values_DL() {
+		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }
