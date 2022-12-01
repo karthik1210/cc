@@ -3463,4 +3463,17 @@ public class Validations {
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("roleId"), true);
 	}
+	
+	public void verifyResponseBodyForUpdateResource(Response response, int resourceId, String name) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("resourceId"), resourceId);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+	}
+	
+	public void verifyErrorResponseBodyForUpdateResource(Response response, int resourceId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource not found by id=" + resourceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
