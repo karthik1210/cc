@@ -1631,7 +1631,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getProviderByClientId_BL(int clientId, String providerName) {
 		String url = ApiPath.GET_PROVIDER_BY_CLIENT_ID_BL();
 		return given().spec(requestSpec).queryParam("name", providerName).queryParam("clientId", clientId).when()
@@ -1643,4 +1643,31 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("name", "null").queryParam("clientId", "null").when().get(url)
 				.then().extract().response();
 	}
+
+	public Response addOrRemoveResourcesForProvider_DL(int providerId, int practiceId,
+			List<ResourceDetails> resourceList) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
+	}
+	
+	public Response searchResourcesToAssociateWithProvider_DL(int providerId, int practiceId, String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_DL(providerId, practiceId);
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+	
+	public Response searchResourcesToAssociateWithProvider_Null_Values_DL() {
+		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response addOrRemoveLocationForResource_DL(int ResourceId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCE_DL(ResourceId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+	
+	public Response getLocationsForResourceForNullValues_DL() {
+		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 }
