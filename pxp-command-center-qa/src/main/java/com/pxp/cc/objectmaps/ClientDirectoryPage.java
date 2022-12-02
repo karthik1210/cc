@@ -3,7 +3,6 @@
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
-import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -674,18 +673,18 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void unFavoriteAllFavoritedClients() {
-        for(WebElement ele : listOfFavClients)
-            new Actions(driver).moveToElement(listOfFavClients.get(0)).pause(2000).click().build().perform();
-		}
-
+		for(WebElement ele : listOfFavClients)
+				new Actions(driver).moveToElement(listOfFavClients.get(0)).pause(2000).click().build().perform();
+	}
+	
 	public void FavoriteAClient() throws InterruptedException {
 		if (FavoritedStarIcon.isSelected()) {
 			log("client is already favorited");
 		} else {
-            CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
-            new Actions(driver).moveToElement(unFavoritedStarIcon).click().build().perform();
-            log("Clicked to Favorite star icon");
-            Thread.sleep(2000);
+			CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+			new Actions(driver).moveToElement(unFavoritedStarIcon).click().build().perform();
+			log("Clicked to Favorite star icon");
+			Thread.sleep(2000);
 		}
 	}
 

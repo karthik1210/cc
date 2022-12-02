@@ -1749,6 +1749,15 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
 	}
 
+	public static final String UPDATE_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/resources/null/practices/null/locations";
+	}
+
+
 	public static final String UPDATE_PASSWORD_DURING_ENROLLMENT(String uriType, String enrollmentId) {
 		if(uriType.equalsIgnoreCase("valid"))
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentials/" + enrollmentId;
