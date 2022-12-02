@@ -88,6 +88,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             userType1 = userMap.get("userType").toString();
             userId = Integer.parseInt(userMap.get("userId").toString());
         }
+        userType1 = userMap.get("userType").toString();
         setupServiceRequestSpecificationBuilderForDataLayer();
         searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
         log(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString());
@@ -110,6 +111,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             userId = Integer.parseInt(userMap.get("userId").toString());
             userType1 = userMap.get("userType").toString();
         }
+        userType1 = userMap.get("userType").toString();
         setupServiceRequestSpecificationBuilderForDataLayer();
         searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
         log(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString());
@@ -126,6 +128,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             userMap = createNewVarResellerUser(clientOrgId, providerId, testData.getProperty("pxpp.26460.enrollment.status.not.sent"));
             userType1 = userMap.get("userType").toString();
         }
+        userType1 = userMap.get("userType").toString();
         setupServiceRequestSpecificationBuilderForDataLayer();
         searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
         log(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString());
@@ -296,7 +299,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         log(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString());
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString().equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.pending")), true);
         setupServiceRequestSpecificationBuilder();
-        String password = CCUtils.generateAlphaNumericStringIncludingSpecialChar(25);
+        String password = CCUtils.generateAlphaNumericStringIncludingSpecialChar(25)+"&9";
         updatePasswordDuringEnrollmentApiResponse = userInfo.updatePassword_BL("valid", internalEnrollmentId, password);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);

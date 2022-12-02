@@ -1757,14 +1757,6 @@ public class ApiPath {
 		return SHARED_DL + "/v1/resources/null/practices/null/locations";
 	}
 
-
-	public static final String UPDATE_PASSWORD_DURING_ENROLLMENT(String uriType, String enrollmentId) {
-		if(uriType.equalsIgnoreCase("valid"))
-			return SERVICE_USER_BL + "/v1/users/enrollments/credentials/" + enrollmentId;
-		else
-			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
-	}
-
 	public static final String GET_USER_INFO(String serviceLayer, int userId) {
 		if(serviceLayer.equalsIgnoreCase("DL"))
 			return SERVICE_USER_DL + "/v1/users/" + userId;
