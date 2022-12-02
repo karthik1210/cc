@@ -730,6 +730,22 @@ public class UserInfo extends BaseRest {
 		}
 	}
 
+    public Map<String, Object> updatePasswordDuringEnrollment_BL(String password) {
+        Map<String, Object> updatePassword = new HashMap<String, Object>();
+        updatePassword.put("password", password);
+        return updatePassword;
+    }
+
+    public Response updatePassword_BL(String typeURI, String enrollmentId, String password) {
+        if (typeURI.equalsIgnoreCase("valid") || typeURI.equalsIgnoreCase("Invalid")) {
+            String url = ApiPath.UPDATE_PASSWORD_DURING_ENROLLMENT(typeURI, enrollmentId);
+            return given().spec(requestSpec).body(updatePasswordDuringEnrollment_BL(password)).when().patch(url).then().extract().response();
+        } else {
+            String url = ApiPath.UPDATE_PASSWORD_DURING_ENROLLMENT( "Valid", enrollmentId);
+            return given().spec(requestSpec).body(updatePasswordDuringEnrollment_BL(password)).when().delete(url).then().extract().response();
+        }
+    }
+
     public Response searchUserWithEnrollmentStatus(String serviceLayer, String userType, String uriType, String enrollmentStatus) {
         if (serviceLayer.equalsIgnoreCase("DL")) {
             String url = ApiPath.USER_DL;

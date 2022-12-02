@@ -105,6 +105,8 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchLocationForProvider_DataLayer"></class>
 			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchResourcesToAssociateWithProviderApiTests_DataLayer"></class>
+            <class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveLocationsForTheResourceApiTests_DataLayer"></class>
 		</classes>
 	</test>
