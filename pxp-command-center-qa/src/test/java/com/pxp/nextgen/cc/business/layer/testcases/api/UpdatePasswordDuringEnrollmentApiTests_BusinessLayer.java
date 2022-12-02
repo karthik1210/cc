@@ -80,7 +80,7 @@ public class UpdatePasswordDuringEnrollmentApiTests_BusinessLayer extends BaseRe
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26078 TC 001_verify response code 200 when user enters valid enrollment id and valid payload for update password during enrollment by using PATCH method")
     public void updatePasswordDuringEnrollmentApiSuccess() throws IOException {
         logStep("-----Update password during Enrollment for Internal User Type-----");
-        String password = CCUtils.generateAlphaNumericStringIncludingSpecialChar(25);
+        String password = CCUtils.generateAlphaNumericStringIncludingSpecialChar(25)+"&9";
         updatePasswordDuringEnrollmentApiResponse = userInfo.updatePassword_BL("valid", internalEnrollmentId, password);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);
