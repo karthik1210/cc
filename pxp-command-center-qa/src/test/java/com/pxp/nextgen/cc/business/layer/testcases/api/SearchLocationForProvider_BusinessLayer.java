@@ -17,9 +17,8 @@ public class SearchLocationForProvider_BusinessLayer extends BaseRest {
 	private OrgInfo orgInfo;
 	private SharedInfo sharedInfo;
 	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, createResourceApiResponse, createNewLocationApiResponse,
-			associateProvidersForLocationApiResponse, associateDeassociatePracticesForLocationApiResponse,
-			addResourceForLocationApiResponse, searchLocationForProviderApiResponse;
+			createEnterpriseApiResponse, createNewLocationApiResponse, associateProvidersForLocationApiResponse,
+			associateDeassociatePracticesForLocationApiResponse, searchLocationForProviderApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId, locationId;
 	String clientName, clientSapNumber, externalId, firstName, lastName, locationName;
 
@@ -107,7 +106,7 @@ public class SearchLocationForProvider_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Non Existing providerId and Existing practiceId to get locations associated with provider")
 	public void testGetLocationsUsingNonExistingProviderIdAndExistingPracticeId() throws Exception {
-		logStep("Enter Non Existingre sourceId and Existing practiceId to get locations associated with resource");
+		logStep("Enter Non Existing providerId and Existing practiceId to get locations associated with provider");
 		int providerId = Integer.parseInt(testData.getProperty("nonexisting.providerId"));
 		searchLocationForProviderApiResponse = sharedInfo.searchLocationForProvider_BL(providerId, practiceId,
 				locationName);
@@ -117,7 +116,7 @@ public class SearchLocationForProvider_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Existing providerId and Non Existing practiceId to get locations associated with provider")
 	public void testGetLocationsUsingExistingProviderIdAndNonExistingPracticeId() throws Exception {
-		logStep("Enter Non Existingre sourceId and Existing practiceId to get locations associated with resource");
+		logStep("Enter Existing providerId and Non Existing practiceId to get locations associated with provider");
 		int practiceId = Integer.parseInt(testData.getProperty("nonexisting.practiceId"));
 		searchLocationForProviderApiResponse = sharedInfo.searchLocationForProvider_BL(providerId, practiceId,
 				locationName);
@@ -127,7 +126,7 @@ public class SearchLocationForProvider_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Non Existing providerId and Non Existing practiceId to get locations associated with provider")
 	public void testGetLocationsUsingNonExistingProviderIdAndNonExistingPracticeId() throws Exception {
-		logStep("Enter Non Existingre sourceId and Existing practiceId to get locations associated with resource");
+		logStep("Enter Non Existing providerId and Non Existing practiceId to get locations associated with provider");
 		int practiceId = Integer.parseInt(testData.getProperty("nonexisting.practiceId"));
 		int providerId = Integer.parseInt(testData.getProperty("nonexisting.providerId"));
 		searchLocationForProviderApiResponse = sharedInfo.searchLocationForProvider_BL(providerId, practiceId,
@@ -138,7 +137,7 @@ public class SearchLocationForProvider_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Null values in providerId, practiceId and name field to get locations associated with provider")
 	public void testGetLocationsUsingNullInput() throws Exception {
-		logStep("Enter Non Existingre sourceId and Existing practiceId to get locations associated with resource");
+		logStep("\"Enter Null values in providerId, practiceId and name field to get locations associated with provider");
 		searchLocationForProviderApiResponse = sharedInfo.searchLocationForProviderForNullValue_BL();
 		CCUtils.responseTimeValidation(searchLocationForProviderApiResponse);
 		CCUtils.assertEquals(searchLocationForProviderApiResponse.getStatusCode(), 400);
