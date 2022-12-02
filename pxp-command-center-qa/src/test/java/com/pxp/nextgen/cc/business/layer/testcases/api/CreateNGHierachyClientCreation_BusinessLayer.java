@@ -12,6 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class CreateNGHierachyClientCreation_BusinessLayer extends BaseRest {
     private OrgInfo orgInfo;
@@ -51,5 +52,34 @@ public class CreateNGHierachyClientCreation_BusinessLayer extends BaseRest {
         validations.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
         int orgId = createPracticeApiResponse.jsonPath().get("orgId");
         return orgId;
+    }
+
+    public HashMap<String, Integer> getOrgHierPractice_BL(String status, String clientName, String clientSapNumber, String testFlag, int clientType, String clientTimezoneId, String systemName, String sysOrgType, String sysParentType, int ehrIdentifier, int pmIdentifier, String enterpriseName, String enterpriseType, String enterpriseParentType, String enterpriseTimeZone, String practiceDisplayName, String practiceName, String practiceOrgType, String practiceParentType, String practiceTimeZone) throws IOException {
+        logStep("Create nge practice below the client with valid details");
+        orgInfo = new OrgInfo();
+        clientInfo = new ClientInfo();
+        validations = new Validations();
+        createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber, testFlag, clientType, clientTimezoneId);
+        int clientId = createClientApiResponse.jsonPath().getInt("clientId");
+
+        logStep("Create a new system below client.");
+        createSystemApiResponse = orgInfo.createOrg(status, "", systemName, sysOrgType, clientId, sysParentType, "", ehrIdentifier, pmIdentifier);
+        int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
+
+        logStep("Create a new enterprise below system.");
+        createEnterpriseApiResponse = orgInfo.createOrg(status, "", enterpriseName, enterpriseType, systemId, enterpriseParentType, enterpriseTimeZone, ehrIdentifier, pmIdentifier);
+        int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
+
+        logStep("Create a new practice below enterprise.");
+        createPracticeApiResponse = orgInfo.createOrg(status, practiceDisplayName, practiceName, practiceOrgType, enterpriseId, practiceParentType, practiceTimeZone, ehrIdentifier, pmIdentifier);
+        int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+
+        HashMap<String, Integer> orgMap = new HashMap<String, Integer>();
+        orgMap.put("clientId", clientId);
+        orgMap.put("systemId", systemId);
+        orgMap.put("enterpriseId", enterpriseId);
+        orgMap.put("practiceId", practiceId);
+
+        return orgMap;
     }
 }

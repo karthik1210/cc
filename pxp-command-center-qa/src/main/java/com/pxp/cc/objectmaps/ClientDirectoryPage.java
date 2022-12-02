@@ -3,6 +3,7 @@
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
+import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -672,20 +674,18 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void unFavoriteAllFavoritedClients() {
-		for (WebElement ele : listOfFavClients) {
-			CCUtils.verifyAndWaitForElementPresence(ele, driver);
-			log("unfavoriting fav clients" + ele.getText());
-			javascriptClick(ele);
+        for(WebElement ele : listOfFavClients)
+            new Actions(driver).moveToElement(listOfFavClients.get(0)).pause(2000).click().build().perform();
 		}
-	}
-	
-	public void FavoriteAClient() {
+
+	public void FavoriteAClient() throws InterruptedException {
 		if (FavoritedStarIcon.isSelected()) {
 			log("client is already favorited");
 		} else {
-			CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
-			unFavoritedStarIcon.click();
-			log("Clicked to Favorite star icon");
+            CCUtils.verifyAndWaitForElement(unFavoritedStarIcon, driver);
+            new Actions(driver).moveToElement(unFavoritedStarIcon).click().build().perform();
+            log("Clicked to Favorite star icon");
+            Thread.sleep(2000);
 		}
 	}
 
@@ -750,7 +750,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		}
 	}
 
-	public void FavoriteClientThenUnfavorite(boolean value, String ClientName) {
+	public void FavoriteClientThenUnfavorite(boolean value, String ClientName) throws InterruptedException {
 		if (value == false) {
 			searchNode(ClientName);
 			clickSearchButton();
