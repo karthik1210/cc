@@ -1732,13 +1732,11 @@ public class ApiPath {
 				return SERVICE_USER_DL + "/v1/users/enrollmentsss/status";
 		}
 	}
-
-
-
+	
 	public static final String UPDATE_RESOURCE_DETAILS_DL(int resourceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId;
 	}
-
+	
 	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/resources/null";
 	}
@@ -1752,6 +1750,13 @@ public class ApiPath {
 	}
 
 
+	public static final String UPDATE_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/resources/null/practices/null/locations";
+	}
 
 	public static final String UPDATE_PASSWORD_DURING_ENROLLMENT(String uriType, String enrollmentId) {
 		if(uriType.equalsIgnoreCase("valid"))
