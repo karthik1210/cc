@@ -1775,4 +1775,10 @@ public class ApiPath {
 		else
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
 	}
+	
+	public static final String ADD_REMOVE_RESOURCE_FOR_PROVIDER(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/"+providerId+"/practices/"+practiceId+"/resources";
+	}
+	
+	public static final String ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL = SHARED_DL + "/v1/providers/null/practices/null/resources";
 }

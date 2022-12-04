@@ -3486,4 +3486,34 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("name"), resourceName);
 		}
 	}
+	
+	public void verifyResponseBodyOfGetResource(Response response, int resourceId) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+				Log4jUtil.log("verifying the resource Id");
+			}
+		}
+	
+	public void verifyResponseBodyOfAddRemoveResource(Response response, int resourceId,String status) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+				CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+				CCUtils.assertEquals(jsonObject.get("status"), status);
+				Log4jUtil.log("verifying the resource Id and status");
+			}
+		}
+
+	public void verifyAddRemoveResourceForNullResourceIdAndActive(Response response , String value) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		if(jsonpath.get("message").toString().contains(value)) {
+			CCUtils.assertTrue(true,"verifying error message "+value+" is present in "+jsonpath.get("message").toString());
+		}
+	}
 }
+
+	
