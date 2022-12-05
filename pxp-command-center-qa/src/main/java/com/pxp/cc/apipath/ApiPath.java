@@ -1802,4 +1802,12 @@ public class ApiPath {
 		else
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
 	}
+	
+	public static String SEARCH_RESOURCES_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources-provider";
+	}
+
+	public static String SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/resources-provider";
+	}
 }
