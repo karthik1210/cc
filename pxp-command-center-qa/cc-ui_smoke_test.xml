@@ -19,7 +19,6 @@
             <class name="com.pxp.cc.testcases.ui.ClientDirectoryTests"/>
             <class name="com.pxp.cc.testcases.ui.GeneralSettingsSearchTests"/>
             <class name="com.pxp.cc.testcases.ui.AddOrgNodeTests"/>
-            <class name="com.pxp.cc.testcases.ui.EditOrgNodeTest"/>
             <class name="com.pxp.cc.testcases.ui.SearchOptionsTests"/>
             <class name="com.pxp.cc.testcases.ui.AddNewLocationTests"/>
             <class name="com.pxp.cc.testcases.ui.PracticeLinksTests"/>
@@ -30,7 +29,7 @@
             <class name="com.pxp.cc.testcases.ui.EditInternalUserTests"/>
             <class name="com.pxp.cc.testcases.ui.InternalUserDeactivationFromKebabMenuTests"/>
             <class name="com.pxp.cc.testcases.ui.FavoriteUnFavoriteClientsTests"/>
-            <class name="com.pxp.cc.testcases.ui.EditClientDetailsTests"/>
+            <class name="com.pxp.cc.testcases.ui.EditClientAndOrgDetailsGeneralSettingsTests"/>
             <class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests"/>
             <class name="com.pxp.cc.testcases.ui.CreateClientTests"/>
             <class name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests"/>
