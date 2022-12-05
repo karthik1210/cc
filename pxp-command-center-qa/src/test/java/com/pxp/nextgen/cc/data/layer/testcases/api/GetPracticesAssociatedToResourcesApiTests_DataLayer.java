@@ -76,17 +76,6 @@ public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRe
 		createProviderApiResponse = sharedInfo.createProvider_DL(practiceId, firstName, lastName,
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
-		logStep("Create new location");
-		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
-		externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
-		createNewLocationApiResponse = sharedInfo.createNewLocation_DL(clientId,
-				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
-				testData.getProperty("location.city"), testData.getProperty("location.state"),
-				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
-				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
-				testData.getProperty("location.timezonecode"), "");
-		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
-		locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 		logStep("Create new resource");
 		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
 		String resourceName = CCUtils.generateAlphaNumericString(8);

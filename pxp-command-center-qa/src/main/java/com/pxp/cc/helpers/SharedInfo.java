@@ -1665,7 +1665,7 @@ public class SharedInfo extends BaseRest {
 	
 	public Response getPracticesAssociatedToResourceNullValues_DL() {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_NULL_VALUE_DL();
-		return given().spec(requestSpec).when().put(url).then().extract().response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 }
