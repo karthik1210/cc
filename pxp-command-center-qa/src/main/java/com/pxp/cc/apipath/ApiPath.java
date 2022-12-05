@@ -1810,5 +1810,4 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices";
 	}
-
 }

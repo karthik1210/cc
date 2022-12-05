@@ -141,5 +141,4 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 				.associateDeassociatePracticeForResourceUsingNullValue_BL();
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 400);
 	}
-
 }
