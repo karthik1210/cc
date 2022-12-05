@@ -3476,4 +3476,14 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource not found by id=" + resourceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifySearchResourcesToAssociateWithProviderApiResponseBody(Response response, int resourceId, String resourceName) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			CCUtils.assertEquals(jsonObject.get("name"), resourceName);
+		}
+	}
 }

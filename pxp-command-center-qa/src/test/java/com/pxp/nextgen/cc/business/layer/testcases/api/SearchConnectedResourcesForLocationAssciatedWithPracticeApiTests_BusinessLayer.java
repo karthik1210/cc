@@ -126,7 +126,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 		resourceId = createResource(providerId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_BL(locationId, practiceId, true);
-		searchResourceApiResponse = sharedInfo.GetConnectedResource_BL(practiceId,
+		searchResourceApiResponse = sharedInfo.getConnectedResource_BL(practiceId,
 				testData.getProperty("resource.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
@@ -137,7 +137,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing practice id associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingPracticeId() throws IOException {
-		searchResourceApiResponse = sharedInfo.GetConnectedResource_BL(
+		searchResourceApiResponse = sharedInfo.getConnectedResource_BL(
 				Integer.parseInt(testData.getProperty("Non.existing.tou.id")), testData.getProperty("resource.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
@@ -146,7 +146,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing resource name associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingResourceName() throws IOException {
-		searchResourceApiResponse = sharedInfo.GetConnectedResource_BL(practiceId,
+		searchResourceApiResponse = sharedInfo.getConnectedResource_BL(practiceId,
 				testData.getProperty("non.existing.user.first.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
@@ -155,7 +155,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing practice id and resource name associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingResourceNameAndPracticeId() throws IOException {
-		searchResourceApiResponse = sharedInfo.GetConnectedResource_BL(
+		searchResourceApiResponse = sharedInfo.getConnectedResource_BL(
 				Integer.parseInt(testData.getProperty("Non.existing.tou.id")),
 				testData.getProperty("non.existing.user.first.name"));
 		logStep("Validating response information");
@@ -166,7 +166,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 400 status code when providing null practice id associated with a location")
 	public void testNotFoundResourceWhenEnterNullPracticeId() throws IOException {
 		searchResourceApiResponse = sharedInfo
-				.GetConnectedResource_Null_BL(testData.getProperty("non.existing.user.first.name"));
+				.getConnectedResource_Null_BL(testData.getProperty("non.existing.user.first.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
 		CCUtils.assertEquals(searchResourceApiResponse.getStatusCode(), 400);

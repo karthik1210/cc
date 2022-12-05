@@ -1,3 +1,5 @@
+// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
