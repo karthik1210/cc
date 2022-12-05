@@ -1592,7 +1592,17 @@ public class SharedInfo extends BaseRest {
 		createDisplayNameMap.put("additionalProp3", additionalProp3);
 		return createDisplayNameMap;
 	}
-
+	
+	public Response getConnectedResource_BL(int practiceId , String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+	
+	public Response getConnectedResource_Null_BL(String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCE_NULL_BL;
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+	
 	public Response updateResourceDetails_DL(int resourceId, String name, String type, String externalId,
 			String linkType, int linkId) {
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkType,
