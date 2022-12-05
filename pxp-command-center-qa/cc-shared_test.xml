@@ -122,6 +122,8 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationForProviderApiTests_BusinessLayer" />
 			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderByClientIdApiTest_BusinessLayer" />
+            <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationForProvider_BusinessLayer" />
 		</classes>
 	</test>
