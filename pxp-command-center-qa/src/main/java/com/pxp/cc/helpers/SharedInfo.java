@@ -1667,5 +1667,15 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+	
+	public Response getPracticesAssociatedToResource_DL(int resourceId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_DL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getPracticesAssociatedToResourceNullValues_DL() {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 }
