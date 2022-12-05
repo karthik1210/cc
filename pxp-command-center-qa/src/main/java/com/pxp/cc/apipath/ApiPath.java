@@ -1743,7 +1743,7 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCE_DETAILS_DL(int resourceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId;
 	}
-	
+
 	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/resources/null";
 	}
@@ -1754,6 +1754,14 @@ public class ApiPath {
 
 	public static String SEARCH_LOCATION_FOR_PROVIDER_DL() {
 		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
+	}
+
+	public static String SEARCH_LOCATION_FOR_PROVIDER_BL(int providerId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/locations-provider";
+	}
+
+	public static String SEARCH_LOCATION_FOR_PROVIDER_BL() {
+		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/locations-provider";
 	}
 
 	public static final String UPDATE_RESOURCES_FOR_PROVIDER_DL(int providerId, int practiceId) {
@@ -1771,7 +1779,7 @@ public class ApiPath {
 	public static final String UPDATE_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locations";
 	}
-	
+
 	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/resources/null/practices/null/locations";
 	}
