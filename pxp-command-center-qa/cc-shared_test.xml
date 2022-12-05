@@ -16,8 +16,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderDetailsApiTests_BusinessLayer" />
-			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" 
-				/>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer" />
 
@@ -25,20 +25,20 @@
 				services Jira #PXPP-20360 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_BusinessLayer" 
 				/> -->
-	    	<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForResourcesApiTests_BusinessLayer" 
-				/>
-			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForProviders_BusinessLayer" 
-				/>
-			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesApiTests_BusinessLayer" 
-				/>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForResourcesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForProviders_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateBrandingTemplateApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandingTemplateApiTests_BusinessLayer" />
-			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.DuplicateBrandingApiTests_BusinessLayer" 
-				/>
-			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProvidersForLocationApiTests_BusinessLayer" 
-				/>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DuplicateBrandingApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProvidersForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandingDetailsApiTests_BusinessLayer" />
 			<class
@@ -69,8 +69,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleSolutionStatusForLocationAndPracticeApiTests_BusinessLayer" />
-			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer" 
-				/>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsAssociatedWithResourceApiTests_BusinessLayer" />
 			<class
@@ -117,10 +117,12 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfBrandsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForProviderApiTests_BusinessLayer" />
-            <class
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeProviderApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationForProviderApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationForProvider_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
