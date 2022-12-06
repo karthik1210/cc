@@ -1819,4 +1819,12 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices";
 
 	}
+	
+	public static final String GET_ORG_PROVIDER_FOR_LOCATION_BL( int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/providers-location";
+	}
+	public static final String GET_ORG_PROVIDER_FOR_LOCATION_NULL_VALUES_BL( ) {
+		return SERVICE_SHARED_BL + "/v1/practices/null/providers-location";
+	}
+	
 }

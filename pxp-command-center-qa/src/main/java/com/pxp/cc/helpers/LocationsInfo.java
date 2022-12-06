@@ -464,31 +464,30 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
-	public Response getResourceForLocation_DL(int locationId, int practiceId,String name) {
+
+	public Response getResourceForLocation_DL(int locationId, int practiceId, String name) {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_DL(locationId, practiceId);
-		return given().spec(requestSpec).queryParam("name",name).when().get(url).then().extract()
-				.response();
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getResourceForLocationNullValue_DL() {
 		String url = ApiPath.ADD_RESOURCES_FOR_LOCATION_NULL_VALUE_DL();
-		return given().spec(requestSpec).when().get(url).then().extract()
-				.response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+
 	public Response toggleSolutionStatusApiResponse_DL(int locationId, int practiceId, int solutionId, boolean active) {
 		String url = ApiPath.UPDATE_SOLUTION_FOR_LOCATION_DL(locationId, practiceId);
 		Map<String, Object> toggleSolutionStatusPayload = toggleSolutionStatus(solutionId, active);
 		return given().spec(requestSpec).body(toggleSolutionStatusPayload).when().put(url).then().extract().response();
 	}
-	
+
 	public Response addProviderForLocation_DL(int locationId, int practiceId, List<Integer> providerIds) {
 		String url = ApiPath.PROVIDERS_FOR_LOCATION_DL(locationId, practiceId);
 		List<Integer> addProviderForLocationPayload = addResourceForLocation(providerIds);
 		return given().spec(requestSpec).body(addProviderForLocationPayload).when().post(url).then().extract()
 				.response();
 	}
-	
+
 	public Response getLocationsForProvider_DL(int providerId, int practiceId) {
 		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
 		return given().spec(requestSpec).get(url).then().extract().response();
@@ -498,23 +497,32 @@ public class LocationsInfo extends BaseRest {
 		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_DL_NULL_VALUES();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response addProviderForLocation_BL(int locationId, int practiceId, List<Integer> providerIds) {
 		String url = ApiPath.PROVIDERS_FOR_LOCATION_BL(locationId, practiceId);
 		List<Integer> addProviderForLocationPayload = addResourceForLocation(providerIds);
 		return given().spec(requestSpec).body(addProviderForLocationPayload).when().post(url).then().extract()
 				.response();
 	}
-	
+
 	public Response getLocationsForProvider_BL(int providerId, int practiceId) {
 		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_BL(providerId, practiceId);
 		return given().spec(requestSpec).get(url).then().extract().response();
 	}
-	
+
 	public Response getLocationsForProviderUsingNullValues_BL() {
 		String url = ApiPath.GET_LOCATION_FOR_PROVIDER_BL_NULL_VALUES();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-
+	public Response getOrgProvidersForLocation_BL(int practiceId, String name) {
+		String url = ApiPath.GET_ORG_PROVIDER_FOR_LOCATION_BL(practiceId);
+		return given().spec(requestSpec)
+				.queryParam("name", name).when().get(url).then().extract().response();
+	}
+	
+	public Response getOrgProvidersForLocationNullValues_BL() {
+		String url = ApiPath.GET_ORG_PROVIDER_FOR_LOCATION_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

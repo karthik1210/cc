@@ -129,7 +129,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchResourcesToAssociateWithProviderApiTests_BusinessLayer" />
             <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociatePracticeForResource_BusinessLayer" />
-
+            <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgProvidersForLocationApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>
