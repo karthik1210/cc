@@ -193,5 +193,4 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return editOrgDetailsGeneralSettingsPage;
     }
-
 }

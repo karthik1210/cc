@@ -48,7 +48,7 @@ public class EditClientAndOrgDetailsGeneralSettingsTests extends CommandCenterGe
 	}
 
 	@Test(priority = 6, groups = {
-	"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Edit and save Client name and status")
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Edit and save Client name and status")
 	public void editAndSaveNameAndStatusAtClientLevel() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("Edit and save System name and status");
@@ -121,7 +121,6 @@ public class EditClientAndOrgDetailsGeneralSettingsTests extends CommandCenterGe
 			ccui.getNgHierarchyClientCreationPage().clickSearchResult();
 			logStep("Navigating To General Settings page");
 			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
-
 		}
 	}
 }

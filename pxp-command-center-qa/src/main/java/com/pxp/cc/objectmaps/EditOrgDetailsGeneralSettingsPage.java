@@ -21,36 +21,37 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//p[@id='treeNodeName'])[1]")
 	private WebElement clientOrg;
-	
+
 	@FindBy(id = "displayNameEditBtn")
 	private WebElement editButton;
-	
+
 	@FindBy(id = "detailSaveBtn")
 	private WebElement saveButton;
 
 	@FindBy(id = "detailCancelBtn")
 	private WebElement cancelButton;
-	
+
 	@FindBy(id = "detailNameInput")
 	private WebElement textBox;
-	
+
 	@FindBy(xpath = "//mat-select[@role ='combobox']")
 	private WebElement statusArrow;
-	
+
 	@FindBy(xpath = "//span[normalize-space(text())='Changes updated successfully']")
 	private WebElement toasterMessage;
-	
+
 	@FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
 	private WebElement errorMessage;
-	
+
 	@FindBy(xpath = "//span[normalize-space(text())='Inactive']")
 	private WebElement inactiveStatus;
-	
+
 	public void clickClientOrg() {
 		CCUtils.verifyAndWaitForElement(clientOrg, driver);
 		clientOrg.click();
 		log("Clicked on client org");
 	}
+
 	public void verifyEditOrgDetailsAtClientLevel() throws InterruptedException, AWTException {
 		log("Verifying Edit Org Details Section at Client level");
 		verifyEditButtonIsDisplayed();
@@ -58,25 +59,25 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 		verifySaveButtonIsDisplayed();
 		verifyCancelButtonIsDisplayed();
 	}
-	
+
 	public void clickEditButton() {
 		CCUtils.verifyAndWaitForElement(editButton, driver);
 		editButton.click();
 		log("Clicked on edit button");
 	}
-	
+
 	public void clickSaveButton() {
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		saveButton.click();
 		log("Clicked on Save button");
 	}
-	
+
 	public void clickCancelButton() {
 		CCUtils.verifyAndWaitForElement(cancelButton, driver);
 		cancelButton.click();
 		log("Clicked on cancel button");
 	}
-	
+
 	public void verifyEditButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(editButton, driver);
 		log("Verifying edit button is displayed");
@@ -90,7 +91,7 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 			log("Edit button is not displayed");
 		}
 	}
-	
+
 	public void verifySaveButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		log("Verifying Save button is displayed");
@@ -104,7 +105,7 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 			log("Save button is not displayed");
 		}
 	}
-	
+
 	public void verifyCancelButtonIsDisplayed() {
 		CCUtils.verifyAndWaitForElement(cancelButton, driver);
 		log("Verifying Cancel button is displayed");
@@ -118,22 +119,22 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 			log("Cancel button is not displayed");
 		}
 	}
-	
+
 	public void EditAndSaveNameAndStatus(String orgName) throws InterruptedException, AWTException {
 		log("Edit and save system name and status at system level");
 		editOrgName(orgName);
 		changeStatus();
 		clickSaveButton();
 
-
 	}
-	
+
 	public void editOrgName(String orgName) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(textBox, driver);
 		textBox.clear();
 		textBox.sendKeys(orgName);
 		log("Entered text : " + orgName);
-}
+	}
+
 	public void changeStatus() {
 		CCUtils.verifyAndWaitForElement(statusArrow, driver);
 		statusArrow.click();
@@ -149,7 +150,7 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-	
+
 	public void verifyErrorMessage(String expectedToasterMessage) {
 		CCUtils.verifyAndWaitForElement(errorMessage, driver);
 		Log4jUtil.log("Verifying success toaster message.");
@@ -158,21 +159,20 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 		else
 			Log4jUtil.log("error message is not displayed");
 	}
-	
+
 	public void clickOnSystemArrow() {
-	        WebElement systemArrow = driver.findElement(By.id("//p[@id='treeNodeName'])[2]"));
-	        CCUtils.verifyAndWaitForElement(systemArrow, driver);
-	        log("clicking on system level");
-	        new Actions(driver).moveToElement(systemArrow).click().build().perform();
-	        log("Successfully system has been viewed");
-	    }
+		WebElement systemArrow = driver.findElement(By.id("//p[@id='treeNodeName'])[2]"));
+		CCUtils.verifyAndWaitForElement(systemArrow, driver);
+		log("clicking on system level");
+		new Actions(driver).moveToElement(systemArrow).click().build().perform();
+		log("Successfully system has been viewed");
+	}
 
-	    public void clickOnEnterpriseArrow() {
-	        WebElement enterpriseArrow = driver.findElement(By.xpath("//p[@id='treeNodeName'])[3]"));
-	        CCUtils.verifyAndWaitForElement(enterpriseArrow, driver);
-	        log("clicking on Enterprise level");
-	        new Actions(driver).moveToElement(enterpriseArrow).click().build().perform();
-	        log("Successfully Enterprise has been viewed");
-	    }
-
+	public void clickOnEnterpriseArrow() {
+		WebElement enterpriseArrow = driver.findElement(By.xpath("//p[@id='treeNodeName'])[3]"));
+		CCUtils.verifyAndWaitForElement(enterpriseArrow, driver);
+		log("clicking on Enterprise level");
+		new Actions(driver).moveToElement(enterpriseArrow).click().build().perform();
+		log("Successfully Enterprise has been viewed");
+	}
 }
