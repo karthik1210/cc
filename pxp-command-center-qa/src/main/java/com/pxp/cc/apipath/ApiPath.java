@@ -1737,9 +1737,9 @@ public class ApiPath {
 	public static final String SEARCH_RESOURCE_BL(int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources-location";
 	}
-	
+
 	public static final String SEARCH_RESOURCE_NULL_BL = SERVICE_SHARED_BL + "/v1/practices/null/resources-location";
-	
+
 	public static final String UPDATE_RESOURCE_DETAILS_DL(int resourceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId;
 	}
@@ -1755,7 +1755,7 @@ public class ApiPath {
 	public static String SEARCH_LOCATION_FOR_PROVIDER_DL() {
 		return SHARED_DL + "/v1/providers/null/practices/null/locations-provider";
 	}
-	
+
 	public static String GET_PROVIDER_BY_CLIENT_ID_BL() {
 		return SERVICE_SHARED_BL + "/v1/providers/";
 	}
@@ -1791,23 +1791,32 @@ public class ApiPath {
 	public static final String PRACTICES_ASSOCIATED_TO_RESOURCE_DL(int resourceId) {
 		return SHARED_DL + "/v1/resources/" + resourceId + "/practices";
 	}
-	
+
 	public static final String PRACTICES_ASSOCIATED_TO_RESOURCE_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/resources/null/practices";
 	}
 
 	public static final String UPDATE_PASSWORD_DURING_ENROLLMENT(String uriType, String enrollmentId) {
-		if(uriType.equalsIgnoreCase("valid"))
+		if (uriType.equalsIgnoreCase("valid"))
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentials/" + enrollmentId;
 		else
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
 	}
-	
+
 	public static String SEARCH_RESOURCES_FOR_PROVIDER_BL(int providerId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources-provider";
 	}
 
 	public static String SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/resources-provider";
+	}
+
+	public static final String UPDATE_RESOURCES_FOR_PRACTICE_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices";
+	}
+
+	public static final String UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/resources/null/practices";
+
 	}
 }
