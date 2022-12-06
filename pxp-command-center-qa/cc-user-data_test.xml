@@ -48,6 +48,7 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer" />
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateExpiredStatusApiTests_DataLayer" />
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchUserWithEnrollmentStatusApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
