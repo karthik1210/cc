@@ -1811,6 +1811,7 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/providers/null/practices/null/resources-provider";
 	}
 
+
 	public static final String UPDATE_RESOURCES_FOR_PRACTICE_BL(int resourceId) {
 		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices";
 	}
@@ -1818,5 +1819,12 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices";
 
+	}
+
+	public static final String GET_USER_INFO(String serviceLayer, int userId) {
+		if(serviceLayer.equalsIgnoreCase("DL"))
+			return SERVICE_USER_DL + "/v1/users/" + userId;
+		else
+			return SERVICE_USER_BL + "/v1/users/" + userId;
 	}
 }
