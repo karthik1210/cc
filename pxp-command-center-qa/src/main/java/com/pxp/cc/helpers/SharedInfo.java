@@ -1699,5 +1699,24 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
+	
+	public Response associateDeassociatePracticeForResource_BL(int resourceId, int practiceId, String active) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		Map<String, Object> associateDeassociatePracticeForResourcePayload = associateDeassociatePracticeForResourceMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+	
+	public Response associateDeassociatePracticeForResourceUsingEmptyPayload_BL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+	
+	public Response associateDeassociatePracticeForResourceUsingNullValue_BL() {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
