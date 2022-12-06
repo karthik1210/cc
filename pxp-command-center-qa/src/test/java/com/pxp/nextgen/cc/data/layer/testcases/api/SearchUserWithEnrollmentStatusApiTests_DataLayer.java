@@ -1,5 +1,6 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
+import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
@@ -46,7 +47,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         validations = new Validations();
     }
 
-    @Test(priority = 1)
+    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26009 TC 003_Verify the Response code as 200, For type Internal & enrollstatus NOT_SENT, PENDING,CONFIRMED,EXPIRED  by using GET Request [BL/DL]")
     public void searchInternalUserWithEnrollmentStatusApiSuccess() throws IOException {
         userMap.clear();
         userMap = createNewInternalUser(testData.getProperty("pxpp.26460.enrollment.status.not.sent"));
@@ -56,7 +57,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         runOnce = false;
     }
 
-    @Test(priority = 2)
+    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26606 TC 001_Verify the Response code as 200, For type Client & enroll status NOT_SENT,CONFIRMED, PENDING and EXPIRED by using GET Request [DL]")
     public void searchClientUserWithEnrollmentStatusApiSuccess() throws Exception {
         orgListMap.clear();
         orgListMap = getOrgMapList();
@@ -71,7 +72,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         runOnce = false;
     }
 
-    @Test(priority = 3)
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP- 26611 TC 005_Verify the Response code as 200, For type VARReseller  & enroll status as NOT_SENT, CONFIRMED, EXPIRED, PENDING by using GET Request [DL]")
     public void searchVARResellerUserWithEnrollmentStatusApiSuccess() throws Exception {
         userMap.clear();
         userMap = createNewVarResellerUser(clientOrgId, providerId, testData.getProperty("pxpp.26460.enrollment.status.not.sent"));
@@ -80,7 +81,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         runOnce = false;
     }
 
-    @Test(priority = 4)
+    @Test(priority = 4,retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26610 TC 004_Verify the Response code as 204, For type Internal & enrollstatus as PENDING by using GET Request [DL]")
     public void searchInternalUserWithEnrollmentStatusWithNoContent() throws IOException {
         if(runOnce) {
             userMap.clear();
@@ -98,7 +99,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 5)
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26608 TC 002_Verify the Response code as 204, For type Client & enroll status as PENDING by using GET Request [DL]")
     public void searchClientUserWithEnrollmentStatusWithNoContent() throws IOException {
         if(runOnce) {
             orgListMap.clear();
@@ -121,7 +122,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 6)
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26612 TC 006_Verify the Response code as 204, For type VARReseller & enroll status as PENDING by using GET Request [DL]")
     public void searchVARResellerUserWithEnrollmentStatusWithNoContent() throws IOException {
         if(runOnce) {
             userMap.clear();
