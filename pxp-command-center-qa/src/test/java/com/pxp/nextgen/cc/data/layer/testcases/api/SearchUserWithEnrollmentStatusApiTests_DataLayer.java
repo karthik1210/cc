@@ -255,9 +255,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
     public void validatingResponseCodeForSearchUserWithEnrollmentStatus(String status) throws IOException {
         setupServiceRequestSpecificationBuilderForDataLayer();
         if (status.equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.not.sent"))) {
-            searchUserWithEnrollmentStatus(status, userType1);
-            searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
-            CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString().equalsIgnoreCase(status), true);
+            searchUserWithEnrollmentStatus(status, userType1, userId);
         } else if (status.equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.pending"))) {
             internalUserName = userMap.get("username").toString();
             internalEnrollmentId = CCUtils.generateAuthId();
@@ -266,17 +264,13 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             logStep("Validating response Code");
             CCUtils.responseTimeValidation(sendUserEnrollmentConsumerResponse);
             CCUtils.assertEquals(sendUserEnrollmentConsumerResponse.getStatusCode(), 200);
-            searchUserWithEnrollmentStatus(status, userType1);
-            searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
-            CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString().equalsIgnoreCase(status), true);
+            searchUserWithEnrollmentStatus(status, userType1, userId);
         } else if (status.equalsIgnoreCase(testData.getProperty("pxpp.26403.valid.expired.status"))) {
             updateExpiredStatusApiResponse = userInfo.updateExpiredStatus_DL("DL", "Valid", status, currentTs);
             logStep("Validating response information");
             CCUtils.responseTimeValidation(updateExpiredStatusApiResponse);
             CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 200);
-            searchUserWithEnrollmentStatus(status, userType1);
-            searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
-            CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString().equalsIgnoreCase(status), true);
+            searchUserWithEnrollmentStatus(status, userType1, userId);
         } else if (status.equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.confirmed"))) {
             internalEnrollmentId = CCUtils.generateAuthId();
             userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(internalEnrollmentId, initiatedTs, expiryTs, testData.getProperty("pxpp.26460.enrollment.status.pending"));
@@ -291,18 +285,18 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             CCUtils.responseTimeValidation(updatePasswordDuringEnrollmentApiResponse);
             CCUtils.assertEquals(updatePasswordDuringEnrollmentApiResponse.getStatusCode(), 200);
             setupServiceRequestSpecificationBuilderForDataLayer();
-            searchUserWithEnrollmentStatus(status, userType1);
-            searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
-            CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString().equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.confirmed")), true);
+            searchUserWithEnrollmentStatus(status, userType1, userId);
         }
     }
 
     @Test(enabled = false)
-    public void searchUserWithEnrollmentStatus(String status, String userType1) {
+    public void searchUserWithEnrollmentStatus(String status, String userType1, int userId) {
         searchUserWithEnrollmentApiResponse = userInfo.searchUserWithEnrollmentStatus("DL", userType1, "Valid", status);
         logStep("Validating response information");
         CCUtils.responseTimeValidation(searchUserWithEnrollmentApiResponse);
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 200);
         validations.verifyUserOutputWithValidInput(searchUserWithEnrollmentApiResponse, userType1);
+        searchUserWithEnrollmentApiResponse = userInfo.getUserInfo("DL", userId);
+        CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getBody().jsonPath().get("enrollmentStatus").toString().equalsIgnoreCase(status), true);
     }
 }
