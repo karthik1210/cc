@@ -47,7 +47,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         validations = new Validations();
     }
 
-    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26009 TC 003_Verify the Response code as 200, For type Internal & enrollstatus NOT_SENT, PENDING,CONFIRMED,EXPIRED  by using GET Request [BL/DL]")
+    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26009 TC 003_Verify the Response code as 200, For type Internal & enrollstatus NOT_SENT, PENDING,CONFIRMED,EXPIRED  by using GET Request [DL]")
     public void searchInternalUserWithEnrollmentStatusApiSuccess() throws IOException {
         userMap.clear();
         userMap = createNewInternalUser(testData.getProperty("pxpp.26460.enrollment.status.not.sent"));
