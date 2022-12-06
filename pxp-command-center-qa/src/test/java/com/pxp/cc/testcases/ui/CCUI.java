@@ -188,7 +188,7 @@ public class CCUI extends CommandCenterGenericTest {
     }
     
     public EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage() throws Exception {
-        if(editOrgDetailsGeneralSettingsPage==null){
+        if(editOrgDetailsGeneralSettingsPage == null){
         	editOrgDetailsGeneralSettingsPage = new EditOrgDetailsGeneralSettingsPage(driver);
         }
         return editOrgDetailsGeneralSettingsPage;

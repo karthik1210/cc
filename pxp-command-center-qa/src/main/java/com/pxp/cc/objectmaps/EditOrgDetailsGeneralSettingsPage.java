@@ -45,6 +45,12 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[normalize-space(text())='Inactive']")
 	private WebElement inactiveStatus;
+ 
+	@FindBy(xpath = "//p[@id='treeNodeName'])[3]")
+	private WebElement enterpriseArrow;
+	
+	@FindBy(xpath = "//p[@id='treeNodeName'])[2]")
+	private WebElement systemArrow;
 
 	public void clickClientOrg() {
 		CCUtils.verifyAndWaitForElement(clientOrg, driver);
@@ -161,7 +167,6 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickOnSystemArrow() {
-		WebElement systemArrow = driver.findElement(By.id("//p[@id='treeNodeName'])[2]"));
 		CCUtils.verifyAndWaitForElement(systemArrow, driver);
 		log("clicking on system level");
 		new Actions(driver).moveToElement(systemArrow).click().build().perform();
@@ -169,7 +174,6 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickOnEnterpriseArrow() {
-		WebElement enterpriseArrow = driver.findElement(By.xpath("//p[@id='treeNodeName'])[3]"));
 		CCUtils.verifyAndWaitForElement(enterpriseArrow, driver);
 		log("clicking on Enterprise level");
 		new Actions(driver).moveToElement(enterpriseArrow).click().build().perform();
