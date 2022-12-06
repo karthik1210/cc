@@ -232,7 +232,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "unsavedCancelBtn")
 	private WebElement activatePopupCancelbutton;
 
-	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Chat']/../following-sibling::div/span[text()='ACTIVATE']")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Patient Chat']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement chatActivateButton;
 
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Engage']/../following-sibling::div/span[text()='ACTIVATE']")
@@ -244,13 +244,13 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Pay']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement payActivateButton;
 
-	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Portal']/../following-sibling::div/span[text()='ACTIVATE']")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Patient Portal']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement portalActivateButton;
 
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//button[@class='button_arrow'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
 	private WebElement purchasedSolutionExpandButton;
 
 	private String purchaseActivateButton(String solutionImageIcon) {
@@ -308,7 +308,28 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
 	private WebElement toasterMessage;
-
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activeVirtualVisitsMoreOptions;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Pay ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePayMoreOptions;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Engage ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activeEngageMoreOptions;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Portal ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePatientPortalMoreOptions;	
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Chat ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePatientChatMoreOptions;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' PSS ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePSSMoreOptions;	
+	
+	@FindBy(xpath = "//button[@id='highlight_off']")
+	private WebElement terminateButton;
+	
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	List<String> activeSolutionName = new ArrayList<String>();
@@ -1104,5 +1125,53 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton, driver);
 		purchasedSolutionExpandButton.click();
 		log("click to pruchased solution expand button");
+	}
+	
+	public void clickToVirtualVisitsMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activeVirtualVisitsMoreOptions);
+		CCUtils.verifyAndWaitForElement(activeVirtualVisitsMoreOptions, driver);
+		activeVirtualVisitsMoreOptions.click();
+		log("click to virtual visits more options");
+	}
+	
+	public void clickToPayMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePayMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePayMoreOptions, driver);
+		activePayMoreOptions.click();
+		log("click to pay more options");
+	}
+	
+	public void clickToEngageMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activeEngageMoreOptions);
+		CCUtils.verifyAndWaitForElement(activeEngageMoreOptions, driver);
+		activeEngageMoreOptions.click();
+		log("click to engage more options");
+	}
+	
+	public void clickToPatientPortalMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePatientPortalMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePatientPortalMoreOptions, driver);
+		activePatientPortalMoreOptions.click();
+		log("click to patient portal more options");
+	}
+	
+	public void clickToPatientChatMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePatientChatMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePatientChatMoreOptions, driver);
+		activePatientChatMoreOptions.click();
+		log("click to patient chat more options");
+	}
+	
+	public void clickToPSSMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePSSMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePSSMoreOptions, driver);
+		activePSSMoreOptions.click();
+		log("click to PSS more options");
+	}
+	
+	public void clickToTerminateOption() {
+		CCUtils.verifyAndWaitForElement(terminateButton, driver);
+		terminateButton.click();
+		log("click to terminate option");
 	}
 }
