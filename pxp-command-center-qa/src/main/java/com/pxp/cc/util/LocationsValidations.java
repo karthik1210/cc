@@ -341,4 +341,14 @@ public class LocationsValidations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
 	}
 
+	public void verifyGetProviderApiResponseBody(Response response, int providerId, String firstName,String lastName) throws IOException {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("providerId"), providerId);
+			CCUtils.assertEquals(jsonObject.get("firstName"), firstName);
+			CCUtils.assertEquals(jsonObject.get("lastName"), lastName);
+		}
+	}
 }
