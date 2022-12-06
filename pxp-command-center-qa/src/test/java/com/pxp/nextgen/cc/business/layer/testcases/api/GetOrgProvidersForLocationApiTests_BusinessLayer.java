@@ -35,8 +35,6 @@ public class GetOrgProvidersForLocationApiTests_BusinessLayer extends BaseRest {
 		sharedInfo = new SharedInfo();
 		locationsInfo = new LocationsInfo();
 		locationsValidations = new LocationsValidations();
-	
-
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
@@ -83,12 +81,11 @@ public class GetOrgProvidersForLocationApiTests_BusinessLayer extends BaseRest {
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_BL(locationId, practiceId, true);
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
-
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing  practiceId & existing Provider name and verify status code and response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing  practiceId and existing Provider name and verify status code and response body")
 	public void testGetProviderForLocationForExistingPracticeIdAndName() throws IOException {
-		logStep("Enter existing  practiceId & Provider name");
+		logStep("Enter existing  practiceId and Provider name");
 		fetchProvidersForLocationResponse = locationsInfo.getOrgProvidersForLocation_BL(practiceId, firstName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProvidersForLocationResponse);
@@ -97,40 +94,40 @@ public class GetOrgProvidersForLocationApiTests_BusinessLayer extends BaseRest {
 				lastName);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing  practiceId & existing Provider name and verify status code")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing  practiceId and existing Provider name and verify status code")
 	public void testGetProviderForLocationForNonExistingPracticeIdAndExistingName() throws IOException {
-		logStep("Enter non existing  practiceId & existing Provider name ");
+		logStep("Enter non existing  practiceId and existing Provider name ");
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
 		fetchProvidersForLocationResponse = locationsInfo.getOrgProvidersForLocation_BL(practiceId, firstName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProvidersForLocationResponse);
 		CCUtils.assertEquals(fetchProvidersForLocationResponse.getStatusCode(), 204);
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing  practiceId & non existing Provider name and verify status code")
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing  practiceId and non existing Provider name and verify status code")
 	public void testGetProviderForLocationForExistingPracticeIdAndNonExistingName() throws IOException {
-		logStep("Enter existing  practiceId & non existing Provider name");
-		String firstName=CCUtils.generateAlphaNumericString(10);
+		logStep("Enter existing  practiceId and non existing Provider name");
+		String firstName = CCUtils.generateAlphaNumericString(10);
 		fetchProvidersForLocationResponse = locationsInfo.getOrgProvidersForLocation_BL(practiceId, firstName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProvidersForLocationResponse);
 		CCUtils.assertEquals(fetchProvidersForLocationResponse.getStatusCode(), 204);
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing  practiceId & non existing Provider name and verify status code ")
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing  practiceId and non existing Provider name and verify status code ")
 	public void testGetProviderForLocationForNonExistingPracticeIdAndNonExistingName() throws IOException {
-		logStep("Enter non existing  practiceId & non existing Provider name ");
+		logStep("Enter non existing  practiceId and non existing Provider name ");
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
-		String firstName=CCUtils.generateAlphaNumericString(10);
+		String firstName = CCUtils.generateAlphaNumericString(10);
 		fetchProvidersForLocationResponse = locationsInfo.getOrgProvidersForLocation_BL(practiceId, firstName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProvidersForLocationResponse);
 		CCUtils.assertEquals(fetchProvidersForLocationResponse.getStatusCode(), 204);
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values practiceId &  Provider name and verify status code ")
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practiceId and Provider name as null and verify status code ")
 	public void testGetProviderForLocationForNullValuesPracticeIdAndName() throws IOException {
-		logStep("Enter null values practiceId &  Provider name");
+		logStep("Enter practiceId and Provider name as null");
 		fetchProvidersForLocationResponse = locationsInfo.getOrgProvidersForLocationNullValues_BL();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProvidersForLocationResponse);
