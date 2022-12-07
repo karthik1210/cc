@@ -3503,4 +3503,11 @@ public class Validations {
 			}
 		}
 	}
+	
+	public void verifyResponseBodyForGetPracticeResource(Response response, String en, String es) throws NullPointerException, IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("en").toString(), en);
+		CCUtils.assertEquals(jsonpath.get("es").toString(), es);
+	}
+
 }
