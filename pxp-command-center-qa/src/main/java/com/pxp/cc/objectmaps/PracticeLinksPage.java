@@ -57,10 +57,10 @@ public class PracticeLinksPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='SAVE']")
     private WebElement saveButtonForPracticeWebsite;
 
-    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_down '] | //div[normalize-space(text())='Practice Links']/../following-sibling::div/button/mat-icon[text()=' keyboard_arrow_down ']")
     private WebElement practiceWebsiteExpandArrow;
 
-    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up ']")
+    @FindBy(xpath = "//div[normalize-space(text())='Practice Links']/../following-sibling::div/span/button/mat-icon[text()=' keyboard_arrow_up '] | //div[normalize-space(text())='Practice Links']/../following-sibling::div/button/mat-icon[text()=' keyboard_arrow_up ']")
     private WebElement practiceWebsiteCollapseArrow;
 
     @FindBy(xpath = "//span/input")

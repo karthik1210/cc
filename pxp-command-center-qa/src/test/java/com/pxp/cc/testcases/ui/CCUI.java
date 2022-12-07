@@ -33,6 +33,9 @@ public class CCUI extends CommandCenterGenericTest {
     InterfaceSetupPage interfaceSetupPage;
     EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
     EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage;
+    ResourceDetailsPage resourceDetailsPage;
+    AddNewResourcePage addNewResourcePage;
+    AddNewProviderPage addNewProviderPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -123,6 +126,27 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return editBasicInfoGeneralSettingsPage;
     }
+    
+    public ResourceDetailsPage resourceDetailsPage() throws Exception {
+        if(resourceDetailsPage == null){
+        	resourceDetailsPage = new ResourceDetailsPage(driver);
+        }
+        return resourceDetailsPage;
+    }
+    
+    public AddNewResourcePage addNewResourcePage() throws Exception {
+        if(addNewResourcePage == null){
+        	addNewResourcePage = new AddNewResourcePage(driver);
+        }
+        return addNewResourcePage;
+    }
+    
+    public AddNewProviderPage addNewProviderPage() throws Exception {
+        if(addNewProviderPage == null){
+        	addNewProviderPage = new AddNewProviderPage(driver);
+        }
+        return addNewProviderPage;
+    }
 
     public static void getClientSystementErpriseandPractice() throws Exception {
 
@@ -144,7 +168,7 @@ public class CCUI extends CommandCenterGenericTest {
             ccui = new CCUI(testData,driver);
             ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
             ccui.getNgHierarchyClientCreationPage().clickSearchButton();
-            ccui.getNgHierarchyClientCreationPage().clickSearchResult();
+            ccui.getNgHierarchyClientCreationPage().clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
             ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
             ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
             ccui.getPrivacyPolicySettingsPage().clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
