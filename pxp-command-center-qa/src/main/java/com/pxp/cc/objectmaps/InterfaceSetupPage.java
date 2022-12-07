@@ -37,7 +37,7 @@ public class InterfaceSetupPage extends CCMainPage {
     @FindBy(xpath = "//span[normalize-space(text())='+ New']")
     private WebElement newButtonForInterfaceSetup;
 
-    @FindBy(xpath = "//div[text()='Interface Setup']/../following-sibling::div/div/span/following-sibling::button/mat-icon[normalize-space(text())='keyboard_arrow_down']")
+    @FindBy(xpath = "//div[text()='Interface Setup']/../following-sibling::div/div/span/following-sibling::button/mat-icon[normalize-space(text())='keyboard_arrow_down'] | //div[text()='Interface Setup']/../following-sibling::div//span/following-sibling::button/mat-icon[normalize-space(text())='keyboard_arrow_down']")
     private WebElement interfaceSetupExpandButton;
 
     @FindBy(xpath = "//div[text()='Interface Setup']/../following-sibling::div/div/span/following-sibling::button/mat-icon[normalize-space(text())='keyboard_arrow_up']")

@@ -151,8 +151,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
 		internalUsersPage.verifyInternalUsersPageTitle();
 	}
 
-	@Test(enabled = true, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new active internal user(without user role) functionality")
 	public void testCreateActiveInternalUserWithoutRole() throws Exception {
 		logStep("Create a new active internal user with user roles and verify success toaster");
 		commonMethods = new CommonMethods(driver);

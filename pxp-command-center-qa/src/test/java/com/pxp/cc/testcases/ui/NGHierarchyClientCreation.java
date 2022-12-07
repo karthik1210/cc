@@ -40,7 +40,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
         logStep("Searching a client in client directory");
         ngHierarchyClientCreationPage.searchNode(clientName);
         ngHierarchyClientCreationPage.clickSearchButton();
-        ngHierarchyClientCreationPage.clickSearchResult();
+        ngHierarchyClientCreationPage.clickSearchResult(clientName);
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         generalSettingsPage.verifyClientNodeIsSelected();
@@ -72,7 +72,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         logStep("Verify general settings page title");
         generalSettingsPage.verifyGeneralSettingsPageTitle();
         logStep("Verify manage client button is displayed");
-        driver.navigate().refresh();
         ngHierarchyClientCreationPage.clickOnManageClient();
         ngHierarchyClientCreationPage.clickOnExpandArrow(systemName);
         ngHierarchyClientCreationPage.verifyAddEnterpriseButton();
