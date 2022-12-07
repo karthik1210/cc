@@ -33,6 +33,9 @@ public class CCUI extends CommandCenterGenericTest {
     InterfaceSetupPage interfaceSetupPage;
     EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
     EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage;
+    ResourceDetailsPage resourceDetailsPage;
+    AddNewResourcePage addNewResourcePage;
+    AddNewProviderPage addNewProviderPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -122,6 +125,27 @@ public class CCUI extends CommandCenterGenericTest {
         	editBasicInfoGeneralSettingsPage = new EditBasicInfoGeneralSettingsPage(driver);
         }
         return editBasicInfoGeneralSettingsPage;
+    }
+    
+    public ResourceDetailsPage resourceDetailsPage() throws Exception {
+        if(resourceDetailsPage == null){
+        	resourceDetailsPage = new ResourceDetailsPage(driver);
+        }
+        return resourceDetailsPage;
+    }
+    
+    public AddNewResourcePage addNewResourcePage() throws Exception {
+        if(addNewResourcePage == null){
+        	addNewResourcePage = new AddNewResourcePage(driver);
+        }
+        return addNewResourcePage;
+    }
+    
+    public AddNewProviderPage addNewProviderPage() throws Exception {
+        if(addNewProviderPage == null){
+        	addNewProviderPage = new AddNewProviderPage(driver);
+        }
+        return addNewProviderPage;
     }
 
     public static void getClientSystementErpriseandPractice() throws Exception {
