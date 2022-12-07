@@ -1046,6 +1046,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickToActivateButtonOfVirtualVisitsSolution() {
+		CCUtils.scrollPageViaElement(driver, virtualVisitsActivateButton);
 		CCUtils.verifyAndWaitForElement(virtualVisitsActivateButton, driver);
 		virtualVisitsActivateButton.click();
 		log("clicked to activate button of Virtual visits");

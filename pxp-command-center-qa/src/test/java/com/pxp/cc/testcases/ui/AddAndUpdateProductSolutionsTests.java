@@ -46,7 +46,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 			}
 		}
 
-	    @Test(priority=0,retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section")
+	    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section")
 		public void testAddPurchaseSolutionAtPracticeLevel() throws Exception {
 			ngHierarchyClientCreate();
 			ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -73,7 +73,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 			runOnce = false;
 		}
 	    
-	    @Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	    @Test(priority=0,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 		public void testTerminatePurchaseSolutionAtPracticeLevel() throws Exception {
 	    	ngHierarchyClientCreate();
 			ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
