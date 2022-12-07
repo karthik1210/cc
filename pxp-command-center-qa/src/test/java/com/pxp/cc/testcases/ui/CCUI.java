@@ -184,7 +184,7 @@ public class CCUI extends CommandCenterGenericTest {
             ccui = new CCUI(testData,driver);
             ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
             ccui.getNgHierarchyClientCreationPage().clickSearchButton();
-            ccui.getNgHierarchyClientCreationPage().clickSearchResult();
+            ccui.getNgHierarchyClientCreationPage().clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
             ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
             ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
             ccui.getPrivacyPolicySettingsPage().clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
