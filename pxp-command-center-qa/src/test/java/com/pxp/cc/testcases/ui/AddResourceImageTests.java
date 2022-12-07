@@ -83,7 +83,7 @@ public class AddResourceImageTests extends CommandCenterGenericTest {
 			logStep("Searching a client in client directory");
 			ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
 			ccui.getNgHierarchyClientCreationPage().clickSearchButton();
-			ccui.getNgHierarchyClientCreationPage().clickSearchResult();
+			ccui.getNgHierarchyClientCreationPage().clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
 			logStep("Navigating To General Settings page");
 			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
 			ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
