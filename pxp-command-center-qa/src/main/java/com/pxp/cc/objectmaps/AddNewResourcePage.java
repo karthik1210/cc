@@ -149,7 +149,7 @@ public class AddNewResourcePage extends CCMainPage {
 	}
 
 	public void clickFirstInAutoSuggestion() {
-		CCUtils.verifyAndWaitForElement(selectFirstOption, driver);
+		CCUtils.verifyAndWaitForElementPresence(selectFirstOption, driver);
 		javascriptClick(selectFirstOption);
 	}
 	
