@@ -123,7 +123,7 @@ public class SavePracticeResourceApiTests_BusinessLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null payload and valid resource id and verify response body")
 	public void testSavePracticeResourceFunctionality_NullPayload() throws IOException {
-		logStep("Enter invalid practice id");
+		logStep("Validating response information");
 		savePracticeResourceApiResponse = sharedInfo.savePracticeResourceUsingNullValues_BL();
 		logStep("Validating response information");
 		CCUtils.assertEquals(savePracticeResourceApiResponse.getStatusCode(), 400);
