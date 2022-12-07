@@ -33,6 +33,7 @@ public class CCUI extends CommandCenterGenericTest {
     InterfaceSetupPage interfaceSetupPage;
     EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
     EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage;
+    TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -192,5 +193,13 @@ public class CCUI extends CommandCenterGenericTest {
         	editOrgDetailsGeneralSettingsPage = new EditOrgDetailsGeneralSettingsPage(driver);
         }
         return editOrgDetailsGeneralSettingsPage;
+    }
+    
+   
+    public TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage() throws Exception {
+        if(tabsNavigationOnGeneralSettingPage == null){
+        	tabsNavigationOnGeneralSettingPage = new TabsNavigationOnGeneralSettingPage(driver);
+        }
+        return tabsNavigationOnGeneralSettingPage;
     }
 }
