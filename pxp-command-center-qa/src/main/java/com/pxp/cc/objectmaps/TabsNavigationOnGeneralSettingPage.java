@@ -44,7 +44,7 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 	private WebElement genaralSettingIcon;
 
 	public void verifyVisibilityOfTab() throws InterruptedException, AWTException {
-		log("Verifying Location,Provider & Resources ,Appointment type Tabs are present");
+		log("Verifying Locations, Provider & Resources, Appointment types Tabs are present");
 		verifyLocationTab();
 		verifyProvidersAndResourcesTab();
 		verifyAppointmentTypeTab();
@@ -53,7 +53,7 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 	public void verifyLocationTab() {
 		CCUtils.verifyAndWaitForElement(locationTab, driver);
 		CCUtils.assertEquals(locationTab.isEnabled(), true);
-		log("Location Tab is Enabled");
+		log("Locations Tab is Enabled");
 	}
 
 	public void verifyProvidersAndResourcesTab() {
@@ -65,11 +65,11 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 	public void verifyAppointmentTypeTab() {
 		CCUtils.verifyAndWaitForElement(appointmentTypeTab, driver);
 		CCUtils.assertEquals(appointmentTypeTab.isEnabled(), true);
-		log("AppointmentTypeTab Tab is Enabled");
+		log("AppointmentType Tab is Enabled");
 	}
 
 	public void verifyVisibilityOfTiles() throws InterruptedException, AWTException {
-		log("Verifying Location,Provider & Resources ,Appointment type Tabs are present");
+		log("Verifying Locations, Provider & Resources, Appointment types Tabs are present");
 		verifyLocationTile();
 		verifyProvidersAndResourcesTile();
 		verifyAppointmentTypeTile();
@@ -78,7 +78,7 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 	public void verifyLocationTile() {
 		CCUtils.verifyAndWaitForElement(locationTile, driver);
 		CCUtils.assertEquals(locationTile.isEnabled(), true);
-		log("Location tile is Enabled");
+		log("Locations tile is Enabled");
 	}
 
 	public void verifyProvidersAndResourcesTile() {
@@ -90,11 +90,11 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 	public void verifyAppointmentTypeTile() {
 		CCUtils.verifyAndWaitForElement(appointmentTypeTile, driver);
 		CCUtils.assertEquals(appointmentTypeTile.isEnabled(), true);
-		log("AppointmentTypeTab tile is Enabled");
+		log("AppointmentType tile is Enabled");
 	}
 
 	public void verifyNavigationOfTab() throws InterruptedException, AWTException {
-		log("Verifying Location,Provider & Resources ,Appointment type Tabs are present");
+		log("Verifying Locations, Provider & Resources, Appointment types Tabs are present");
 		verifyNavigationLocationTab();
 		verifyNavigationProvidersAndResourcesTab();
 		verifyNavigationAppointmentTypeTab();
@@ -125,23 +125,23 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 	public void verifyLocationlabel() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Locations");
-		log("LocationLabel is displayed");
+		log("LocationLabel is displayed on Locations page");
 	}
 
 	public void verifyProvidersAndResourceslabel() {
 		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Providers, Resources & Staff");
-		log("ProvidersAndResources Label is displayed");
+		log("Providers, Resources & Staff Label is displayed on Providers, Resources & Staff page");
 	}
 
 	public void verifynAppointmentTypelabel() {
 		CCUtils.verifyAndWaitForElement(appointmentLabel, driver);
 		CCUtils.assertEquals(appointmentLabel.getText().trim(), "Appointment Types");
-		log("nAppointmentType Label is displayed");
+		log("Appointment Types Label is displayed on Appointment Types page");
 	}
 
 	public void verifyNavigationOfTile() throws InterruptedException, AWTException {
-		log("Verifying Location,Provider & Resources ,Appointment type Tabs are present");
+		log("Verifying Locations, Provider & Resources, Appointment types Tabs are present");
 		verifyNavigationLocationTile();
 		verifyNavigationProvidersAndResourcesTile();
 		verifyNavigationAppointmentTypeTile();

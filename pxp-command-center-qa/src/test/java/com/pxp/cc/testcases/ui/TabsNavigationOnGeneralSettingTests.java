@@ -24,9 +24,9 @@ public class TabsNavigationOnGeneralSettingTests extends CommandCenterGenericTes
 			}
 	}
 
-	@Test(priority=1, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers & Resources,Appointments type tab & tiles is presents at Client level")
+	@Test(priority=1, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles are present at Client level")
 	public void verifyVisibilityOfTabsAndTilesAtClientLevel() throws Exception {
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles is presents at Client level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents at Client level");
 		ngHierarchyClientCreate();
 		ccui.editBasicInfoGeneralSettingsPage().clickClientOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
@@ -34,9 +34,9 @@ public class TabsNavigationOnGeneralSettingTests extends CommandCenterGenericTes
 		runOnce = false;
 	}
 
-	@Test(priority=2, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers & Resources,Appointments type tab & tiles navigate respective pages at Client level")
+	@Test(priority=2, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles navigate respective pages at Client level")
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientLevel() throws Exception {
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles navigate respective pages at Client level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client level");
 		ngHierarchyClientCreate();
 		ccui.editBasicInfoGeneralSettingsPage().clickClientOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
@@ -44,19 +44,19 @@ public class TabsNavigationOnGeneralSettingTests extends CommandCenterGenericTes
 		runOnce = false;
 	}
 
-	@Test(priority=3, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers & Resources,Appointments type tab & tiles is presents at System level")
+	@Test(priority=3, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles are present at System level")
 	public void verifyVisibilityOfTabsAndTilesAtSystemLevel() throws Exception {
 		ngHierarchyClientCreate();
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles is presents At System Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents At System Level");
 		ccui.editBasicInfoGeneralSettingsPage().clickSystemOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
 		runOnce = false;
 	}
 
-	@Test(priority=4, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers & Resources,Appointments type tab & tiles navigate respective pages at System Level")
+	@Test(priority=4, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles navigate respective pages at System Level")
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtSystemLevel() throws Exception {
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles navigate respective pages at System Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at System Level");
 		ngHierarchyClientCreate();
 		ccui.editBasicInfoGeneralSettingsPage().clickSystemOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
@@ -64,19 +64,19 @@ public class TabsNavigationOnGeneralSettingTests extends CommandCenterGenericTes
 		runOnce = false;
 	}
 
-	@Test(priority=5, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers & Resources,Appointments type tab & tiles is presents at Enterprise level")
+	@Test(priority=5, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles are present at Enterprise level")
 	public void verifyVisibilityOfTabsAndTilesAtEnterpriseLevel() throws Exception {
 		ngHierarchyClientCreate();
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles is presents At Enterprise Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents At Enterprise Level");
 		ccui.editBasicInfoGeneralSettingsPage().clickEnterpriseOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
 		runOnce = false;
 	}
 
-	@Test(priority=6, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers& Resources,Appointments type tab & tiles navigate respective pages at Enterprise Level")
+	@Test(priority=6, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level")
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtEnterpriseLevel() throws Exception {
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles navigate respective pages at Enterprise Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level");
 		ngHierarchyClientCreate();
 		ccui.editBasicInfoGeneralSettingsPage().clickEnterpriseOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
@@ -85,18 +85,18 @@ public class TabsNavigationOnGeneralSettingTests extends CommandCenterGenericTes
 	}
 	
 	
-	@Test(priority=7, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers& Resources,Appointments type tab & tiles is presents at Practice level")
+	@Test(priority=7, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles are present at Practice level")
 	public void verifyVisibilityOfTabsAndTilesAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles is presents At Practice Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents At Practice Level");
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
 		runOnce = false;
 	}
 	
-	@Test(priority=8, retryAnalyzer = RetryAnalyzer.class, description = "Verify locatin,Providers& Resources,Appointments type tab & tiles navigate respective pages at Practice Level")
+	@Test(priority=8, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources,, Appointment types tab & tiles navigate respective pages at Practice Level")
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtPracticeLevel() throws Exception {
-		logStep("Verify locatin,Providers& Resources,Appointments type tab & tiles navigate respective pages at Enterprise Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level");
 		ngHierarchyClientCreate();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTile();
