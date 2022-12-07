@@ -141,37 +141,38 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add/remove resources for a provider and a practice when enter resourceId as zero")
 	public void testErrorResourcesForProviderWhenResourceIdIsZero() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
-		addResourcePayload.add(new ResourceDetails(resourceId, true));
+		addResourcePayload.add(new ResourceDetails(0, true));
 		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(providerId, practiceId, addResourcePayload);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceResponse);
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 207);
-		validations.verifyResponseBodyOfAddRemoveResource(addResourceResponse, 0,
-				testData.getProperty("status.error"));
+		validations.verifyResponseBodyOfAddRemoveResource(addResourceResponse, 0, testData.getProperty("status.error"));
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add/remove resources for a provider and a practice when enter non-existing practice Id")
 	public void testErrorResourcesForProviderWhenProvideNonExistingPracticeId() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
-		addResourcePayload.add(new ResourceDetails(resourceId, true));
-		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(providerId,Integer.parseInt(testData.getProperty("nonexisting.practiceId")), addResourcePayload);
+		addResourcePayload.add(new ResourceDetails(0, true));
+		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(providerId,
+				Integer.parseInt(testData.getProperty("nonexisting.practiceId")), addResourcePayload);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceResponse);
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 400);
 		validations.verifyErrorInResponseForNullValuesForOrgIdField(addResourceResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add/remove resources for a provider and a practice when enter non-existing provider Id")
 	public void testErrorResourcesForProviderWhenProvideNonExistingProviderId() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
 		addResourcePayload.add(new ResourceDetails(0, true));
-		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(Integer.parseInt(testData.getProperty("nonexisting.providerId")),practiceId,addResourcePayload);
+		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(
+				Integer.parseInt(testData.getProperty("nonexisting.providerId")), practiceId, addResourcePayload);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceResponse);
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 400);
 		validations.verifyErrorInResponseForNullValuesForOrgIdField(addResourceResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add resources for a provider and a practice when enter resource Id as null")
 	public void testErrorAddResourcesForProviderWhenEnterResourceIdNULL() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
@@ -180,9 +181,9 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceResponse);
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 400);
-		validations.verifyAddRemoveResourceForNullResourceIdAndActive(addResourceResponse,"ResourceId cannot be null");
+		validations.verifyAddRemoveResourceForNullResourceIdAndActive(addResourceResponse, "ResourceId cannot be null");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add resources for a provider and a practice when enter active as null")
 	public void testAddResourcesForProviderWhenEnterActiveNULL() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
@@ -191,9 +192,9 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceResponse);
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 400);
-		validations.verifyAddRemoveResourceForNullResourceIdAndActive(addResourceResponse,"Active cannot be null");
+		validations.verifyAddRemoveResourceForNullResourceIdAndActive(addResourceResponse, "Active cannot be null");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add resources for a provider and a practice when enter both active and resource Id as null")
 	public void testAddResourcesForProviderWhenEnterBothResourceIdAndActiveAsNULL() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
@@ -202,9 +203,10 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceResponse);
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 400);
-		validations.verifyAddRemoveResourceForNullResourceIdAndActive(addResourceResponse,"ResourceId cannot be null Active cannot be null");
+		validations.verifyAddRemoveResourceForNullResourceIdAndActive(addResourceResponse,
+				"ResourceId cannot be null Active cannot be null");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body for add resources for a provider and a practice when enter both provider id and practice id as null")
 	public void testAddResourcesForProviderWhenEnterBothProviderIdAndPracticeIdAsNULL() throws IOException {
 		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
