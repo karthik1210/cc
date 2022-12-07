@@ -46,7 +46,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		}
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section")
+	@Test(priority = 0,retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section")
 	public void testAddPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -73,7 +73,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 1,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 	public void testTerminateVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -85,7 +85,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 2,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 	public void testTerminatePayPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -97,7 +97,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 	public void testTerminateEngagePurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -109,7 +109,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 4,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 	public void testTerminateChatPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -121,7 +121,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 5,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 	public void testTerminatePortalPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -133,7 +133,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
 	public void testTerminatePSSPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -142,6 +142,40 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
+	}
+	
+	@Test(priority = 7,retryAnalyzer = RetryAnalyzer.class, description = "Verify activate pop up web elements")
+	public void testActivatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		String pracName = clientSystementErpriseandPractice.get("practiceName");
+		log("name of practice : "+pracName);
+		ccui.getGeneralSettingsPage().verifyActivatePopupTitle();
+		ccui.getGeneralSettingsPage().verifyActivateTerminatePopupCancelButtonAndCrossIcon();
+		ccui.getGeneralSettingsPage().cautionActivateMessage(pracName);
+		runOnce = false;
+	}
+	
+	@Test(priority = 8,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate pop up web elements")
+	public void testTerminatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		String pracName = clientSystementErpriseandPractice.get("practiceName");
+		log("name of practice : "+pracName);
+		ccui.getGeneralSettingsPage().clickToVirtualVisitsMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().verifyTerminatePopupTitle();
+		ccui.getGeneralSettingsPage().verifyActivateTerminatePopupCancelButtonAndCrossIcon();
+		ccui.getGeneralSettingsPage().cautionTerminateMessage(pracName);
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");		
 		runOnce = false;
 	}
 }
