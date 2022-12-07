@@ -1803,6 +1803,13 @@ public class ApiPath {
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
 	}
 
+	public static final String ADD_REMOVE_RESOURCE_FOR_PROVIDER(int providerId, int practiceId) {
+		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
+	}
+
+	public static final String ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL = SHARED_DL
+			+ "/v1/providers/null/practices/null/resources";
+
 	public static String SEARCH_RESOURCES_FOR_PROVIDER_BL(int providerId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources-provider";
 	}
@@ -1833,5 +1840,17 @@ public class ApiPath {
 			return SERVICE_USER_DL + "/v1/users/" + userId;
 		else
 			return SERVICE_USER_BL + "/v1/users/" + userId;
+	}
+	
+	public static final String SAVE_PRACTICE_RESOURCES_BL(int practiceId, int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+	
+	public static final String GET_PRACTICE_RESOURCES_BL(int practiceId, int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+	
+	public static final String SAVE_PRACTICE_RESOURCES_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null";
 	}
 }

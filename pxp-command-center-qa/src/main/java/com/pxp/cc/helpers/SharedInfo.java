@@ -4,6 +4,7 @@ package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1690,6 +1691,23 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
+	public Response putAddRemoveResourcesForProvider(int providerId, int practiceId,List<ResourceDetails> addRemoveResourcePayload) {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
+		List<ResourceDetails> addRemoveResource = addRemoveResourcePayload;
+		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
+	}
+	
+	public Response putAddRemoveResourcesForProvider_Null(List<ResourceDetails> addRemoveResourcePayload) {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
+		List<ResourceDetails> addRemoveResource = addRemoveResourcePayload;
+		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
+	}
+	
+	public Response getRemoveResourcesForProvider(int providerId, int practiceId) {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response getPracticesAssociatedToResource_DL(int resourceId) {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_DL(resourceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -1727,6 +1745,22 @@ public class SharedInfo extends BaseRest {
 
 	public Response associateDeassociatePracticeForResourceUsingNullValue_BL() {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response savePracticeResource_BL(int practiceId, int resourcerId, String en, String es) {
+		String url = ApiPath.SAVE_PRACTICE_RESOURCES_BL(practiceId, resourcerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+	}
+	
+	public Response getPracticeResourceDetails_BL(int practiceId, int resourceId) {
+		String url = ApiPath.GET_PRACTICE_RESOURCES_BL(practiceId, resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response savePracticeResourceUsingNullValues_BL() {
+		String url = ApiPath.SAVE_PRACTICE_RESOURCES_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }
