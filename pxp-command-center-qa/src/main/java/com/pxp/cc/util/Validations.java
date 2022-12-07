@@ -3451,15 +3451,14 @@ public class Validations {
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("roleId"), true);
 	}
-	
+
 	public void verifyResponseBodyForUpdateResource(Response response, int resourceId, String name) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("resourceId"), resourceId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
-	
-	public void verifyErrorResponseBodyForUpdateResource(Response response, int resourceId)
-			throws IOException {
+
+	public void verifyErrorResponseBodyForUpdateResource(Response response, int resourceId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource not found by id=" + resourceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -3479,13 +3478,14 @@ public class Validations {
 		for (int i = 0; i < responseBody.length(); i++) {
 			jsonObject = responseBody.getJSONObject(i);
 			CCUtils.assertTrue(
-					actualProviderInfoList.contains(
-							new ProviderInfo(jsonObject.getInt("providerId"), jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
+					actualProviderInfoList.contains(new ProviderInfo(jsonObject.getInt("providerId"),
+							jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
 					"providerId" + jsonObject.getInt("providerId") + " doesn't exist");
 		}
 	}
 
-	public void verifySearchResourcesToAssociateWithProviderApiResponseBody(Response response, int resourceId, String resourceName) throws IOException {
+	public void verifySearchResourcesToAssociateWithProviderApiResponseBody(Response response, int resourceId,
+			String resourceName) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -3494,7 +3494,36 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("name"), resourceName);
 		}
 	}
-	
+
+	public void verifyResponseBodyOfGetResource(Response response, int resourceId) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			Log4jUtil.log("verifying the resource Id");
+		}
+	}
+
+	public void verifyResponseBodyOfAddRemoveResource(Response response, int resourceId, String status) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			CCUtils.assertEquals(jsonObject.get("status"), status);
+			Log4jUtil.log("verifying the resource Id and status");
+		}
+	}
+
+	public void verifyAddRemoveResourceForNullResourceIdAndActive(Response response, String value) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		if (jsonpath.get("message").toString().contains(value)) {
+			CCUtils.assertTrue(true,
+					"verifying error message " + value + " is present in " + jsonpath.get("message").toString());
+		}
+	}
+
 	public void verifyResponseBodyForResourceAssociatedToPractices(Response response, ArrayList<Integer> practiceIds)
 			throws IOException {
 		for (int i = 0; i < practiceIds.size(); i++) {

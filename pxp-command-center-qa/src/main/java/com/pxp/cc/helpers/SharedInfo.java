@@ -4,6 +4,7 @@ package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -1688,6 +1689,23 @@ public class SharedInfo extends BaseRest {
 	public Response getLocationsForResourceForNullValues_DL() {
 		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response putAddRemoveResourcesForProvider(int providerId, int practiceId,List<ResourceDetails> addRemoveResourcePayload) {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
+		List<ResourceDetails> addRemoveResource = addRemoveResourcePayload;
+		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
+	}
+	
+	public Response putAddRemoveResourcesForProvider_Null(List<ResourceDetails> addRemoveResourcePayload) {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
+		List<ResourceDetails> addRemoveResource = addRemoveResourcePayload;
+		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
+	}
+	
+	public Response getRemoveResourcesForProvider(int providerId, int practiceId) {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getPracticesAssociatedToResource_DL(int resourceId) {
