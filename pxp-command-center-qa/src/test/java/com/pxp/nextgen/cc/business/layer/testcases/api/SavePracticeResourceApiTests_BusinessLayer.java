@@ -125,7 +125,6 @@ public class SavePracticeResourceApiTests_BusinessLayer extends BaseRest {
 	public void testSavePracticeResourceFunctionality_NullPayload() throws IOException {
 		logStep("Validating response information");
 		savePracticeResourceApiResponse = sharedInfo.savePracticeResourceUsingNullValues_BL();
-		logStep("Validating response information");
 		CCUtils.assertEquals(savePracticeResourceApiResponse.getStatusCode(), 400);
 	}
 }
