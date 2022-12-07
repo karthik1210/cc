@@ -16,19 +16,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
-import com.pxp.cc.pojos.ClientOrg;
 import com.pxp.cc.pojos.*;
-import com.pxp.cc.pojos.ClientTypes;
-import com.pxp.cc.pojos.OrgDetails;
-import com.pxp.cc.pojos.OrgHierarchyDetails;
-import com.pxp.cc.pojos.OrgNode;
-import com.pxp.cc.pojos.OrgSolutions;
-import com.pxp.cc.pojos.ProviderStatus;
-import com.pxp.cc.pojos.ResourceStatus;
-import com.pxp.cc.pojos.Solutions;
-import com.pxp.cc.pojos.Timezone;
-import com.pxp.cc.pojos.UserRoles;
-import com.pxp.cc.pojos.UserStatus;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -3463,21 +3451,41 @@ public class Validations {
 		}
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("roleId"), true);
 	}
-	
+
 	public void verifyResponseBodyForUpdateResource(Response response, int resourceId, String name) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("resourceId"), resourceId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
-	
-	public void verifyErrorResponseBodyForUpdateResource(Response response, int resourceId)
-			throws IOException {
+
+	public void verifyErrorResponseBodyForUpdateResource(Response response, int resourceId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource not found by id=" + resourceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
-	public void verifySearchResourcesToAssociateWithProviderApiResponseBody(Response response, int resourceId, String resourceName) throws IOException {
+
+	public void verifyGetProviderByClientIdApiResponseBody(Response response, List<Integer> providerIds,
+			String firstName, String lastName) throws IOException {
+		List<ProviderInfo> actualProviderInfoList = new ArrayList<ProviderInfo>();
+		for (int i = 0; i < providerIds.size(); i++) {
+			actualProviderInfoList.add(new ProviderInfo(providerIds.get(i), firstName, lastName));
+		}
+		JSONArray responseBody = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject;
+		CCUtils.assertTrue(responseBody.length() > 0, "Providers list is empty");
+		CCUtils.assertTrue(actualProviderInfoList.size() == responseBody.length(),
+				"Size of actual Providers list and expected Providers list is not same");
+		for (int i = 0; i < responseBody.length(); i++) {
+			jsonObject = responseBody.getJSONObject(i);
+			CCUtils.assertTrue(
+					actualProviderInfoList.contains(new ProviderInfo(jsonObject.getInt("providerId"),
+							jsonObject.getString("firstName"), jsonObject.getString("lastName"))),
+					"providerId" + jsonObject.getInt("providerId") + " doesn't exist");
+		}
+	}
+
+	public void verifySearchResourcesToAssociateWithProviderApiResponseBody(Response response, int resourceId,
+			String resourceName) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -3486,34 +3494,42 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("name"), resourceName);
 		}
 	}
-	
+
 	public void verifyResponseBodyOfGetResource(Response response, int resourceId) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
-				Log4jUtil.log("verifying the resource Id");
-			}
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			Log4jUtil.log("verifying the resource Id");
 		}
-	
-	public void verifyResponseBodyOfAddRemoveResource(Response response, int resourceId,String status) {
+	}
+
+	public void verifyResponseBodyOfAddRemoveResource(Response response, int resourceId, String status) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
 			jsonObject = jsonArray.getJSONObject(i);
-				CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
-				CCUtils.assertEquals(jsonObject.get("status"), status);
-				Log4jUtil.log("verifying the resource Id and status");
-			}
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			CCUtils.assertEquals(jsonObject.get("status"), status);
+			Log4jUtil.log("verifying the resource Id and status");
 		}
+	}
 
-	public void verifyAddRemoveResourceForNullResourceIdAndActive(Response response , String value) {
+	public void verifyAddRemoveResourceForNullResourceIdAndActive(Response response, String value) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		if(jsonpath.get("message").toString().contains(value)) {
-			CCUtils.assertTrue(true,"verifying error message "+value+" is present in "+jsonpath.get("message").toString());
+		if (jsonpath.get("message").toString().contains(value)) {
+			CCUtils.assertTrue(true,
+					"verifying error message " + value + " is present in " + jsonpath.get("message").toString());
+		}
+	}
+
+	public void verifyResponseBodyForResourceAssociatedToPractices(Response response, ArrayList<Integer> practiceIds)
+			throws IOException {
+		for (int i = 0; i < practiceIds.size(); i++) {
+			if (response.asString().contains(String.valueOf(practiceIds.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + practiceIds.get(i));
+			}
 		}
 	}
 }
-
-	

@@ -32,6 +32,7 @@ public class CCUI extends CommandCenterGenericTest {
     PracticeLinksPage practiceLinksPage;
     InterfaceSetupPage interfaceSetupPage;
     EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
+    EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -184,5 +185,12 @@ public class CCUI extends CommandCenterGenericTest {
         if(solution == null){
             solution = testData.getProperty("solution.forms");;
         }
+    }
+    
+    public EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage() throws Exception {
+        if(editOrgDetailsGeneralSettingsPage == null){
+        	editOrgDetailsGeneralSettingsPage = new EditOrgDetailsGeneralSettingsPage(driver);
+        }
+        return editOrgDetailsGeneralSettingsPage;
     }
 }

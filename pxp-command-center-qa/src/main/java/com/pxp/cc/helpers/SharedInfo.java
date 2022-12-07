@@ -1593,15 +1593,25 @@ public class SharedInfo extends BaseRest {
 		createDisplayNameMap.put("additionalProp3", additionalProp3);
 		return createDisplayNameMap;
 	}
-	
+
+	public Response getConnectedResource_BL(int practiceId, String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+
+	public Response getConnectedResource_Null_BL(String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCE_NULL_BL;
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+
 	public Response updateResourceDetails_DL(int resourceId, String name, String type, String externalId,
 			String linkType, int linkId) {
-		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId,
-				linkType, linkId);
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkType,
+				linkId);
 		String url = ApiPath.UPDATE_RESOURCE_DETAILS_DL(resourceId);
 		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
 	}
-	
+
 	private Map<String, Object> createResourceRequestPayload(String name, String type, String externalId,
 			String linkType, int linkId) {
 		Map<String, Object> createResourceMap = new HashMap<String, Object>();
@@ -1617,12 +1627,12 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_RESOURCE_DETAILS_DL(resourceId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateResourceDetails_NullValues_DL() {
 		String url = ApiPath.UPDATE_RESOURCE_DETAILS_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response searchLocationForProvider_DL(int providerId, int practiceId, String providerName) {
 		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_DL(providerId, practiceId);
 		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
@@ -1632,18 +1642,40 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
+	public Response getProviderByClientId_BL(int clientId, String providerName) {
+		String url = ApiPath.GET_PROVIDER_BY_CLIENT_ID_BL();
+		return given().spec(requestSpec).queryParam("name", providerName).queryParam("clientId", clientId).when()
+				.get(url).then().extract().response();
+	}
+
+	public Response getProviderByClientId_NullValues_BL() {
+		String url = ApiPath.GET_PROVIDER_BY_CLIENT_ID_BL();
+		return given().spec(requestSpec).queryParam("name", "null").queryParam("clientId", "null").when().get(url)
+				.then().extract().response();
+	}
+
+	public Response searchLocationForProvider_BL(int providerId, int practiceId, String providerName) {
+		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
+	}
+
+	public Response searchLocationForProviderForNullValue_BL() {
+		String url = ApiPath.SEARCH_LOCATION_FOR_PROVIDER_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response addOrRemoveResourcesForProvider_DL(int providerId, int practiceId,
 			List<ResourceDetails> resourceList) {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_DL(providerId, practiceId);
 		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
 	}
-	
+
 	public Response searchResourcesToAssociateWithProvider_DL(int providerId, int practiceId, String resourceName) {
 		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_DL(providerId, practiceId);
 		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
 	}
-	
+
 	public Response searchResourcesToAssociateWithProvider_Null_Values_DL() {
 		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
@@ -1653,7 +1685,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCE_DL(ResourceId, practiceId);
 		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getLocationsForResourceForNullValues_DL() {
 		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
@@ -1674,5 +1706,45 @@ public class SharedInfo extends BaseRest {
 	public Response getRemoveResourcesForProvider(int providerId, int practiceId) {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticesAssociatedToResource_DL(int resourceId) {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_DL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticesAssociatedToResourceNullValues_DL() {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_RESOURCE_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response searchResourcesToAssociateWithProvider_BL(int providerId, int practiceId, String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_BL(providerId, practiceId);
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+
+	public Response searchResourcesToAssociateWithProvider_Null_Values_BL() {
+		String url = ApiPath.SEARCH_RESOURCES_FOR_PROVIDER_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response associateDeassociatePracticeForResource_BL(int resourceId, int practiceId, String active) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		Map<String, Object> associateDeassociatePracticeForResourcePayload = associateDeassociatePracticeForResourceMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForResourcePayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForResourceUsingEmptyPayload_BL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		Map<String, Object> associateDeassociatePracticeForLocationPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForLocationPayload).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response associateDeassociatePracticeForResourceUsingNullValue_BL() {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 }

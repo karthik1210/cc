@@ -745,4 +745,19 @@ public class UserInfo extends BaseRest {
             return given().spec(requestSpec).body(updatePasswordDuringEnrollment_BL(password)).when().delete(url).then().extract().response();
         }
     }
+
+    public Response searchUserWithEnrollmentStatus(String serviceLayer, String userType, String uriType, String enrollmentStatus) {
+        if (serviceLayer.equalsIgnoreCase("DL")) {
+            String url = ApiPath.USER_DL;
+            return given().spec(requestSpec).queryParam("type", userType).queryParam("enrollstatus", enrollmentStatus).when().get(url).then().extract().response();
+        } else {
+            String url = ApiPath.USER_BL;
+            return given().spec(requestSpec).queryParam("type", userType).queryParam("enrollstatus", enrollmentStatus).when().get(url).then().extract().response();
+        }
+    }
+
+    public Response getUserInfo(String serviceLayer, int userId) {
+        String url = ApiPath.GET_USER_INFO(serviceLayer, userId);
+        return given().spec(requestSpec).when().get(url).then().extract().response();
+    }
 }
