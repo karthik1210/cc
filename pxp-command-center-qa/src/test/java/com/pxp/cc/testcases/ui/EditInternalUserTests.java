@@ -78,8 +78,7 @@ public class EditInternalUserTests extends CommandCenterGenericTest {
 		internalUserDetailsPage.clickCancel();
 	}
 
-	@Test(enabled = true, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
+	@Test(enabled = true,retryAnalyzer = RetryAnalyzer.class, description = "Verify edit button is displayed & fe")
 	public void testEditInternalUser() throws Exception {
 		logStep("Verify selected internal user status is same on internal user details page");
 		internalUserDetailsPage = new InternalUserDetailsPage(driver);
