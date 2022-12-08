@@ -33,9 +33,11 @@ public class CCUI extends CommandCenterGenericTest {
     InterfaceSetupPage interfaceSetupPage;
     EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
     EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage;
+    TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
     ResourceDetailsPage resourceDetailsPage;
     AddNewResourcePage addNewResourcePage;
     AddNewProviderPage addNewProviderPage;
+
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -147,6 +149,20 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return addNewProviderPage;
     }
+    
+    public EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage() throws Exception {
+        if(editOrgDetailsGeneralSettingsPage == null){
+        	editOrgDetailsGeneralSettingsPage = new EditOrgDetailsGeneralSettingsPage(driver);
+        }
+        return editOrgDetailsGeneralSettingsPage;
+    }
+     
+    public TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage() throws Exception {
+        if(tabsNavigationOnGeneralSettingPage == null){
+        	tabsNavigationOnGeneralSettingPage = new TabsNavigationOnGeneralSettingPage(driver);
+        }
+        return tabsNavigationOnGeneralSettingPage;
+    }
 
     public static void getClientSystementErpriseandPractice() throws Exception {
 
@@ -209,12 +225,5 @@ public class CCUI extends CommandCenterGenericTest {
         if(solution == null){
             solution = testData.getProperty("solution.forms");;
         }
-    }
-    
-    public EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage() throws Exception {
-        if(editOrgDetailsGeneralSettingsPage == null){
-        	editOrgDetailsGeneralSettingsPage = new EditOrgDetailsGeneralSettingsPage(driver);
-        }
-        return editOrgDetailsGeneralSettingsPage;
     }
 }

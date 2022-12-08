@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.pxp.cc</groupId>
 	<artifactId>pxp-command-center-qa</artifactId>
-	<version>1.244.3</version>
+	<version>1.245.1</version>
 	<packaging>jar</packaging>
 	<repositories>
 		<repository>
