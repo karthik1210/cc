@@ -1134,7 +1134,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, purchasedSolutionExpandButton);
 		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton, driver);
 		purchasedSolutionExpandButton.click();
-		log("click to pruchased solution expand button");
+		log("click to purchased solution expand button");
 	}
 
 	public void clickToVirtualVisitsMoreOptions() {

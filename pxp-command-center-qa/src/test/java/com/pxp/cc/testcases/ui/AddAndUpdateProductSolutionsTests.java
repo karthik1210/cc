@@ -73,7 +73,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(priority = 1,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 1,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate virtual visits solution within practice from available to purchase section")
 	public void testTerminateVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -85,7 +85,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(priority = 2,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 2,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate pay solution within practice from available to purchase section")
 	public void testTerminatePayPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -97,7 +97,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate engage solution within practice from available to purchase section")
 	public void testTerminateEngagePurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -109,7 +109,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(priority = 4,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 4,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate patient chat solution within practice from available to purchase section")
 	public void testTerminateChatPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -121,7 +121,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(priority = 5,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 5,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate patient portal solution within practice from available to purchase section")
 	public void testTerminatePortalPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
@@ -133,7 +133,7 @@ public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest 
 		runOnce = false;
 	}
 
-	@Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate all the solutions within practice from available to purchase section")
+	@Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate PSS solution within practice from available to purchase section")
 	public void testTerminatePSSPurchaseSolutionAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
