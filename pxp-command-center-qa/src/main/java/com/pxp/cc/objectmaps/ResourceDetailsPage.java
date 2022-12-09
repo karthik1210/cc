@@ -64,7 +64,6 @@ public class ResourceDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
 	private WebElement entepriseArrow;
 
-
 	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
 		searchButton.click();
@@ -139,12 +138,12 @@ public class ResourceDetailsPage extends CCMainPage {
 	}
 	
 	public void clickToResource(String resourceName) throws InterruptedException {
-		enterProviderInSearchTextBox(resourceName);
+		enterResourceInSearchTextBox(resourceName);
 		clickToSearchBtn();
-		selectProvider();
+		selectResource();
 	}
 
-	public void enterProviderInSearchTextBox(String resourceName) {
+	public void enterResourceInSearchTextBox(String resourceName) {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
 		searchButton.clear();
 		searchButton.sendKeys(resourceName);
@@ -157,7 +156,7 @@ public class ResourceDetailsPage extends CCMainPage {
 		log("clicked to search button");
 	}
 
-	public void selectProvider() throws InterruptedException {
+	public void selectResource() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(selectResource, driver);
 		selectResource.click();
 		log("Clicked on first Resource");
@@ -192,4 +191,5 @@ public class ResourceDetailsPage extends CCMainPage {
 		entepriseArrow.click();
 		log("clicked to enteprise Arrow");
 	}
+	
 }
