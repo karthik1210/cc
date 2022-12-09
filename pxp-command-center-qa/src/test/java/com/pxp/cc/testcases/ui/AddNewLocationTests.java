@@ -44,6 +44,7 @@ public class AddNewLocationTests extends CommandCenterGenericTest {
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
 		logStep("Verify Locations tab is displayed");
+		GeneralSettingsPage generalSettingsPage = new GeneralSettingsPage(driver);
 		generalSettingsPage.verifyLocationsTab();
 		generalSettingsPage.clickOnLocationsTab();
 		addLocationPage = new AddLocationPage(driver);
