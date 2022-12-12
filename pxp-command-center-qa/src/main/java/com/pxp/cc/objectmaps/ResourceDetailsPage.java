@@ -44,6 +44,25 @@ public class ResourceDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[normalize-space(text())='Success! Successfully removed image']")
 	private WebElement toasterMessage;
+	
+
+	@FindBy(id = "searchButton")
+	private WebElement searchBtn;
+
+	@FindBy(xpath = "(//tr[@role='row'])[2]")
+	private WebElement selectResource;
+
+	@FindBy(xpath = "//span[@class='slider round']")
+	private WebElement toggleButton;
+
+	@FindBy(xpath = "//span[normalize-space(text())='Success! New practice has been successfully unassigned']")
+	private WebElement toasterMsg;
+
+	@FindBy(xpath = "//span[normalize-space(text())='Success! New practice has been successfully assigned']")
+	private WebElement toasterMsgOne;
+
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
+	private WebElement entepriseArrow;
 
 	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
@@ -117,4 +136,60 @@ public class ResourceDetailsPage extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
+	
+	public void clickToResource(String resourceName) throws InterruptedException {
+		enterResourceInSearchTextBox(resourceName);
+		clickToSearchBtn();
+		selectResource();
+	}
+
+	public void enterResourceInSearchTextBox(String resourceName) {
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
+		searchButton.clear();
+		searchButton.sendKeys(resourceName);
+		log("resource name : " + resourceName + " entered in serach textbox");
+	}
+
+	public void clickToSearchBtn() {
+		CCUtils.verifyAndWaitForElement(searchBtn, driver);
+		searchBtn.click();
+		log("clicked to search button");
+	}
+
+	public void selectResource() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(selectResource, driver);
+		selectResource.click();
+		log("Clicked on first Resource");
+	}
+
+	public void clickOnToggleButton() {
+		CCUtils.verifyAndWaitForElement(toggleButton, driver);
+		toggleButton.click();
+		log("clicked to toggle button");
+	}
+
+	public void verifyToasterMsgForEnable(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMsgOne, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMsgOne.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMsgOne.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void verifyToasterMsgForDisable(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMsg, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMsg.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMsg.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void clickToEntepriseArrow() {
+		CCUtils.verifyAndWaitForElement(entepriseArrow, driver);
+		entepriseArrow.click();
+		log("clicked to enteprise Arrow");
+	}
+	
 }
