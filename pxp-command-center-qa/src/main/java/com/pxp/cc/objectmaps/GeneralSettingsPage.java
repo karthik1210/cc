@@ -68,7 +68,6 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "orgTimezoneValue")
 	private WebElement labelOrgTimezoneValue;
 
-	// @FindBy(xpath = "//span[@class='link inputvalue']")
 	@FindBy(xpath = "(//mat-icon[@id='treeActiveIcon'])[2]")
 	private WebElement labelOrgStatusValue;
 

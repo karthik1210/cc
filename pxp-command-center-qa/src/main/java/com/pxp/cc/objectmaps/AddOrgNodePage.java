@@ -204,7 +204,6 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//input[@value='true']")
 	private WebElement radioBtnActive;
 
-	//@FindBy(xpath = "//div[@class='flex']/span")
 	@FindBy(xpath = "//span[normalize-space(text())='Changes updated successfully']")
 	private WebElement toasterMessage;
 
