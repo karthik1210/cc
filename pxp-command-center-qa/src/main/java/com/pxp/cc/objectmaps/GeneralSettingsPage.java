@@ -131,7 +131,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'FAVORITES')]//following::div[@role='option'][1]")
 	private WebElement favoriteFirstClient;
 
-	@FindBy(id = "headerBookIcon")
+	@FindBy(xpath = "//a[@id='headerBookIcon']/parent::div")
 	private WebElement backToClientDirectory;
 
 	@FindBy(xpath = "//div[@class='info']")
