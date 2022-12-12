@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+//Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.testcases.ui;
 
@@ -105,7 +105,6 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		systemName = CCUtils.generateAlphaNumericString(18);
 		addOrgNodePage.enterSystemName(systemName);
 		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
-		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
 		logStep("Click on save and add button");
 		addOrgNodePage.clickOnSaveAndAddButton();
 		logStep("Verify success toaster message");
@@ -138,7 +137,6 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(systemName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -168,7 +166,6 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(systemName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -199,7 +196,8 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 	private void createNewActivePractice() throws NullPointerException, InterruptedException {
 		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(enterpriseName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -227,13 +225,78 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Verify success toaster message");
 		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
 	}
-	
+
 	private void createNewInactivePractice() throws NullPointerException, InterruptedException {
 		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(enterpriseName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new practice page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		logStep("Enter data in all input fields");
+		practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
+		addOrgNodePage.verifyInactiveRadioButton();
+		logStep("Click on inactive radio button");
+		addOrgNodePage.selectInactiveRadiobutton();
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	private void createNewActiveAgnosticPractice() throws NullPointerException, InterruptedException {
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Verify general settings page title");
+		generalSettingsPage.verifyGeneralSettingsPageTitle();
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
+		generalSettingsPage.clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		addOrgNodePage = new AddOrgNodePage(driver);
+		logStep("Verify manage client button is displayed");
+		addOrgNodePage.verifyManageClientButton();
+		logStep("Click on manage client button");
+		addOrgNodePage.clickOnManageClient();
+		addOrgNodePage.verifyOrgName();
+		addOrgNodePage.clickOnExpandArrow();
+		logStep("Verify add new practice page");
+		addOrgNodePage.verifyAddPracticeButton();
+		addOrgNodePage.clickOnAddPracticeButton();
+		logStep("Enter data in all input fields");
+		practiceName = CCUtils.generateAlphaNumericString(18);
+		addOrgNodePage.enterPracticeName(practiceName);
+		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
+		addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
+		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
+		logStep("Click on save and add button");
+		addOrgNodePage.clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
+	}
+
+	private void createNewInactiveAgnosticPractice() throws NullPointerException, InterruptedException {
+		logStep("Navigating To General Settings page");
+		generalSettingsPage = new GeneralSettingsPage(driver);
+		logStep("Searching a node under client in general settings page");
+		generalSettingsPage.enterSearchText(systemName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		addOrgNodePage = new AddOrgNodePage(driver);
@@ -338,7 +401,6 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(systemName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -363,7 +425,6 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(systemName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -429,8 +490,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		createNewActiveSystem();
 		createNewActiveEnterprise();
 		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.verifyGeneralSettingsPageTitle(); 
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(enterpriseName);
@@ -455,8 +515,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		createNewActiveEnterprise();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.verifyGeneralSettingsPageTitle(); 
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(enterpriseName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -485,7 +544,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
 	}
 
@@ -500,7 +559,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
 	}
 
@@ -512,7 +571,6 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(enterpriseName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -543,10 +601,8 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 	}
 
 	@Test(priority = 16, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new nge practice(with solutions) functionality")
@@ -560,10 +616,8 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.verifyActiveSolutions();
 	}
 
 	@Test(priority = 17, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice(without solutions) functionality")
@@ -573,8 +627,7 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		logStep("Navigating To General Settings page");
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
+		generalSettingsPage.verifyGeneralSettingsPageTitle(); 
 		logStep("Searching a node under client in general settings page");
 		generalSettingsPage.enterSearchText(systemName);
 		generalSettingsPage.clickFirstInAutoSuggestion();
@@ -604,33 +657,29 @@ public class AddOrgNodeTests extends CommandCenterGenericTest {
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
 	}
 
 	@Test(priority = 18, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new inactive agnostic practice(with solutions) functionality")
 	public void testAddNewInactiveAgnosticPracticeWithSolutionsBelowActiveClient() throws Exception {
 		createNewActiveClient();
 		createNewActiveSystem();
-		createNewInactivePractice();
+		createNewInactiveAgnosticPractice();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
 		logStep("Verify newly added practice node details in general settings page");
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsOnGeneralSettingsPage(practiceName);
-		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactive(true);
+		generalSettingsPage.verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(true);
 		generalSettingsPage.verifyNewlyAddedOrgNodeDetailsInOrgTree(practiceName, false);
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.verifyActiveSolutions();
 	}
 
 	@Test(priority = 19, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to add active agnostic practice node below inactive client")
 	public void testAddNewActiveAgnosticPracticeBelowInactiveClient() throws Exception {
 		createNewInactiveClient();
 		createNewActiveSystem();
-		createNewActivePractice();
+		createNewActiveAgnosticPractice();
 		generalSettingsPage = new GeneralSettingsPage(driver);
 		logStep("Verify general settings page title");
 		generalSettingsPage.verifyGeneralSettingsPageTitle();
