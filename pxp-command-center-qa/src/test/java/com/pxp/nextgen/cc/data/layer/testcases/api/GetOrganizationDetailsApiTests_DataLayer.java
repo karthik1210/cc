@@ -4,7 +4,6 @@ package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
@@ -21,7 +20,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 	private Validations validation;
 	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
 			fetchOrgDetailsApiResponse;
-	String clientName, clientSapNumber, testFlag, clientTimezoneId;
+	String clientName, clientSapNumber, testFlag, clientTimezoneId, systemName, enterpriseName, practiceName;
 	int clientId, systemId, enterpriseId, practiceId;
 
 	@BeforeClass()
@@ -30,10 +29,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		orgInfo = new OrgInfo();
 		validation = new Validations();
 		clientInfo = new ClientInfo();
-		clientId = createClient();
-	}
 
-	public int createClient() throws NumberFormatException, NullPointerException, IOException {
 		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
 		clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
@@ -45,52 +41,21 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
 				clientTimezoneId);
-		return createClientApiResponse.jsonPath().getInt("clientId");
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Enter system id in orgId field and validate response body")
-	public void testFetchSystemDetailsUsingSystemId() throws IOException {
-		String systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
+		clientId = createClientApiResponse.jsonPath().getInt("clientId");
+		systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "", systemName,
 				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		logStep("Fetch newly created system details using system id");
-		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(systemId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId, systemName,
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
-				systemName, testData.getProperty("api.system.active"), testFlag,
-				clientTimezoneId);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Enter enterprise id in orgId field and validate response body")
-	public void testFetchEnterpriseDetailsUsingEnterpriseId() throws IOException {
-		String enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateRandomString());
+		enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateRandomString());
 		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
 				enterpriseName, testData.getProperty("api.enterprise.orgtype"), systemId,
 				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
-
 		enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		logStep("Fetch newly created enterprise details using enterprise id");
-		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(enterpriseId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId, enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
-				enterpriseName, testData.getProperty("api.enterprise.active"),
-				testFlag, testData.getProperty("api.enterprise.timezoneid"));
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Enter practice id in orgId field and validate response body")
-	public void testFetchingPracticeOrgId() throws IOException {
-		String practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateRandomString());
+		practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateRandomString());
 		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
 				testData.getProperty("api.practice.displayname"), practiceName,
 				testData.getProperty("api.practice.orgtype"), enterpriseId,
@@ -99,15 +64,44 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 
 		practiceId = createPracticeApiResponse.jsonPath().getInt("orgId");
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Enter system id in orgId field and validate response body")
+	public void testFetchSystemDetailsUsingSystemId() throws IOException {
+
+		logStep("Fetch newly created system details using system id");
+		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(systemId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
+		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId, systemName,
+				testData.getProperty("api.system.orgtype"), systemName, "true", "true", "", "");
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Enter enterprise id in orgId field and validate response body")
+	public void testFetchEnterpriseDetailsUsingEnterpriseId() throws IOException {
+		logStep("Fetch newly created enterprise details using enterprise id");
+		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(enterpriseId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
+		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
+		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId, enterpriseName,
+				testData.getProperty("api.enterprise.orgtype"), enterpriseName, "true", "true",
+				testData.getProperty("api.enterprise.timezoneid"),
+				testData.getProperty("api.enterprise.timezonedisplayname"));
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Enter practice id in orgId field and validate response body")
+	public void testFetchingPracticeOrgId() throws IOException {
 		logStep("Fetching Practice Id Response body");
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(practiceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId, practiceName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"), testFlag,
-				testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.orgtype"),  testData.getProperty("api.practice.displayname"), "true", "true",
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid org id in orgid field and validate response body")
