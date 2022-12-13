@@ -304,15 +304,14 @@ public class Validations {
 
 	}
 
-	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String systemName, String orgType,
-			String clientType, String displayName, String active, String testClient, String timezoneId)
+	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String orgName, String orgType,
+			String displayName, String active, String testClient, String timezoneId, String displayNameOne)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
-		CCUtils.assertEquals(jsonpath.get("name").toString(), systemName);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), orgName);
 		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
-		CCUtils.assertEquals(jsonpath.get("clientType").toString(), clientType);
 		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
 		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
@@ -321,6 +320,7 @@ public class Validations {
 		} else {
 			Map<String, String> timezone = response.jsonPath().getMap("timezone");
 			CCUtils.assertEquals(timezone.get("id").toString(), timezoneId);
+			CCUtils.assertEquals(timezone.get("displayName").toString(), displayNameOne);
 		}
 	}
 
