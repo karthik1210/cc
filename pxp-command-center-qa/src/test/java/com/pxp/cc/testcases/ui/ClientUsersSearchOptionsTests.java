@@ -166,7 +166,7 @@ public class ClientUsersSearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("client.user.last.name"), testData.getProperty("client.user.email"),
 				testData.getProperty("client.username"), testData.getProperty("client.user.mobile.number"));
 		searchOptionsPage.enterSeachTextInClientNameField(testData.getProperty("valid.client.name"));
-		searchOptionsPage.selectEnrollmentStatusValues(enrollmentStatusList);
+		searchOptionsPage.selectEnrollment(enrollmentStatusList);
 		searchOptionsPage.clickOnNoRolesAssignedCheckbox();
 		logStep("Click on search button on the search options popup");
 		searchOptionsPage.clickOnSearchButton();
