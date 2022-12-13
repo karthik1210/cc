@@ -44,7 +44,6 @@ public class ResourceDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[normalize-space(text())='Success! Successfully removed image']")
 	private WebElement toasterMessage;
-	
 
 	@FindBy(id = "searchButton")
 	private WebElement searchBtn;
@@ -63,6 +62,28 @@ public class ResourceDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
 	private WebElement entepriseArrow;
+	
+	@FindBy(xpath = "//p[normalize-space(text())='Connected Solutions']")
+	private WebElement connectedSolutionsLabel;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
+	private WebElement connectedSolChat;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Pay ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPay;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Virtual Visits ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolVirtualVisits;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' PSS ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPss;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Patient Portal ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPortal;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolEngage;
+
 
 	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
@@ -136,7 +157,7 @@ public class ResourceDetailsPage extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-	
+
 	public void clickToResource(String resourceName) throws InterruptedException {
 		enterResourceInSearchTextBox(resourceName);
 		clickToSearchBtn();
@@ -192,4 +213,101 @@ public class ResourceDetailsPage extends CCMainPage {
 		log("clicked to enteprise Arrow");
 	}
 	
+	public void verifyConnectedSolutionsLabel() {
+		log("Verify connected Solutions Label");
+		CCUtils.scrollPageViaElement(driver, connectedSolutionsLabel);
+		CCUtils.verifyAndWaitForElement(connectedSolutionsLabel, driver);
+		CCUtils.assertEquals(connectedSolutionsLabel.isDisplayed(), true);
+	}
+
+	public void clickOnEngageToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolEngage);
+		CCUtils.verifyAndWaitForElement(connectedSolEngage, driver);
+		log("click On Engage Toggle");
+		javascriptClick(connectedSolEngage);
+	}
+
+	public void clickOffEngageToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolEngage, driver);
+		log("click Off Engage Toggle");
+		javascriptClick(connectedSolEngage);
+	}
+
+	public void clickOnChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click On Chat Toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
+
+	public void clickOffChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click Off Chat Toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
+
+	public void clickOnPayToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPay);
+		CCUtils.verifyAndWaitForElement(connectedSolPay, driver);
+		log("click On Pay Toggle");
+		javascriptClick(connectedSolPay);
+	}
+
+	public void clickOffPayToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPay, driver);
+		log("click off pay toggle");
+		javascriptClick(connectedSolPay);
+	}
+
+	public void clickOnVirtualVisitToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolVirtualVisits);
+		log("click on virtual visit toggle");
+		javascriptClick(connectedSolVirtualVisits);
+	}
+
+	public void clickOffVirtualVisitToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolVirtualVisits, driver);
+		log("click of virtual visit toggle");
+		javascriptClick(connectedSolVirtualVisits);
+	}
+
+	public void clickOnPSSToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPss);
+		CCUtils.verifyAndWaitForElement(connectedSolPss, driver);
+		log("click on Pss Toggle");
+		javascriptClick(connectedSolPss);
+	}
+
+	public void clickOffPSSToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPss, driver);
+		log("click Off PSS Toggle");
+		javascriptClick(connectedSolPss);
+	}
+
+	public void clickOnPortalToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPortal);
+		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
+		log("click On Portal Toggle");
+		javascriptClick(connectedSolPortal);
+	}
+
+	public void clickOffPortalToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
+		log("click Off Portal Toggle");
+		javascriptClick(connectedSolPortal);
+	}
+
 }
