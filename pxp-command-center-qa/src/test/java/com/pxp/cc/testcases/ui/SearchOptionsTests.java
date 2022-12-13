@@ -113,7 +113,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
 				testData.getProperty("valid.user.mobile.number"));
 		searchOptionsPage.selectUserStatus(Arrays.asList("Active"));
-		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed"));
+		searchOptionsPage.selectEnrollmentStatus("Confirmed");
 		searchOptionsPage.clickOnSearchButton();
 		internalUsersPage.verifyInternalUsersPageTitle();
 		logStep("Verify clear all button is displayed");
@@ -141,7 +141,7 @@ public class SearchOptionsTests extends CommandCenterGenericTest {
 				testData.getProperty("valid.user.email"), testData.getProperty("valid.username"),
 				testData.getProperty("valid.user.mobile.number"));
 		searchOptionsPage.selectUserStatus(Arrays.asList("Active"));
-		searchOptionsPage.selectEnrollmentStatusValues(Arrays.asList("Confirmed"));
+		searchOptionsPage.selectEnrollmentStatus("Confirmed");
 		searchOptionsPage.clickOnSearchButton();
 		internalUsersPage.verifyInternalUsersPageTitle();
 		logStep("Verify clear all button is displayed");
