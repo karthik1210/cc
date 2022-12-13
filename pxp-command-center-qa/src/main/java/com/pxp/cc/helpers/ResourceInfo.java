@@ -148,7 +148,7 @@ public class ResourceInfo extends BaseRest {
 	}
 
 	public Response deleteResourceImage_BL(int resourceId) {
-		String url = ApiPath.DELETE_RESOURCE_DETAILS_BL(resourceId);
+		String url = ApiPath.DELETE_RESOURCE_IMAGE_BL(resourceId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 }
