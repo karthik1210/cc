@@ -1861,4 +1861,7 @@ public class ApiPath {
 	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices/null/locations";
 	}
+	
+	public static final String GET_RESOURCE_DETAILS_DL_NULL = SHARED_DL + "/v1/resources/null";
+
 }
