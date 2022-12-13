@@ -133,6 +133,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgProvidersForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeResourceApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

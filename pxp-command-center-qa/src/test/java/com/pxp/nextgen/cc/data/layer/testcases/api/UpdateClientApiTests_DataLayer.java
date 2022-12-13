@@ -49,14 +49,6 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, newClientName);
-		logStep("Fetch updated client details using clientid");
-		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
-		logStep("Verify updated client details");
-		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, Integer.toString(clientId),
-				newClientName, Integer.parseInt(testData.getProperty("client.type.tsi.id")),
-				testData.getProperty("api.client.forteen.type"), newClientSapNumber, "false",
-				testData.getProperty("api.client.testclient"), testData.getProperty("new.timezone"),
-				testData.getProperty("new.timezone.display.name"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client status from inactive to active and update timezone value from not null to null value and fetch updated client details using client id")
@@ -80,13 +72,6 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateClientApiResponse);
 		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 200);
 		validation.verifyCreateAndUpdateClientResponseBody(updateClientApiResponse, clientName);
-		logStep("Fetch updated client details using clientid");
-		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
-		logStep("Verify client status is changed from inactive to active and timezone value is changed from not null value to null value");
-		validation.verifyGetClientDetailsApiResponseBody(fetchClientDetailsApiResponse, Integer.toString(clientId),
-				clientName, Integer.parseInt(testData.getProperty("client.type.tsi.id")),
-				testData.getProperty("api.client.forteen.type"), clientSapNumber, "true",
-				testData.getProperty("api.client.testclient"), null, null);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing client id in clientId field and verify error message")
@@ -131,7 +116,6 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
-
 		int clientIdOne = createClientApiResponse.jsonPath().getInt("clientId");
 		log("create another new client");
 		String clientName = testData.getProperty("api.client.name")
@@ -170,7 +154,6 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
-
 		log("create another new client");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
@@ -181,12 +164,10 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		Boolean activeStatus = fetchClientDetailsApiResponse.jsonPath().getBoolean("active");
 		String testClient = String.valueOf(fetchClientDetailsApiResponse.jsonPath().get("testClient"));
 		String timezoneId = fetchClientDetailsApiResponse.jsonPath().get("timezone.id");
-
 		logStep("Enter already existing value in client name field and validate error message");
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, activeStatus, clientName,
 				clientSapNumberOne, testClient, Integer.parseInt(testData.getProperty("client.type.tsi.id")),
@@ -209,7 +190,6 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("api.client.type")),
 				testData.getProperty("api.client.timezoneid"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-
 		int nonExistingClientType = Integer.parseInt(testData.getProperty("invalid.client.type"));
 		logStep("Enter non existing client type while updating client and validate error message");
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId, Boolean.parseBoolean("true"),

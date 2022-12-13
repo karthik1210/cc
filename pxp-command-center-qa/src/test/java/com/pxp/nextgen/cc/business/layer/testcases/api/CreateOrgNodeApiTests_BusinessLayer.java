@@ -14,7 +14,6 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
-
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validation;
@@ -62,9 +61,8 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, systemId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.active"), "false", ccUser.getTimezoneId());
-
+				testData.getProperty("api.system.name"), testData.getProperty("api.system.active"), "false",
+				ccUser.getTimezoneId(), "");
 		logStep("Create an active enterprise node below system");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
@@ -82,10 +80,9 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, enterpriseId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.active"), "false",
-				testData.getProperty("api.enterprise.timezoneid"));
-
+				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.active"), "false",
+				testData.getProperty("api.enterprise.timezoneid"),
+				testData.getProperty("api.system.timezonedisplayname"));
 		logStep("Create an active NGE practice node without solutions below enterprise");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
@@ -103,8 +100,9 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(ngePracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, ngePracticeId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), "false", testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"), "false",
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create inactive org nodes below active client")
@@ -126,9 +124,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(systemIdOne);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, systemIdOne,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.name"), "false", "true",
-				ccUser.getTimezoneId());
-
+				testData.getProperty("api.system.name"), "false", "true", ccUser.getTimezoneId(), "");
 		logStep("Create an inactive enterprise node below system");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), "", "false",
@@ -146,9 +142,9 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(enterpriseIdOne);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, enterpriseIdOne,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.name"), "false",
-				"true", testData.getProperty("api.enterprise.timezoneid"));
-
+				testData.getProperty("api.enterprise.name"), "false", "true",
+				testData.getProperty("api.enterprise.timezoneid"),
+				testData.getProperty("api.system.timezonedisplayname"));
 		logStep("Create an inactive NGE practice node without solutions below enterprise");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"), "false",
@@ -166,8 +162,9 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(ngePracticeIdOne);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, ngePracticeIdOne,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"), "false",
-				"true", testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.displayname"), "false", "true",
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@DataProvider(name = "getTypes")
@@ -355,9 +352,7 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(systemIdTwo);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, systemIdTwo,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.name"), "false", "false",
-				ccUser.getTimezoneId());
-
+				testData.getProperty("api.system.name"), "false", "false", ccUser.getTimezoneId(), "");
 		logStep("Create an active enterprise node below system");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
@@ -375,9 +370,9 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(enterpriseIdTwo);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, enterpriseIdTwo,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.name"), "false",
-				"false", testData.getProperty("api.enterprise.timezoneid"));
-
+				testData.getProperty("api.enterprise.name"), "false", "false",
+				testData.getProperty("api.enterprise.timezoneid"),
+				testData.getProperty("api.system.timezonedisplayname"));
 		logStep("Create an active NGE practice node without solutions below enterprise");
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), "", testData.getProperty("api.practice.active"),
@@ -395,8 +390,9 @@ public class CreateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeApiResponse = orgInfo.getOrgId(ngePracticeIdTwo);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeApiResponse, ngePracticeIdTwo,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.name"), "false",
-				"false", testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.name"), "false", "false",
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", description = "Enter invalid url and verify error response body")
