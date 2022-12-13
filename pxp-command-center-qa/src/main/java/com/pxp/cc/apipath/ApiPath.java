@@ -1869,4 +1869,6 @@ public class ApiPath {
 	public static final String GET_DISPLAY_DETAILS_BL_NULL() {
 		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null";
     }
+	
+	public static final String GET_RESOURCE_DETAILS_DL_NULL = SHARED_DL + "/v1/resources/null";
 }
