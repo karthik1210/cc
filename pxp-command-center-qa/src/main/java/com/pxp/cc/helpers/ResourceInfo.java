@@ -136,5 +136,13 @@ public class ResourceInfo extends BaseRest {
         return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
     }
 	
+	public Response getDisplayNameOfPracticeResource_BL(int resourceId,int practiceId) {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL(resourceId,practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 	
+	public Response  getDisplayNameOfPracticeResource_BL_NULL() {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL_NULL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}	
 }

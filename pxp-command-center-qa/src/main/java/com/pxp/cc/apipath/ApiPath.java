@@ -1861,4 +1861,12 @@ public class ApiPath {
 	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices/null/locations";
 	}
+	
+	public static final String GET_DISPLAY_DETAILS_BL(int resourceId,int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+	
+	public static final String GET_DISPLAY_DETAILS_BL_NULL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null";
+    }
 }
