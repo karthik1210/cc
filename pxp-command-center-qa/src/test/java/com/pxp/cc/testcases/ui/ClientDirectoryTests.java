@@ -4,6 +4,8 @@ package com.pxp.cc.testcases.ui;
 
 import java.awt.AWTException;
 import java.util.List;
+
+import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -52,6 +54,8 @@ public class ClientDirectoryTests extends CommandCenterGenericTest {
 	public void testClientNameSearch() throws Exception {
 		logStep("Searching a client in client directory");
 		String clientName = createClient();
+		GeneralSettingsPage generalSettingsPage = new GeneralSettingsPage(driver);
+		generalSettingsPage.clickClientDirectoryIcon();
 		clientDirectoryPage.searchNode(clientName);
 		clientDirectoryPage.clickSearchButton();
 		logStep("Verifying results for searched client");
