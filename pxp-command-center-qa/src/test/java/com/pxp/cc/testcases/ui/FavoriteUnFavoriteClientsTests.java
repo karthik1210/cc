@@ -4,6 +4,8 @@ package com.pxp.cc.testcases.ui;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -68,7 +70,9 @@ public class FavoriteUnFavoriteClientsTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
 	public void testFavoriteClient() throws Exception {
+		GeneralSettingsPage generalSettingsPage = new GeneralSettingsPage(driver);
 		clientNameOne = createClient(clientName);
+		generalSettingsPage.clickClientDirectoryIcon();
 		logStep("Verfying whether favorited client count is equal or less than five");
 		boolean value = clientDirectoryPage.getNoOfFavoriteClients();
 		clientDirectoryPage.verifyNoOfFavoriteClient(value);

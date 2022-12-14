@@ -1763,4 +1763,32 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SAVE_PRACTICE_RESOURCES_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+	
+	public Response addOrRemoveLocationForResource_BL(int ResourceId, int practiceId, List<Locations> location) {
+		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCE_BL(ResourceId, practiceId);
+		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
+	}
+	
+	public Response getLocationsForResourceForNullValues_BL() {
+		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+	
+	public Response updateResourceDetails_BL(int resourceId, String name, String type, String externalId,
+			String linkType, int linkId) {
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkType,
+				linkId);
+		String url = ApiPath.UPDATE_RESOURCE_DETAILS_BL(resourceId);
+		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
+	}
+	
+	public Response updateResourceDetails_NullPayload_BL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCE_DETAILS_BL(resourceId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response updateResourceDetails_NullValues_BL() {
+		String url = ApiPath.UPDATE_RESOURCE_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }

@@ -47,11 +47,8 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         ccui.getCommonMethods().verifyToasterMessage("Success! External URLs saved successfully");
         ccui.getPracticeLinksPage().verifyExternalUrlDisplay(externalWebsite);
         ccui.getPracticeLinksPage().clickOnSocialMediaEdit();
-        ccui.getPracticeLinksPage().toggleAllSocial();
+        ccui.getPracticeLinksPage().toggleSwitchClick("facebook");
         ccui.getPracticeLinksPage().enterValueOnSocialMedia("Facebook", "https://www.facebook.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
-        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Twitter", "https://www.twitter.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
-        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Linkedin", "https://www.linkedin.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
-        ccui.getPracticeLinksPage().enterValueOnSocialMedia("Youtube", "https://www.youtube.com/"+testData.getProperty("PXPP.17867.external.url.EN3"));
         ccui.getPracticeLinksPage().clickOnSocialMediaSave();
         ccui.getCommonMethods().verifyToasterMessage("Successfully Updated Social Media.");
         runOnce = false;
