@@ -50,26 +50,16 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), testData.getProperty("api.client.one.type"), clientSapNumber,
-				ccUser.getActive(), ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(),
-				ccUser.getPracticeCount(), false, solutionList);
-
 		logStep("Update client status from active to inactive");
 		updateClientStatusApiResponse = clientInfo.patchClientStatus(clientId, "false");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientStatusApiResponse);
 		CCUtils.assertEquals(updateClientStatusApiResponse.getStatusCode(), 200);
-
 		logStep("Verify Client Status is changed from active to inactive");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), testData.getProperty("api.client.one.type"), clientSapNumber,
-				"false", ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(),
-				ccUser.getPracticeCount(), false, solutionList);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to change client status from inactive to active")
@@ -85,32 +75,21 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
 		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
 		String clientId = createClientApiResponse.jsonPath().get("id").toString();
-
 		logStep("Fetch newly created client details using client id");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), testData.getProperty("api.client.one.type"), clientSapNumber,
-				"false", ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(),
-				ccUser.getPracticeCount(), false, solutionList);
-
 		logStep("Update client status from inactive to active");
 		updateClientStatusApiResponse = clientInfo.patchClientStatus(clientId, "true");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateClientStatusApiResponse);
 		CCUtils.assertEquals(updateClientStatusApiResponse.getStatusCode(), 200);
-
 		logStep("Verify Client Status is changed from active to inactive");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), testData.getProperty("api.client.one.type"), clientSapNumber,
-				"true", ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(),
-				ccUser.getPracticeCount(), false, solutionList);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify after changing client node status from active to inactive, subsequent child nodes also become inactive")
@@ -145,11 +124,6 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), testData.getProperty("api.client.one.type"), clientSapNumber,
-				"false", ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(),
-				ccUser.getPracticeCount(), false, solutionList);
-
 		logStep("Verify after updating client node status from active to inactive, subsequent child node also become inactive");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
 		logStep("Validating response information");
@@ -193,11 +167,6 @@ public class UpdateClientStatusApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), testData.getProperty("api.client.one.type"), clientSapNumber,
-				"true", ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(),
-				ccUser.getPracticeCount(), false, solutionList);
-
 		logStep("Verify after updating client node status from inactive to active, only client node status changed to active and subsequent child nodes remains inactive");
 		fetchSystemDetailsApiResponse = orgInfo.getOrgNodesDetails(orgId);
 		logStep("Validating response information");

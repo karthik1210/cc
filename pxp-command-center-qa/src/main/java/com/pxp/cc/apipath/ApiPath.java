@@ -49,6 +49,10 @@ public class ApiPath {
 	public static final String CLIENT_DETAILS_BL(String clientId) {
 		return CLIENT_BL + "/" + "{clientId}";
 	}
+	
+	public static final String CLIENT_DETAILS_NULL_VALUES_BL() {
+		return CLIENT_BL + "/null";
+	}
 
 	public static final String CLIENTNAME_BL(String name) {
 		return SERVICE_CLIENT_BL + "/v1/clients/name/" + "{name}";
@@ -1860,5 +1864,27 @@ public class ApiPath {
 	
 	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null/practices/null/locations";
+	}
+	
+	public static final String GET_DISPLAY_DETAILS_BL(int resourceId,int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+	
+	public static final String GET_DISPLAY_DETAILS_BL_NULL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null";
+    }
+	
+	public static final String GET_RESOURCE_DETAILS_DL_NULL = SHARED_DL + "/v1/resources/null";
+
+	public static final String DELETE_RESOURCE_IMAGE_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/images";
+	}
+	
+	public static final String UPDATE_RESOURCE_DETAILS_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId;
+	}
+	
+	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/resources/null";
 	}
 }
