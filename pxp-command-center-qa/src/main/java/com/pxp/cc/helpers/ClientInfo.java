@@ -33,6 +33,12 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).body(updateClientPayload).pathParam("clientId", clientId).when().put(url)
 				.then().extract().response();
 	}
+	
+	public Response updateClientNullValues_BL() throws IOException {
+		String url = ApiPath.CLIENT_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().put(url)
+				.then().extract().response();
+	}
 
 	public Response updateClientWithInvalidUrl(Boolean active, String clientId, String clientName, String sapNumber,
 			String testClient, int type, String timezoneId) throws IOException {

@@ -59,9 +59,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify updated client details");
-		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, newClientName,
+		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, newClientName,
 				Integer.parseInt(testData.getProperty("client.type.tsi.id")), "TSI", newSapNumber, ccUser.getActive(),
-				ccUser.getTestClient(), "Asia/Kuwait", "Kuwait, Riyadh", 0, solutionLists);
+				ccUser.getTestClient(), "Asia/Kuwait", "Kuwait, Riyadh");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client status from active to inactive anf inactive to active and fetch updated client details using client id")
@@ -84,10 +84,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify Client Status is changed from active to inactive");
-		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
+		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
-				clientSapNumber, "false", ccUser.getTestClient(), ccUser.getTimezoneId(), "Eastern Standard Time", 0,
-				solutionLists);
+				clientSapNumber, "false", ccUser.getTestClient(), ccUser.getTimezoneId(), "Eastern Standard Time");
 		logStep("Update client status from inactive to active");
 		updateClientApiResponse = clientInfo.updateClient(Boolean.parseBoolean("true"), clientId, clientName,
 				clientSapNumber, ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
@@ -99,10 +98,9 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		logStep("Fetch updated client details using clientid");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails(clientId);
 		logStep("Verify Client Status is changed from inactive to active");
-		validation.verifySearchClientIdResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
+		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
 				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.one.type"),
-				clientSapNumber, "true", ccUser.getTestClient(), ccUser.getTimezoneId(), "Eastern Standard Time", 0,
-				solutionLists);
+				clientSapNumber, "true", ccUser.getTestClient(), ccUser.getTimezoneId(), "Eastern Standard Time");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify status code when editing client details with invalid url")
@@ -230,19 +228,13 @@ public class EditClientApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForClientSapNumber(updateClientApiResponse, clientSapNumber);
 	}
 
-	/*
-	 * Enable test case once this issue is addressed for Jira#PXPP-20903
-	 * 
-	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Edit client and enter null values in mandatory field and verify error message"
-	 * ) public void testUpdateNullDataInMandatoryFields() throws IOException {
-	 * logStep("Edit client and enter null values in mandatory field");
-	 * updateClientApiResponse = clientInfo.updateClient(null, newClientId, null,
-	 * null, ccUser.getTestClient(), null, null);
-	 * logStep("Validating response information");
-	 * CCUtils.responseTimeValidation(updateClientApiResponse);
-	 * CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
-	 * validation.verifyNullErrorMessageResponseBody(updateClientApiResponse); }
-	 */
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit client and enter null values in mandatory field and verify error message")
+	public void testUpdateNullDataInMandatoryFields() throws IOException {
+		logStep("Edit client and enter null values in mandatory field");
+		updateClientApiResponse = clientInfo.updateClientNullValues_BL();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(updateClientApiResponse);
+		CCUtils.assertEquals(updateClientApiResponse.getStatusCode(), 400);
+	}
 
 }

@@ -113,9 +113,6 @@ public class CreateClientOrgControllerApiTests extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
-		validation.verifySearchClientResponseBody(fetchClientDetailsApiResponse, clientId, clientName,
-				Integer.parseInt(ccUser.getClientType()), ccUser.getClientType(), clientSapNumber, ccUser.getActive(),
-				ccUser.getTestClient(), ccUser.getTimezoneId(), ccUser.getDisplayName(), 1, true, solutionList);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing parent id & verify response message in response body.")
