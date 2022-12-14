@@ -308,9 +308,15 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
 	private WebElement toasterMessage;
+	
+	@FindBy(xpath = "(//p[@id='treeNodeName']//span[@tabindex=0])[1]")
+	private WebElement clientNode;
 
+	@FindBy(id = "providerTile")
+	private WebElement providerAndResourcesTile;
+	
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
-
+	
 	List<String> activeSolutionName = new ArrayList<String>();
 
 	public GeneralSettingsPage(WebDriver driver) {
@@ -1104,5 +1110,23 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton, driver);
 		purchasedSolutionExpandButton.click();
 		log("click to pruchased solution expand button");
+	}
+	
+	public void clickToClientNode() {
+		CCUtils.verifyAndWaitForElement(clientNode, driver);
+		clientNode.click();
+		log("click to client node in general settings");
+	}
+	
+	public void verifyProvidersAndResourcesTile() {
+		log("Verify 'ProvidersAndResources' Tile on General Settings page");
+		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
+		CCUtils.assertEquals(providerAndResourcesTile.isDisplayed(), true);
+	}
+
+	public void clickOnProvidersAndResourcesTile() {
+		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
+		javascriptClick(providerAndResourcesTile);
+		log("Clicked on ProvidersAndResources tile");
 	}
 }

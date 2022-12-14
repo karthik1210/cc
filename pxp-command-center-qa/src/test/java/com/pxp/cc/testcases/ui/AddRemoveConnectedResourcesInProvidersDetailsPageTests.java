@@ -203,7 +203,7 @@ public class AddRemoveConnectedResourcesInProvidersDetailsPageTests extends Comm
 		providerDetailsPage.verifyAddResourceTitle();
 		providerDetailsPage.enterResourceNameinInputText(resourceName);
 		providerDetailsPage.clickToResourceCheckBox();
-		providerDetailsPage.clickToAddResourceButton();
+		providerDetailsPage.clickToAddButtonInPopup();
 		commonMethods.verifyToasterMessage("Changes updated successfully");
 	}
 

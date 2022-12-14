@@ -37,7 +37,7 @@ public class AddNewProviderPage extends CCMainPage {
 	@FindBy(xpath = "//ng-select[@formcontrolname='gender']")
 	private WebElement dropdownGender;
 
-	@FindBy(id = "addNewProviderSave")
+	@FindBy(id = "addNewPRSSave")
 	private WebElement saveButton;
 
 	@FindBy(id = "searchOrgInput")

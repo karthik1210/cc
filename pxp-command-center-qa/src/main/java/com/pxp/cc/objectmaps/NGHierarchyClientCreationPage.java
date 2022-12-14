@@ -508,6 +508,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
         log("Entered text in SAP ID field : " + newSAPID);
         CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
         CCUtils.verifyForElementToBeClickable(dropdownClientType, driver);
+        CCUtils.verifyAndWaitForElement(dropdownClientType, driver);
         dropdownClientType.click();
         log("clicked to dropdown of client type");
         selectClientType(clientType);

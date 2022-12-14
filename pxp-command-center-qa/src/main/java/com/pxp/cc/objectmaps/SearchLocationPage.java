@@ -337,6 +337,15 @@ public class SearchLocationPage extends CCMainPage {
 		return PageFactory.initElements(super.driver, LocationDetailsPage.class);
 	}
 	
+	public void clickToSearchLocation(String locationName) {
+		enterLocationInSearchTextBox(locationName);
+		clickToSearchButton();
+		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfLocationName, driver);
+			CCUtils.assertEquals(listOfLocationName.get(0).getText().toString().trim(), locationName);
+			CCUtils.verifyForElementToBeClickable(listOfLocationName.get(0), driver);
+			javascriptClick(listOfLocationName.get(0));
+	}
+	
 	public String getDefaultItemsPerPage() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
 		highlightElement(defaultItemsPerPage);

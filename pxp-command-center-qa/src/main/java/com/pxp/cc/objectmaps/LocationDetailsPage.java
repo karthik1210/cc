@@ -8,6 +8,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 
@@ -203,13 +205,13 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='tab']//div")
 	private List<WebElement> listOfSystemTabs;
 
-	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button/following-sibling::p")
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//following-sibling::p")
 	private List<WebElement> listOfEntTabs;
 
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> listOfPracTabs;
-
-	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
+	
+	@FindBy(xpath = "(//mat-icon[normalize-space(text()='chevron_right')])[4]")
 	private WebElement arrowEntPractice;
 
 	@FindBy(xpath = "//mat-icon[@title='Back']")
@@ -217,7 +219,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	public String xpathRequiredClientType(String practiceName) {
 		return "//mat-tree-node//p[contains(text(),'" + practiceName
-				+ "')]//following::div[1]//label[@class='switch']//span";
+				+ "')]//following::div[1]//label[@class='switch']//span[2]";
 	}
 
 	@FindBy(xpath = "(//input[@id='directorySearchInput'])[2]")
@@ -258,25 +260,25 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//span[@id='directoryToggleIcon'])[2]")
 	private WebElement searchButton;
-	
+
 	@FindBy(xpath = "//p[@class='connected-solution-header']")
 	private WebElement connectedSolutionsTitle;
-	
+
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Portal')]//following::mat-slide-toggle[1]")
 	private WebElement portalToggle;
-	
+
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Virtual Visits')]//following::mat-slide-toggle[1]")
 	private WebElement virtualVisitslToggle;
-	
+
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'PSS')]//following::mat-slide-toggle[1]")
-	private WebElement  pSSToggle;
-	
+	private WebElement pSSToggle;
+
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Pay')]//following::mat-slide-toggle[1]")
 	private WebElement payToggle;
-	
+
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Engage')]//following::mat-slide-toggle[1]")
 	private WebElement engageToggle;
-	
+
 	@FindBy(xpath = "//span[@id='solutionIcon']//following::p[@id='solutionName' and contains(text(),'Chat')]//following::mat-slide-toggle[1]")
 	private WebElement ChatToggle;
 
@@ -336,6 +338,10 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Successfully added provider')]")
 	private WebElement successToasterMessage;
+
+	private String expandArrowEntPractice(String ent) {
+		return "//mat-tree-node[@role='treeitem']//button[@aria-label='Toggle " + ent + "']";
+	}
 
 	public void verifyLocationDetailsTitle() {
 		CCUtils.verifyAndWaitForElement(titleLocationDetails, driver);
@@ -795,9 +801,12 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.assertTrue(timeZone.isDisplayed(), "timeZone is displayed");
 	}
 
-	public void clickToBackButton() {
+	public void clickToBackButton() throws AWTException {
+		CCUtils.scrollPageToStart();
+		CCUtils.verifyElementToBeClickable(backIcon, driver);
 		CCUtils.verifyAndWaitForElement(backIcon, driver);
 		backIcon.click();
+		log("clicked to back button in location details page");
 	}
 
 	public void clickToSytemTab(String systemName) {
@@ -813,14 +822,20 @@ public class LocationDetailsPage extends CCMainPage {
 	public void clickToEnterpriseTabPracticeAndToggleOn(String enterpriseName, String practiceName)
 			throws AWTException {
 		for (WebElement element : listOfEntTabs) {
+			log("list of enterprise : " + element.getText());
 			CCUtils.verifyAndWaitForElement(element, driver);
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageViaElement(driver, element);
 			if (element.getText().toString().trim().equals(enterpriseName.trim())) {
-				if (arrowEntPractice.getText().contains("chevron_right")) {
+				log("inside if one");
+				// CCUtils.assertEquals(arrowEntPractice.getText().toString().trim(),
+				// "chevron_right");
+				if (arrowEntPractice.getText().trim().equals("chevron_right")) {
+					log("inside another if");
 					arrowEntPractice.click();
-					log("clicked to arrow practice : " + arrowEntPractice.getText() + " tab");
-				} else
+					// log("clicked to arrow practice : " + arrowEntPractice.getText() + " tab");
+				} else {
 					log("enterprise " + element.getText() + " is already expanded");
+				}
 				for (WebElement ele : listOfPracTabs) {
 					log("get the class of ele: " + ele.getAttribute("class").toString());
 					if (ele.getText().toString().trim().equals(practiceName.trim())
@@ -1066,33 +1081,33 @@ public class LocationDetailsPage extends CCMainPage {
 		for (WebElement ele : listOfPracTabs) {
 			if (ele.getText().toString().equals(practiceName)) {
 				ele.click();
-				log("click to the practice : "+ele.getText().toString()+" tab");
-			}		
+				log("click to the practice : " + ele.getText().toString() + " tab");
+			}
 		}
 	}
-	
+
 	public void verifyConnectedSolutionsTitle() {
 		CCUtils.verifyAndWaitForElement(connectedSolutionsTitle, driver);
 		CCUtils.assertTrue(connectedSolutionsTitle.isDisplayed(), "verifying connected solutions title");
 		log("Verifying connected solutions Title");
 	}
-	
+
 	public void toggleOnChats() {
 		CCUtils.verifyAndWaitForElement(ChatToggle, driver);
 		log(ChatToggle.getCssValue("background-color"));
 	}
-	
+
 	public void toggleOnEngage() {
 		CCUtils.verifyAndWaitForElement(engageToggle, driver);
-		if(ChatToggle.getCssValue("background-color").toString().trim().equals("rgba(0, 0, 0, 0)")) {
+		if (ChatToggle.getCssValue("background-color").toString().trim().equals("rgba(0, 0, 0, 0)")) {
 			engageToggle.click();
 			log("clicked to Engage Toggle ON button");
 		}
 	}
-	
+
 	public void toggleOffEngage() {
 		CCUtils.verifyAndWaitForElement(engageToggle, driver);
-		if(ChatToggle.getCssValue("background-color").toString().trim().equals("rgba(91, 51, 162, 0.16)")) {
+		if (ChatToggle.getCssValue("background-color").toString().trim().equals("rgba(91, 51, 162, 0.16)")) {
 			engageToggle.click();
 			log("clicked to Engage Toggle OFF button");
 		}
