@@ -92,6 +92,17 @@ public class ResourceValidations {
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource image not found by resourceId=" + nonExistingResourceId);
+	}
+	
+	public void verifyGetDisplayNameOfPracticeResourcesApiResponseBody(Response response)
+			 throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("value of name is : " + jsonpath.get("en").toString());
+	}
+	
+	public void verifyErrorMessageForBlankField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }

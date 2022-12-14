@@ -128,14 +128,24 @@ public class ResourceInfo extends BaseRest {
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
 	}
-
-	public Response createResourceNullValue_DL(String name, String type, String externalId, String linkId,
-			String linkType) {
-		String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
-		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
-				linkType);
-		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	
+	public Response createResourceNullValue_DL( String name, String type, String externalId, String linkId,
+            String linkType) {
+        String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
+        Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+                linkType);
+        return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+    }
+	
+	public Response getDisplayNameOfPracticeResource_BL(int resourceId,int practiceId) {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL(resourceId,practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response  getDisplayNameOfPracticeResource_BL_NULL() {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL_NULL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}	
 
 	public Response getResourceDetails_DL(int resourceId) {
 		String url = ApiPath.GET_RESOURCE_DETAILS_DL(resourceId);
