@@ -49,6 +49,10 @@ public class ApiPath {
 	public static final String CLIENT_DETAILS_BL(String clientId) {
 		return CLIENT_BL + "/" + "{clientId}";
 	}
+	
+	public static final String CLIENT_DETAILS_NULL_VALUES_BL() {
+		return CLIENT_BL + "/null";
+	}
 
 	public static final String CLIENTNAME_BL(String name) {
 		return SERVICE_CLIENT_BL + "/v1/clients/name/" + "{name}";
