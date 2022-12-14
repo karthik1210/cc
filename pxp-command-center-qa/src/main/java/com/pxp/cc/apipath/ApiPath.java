@@ -1871,4 +1871,8 @@ public class ApiPath {
     }
 	
 	public static final String GET_RESOURCE_DETAILS_DL_NULL = SHARED_DL + "/v1/resources/null";
+
+	public static final String DELETE_RESOURCE_IMAGE_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/images";
+	}
 }

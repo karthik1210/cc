@@ -88,6 +88,12 @@ public class ResourceValidations {
 		}
 	}
 	
+	public void verifyErrorMessageForResourceIdWithNonExistingImage(Response response, int nonExistingResourceId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource image not found by resourceId=" + nonExistingResourceId);
+	}
+	
 	public void verifyGetDisplayNameOfPracticeResourcesApiResponseBody(Response response)
 			 throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
