@@ -71,10 +71,10 @@ public class PatientAccessDetailsTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Auto Age Out Enable/Disable and check the remove button function for Patient Access Details Section")
+    @Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verifying State SpecificRule Button Enable/Disable and check the multiple remove function for Patient Access Details Section")
     public void verifyAutoAgeoutWithAllStatesMultipleAges() throws Exception {
         ngHierarchyClientCreate();
-        logStep("Auto Age Out Enable/Disable and check the remove button function");
+        logStep("State SpecificRule Button Enable/Disable and check the multiple remove function for Patient Access Details Section");
         ccui.getPatientAccessPage().validateAllStatesMultipleAges();
         ccui.getCommonMethods().verifyToasterMessage("Patient Access Rules updated Successfully");
         runOnce = false;

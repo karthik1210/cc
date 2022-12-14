@@ -321,7 +321,6 @@ public class PatientAccessPage extends CCMainPage {
 
     public void addSingleStatetoSingleAgeAndMultipleAgeMultipleStates() throws Exception {
         clickOnPatientAccessButton(patientAccessExpandButton, "Expand Button");
-        log("PXPP-24089_TC_012_Verify that user can able to click on the EDIT button under Patient Access Rules section");
         clickOnPatientAccessButton(patientAccessEdit, "Edit Button");
         autoAgeOutToggleValidation();
         log("PXPP-24098_TC_013_Verify that user can able to select a single state with age-out 20 under Patient Access Rules section");
