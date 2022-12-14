@@ -36,7 +36,7 @@ public class PatientAccessDetailsTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 2,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present for Patient Access Details Section")
+    @Test(priority = 2,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit and Cancel functionality for Patient Access Details Section")
     public void verifyEditandCancelLinkedAccountsAutoAgeoutGaurdianAccessDetails() throws Exception {
         ngHierarchyClientCreate();
         logStep("Edit and Cancel mode for Patient Access Details Section");
@@ -44,7 +44,7 @@ public class PatientAccessDetailsTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Respective label and other elements are present for Patient Access Details Section")
+    @Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit and Save functionality for Patient Access Details Section")
     public void verifyEditandSaveLinkedAccountsAutoAgeoutGaurdianAccessDetails() throws Exception {
         ngHierarchyClientCreate();
         logStep("Edit and Save mode for Patient Access Details Section");
@@ -53,8 +53,32 @@ public class PatientAccessDetailsTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
+    @Test(priority = 4,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Single Age to Single State And Multiple Ages with Multiple States for Patient Access Details Section")
+    public void verifySingleStatetoSingleAgeAndMultipleAgeMultipleStates() throws Exception {
+        ngHierarchyClientCreate();
+        logStep("Single Age to Single State And Multiple Ages with Multiple States");
+        ccui.getPatientAccessPage().addSingleStatetoSingleAgeAndMultipleAgeMultipleStates();
+        ccui.getCommonMethods().verifyToasterMessage("Patient Access Rules updated Successfully");
+        runOnce = false;
+    }
 
+    @Test(priority = 5,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Auto Age Out Enable/Disable and check the remove button function for Patient Access Details Section")
+    public void verifyAutoAgeoutToggleAndStateRemove() throws Exception {
+        ngHierarchyClientCreate();
+        logStep("Auto Age Out Enable/Disable and check the remove button function");
+        ccui.getPatientAccessPage().disableAndEnableAutoAgeOut();
+        ccui.getCommonMethods().verifyToasterMessage("Patient Access Rules updated Successfully");
+        runOnce = false;
+    }
 
+    @Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Auto Age Out Enable/Disable and check the remove button function for Patient Access Details Section")
+    public void verifyAutoAgeoutWithAllStatesMultipleAges() throws Exception {
+        ngHierarchyClientCreate();
+        logStep("Auto Age Out Enable/Disable and check the remove button function");
+        ccui.getPatientAccessPage().validateAllStatesMultipleAges();
+        ccui.getCommonMethods().verifyToasterMessage("Patient Access Rules updated Successfully");
+        runOnce = false;
+    }
 
     @Test(enabled = false)
     public void ngHierarchyClientCreate() throws Exception {
