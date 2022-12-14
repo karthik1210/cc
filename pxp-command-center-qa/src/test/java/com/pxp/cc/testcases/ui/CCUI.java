@@ -37,7 +37,7 @@ public class CCUI extends CommandCenterGenericTest {
     ResourceDetailsPage resourceDetailsPage;
     AddNewResourcePage addNewResourcePage;
     AddNewProviderPage addNewProviderPage;
-
+    AddLocationPage addLocationPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -105,6 +105,13 @@ public class CCUI extends CommandCenterGenericTest {
             ngHierarchyClientCreationPage = new NGHierarchyClientCreationPage(driver);
         }
         return ngHierarchyClientCreationPage;
+    }
+
+    public AddLocationPage getAddLocationPage() throws InterruptedException {
+        if(addLocationPage==null){
+            addLocationPage = new AddLocationPage(driver);
+        }
+        return addLocationPage;
     }
 
     public InterfaceSetupPage getInterfaceSetupPage() throws InterruptedException {
