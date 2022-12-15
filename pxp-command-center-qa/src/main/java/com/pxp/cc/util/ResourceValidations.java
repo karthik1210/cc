@@ -106,7 +106,7 @@ public class ResourceValidations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 	
-	public void verifyErrorMessageForResourceWithNonExisting(Response response) throws IOException {
+	public void verifyErrorMessageForResourceWithNonExistingUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Error while download the file");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");

@@ -108,21 +108,21 @@ public class GetResourceImageApiTests_BusinessLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response code of get resource image details with null values")
 	public void testResponseCodeToGetResourceImageWithNull() throws NullPointerException, IOException {
-		log("Enter valid resourceid with valid image format");
+		logStep("Enter the null values in Image Url");
 		getResourceImageApiResponse=resourceInfo.getResourceImage_Null_BL();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getResourceImageApiResponse);
 		CCUtils.assertEquals(getResourceImageApiResponse.getStatusCode(), 400);
-		resourceValidation.verifyErrorMessageForResourceWithNonExisting(getResourceImageApiResponse);
+		resourceValidation.verifyErrorMessageForResourceWithNonExistingUrl(getResourceImageApiResponse);
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response code of entering non-existing image url details")
 	public void testResponseCodeToGetResourceImageWithInvalidImageUrl() throws NullPointerException, IOException {
-		log("Enter valid resourceid with valid image format");
-		getResourceImageApiResponse=resourceInfo.getResourceImage_BL(testData.getProperty("api.non.existing.imageurl"));
+		logStep("Enter the non Existing Image Url");
+		getResourceImageApiResponse=resourceInfo.getResourceImage_BL(testData.getProperty("non.existing.image.id"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getResourceImageApiResponse);
 		CCUtils.assertEquals(getResourceImageApiResponse.getStatusCode(), 400);
-		resourceValidation.verifyErrorMessageForResourceWithNonExisting(getResourceImageApiResponse);
+		resourceValidation.verifyErrorMessageForResourceWithNonExistingUrl(getResourceImageApiResponse);
 	}	
 }
