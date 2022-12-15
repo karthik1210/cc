@@ -37,7 +37,6 @@ public class GetResourceImageApiTests_BusinessLayer extends BaseRest {
 		resourceInfo = new ResourceInfo();
 		resourceValidation = new ResourceValidations();
 		sharedInfo = new SharedInfo();
-
 		logStep("Create nge practice below the client with valid details");
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
@@ -70,7 +69,6 @@ public class GetResourceImageApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
 		CCUtils.responseTimeValidation(createPracticeApiResponse);
 		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
-
 		logStep("Create new provider");
 		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
@@ -79,7 +77,6 @@ public class GetResourceImageApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
-
 		logStep("Create new resource");
 		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
 		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, testData.getProperty("resource.name"),
