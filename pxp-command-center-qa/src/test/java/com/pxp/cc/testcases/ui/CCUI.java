@@ -38,6 +38,7 @@ public class CCUI extends CommandCenterGenericTest {
     AddNewResourcePage addNewResourcePage;
     AddNewProviderPage addNewProviderPage;
     AddLocationPage addLocationPage;
+    PatientAccessPage PatientAccessPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -63,14 +64,7 @@ public class CCUI extends CommandCenterGenericTest {
         return commonMethods;
     }
 
-    public PracticeLinksPage getPracticeLinksPage() throws InterruptedException {
-        if(practiceLinksPage==null){
-            practiceLinksPage = new PracticeLinksPage(driver);
-        }
-        return practiceLinksPage;
-    }
-
-    public ClientDirectoryPage getClientDirectoryPage() throws InterruptedException {
+      public ClientDirectoryPage getClientDirectoryPage() throws InterruptedException {
         if(clientDirectoryPage==null){
             LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
             ClientDirectoryPage clientDirectoryPage = loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
@@ -121,6 +115,19 @@ public class CCUI extends CommandCenterGenericTest {
         return interfaceSetupPage;
     }
 
+    public PatientAccessPage getPatientAccessPage() throws InterruptedException {
+        if(PatientAccessPage==null){
+            PatientAccessPage = new PatientAccessPage(driver);
+        }
+        return PatientAccessPage;
+    }
+
+    public PracticeLinksPage getPracticeLinksPage() throws InterruptedException {
+        if(practiceLinksPage==null){
+            practiceLinksPage = new PracticeLinksPage(driver);
+        }
+        return practiceLinksPage;
+    }
 
     public static NGHierarchyClientCreation getNGHierarchyClientCreation() throws Exception {
         if(ngHierarchyClientCreation==null){
