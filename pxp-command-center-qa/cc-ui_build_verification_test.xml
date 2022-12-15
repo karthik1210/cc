@@ -17,10 +17,11 @@
 			</run>
 		</groups>
 		<classes>
+			<class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
+			<class name="com.pxp.cc.testcases.ui.AddNewResourceTests" />
 			<class name="com.pxp.cc.testcases.ui.InterfaceSetupTests" />
 			<class name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
 			<class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
-			<class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
 
 <!--			<class name="com.pxp.cc.testcases.ui.LoginScreenTests" />-->
 <!--			<class name="com.pxp.cc.testcases.ui.PasswordResetTests" />-->

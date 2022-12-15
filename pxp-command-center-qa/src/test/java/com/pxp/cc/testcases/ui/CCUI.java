@@ -143,14 +143,14 @@ public class CCUI extends CommandCenterGenericTest {
         return resourceDetailsPage;
     }
     
-    public AddNewResourcePage addNewResourcePage() throws Exception {
+    public AddNewResourcePage getAddNewResourcePage() throws Exception {
         if(addNewResourcePage == null){
         	addNewResourcePage = new AddNewResourcePage(driver);
         }
         return addNewResourcePage;
     }
     
-    public AddNewProviderPage addNewProviderPage() throws Exception {
+    public AddNewProviderPage getAddNewProviderPage() throws Exception {
         if(addNewProviderPage == null){
         	addNewProviderPage = new AddNewProviderPage(driver);
         }
