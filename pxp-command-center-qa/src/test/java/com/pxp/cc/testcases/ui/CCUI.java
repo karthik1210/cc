@@ -39,6 +39,9 @@ public class CCUI extends CommandCenterGenericTest {
     AddNewProviderPage addNewProviderPage;
     AddLocationPage addLocationPage;
     PatientAccessPage PatientAccessPage;
+    InternalUsersPage internalUsersPage;
+    CommandCenterUsersPage commandCenterUsersPage;
+    AddNewInternalUsersPage addNewInternalUsersPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -163,7 +166,28 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return addNewProviderPage;
     }
-    
+
+    public InternalUsersPage getInternalUsersPage() throws InterruptedException {
+        if(internalUsersPage==null){
+            internalUsersPage = new InternalUsersPage(driver);
+        }
+        return internalUsersPage;
+    }
+
+    public CommandCenterUsersPage getCommandCenterUsersPage() throws InterruptedException {
+        if( commandCenterUsersPage==null){
+            commandCenterUsersPage = new CommandCenterUsersPage(driver);
+        }
+        return commandCenterUsersPage;
+    }
+
+    public AddNewInternalUsersPage getAddNewInternalUsersPage() throws InterruptedException {
+        if( addNewInternalUsersPage==null){
+            addNewInternalUsersPage = new AddNewInternalUsersPage(driver);
+        }
+        return addNewInternalUsersPage;
+    }
+
     public EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage() throws Exception {
         if(editOrgDetailsGeneralSettingsPage == null){
         	editOrgDetailsGeneralSettingsPage = new EditOrgDetailsGeneralSettingsPage(driver);

@@ -44,7 +44,7 @@ public class PatientAccessDetailsTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verifying Edit and Save functionality for Patient Access Details Section")
+    @Test(priority = 3,retryAnalyzer = RetryAnalyzer.class,groups = {"buildvalidation"}, description = "Verifying Edit and Save functionality for Patient Access Details Section")
     public void verifyEditandSaveLinkedAccountsAutoAgeoutGaurdianAccessDetails() throws Exception {
         ngHierarchyClientCreate();
         logStep("Edit and Save mode for Patient Access Details Section");

@@ -36,7 +36,7 @@ phases:
         - |
           if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then
              echo "Running Smoke Test for $APPLICATION_NAME on $ENVIRONMENT";
-             mvn -ntp -U clean test -Dsuite.xml=cc-ui_smoke_test.xml -Dtest.environment=${ENVIRONMENT} -Dselenium.browser="*chrome" -Dexecution.mode=headless             
+             mvn -ntp -U clean test -Dsuite.xml=cc-ui_build_verification_test.xml -Dtest.environment=${ENVIRONMENT} -Dselenium.browser="*chrome" -Dexecution.mode=headless             
           else                                                       
              if [ -f "$testSuiteFileName" ]; then
                 echo "Running Test Suite for $APPLICATION_NAME in $ENVIRONMENT";
