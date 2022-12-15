@@ -1887,4 +1887,12 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null";
 	}
+	
+	public static final String GET_RESOURCE_IMAGE_BL(String imageUrl ) {
+		return SERVICE_SHARED_BL + "/v1/resources/image/"+imageUrl;
+	}
+	
+	public static final String GET_RESOURCE_IMAGE_BL_NULL_VALUES() {
+		return SERVICE_SHARED_BL + "/v1/resources/image/null";
+	}
 }
