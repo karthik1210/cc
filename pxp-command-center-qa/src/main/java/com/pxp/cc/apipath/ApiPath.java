@@ -1887,4 +1887,9 @@ public class ApiPath {
 	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/resources/null";
 	}
+	
+	public static final String RESOURCE_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/resources";
+	}
+
 }
