@@ -65,7 +65,7 @@ public class SearchClientResourceApiTests_BusinessLayer extends BaseRest {
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 		logStep("Create new resource");
 		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
-		String resourceName =  testData.getProperty("api.name").concat(CCUtils.generateAlphaNumericString(5));
+		String resourceName = testData.getProperty("api.name").concat(CCUtils.generateAlphaNumericString(5));
 		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, resourceName,
 				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
 				testData.getProperty("resource.link.type"));
@@ -88,8 +88,8 @@ public class SearchClientResourceApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(searchResourcesResult);
 		CCUtils.assertEquals(searchResourcesResult.getStatusCode(), 200);
 		logStep("Search resource for client using clientId and partial resource name");
-		searchResourcesResult = sharedInfo.getResouresForClient_BL(String.valueOf(clientId),  testData.getProperty("api.name"), null, null,
-				null, null);
+		searchResourcesResult = sharedInfo.getResouresForClient_BL(String.valueOf(clientId),
+				testData.getProperty("api.name"), null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourcesResult);
 		CCUtils.assertEquals(searchResourcesResult.getStatusCode(), 200);
@@ -137,10 +137,10 @@ public class SearchClientResourceApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(searchResourcesResult.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search resource for non-existing practiceId and verify response code")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search resource for non-existing resource name and verify response code")
 	public void testSearchResourceWithNonExistingPracticeId() throws IOException {
 		logStep("Search provider for client with non-existing practiceId");
-		searchResourcesResult = sharedInfo.getResouresForClient_BL(String.valueOf(clientId), null, null, null,
+		searchResourcesResult = sharedInfo.getResouresForClient_BL(String.valueOf(clientId), CCUtils.generateAlphaNumericString(5), null, null,
 				testData.getProperty("nonexiting.practice.id"), null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourcesResult);
@@ -157,10 +157,21 @@ public class SearchClientResourceApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(searchResourcesResult.getStatusCode(), 204);
 	}
 
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search resource for non-existing Resource Name and verify response code")
+	public void testSearchResourceWithNonExistingResourceName() throws IOException {
+		logStep("Search provider for client with non-existing Resource Name");
+		searchResourcesResult = sharedInfo.getResouresForClient_BL(testData.getProperty("org.client.id"), null, null,
+				null, null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(searchResourcesResult);
+		CCUtils.assertEquals(searchResourcesResult.getStatusCode(), 204);
+	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search resource with clientId, practiceId as null and verify response code")
 	public void testSearchResourceWithClientIdPracticeIdAsNull() throws IOException {
 		logStep("Search provider with clientId, practiceId as null");
-		searchResourcesResult = sharedInfo.getResouresForClient_BL(null, null, null, null, null, null);
+		searchResourcesResult = sharedInfo.getResouresForClient_BL(null, null, null, null, null,
+				null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourcesResult);
 		CCUtils.assertEquals(searchResourcesResult.getStatusCode(), 400);
