@@ -39,6 +39,10 @@ public class CCUI extends CommandCenterGenericTest {
     ProviderResourceAndStaffSearchPage providerResourceAndStaffSearchPage;
     LocationDetailsPage locationDetailsPage;
     SearchLocationPage searchLocationPage;
+    TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
+    ResourceDetailsPage resourceDetailsPage;
+    AddNewResourcePage addNewResourcePage;
+    PatientAccessPage PatientAccessPage;
 
     ///////////Variables Test Data
     public static HashMap<String,String> clientSystementErpriseandPractice;
@@ -64,14 +68,7 @@ public class CCUI extends CommandCenterGenericTest {
         return commonMethods;
     }
 
-    public PracticeLinksPage getPracticeLinksPage() throws InterruptedException {
-        if(practiceLinksPage==null){
-            practiceLinksPage = new PracticeLinksPage(driver);
-        }
-        return practiceLinksPage;
-    }
-
-    public ClientDirectoryPage getClientDirectoryPage() throws InterruptedException {
+      public ClientDirectoryPage getClientDirectoryPage() throws InterruptedException {
         if(clientDirectoryPage==null){
             LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
             ClientDirectoryPage clientDirectoryPage = loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
@@ -115,6 +112,19 @@ public class CCUI extends CommandCenterGenericTest {
         return interfaceSetupPage;
     }
 
+    public PatientAccessPage getPatientAccessPage() throws InterruptedException {
+        if(PatientAccessPage==null){
+            PatientAccessPage = new PatientAccessPage(driver);
+        }
+        return PatientAccessPage;
+    }
+
+    public PracticeLinksPage getPracticeLinksPage() throws InterruptedException {
+        if(practiceLinksPage==null){
+            practiceLinksPage = new PracticeLinksPage(driver);
+        }
+        return practiceLinksPage;
+    }
 
     public static NGHierarchyClientCreation getNGHierarchyClientCreation() throws Exception {
         if(ngHierarchyClientCreation==null){
@@ -128,6 +138,34 @@ public class CCUI extends CommandCenterGenericTest {
         	editBasicInfoGeneralSettingsPage = new EditBasicInfoGeneralSettingsPage(driver);
         }
         return editBasicInfoGeneralSettingsPage;
+    }
+    
+    public ResourceDetailsPage resourceDetailsPage() throws Exception {
+        if(resourceDetailsPage == null){
+        	resourceDetailsPage = new ResourceDetailsPage(driver);
+        }
+        return resourceDetailsPage;
+    }
+    
+    public AddNewResourcePage addNewResourcePage() throws Exception {
+        if(addNewResourcePage == null){
+        	addNewResourcePage = new AddNewResourcePage(driver);
+        }
+        return addNewResourcePage;
+    }
+    
+    public AddNewProviderPage addNewProviderPage() throws Exception {
+        if(addNewProviderPage == null){
+        	addNewProviderPage = new AddNewProviderPage(driver);
+        }
+        return addNewProviderPage;
+    }
+     
+    public TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage() throws Exception {
+        if(tabsNavigationOnGeneralSettingPage == null){
+        	tabsNavigationOnGeneralSettingPage = new TabsNavigationOnGeneralSettingPage(driver);
+        }
+        return tabsNavigationOnGeneralSettingPage;
     }
 
     public static void getClientSystementErpriseandPractice() throws Exception {
@@ -150,7 +188,7 @@ public class CCUI extends CommandCenterGenericTest {
             ccui = new CCUI(testData,driver);
             ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
             ccui.getNgHierarchyClientCreationPage().clickSearchButton();
-            ccui.getNgHierarchyClientCreationPage().clickSearchResult();
+            ccui.getNgHierarchyClientCreationPage().clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
             ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
             ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
             ccui.getPrivacyPolicySettingsPage().clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
@@ -207,13 +245,6 @@ public class CCUI extends CommandCenterGenericTest {
         return addLocationPage;
     }
     
-    public AddNewProviderPage addNewProviderPage() throws Exception {
-        if(addNewProviderPage == null){
-        	addNewProviderPage = new AddNewProviderPage(driver);
-        }
-        return addNewProviderPage;
-    }
-    
     public ProviderDetailsPage getProviderDetailsPage() throws Exception {
         if(providerDetailsPage == null){
         	providerDetailsPage = new ProviderDetailsPage(driver);
@@ -241,6 +272,4 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return searchLocationPage;
     }
-    
-     
 }

@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
@@ -21,7 +22,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class NGHierarchyClientCreationPage extends CCMainPage {
-
 
     public NGHierarchyClientCreationPage(WebDriver driver) {
         super(driver);
@@ -829,11 +829,13 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
         log("Clicked on Clear button in Client type Filter");
     }
 
-    public void clickSearchResult() {
-        CCUtils.verifyAndWaitForElement(tableClientNameInSearchResult.get(0), driver);
-        String searchResultText = tableClientNameInSearchResult.get(0).getText().trim();
-        tableClientNameInSearchResult.get(0).click();
-        log("Clicked on Client :" + searchResultText);
+    public void clickSearchResult(String clientName) {
+        WebElement clientDisplay = driver.findElement(By.xpath("//td[normalize-space(text())='"+clientName+"']"));
+        CCUtils.verifyAndWaitForElement(clientDisplay, driver);
+        //String searchResultText = tableClientNameInSearchResult.get(0).getText().trim();
+        //tableClientNameInSearchResult.get(0).click();
+        new Actions(driver).moveToElement(clientDisplay).click().build().perform();
+        log("Clicked on Client :" + clientName);
     }
 
     public void verfiySearchResult(String searchNodeName) {

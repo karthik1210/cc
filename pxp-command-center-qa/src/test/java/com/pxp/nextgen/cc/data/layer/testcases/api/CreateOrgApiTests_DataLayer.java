@@ -67,8 +67,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.active"), testFlag, clientTimezoneId);
+				 testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.active"), testFlag, clientTimezoneId,"");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter NULL value in mandatory field and validate error message")
@@ -103,9 +103,9 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.name"),
+				 testData.getProperty("api.enterprise.name"),
 				testData.getProperty("api.enterprise.active"), testFlag,
-				testData.getProperty("api.enterprise.timezoneid"));
+				testData.getProperty("api.enterprise.timezoneid"), testData.getProperty("location.timezone.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Enter NULL value in mandatory field and validate error message")
@@ -143,10 +143,10 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, agnosticPracticeId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"));
+				 testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"), testData.getProperty("api.practice.timezonedisplayname"));
 	}
-
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 4, description = "Create New NGE Practice and fetch newly created Practice details using Practice id")
 	public void testCreateNewNgePracticeOrgNode() throws IOException {
 		logStep("Create a new practice below enterprise.");
@@ -168,8 +168,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"));
+				 testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"),testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 5, description = "Enter Non existing time zone id and validate error message")
@@ -343,8 +343,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, agnosticPracticeId, practiceName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), practiceName,
-				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.orgtype"), practiceName,
+				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"),testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 12, description = "Enter NULL value in mandatory field and validate error message")

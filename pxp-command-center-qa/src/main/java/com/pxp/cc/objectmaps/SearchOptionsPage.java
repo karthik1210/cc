@@ -181,6 +181,18 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'Active')]")
 	private WebElement activeCheckbox;
 
+	@FindBy(xpath = "//span[normalize-space(text())='Confirmed']/preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
+	private WebElement confirmedStatusCheckBox;
+
+	@FindBy(xpath = "//span[normalize-space(text())='Pending']/preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
+	private WebElement pendingStatusCheckBox;
+
+	@FindBy(xpath = "//span[normalize-space(text())='Expired']/preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
+	private WebElement expiredStatusCheckBox;
+
+	@FindBy(xpath = "//span[@class='mat-checkbox-label']/span[normalize-space(text())='Not Sent']/../preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
+	private WebElement notSentStatusCheckBox;
+
 	List<String> actualUserStatusValues = new ArrayList<String>();
 	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
 
@@ -194,6 +206,30 @@ public class SearchOptionsPage extends CCMainPage {
 
 	public final List<String> expectedListOfEnrollmentStatusValues = Arrays.asList("Delivered", "Pending",
 			"Email Issue", "Expired", "Not Sent");
+
+	public void selectEnrollmentStatus(String status) {
+		if(status.equalsIgnoreCase("Confirmed"))
+			confirmedStatusCheckBox.click();
+		else if(status.equalsIgnoreCase("Pending"))
+			pendingStatusCheckBox.click();
+		else if(status.equalsIgnoreCase("Expired"))
+			expiredStatusCheckBox.click();
+		else if(status.equalsIgnoreCase("Not Sent"))
+			notSentStatusCheckBox.click();
+	}
+
+	public void selectEnrollment(List<String> enrollmentStatus) {
+		for(String each : enrollmentStatus) {
+			if(each.equalsIgnoreCase("Confirmed"))
+				confirmedStatusCheckBox.click();
+			else if(each.equalsIgnoreCase("Pending"))
+				pendingStatusCheckBox.click();
+			else if(each.equalsIgnoreCase("Expired"))
+				expiredStatusCheckBox.click();
+			else if(each.equalsIgnoreCase("Not Sent"))
+				notSentStatusCheckBox.click();
+		}
+	}
 
 	public void verifySearchInternalUserPopup() throws InterruptedException, AWTException {
 		log("Verifying search internal user pop-up");
