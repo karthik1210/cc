@@ -149,6 +149,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationsForAssociatingWithResource_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToResource_BusinessLayer" />	
 		</classes>
 	</test>
 </suite>
