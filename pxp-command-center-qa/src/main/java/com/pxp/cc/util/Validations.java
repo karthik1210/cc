@@ -3422,5 +3422,14 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("en").toString(), en);
 		CCUtils.assertEquals(jsonpath.get("es").toString(), es);
 	}
-
+	
+	public void verifyResponseBodyForGetLocationResource(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
+	}
 }
