@@ -240,8 +240,8 @@ public class CCUtils {
     }
 
     public static Long generateMobileNumber() {
-        Long mobileNumber =  (long) (Math.random() * 10000000000L);
-        String mob = mobileNumber.toString().replace('0','9');
+        String mob = generateNumericString(10);
+        mob = mob.toString().replace('0','9');
         return Long.parseLong(mob);
     }
 
