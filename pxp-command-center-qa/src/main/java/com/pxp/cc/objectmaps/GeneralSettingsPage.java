@@ -68,7 +68,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "orgTimezoneValue")
 	private WebElement labelOrgTimezoneValue;
 
-	@FindBy(xpath = "//span[@class='link inputvalue']")
+	@FindBy(xpath = "(//mat-icon[@id='treeActiveIcon'])[2]")
 	private WebElement labelOrgStatusValue;
 
 	@FindBy(id = "orgTitle")
@@ -131,7 +131,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'FAVORITES')]//following::div[@role='option'][1]")
 	private WebElement favoriteFirstClient;
 
-	@FindBy(id = "headerBookIcon")
+	@FindBy(xpath = "//a[@id='headerBookIcon']/parent::div")
 	private WebElement backToClientDirectory;
 
 	@FindBy(xpath = "//div[@class='info']")
@@ -232,7 +232,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "unsavedCancelBtn")
 	private WebElement activatePopupCancelbutton;
 
-	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Chat']/../following-sibling::div/span[text()='ACTIVATE']")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Patient Chat']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement chatActivateButton;
 
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Engage']/../following-sibling::div/span[text()='ACTIVATE']")
@@ -244,13 +244,13 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Pay']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement payActivateButton;
 
-	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Portal']/../following-sibling::div/span[text()='ACTIVATE']")
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Patient Portal']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement portalActivateButton;
 
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//button[@class='button_arrow'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
 	private WebElement purchasedSolutionExpandButton;
 
 	private String purchaseActivateButton(String solutionImageIcon) {
@@ -308,6 +308,36 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
 	private WebElement toasterMessage;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activeVirtualVisitsMoreOptions;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Pay ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePayMoreOptions;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Engage ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activeEngageMoreOptions;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Portal ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePatientPortalMoreOptions;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Chat ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePatientChatMoreOptions;
+
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' PSS ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	private WebElement activePSSMoreOptions;
+
+	@FindBy(xpath = "//button[@id='highlight_off']")
+	private WebElement terminateButton;
+
+	@FindBy(xpath = "//span[@id='confirmLabel']")
+	private WebElement popupTitle;
+
+	@FindBy(xpath = "//span[@id='clearDelete']")
+	private WebElement crossIconPopup;
+
+	@FindBy(xpath = "//div[@class='backCaution']//p")
+	private WebElement cautionMessage;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -410,7 +440,18 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelOrgStatusValue, driver);
 		log("Verifying org node status is inactive for newly added org node when parent is inactive");
 		if (isParentInactive == true) {
-			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "inactive");
+			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "cancel");
+			log("Newly added org node status is inactive");
+		} else {
+			log("Newly added org node status is active");
+		}
+	}
+
+	public void verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(Boolean isParentInactive) {
+		CCUtils.verifyAndWaitForElement(labelOrgStatusValue, driver);
+		log("Verifying org node status is inactive for newly added org node when parent is inactive");
+		if (isParentInactive == true) {
+			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "check_circle");
 			log("Newly added org node status is inactive");
 		} else {
 			log("Newly added org node status is active");
@@ -562,8 +603,6 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void enterSearchText(String nodeName) {
 		CCUtils.verifyAndWaitForElement(searchIcon, driver);
 		searchIcon.click();
-//		CCUtils.verifyAndWaitForElement(searchIcon,driver);
-//		searchIcon.click();
 		log("click to search icon");
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
@@ -594,7 +633,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickFirstInAutoSuggestion() {
-		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
+		CCUtils.verifyAndWaitForElementPresence(selectFirstInAutoSuggestion, driver);
 		if (selectFirstInAutoSuggestion.isDisplayed()) {
 			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
 			javascriptClick(selectFirstInAutoSuggestion);
@@ -996,6 +1035,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Verifying org name value");
 		CCUtils.verifyAndWaitForElement(labelNodeNameRightPanel, driver);
 		CCUtils.assertEquals(labelNodeNameRightPanel.isDisplayed(), true);
+		log("Verified Newly Added Org Node Details In Org Tree");
 	}
 
 	public void clickFirstOption() {
@@ -1025,6 +1065,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickToActivateButtonOfVirtualVisitsSolution() {
+		CCUtils.scrollPageViaElement(driver, virtualVisitsActivateButton);
 		CCUtils.verifyAndWaitForElement(virtualVisitsActivateButton, driver);
 		virtualVisitsActivateButton.click();
 		log("clicked to activate button of Virtual visits");
@@ -1103,6 +1144,87 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, purchasedSolutionExpandButton);
 		CCUtils.verifyAndWaitForElement(purchasedSolutionExpandButton, driver);
 		purchasedSolutionExpandButton.click();
-		log("click to pruchased solution expand button");
+		log("click to purchased solution expand button");
+	}
+
+	public void clickToVirtualVisitsMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activeVirtualVisitsMoreOptions);
+		CCUtils.verifyAndWaitForElement(activeVirtualVisitsMoreOptions, driver);
+		activeVirtualVisitsMoreOptions.click();
+		log("click to virtual visits more options");
+	}
+
+	public void clickToPayMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePayMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePayMoreOptions, driver);
+		activePayMoreOptions.click();
+		log("click to pay more options");
+	}
+
+	public void clickToEngageMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activeEngageMoreOptions);
+		CCUtils.verifyAndWaitForElement(activeEngageMoreOptions, driver);
+		activeEngageMoreOptions.click();
+		log("click to engage more options");
+	}
+
+	public void clickToPatientPortalMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePatientPortalMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePatientPortalMoreOptions, driver);
+		activePatientPortalMoreOptions.click();
+		log("click to patient portal more options");
+	}
+
+	public void clickToPatientChatMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePatientChatMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePatientChatMoreOptions, driver);
+		activePatientChatMoreOptions.click();
+		log("click to patient chat more options");
+	}
+
+	public void clickToPSSMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePSSMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePSSMoreOptions, driver);
+		activePSSMoreOptions.click();
+		log("click to PSS more options");
+	}
+
+	public void clickToTerminateOption() {
+		CCUtils.verifyAndWaitForElement(terminateButton, driver);
+		terminateButton.click();
+		log("click to terminate option");
+	}
+
+	public void verifyTerminatePopupTitle() {
+		CCUtils.verifyAndWaitForElement(popupTitle, driver);
+		if (popupTitle.getText().contains("Terminate - ")) {
+			CCUtils.assertTrue(true, "verifying popup title");
+		}
+	}
+
+	public void verifyActivatePopupTitle() {
+		CCUtils.verifyAndWaitForElement(popupTitle, driver);
+		if (popupTitle.getText().contains("Activate - ")) {
+			CCUtils.assertTrue(true, "verifying popup title");
+		}
+	}
+
+	public void verifyActivateTerminatePopupCancelButtonAndCrossIcon() {
+		CCUtils.verifyAndWaitForElement(activatePopupCancelbutton, driver);
+		log("cancel button is present in pop up");
+		CCUtils.verifyAndWaitForElement(crossIconPopup, driver);
+		log("cross iocn is present in pop up");
+	}
+
+	public void cautionActivateMessage(String practiceName) {
+		CCUtils.verifyAndWaitForElement(cautionMessage, driver);
+		CCUtils.assertEquals(cautionMessage.getText().toString(),
+				"Before continuing, are you sure " + practiceName + " has purchased this solution?");
+	}
+
+	public void cautionTerminateMessage(String practiceName) {
+		CCUtils.verifyAndWaitForElement(cautionMessage, driver);
+		CCUtils.assertEquals(cautionMessage.getText().toString(),
+				"Before continuing, are you sure this solution is on no longer used by " + practiceName + "?");
 	}
 }

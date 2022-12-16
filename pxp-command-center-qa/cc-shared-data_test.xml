@@ -112,6 +112,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveLocationsForTheResourceApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesAssociatedToResourcesApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddRemoveResourcesForProviderApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourceDetailsApiTests_DataLayer"></class>
 		</classes>
 	</test>
 

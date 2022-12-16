@@ -37,7 +37,7 @@ public class AddNewProviderPage extends CCMainPage {
 	@FindBy(xpath = "//ng-select[@formcontrolname='gender']")
 	private WebElement dropdownGender;
 
-	@FindBy(id = "addNewProviderSave")
+	@FindBy(xpath = "//button[@type='submit']")
 	private WebElement saveButton;
 
 	@FindBy(id = "searchOrgInput")
@@ -456,10 +456,10 @@ public class AddNewProviderPage extends CCMainPage {
 		if (listOfGenderValue.size() > 0) {
 			if (value.equals("Male")) {
 				javascriptClick(listOfGenderValue.get(0));
-				log("Clicked on super admin user role checkbox");
+				log("Clicked on 'Male' option");
 			} else if (value.equals("Female")) {
 				javascriptClick(listOfGenderValue.get(1));
-				log("Clicked on Support T1 user role checkbox");
+				log("Clicked on 'Female' option");
 
 			} else {
 				log("Gender value not displayed on add a provider screen");

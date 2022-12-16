@@ -479,9 +479,8 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void clickSave() {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
 		buttonSave.click();
-		buttonSave.click();
 		log("Clicked on Save");
-		driver.navigate().refresh();
+		//driver.navigate().refresh();
 	}
 
 	public void clickBackArrowOnInternalUserDetailsPage() {

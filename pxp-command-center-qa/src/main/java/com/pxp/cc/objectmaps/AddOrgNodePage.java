@@ -123,14 +123,17 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']//preceding::div[@class='mat-checkbox-inner-container']")
 	private List<WebElement> particularSolutionCheckbox;
 
-	@FindBy(xpath = "//label[text()='Active']")
+	@FindBy(xpath = "//div[normalize-space(text())='Active']")
 	private WebElement labelActive;
 
-	@FindBy(xpath = "//label[text()='Inactive']")
+	@FindBy(xpath = "//div[normalize-space(text())='Inactive']")
 	private WebElement labelInactive;
 
 	@FindBy(id = "manageClientLabel")
 	private WebElement btnManageClient;
+	
+	@FindBy(xpath = "//div[normalize-space(text())='MANAGE CLIENT']")
+	private WebElement labelManageClient;
 
 	@FindBy(xpath = "//button[contains(text(),' + ADD SYSTEM')]")
 	private WebElement btnAddSystem;
@@ -174,10 +177,10 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "(//button[@id='treeExpandBtn'])[2]")
 	private WebElement expandEnterpriseArrow;
 
-	@FindBy(id = "//span[text()='PM System *']")
+	@FindBy(xpath = "//label[normalize-space(text())='PM System *']")
 	private WebElement labelPm;
 
-	@FindBy(xpath = "//span[text()='EHR System *']")
+	@FindBy(xpath = "//label[normalize-space(text())='EHR System *']")
 	private WebElement labelEhr;
 
 	@FindBy(xpath = "//button[contains(text(),'+ ADD ENTERPRISE')]")
@@ -189,10 +192,10 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "(//input[@type='text'])[3]")
 	private WebElement enterEhrEnterprise;
 
-	@FindBy(xpath = "//span[@id='timezone-label']")
+	@FindBy(xpath = "//label[@id='timezone-label']")
 	private WebElement labelTimeZone;
 
-	@FindBy(xpath = "//span[text()='Solutions Display Name']")
+	@FindBy(xpath = "//label[normalize-space(text())='Solutions Display Name']")
 	private WebElement labelSolutionsDisplayName;
 
 	@FindBy(id = "addNodeSolutionInput")
@@ -201,7 +204,7 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//input[@value='true']")
 	private WebElement radioBtnActive;
 
-	@FindBy(xpath = "//div[@class='flex']/span")
+	@FindBy(xpath = "//span[normalize-space(text())='Changes updated successfully']")
 	private WebElement toasterMessage;
 
 	@FindBy(id = "closeManageClientLabel")
@@ -917,8 +920,8 @@ public class AddOrgNodePage extends CCMainPage {
 	}
 
 	public void verifyManageClientButton() {
-		CCUtils.verifyAndWaitForElement(btnManageClient, driver);
-		CCUtils.assertEquals(btnManageClient.getText().trim(), "MANAGE CLIENT");
+		CCUtils.verifyAndWaitForElement(labelManageClient, driver);
+		CCUtils.assertEquals(labelManageClient.getText().trim(), "MANAGE CLIENT");
 		log(" MANAGE CLIENT  Button is displayed");
 	}
 
@@ -952,7 +955,7 @@ public class AddOrgNodePage extends CCMainPage {
 	public void verifySolutionsDisplayNameLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelSolutionsDisplayName, driver);
 		log("Verifying Solutions Display Name label text");
-		CCUtils.assertEquals(labelSolutionsDisplayName.getText().trim(), "Practice Name *");
+		CCUtils.assertEquals(labelSolutionsDisplayName.getText().trim(), "Solutions Display Name");
 		log("Solutions Display Name label text is " + labelSolutionsDisplayName.getText().trim());
 		CCUtils.verifyAndWaitForElement(textboxSolutionsName, driver);
 		log("Verifying Input text here placeholder is displayed for Practice name textbox field");
@@ -970,12 +973,12 @@ public class AddOrgNodePage extends CCMainPage {
 	public void verifyActiveInactiveRadioButtonStatusLabel() {
 		CCUtils.verifyAndWaitForElement(labelActive, driver);
 		log("Verifying Active label text");
-		CCUtils.assertEquals(labelActive.getText().trim(), " Active ");
+		CCUtils.assertEquals(labelActive.getText().trim(), "Active");
 		log("Active label text is " + labelActive.getText().trim());
 
 		CCUtils.verifyAndWaitForElement(labelInactive, driver);
 		log("Verifying Inactive label text");
-		CCUtils.assertEquals(labelInactive.getText().trim(), " Inactive ");
+		CCUtils.assertEquals(labelInactive.getText().trim(), "Inactive");
 		log("Inactive label text is " + labelInactive.getText().trim());
 	}
 

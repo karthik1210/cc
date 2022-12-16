@@ -36,14 +36,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         String actualMessage = commonMethods.getToasterMessage();
         logStep("Verify success toaster message");
         CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
-        commonMethods = new CommonMethods(driver);
-        logStep("Searching a client in client directory");
-        ngHierarchyClientCreationPage.searchNode(clientName);
-        ngHierarchyClientCreationPage.clickSearchButton();
-        ngHierarchyClientCreationPage.clickSearchResult();
-        logStep("Navigating To General Settings page");
-        generalSettingsPage = new GeneralSettingsPage(driver);
-        generalSettingsPage.verifyClientNodeIsSelected();
         return clientName;
     }
 
@@ -72,7 +64,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         logStep("Verify general settings page title");
         generalSettingsPage.verifyGeneralSettingsPageTitle();
         logStep("Verify manage client button is displayed");
-        driver.navigate().refresh();
         ngHierarchyClientCreationPage.clickOnManageClient();
         ngHierarchyClientCreationPage.clickOnExpandArrow(systemName);
         ngHierarchyClientCreationPage.verifyAddEnterpriseButton();

@@ -2,186 +2,180 @@
 
 package com.pxp.cc.testcases.ui;
 
+import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
+import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.objectmaps.AddAndUpdateProductSolutionsPage;
-import com.pxp.cc.objectmaps.AddOrgNodePage;
-import com.pxp.cc.objectmaps.ClientDirectoryPage;
-import com.pxp.cc.objectmaps.GeneralSettingsPage;
-import com.pxp.cc.util.CCUtils;
+import com.pxp.cc.objectmaps.LoginPage;
 
 public class AddAndUpdateProductSolutionsTests extends CommandCenterGenericTest {
-	public ClientDirectoryPage clientDirectoryPage;
-	public GeneralSettingsPage generalSettingsPage;
-	public AddOrgNodePage addOrgNodePage;
-	public AddAndUpdateProductSolutionsPage addAndUpdateProductSolutionsPage;
+	public static boolean runOnce = true;
+	public CCUI ccui;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to CC portal. url= " + ccuser.getUrl() + "and password=" + ccuser.getPassword());
-		clientDirectoryPage = login(ccuser.getUrl(), ccuser.getUsername(), ccuser.getPassword());
-		logStep("Enter client name in search text box and click on client name in client table");
-		clientDirectoryPage.searchAndSelectClientNameInClientTable(testData.getProperty("active.client.name"));
-		generalSettingsPage = new GeneralSettingsPage(driver);
+		if (runOnce) {
+			ccui = new CCUI(testData, driver);
+			logStep("Login to command center portal");
+			ccui.getClientDirectoryPage();
+			ccui.initializeTestData();
+			getClientSystementErpriseandPractice();
+		}
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the newly purchased solutions")
-	public void testTerminatedSolutionAvailableForPurchase() throws Exception {
-		String parentName = generalSettingsPage.getClientName();
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new agnostic practice node below client node");
-		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
-				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String actualSolutionName = addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		String expectedSolutionName = addAndUpdateProductSolutionsPage
-				.verifyTerminatedSolutionsIsAvailableForPurchase();
-		CCUtils.assertEquals(actualSolutionName, expectedSolutionName);
+	@Test(enabled = false)
+	public void ngHierarchyClientCreate() throws Exception {
+		if (!runOnce) {
+			ccui = new CCUI(testData, driver);
+			logStep("Login to command center portal");
+			LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
+			loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
+			logStep("Select create client button from new dropdown");
+			logStep("Searching a client in client directory");
+			ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
+			ccui.getNgHierarchyClientCreationPage().clickSearchButton();
+			ccui.getNgHierarchyClientCreationPage().clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
+			logStep("Navigating To General Settings page");
+			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+			ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
+			ccui.getPrivacyPolicySettingsPage()
+					.clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
+			ccui.getPrivacyPolicySettingsPage()
+					.clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
+		}
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate already terminated solutions")
-	public void testAgnosticPracticeToActivateAlreadyTerminatedSolutions() throws Exception {
-		String parentName = generalSettingsPage.getClientName();
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new agnostic practice node below client node");
-		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
-				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectTerminateCheckboxForSingleProduct();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		String actualSolutionName = addAndUpdateProductSolutionsPage.selectActivateCheckboxForSingleProduct();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		String expectedSolutionName = addAndUpdateProductSolutionsPage
-				.verifyActivatedSolutionsIsAvailableForTerminate();
-		CCUtils.assertEquals(actualSolutionName, expectedSolutionName);
+	@Test(priority = 0,retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section")
+	public void testAddPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfPaySolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfEngageSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfChatSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfPortalSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfPSSSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to terminate the all newly purchased solutions")
-	public void testAddNewNgePracticeToTerminateAllNewlyPurchasedSolutions() throws Exception {
-		generalSettingsPage.clickOnAddSystem();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		String systemName = ccuser.getSystemName().concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(systemName, ccuser.getSystemSapId(), ccuser.getSystemTimezone(),
-				ccuser.getSystemSolutionDisplayName());
-		addOrgNodePage.selectActiveRadiobutton();
-		addOrgNodePage.clickOnSaveAndAddButton();
-
-		generalSettingsPage.clickOnAddEnterprise();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Enter details in add new enterprise pop up");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(ccuser.getSystemName());
-		addOrgNodePage.createNewOrgNode(ccuser.getEnterpriseName(), ccuser.getEnterpriseSapId(),
-				ccuser.getEnterpriseTimezone(), ccuser.getEnterpriseSolutionDisplayName());
-		addOrgNodePage.clickOnSaveAndAddButton();
-
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
-		logStep("Add new nge practice node below enterprise node");
-		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
+	@Test(priority = 1,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate virtual visits solution within practice from available to purchase section")
+	public void testTerminateVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToVirtualVisitsMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new Nge practice to activate all terminated solutions")
-	public void testAddNewNgePracticeToActivateAllTerminatedSolutions() throws Exception {
-
-		generalSettingsPage.clickOnAddSystem();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		String systemName = ccuser.getSystemName().concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(systemName, ccuser.getSystemSapId(), ccuser.getSystemTimezone(),
-				ccuser.getSystemSolutionDisplayName());
-		addOrgNodePage.selectActiveRadiobutton();
-		addOrgNodePage.clickOnSaveAndAddButton();
-
-		generalSettingsPage.clickOnAddEnterprise();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Enter details in add new enterprise pop up");
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(ccuser.getSystemName());
-		addOrgNodePage.createNewOrgNode(ccuser.getEnterpriseName(), ccuser.getEnterpriseSapId(),
-				ccuser.getEnterpriseTimezone(), ccuser.getEnterpriseSolutionDisplayName());
-		addOrgNodePage.clickOnSaveAndAddButton();
-
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		addOrgNodePage.clickOnParentEntityNameDropdown();
-		addOrgNodePage.searchTextForParentEntityName(ccuser.getEnterpriseName());
-		logStep("Add new nge practice node below enterprise node");
-		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.createNewOrgNode(practiceName, testData.getProperty("new.practice.sapid"),
-				testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addOrgNodePage.addSolutions();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.verifyActiveSolutionsNames();
+	@Test(priority = 2,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate pay solution within practice from available to purchase section")
+	public void testTerminatePayPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToPayMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to terminate the all purchased solutions")
-	public void testAgnosticPracticeToTerminateAllTheSolutions() throws Exception {
-		String parentName = generalSettingsPage.getClientName();
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new agnostic practice node below client node");
-		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
-				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
+	@Test(priority = 3,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate engage solution within practice from available to purchase section")
+	public void testTerminateEngagePurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToEngageMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify add new agnostic practice to activate all the terminated solutions")
-	public void testAgnosticPracticeToActivateAllTheTerminatedSolutions() throws Exception {
-		String parentName = generalSettingsPage.getClientName();
-		generalSettingsPage.clickOnAddPractice();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		logStep("Add new agnostic practice node below client node");
-		String practiceName = testData.getProperty("active.practice.name").concat(CCUtils.generateRandomString());
-		addOrgNodePage.addNewPracticeNodeWithSolutions(parentName, true, practiceName,
-				testData.getProperty("new.practice.sapid"), testData.getProperty("new.practice.timezone"),
-				testData.getProperty("new.practice.solutiondisplayname"));
-		addAndUpdateProductSolutionsPage = new AddAndUpdateProductSolutionsPage(driver);
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectAllTerminateCheckboxOfProducts();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.verifySolutionsNameForAvailableToPurchase();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageEditButton();
-		addAndUpdateProductSolutionsPage.selectAllActivateCheckboxOfProducts();
-		addAndUpdateProductSolutionsPage.clickOnOrgPageSaveButton();
-		addAndUpdateProductSolutionsPage.verifyActiveSolutionsNames();
+	@Test(priority = 4,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate patient chat solution within practice from available to purchase section")
+	public void testTerminateChatPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToPatientChatMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
 	}
 
+	@Test(priority = 5,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate patient portal solution within practice from available to purchase section")
+	public void testTerminatePortalPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToPatientPortalMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
+	}
+
+	@Test(priority = 6,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate PSS solution within practice from available to purchase section")
+	public void testTerminatePSSPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToPSSMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
+	}
+	
+	@Test(priority = 7,retryAnalyzer = RetryAnalyzer.class, description = "Verify activate pop up web elements")
+	public void testActivatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		String pracName = clientSystementErpriseandPractice.get("practiceName");
+		log("name of practice : "+pracName);
+		ccui.getGeneralSettingsPage().verifyActivatePopupTitle();
+		ccui.getGeneralSettingsPage().verifyActivateTerminatePopupCancelButtonAndCrossIcon();
+		ccui.getGeneralSettingsPage().cautionActivateMessage(pracName);
+		runOnce = false;
+	}
+	
+	@Test(priority = 8,retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate pop up web elements")
+	public void testTerminatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		String pracName = clientSystementErpriseandPractice.get("practiceName");
+		log("name of practice : "+pracName);
+		ccui.getGeneralSettingsPage().clickToVirtualVisitsMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().verifyTerminatePopupTitle();
+		ccui.getGeneralSettingsPage().verifyActivateTerminatePopupCancelButtonAndCrossIcon();
+		ccui.getGeneralSettingsPage().cautionTerminateMessage(pracName);
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");		
+		runOnce = false;
+	}
 }

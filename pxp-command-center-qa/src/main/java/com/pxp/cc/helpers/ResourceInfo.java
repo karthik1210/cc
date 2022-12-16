@@ -153,4 +153,29 @@ public class ResourceInfo extends BaseRest {
 				.queryParam("sortdir", sortDir).queryParam("page", pages).queryParam("pagesize", pageSize).when()
 				.get(url).then().extract().response();
 	}
+	
+	public Response getDisplayNameOfPracticeResource_BL(int resourceId,int practiceId) {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL(resourceId,practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response  getDisplayNameOfPracticeResource_BL_NULL() {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL_NULL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}	
+
+	public Response getResourceDetails_DL(int resourceId) {
+		String url = ApiPath.GET_RESOURCE_DETAILS_DL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getResourceDetails_DL_NULL() {
+		String url = ApiPath.GET_RESOURCE_DETAILS_DL_NULL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response deleteResourceImage_BL(int resourceId) {
+		String url = ApiPath.DELETE_RESOURCE_IMAGE_BL(resourceId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
 }
