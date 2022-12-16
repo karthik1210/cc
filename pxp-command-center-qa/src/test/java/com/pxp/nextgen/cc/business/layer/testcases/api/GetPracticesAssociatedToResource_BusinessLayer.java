@@ -4,7 +4,6 @@ package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -82,14 +81,14 @@ public class GetPracticesAssociatedToResource_BusinessLayer extends BaseRest {
 		return createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid for existing resourceId and verify response body")
-	public void testResponseCodeForExistingPracticeIdAndResourceId() throws NullPointerException, IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing resourceId and verify response body")
+	public void testResponseCodeForExistingResourceId() throws NullPointerException, IOException {
 		logStep("Add practiceid for existing resourceId");
 		associateDeassociatePracticeForResourceApiResponse = sharedInfo
 				.associateDeassociatePracticeForResource_BL(resourceId, practiceId, "true");
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 200);
-		logStep("Enter existind practiceid for existing resourceId and verify response body");
-		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId, practiceId);
+		logStep("Enter existing resourceId and verify response body");
+		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId);
 		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 200);
 		ArrayList<Object> practiceIds = new ArrayList<Object>();
 		practiceIds.add(practiceId);
@@ -98,41 +97,22 @@ public class GetPracticesAssociatedToResource_BusinessLayer extends BaseRest {
 		associateDeassociatePracticeForResourceApiResponse = sharedInfo
 				.associateDeassociatePracticeForResource_BL(resourceId, practiceId, "false");
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 200);
-		logStep("Enter existind practiceid for existing resourceId and verify response body");
-		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId, practiceId);
+		logStep("Enter existing resourceId and verify response body");
+		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId);
 		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid for non-existing resourceId and verify response body")
-	public void testResponseCodeForExistingPracticeIdAndNonExistingResourceId() throws NullPointerException, IOException {
-		logStep("Enter existind practiceid for non-existing resourceId and verify response body");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing resourceId and verify response body")
+	public void testResponseCodeForNonExistingResourceId() throws NullPointerException, IOException {
+		logStep("Enter existind practiceid and non-existing resourceId and verify response body");
 		int resourceId= Integer.parseInt(testData.getProperty("non.existing.resource.id"));
-		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId, practiceId);
+		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId);
 		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 204);
 	
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceid for existing resourceId and verify response body")
-	public void testResponseCodeForNonExistingPracticeIdAndExistingResourceId() throws NullPointerException, IOException {
-		logStep("Enter non-existind practiceid for existing resourceId and verify response body");
-		int practiceId= Integer.parseInt(testData.getProperty("nonexisting.practiceId"));
-		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId, practiceId);
-		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 204);
-	
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceid for non-existing resourceId and verify response body")
-	public void testResponseCodeForNonExistingPracticeIdAndNonExistingResourceId() throws NullPointerException, IOException {
-		logStep("Enter non-existind practiceid for existing resourceId and verify response body");
-		int resourceId= Integer.parseInt(testData.getProperty("non.existing.resource.id"));
-		int practiceId= Integer.parseInt(testData.getProperty("nonexisting.practiceId"));
-		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId, practiceId);
-		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 204);
-	
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practiceid, resourceId as null and verify response code")
-	public void testResponseCodeToAddPracticeWithResourceIdAsNull() throws NullPointerException, IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter  resourceId as null and verify response code")
+	public void testResponseCodeToGetPracticeWithResourceIdAsNull() throws NullPointerException, IOException {
 		logStep("Enter practiceid, resourceId as null");
 		getPracticesAssociatedToResourceApiResponse = sharedInfo
 				.associateDeassociatePracticeForResourceUsingNullValue_BL();

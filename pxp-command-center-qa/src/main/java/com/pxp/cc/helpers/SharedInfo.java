@@ -1812,9 +1812,10 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 	
-	public Response getPracticeForResource_BL(int resourceId, int practiceId) {
-		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
-		return given().spec(requestSpec).when().get(url).then()
-				.extract().response();
-	}
+	
+	  public Response getPracticeForResource_BL(int resourceId) {
+	  String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+	  return given().spec(requestSpec).when().get(url).then()
+	  .extract().response(); }
+	 
 }
