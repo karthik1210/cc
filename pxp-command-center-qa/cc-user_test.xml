@@ -38,11 +38,10 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateExpiredStatusApiTests_BusinessLayer" />
-			<!-- Enable test class Once mentioned issue resolved https://nextgenhealthcare.atlassian.net/browse/PXPP-27222 -->
-			<!--<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePasswordDuringEnrollmentApiTests_BusinessLayer" />-->
-			<!--<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchUsersWithEnrollmentStatusApiTests_BusinessLayer" />-->
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePasswordDuringEnrollmentApiTests_BusinessLayer" />
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchUsersWithEnrollmentStatusApiTests_BusinessLayer" />
                 <!-- Enable test class once below issue is resolved  # PXPP-26529-->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListRoleLocationsApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetInternalUserLoginDetailsApiTests_BusinessLayer" 
