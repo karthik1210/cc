@@ -92,7 +92,8 @@ public class GetPracticesAssociatedToResource_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 200);
 		ArrayList<Object> practiceIds = new ArrayList<Object>();
 		practiceIds.add(practiceId);
-		validation.verifygetPracticesAssociatedToResourceApiResponse(getPracticesAssociatedToResourceApiResponse,practiceIds);
+		validation.verifyGetPracticesAssociatedToResourceApiResponse(getPracticesAssociatedToResourceApiResponse,
+				practiceIds);
 		logStep("Remove practiceid for existing resourceId");
 		associateDeassociatePracticeForResourceApiResponse = sharedInfo
 				.associateDeassociatePracticeForResource_BL(resourceId, practiceId, "false");
@@ -105,10 +106,9 @@ public class GetPracticesAssociatedToResource_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing resourceId and verify response body")
 	public void testResponseCodeForNonExistingResourceId() throws NullPointerException, IOException {
 		logStep("Enter existind practiceid and non-existing resourceId and verify response body");
-		int resourceId= Integer.parseInt(testData.getProperty("non.existing.resource.id"));
+		int resourceId = Integer.parseInt(testData.getProperty("non.existing.resource.id"));
 		getPracticesAssociatedToResourceApiResponse = sharedInfo.getPracticeForResource_BL(resourceId);
 		CCUtils.assertEquals(getPracticesAssociatedToResourceApiResponse.getStatusCode(), 204);
-	
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter  resourceId as null and verify response code")

@@ -3433,7 +3433,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
 	}
 	
-	public void verifygetPracticesAssociatedToResourceApiResponse(Response response, ArrayList<Object> orgId) throws IOException {
+	public void verifyGetPracticesAssociatedToResourceApiResponse(Response response, ArrayList<Object> orgId) throws IOException {
 		for (int i = 0; i < orgId.size(); i++) {
 			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
 				CCUtils.assertTrue(true, " : this value is present in response body" + orgId.get(i));
