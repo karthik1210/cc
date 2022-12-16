@@ -44,14 +44,14 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserInfoApiTests_DataLayer" 
 				/> -->
 			<!-- Enable test class Once mentioned issue resolved https://nextgenhealthcare.atlassian.net/browse/PXPP-27222 -->
-			<!--<class
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SendUserEnrollmentConsumerApiTests_DataLayer" />
 
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer" />-->
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer" />
 			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateExpiredStatusApiTests_DataLayer" />
 			<!-- Enable test class Once mentioned issue resolved https://nextgenhealthcare.atlassian.net/browse/PXPP-27222 -->
-			<!--<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchUserWithEnrollmentStatusApiTests_DataLayer" />-->
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchUserWithEnrollmentStatusApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>
