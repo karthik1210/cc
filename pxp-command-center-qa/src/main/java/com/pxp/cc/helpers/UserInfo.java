@@ -760,4 +760,9 @@ public class UserInfo extends BaseRest {
         String url = ApiPath.GET_USER_INFO(serviceLayer, userId);
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
+
+    public Response getUserRolesByUserType(String userType) {
+        String url = ApiPath.USER_ROLES_BL(userType);
+        return given().spec(requestSpec).pathParam("userType", userType).when().get(url).then().extract().response();
+    }
 }
