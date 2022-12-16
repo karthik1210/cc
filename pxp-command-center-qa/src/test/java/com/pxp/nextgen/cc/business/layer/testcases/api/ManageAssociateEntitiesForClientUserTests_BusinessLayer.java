@@ -140,7 +140,6 @@ public class ManageAssociateEntitiesForClientUserTests_BusinessLayer extends Bas
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addAssociatedEntitiesResponse);
 		CCUtils.assertEquals(addAssociatedEntitiesResponse.getStatusCode(), 400);
-		validation.verifyErrorInResponseForInvalidValueForOrgIdField(addAssociatedEntitiesResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for non existing userId in userId field")
