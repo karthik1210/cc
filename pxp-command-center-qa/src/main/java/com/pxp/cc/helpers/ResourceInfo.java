@@ -69,30 +69,30 @@ public class ResourceInfo extends BaseRest {
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
 	}
-	
-	public Response createResourceInvalidUrl_BL(int practiceId, String name, String type, String externalId, String linkId,
-			String linkType) {
+
+	public Response createResourceInvalidUrl_BL(int practiceId, String name, String type, String externalId,
+			String linkId, String linkType) {
 		String url = ApiPath.CREATE_RESOURCE_INVALID_URL_BL(practiceId);
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
 	}
-	public Response createResourceInvalidMethodCall_BL(int practiceId, String name, String type, String externalId, String linkId,
-			String linkType) {
+
+	public Response createResourceInvalidMethodCall_BL(int practiceId, String name, String type, String externalId,
+			String linkId, String linkType) {
 		String url = ApiPath.CREATE_RESOURCE_BL(practiceId);
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
 	}
-	
-	public Response createResourceNullValue_BL( String name, String type, String externalId, String linkId,
+
+	public Response createResourceNullValue_BL(String name, String type, String externalId, String linkId,
 			String linkType) {
 		String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_BL;
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
 	}
-	
 
 	private Map<String, Object> createResourceRequestPayload(String name, String type, String externalId, String linkId,
 			String linkType) {
@@ -104,37 +104,53 @@ public class ResourceInfo extends BaseRest {
 		createResourceMap.put("linkType", linkType);
 		return createResourceMap;
 	}
-	
-	public Response createResource_DL(int practiceId, String name, String type, String externalId, String linkId, String linkType ) {
-        String url = ApiPath.CREATE_RESOURCE_DL(practiceId);
-        Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
-                linkType);
-        return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
-    }
 
-	public Response createResourceInvalidUrl_DL(int practiceId, String name, String type, String externalId, String linkId,
+	public Response createResource_DL(int practiceId, String name, String type, String externalId, String linkId,
 			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_DL(practiceId);
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	}
+
+	public Response createResourceInvalidUrl_DL(int practiceId, String name, String type, String externalId,
+			String linkId, String linkType) {
 		String url = ApiPath.CREATE_RESOURCE_INVALID_URL_DL(practiceId);
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
 	}
-	
-	public Response createResourceInvalidPutMethodCall_DL(int practiceId, String name, String type, String externalId, String linkId,
-			String linkType) {
+
+	public Response createResourceInvalidPutMethodCall_DL(int practiceId, String name, String type, String externalId,
+			String linkId, String linkType) {
 		String url = ApiPath.CREATE_RESOURCE_DL(practiceId);
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
 	}
-	
-	public Response createResourceNullValue_DL( String name, String type, String externalId, String linkId,
-            String linkType) {
-        String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
-        Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
-                linkType);
-        return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
-    }
-	
-	
+
+	public Response createResourceNullValue_DL(String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	}
+
+	public Response searchResources_DL(String clientId, String resourceName, String systemId, String enterpriseId,
+			String practiceId, String solutionId, String sortColumn, String sortDir, String page, String pagesize) {
+		int clientID = Integer.parseInt(clientId);
+		int systemID = Integer.parseInt(systemId);
+		int enterpriseID = Integer.parseInt(enterpriseId);
+		int practiceID = Integer.parseInt(practiceId);
+		int solutionID = Integer.parseInt(solutionId);
+		int pages = Integer.parseInt(page);
+		int pageSize = Integer.parseInt(pagesize);
+		String url = ApiPath.SEARCH_RESOURCES_DL(clientID);
+		return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+				.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID)
+				.queryParam("solutionid", solutionID).queryParam("sortcolumn", sortColumn)
+				.queryParam("sortdir", sortDir).queryParam("page", pages).queryParam("pagesize", pageSize).when()
+				.get(url).then().extract().response();
+	}
 }
