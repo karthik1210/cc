@@ -3,27 +3,30 @@
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
+
 import io.restassured.response.Response;
 
 public class SearchResourcesApiTests_DataLayer extends BaseRest {
 
 	private SharedInfo sharedInfo;
-	private Validations validation;
 	private ResourceInfo resourceInfo;
 	Response createProviderApiResponse, createResourceApiResponse, createSystemApiResponse, createClientApiResponse,
-			createPracticeApiResponse, createEnterpriseApiResponse, searchResourceApiResponse, getResourcesApiResponse;
+			createPracticeApiResponse, createEnterpriseApiResponse, searchResourceApiResponse, getResourcesApiResponse,
+			updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse, updateSolutionForResources;
 	public static int clientId, systemId, enterpriseId, practiceId, resourceId;
 	public static String resourceName;
 	public int providerId;
@@ -35,7 +38,6 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
-		validation = new Validations();
 		orgInfo = new OrgInfo();
 		clientInfo = new ClientInfo();
 		validations = new Validations();
@@ -52,6 +54,7 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"));
 		providerId = createProviderForPractice();
 		resourceId = createResource(providerId);
+		enableSolutionForResource();
 	}
 
 	public int createProviderForPractice() throws IOException {
@@ -63,7 +66,7 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createProviderApiResponse);
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
-		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
+		validations.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
 		int providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 		return providerId;
 	}
@@ -76,6 +79,13 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
 		int resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
 		return resourceId;
+	}
+
+	public void enableSolutionForResource() throws IOException {
+		int solutionId = Integer.parseInt(testData.getProperty("Portal.id"));
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+				solutionId, true);
+		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
 	}
 
 	@Test(enabled = false)
@@ -101,27 +111,77 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 				practiceOrgType, enterpriseId, practiceParentType, practiceTimeZone, ehrIdentifier, pmIdentifier);
 		logStep("Validating Response Information");
 		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		validations.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
 		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
+		List<OrgSolutions> productList = Arrays.asList(
+				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased").trim()));
+		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, orgId);
+		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
+		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(orgId,
+				testData.getProperty("get.org.type"));
+		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
 		return orgId;
 	}
 
 	@DataProvider(name = "resourcevaliddata")
-	public Object[] searchResourcesWithoutFilter() {
-		Object[][] obj = new Object[][] { { String.valueOf(clientId), testData.getProperty("resource.name").trim(), 0,
-				0, 0, 0, null, null, (testData.getProperty("api.page.no").trim()),
-				(testData.getProperty("api.page.size").trim()) } };
+	public Object[] searchResources() {
+		Object[][] obj = new Object[][] {
+				{ String.valueOf(clientId), testData.getProperty("resource.name").trim(), "0", "0", "0", "0", null,
+						null },
+				{ String.valueOf(clientId), testData.getProperty("resource.name").trim(), String.valueOf(systemId), "0",
+						"0", "0", null, null },
+				{ String.valueOf(clientId), testData.getProperty("resource.name").trim(), String.valueOf(systemId),
+						String.valueOf(enterpriseId), "0", "0", null, null },
+				{ String.valueOf(clientId), testData.getProperty("resource.name").trim(), String.valueOf(systemId),
+						String.valueOf(enterpriseId), String.valueOf(practiceId), "0", null, null },
+				{ String.valueOf(clientId), testData.getProperty("resource.name").trim(), String.valueOf(systemId),
+						String.valueOf(enterpriseId), String.valueOf(practiceId), testData.getProperty("Portal.id"),
+						null, null } };
 		return obj;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "resourcevaliddata", description = "Search Internal user without filter  by keeping page 0 and page size 10")
-	public void testSearchResourcesWithoutFilter(String[] getSearchResources) throws NullPointerException {
+	@DataProvider(name = "resourceinvaliddata")
+	public Object[] searchResourcesWithInvalidData() {
+		Object[][] obj = new Object[][] { { String.valueOf(clientId), "invalid", "0", "0", "0", "0", null, null },
+				{ String.valueOf(clientId), "invalid", "1234", "0", "0", "0", null, null },
+				{ String.valueOf(clientId), "invalid", "1234", "1234", "0", "0", null, null },
+				{ String.valueOf(clientId), "invalid", "1234", "1234", "1234", "0", null, null },
+				{ String.valueOf(clientId), "invalid", "1234", "1234", "1234", "1234", null, null } };
+		return obj;
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "resourcevaliddata", description = "Search resources for valid client id ,system id, enterprise id, practice id and solution id")
+	public void testSearchResourcesForValidData(String[] getSearchResources) throws NullPointerException {
 		getResourcesApiResponse = resourceInfo.searchResources_DL(getSearchResources[0], getSearchResources[1],
 				getSearchResources[2], getSearchResources[3], getSearchResources[4], getSearchResources[5],
-				getSearchResources[6], getSearchResources[7], getSearchResources[8], getSearchResources[9]);
+				getSearchResources[6], getSearchResources[7]);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getResourcesApiResponse);
 		CCUtils.assertEquals(getResourcesApiResponse.getStatusCode(), 200);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "resourceinvaliddata", description = "Search resources for invalid client id ,system id, enterprise id, practice id and solution id")
+	public void testSearchResourcesForInvalidData(String[] getSearchResources) throws NullPointerException {
+		getResourcesApiResponse = resourceInfo.searchResources_DL(getSearchResources[0], getSearchResources[1],
+				getSearchResources[2], getSearchResources[3], getSearchResources[4], getSearchResources[5],
+				getSearchResources[6], getSearchResources[7]);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getResourcesApiResponse);
+		CCUtils.assertEquals(getResourcesApiResponse.getStatusCode(), 204);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search resources for non-existing client id")
+	public void testSearchResourcesForNonExistingClientId() throws NullPointerException {
+		getResourcesApiResponse = resourceInfo.searchResources_DL("1234", null, "0", "0", "0", "0", null, null);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getResourcesApiResponse);
+		CCUtils.assertEquals(getResourcesApiResponse.getStatusCode(), 204);
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search resources for null client id")
+	public void testSearchResourcesForNullClientId() throws NullPointerException {
+		getResourcesApiResponse = resourceInfo.searchResources_NULL_DL();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getResourcesApiResponse);
+		CCUtils.assertEquals(getResourcesApiResponse.getStatusCode(), 400);
 	}
 }
