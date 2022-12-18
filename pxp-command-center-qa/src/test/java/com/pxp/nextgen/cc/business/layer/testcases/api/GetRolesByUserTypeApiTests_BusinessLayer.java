@@ -3,19 +3,21 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
+
+import com.pxp.cc.helpers.UserInfo;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.RoleInfo;
+import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
-	private RoleInfo roleInfo;
+	private UserInfo userInfo;
 	private Validations validation;
 	Response getUserRolesApiResponse, createClientApiResponse;
 	String clientName, clientSapNumber, newClientId;
@@ -24,7 +26,7 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		roleInfo = new RoleInfo();
+		userInfo = new UserInfo();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
@@ -52,7 +54,7 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userTypeValue", description = "Get user roles by userType")
 	public void testUserRolesForUserType(String userType) throws IOException {
-		getUserRolesApiResponse = roleInfo.getUserRolesByUserType(userType);
+		getUserRolesApiResponse = userInfo.getUserRolesByUserType(userType);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
@@ -60,7 +62,7 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userType", description = "Enter non existing user type and verify response status code")
 	public void testResponseCodeForNonExistingUserType(String userType) throws IOException {
-		getUserRolesApiResponse = roleInfo.getUserRolesByUserType(userType);
+		getUserRolesApiResponse = userInfo.getUserRolesByUserType(userType);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 204);
@@ -68,21 +70,10 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank space in user type field and verify error message")
 	public void testErrorRepsonseForBlankUserType() throws IOException {
-		getUserRolesApiResponse = roleInfo.getUserRolesByUserType(" ");
+		getUserRolesApiResponse = userInfo.getUserRolesByUserType(" ");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 400);
 		validation.verifyErrorResponseBodyForUserTypeField(getUserRolesApiResponse);
 	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error message for invalid url")
-	public void testErrorMessagesForInvalidUrl() throws IOException {
-		getUserRolesApiResponse = roleInfo
-				.getUserRolesByUserTypeUsingInvalidUrl(testData.getProperty("user.type.internal"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(getUserRolesApiResponse);
-		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(getUserRolesApiResponse);
-	}
-
 }

@@ -89,7 +89,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         runOnce = false;
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26610 TC 004_Verify the Response code as 204, For type Internal & enrollstatus as PENDING by using GET Request [DL]")
+    @Test(enabled = false, priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26610 TC 004_Verify the Response code as 204, For type Internal & enrollstatus as PENDING by using GET Request [DL]")
     public void searchInternalUserWithEnrollmentStatusWithNoContent() throws IOException {
         if (runOnce) {
             userMap.clear();
@@ -105,7 +105,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26608 TC 002_Verify the Response code as 204, For type Client & enroll status as PENDING by using GET Request [DL]")
+    @Test(enabled = false, priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26608 TC 002_Verify the Response code as 204, For type Client & enroll status as PENDING by using GET Request [DL]")
     public void searchClientUserWithEnrollmentStatusWithNoContent() throws IOException {
         if (runOnce) {
             orgListMap.clear();
@@ -126,7 +126,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26612 TC 006_Verify the Response code as 204, For type VARReseller & enroll status as PENDING by using GET Request [DL]")
+    @Test(enabled = false, priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26612 TC 006_Verify the Response code as 204, For type VARReseller & enroll status as PENDING by using GET Request [DL]")
     public void searchVARResellerUserWithEnrollmentStatusWithNoContent() throws IOException {
         if (runOnce) {
             userMap.clear();
@@ -245,6 +245,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         String practiceParentType = testData.getProperty("api.practice.parenttype");
         String practiceTimeZone = testData.getProperty("api.practice.timezoneid");
         orgListMap.clear();
+        setupServiceRequestSpecificationBuilderForDataLayer();
         orgListMap = ngOrgPracticeObj.getOrgHierPractice(status, clientName, clientSapNumber, testFlag, clientType, clientTimezoneId, systemName, orgType, parentType,
                 ehrIdentifier, pmIdentifier, enterpriseName, enterpriseType, enterpriseParentType, enterpriseTimeZone, practiceDisplayName, practiceName,
                 practiceOrgType, practiceParentType, practiceTimeZone);
@@ -272,6 +273,10 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 200);
             searchUserWithEnrollmentStatus(status, userType1, userId);
         } else if (status.equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.confirmed"))) {
+            Date date1 = new Date(System.currentTimeMillis() + 4 * 60 * 60 * 1000);
+            Date date2 = new Date(System.currentTimeMillis() - 20 * 60 * 60 * 1000);
+            String expiryTs = dateFormat.format(new Date(date1.getTime() + (1000 * 60 * 60 * 24)));
+            String initiatedTs = dateFormat.format(new Date(date2.getTime() + (1000 * 60 * 60 * 24)));
             internalEnrollmentId = CCUtils.generateAuthId();
             userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(internalEnrollmentId, initiatedTs, expiryTs, testData.getProperty("pxpp.26460.enrollment.status.pending"));
             sendUserEnrollmentConsumerResponse = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);

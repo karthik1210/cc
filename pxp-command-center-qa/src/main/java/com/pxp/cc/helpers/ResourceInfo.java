@@ -197,4 +197,14 @@ public class ResourceInfo extends BaseRest {
 		String url = ApiPath.DELETE_RESOURCE_IMAGE_BL(resourceId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+	
+	public Response getResourceImage_BL(String imageUrl) {
+		String url=ApiPath.GET_RESOURCE_IMAGE_BL(imageUrl);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getResourceImage_Null_BL() {
+		String url=ApiPath.GET_RESOURCE_IMAGE_BL_NULL_VALUES();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
