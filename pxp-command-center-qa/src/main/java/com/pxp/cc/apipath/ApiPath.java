@@ -1913,4 +1913,10 @@ public class ApiPath {
 	public static final String SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null/locations-resource";
 	}
+	
+	public static final String SEARCH_PROVIDERS_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
+	}
+
+	public static final String SEARCH_PROVIDERS_NULL_DL = SHARED_DL + "/v1/clients/null/providers";
 }
