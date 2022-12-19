@@ -1811,10 +1811,47 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-		
-	  public Response getPracticeForResource_BL(int resourceId) {
-	  String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
-	  return given().spec(requestSpec).when().get(url).then()
-	  .extract().response(); }
-	 
+
+	public Response getPracticeForResource_BL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response searchProviders_DL(String clientId, String resourceName, String systemId, String enterpriseId,
+			String practiceId, String solutionId, String sortColumn, String sortDir) {
+		int clientID = Integer.parseInt(clientId);
+		int systemID = Integer.parseInt(systemId.trim());
+		int enterpriseID = Integer.parseInt(enterpriseId.trim());
+		int practiceID = Integer.parseInt(practiceId.trim());
+		int solutionID = Integer.parseInt(solutionId.trim());
+		String url = ApiPath.SEARCH_PROVIDERS_DL(clientID);
+		if ((systemID <= 0) && (enterpriseID <= 0) && (practiceID <= 0) && (solutionID <= 0) && (sortColumn == null)
+				&& (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract()
+					.response();
+		} else if ((enterpriseID <= 0) && (practiceID <= 0) && (solutionID <= 0) && (sortColumn == null)
+				&& (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID).when()
+					.get(url).then().extract().response();
+		} else if ((practiceID <= 0) && (solutionID <= 0) && (sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).when().get(url).then().extract().response();
+		} else if ((solutionID <= 0) && (sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID).when().get(url)
+					.then().extract().response();
+		} else if ((sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID)
+					.queryParam("solutionid", solutionID).when().get(url).then().extract().response();
+		} else
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response searchProviders_NULL_DL() {
+		String url = ApiPath.SEARCH_PROVIDERS_NULL_DL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+
 }
