@@ -69,7 +69,7 @@ public class ClientSearchProvidersApiTests_DataLayer extends BaseRest {
 		fetchSolutionsForProviders = sharedInfo.getSolutionsForProviders_DL(providerId, practiceId);
 		return providerId;
 	}
-
+	
 	@Test(enabled = false)
 	public int createPractice(String status, String clientName, String clientSapNumber, String testFlag, int clientType,
 			String clientTimezoneId, String systemName, String sysOrgType, String sysParentType, int ehrIdentifier,
