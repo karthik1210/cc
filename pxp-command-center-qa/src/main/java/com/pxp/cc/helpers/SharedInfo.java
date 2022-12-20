@@ -1816,7 +1816,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response searchProviders_DL(String clientId, String resourceName, String systemId, String enterpriseId,
 			String practiceId, String solutionId, String sortColumn, String sortDir) {
 		int clientID = Integer.parseInt(clientId);
@@ -1847,15 +1847,21 @@ public class SharedInfo extends BaseRest {
 		} else
 			return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response searchProviders_NULL_DL() {
 		String url = ApiPath.SEARCH_PROVIDERS_NULL_DL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
- 
+
 	public Response getResourcesForProvider_NullValue() {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
+	
+	public Response savePracticeResource_DL(int practiceId, int resourcerId, String en, String es) {
+		String url = ApiPath.SAVE_PRACTICE_RESOURCES_DL(practiceId, resourcerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
+				.response();
+	}
 }
