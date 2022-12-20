@@ -240,7 +240,9 @@ public class CCUtils {
     }
 
     public static Long generateMobileNumber() {
-        return (long) (Math.random() * 1000000 + 3333000000L);
+        String mob = generateNumericString(10);
+        mob = mob.toString().replace('0','9');
+        return Long.parseLong(mob);
     }
 
     public static String generateNewEmail(int n) {

@@ -1691,19 +1691,20 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
-	public Response putAddRemoveResourcesForProvider(int providerId, int practiceId,List<ResourceDetails> addRemoveResourcePayload) {
+	public Response putAddRemoveResourcesForProvider(int providerId, int practiceId,
+			List<ResourceDetails> addRemoveResourcePayload) {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
 		List<ResourceDetails> addRemoveResource = addRemoveResourcePayload;
 		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
 	}
-	
+
 	public Response putAddRemoveResourcesForProvider_Null(List<ResourceDetails> addRemoveResourcePayload) {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
 		List<ResourceDetails> addRemoveResource = addRemoveResourcePayload;
 		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
 	}
-	
-	public Response getRemoveResourcesForProvider(int providerId, int practiceId) {
+
+	public Response getResourcesForProvider(int providerId, int practiceId) {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
@@ -1747,33 +1748,34 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response savePracticeResource_BL(int practiceId, int resourcerId, String en, String es) {
 		String url = ApiPath.SAVE_PRACTICE_RESOURCES_BL(practiceId, resourcerId);
 		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
-		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract().response();
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
+				.response();
 	}
-	
+
 	public Response getPracticeResourceDetails_BL(int practiceId, int resourceId) {
 		String url = ApiPath.GET_PRACTICE_RESOURCES_BL(practiceId, resourceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response savePracticeResourceUsingNullValues_BL() {
 		String url = ApiPath.SAVE_PRACTICE_RESOURCES_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response addOrRemoveLocationForResource_BL(int ResourceId, int practiceId, List<Locations> location) {
 		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCE_BL(ResourceId, practiceId);
 		return given().spec(requestSpec).body(location).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getLocationsForResourceForNullValues_BL() {
 		String url = ApiPath.UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateResourceDetails_BL(int resourceId, String name, String type, String externalId,
 			String linkType, int linkId) {
 		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkType,
@@ -1781,7 +1783,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_RESOURCE_DETAILS_BL(resourceId);
 		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
 	}
-	
+
 	public Response updateResourceDetails_NullPayload_BL(int resourceId) {
 		String url = ApiPath.UPDATE_RESOURCE_DETAILS_BL(resourceId);
 		return given().spec(requestSpec).when().put(url).then().extract().response();
@@ -1791,4 +1793,69 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.UPDATE_RESOURCE_DETAILS_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
+
+	public Response getResouresForClient_BL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid) {
+		String url = ApiPath.RESOURCE_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).when().get(url).then().extract().response();
+	}
+
+	public Response searchLocationForResource_BL(int ResourceId, int practiceId, String name) {
+		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_BL(ResourceId, practiceId);
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response searchLocationForResource_NullValue_BL() {
+		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getPracticeForResource_BL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response searchProviders_DL(String clientId, String resourceName, String systemId, String enterpriseId,
+			String practiceId, String solutionId, String sortColumn, String sortDir) {
+		int clientID = Integer.parseInt(clientId);
+		int systemID = Integer.parseInt(systemId.trim());
+		int enterpriseID = Integer.parseInt(enterpriseId.trim());
+		int practiceID = Integer.parseInt(practiceId.trim());
+		int solutionID = Integer.parseInt(solutionId.trim());
+		String url = ApiPath.SEARCH_PROVIDERS_DL(clientID);
+		if ((systemID <= 0) && (enterpriseID <= 0) && (practiceID <= 0) && (solutionID <= 0) && (sortColumn == null)
+				&& (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract()
+					.response();
+		} else if ((enterpriseID <= 0) && (practiceID <= 0) && (solutionID <= 0) && (sortColumn == null)
+				&& (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID).when()
+					.get(url).then().extract().response();
+		} else if ((practiceID <= 0) && (solutionID <= 0) && (sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).when().get(url).then().extract().response();
+		} else if ((solutionID <= 0) && (sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID).when().get(url)
+					.then().extract().response();
+		} else if ((sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID)
+					.queryParam("solutionid", solutionID).when().get(url).then().extract().response();
+		} else
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response searchProviders_NULL_DL() {
+		String url = ApiPath.SEARCH_PROVIDERS_NULL_DL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+ 
+	public Response getResourcesForProvider_NullValue() {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 }

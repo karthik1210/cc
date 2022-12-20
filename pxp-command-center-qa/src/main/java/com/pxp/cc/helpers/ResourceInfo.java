@@ -128,24 +128,60 @@ public class ResourceInfo extends BaseRest {
 				linkType);
 		return given().spec(requestSpec).body(createResourcePayload).when().put(url).then().extract().response();
 	}
-	
-	public Response createResourceNullValue_DL( String name, String type, String externalId, String linkId,
-            String linkType) {
-        String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
-        Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
-                linkType);
-        return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
-    }
-	
-	public Response getDisplayNameOfPracticeResource_BL(int resourceId,int practiceId) {
-		String url = ApiPath.GET_DISPLAY_DETAILS_BL(resourceId,practiceId);
+
+	public Response createResourceNullValue_DL(String name, String type, String externalId, String linkId,
+			String linkType) {
+		String url = ApiPath.CREATE_RESOURCE_NULL_VALUE_DL;
+		Map<String, Object> createResourcePayload = createResourceRequestPayload(name, type, externalId, linkId,
+				linkType);
+		return given().spec(requestSpec).body(createResourcePayload).when().post(url).then().extract().response();
+	}
+
+	public Response searchResources_DL(String clientId, String resourceName, String systemId, String enterpriseId,
+			String practiceId, String solutionId, String sortColumn, String sortDir) {
+		int clientID = Integer.parseInt(clientId);
+		int systemID = Integer.parseInt(systemId.trim());
+		int enterpriseID = Integer.parseInt(enterpriseId.trim());
+		int practiceID = Integer.parseInt(practiceId.trim());
+		int solutionID = Integer.parseInt(solutionId.trim());
+		String url = ApiPath.SEARCH_RESOURCES_DL(clientID);
+		if ((systemID <= 0) && (enterpriseID <= 0) && (practiceID <= 0) && (solutionID <= 0) && (sortColumn == null)
+				&& (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract()
+					.response();
+		} else if ((enterpriseID <= 0) && (practiceID <= 0) && (solutionID <= 0) && (sortColumn == null)
+				&& (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID).when()
+					.get(url).then().extract().response();
+		} else if ((practiceID <= 0) && (solutionID <= 0) && (sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).when().get(url).then().extract().response();
+		} else if ((solutionID <= 0) && (sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID).when().get(url)
+					.then().extract().response();
+		} else if ((sortColumn == null) && (sortDir == null)) {
+			return given().spec(requestSpec).queryParam("name", resourceName).queryParam("systemid", systemID)
+					.queryParam("enterpriseid", enterpriseID).queryParam("practiceid", practiceID)
+					.queryParam("solutionid", solutionID).when().get(url).then().extract().response();
+		} else
+			return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response searchResources_NULL_DL() {
+		String url = ApiPath.SEARCH_RESOURCES_NULL_DL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
-	public Response  getDisplayNameOfPracticeResource_BL_NULL() {
+
+	public Response getDisplayNameOfPracticeResource_BL(int resourceId, int practiceId) {
+		String url = ApiPath.GET_DISPLAY_DETAILS_BL(resourceId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getDisplayNameOfPracticeResource_BL_NULL() {
 		String url = ApiPath.GET_DISPLAY_DETAILS_BL_NULL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}	
+	}
 
 	public Response getResourceDetails_DL(int resourceId) {
 		String url = ApiPath.GET_RESOURCE_DETAILS_DL(resourceId);
@@ -160,5 +196,15 @@ public class ResourceInfo extends BaseRest {
 	public Response deleteResourceImage_BL(int resourceId) {
 		String url = ApiPath.DELETE_RESOURCE_IMAGE_BL(resourceId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+	
+	public Response getResourceImage_BL(String imageUrl) {
+		String url=ApiPath.GET_RESOURCE_IMAGE_BL(imageUrl);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getResourceImage_Null_BL() {
+		String url=ApiPath.GET_RESOURCE_IMAGE_BL_NULL_VALUES();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }

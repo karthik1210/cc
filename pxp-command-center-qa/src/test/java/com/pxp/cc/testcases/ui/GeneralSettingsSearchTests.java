@@ -2,203 +2,160 @@
 
 package com.pxp.cc.testcases.ui;
 
+import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
+import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.objectmaps.AddOrgNodePage;
-import com.pxp.cc.objectmaps.ClientDirectoryPage;
-import com.pxp.cc.objectmaps.CreateClientPage;
-import com.pxp.cc.objectmaps.GeneralSettingsPage;
+import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 
 public class GeneralSettingsSearchTests extends CommandCenterGenericTest {
-	ClientDirectoryPage clientDirectoryPage;
-	GeneralSettingsPage generalSettingsPage;
-	public CommonMethods commonMethods;
-	public CommandCenterGenericTest commandCenterGenericTest;
-	public CreateClientPage createClientPage;
-	public AddOrgNodePage addOrgNodePage;
-	public NGHierarchyClientCreation ngHierarchyClientCreation;
-	String systemName, enterpriseName, clientName, practiceName, timeZone, solution;
-	public ClientDirectoryPage cchomepage;
+	static boolean runOnce = true;
+	public CCUI ccui;
 
-	@BeforeMethod(alwaysRun = false)
+	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
-		logStep("Login to command center portal");
-		cchomepage = login(testData.getProperty("base.url"), testData.getProperty("user.name"),
-				testData.getProperty("user.password"));
-		createClientPage = new CreateClientPage(driver);
-		logStep("Select create client button from new dropdown");
-		commonMethods = new CommonMethods(driver);
-		ngHierarchyClientCreation = new NGHierarchyClientCreation(driver);
+		if (runOnce) {
+			ccui = new CCUI(testData, driver);
+			logStep("Login to command center portal");
+			ccui.getClientDirectoryPage();
+			ccui.initializeTestData();
+			getClientSystementErpriseandPractice();
+		}
 	}
 
-	public void createNewActiveClient() throws Exception {
-		clientName = testData.getProperty("new.test.client.name").concat("12")
-				.concat(CCUtils.generateAlphaNumericString(10).concat("_"));
-		String clientSap = testData.getProperty("new.client.sap")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(20));
-		String clientType = testData.getProperty("new.client.type");
-		String timeZone = testData.getProperty("new.client.timezone");
-		ngHierarchyClientCreation.createNewActiveClient(clientName, clientSap, clientType, timeZone);
-	}
+	String systemName;
 
-	private void createNewActiveSystem() throws NullPointerException, InterruptedException {
-		addOrgNodePage = new AddOrgNodePage(driver);
-		addOrgNodePage.verifyManageClientButton();
-		addOrgNodePage.clickOnManageClient();
-		addOrgNodePage.verifyAddSystemButton();
-		addOrgNodePage.clickOnAddSystem();
-		systemName = "System" + CCUtils.generateAlphaNumericString(5).concat("@");
-		addOrgNodePage.enterSystemName(systemName);
-		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
-		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
-	}
-
-	private void createNewActiveEnterprise() throws NullPointerException, InterruptedException {
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
-		generalSettingsPage.enterSearchText(systemName);
-		generalSettingsPage.clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
-		addOrgNodePage = new AddOrgNodePage(driver);
-		addOrgNodePage.verifyManageClientButton();
-		addOrgNodePage.clickOnManageClient();
-		addOrgNodePage.clickOnExpandArrow();
-		driver.navigate().refresh();
-		addOrgNodePage.clickOnManageClient();
-		addOrgNodePage.clickOnExpandArrow();
-		addOrgNodePage.verifyAddEnterpriseButton();
-		addOrgNodePage.clickOnAddEnterprise();
-		enterpriseName = CCUtils.generateAlphaNumericString(18);
-		addOrgNodePage.enterEnterpriseName(enterpriseName);
-		addOrgNodePage.addPmSystemAndEhrSystem(testData.getProperty("new.system"), testData.getProperty("new.system"));
-		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
-	}
-
-	private void createNewActivePractice() throws NullPointerException, InterruptedException {
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		addOrgNodePage = new AddOrgNodePage(driver);
-		addOrgNodePage.verifyManageClientButton();
-		addOrgNodePage.clickOnManageClient();
-		addOrgNodePage.clickOnSystemExpandArrow();
-		addOrgNodePage.clickOnEnterpriseExpandArrow();
-		addOrgNodePage.verifyAddPracticeButton();
-		addOrgNodePage.clickOnAddPracticeButton();
-		practiceName = CCUtils.generateAlphaNumericString(18);
-		addOrgNodePage.enterPracticeName(practiceName);
-		addOrgNodePage.addPracticePmSystemAndEhrSystem(testData.getProperty("new.system"),
-				testData.getProperty("new.system"));
-		addOrgNodePage.addTimezone(testData.getProperty("new.timezone.display.name"));
-		addOrgNodePage.enterSolutionsDisplayName(testData.getProperty("solution.forms"));
-		addOrgNodePage.verifyActiveRadioButtonIsByDefaultSelected();
-		addOrgNodePage.clickOnSaveAndAddButton();
-		addOrgNodePage.verifyToasterMessage("Changes updated successfully");
-	}
-
-	@Test(enabled = false, groups = {
+	@Test(enabled = true, groups = {
 			"UISmokeTest" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
-		createNewActiveClient();
-		createNewActiveSystem();
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Verifying default text");
-		String actualDefaultText = generalSettingsPage.defaultTextInSearch();
+		String actualDefaultText = ccui.getGeneralSettingsPage().defaultTextInSearch();
 		CCUtils.assertEquals(actualDefaultText, "Search");
-		generalSettingsPage.verifyStatusIcon();
+		ccui.getGeneralSettingsPage().verifyStatusIcon();
 		logStep("Verifying Auto-suggestion list is displayed");
-		generalSettingsPage.enterSearchText(systemName);
-		generalSettingsPage.verifyAutoSuggestionList(systemName);
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
+		ccui.getGeneralSettingsPage().verifyAutoSuggestionList(clientSystementErpriseandPractice.get("systemName"));
+		runOnce = false;
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
 	public void testAutoSuggestionForSingleCharacterSearch() throws Exception {
-		createNewActiveClient();
-		createNewActiveSystem();
+		ngHierarchyClientCreate();
+		createNewSystemForNumberSymbolSearch();
 		logStep("Searching for nodes with single character name in General settings search");
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
-		generalSettingsPage.enterSearchText(ccuser.searchSymbolInGeneralSetting);
-		generalSettingsPage.clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		ccui.getGeneralSettingsPage().enterSearchText(ccuser.searchSymbolInGeneralSetting);
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		generalSettingsPage.verifySearchedResult();
+		ccui.getGeneralSettingsPage().verifySearchedResult();
+		runOnce = false;
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
 	public void testAutoSuggestionForNumbersSearch() throws Exception {
-		createNewActiveClient();
-		logStep("Searching for nodes with number in General settings search");
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
-		generalSettingsPage.enterSearchText(ccuser.searchNumberInGeneralSetting);
-		generalSettingsPage.clickFirstInAutoSuggestion();
+		ngHierarchyClientCreate();
+		createNewSystemForNumberSymbolSearch();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		ccui.getGeneralSettingsPage().enterSearchText(ccuser.searchNumberInGeneralSetting);
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		generalSettingsPage.verifySearchedResult();
+		ccui.getGeneralSettingsPage().verifySearchedResult();
+		runOnce = false;
 	}
 
-	@Test(enabled = false, groups = {
+	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system node functionality in Client's General settings page")
 	public void testNodeSearch() throws Exception {
-		createNewActiveClient();
-		createNewActiveSystem();
-		generalSettingsPage = new GeneralSettingsPage(driver);
+		ngHierarchyClientCreate();
 		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a system node under client in general settings page");
-		generalSettingsPage.enterSearchText(systemName);
-		generalSettingsPage.clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		generalSettingsPage.verifySearchedResult();
+		ccui.getGeneralSettingsPage().verifySearchedResult();
+		runOnce = false;
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search enterprise node functionality in Client's General settings page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search enterprise node functionality in Client's General settings page")
 	public void testEnterpriseNodeSearch() throws Exception {
-		createNewActiveClient();
-		createNewActiveSystem();
-		createNewActiveEnterprise();
-		generalSettingsPage = new GeneralSettingsPage(driver);
+		ngHierarchyClientCreate();
 		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a enterprise node under client in general settings page");
-		generalSettingsPage.enterSearchText(enterpriseName);
-		generalSettingsPage.clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		generalSettingsPage.verifySearchedResult();
+		ccui.getGeneralSettingsPage().verifySearchedResult();
+		runOnce = false;
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search practice node functionality in Client's General settings page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search practice node functionality in Client's General settings page")
 	public void testPracticeNodeSearch() throws Exception {
-		createNewActiveClient();
-		createNewActiveSystem();
-		createNewActiveEnterprise();
-		createNewActivePractice();
-		generalSettingsPage = new GeneralSettingsPage(driver);
+		ngHierarchyClientCreate();
 		logStep("Verify general settings page title");
-		generalSettingsPage.verifyGeneralSettingsPageTitle();
-		generalSettingsPage.clickSearchIcon();
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
-		generalSettingsPage.enterSearchText(practiceName);
-		generalSettingsPage.clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		generalSettingsPage.verifySearchedResult();
+		ccui.getGeneralSettingsPage().verifySearchedResult();
+		runOnce = false;
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
 	public void testNoResultFound() throws Exception {
-		createNewActiveClient();
+		ngHierarchyClientCreate();
 		logStep("Searching invalid node under client in general settings page, to check client details are highlighted");
-		generalSettingsPage = new GeneralSettingsPage(driver);
-		generalSettingsPage.clickSearchIcon();
-		generalSettingsPage.enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		ccui.getGeneralSettingsPage().enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
 		CCUtils.pressEnterKey();
+		runOnce = false;
+	}
+
+	@Test(enabled = false)
+	public void ngHierarchyClientCreate() throws Exception {
+		if (!runOnce) {
+			ccui = new CCUI(testData, driver);
+			logStep("Login to command center portal");
+			LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
+			loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
+			logStep("Select create client button from new dropdown");
+			logStep("Searching a client in client directory");
+			ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
+			ccui.getNgHierarchyClientCreationPage().clickSearchButton();
+			ccui.getNgHierarchyClientCreationPage()
+					.clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
+			logStep("Navigating To General Settings page");
+			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+		}
+	}
+
+	private void createNewSystemForNumberSymbolSearch() throws NullPointerException, InterruptedException {
+		logStep("Verify manage client button is displayed");
+		ccui.getAddOrgNodePage().verifyManageClientButton();
+		logStep("Click on manage client button");
+		ccui.getAddOrgNodePage().clickOnManageClient();
+		ccui.getAddOrgNodePage().verifyAddSystemButton();
+		ccui.getAddOrgNodePage().clickOnAddSystem();
+		logStep("Enter data in all input fields");
+		systemName = "System" + CCUtils.generateAlphaNumericString(18).concat("12").concat("@");
+		ccui.getAddOrgNodePage().enterSystemName(systemName);
+		ccui.getAddOrgNodePage().addPmSystemAndEhrSystem(testData.getProperty("new.system"),
+				testData.getProperty("new.system"));
+		ccui.getAddOrgNodePage().verifyInactiveRadioButton();
+		logStep("Click on inactive radio button");
+		ccui.getAddOrgNodePage().selectInactiveRadiobutton();
+		logStep("Click on save and add button");
+		ccui.getAddOrgNodePage().clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		ccui.getAddOrgNodePage().verifyToasterMessage("Changes updated successfully");
 	}
 }

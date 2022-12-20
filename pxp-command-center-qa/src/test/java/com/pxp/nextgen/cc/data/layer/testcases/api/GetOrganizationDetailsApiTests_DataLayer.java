@@ -75,7 +75,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId, systemName,
-				testData.getProperty("api.system.orgtype"), systemName, "true", "true", "", "");
+				testData.getProperty("api.system.orgtype"), systemName, "true", "", "");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Enter enterprise id in orgId field and validate response body")
@@ -86,7 +86,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId, enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), enterpriseName, "true", "true",
+				testData.getProperty("api.enterprise.orgtype"), enterpriseName, "true",
 				testData.getProperty("api.enterprise.timezoneid"),
 				testData.getProperty("api.enterprise.timezonedisplayname"));
 	}
@@ -99,7 +99,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId, practiceName,
-				testData.getProperty("api.practice.orgtype"),  testData.getProperty("api.practice.displayname"), "true", "true",
+				testData.getProperty("api.practice.orgtype"),  testData.getProperty("api.practice.displayname"), "true",
 				testData.getProperty("api.practice.timezoneid"),
 				testData.getProperty("api.practice.timezonedisplayname"));
 	}
