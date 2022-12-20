@@ -17,11 +17,11 @@ import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
 public class AddNewInternalUserTests extends CommandCenterGenericTest {
     public CCUI ccui;
-	String firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
-	String lastName=CCUtils.generateAlphaNumericString(12);
-	String email=CCUtils.generateNewEmail(12);
-	String userName=CCUtils.generateAlphaNumericStringIncludingSpecialChar(12);
-	long mobileNumber=CCUtils.generateMobileNumber();
+    String firstName = CCUtils.generateAlphaNumericString(12).concat("'s");
+    String lastName = CCUtils.generateAlphaNumericString(12);
+    String email = CCUtils.generateNewEmail(12);
+    String userName = CCUtils.generateAlphaNumericStringIncludingSpecialChar(12);
+    long mobileNumber = CCUtils.generateMobileNumber();
 
     @BeforeMethod(alwaysRun = true)
     public void loginToCommandCenterPortal() throws Exception {
@@ -43,6 +43,21 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
         return obj;
     }
 
+
+    @Test(enabled = false)
+    public void navigatetoInternalUser() throws Exception {
+        logStep("Click on command center users icon in left side navigation panel");
+        ccui.getClientDirectoryPage().clickOnCommandCenterUsersIcon();
+        logStep("Verify user redirected to command center users page");
+        ccui.getCommandCenterUsersPage().verifyUserRedirectedToCommandCenterPage();
+        logStep("Verify internal users tab is by default selected");
+        ccui.getCommandCenterUsersPage().verifyInternalUsersTabByDefaultSelected();
+        logStep("Click on more options button");
+        ccui.getInternalUsersPage().clickToMoreOptions();
+        logStep("Click on new button");
+        ccui.getInternalUsersPage().clickOnNewButton();
+    }
+
     @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Verify add new internal user popup")
     public void testAddNewInternalUserPopup() throws Exception {
         logStep("Verify add new internal user popup");
@@ -59,7 +74,6 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
         ccui.getAddNewInternalUsersPage().verifyCancelButtonIsDisplayed();
         ccui.getAddNewInternalUsersPage().verifySaveAndAddButtonIsDisplayed();
     }
-
 
     @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Verify add new active internal user(without user role) functionality")
     public void testCreateActiveInternalUserWithoutRole() throws Exception {
@@ -95,7 +109,7 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
         ccui.getCommonMethods().enterLastName(lastName);
         ccui.getCommonMethods().enterEmail(email);
         ccui.getCommonMethods().enterUserName(userName);
-		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobileNumber));
+        ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobileNumber));
         ccui.getAddNewInternalUsersPage().addUserRoles();
         ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
         ccui.getCommonMethods().verifyToasterMessage("Success! New User has been successfully added");
@@ -138,13 +152,43 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
         CCUtils.assertEquals(ccui.getCommonMethods().getMaximumCharacterErrorForEmailField(), "Maximum characters reached");
     }
 
-    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 9, description = "Verify username is generated using beginning of email")
+    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 8, dependsOnMethods = {"testCreateActiveInternalUserWithRoles"}, description = "Enter already existing username, email and mobile number on add new internal user page and verify error message.")
+    public void testUniqueErrorMessage() throws Exception {
+        logStep("Enter existing value in username, email and mobile number fields and verify error message");
+        ccui.getCommonMethods().enterFirstName(firstName);
+        ccui.getCommonMethods().enterLastName(lastName);
+        ccui.getCommonMethods().enterEmail(email);
+        ccui.getCommonMethods().enterUserName(userName);
+        ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobileNumber));
+        ccui.getCommonMethods().focusOnInactiveRadioButton();
+        CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
+        CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForEmailField(), "Email already in use");
+        CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
+    }
+
+    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 9, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
+    public void testEnterValidDataErrorMessage(String[] getTestData) throws Exception {
+        logStep("Enter invalid data in first name, last name, email,username and mobile number fields and verify error message");
+        ccui.getCommonMethods().enterFirstName(getTestData[0]);
+        CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForFirstNameField(), "Please enter valid first name");
+        ccui.getCommonMethods().enterLastName(getTestData[1]);
+        CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForLastNameField(), "Please enter valid last name");
+        ccui.getCommonMethods().enterEmail(getTestData[2]);
+        CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForEmailField(), "Please enter valid email address");
+        ccui.getCommonMethods().enterUserName(getTestData[3]);
+        CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForUsernameField(), "Please enter valid username");
+        ccui.getCommonMethods().enterMobileNumber(getTestData[4]);
+        ccui.getCommonMethods().focusOnInactiveRadioButton();
+        CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForMobileNumberField(), "Please enter valid mobile number");
+    }
+
+    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 10, description = "Verify username is generated using beginning of email")
     public void testUsernameGeneratedFromEmail() throws Exception {
         logStep("Verify username is generated using beginning of email");
         ccui.getCommonMethods().verifyUsernameGeneratedUsingBeginningOfEmail(CCUtils.generateNewEmail(20));
     }
 
-    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 10, description = "Verify functionality of cancel and cross icon")
+    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 11, description = "Verify functionality of cancel and cross icon")
     public void testCancelAndCrossIconFunctionality() throws Exception {
         logStep("Click on cancel button");
         ccui.getAddNewInternalUsersPage().clickOnCancelButton();
@@ -160,47 +204,4 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
         ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
     }
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 8,dependsOnMethods ={"testCreateActiveInternalUserWithRoles"} , description = "Enter already existing username, email and mobile number on add new internal user page and verify error message.")
-	public void testUniqueErrorMessage() throws Exception {
-		logStep("Enter existing value in username, email and mobile number fields and verify error message");
-		ccui.getCommonMethods().enterFirstName(firstName);
-		ccui.getCommonMethods().enterLastName(lastName);
-		ccui.getCommonMethods().enterEmail(email);
-		ccui.getCommonMethods().enterUserName(userName);
-		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobileNumber));
-		ccui.getCommonMethods().focusOnInactiveRadioButton();
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForEmailField(), "Email already in use");
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 9, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
-	public void testEnterValidDataErrorMessage(String[] getTestData) throws Exception {
-		logStep("Enter invalid data in first name, last name, email,username and mobile number fields and verify error message");
-		ccui.getCommonMethods().enterFirstName(getTestData[0]);
-		CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForFirstNameField(), "Please enter valid first name");
-		ccui.getCommonMethods().enterLastName(getTestData[1]);
-		CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForLastNameField(), "Please enter valid last name");
-		ccui.getCommonMethods().enterEmail(getTestData[2]);
-		CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForEmailField(), "Please enter valid email address");
-		ccui.getCommonMethods().enterUserName(getTestData[3]);
-		CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForUsernameField(), "Please enter valid username");
-		ccui.getCommonMethods().enterMobileNumber(getTestData[4]);
-		ccui.getCommonMethods().focusOnInactiveRadioButton();
-		CCUtils.assertEquals(ccui.getCommonMethods().getValidErrorForMobileNumberField(), "Please enter valid mobile number");
-	}
-
-    @Test(enabled = false)
-    public void navigatetoInternalUser() throws Exception {
-        logStep("Click on command center users icon in left side navigation panel");
-        ccui.getClientDirectoryPage().clickOnCommandCenterUsersIcon();
-        logStep("Verify user redirected to command center users page");
-        ccui.getCommandCenterUsersPage().verifyUserRedirectedToCommandCenterPage();
-        logStep("Verify internal users tab is by default selected");
-        ccui.getCommandCenterUsersPage().verifyInternalUsersTabByDefaultSelected();
-        logStep("Click on more options button");
-        ccui.getInternalUsersPage().clickToMoreOptions();
-        logStep("Click on new button");
-        ccui.getInternalUsersPage().clickOnNewButton();
-    }
 }
