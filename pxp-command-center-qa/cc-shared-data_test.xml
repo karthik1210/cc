@@ -120,6 +120,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchResourcesApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
