@@ -2,6 +2,7 @@
 
 package com.pxp.cc.objectmaps;
 
+import java.awt.*;
 import java.util.List;
 
 import org.openqa.selenium.WebDriver;
@@ -22,6 +23,9 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 
     @FindBy(xpath = "//ng-select[@id='selectUser']//div[text()='Search/Select']")
     private WebElement textboxSearchVarResellerName;
+
+    @FindBy(xpath = "//span[@class='ng-arrow-wrapper']")
+    private WebElement comboSearchVarResellerName;
 
     @FindBy(xpath = "//div[@role='combobox']/input")
     private WebElement inputTextboxSearchVarResellerName;
@@ -201,11 +205,19 @@ public class AddNewVarResellerUserPage extends CCMainPage {
         //verifyUserRoleRadioButtonsAreNotByDefaultSelected();
     }
 
+    public void clickVarResellerCombo(int i) throws InterruptedException, AWTException {
+        CCUtils.verifyElementToBeClickable(comboSearchVarResellerName, driver);
+        comboSearchVarResellerName.click();
+        log(listOfVARResellerType.get(i).getText());
+        listOfVARResellerType.get(i).click();
+        log("VAR/Reseller added Successfully");
+    }
+
     public void enterVarResellerName(String input) {
         CCUtils.verifyAndWaitForElement(inputTextboxSearchVarResellerName, driver);
         inputTextboxSearchVarResellerName.clear();
         inputTextboxSearchVarResellerName.sendKeys(input);
-        CCUtils.pressEnterKey();
+        //CCUtils.pressEnterKey();
         log("Entered input for VAR/Reseller Name : " + input);
     }
 

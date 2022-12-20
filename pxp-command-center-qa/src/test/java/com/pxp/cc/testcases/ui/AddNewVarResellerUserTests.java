@@ -75,7 +75,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, groups = {"buildvalidation"}, retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Verify add new active VAR/Reseller user functionality")
 	public void testActiveVarResellerUser() throws Exception {
 		logStep("Enter data in mandatory fields");
-		ccui.getAddNewVarResellerUserPage().searchAndSelectVarReseller(ccuser.getClientThreeType());
+		ccui.getAddNewVarResellerUserPage().clickVarResellerCombo(2);
 		ccui.getCommonMethods().enterFirstName(firstName);
 		ccui.getCommonMethods().enterLastName(lastName);
 		ccui.getCommonMethods().enterEmail(email);
@@ -94,7 +94,7 @@ public class AddNewVarResellerUserTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Verify add new inactive VAR/Reseller user functionality")
 	public void testInactiveVarResellerUser() throws Exception {
 		logStep("Enter data in mandatory fields");
-		ccui.getAddNewVarResellerUserPage().searchAndSelectVarReseller(ccuser.getClientThreeType());
+		ccui.getAddNewVarResellerUserPage().clickVarResellerCombo(1);
 		ccui.getCommonMethods().enterFirstName(CCUtils.generateAlphaNumericString(18));
 		ccui.getCommonMethods().enterLastName(
 				CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(5)));
