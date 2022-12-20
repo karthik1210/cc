@@ -35,7 +35,7 @@ public class ResourceValidations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "ExternalId cannot be empty or null, linkId cannot be null, linkType cannot be empty or null";
 	}
-	
+
 	public void verifyErrorResponseForNullPayload(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		String actual = "LinkType cannot be blank, Type cannot be blank, LinkId cannot be blank, ExternalId cannot be blank, Name cannot be blank";
@@ -78,7 +78,8 @@ public class ResourceValidations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyGetResourcesApiResponseBody(Response response, int resourceId, String resourceName) throws IOException {
+	public void verifyGetResourcesApiResponseBody(Response response, int resourceId, String resourceName)
+			throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -87,19 +88,19 @@ public class ResourceValidations {
 			CCUtils.assertEquals(jsonObject.get("name"), resourceName);
 		}
 	}
-	
+
 	public void verifyErrorMessageForResourceIdWithNonExistingImage(Response response, int nonExistingResourceId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource image not found by resourceId=" + nonExistingResourceId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Resource image not found by resourceId=" + nonExistingResourceId);
 	}
-	
-	public void verifyGetDisplayNameOfPracticeResourcesApiResponseBody(Response response)
-			 throws IOException {
+
+	public void verifyGetDisplayNameOfPracticeResourcesApiResponseBody(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Log4jUtil.log("value of name is : " + jsonpath.get("en").toString());
 	}
-	
+
 	public void verifyErrorMessageForBlankField(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input");
