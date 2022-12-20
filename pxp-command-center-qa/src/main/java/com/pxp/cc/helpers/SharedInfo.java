@@ -1811,10 +1811,19 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-		
-	  public Response getPracticeForResource_BL(int resourceId) {
-	  String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
-	  return given().spec(requestSpec).when().get(url).then()
-	  .extract().response(); }
-	 
+
+	public Response getPracticeForResource_BL(int resourceId) {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PRACTICE_BL(resourceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response searchProviderLocation_DL(int practiceId, String providerName) {
+		String url = ApiPath.SEARCH_PROVIDERS_LOCATION_DL(practiceId);
+		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
+	}
+	
+	public Response searchProviderLocation_NULL_DL(String providerName) {
+		String url = ApiPath.SEARCH_PROVIDERS_LOCATION_NULL_DL;
+		return given().spec(requestSpec).queryParam("name", providerName).when().get(url).then().extract().response();
+	}
 }
