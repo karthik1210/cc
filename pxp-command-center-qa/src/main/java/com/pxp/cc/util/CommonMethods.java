@@ -162,7 +162,7 @@ public class CommonMethods extends CCMainPage {
     }
 
     public void verifyToasterMessage(String expectedToasterMessage) {
-        CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+        CCUtils.verifyAndWaitForElementPresent(toasterMessage, driver);
         Log4jUtil.log("Verifying success toaster message.");
         if (toasterMessage.isDisplayed() == true)
             CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
