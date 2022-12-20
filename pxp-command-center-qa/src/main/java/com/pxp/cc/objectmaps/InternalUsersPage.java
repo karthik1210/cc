@@ -102,7 +102,7 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(id = "IconContainer")
 	private WebElement moreOptionsButton;
 
-	@FindBy(id = "addClientUser")
+	@FindBy(id = "addInternalUser")
 	private WebElement btnNew;
 
 	@FindBy(id = "IconContainer")

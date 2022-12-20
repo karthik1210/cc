@@ -1704,7 +1704,7 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(addRemoveResource).when().put(url).then().extract().response();
 	}
 
-	public Response getRemoveResourcesForProvider(int providerId, int practiceId) {
+	public Response getResourcesForProvider(int providerId, int practiceId) {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER(providerId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
@@ -1852,6 +1852,10 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_PROVIDERS_NULL_DL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-
+ 
+	public Response getResourcesForProvider_NullValue() {
+		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 }

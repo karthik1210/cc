@@ -22,7 +22,7 @@
 				/> </class> -->
 			<!--Jira #PXPP-20235- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer"/> -->
 
-			<class
+		<!-- 	<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateBrandApiTests_DataLayer" />
@@ -119,7 +119,9 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchResourcesApiTests_DataLayer"></class>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class> -->
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.getResourcesForProvider_DataLayer"></class>
 		</classes>
 	</test>
 
