@@ -108,5 +108,4 @@ public class GetResourceDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getResourceDetailsApiResponse);
 		CCUtils.assertEquals(getResourceDetailsApiResponse.getStatusCode(), 400);
 	}
-
 }

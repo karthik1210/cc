@@ -118,7 +118,7 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 207);
 		validations.verifyResponseBodyOfAddRemoveResource(addResourceResponse, resourceId,
 				testData.getProperty("status.success"));
-		getResourceResponse = sharedInfo.getRemoveResourcesForProvider(providerId, practiceId);
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
 		validations.verifyResponseBodyOfGetResource(getResourceResponse, resourceId);
 	}
 
@@ -134,7 +134,7 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(removeResourceResponse);
 		CCUtils.assertEquals(removeResourceResponse.getStatusCode(), 207);
-		getResourceResponse = sharedInfo.getRemoveResourcesForProvider(providerId, practiceId);
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
 		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 204);
 	}
 

@@ -188,7 +188,7 @@ public class Validations {
 	}
 
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String orgName, String orgType,
-			String displayName, String active, String testClient, String timezoneId, String displayNameOne)
+			String displayName, String active,String timezoneId, String displayNameOne)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -196,8 +196,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("name").toString(), orgName);
 		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
 		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
-		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
-		CCUtils.assertEquals(jsonpath.get("testClient").toString(), testClient);
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);	
 		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
 		} else {
@@ -2432,7 +2431,7 @@ public class Validations {
 	public void verifyErrorResponseBodyWhenUserEnterClientIdInOrgIdField(Response response, int clientId)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for orgId=" + clientId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for orgId=" + clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -3421,6 +3420,24 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("en").toString(), en);
 		CCUtils.assertEquals(jsonpath.get("es").toString(), es);
+	}
+	
+	public void verifyResponseBodyForGetLocationResource(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+		}
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
+		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
+	}
+	
+	public void verifyGetPracticesAssociatedToResourceApiResponse(Response response, ArrayList<Object> orgId) throws IOException {
+		for (int i = 0; i < orgId.size(); i++) {
+			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + orgId.get(i));
+			}
+		}
 	}
 
 }

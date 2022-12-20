@@ -12,7 +12,7 @@ import com.pxp.cc.util.CCUtils;
 
 public class InternalUsersPage extends CCMainPage {
 
-	@FindBy(id = "addClientUser")
+	@FindBy(id = "addInternalUser")
 	private WebElement buttonNew;
 
 	@FindBy(xpath = "//span[text()=' Internal Users ']")
@@ -102,7 +102,7 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(id = "IconContainer")
 	private WebElement moreOptionsButton;
 
-	@FindBy(id = "addClientUser")
+	@FindBy(id = "addInternalUser")
 	private WebElement btnNew;
 
 	@FindBy(id = "IconContainer")

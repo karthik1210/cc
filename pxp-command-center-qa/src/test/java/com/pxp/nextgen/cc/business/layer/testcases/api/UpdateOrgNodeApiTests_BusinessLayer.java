@@ -350,7 +350,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
 				testData.getProperty("api.system.orgtype"),
 				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
-				"false", testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"),"");
+				"false", testData.getProperty("api.client.timezoneid"), "");
 
 		logStep("Update enterprise name, timezone");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(
@@ -367,9 +367,9 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		fetchOrgNodeDetails = orgInfo.getOrgId(enterpriseIdOne);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseIdOne,
 				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
-				testData.getProperty("api.enterprise.orgtype"), 
+				testData.getProperty("api.enterprise.orgtype"),
 				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
-				"false", testData.getProperty("api.client.testclient"), "US/Alaska","Alaska Standard Time");
+				"false", "US/Alaska", "Alaska Standard Time");
 
 		logStep("Update nge practice name, practice display name,timezone");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL(
@@ -389,7 +389,7 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 				"practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2@1234",
 				testData.getProperty("api.practice.orgtype"),
 				"practice_display_name@123 practice_display_name@123 practice_display_name@123 practice_display_name1",
-				"false", testData.getProperty("api.client.testclient"), "US/Arizona","Arizona Standard Time");
+				"false", "US/Arizona", "Arizona Standard Time");
 
 		logStep("Update agnostic practice name, practice display name, timezone");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_BL("ag_Prac_2", testData.getProperty("api.practice.orgtype"),
@@ -403,9 +403,8 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId(agnosticPracticeIdOne);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeIdOne, "ag_Prac_2",
-				testData.getProperty("api.practice.orgtype"), 
-				"agnostic_practice_display_name", "false", testData.getProperty("api.client.testclient"),
-				"Canada/Atlantic","Atlantic Standard Time");
+				testData.getProperty("api.practice.orgtype"), "agnostic_practice_display_name", "false",
+				"Canada/Atlantic", "Atlantic Standard Time");
 	}
 
 }
