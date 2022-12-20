@@ -7,10 +7,11 @@ import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.objectmaps.AddNewProviderPage;
 import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
 
-public class AddConnectedLocationsInProvidersDetailsPageTests extends CommandCenterGenericTest {
+public class AddRemoveConnectedLocationsInProvidersDetailsPageTests extends CommandCenterGenericTest {
 
 	static boolean runOnce = true;
 	public CCUI ccui;
@@ -38,7 +39,8 @@ public class AddConnectedLocationsInProvidersDetailsPageTests extends CommandCen
 			logStep("Searching a client in client directory");
 			ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
 			ccui.getNgHierarchyClientCreationPage().clickSearchButton();
-			//ccui.getNgHierarchyClientCreationPage().clickSearchResult();
+			ccui.getNgHierarchyClientCreationPage()
+					.clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
 			logStep("Navigating To General Settings page");
 			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
 			ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
@@ -47,6 +49,15 @@ public class AddConnectedLocationsInProvidersDetailsPageTests extends CommandCen
 			ccui.getPrivacyPolicySettingsPage()
 					.clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
 		}
+	}
+
+	public void searchProvider() throws Exception {
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.addNewProviderPage = new AddNewProviderPage(driver);
+		ccui.addNewProviderPage().verifyProvidersAndResourcesTitle();
+
+		runOnce = false;
 	}
 
 	@Test(enabled = false)
@@ -100,7 +111,7 @@ public class AddConnectedLocationsInProvidersDetailsPageTests extends CommandCen
 		ccui.addLocationsPage().verifyToasterMessage("Success! New location has been successfully created");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to add location in provider details page")
+	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "test to add location in provider details page")
 	public void testAddLocationInProviderDetailsPage() throws Exception {
 		ngHierarchyClientCreate();
 		createProviderWithinPractice();
@@ -135,9 +146,8 @@ public class AddConnectedLocationsInProvidersDetailsPageTests extends CommandCen
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to remove location in provider details page")
+	@Test(retryAnalyzer = RetryAnalyzer.class, dependsOnMethods = "testAddLocationInProviderDetailsPage", description = "test to remove location in provider details page")
 	public void testRemoveLocationInProviderDetailsPage() throws Exception {
-		logStep("Verify Basic Info section At Client Level");
 		ngHierarchyClientCreate();
 		createProviderWithinPractice();
 		ccui.getResourceAndStaffSearchPage().clickGeneralSettingsIcon();
@@ -175,7 +185,6 @@ public class AddConnectedLocationsInProvidersDetailsPageTests extends CommandCen
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test web elements of add location popup")
 	public void testWebElementsOfAddLocationPopup() throws Exception {
-		logStep("Verify Basic Info section At Client Level");
 		ngHierarchyClientCreate();
 		createProviderWithinPractice();
 		ccui.getResourceAndStaffSearchPage().clickGeneralSettingsIcon();
