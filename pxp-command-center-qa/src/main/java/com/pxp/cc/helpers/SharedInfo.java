@@ -1864,4 +1864,14 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
 				.response();
 	}
+	
+	public Response getConnectedResource_DL(int practiceId, String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
+
+	public Response getConnectedResource_Null_DL(String resourceName) {
+		String url = ApiPath.SEARCH_RESOURCE_NULL_DL;
+		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
+	}
 }
