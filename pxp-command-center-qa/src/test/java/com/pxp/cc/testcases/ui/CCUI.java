@@ -35,11 +35,15 @@ public class CCUI extends CommandCenterGenericTest {
     InterfaceSetupPage interfaceSetupPage;
     EditBasicInfoGeneralSettingsPage editBasicInfoGeneralSettingsPage;
     EditOrgDetailsGeneralSettingsPage editOrgDetailsGeneralSettingsPage;
+    AddLocationPage addLocationPage;
+    AddNewProviderPage addNewProviderPage;
+    ProviderDetailsPage providerDetailsPage;
+    ProviderResourceAndStaffSearchPage providerResourceAndStaffSearchPage;
+    LocationDetailsPage locationDetailsPage;
+    SearchLocationPage searchLocationPage;
     TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
     ResourceDetailsPage resourceDetailsPage;
     AddNewResourcePage addNewResourcePage;
-    AddNewProviderPage addNewProviderPage;
-    AddLocationPage addLocationPage;
     PatientAccessPage PatientAccessPage;
     InternalUsersPage internalUsersPage;
     CommandCenterUsersPage commandCenterUsersPage;
@@ -170,7 +174,7 @@ public class CCUI extends CommandCenterGenericTest {
         }
         return addNewProviderPage;
     }
-
+    
     public InternalUsersPage getInternalUsersPage() throws InterruptedException {
         if (internalUsersPage == null) {
             internalUsersPage = new InternalUsersPage(driver);
@@ -284,5 +288,40 @@ public class CCUI extends CommandCenterGenericTest {
             solution = testData.getProperty("solution.forms");
             ;
         }
+    }
+    
+    public AddLocationPage addLocationsPage() throws Exception {
+        if(addLocationPage == null){
+        	addLocationPage = new AddLocationPage(driver);
+        }
+        return addLocationPage;
+    }
+    
+    public ProviderDetailsPage getProviderDetailsPage() throws Exception {
+        if(providerDetailsPage == null){
+        	providerDetailsPage = new ProviderDetailsPage(driver);
+        }
+        return providerDetailsPage;
+    }
+    
+    public ProviderResourceAndStaffSearchPage getResourceAndStaffSearchPage() throws Exception {
+        if(providerResourceAndStaffSearchPage == null){
+        	providerResourceAndStaffSearchPage = new ProviderResourceAndStaffSearchPage(driver);
+        }
+        return providerResourceAndStaffSearchPage;
+    }
+    
+    public LocationDetailsPage getLocationDetailsPage() throws Exception {
+        if(locationDetailsPage == null){
+        	locationDetailsPage = new LocationDetailsPage(driver);
+        }
+        return locationDetailsPage;
+    }
+    
+    public SearchLocationPage getSearchLocationDetailsPage() throws Exception {
+        if(searchLocationPage == null){
+        	searchLocationPage = new SearchLocationPage(driver);
+        }
+        return searchLocationPage;
     }
 }

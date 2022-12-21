@@ -309,6 +309,12 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
 	private WebElement toasterMessage;
 
+	@FindBy(xpath = "(//p[@id='treeNodeName']//span[@tabindex=0])[1]")
+	private WebElement clientNode;
+
+	@FindBy(id = "providerTile")
+	private WebElement providerAndResourcesTile;
+
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
 	private WebElement activeVirtualVisitsMoreOptions;
 
@@ -1225,8 +1231,27 @@ public class GeneralSettingsPage extends CCMainPage {
 				"Before continuing, are you sure this solution is on no longer used by " + practiceName + "?");
 	}
 
-	public void navigatetoClientNode(String clientName) throws Exception{
-		WebElement clientNode=driver.findElement(By.xpath("//p[@id='treeNodeName']/span[normalize-space(text())='"+clientName+"']"));
+	public void clickToClientNode() {
+		CCUtils.verifyAndWaitForElement(clientNode, driver);
+		clientNode.click();
+		log("click to client node in general settings");
+	}
+
+	public void verifyProvidersAndResourcesTile() {
+		log("Verify 'ProvidersAndResources' Tile on General Settings page");
+		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
+		CCUtils.assertEquals(providerAndResourcesTile.isDisplayed(), true);
+	}
+
+	public void clickOnProvidersAndResourcesTile() {
+		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
+		javascriptClick(providerAndResourcesTile);
+		log("Clicked on ProvidersAndResources tile");
+	}
+
+	public void navigatetoClientNode(String clientName) throws Exception {
+		WebElement clientNode = driver
+				.findElement(By.xpath("//p[@id='treeNodeName']/span[normalize-space(text())='" + clientName + "']"));
 		javascriptClick(clientNode);
 	}
 }
