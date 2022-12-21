@@ -53,7 +53,7 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(id = "firstName")
 	private List<WebElement> selectUser;
 
-	@FindBy(id = "newButton")
+	@FindBy(id = "addClientUser")
 	private WebElement buttonNew;
 
 	@FindBy(xpath = "//td[@id='no-result']")
@@ -80,7 +80,7 @@ public class VarResellerUsersPage extends CCMainPage {
 	@FindBy(xpath = "//td[@class='mat-cell cdk-cell cdk-column-firstName mat-column-firstName ng-star-inserted'][1]")
 	private WebElement selectVarResellerUser;
 
-	@FindBy(xpath = "//mat-icon[@mattooltip='More Options']")
+	@FindBy(xpath = "//button[@mattooltip='More Options']")
 	private WebElement buttonKebabMenu;
 
 	public VarResellerUsersPage(WebDriver driver) {

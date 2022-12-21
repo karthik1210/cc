@@ -55,7 +55,7 @@ public class AddRemoveConnectedLocationsInProvidersDetailsPageTests extends Comm
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
 		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
 		ccui.addNewProviderPage = new AddNewProviderPage(driver);
-		ccui.addNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
 
 		runOnce = false;
 	}
@@ -66,22 +66,22 @@ public class AddRemoveConnectedLocationsInProvidersDetailsPageTests extends Comm
 				+ CCUtils.generateAlphaNumericString(3).concat("-").concat(CCUtils.generateAlphaNumericString(3));
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTile();
 		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTile();
-		ccui.addNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
 		logStep("Verify ADD button is enabled for client level on provider page");
-		ccui.addNewProviderPage().verifyAddButtonIsEnabled();
-		ccui.addNewProviderPage().clickOnAddProviderButton();
+		ccui.getAddNewProviderPage().verifyAddButtonIsEnabled();
+		ccui.getAddNewProviderPage().clickOnAddProviderButton();
 		String lastName = CCUtils.generateAlphaNumericString(3).concat("-")
 				.concat(CCUtils.generateAlphaNumericString(3)).concat("'s");
 		String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
 		String credentials = testData.getProperty("provider.credentials");
 		logStep("Enter valid details in mandatory field and verify success toaster message");
-		ccui.addNewProviderPage().enterFirstName(providerFirstName);
-		ccui.addNewProviderPage().enterLastName(lastName);
-		ccui.addNewProviderPage().enterCredentials(credentials);
-		ccui.addNewProviderPage().enterExternalId(externalId);
-		ccui.addNewProviderPage().selectGenderValue("Male");
-		ccui.addNewProviderPage().verifySaveAndAddButtonIsEnabled();
-		ccui.addNewProviderPage().clickOnSaveAndAddButton();
+		ccui.getAddNewProviderPage().enterFirstName(providerFirstName);
+		ccui.getAddNewProviderPage().enterLastName(lastName);
+		ccui.getAddNewProviderPage().enterCredentials(credentials);
+		ccui.getAddNewProviderPage().enterExternalId(externalId);
+		ccui.getAddNewProviderPage().selectGenderValue("Male");
+		ccui.getAddNewProviderPage().verifySaveAndAddButtonIsEnabled();
+		ccui.getAddNewProviderPage().clickOnSaveAndAddButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Provider has been successfully created");
 	}
 

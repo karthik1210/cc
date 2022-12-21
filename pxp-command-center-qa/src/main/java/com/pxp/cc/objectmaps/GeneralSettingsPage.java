@@ -308,13 +308,13 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
 	private WebElement toasterMessage;
-	
+
 	@FindBy(xpath = "(//p[@id='treeNodeName']//span[@tabindex=0])[1]")
 	private WebElement clientNode;
 
 	@FindBy(id = "providerTile")
 	private WebElement providerAndResourcesTile;
-	
+
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
 	private WebElement activeVirtualVisitsMoreOptions;
 
@@ -346,7 +346,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	private WebElement cautionMessage;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
-	
+
 	List<String> activeSolutionName = new ArrayList<String>();
 
 	public GeneralSettingsPage(WebDriver driver) {
@@ -1230,13 +1230,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(cautionMessage.getText().toString(),
 				"Before continuing, are you sure this solution is on no longer used by " + practiceName + "?");
 	}
-	
+
 	public void clickToClientNode() {
 		CCUtils.verifyAndWaitForElement(clientNode, driver);
 		clientNode.click();
 		log("click to client node in general settings");
 	}
-	
+
 	public void verifyProvidersAndResourcesTile() {
 		log("Verify 'ProvidersAndResources' Tile on General Settings page");
 		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
@@ -1247,5 +1247,11 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
 		javascriptClick(providerAndResourcesTile);
 		log("Clicked on ProvidersAndResources tile");
+	}
+
+	public void navigatetoClientNode(String clientName) throws Exception {
+		WebElement clientNode = driver
+				.findElement(By.xpath("//p[@id='treeNodeName']/span[normalize-space(text())='" + clientName + "']"));
+		javascriptClick(clientNode);
 	}
 }

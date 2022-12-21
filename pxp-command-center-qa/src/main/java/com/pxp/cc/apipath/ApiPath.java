@@ -1919,4 +1919,16 @@ public class ApiPath {
 	}
 
 	public static final String SEARCH_PROVIDERS_NULL_DL = SHARED_DL + "/v1/clients/null/providers";
+	
+	public static final String GET_RESOURCE_DISPLAY_DETAILS_DL(int resourceId, int practiceId) {
+        return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+    }
+
+    public static final String GET_RESOURCE_DISPLAY_DETAILS_DL_NULL() {
+        return SHARED_DL + "/v1/practices/null/resources/null";
+    }
+
+    public static final String SAVE_PRACTICE_RESOURCES_DL(int practiceId, int resourceId) {
+        return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+    }
 }

@@ -82,13 +82,13 @@ public class AddNewProviderPage extends CCMainPage {
 	@FindBy(xpath = "//span[text()='Last Name * ']")
 	private WebElement labelLastName;
 
-	@FindBy(xpath = "//span[text()='External Id * ']")
+	@FindBy(xpath = "//span[text()='External ID * ']")
 	private WebElement labelExternalId;
 
 	@FindBy(xpath = "//span[text()='Credentials * ']")
 	private WebElement labelCredentials;
 
-	@FindBy(xpath = "//span[text()='Gender *']")
+	@FindBy(xpath = "//label[text()='Gender *']")
 	private WebElement labelGender;
 
 	@FindBy(xpath = "//div[@role='option']/span")
@@ -327,7 +327,7 @@ public class AddNewProviderPage extends CCMainPage {
 	public void verifyExternalIdLabelTextAndTextboxDefaultValue() {
 		CCUtils.verifyAndWaitForElement(labelExternalId, driver);
 		log("Verifying external id label text");
-		CCUtils.assertEquals(labelExternalId.getText().trim(), "External Id *");
+		CCUtils.assertEquals(labelExternalId.getText().trim(), "External ID *");
 		log("External id label text is " + labelExternalId.getText().trim());
 		CCUtils.verifyAndWaitForElement(textboxExternalId, driver);
 		log("Verifying Input External Id placeholder is displayed for external id textbox field");
