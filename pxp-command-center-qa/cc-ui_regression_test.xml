@@ -23,7 +23,6 @@
             <class name="com.pxp.cc.testcases.ui.MoveEnterpriseTests"/>
             <class name="com.pxp.cc.testcases.ui.MoveNgePracticeTests"/>
             <class name="com.pxp.cc.testcases.ui.MoveAgnosticPracticeTests"/>
-            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests"/>
             <!--<class name="com.pxp.cc.testcases.ui.DeactivateUserTests" />-->
             <class name="com.pxp.cc.testcases.ui.EditInternalUserTests"/>
             <class name="com.pxp.cc.testcases.ui.SearchOptionsTests"/>
@@ -33,6 +32,11 @@
             <class name="com.pxp.cc.testcases.ui.EnableDisablePracticesOnResourceDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.AssociateDeassociateSolutionsOnResourceDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.PatientAccessDetailsTests"/>
+            <class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
+            <class name="com.pxp.cc.testcases.ui.AddNewProviderTests" />
+            <class name="com.pxp.cc.testcases.ui.AddNewResourceTests" />
+            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
+            <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests"/>
         </classes>
     </test>
 </suite>

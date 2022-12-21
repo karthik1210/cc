@@ -1867,4 +1867,11 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.ADD_REMOVE_RESOURCE_FOR_PROVIDER_NULL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response savePracticeResource_DL(int practiceId, int resourcerId, String en, String es) {
+		String url = ApiPath.SAVE_PRACTICE_RESOURCES_DL(practiceId, resourcerId);
+		Map<String, Object> createPracticeresourcePayload = createPracticeresourceRequestPayload(en, es);
+		return given().spec(requestSpec).body(createPracticeresourcePayload).when().put(url).then().extract()
+				.response();
+	}
 }

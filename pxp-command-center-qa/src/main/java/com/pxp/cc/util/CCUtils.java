@@ -73,6 +73,15 @@ public class CCUtils {
         }
     }
 
+    public static void verifyAndWaitForElementPresent(WebElement we, WebDriver driver) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOf(we));
+        } catch (Exception exception) {
+            verifyAndWaitForElement(we, driver);
+        }
+    }
+
     public static void verifyAndWaitForElementPresenceForInterfaceSetup(String externalSystemName, WebElement we, WebDriver driver) {
         while (repeat <= 5) {
             try {
