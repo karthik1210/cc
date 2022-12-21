@@ -29,7 +29,7 @@ public class PracticeLinksTests extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 5, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Smoke functionality of Practice Links")
+    @Test(priority = 5, groups = {"buildvalidation"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Smoke functionality of Practice Links")
     public void verifyBasicPracticeLinks() throws Exception {
         ngHierarchyClientCreate();
         logStep("Smoke Validation for Practice Links");

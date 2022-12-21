@@ -1224,4 +1224,9 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(cautionMessage.getText().toString(),
 				"Before continuing, are you sure this solution is on no longer used by " + practiceName + "?");
 	}
+
+	public void navigatetoClientNode(String clientName) throws Exception{
+		WebElement clientNode=driver.findElement(By.xpath("//p[@id='treeNodeName']/span[normalize-space(text())='"+clientName+"']"));
+		javascriptClick(clientNode);
+	}
 }

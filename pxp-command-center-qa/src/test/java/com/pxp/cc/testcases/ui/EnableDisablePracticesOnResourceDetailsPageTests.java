@@ -82,41 +82,41 @@ public class EnableDisablePracticesOnResourceDetailsPageTests extends CommandCen
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
 		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
 		ccui.addNewProviderPage = new AddNewProviderPage(driver);
-		ccui.addNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
 		logStep("Create new Provider using valid test data");
 		firstName = "Provi" + CCUtils.generateAlphaNumericString(10);
 		String lastName = CCUtils.generateAlphaNumericString(5);
 		String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
 		String credentials = testData.getProperty("provider.credentials");
 		logStep("Enter valid details in mandatory field and verify success toaster message");
-		ccui.addNewProviderPage().verifyAddButtonIsEnabled();
-		ccui.addNewProviderPage().clickOnAddProviderButton();
-		ccui.addNewProviderPage().enterFirstName(firstName);
-		ccui.addNewProviderPage().enterLastName(lastName);
-		ccui.addNewProviderPage().enterCredentials(credentials);
-		ccui.addNewProviderPage().enterExternalId(externalId);
-		ccui.addNewProviderPage().selectGenderValue("Male");
-		ccui.addNewProviderPage().verifySaveAndAddButtonIsEnabled();
-		ccui.addNewProviderPage().clickOnSaveAndAddButton();
+		ccui.getAddNewProviderPage().verifyAddButtonIsEnabled();
+		ccui.getAddNewProviderPage().clickOnAddProviderButton();
+		ccui.getAddNewProviderPage().enterFirstName(firstName);
+		ccui.getAddNewProviderPage().enterLastName(lastName);
+		ccui.getAddNewProviderPage().enterCredentials(credentials);
+		ccui.getAddNewProviderPage().enterExternalId(externalId);
+		ccui.getAddNewProviderPage().selectGenderValue("Male");
+		ccui.getAddNewProviderPage().verifySaveAndAddButtonIsEnabled();
+		ccui.getAddNewProviderPage().clickOnSaveAndAddButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Provider has been successfully created");
 		logStep("Verify Providers And Resources tab is displayed");
-		ccui.addNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
 	}
 
 	public void createResource() throws Exception {
-		ccui.addNewProviderPage().verifyProvidersAndResourcesTitle();
-		ccui.addNewResourcePage().clickOnResourcesTab();
-		ccui.addNewResourcePage().verifyAddButtonIsEnabled();
-		ccui.addNewResourcePage().clickOnAddResourceButton();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
+		ccui.getAddNewResourcePage().verifyAddButtonIsEnabled();
+		ccui.getAddNewResourcePage().clickOnAddResourceButton();
 		logStep("Create new Resources using valid test data");
 		resourceName = "Resourr" + CCUtils.generateAlphaNumericString(10);
 		String externalIds = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
-		ccui.addNewResourcePage().enterResourceName(resourceName);
-		ccui.addNewResourcePage().enterExternalId(externalIds);
-		ccui.addNewResourcePage().selectResourceType("Person");
-		ccui.addNewResourcePage().enterConnectedProvider(firstName);
-		ccui.addNewResourcePage().clickFirstInAutoSuggestion();
-		ccui.addNewResourcePage().verifySaveAndAddButtonIsEnabled();
-		ccui.addNewResourcePage().clickOnSaveAndAddButton();
+		ccui.getAddNewResourcePage().enterResourceName(resourceName);
+		ccui.getAddNewResourcePage().enterExternalId(externalIds);
+		ccui.getAddNewResourcePage().selectResourceType("Person");
+		ccui.getAddNewResourcePage().enterConnectedProvider(firstName);
+		ccui.getAddNewResourcePage().clickFirstInAutoSuggestion();
+		ccui.getAddNewResourcePage().verifySaveAndAddButtonIsEnabled();
+		ccui.getAddNewResourcePage().clickOnSaveAndAddButton();
 	}
 }
