@@ -211,7 +211,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> listOfPracTabs;
 	
-	@FindBy(xpath = "(//mat-icon[normalize-space(text()='chevron_right')])[4]")
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon[normalize-space(text()='chevron_right')]")
 	private WebElement arrowEntPractice;
 
 	@FindBy(xpath = "//mat-icon[@title='Back']")
@@ -219,7 +219,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	public String xpathRequiredClientType(String practiceName) {
 		return "//mat-tree-node//p[contains(text(),'" + practiceName
-				+ "')]//following::div[1]//label[@class='switch']//span[2]";
+				+ "')]//following::div[1]//label[@class='switch']//span";
 	}
 
 	@FindBy(xpath = "(//input[@id='directorySearchInput'])[2]")
