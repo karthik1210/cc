@@ -1931,4 +1931,11 @@ public class ApiPath {
     public static final String SAVE_PRACTICE_RESOURCES_DL(int practiceId, int resourceId) {
         return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
     }
+    
+    public static final String SEARCH_RESOURCE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources-location";
+	}
+
+	public static final String SEARCH_RESOURCE_NULL_DL = SHARED_DL + "/v1/practices/null/resources-location";
+
 }
