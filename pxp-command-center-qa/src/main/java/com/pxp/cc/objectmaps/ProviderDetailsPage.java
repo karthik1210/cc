@@ -104,7 +104,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Connected Scheduling Resources']")
 	private WebElement labelConnectedResources;
 
-	@FindBy(id = "inputCheckbox")
+	@FindBy(xpath = "//div//input[@id='inputCheckbox']")
 	private WebElement resourceCheckBox;
 
 	@FindBy(xpath = "//button[text()='+ ADD']")
@@ -142,27 +142,55 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
-	
+
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Pay ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolPay;
-	
+
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Virtual Visits ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolVirtualVisits;
-	
+
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' PSS ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolPss;
-	
+
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Portal ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolPortal;
-	
+
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolEngage;
-	
+
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
 	private WebElement connectedSolChat;
 
+	@FindBy(xpath = "//div[@aria-label='Connected Locations']")
+	private WebElement connectedLocationSectionTitle;
+
+	@FindBy(id = "addLocation")
+	private WebElement addLocationButton;
+
+	@FindBy(xpath = "//div[@role='combobox']//input[@id='Location']")
+	private WebElement locationInput;
+
+	@FindBy(xpath = "//div[@role='combobox']")
+	private WebElement listBox;
+
+	@FindBy(xpath = "//div//input[@id='inputCheckbox']//following::label[@id='locationName']")
+	private WebElement locationCheckBox;
+
+	@FindBy(xpath = "(//div[@aria-label='Connected Locations']//following::td[@id='no-result'])[1]")
+	private WebElement noDataDisplayConnectedLocations;
+	
+	@FindBy(xpath = "//span[@id='cancel-text']")
+	private WebElement crossIcon;
+	
+	@FindBy(xpath = "//label[@class='input']")
+	private WebElement labelPopup;
+	
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
+	}
+
+	public String removeParticularLocation(String data) {
+		return "//div[text()=' " + data + " ']//following::div//button[@mattooltip='Remove Connection']";
 	}
 
 	public String finalResourceTableXpath(String data) {
@@ -471,15 +499,18 @@ public class ProviderDetailsPage extends CCMainPage {
 	}
 
 	public void clickToResourceCheckBox() {
+		CCUtils.verifyElementToBeClickable(resourceCheckBox, driver);
 		CCUtils.verifyAndWaitForElement(resourceCheckBox, driver);
 		resourceCheckBox.click();
 		log("desired resource selected");
 	}
 
-	public void clickToAddResourceButton() {
+	public void clickToAddButtonInPopup() {
 		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		addResourceTitle.click();
 		addButtonResource.click();
-		log("clicked to Add button of resource pop up");
+		log("clicked to Add button of pop up");
 	}
 
 	public void verifyResourceLabel() {
@@ -505,7 +536,7 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	public void verifyNoItemsFound() {
 		CCUtils.verifyAndWaitForElement(noItemsFound, driver);
-		log("no items found message found in resource lists");
+		log("no items found message found");
 	}
 
 	public void clickToEnterpriseTabPracticeAndToggleOn(String enterpriseName, String practiceName)
@@ -585,37 +616,108 @@ public class ProviderDetailsPage extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-	
+
 	public void clickOnChatToggle() {
 		CCUtils.scrollPageViaElement(driver, connectedSolChat);
 		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
-		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"false");
-		log("The toggle is not checked yet as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
 		log("click to chat toggle");
 		javascriptClick(connectedSolChat);
-		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"true");
-		log("The toggle is checked as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
 	}
-	
+
 	public void clickOffChatToggle() {
 		CCUtils.scrollPageViaElement(driver, connectedSolChat);
 		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
-		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"true");
-		log("The toggle is checked as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
 		log("click to chat toggle");
 		javascriptClick(connectedSolChat);
-		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(),"false");
-		log("The toggle is not checked yet as aria-checked attribute value is "+connectedSolChat.getAttribute("aria-checked").toString().trim());
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
 	}
-	
+
 	public void clickOnPortalToggle() {
 		CCUtils.scrollPageViaElement(driver, connectedSolPortal);
 		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
-		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(),"false");
-		log("The toggle is not checked yet as aria-checked attribute value is "+connectedSolPortal.getAttribute("aria-checked").toString().trim());
+		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolPortal.getAttribute("aria-checked").toString().trim());
 		log("click to portal toggle");
 		javascriptClick(connectedSolPortal);
-		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(),"true");
-		log("The toggle is checked as aria-checked attribute value is "+connectedSolPortal.getAttribute("aria-checked").toString().trim());
+		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolPortal.getAttribute("aria-checked").toString().trim());
+	}
+
+	public void selectPractice(String practiceName) {
+		for (WebElement ele : listOfPracTabs) {
+			CCUtils.verifyAndWaitForElement(ele, driver);
+			CCUtils.assertEquals(ele.getText().toString().trim(), practiceName.trim());
+			ele.click();
+			log("clicked to practice tab named as : " + ele.getText().toString().trim());
+		}
+	}
+
+	public void verifyConnectedLocationSection() {
+		CCUtils.scrollPageViaElement(driver, connectedLocationSectionTitle);
+		CCUtils.verifyAndWaitForElement(connectedLocationSectionTitle, driver);
+		CCUtils.assertEquals(connectedLocationSectionTitle.getText().toString().trim(), "Connected Locations");
+		log("verifying the presence of connected locations title");
+	}
+
+	public void clickToAddLocationButton() {
+		CCUtils.verifyAndWaitForElement(addLocationButton, driver);
+		addLocationButton.click();
+		log("clicked to add location button");
+	}
+
+	public void enterTextInLocationTextBox(String location) {
+		CCUtils.verifyAndWaitForElement(listBox, driver);
+		CCUtils.assertEquals(listBox.getAttribute("aria-expanded").toString().trim(), "false");
+		listBox.click();
+		CCUtils.verifyElementToBeClickable(locationInput, driver);
+		CCUtils.assertEquals(listBox.getAttribute("aria-expanded").toString().trim(), "true");
+		verifyNoItemsFound();
+		log("send values to listbox div");
+		locationInput.sendKeys(location);
+		log("entered location in input textbox");
+	}
+
+	public void clickToLocationCheckBox(String location) {
+		CCUtils.verifyElementToBeClickable(locationCheckBox, driver);
+		CCUtils.verifyAndWaitForElement(locationCheckBox, driver);
+		CCUtils.assertEquals(locationCheckBox.getText().trim(), location);
+		locationCheckBox.click();
+		log("desired location " + location + " is selected");
+	}
+
+	public void verifyPopupTitle(String title) {
+		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		CCUtils.assertEquals(addResourceTitle.getText().trim(), title);
+		log("verifying title of pop up");
+	}
+	
+	public void clickToRemoveParticularLocation(String locationName) {
+		WebElement locationData = driver.findElement(By.xpath(removeParticularLocation(locationName)));
+		CCUtils.verifyAndWaitForElement(locationData, driver);
+		locationData.click();
+		log("clicked to remove resource icon for resource : " + locationName);
+	}
+	
+	public void verifyNoDataDisplayConnectedLocationsMessage() {
+		CCUtils.verifyAndWaitForElement(noDataDisplayConnectedLocations,driver);
+		log("No data to display message dispalyed in Connected locations");
+	}
+	
+	public void verifyPopupLabel() {
+		CCUtils.verifyAndWaitForElement(labelPopup, driver);
+		log("pop up is displayed in add popup");
 	}
 }

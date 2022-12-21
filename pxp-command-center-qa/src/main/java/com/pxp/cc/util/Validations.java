@@ -3421,7 +3421,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("en").toString(), en);
 		CCUtils.assertEquals(jsonpath.get("es").toString(), es);
 	}
-	
+
 	public void verifyResponseBodyForGetLocationResource(Response response) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
@@ -3431,8 +3431,9 @@ public class Validations {
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("locationId"), true);
 		CCUtils.assertEquals(jsonArray.get(0).toString().contains("name"), true);
 	}
-	
-	public void verifyGetPracticesAssociatedToResourceApiResponse(Response response, ArrayList<Object> orgId) throws IOException {
+
+	public void verifyGetPracticesAssociatedToResourceApiResponse(Response response, ArrayList<Object> orgId)
+			throws IOException {
 		for (int i = 0; i < orgId.size(); i++) {
 			if (response.asString().contains(String.valueOf(orgId.get(i)))) {
 				CCUtils.assertTrue(true, " : this value is present in response body" + orgId.get(i));
@@ -3440,4 +3441,16 @@ public class Validations {
 		}
 	}
 
+	public void verifyResponseBodyOfProvidersLocation(Response response, int providerId, String providerFirstName,
+			String providerLastName) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("providerId"), providerId);
+			CCUtils.assertEquals(jsonObject.get("firstName"), providerFirstName);
+			CCUtils.assertEquals(jsonObject.get("lastName"), providerLastName);
+			Log4jUtil.log("verifying provider Id and provider first name and last name");
+		}
+	}
 }
