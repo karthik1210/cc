@@ -3,6 +3,9 @@
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +21,9 @@ public class ResourceDetailsPage extends CCMainPage {
 
 	@FindBy(id = "searchOrgInput")
 	private WebElement searchButton;
+	
+	@FindBy(id = "treeNodeName")
+	private List<WebElement> listOfPracTabs;
 
 	@FindBy(xpath = "//img[@alt='prs-image']")
 	private WebElement blankImage;
@@ -83,8 +89,50 @@ public class ResourceDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolEngage;
+	
+	@FindBy(xpath = "//div[@aria-label='Connected Locations']")
+	private WebElement connectedLocationSectionTitle;
 
+	@FindBy(id = "addLocation")
+	private WebElement addLocationButton;
 
+	@FindBy(xpath = "//div[@role='combobox']//input[@id='Location']")
+	private WebElement locationInput;
+
+	@FindBy(xpath = "//div[@role='combobox']")
+	private WebElement listBox;
+
+	@FindBy(xpath = "//div//input[@id='inputCheckbox']//following::label[@id='locationName']")
+	private WebElement locationCheckBox;
+
+	@FindBy(xpath = "(//div[@aria-label='Connected Locations']//following::td[@id='no-result'])[1]")
+	private WebElement noDataDisplayConnectedLocations;
+	
+	@FindBy(xpath = "//span[@id='cancel-text']")
+	private WebElement crossIcon;
+	
+	@FindBy(xpath = "//label[@class='input']")
+	private WebElement labelPopup;
+	
+	@FindBy(xpath = "//div[@class='title']")
+	private WebElement addResourceTitle;
+
+	@FindBy(xpath = "//div[text()='No items found']")
+	private WebElement noItemsFound;
+	
+	@FindBy(xpath = "//span[text()=' clear ']")
+	private WebElement crossPopupIcon;
+	
+	@FindBy(id = "cancel-icon")
+	private WebElement cancelPopupButton;
+	
+	@FindBy(id = "save-icon")
+	private WebElement addButtonResource;
+	
+	public String removeParticularLocation(String data) {
+		return "//div[text()=' " + data + " ']//following::div//button[@mattooltip='Remove Connection']";
+	}
+	
 	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
 		searchButton.click();
@@ -308,6 +356,100 @@ public class ResourceDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
 		log("click Off Portal Toggle");
 		javascriptClick(connectedSolPortal);
+	}
+	
+	public void selectPractice(String practiceName) {
+		for (WebElement ele : listOfPracTabs) {
+			CCUtils.verifyAndWaitForElement(ele, driver);
+			CCUtils.assertEquals(ele.getText().toString().trim(), practiceName.trim());
+			ele.click();
+			log("clicked to practice tab named as : " + ele.getText().toString().trim());
+		}
+	}
+
+	public void verifyConnectedLocationSection() {
+		CCUtils.scrollPageViaElement(driver, connectedLocationSectionTitle);
+		CCUtils.verifyAndWaitForElement(connectedLocationSectionTitle, driver);
+		CCUtils.assertEquals(connectedLocationSectionTitle.getText().toString().trim(), "Connected Locations");
+		log("verifying the presence of connected locations title");
+	}
+
+	public void clickToAddLocationButton() {
+		CCUtils.verifyAndWaitForElement(addLocationButton, driver);
+		addLocationButton.click();
+		log("clicked to add location button");
+	}
+
+	public void enterTextInLocationTextBox(String location) {
+		CCUtils.verifyAndWaitForElement(listBox, driver);
+		CCUtils.assertEquals(listBox.getAttribute("aria-expanded").toString().trim(), "false");
+		listBox.click();
+		CCUtils.verifyElementToBeClickable(locationInput, driver);
+		CCUtils.assertEquals(listBox.getAttribute("aria-expanded").toString().trim(), "true");
+		verifyNoItemsFound();
+		log("send values to listbox div");
+		locationInput.sendKeys(location);
+		log("entered location in input textbox");
+	}
+
+	public void clickToLocationCheckBox(String location) {
+		CCUtils.verifyElementToBeClickable(locationCheckBox, driver);
+		CCUtils.verifyAndWaitForElement(locationCheckBox, driver);
+		CCUtils.assertEquals(locationCheckBox.getText().trim(), location);
+		locationCheckBox.click();
+		log("desired location " + location + " is selected");
+	}
+
+	public void verifyPopupTitle(String title) {
+		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		CCUtils.assertEquals(addResourceTitle.getText().trim(), title);
+		log("verifying title of pop up");
+	}
+	
+	public void clickToRemoveParticularLocation(String locationName) {
+		WebElement locationData = driver.findElement(By.xpath(removeParticularLocation(locationName)));
+		CCUtils.verifyAndWaitForElement(locationData, driver);
+		locationData.click();
+		log("clicked to remove resource icon for resource : " + locationName);
+	}
+	
+	public void verifyNoDataDisplayConnectedLocationsMessage() {
+		CCUtils.verifyAndWaitForElement(noDataDisplayConnectedLocations,driver);
+		log("No data to display message dispalyed in Connected locations");
+	}
+	
+	public void verifyPopupLabel() {
+		CCUtils.verifyAndWaitForElement(labelPopup, driver);
+		log("pop up is displayed in add popup");
+	}
+	
+	public void verifyNoItemsFound() {
+		CCUtils.verifyAndWaitForElement(noItemsFound, driver);
+		log("no items found message found");
+	}
+	
+	public void clickToAddButtonInPopup() {
+		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		addResourceTitle.click();
+		addButtonResource.click();
+		log("clicked to Add button of pop up");
+	}
+	
+	public void verifyCrossIcon() {
+		CCUtils.verifyAndWaitForElement(crossPopupIcon, driver);
+		log("cross icon is displayed in pop up");
+	}
+	
+	public void verifyCancelButton() {
+		CCUtils.verifyAndWaitForElement(cancelPopupButton, driver);
+		log("cancel button is displayed in pop up");
+	}
+
+	public void verifyAddButton() {
+		CCUtils.verifyAndWaitForElement(addButtonResource, driver);
+		CCUtils.assertEquals(addButtonResource.getAttribute("disabled"), "true");
+		log("cancel button is displayed in pop up");
 	}
 
 }
