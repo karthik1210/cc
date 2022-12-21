@@ -124,8 +124,10 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
-				<class
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetDisplayNameOfPracticeResourceApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
