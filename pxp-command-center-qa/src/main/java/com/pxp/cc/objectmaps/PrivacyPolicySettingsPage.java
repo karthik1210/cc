@@ -1082,7 +1082,7 @@ public class PrivacyPolicySettingsPage extends CCMainPage {
     }
 
     public void clickOnEnterpriseArrow(String enterpriseName) {
-        WebElement enterpriseArrow = driver.findElement(By.xpath("//button[@aria-label='toggle "+enterpriseName+"']/span/mat-icon[normalize-space(text())='keyboard_arrow_right']"));
+        WebElement enterpriseArrow = driver.findElement(By.xpath("//button[@id='treeExpandBtn'][@aria-label='toggle "+enterpriseName+"']//span//mat-icon[normalize-space(text())='keyboard_arrow_right']"));
         CCUtils.verifyAndWaitForElement(enterpriseArrow, driver);
         log("clicking on Enterprise level");
         new Actions(driver).moveToElement(enterpriseArrow).click().build().perform();
