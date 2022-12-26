@@ -1944,4 +1944,11 @@ public class ApiPath {
 
 	public static final String SEARCH_RESOURCE_NULL_DL = SHARED_DL + "/v1/practices/null/resources-location";
 
+	public static final String SEND_ENROLLMENT_BL( String uriType) {
+		if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_BL + "/v1/users/enrollments";
+			else
+				return SERVICE_USER_BL + "/v1/usersssss/enrollments";
+	}
+
 }
