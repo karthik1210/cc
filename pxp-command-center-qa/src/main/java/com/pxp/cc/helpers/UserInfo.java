@@ -765,4 +765,24 @@ public class UserInfo extends BaseRest {
         String url = ApiPath.USER_ROLES_BL(userType);
         return given().spec(requestSpec).pathParam("userType", userType).when().get(url).then().extract().response();
     }
+
+    public Response sendEnrollmentBL(String typeURI, ArrayList<Integer> usersList) {
+        if (typeURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.SEND_ENROLLMENT_BL(typeURI);
+            return given().spec(requestSpec).body(usersList).when().post(url).then().extract().response();
+        } else if (typeURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.SEND_ENROLLMENT_BL(typeURI);
+            return given().spec(requestSpec).body(usersList).when().post(url).then().extract().response();
+        } else {
+            String url = ApiPath.SEND_ENROLLMENT_BL("Valid");
+            return given().spec(requestSpec).body(usersList).when().delete(url).then().extract().response();
+        }
+    }
+
+    public Response getUsersByTypeAndEnrollmentStatusBL(String type, String enrollmentStatus, String userStatus) {
+          String url = ApiPath.USER_DETAILS_BL;
+            return given().spec(requestSpec).queryParam("type", type).queryParam("enrollstatus", enrollmentStatus).queryParam("userstatus", userStatus)
+                    .when().get(url).then().extract().response();
+        }
+
 }
