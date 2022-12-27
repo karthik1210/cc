@@ -39,7 +39,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
         return clientName;
     }
 
-    public String createNewActiveSystem(String system, String enterprise) throws NullPointerException, InterruptedException {
+    public String createNewActiveSystem(String system, String enterprise) throws Exception {
         logStep("Verify manage client button is displayed");
         ngHierarchyClientCreationPage.verifyManageClientButton();
         logStep("Click on manage client button");
@@ -80,7 +80,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
         return enterpriseName;
     }
 
-    public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws NullPointerException, InterruptedException {
+    public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws Exception {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         logStep("Verify manage client button is displayed");

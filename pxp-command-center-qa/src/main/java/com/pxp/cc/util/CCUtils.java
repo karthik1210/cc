@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+
 import org.hamcrest.Matchers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -18,9 +20,7 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
@@ -62,6 +62,15 @@ public class CCUtils {
         }
     }
 
+    public static void waitForElementPresence(WebElement we, WebDriver driver) throws InterruptedException {
+        try {
+            Wait wait = new FluentWait(driver).withTimeout(5000, TimeUnit.MILLISECONDS).pollingEvery(5000, TimeUnit.MILLISECONDS).ignoring(Exception.class);
+            wait.until(ExpectedConditions.visibilityOf(we));
+            wait.until(ExpectedConditions.stalenessOf(we));
+        } catch (Exception exception) {
+            Thread.sleep(4000);
+        }
+    }
 
     public static void verifyAndWaitForElementPresence(WebElement we, WebDriver driver) {
         try {
