@@ -42,6 +42,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePasswordDuringEnrollmentApiTests_BusinessLayer" />
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchUsersWithEnrollmentStatusApiTests_BusinessLayer" />
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SendEnrollmentApiTests_BusinessLayer" />
                 <!-- Enable test class once below issue is resolved  # PXPP-26529-->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListRoleLocationsApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetInternalUserLoginDetailsApiTests_BusinessLayer" 
