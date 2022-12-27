@@ -457,9 +457,9 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
         CCUtils.verifyAndWaitForElement(buttonNew, driver);
         buttonNew.click();
         log("Clicked on new button");
-        CCUtils.verifyAndWaitForElement(buttonCreateClient, driver);
-        buttonCreateClient.click();
-        log("Clicked on Create client button");
+//        CCUtils.verifyAndWaitForElement(buttonCreateClient, driver);
+//        buttonCreateClient.click();
+//        log("Clicked on Create client button");
     }
 
     public String verifyClientPopupText() {
@@ -2040,8 +2040,8 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
         enterNewPracticeDetails("PracticeForDemo");
     }
 
-    public void verifyManageClientButton() {
-        CCUtils.verifyAndWaitForElement(btnManageClient, driver);
+    public void verifyManageClientButton() throws Exception {
+        CCUtils.waitForElementPresence(btnManageClient, driver);
         CCUtils.assertEquals(btnManageClient.getText().trim(), "MANAGE CLIENT");
         log(" MANAGE CLIENT  Button is displayed");
     }
