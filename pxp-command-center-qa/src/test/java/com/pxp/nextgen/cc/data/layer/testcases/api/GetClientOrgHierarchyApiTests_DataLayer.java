@@ -122,7 +122,7 @@ public class GetClientOrgHierarchyApiTests_DataLayer extends BaseRest {
 		fetchClientDetailsApiResponse = clientInfo.getClientOrgHierarchyDetails_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
-		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
+		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 200);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify error response for invalid url")
