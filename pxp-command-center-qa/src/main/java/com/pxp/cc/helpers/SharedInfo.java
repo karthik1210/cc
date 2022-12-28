@@ -1884,4 +1884,44 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_RESOURCE_NULL_DL;
 		return given().spec(requestSpec).queryParam("name", resourceName).when().get(url).then().extract().response();
 	}
+	
+	private Map<String, Object> createStaffRequestPayload(String firstName, String lastName, String gender,
+            String externalId) {
+        Map<String, Object> createStaffMap = new HashMap<String, Object>();
+        createStaffMap.put("firstName", firstName);
+        createStaffMap.put("lastName", lastName);
+        createStaffMap.put("gender", gender);
+        createStaffMap.put("externalId", externalId);
+        return createStaffMap;
+    }
+
+     public Response createStaff_DL(int clientId, String firstName, String lastName, String gender,
+            String externalId) {
+        String url = ApiPath.CREATE_STAFF_DL(clientId);
+        Map<String, Object> createStaffPayload = createStaffRequestPayload(firstName, lastName, gender,externalId);
+        return given().spec(requestSpec).body(createStaffPayload).when().post(url).then().extract().response();
+    }
+     
+     public Response getStaffForClient_DL(String clientId, String name, String systemid, String enterpriseid,
+ 			String practiceid, String solutionid, String pagesize) {
+ 		String url = ApiPath.STAFF_FOR_CLIENT_DL(clientId);
+ 		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+ 				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+ 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+ 				.response();
+ 	} 
+     
+     public Response practicesAssociateToStaff_DL(int staffId, int practiceId, boolean active) {
+ 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_DL(staffId);
+ 		Map<String, Object> staffAssociateToPracticePayload = staffAssociateToPractice(practiceId, active);
+ 		return given().spec(requestSpec).body(staffAssociateToPracticePayload).when().put(url).then().extract()
+ 				.response();
+ 	}
+     
+     private Map<String, Object> staffAssociateToPractice(Integer practiceId, Boolean active) {
+ 		Map<String, Object> staffassociatetoPracticeMap = new HashMap<String, Object>();
+ 		staffassociatetoPracticeMap.put("practiceId", practiceId);
+ 		staffassociatetoPracticeMap.put("active", active);
+ 		return staffassociatetoPracticeMap;
+ 	}
 }
