@@ -338,6 +338,12 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Successfully added provider')]")
 	private WebElement successToasterMessage;
+	
+	@FindBy(xpath = "//span[@class='slider round']")
+	private WebElement toggleButton;
+	
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
+	private WebElement entepriseArrow;
 
 	private String expandArrowEntPractice(String ent) {
 		return "//mat-tree-node[@role='treeitem']//button[@aria-label='Toggle " + ent + "']";
@@ -1087,6 +1093,7 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void verifyConnectedSolutionsTitle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolutionsTitle);
 		CCUtils.verifyAndWaitForElement(connectedSolutionsTitle, driver);
 		CCUtils.assertTrue(connectedSolutionsTitle.isDisplayed(), "verifying connected solutions title");
 		log("Verifying connected solutions Title");
@@ -1316,5 +1323,17 @@ public class LocationDetailsPage extends CCMainPage {
 		clickOnAdd();
 		enterProviderName(input);
 		clickOnAddToSave();
+	}
+	
+	public void clickToEntepriseArrow() {
+		CCUtils.verifyAndWaitForElement(entepriseArrow, driver);
+		entepriseArrow.click();
+		log("clicked to enteprise Arrow");
+	}
+	
+	public void clickOnToggleButton() {
+		CCUtils.verifyAndWaitForElement(toggleButton, driver);
+		toggleButton.click();
+		log("clicked to toggle button");
 	}
 }

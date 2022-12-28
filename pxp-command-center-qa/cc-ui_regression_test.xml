@@ -32,7 +32,7 @@
             <class name="com.pxp.cc.testcases.ui.EnableDisablePracticesOnResourceDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.AssociateDeassociateSolutionsOnResourceDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.PatientAccessDetailsTests"/>
-            <class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
+            <class name="com.pxp.cc.testcases.ui.LocationsPageTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewProviderTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewResourceTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
