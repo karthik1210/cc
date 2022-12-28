@@ -139,10 +139,6 @@ public class ApiPath {
 		return SERVICE_ORG_DL + "/v1/clients/" + clientId + "/orgsabcdfef";
 	}
 
-	public static final String CLIENT_SOLUTION_DL(int clientId) {
-		return SERVICE_CLIENT_DL + "/v1/clients/" + "{clientId}" + "/solutions";
-	}
-
 	public static final String SERVICE_USER_BL = "/service/user-service";
 	public static final String USER_ROLES_BL = SERVICE_USER_BL + "/usertypes/";
 
