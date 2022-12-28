@@ -4,6 +4,8 @@ package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
 import java.util.List;
+
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -103,6 +105,8 @@ public class AddNewResourcePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxConnectedProvider, driver);
 		textboxConnectedProvider.sendKeys(input);
 		log("Entered input for Connected Provider : " + input);
+		textboxConnectedProvider.sendKeys(Keys.BACK_SPACE);
+		textboxConnectedProvider.sendKeys(String.valueOf(input.charAt(input.length()-1)));
 	}
 
 	public void enterExternalId(String input) {
@@ -148,8 +152,8 @@ public class AddNewResourcePage extends CCMainPage {
 		logStep("Clicked on Save and add button");
 	}
 
-	public void clickFirstInAutoSuggestion() {
-		CCUtils.verifyAndWaitForElementPresent(selectFirstOption, driver);
+	public void clickFirstInAutoSuggestion() throws InterruptedException{
+		CCUtils.waitForElementPresence(selectFirstOption, driver);
 		javascriptClick(selectFirstOption);
 	}
 	

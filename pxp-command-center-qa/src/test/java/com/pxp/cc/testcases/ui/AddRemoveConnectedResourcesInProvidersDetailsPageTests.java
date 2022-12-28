@@ -109,7 +109,7 @@ public class AddRemoveConnectedResourcesInProvidersDetailsPageTests extends Comm
 		return firstName;
 	}
 
-	public String createResource(String providerName) {
+	public String createResource(String providerName) throws Exception{
 		addNewResourcePage = new AddNewResourcePage(driver);
 		addNewResourcePage.verifyAddButtonIsEnabled();
 		addNewResourcePage.clickOnAddResourceButton();
