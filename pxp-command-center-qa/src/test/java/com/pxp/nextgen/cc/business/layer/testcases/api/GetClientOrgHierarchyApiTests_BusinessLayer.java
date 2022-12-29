@@ -37,11 +37,10 @@ public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForClientIdField() throws IOException {
 		logStep("Enter non existing client id");
 		fetchClientDetailsApiResponse = clientInfo
-				.getClientOrgHierarchyDetails(Integer.parseInt(testData.getProperty("api.nonexisting.orgid")));
+				.getClientOrgHierarchyDetails(Integer.parseInt(testData.getProperty("non.existing.org.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchClientDetailsApiResponse);
 		CCUtils.assertEquals(fetchClientDetailsApiResponse.getStatusCode(), 204);
-		logStep("Validating error message of response body");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Create client & add org node below the client then fetch & validate client org hierarchy details with client id")
