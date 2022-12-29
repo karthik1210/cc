@@ -9,7 +9,6 @@ import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.util.CCUtils;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
@@ -68,10 +67,11 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getAddLocationPage().clickOnAddLocationButton();
 	}
 
-	//  AddNewLocationTests 
-	
+	// AddNewLocationTests
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Verify navigation to Locations page with Locations tab and Locations tile on General Settings page")
 	public void testNavigationToLocationsPageWithLocationsTile() throws Exception {
+		logStep("PXPP-19934,PXPP-19937 Click on +ADD button on Locations page and verify details on add a location dialogue box");
 		ngHierarchyClientCreate();
 		addLocationPopUp();
 		logStep("Click on cancel button");
@@ -88,6 +88,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, groups = {
 			"buildvalidation" }, description = "Verify add new location functionality with valid details in all input fields")
 	public void testAddNewLocationFunctionalityWithAllValidDetails() throws Exception {
+		logStep("PXPP-19957,PXPP-20022 Verify user is able to create new location using all valid details");
 		ngHierarchyClientCreate();
 		addLocationPopUp();
 		logStep("Enter data in all input fields");
@@ -109,9 +110,9 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Verify add new location functionality with valid details in all mandatory fields")
 	public void testAddNewLocationFunctionalityWithAllValidDetailsInMandatoryFields() throws Exception {
+		logStep("PXPP-19969 Verify mandatory fields on Add a Location dialogue box ");
 		ngHierarchyClientCreate();
 		addLocationPopUp();
-		logStep("Enter data in mandatory fields");
 		ccui.getAddLocationPage().enterLocationName(CCUtils.generateAlphaNumericString(18));
 		ccui.getAddLocationPage().enterLocationDisplayName(CCUtils.generateAlphaNumericString(18));
 		ccui.getAddLocationPage().enterAddressOne(CCUtils.generateAlphaNumericString(18));
@@ -129,6 +130,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 4, description = "Enter more than 100 characters in locationName, locationDisplayName, Address1, city, zip, locationId fields and verify error message")
 	public void testHundredMaximumCharactersErrorMessageForInputFields() throws Exception {
+		logStep("PXPP-19965 Verify field limits for text fields on the Add a Location dialogue box ");
 		ngHierarchyClientCreate();
 		addLocationPopUp();
 		logStep("Verify maximum character reached error message for locationName, locationDisplayName, Address1");
@@ -179,20 +181,16 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 				testData.getProperty("new.locations.timezone"));
 		logStep("Click on save and add button");
 		ccui.getAddLocationPage().clickOnSaveAndAddButton();
-		logStep("Verify success toaster message");
-		ccui.getAddLocationPage().verifyToasterMessage("Success! New location has been successfully created");
-
 	}
 
 	@Test(priority = 6, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
 	public void testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable() throws Exception {
 		ngHierarchyClientCreate();
+		logStep("PXPP-12737 Verify pagination and Items per page dropdown should be present in location web table");
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
 		ccui.getGeneralSettingsPage().clickOnLocationsTab();
-		createlocation();
-		createlocation();
 		createlocation();
 		createlocation();
 		createlocation();
@@ -216,29 +214,10 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().clickFirstPageButton();
 	}
 
-	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, dependsOnMethods = "testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable", description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
-	public void testAllPaginationButtonsClickable() throws Exception {
-		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
-		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
-		CCUtils.assertEquals(ccui.getSearchLocationDetailsPage().getDefaultItemsPerPage(), "10");
-		CCUtils.assertEquals(ccui.getSearchLocationDetailsPage().getDefaultPagination(), "1 – 10");
-		String noOfClients = ccui.getSearchLocationDetailsPage().getTotalNoOfLocations();
-		logStep("Get the Total No of Clients : " + noOfClients);
-		ccui.getSearchLocationDetailsPage().clickNextPageButton();
-		ccui.getSearchLocationDetailsPage().clickNextPageButton();
-		ccui.getSearchLocationDetailsPage().clickNextPageButton();
-		ccui.getSearchLocationDetailsPage().clickPreviousPageButton();
-		ccui.getSearchLocationDetailsPage().clickLastPageButton();
-		ccui.getSearchLocationDetailsPage().clickFirstPageButton();
-	}
-
-	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality")
+	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality")
 	public void testNextPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
+		logStep("PXPP-12737 Verify pagination and Items per page dropdown should be present in location web table");
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
@@ -274,7 +253,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 	}
 
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Last Button functionality")
+	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Last Button functionality")
 	public void testLastPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
@@ -317,7 +296,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwohundred));
 	}
 
-	@Test(priority = 10, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality")
+	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality")
 	public void testPreviousPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
@@ -355,7 +334,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 	}
 
-	@Test(priority = 11, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality")
+	@Test(priority = 10, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality")
 	public void testFirstPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
@@ -391,41 +370,34 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
 		ccui.getSearchLocationDetailsPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
-
 	}
 
-	@Test(priority = 12, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check location name sorting from ascending to descending")
-	public void testLocationNameSortingToDescending() throws Exception {
+	@Test(priority = 11, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check location name and status sorting")
+	public void testLocationNameAndStatusSorting() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
 		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("Check location status sorting");
 		ccui.getSearchLocationDetailsPage().clickAscLocationNameSortToDsc();
 		ccui.getSearchLocationDetailsPage().clickDscLocationNameSortToAsc();
-
-	}
-
-	@Test(priority = 13, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check location status sorting from ascending to descending")
-	public void testLocationStatusSortingToAscending() throws Exception {
-		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("PXPP-12735 Verify location status column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
 		ccui.getSearchLocationDetailsPage().clickAscLocationStatusSortToDsc();
 		ccui.getSearchLocationDetailsPage().clickDscLocationStatusSortToAsc();
 	}
 
-	@Test(priority = 14, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the visibility and presence of web elements of search location screen")
+	@Test(priority = 12, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the visibility and presence of web elements of search location screen")
 	public void testSearchLocationScreenWebElements() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
 		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("PXPP-12648 Verify search textbox with search button is present in location search page");
 		ccui.getSearchLocationDetailsPage().verifySearchTextBoxAndPlaceholderIsDisplayed();
 		ccui.getSearchLocationDetailsPage().verifySearchButtonIsDisplayed();
+		logStep("PXPP-12650 Verify elements of Filter container in location search page ");
 		ccui.getSearchLocationDetailsPage().verifyFilterLabel();
 		ccui.getSearchLocationDetailsPage().verifySystemFilterLabelTextAndPlaceholder();
 		ccui.getSearchLocationDetailsPage().verifyEnterpriseFilterLabelTextAndPlaceholder();
@@ -433,51 +405,30 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().verifySolutionFilterLabelTextAndPlaceholder();
 		ccui.getSearchLocationDetailsPage().clearButtonDisplayed();
 		ccui.getSearchLocationDetailsPage().clearApplyDisplayed();
-	}
-
-	@Test(priority = 15, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify after clicking hide button filter section should not get displayed")
-	public void testFunctionalityOfHideFiltersButtonOnLocationScreen() throws Exception {
-		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
-		ccui.getSearchLocationDetailsPage().verifyFilterLabel();
-		ccui.getSearchLocationDetailsPage().verifySystemFilterLabelTextAndPlaceholder();
-		ccui.getSearchLocationDetailsPage().verifyEnterpriseFilterLabelTextAndPlaceholder();
-		ccui.getSearchLocationDetailsPage().verifyPracticeFilterLabelTextAndPlaceholder();
-		ccui.getSearchLocationDetailsPage().verifySolutionFilterLabelTextAndPlaceholder();
-		ccui.getSearchLocationDetailsPage().clearButtonDisplayed();
-		ccui.getSearchLocationDetailsPage().clearApplyDisplayed();
+		logStep("PXPP-12651 Verify Hide filters button should be present in locations page");
 		ccui.getSearchLocationDetailsPage().clickToHideFiltersButton();
 		ccui.getSearchLocationDetailsPage().verifyAllElementsOfFilterNotVisible();
 	}
 
-	@Test(priority = 16, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a location")
-	public void testSearchExistingLocationOnLocationScreen() throws Exception {
+	@Test(priority = 13, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a location")
+	public void testSearchLocationOnLocationScreen() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
 		ccui.getGeneralSettingsPage().clickOnLocationsTab();
 		createlocation();
+		logStep("PXPP-12648 Verify user can search by location name and location ID in search textbox in location search page");
 		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
-	}
-
-	@Test(priority = 17, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error message when searching non-existing location")
-	public void testErrorMessageWhenSearchingNonExistingLocation() throws Exception {
-		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("PXPP-12920 Verify when user can search by location name and location ID in search textbox and it is not found in location web table should display message ' Location not found'");
 		ccui.getSearchLocationDetailsPage().searchNonExistingLocationAndVerifyResult("NonExistingLocation");
 	}
 
 	// SearchLocationsTests
 
-	@Test(priority = 18, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply practice, enterprise, system filter in search location screen")
+	@Test(priority = 14, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply practice, enterprise, system filter in search location screen")
 	public void testSearchExistingLocationByFilterPracticeEnterpriseAndSysten() throws Exception {
+		logStep("PXPP-12740 Verify user can apply filter by clicking apply button in Filter container in location search page");
 		ngHierarchyClientCreate();
 		enablepractice();
 		logStep("Apply filter for Practice");
@@ -493,6 +444,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().selectFilter(clientSystementErpriseandPractice.get("enterpriseName"));
 		ccui.getSearchLocationDetailsPage().clickToApplyFilterButton();
 		ccui.getSearchLocationDetailsPage().verifyListOfLocationMatchedSearchResult(listOfLocations);
+		logStep("PXPP-12738 Verify user can clear applied filter by clicking to clear button in location search page");
 		ccui.getSearchLocationDetailsPage().clickToClearFilterButton();
 		logStep("Apply filter for System");
 		ccui.getSearchLocationDetailsPage().clickToSystemFilter();
@@ -510,9 +462,9 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().clickToApplyFilterButton();
 		ccui.getSearchLocationDetailsPage().verifyListOfLocationMatchedSearchResult(listOfLocations);
 	}
-	
-   // Enable test case once issue is resolved #PXPP-27241
-	@Test(priority = 19, enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search location screen")
+
+	// Enable test case once issue is resolved #PXPP-27241
+	@Test(priority = 15, enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search location screen")
 	public void testSearchExistingLocationByFilterSolution() throws Exception {
 		ngHierarchyClientCreate();
 		addPurchaseSolutionAtPracticeLevel();
@@ -556,6 +508,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getLocationDetailsPage().verifyLocationDetailsTitle();
 		ccui.getLocationDetailsPage().clickToEntepriseArrow();
 		ccui.getLocationDetailsPage().clickOnToggleButton();
+		ccui.getLocationDetailsPage().clickOnPracticeNode();
 		ccui.getLocationDetailsPage().verifyConnectedSolutionsTitle();
 		ccui.getLocationDetailsPage().toggleOnChats();
 		ccui.getLocationDetailsPage().clickToBackButton();
