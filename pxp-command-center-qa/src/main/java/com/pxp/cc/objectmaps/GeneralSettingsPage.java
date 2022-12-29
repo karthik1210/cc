@@ -131,7 +131,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'FAVORITES')]//following::div[@role='option'][1]")
 	private WebElement favoriteFirstClient;
 
-	@FindBy(xpath = "//a[@id='headerBookIcon']/parent::div")
+	@FindBy(id = "headerBookIcon")
 	private WebElement backToClientDirectory;
 
 	@FindBy(xpath = "//div[@class='info']")
@@ -580,10 +580,10 @@ public class GeneralSettingsPage extends CCMainPage {
 		return favoritesSecondClient;
 	}
 
-	public ClientDirectoryPage clickClientDirectoryIcon() {
+	public void clickClientDirectoryIcon() {
 		CCUtils.verifyAndWaitForElement(backToClientDirectory, driver);
-		backToClientDirectory.click();
-		return PageFactory.initElements(driver, ClientDirectoryPage.class);
+		javascriptClick(backToClientDirectory);
+		log("clicked to client directory icon");
 	}
 
 	public String getGeneralSettingsRightSectionClientName() {

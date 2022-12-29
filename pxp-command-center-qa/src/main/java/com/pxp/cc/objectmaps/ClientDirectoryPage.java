@@ -93,7 +93,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
 	private WebElement displayPagination;
 
-	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
+	@FindBy(xpath = "//mat-select[@role='combobox']")
 	private WebElement itemsPerPageDropdown;
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
@@ -431,7 +431,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		return noOfRowsPagination.trim();
 	}
 
-	public String getLHSPagination() throws AWTException {
+	public String getLHSPagination() {
 		String data = getDefaultPagination();
 		String[] words = data.split("–", 2);
 		for (String w : words) {
@@ -442,7 +442,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		return data.trim();
 	}
 
-	public String getRHSPagination() throws AWTException {
+	public String getRHSPagination() {
 		String data = getDefaultPagination();
 		String[] words = data.split("–", 0);
 		for (String w : words) {
@@ -452,8 +452,8 @@ public class ClientDirectoryPage extends CCMainPage {
 		return data.trim();
 	}
 
-	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+	public void clickItemsPerPageDropdown() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, itemsPerPageDropdown);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
@@ -558,7 +558,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException, AWTException {
+			throws NumberFormatException {
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		if (noOfClients >= itemsPerPageValue) {
 			clickLastPageButton();
@@ -578,7 +578,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException, AWTException {
+			throws NumberFormatException {
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		log("Total number of clients is : " + noOfClients);
 		if (noOfClients >= itemsPerPageValue) {
@@ -600,7 +600,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException, AWTException {
+			throws NumberFormatException {
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		log("Total number of clients is : " + noOfClients);
 		if (noOfClients >= itemsPerPageValue) {
@@ -623,7 +623,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException, AWTException {
+			throws NumberFormatException{
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		log("Total number of clients is : " + noOfClients);
 		checkLastPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
