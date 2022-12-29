@@ -158,8 +158,8 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolEngage;
 
-	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
-	private WebElement connectedSolChat;
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
+    private WebElement connectedSolChat;
 
 	@FindBy(xpath = "//div[@aria-label='Connected Locations']")
 	private WebElement connectedLocationSectionTitle;
@@ -618,17 +618,17 @@ public class ProviderDetailsPage extends CCMainPage {
 	}
 
 	public void clickOnChatToggle() {
-		CCUtils.scrollPageViaElement(driver, connectedSolChat);
-		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
-		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
-		log("The toggle is not checked yet as aria-checked attribute value is "
-				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
-		log("click to chat toggle");
-		javascriptClick(connectedSolChat);
-		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
-		log("The toggle is checked as aria-checked attribute value is "
-				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
-	}
+        CCUtils.scrollPageViaElement(driver, connectedSolChat);
+        CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+        CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+        log("The toggle is not checked yet as aria-checked attribute value is "
+                + connectedSolChat.getAttribute("aria-checked").toString().trim());
+        log("click On Chat Toggle");
+        javascriptClick(connectedSolChat);
+        CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+        log("The toggle is checked as aria-checked attribute value is "
+                + connectedSolChat.getAttribute("aria-checked").toString().trim());
+    }
 
 	public void clickOffChatToggle() {
 		CCUtils.scrollPageViaElement(driver, connectedSolChat);

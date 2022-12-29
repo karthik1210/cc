@@ -690,9 +690,4 @@ public class SearchProviderPage extends CCMainPage {
 		log("clicked to provider tab");
 	}
 
-	public void searchFullNameProviderAndVerifyResult(String searchProviderName) throws AWTException {
-		enterProviderInSearchTextBox(searchProviderName);
-		clickToSearchButton();
-		verifySearchProviderFound(searchProviderName);
-	}
 }

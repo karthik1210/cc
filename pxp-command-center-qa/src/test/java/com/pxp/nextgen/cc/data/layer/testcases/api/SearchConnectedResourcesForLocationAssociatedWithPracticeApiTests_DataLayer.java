@@ -16,7 +16,7 @@ import com.pxp.cc.util.ResourceValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_DataLayer extends BaseRest {
+public class SearchConnectedResourcesForLocationAssociatedWithPracticeApiTests_DataLayer extends BaseRest {
 
 	private SharedInfo sharedInfo;
 	private Validations validation;
@@ -138,7 +138,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Da
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing practice id associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingPracticeId() throws IOException {
 		searchResourceApiResponse = sharedInfo.getConnectedResource_DL(
-				Integer.parseInt(testData.getProperty("Non.existing.tou.id")), testData.getProperty("resource.name"));
+				Integer.parseInt(testData.getProperty("nonexiting.practice.id")), testData.getProperty("resource.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
 		CCUtils.assertEquals(searchResourceApiResponse.getStatusCode(), 204);
@@ -156,7 +156,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Da
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing practice id and resource name associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingResourceNameAndPracticeId() throws IOException {
 		searchResourceApiResponse = sharedInfo.getConnectedResource_DL(
-				Integer.parseInt(testData.getProperty("Non.existing.tou.id")),
+				Integer.parseInt(testData.getProperty("nonexiting.practice.id")),
 				testData.getProperty("non.existing.user.first.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
