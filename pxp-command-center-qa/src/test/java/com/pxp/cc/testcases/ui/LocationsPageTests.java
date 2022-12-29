@@ -52,6 +52,11 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 					.clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
 			logStep("Navigating To General Settings page");
 			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+			ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
+			ccui.getPrivacyPolicySettingsPage()
+					.clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
+			ccui.getPrivacyPolicySettingsPage()
+					.clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
 		}
 	}
 
@@ -464,13 +469,24 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 	}
 
 	// Enable test case once issue is resolved #PXPP-27241
-	@Test(priority = 15, enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search location screen")
+	@Test(priority = 15, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search location screen")
 	public void testSearchExistingLocationByFilterSolution() throws Exception {
 		ngHierarchyClientCreate();
 		addPurchaseSolutionAtPracticeLevel();
-		enableSolution();
+		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
+		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
 		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
+		CCUtils.pressEnterKey();
+		ccui.getAddLocationPage().selectLocation();
+		ccui.getLocationDetailsPage().verifyLocationDetailsTitle();
+		ccui.getLocationDetailsPage().clickToEntepriseArrow();
+		ccui.getLocationDetailsPage().clickOnToggleButton();
+		ccui.getLocationDetailsPage().clickOnPracticeNode();
+		ccui.getLocationDetailsPage().verifyConnectedSolutionsTitle();
+		ccui.getLocationDetailsPage().clickOnChatToggle();
+		ccui.getLocationDetailsPage().clickToBackButton();
 		ccui.getSearchLocationDetailsPage().clickToSolutionFilter();
 		ccui.getSearchLocationDetailsPage().selectFilter(testData.getProperty("solution.chat"));
 		ccui.getSearchLocationDetailsPage().clickToApplyFilterButton();
@@ -515,20 +531,21 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 	}
 
 	public void addPurchaseSolutionAtPracticeLevel() throws Exception {
-		logStep("Navigating To General Settings page");
-		ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
-		ccui.getPrivacyPolicySettingsPage()
-				.clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
-		ccui.getPrivacyPolicySettingsPage().clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
 		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfPaySolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfEngageSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfChatSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfPortalSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfPSSSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		runOnce = false;
 	}
-}
+}	

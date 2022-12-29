@@ -210,7 +210,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> listOfPracTabs;
-	
+
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon[normalize-space(text()='chevron_right')]")
 	private WebElement arrowEntPractice;
 
@@ -338,12 +338,15 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Successfully added provider')]")
 	private WebElement successToasterMessage;
-	
+
 	@FindBy(xpath = "//span[@class='slider round']")
 	private WebElement toggleButton;
-	
+
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
 	private WebElement entepriseArrow;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
+	private WebElement connectedSolChat;
 
 	private String expandArrowEntPractice(String ent) {
 		return "//mat-tree-node[@role='treeitem']//button[@aria-label='Toggle " + ent + "']";
@@ -1324,16 +1327,29 @@ public class LocationDetailsPage extends CCMainPage {
 		enterProviderName(input);
 		clickOnAddToSave();
 	}
-	
+
 	public void clickToEntepriseArrow() {
 		CCUtils.verifyAndWaitForElement(entepriseArrow, driver);
 		entepriseArrow.click();
 		log("clicked to enteprise Arrow");
 	}
-	
+
 	public void clickOnToggleButton() {
 		CCUtils.verifyAndWaitForElement(toggleButton, driver);
 		toggleButton.click();
 		log("clicked to toggle button");
+	}
+
+	public void clickOnChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click On Chat Toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
 	}
 }
