@@ -186,13 +186,13 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().clickToApplyFilterButton();
 		ccui.getSearchProviderPage().verifySearchProviderFound(providerFirstName);
 		logStep("Apply filter for System, enterprise, practice at a time");
-		ccui.getSearchLocationDetailsPage().clickToSystemFilter();
-		ccui.getSearchLocationDetailsPage().selectFilter(clientSystementErpriseandPractice.get("systemName"));
-		ccui.getSearchLocationDetailsPage().clickToEnterpriseFilter();
-		ccui.getSearchLocationDetailsPage().selectFilter(clientSystementErpriseandPractice.get("enterpriseName"));
-		ccui.getSearchLocationDetailsPage().clickToPracticeFilter();
-		ccui.getSearchLocationDetailsPage().selectFilter(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getSearchLocationDetailsPage().clickToApplyFilterButton();
+		ccui.getSearchProviderPage().clickToSystemFilter();
+		ccui.getSearchProviderPage().selectFilter(clientSystementErpriseandPractice.get("systemName"));
+		ccui.getSearchProviderPage().clickToEnterpriseFilter();
+		ccui.getSearchProviderPage().selectFilter(clientSystementErpriseandPractice.get("enterpriseName"));
+		ccui.getSearchProviderPage().clickToPracticeFilter();
+		ccui.getSearchProviderPage().selectFilter(clientSystementErpriseandPractice.get("practiceName"));
+		ccui.getSearchProviderPage().clickToApplyFilterButton();
 		ccui.getSearchProviderPage().verifySearchProviderFound(providerFirstName);
 	}
 
@@ -265,37 +265,37 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	public void testNextPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("Verify Providers tab is displayed");
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		//ccui.getGeneralSettingsPage().clickOnProvidersTab();
 		logStep("Check Next Button functionality when Items Per Page value is = 10");
-		String defaultItemsPerPage = ccui.getSearchLocationDetailsPage().getDefaultItemsPerPage();
+		String defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		logStep("Check Next Button functionality when Items Per Page value is = 20");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageTwenty = ccui.getSearchLocationDetailsPage().clickTwentyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageTwenty = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwenty, "20");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwenty));
 		logStep("Check Next Button functionality when Items Per Page value is = 50");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageFifty = ccui.getSearchLocationDetailsPage().clickFiftyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageFifty = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageFifty, "50");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
 		logStep("Check Next Button functionality when Items Per Page value is = 100");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageHundred = ccui.getSearchLocationDetailsPage().clickHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageHundred = ccui.getSearchProviderPage().clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageHundred, "100");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
 		logStep("Check Next Button functionality when Items Per Page value is = 200");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageTwoHundred = ccui.getSearchLocationDetailsPage().clickTwoHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageTwoHundred = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 	}
 
@@ -303,42 +303,42 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	public void testLastPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
-		String defaultItemsPerPage = ccui.getSearchLocationDetailsPage().getDefaultItemsPerPage();
+		logStep("Verify Providers tab is displayed");
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		//ccui.getGeneralSettingsPage().clickOnProvidersTab();
+		String defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
 		logStep("Check Last Button functionality when Items Per Page value is = 10.");
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
-		log("Print the RHS Pagination : " + ccui.getSearchLocationDetailsPage().getRHSPagination());
-		ccui.getSearchLocationDetailsPage()
+		log("Print the RHS Pagination : " + ccui.getSearchProviderPage().getRHSPagination());
+		ccui.getSearchProviderPage()
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		logStep("Check Last Button functionality when Items Per Page value is = 20.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPage = ccui.getSearchLocationDetailsPage().clickTwentyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPage = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "20");
-		log("get default pagination : " + ccui.getSearchLocationDetailsPage().getDefaultPagination());
-		log("Print the RHS Pagination : " + ccui.getSearchLocationDetailsPage().getRHSPagination());
-		ccui.getSearchLocationDetailsPage()
+		log("get default pagination : " + ccui.getSearchProviderPage().getDefaultPagination());
+		log("Print the RHS Pagination : " + ccui.getSearchProviderPage().getRHSPagination());
+		ccui.getSearchProviderPage()
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 		logStep("Check Last Button functionality when Items Per Page value is = 50.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageFifty = ccui.getSearchLocationDetailsPage().clickFiftyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageFifty = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageFifty, "50");
-		log("Print the RHS Pagination : " + ccui.getSearchLocationDetailsPage().getRHSPagination());
-		ccui.getSearchLocationDetailsPage()
+		log("Print the RHS Pagination : " + ccui.getSearchProviderPage().getRHSPagination());
+		ccui.getSearchProviderPage()
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
 		logStep("Check Last Button functionality when Items Per Page value is = 100.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageHundred = ccui.getSearchLocationDetailsPage().clickHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageHundred = ccui.getSearchProviderPage().clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageHundred, "100");
-		log("Print the RHS Pagination : " + ccui.getSearchLocationDetailsPage().getRHSPagination());
-		ccui.getSearchLocationDetailsPage()
+		log("Print the RHS Pagination : " + ccui.getSearchProviderPage().getRHSPagination());
+		ccui.getSearchProviderPage()
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
 		logStep("Check Last Button functionality when Items Per Page value is = 200.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageTwohundred = ccui.getSearchLocationDetailsPage().clickTwoHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageTwohundred = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwohundred, "200");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwohundred));
 	}
 
@@ -346,37 +346,37 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	public void testPreviousPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("Verify Providers tab is displayed");
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		//ccui.getGeneralSettingsPage().clickOnProvidersTab();
 		logStep("Check Previous Button functionality when Items Per Page value is = 10");
-		String defaultItemsPerPage = ccui.getSearchLocationDetailsPage().getDefaultItemsPerPage();
+		String defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		logStep("Check Previous Button functionality when Items Per Page value is = 20");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPage = ccui.getSearchLocationDetailsPage().clickTwentyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPage = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "20");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 		logStep("Check Previous Button functionality when Items Per Page value is = 50");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPagFifty = ccui.getSearchLocationDetailsPage().clickFiftyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPagFifty = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPagFifty, "50");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPagFifty));
 		logStep("Check Previous Button functionality when Items Per Page value is = 100");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageHundred = ccui.getSearchLocationDetailsPage().clickHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageHundred = ccui.getSearchProviderPage().clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageHundred, "100");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
 		logStep("Check Previous Button functionality when Items Per Page value is = 200");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageTwoHundred = ccui.getSearchLocationDetailsPage().clickTwoHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageTwoHundred = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 	}
 
@@ -384,37 +384,37 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	public void testFirstPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("Verify Providers tab is displayed");
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		//ccui.getGeneralSettingsPage().clickOnProvidersTab();
 		logStep("Check First Button functionality when Items Per Page value is = 10.");
-		String defaultItemsPerPage = ccui.getSearchLocationDetailsPage().getDefaultItemsPerPage();
+		String defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		logStep("Check First Button functionality when Items Per Page value is = 20.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPage = ccui.getSearchLocationDetailsPage().clickTwentyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPage = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "20");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 		logStep("Check First Button functionality when Items Per Page value is = 50.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageFifty = ccui.getSearchLocationDetailsPage().clickFiftyItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageFifty = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageFifty, "50");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
 		logStep("Check First Button functionality when Items Per Page value is = 100.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageHundred = ccui.getSearchLocationDetailsPage().clickHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageHundred = ccui.getSearchProviderPage().clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageHundred, "100");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
 		logStep("Check First Button functionality when Items Per Page value is = 200.");
-		ccui.getSearchLocationDetailsPage().clickItemsPerPageDropdown();
-		String itemsPerPageTwoHundred = ccui.getSearchLocationDetailsPage().clickTwoHundredItemsPerPage();
+		ccui.getSearchProviderPage().clickItemsPerPageDropdown();
+		String itemsPerPageTwoHundred = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
-		ccui.getSearchLocationDetailsPage()
+		ccui.getSearchProviderPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 
 	}
