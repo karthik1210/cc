@@ -78,6 +78,57 @@ public class SearchProviderPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@role='option'])[1]")
 	private WebElement selectPractice;
 
+	@FindBy(xpath = "//div[normalize-space(text())='Status']")
+	private WebElement providersStatusLabel;
+
+	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
+	private WebElement itemsPerPageDropdown;
+
+	@FindBy(xpath = "//button[@aria-label='Next page']")
+	private WebElement buttonNextPage;
+
+	@FindBy(xpath = "//button[@aria-label='Last page']")
+	private WebElement buttonLastPage;
+
+	@FindBy(xpath = "//button[@aria-label='Previous page']")
+	private WebElement buttonPreviousPage;
+
+	@FindBy(xpath = "//button[@aria-label='First page']")
+	private WebElement buttonFirstPage;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'20')]")
+	private WebElement itemsPerPageTwenty;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'50')]")
+	private WebElement itemsPerPageFifty;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'100')]")
+	private WebElement itemsPerPageHundred;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
+	private WebElement itemsPerPageTwoHundred;
+
+	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
+	private WebElement displayPagination;
+
+	@FindBy(xpath = "//div//span//following::span[contains(text(),'10')]")
+	private WebElement defaultItemsPerPage;
+
+	@FindBy(xpath = "(//tbody[@role='rowgroup']//tr[@role='row']//td[1])")
+	private List<WebElement> listOfProviderName;
+
+	@FindBy(xpath = "//div[@role='tab']//div[text()='Providers']")
+	private WebElement tabProvider;
+
+	@FindBy(xpath = "//div[normalize-space(text())='Last Name']")
+	private WebElement providersLastNameLabel;
+
+	@FindBy(xpath = "//td[@aria-sort='ascending']")
+	private WebElement providersAscSort;
+
+	@FindBy(xpath = "//td[@aria-sort='descending']")
+	private WebElement providersDscSort;
+
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	private WebElement prepareDynamicXpath(String xpathValue, String substitutionValue) {
@@ -297,153 +348,85 @@ public class SearchProviderPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(selectPractice, driver);
 		selectPractice.click();
 	}
-	
-	//
-//////
-	@FindBy(xpath = "//td[@aria-sort='ascending']")
-	private WebElement providersAscSort;
-	
-	@FindBy(xpath = "//td[@aria-sort='descending']")
-	private WebElement providersDscSort;
-	
+
 	public void clickAscProvidersFirstNameSortToDsc() {
 		CCUtils.verifyAndWaitForElement(providersAscSort, driver);
 		providersAscSort.click();
 		log("clicked to ascending Provider first name sort");
 	}
-	
+
 	public void verifyProvidersFirstNameDescendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(providersDscSort, driver);
 		log("verified after clicking to acsendig sort Provider first name sort arrow goes downwards to descending sort");
 	}
-	
+
 	public void clickDscProvidersFirstNameSortToAsc() {
 		CCUtils.verifyAndWaitForElement(providersDscSort, driver);
 		providersDscSort.click();
 		log("clicked to descending Provider first name sort");
 	}
-	
+
 	public void verifyProvidersFirstNameAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(providersAscSort, driver);
 		log("verified after clicking to descendig sort Provider first name sort arrow goes upwards to ascending sort");
 	}
-	
-	//
-	
-	@FindBy(xpath = "//div[normalize-space(text())='Last Name']")
-	private WebElement providersLastNameLabel;
-		
-	/*
-	 * @FindBy(xpath = "//td[@aria-sort='ascending']") private WebElement
-	 * providersLastNameAscSort;
-	 * 
-	 * @FindBy(xpath = "//td[@aria-sort='descending']") private WebElement
-	 * providersLastNameDscSort;
-	 */
+
 	public void clickAscProvidersLastNameSortToDsc() {
 		CCUtils.verifyAndWaitForElement(providersLastNameLabel, driver);
 		javascriptClick(providersLastNameLabel);
-		log("clicked on Provider LastName column label");	
+		log("clicked on Provider LastName column label");
 		CCUtils.verifyAndWaitForElement(providersAscSort, driver);
 		providersAscSort.click();
 		log("clicked to ascending Provider last name sort");
 	}
-	
+
 	public void verifyProvidersLastNameDescendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(providersDscSort, driver);
 		log("verified after clicking to acsendig sort Provider last name sort arrow goes downwards to descending sort");
 	}
-	
+
 	public void clickDscProvidersLastNameSortToAsc() {
 		CCUtils.verifyAndWaitForElement(providersDscSort, driver);
 		providersDscSort.click();
 		log("clicked to descending Provider last name sort");
 	}
-	
+
 	public void verifyProvidersLastNameAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(providersAscSort, driver);
 		log("verified after clicking to descendig sort Provider last name sort arrow goes upwards to ascending sort");
 	}
-	
-	//
-	@FindBy(xpath = "//div[normalize-space(text())='Status']")
-	private WebElement providersStatusLabel;
-	
-	/*
-	 * @FindBy(xpath = "//td[@aria-sort='ascending']") private WebElement
-	 * providersStatusAscSort;
-	 * 
-	 * @FindBy(xpath = "//td[@aria-sort='descending']") private WebElement
-	 * providersStatusDscSort;
-	 */
-	
+
 	public void clickAscProvidersStatusSortToDsc() {
 		CCUtils.verifyAndWaitForElement(providersStatusLabel, driver);
 		javascriptClick(providersStatusLabel);
-		log("clicked on Provider status column label");	
+		log("clicked on Provider status column label");
 		CCUtils.verifyAndWaitForElement(providersAscSort, driver);
 		providersAscSort.click();
 		log("clicked to ascending Provider status sort");
 	}
-	
+
 	public void verifyProvidersStatusDescendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(providersDscSort, driver);
 		log("verified after clicking to acsendig sort Provider status sort arrow goes downwards to descending sort");
 	}
-	
-	public void clickDscProvidersStatusSortToAsc() {	
+
+	public void clickDscProvidersStatusSortToAsc() {
 		CCUtils.verifyAndWaitForElement(providersDscSort, driver);
 		providersDscSort.click();
 		log("clicked to descending Provider status sort");
 	}
-	
+
 	public void verifyProvidersStatusAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(providersAscSort, driver);
 		log("verified after clicking to descendig sort Provider status sort arrow goes upwards to ascending sort");
 	}
-	
-	
-	//
-	
-	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
-	private WebElement itemsPerPageDropdown;
 
-	@FindBy(xpath = "//button[@aria-label='Next page']")
-	private WebElement buttonNextPage;
-
-	@FindBy(xpath = "//button[@aria-label='Last page']")
-	private WebElement buttonLastPage;
-
-	@FindBy(xpath = "//button[@aria-label='Previous page']")
-	private WebElement buttonPreviousPage;
-
-	@FindBy(xpath = "//button[@aria-label='First page']")
-	private WebElement buttonFirstPage;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'20')]")
-	private WebElement itemsPerPageTwenty;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'50')]")
-	private WebElement itemsPerPageFifty;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'100')]")
-	private WebElement itemsPerPageHundred;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
-	private WebElement itemsPerPageTwoHundred;
-	
-	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
-	private WebElement displayPagination;
-	
-	@FindBy(xpath = "//div//span//following::span[contains(text(),'10')]")
-	private WebElement defaultItemsPerPage;
-	
 	public String getDefaultItemsPerPage() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
 		highlightElement(defaultItemsPerPage);
 		return defaultItemsPerPage.getText().toString();
 	}
-	
+
 	public String getDefaultPagination() {
 		CCUtils.verifyAndWaitForElement(displayPagination, driver);
 		CCUtils.scrollPageViaElement(driver, displayPagination);
@@ -482,14 +465,14 @@ public class SearchProviderPage extends CCMainPage {
 		log("Print the value of default Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
 	}
-	
+
 	public void clickNextPageButton() {
 		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
 		buttonNextPage.click();
@@ -533,7 +516,7 @@ public class SearchProviderPage extends CCMainPage {
 		boolean buttonStatus = CCUtils.isPaginationButtonDisabled(buttonFirstPage, driver);
 		return buttonStatus;
 	}
-	
+
 	public String getNoOfRowsPagination() {
 		String data = splitingPagination();
 		String noOfRowsPagination = data.substring(0, 2).trim();
@@ -546,7 +529,7 @@ public class SearchProviderPage extends CCMainPage {
 		String value = null;
 		for (String w : words) {
 			value = w.trim();
-			log("print the value of data : "+value);
+			log("print the value of data : " + value);
 			break;
 		}
 		log("Print the value of LHS Pagination : " + value.trim());
@@ -562,7 +545,7 @@ public class SearchProviderPage extends CCMainPage {
 		log("Print the value of RHS Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		int noOfProviders = Integer.valueOf(getTotalNoOfProviders());
@@ -582,7 +565,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertTrue(isPreviousPageButtonDisabled() == false, "Previous Page Button should get disabled");
 		}
 	}
-	
+
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		int noOfProviders = Integer.valueOf(getTotalNoOfProviders());
@@ -624,7 +607,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
 		}
 	}
-	
+
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		CCUtils.scrollPageToEnd();
@@ -647,7 +630,7 @@ public class SearchProviderPage extends CCMainPage {
 			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
 		}
 	}
-	
+
 	public String clickTwentyItemsPerPage() {
 		String currentItemPerPage = null;
 		CCUtils.verifyAndWaitForElement(itemsPerPageTwenty, driver);
@@ -683,7 +666,7 @@ public class SearchProviderPage extends CCMainPage {
 		itemsPerPageTwoHundred.click();
 		return currentItemPerPage;
 	}
-	
+
 	public void verifyListOfProviderMatchedSearchResult(List<String> ProviderName) throws AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfProviderName, driver);
@@ -700,16 +683,16 @@ public class SearchProviderPage extends CCMainPage {
 			}
 		}
 	}
-	
-	@FindBy(xpath = "(//tbody[@role='rowgroup']//tr[@role='row']//td[1])")
-	private List<WebElement> listOfProviderName;
-	
-	 public void clickToProvidersTab() {
-			CCUtils.verifyAndWaitForElement(tabProvider, driver);
-			tabProvider.click();
-			log("clicked to provider tab");
-		}
-	    
-	    @FindBy(xpath = "//div[@role='tab']//div[text()='Providers']")
-		private WebElement tabProvider;
+
+	public void clickToProvidersTab() {
+		CCUtils.verifyAndWaitForElement(tabProvider, driver);
+		tabProvider.click();
+		log("clicked to provider tab");
+	}
+
+	public void searchFullNameProviderAndVerifyResult(String searchProviderName) throws AWTException {
+		enterProviderInSearchTextBox(searchProviderName);
+		clickToSearchButton();
+		verifySearchProviderFound(searchProviderName);
+	}
 }

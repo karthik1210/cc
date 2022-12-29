@@ -28,7 +28,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		}
 	}
 
-	String proOne, proTwo, proThree, proFour, proFive, proSix, proSeven, proEight, proNine, proTen, proEleven, providerFirstName;
+	String proOne, proTwo, proThree, proFour, proFive, proSix, proSeven, proEight, proNine, proTen, proEleven, providerFirstName, lastName;
 
 	// AddNewProviderTests
 
@@ -65,30 +65,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 	
-	/*
-	 * @Test(retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Create new female provider using valid test data") public void
-	 * testAddNewFemaleProviderFunctionalityUsingValidData() throws Exception {
-	 * ngHierarchyClientCreate(); providerNavigation(); String firstName =
-	 * "ProvFirst " +
-	 * CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.
-	 * generateAlphaNumericString(6)); String lastName = "ProvLast " +
-	 * CCUtils.generateAlphaNumericString(5).concat("-")
-	 * .concat(CCUtils.generateAlphaNumericString(6)).concat("'s"); String
-	 * credentials = testData.getProperty("provider.credentials");
-	 * logStep("Enter valid details in mandatory field and verify success toaster message"
-	 * ); ccui.getAddNewProviderPage().enterFirstName(firstName);
-	 * ccui.getAddNewProviderPage().enterLastName(lastName);
-	 * ccui.getAddNewProviderPage().enterCredentials(credentials);
-	 * ccui.getAddNewProviderPage().enterExternalId(externalId);
-	 * ccui.getAddNewProviderPage().selectGenderValue("Female");
-	 * ccui.getAddNewProviderPage().verifySaveAndAddButtonIsEnabled();
-	 * ccui.getAddNewProviderPage().clickOnSaveAndAddButton();
-	 * ccui.getCommonMethods().
-	 * verifyToasterMessage("Success! New Provider has been successfully created");
-	 * runOnce = false; }
-	 */
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify Add New Provider page UI")
 	public void testAddNewProviderPageUi() throws Exception {
 		ngHierarchyClientCreate();
@@ -155,8 +131,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().clearButtonDisplayed();
 		ccui.getSearchProviderPage().clearApplyDisplayed();
 	}
-
-	//write for partial and full name search
 	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a provider")
 	public void testSearchExistingProviderOnProviderScreen() throws Exception {
@@ -165,21 +139,10 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		providerNavigation();
 		createProvider();
 		ccui.getSearchProviderPage().searchProviderAndVerifyResult(providerFirstName);
+		ccui.getSearchProviderPage().searchFullNameProviderAndVerifyResult(providerFirstName + lastName);
 		logStep("PXPP-13346 Verify when user can search by provider name in search textbox and it is not found in provider web table should display message 'No data to display' - Command Center Admin");
 		ccui.getSearchProviderPage().searchNonExistingProviderAndVerifyResult("NonExistingProvider");
 	}
-
-	/*
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Verify error message when searching non-existing provider") public void
-	 * testErrorMessageWhenSearchingNonExistingProvider() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("PXPP-13346 Verify when user can search by provider name in search textbox and it is not found in provider web table should display message 'No data to display' - Command Center Admin"
-	 * ); ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getSearchProviderPage().searchNonExistingProviderAndVerifyResult(
-	 * "NonExistingProvider"); }
-	 */
 
 	// Filter
 
@@ -235,34 +198,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().verifySearchProviderFound(providerFirstName);
 	}
 
-	/*
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Verify search result when apply enterprise filter in search provider screen"
-	 * ) public void testSearchExistingProviderByFilterEnterprise() throws Exception
-	 * { ngHierarchyClientCreate(); providerNavigation(); String createProviderOne =
-	 * createProvider();
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getSearchProviderPage().clickToEnterpriseFilter();
-	 * ccui.getSearchProviderPage().selectFilter(clientSystementErpriseandPractice.
-	 * get("enterpriseName"));
-	 * ccui.getSearchProviderPage().clickToApplyFilterButton();
-	 * ccui.getSearchProviderPage().verifySearchProviderFound(createProviderOne); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Verify search result when apply practice filter in search provider screen")
-	 * public void testSearchExistingProviderByFilterPractice() throws Exception {
-	 * ngHierarchyClientCreate(); providerNavigation(); String createProviderOne =
-	 * createProvider();
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getSearchProviderPage().clickToPracticeFilter();
-	 * ccui.getSearchProviderPage().selectFilter(clientSystementErpriseandPractice.
-	 * get("practiceName"));
-	 * ccui.getSearchProviderPage().clickToApplyFilterButton();
-	 * ccui.getSearchProviderPage().verifySearchProviderFound(createProviderOne); }
-	 */
-
 	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search provider screen")
 	public void testSearchExistingProviderByFilterSolution() throws Exception {
 		ngHierarchyClientCreate();
@@ -310,33 +245,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().verifyProvidersStatusAscendingSortIsVisible();
 	}
 
-	/*
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Provider LastName sorting from ascending to descending and from ascending to descending"
-	 * ) public void testProviderLastNameSortingToDescendingAndAscending() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("PXPP-13340 Verify provider last name column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards - Command Center Admin"
-	 * ); providerNavigation(); createProvider();
-	 * ccui.getSearchProviderPage().clickAscProvidersLastNameSortToDsc();
-	 * ccui.getSearchProviderPage().verifyProvidersLastNameDescendingSortIsVisible()
-	 * ; ccui.getSearchProviderPage().clickDscProvidersLastNameSortToAsc();
-	 * ccui.getSearchProviderPage().verifyProvidersLastNameAscendingSortIsVisible();
-	 * }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Status column sorting from ascending to descending and from ascending to descending"
-	 * ) public void testProviderStatusSortingToDescendingAndAscending() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("PXPP-13341 Verify provider status column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards - Command Center Admin"
-	 * );
-	 * 
-	 * providerNavigation(); createProvider();
-	 * ccui.getSearchProviderPage().clickAscProvidersStatusSortToDsc();
-	 * ccui.getSearchProviderPage().verifyProvidersStatusDescendingSortIsVisible();
-	 * ccui.getSearchProviderPage().clickDscProvidersStatusSortToAsc();
-	 * ccui.getSearchProviderPage().verifyProvidersStatusAscendingSortIsVisible(); }
-	 */
-
 	// Pagination
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Display of default pagination i.e., 10 items per page.")
@@ -358,322 +266,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(ccui.getSearchProviderPage().isNextPageButtonDisabled(), true);
 		CCUtils.assertEquals(ccui.getSearchProviderPage().isLastPageButtonDisabled(), true);
 	}
-
-	/*
-	 * @Test(enabled = true, priority = 1, retryAnalyzer = RetryAnalyzer.class,
-	 * description =
-	 * "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value."
-	 * ) public void testAllPaginationButtonsClickable() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * logStep("Now comparing the default Items per Page" +
-	 * ".Ideally it should be 10.");
-	 * CCUtils.assertEquals(ccui.getSearchProviderPage().getDefaultItemsPerPage(),
-	 * "10");
-	 * CCUtils.assertEquals(ccui.getSearchProviderPage().getDefaultPagination(),
-	 * "1 – 10"); String noOfProviders =
-	 * ccui.getSearchProviderPage().getTotalNoOfProviders();
-	 * logStep("Get the Total No of Providers : " + noOfProviders);
-	 * ccui.getSearchProviderPage().clickNextPageButton();
-	 * ccui.getSearchProviderPage().clickNextPageButton();
-	 * ccui.getSearchProviderPage().clickNextPageButton();
-	 * ccui.getSearchProviderPage().clickPreviousPageButton();
-	 * ccui.getSearchProviderPage().clickLastPageButton();
-	 * ccui.getSearchProviderPage().clickFirstPageButton(); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Next Button functionality when Items Per Page value is = 10.") public
-	 * void testNextPageButtonWhenItemsPerPageValueisTen() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle(); String
-	 * defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
-	 * CCUtils.assertEquals(defaultItemsPerPage, "10"); ccui.getSearchProviderPage()
-	 * .checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * defaultItemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Next Button functionality when Items Per Page value is = 20.") public
-	 * void testNextPageButtonWhenItemsPerPageValueisTwenty() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String
-	 * itemsPerPageTwenty = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPageTwenty, "20"); ccui.getSearchProviderPage()
-	 * .checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPageTwenty)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Next Button functionality when Items Per Page value is = 50.") public
-	 * void testNextPageButtonWhenItemsPerPageValueisFifty() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String
-	 * itemsPerPageFifty = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPageFifty, "50"); ccui.getSearchProviderPage()
-	 * .checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPageFifty)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Next Button functionality when Items Per Page value is = 100.") public
-	 * void testNextPageButtonWhenItemsPerPageValueisHundred() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String
-	 * itemsPerPageHundred =
-	 * ccui.getSearchProviderPage().clickHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPageHundred, "100");
-	 * ccui.getSearchProviderPage()
-	 * .checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPageHundred)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Next Button functionality when Items Per Page value is = 200.") public
-	 * void testNextPageButtonWhenItemsPerPageValueisTwoHundred() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String
-	 * itemsPerPageTwoHundred =
-	 * ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
-	 * ccui.getSearchProviderPage()
-	 * .checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPageTwoHundred)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Last Button functionality when Items Per Page value is = 10.") public
-	 * void testLastPageButtonWhenItemsPerPageValueisTen() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle(); String
-	 * defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
-	 * CCUtils.assertEquals(defaultItemsPerPage, "10");
-	 * log("Print the RHS Pagination : " +
-	 * ccui.getSearchProviderPage().getRHSPagination());
-	 * ccui.getSearchProviderPage()
-	 * .checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * defaultItemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Last Button functionality when Items Per Page value is = 20.")
-	 * 
-	 * public void testLastPageButtonWhenItemsPerPageValueisTwenty() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "20"); log("get default pagination : " +
-	 * ccui.getSearchProviderPage().getDefaultPagination());
-	 * log("Print the RHS Pagination : " +
-	 * ccui.getSearchProviderPage().getRHSPagination());
-	 * ccui.getSearchProviderPage().checkLastPageButtonFunctionalityTillGetDisabled(
-	 * Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Last Button functionality when Items Per Page value is = 50.") public
-	 * void testLastPageButtonWhenItemsPerPageValueisFifty() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "50"); log("Print the RHS Pagination : " +
-	 * ccui.getSearchProviderPage().getRHSPagination());
-	 * ccui.getSearchProviderPage().checkLastPageButtonFunctionalityTillGetDisabled(
-	 * Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Last Button functionality when Items Per Page value is = 100.") public
-	 * void testLastPageButtonWhenItemsPerPageValueisHundred() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "100"); log("Print the RHS Pagination : "
-	 * + ccui.getSearchProviderPage().getRHSPagination());
-	 * ccui.getSearchProviderPage().checkLastPageButtonFunctionalityTillGetDisabled(
-	 * Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Last Button functionality when Items Per Page value is = 200.") public
-	 * void testLastPageButtonWhenItemsPerPageValueisTwoHundred() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "200"); log("Print the RHS Pagination : "
-	 * + ccui.getSearchProviderPage().getRHSPagination());
-	 * ccui.getSearchProviderPage().checkLastPageButtonFunctionalityTillGetDisabled(
-	 * Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Previous Button functionality when Items Per Page value is = 10.")
-	 * public void testPreviousPageButtonWhenItemsPerPageValueisTen() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle(); String
-	 * defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
-	 * CCUtils.assertEquals(defaultItemsPerPage, "10"); ccui.getSearchProviderPage()
-	 * .checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * defaultItemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Previous Button functionality when Items Per Page value is = 20.")
-	 * public void testPreviousPageButtonWhenItemsPerPageValueisTwenty() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "20"); ccui.getSearchProviderPage()
-	 * .checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Previous Button functionality when Items Per Page value is = 50.")
-	 * public void testPreviousPageButtonWhenItemsPerPageValueisFifty() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "50"); ccui.getSearchProviderPage()
-	 * .checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Previous Button functionality when Items Per Page value is = 100.")
-	 * public void testPreviousPageButtonWhenItemsPerPageValueisHundred() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "100"); ccui.getSearchProviderPage()
-	 * .checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check Previous Button functionality when Items Per Page value is = 200.")
-	 * public void testPreviousPageButtonWhenItemsPerPageValueisTwoHundred() throws
-	 * NumberFormatException, Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "200"); ccui.getSearchProviderPage()
-	 * .checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check First Button functionality when Items Per Page value is = 10.") public
-	 * void testFirstPageButtonWhenItemsPerPageValueisTen() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle(); String
-	 * defaultItemsPerPage = ccui.getSearchProviderPage().getDefaultItemsPerPage();
-	 * CCUtils.assertEquals(defaultItemsPerPage, "10"); ccui.getSearchProviderPage()
-	 * .checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(
-	 * defaultItemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check First Button functionality when Items Per Page value is = 20.") public
-	 * void testFirstPageButtonWhenItemsPerPageValueisTwenty() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickTwentyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "20");
-	 * ccui.getSearchProviderPage().checkFirstPageButtonFunctionalityTillGetDisabled
-	 * (Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check First Button functionality when Items Per Page value is = 50.") public
-	 * void testFirstPageButtonWhenItemsPerPageValueisFifty() throws Exception {
-	 * ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickFiftyItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "50");
-	 * ccui.getSearchProviderPage().checkFirstPageButtonFunctionalityTillGetDisabled
-	 * (Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check First Button functionality when Items Per Page value is = 100.")
-	 * public void testFirstPageButtonWhenItemsPerPageValueisHundred() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "100");
-	 * ccui.getSearchProviderPage().checkFirstPageButtonFunctionalityTillGetDisabled
-	 * (Integer.parseInt(itemsPerPage)); }
-	 * 
-	 * @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description =
-	 * "Check First Button functionality when Items Per Page value is = 200.")
-	 * public void testFirstPageButtonWhenItemsPerPageValueisTwoHundred() throws
-	 * Exception { ngHierarchyClientCreate();
-	 * logStep("Verify Providers And Resources tab is displayed");
-	 * ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-	 * ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-	 * ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
-	 * ccui.getSearchProviderPage().clickItemsPerPageDropdown(); String itemsPerPage
-	 * = ccui.getSearchProviderPage().clickTwoHundredItemsPerPage();
-	 * CCUtils.assertEquals(itemsPerPage, "200");
-	 * ccui.getSearchProviderPage().checkFirstPageButtonFunctionalityTillGetDisabled
-	 * (Integer.parseInt(itemsPerPage)); }
-	 */
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality")
 	public void testNextPageButtonFunctionality() throws Exception {
@@ -836,7 +428,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	public String createProvider() throws Exception {
 		providerFirstName = "New"
 				+ CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(6));
-		String lastName = CCUtils.generateAlphaNumericString(5).concat("-")
+		lastName = CCUtils.generateAlphaNumericString(5).concat("-")
 				.concat(CCUtils.generateAlphaNumericString(6)).concat("'s");
 		String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
 		String credentials = testData.getProperty("provider.credentials");
