@@ -144,8 +144,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().searchNonExistingProviderAndVerifyResult("NonExistingProvider");
 	}
 
-	// Filter
-
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify after clicking hide button filter section should not get displayed")
 	public void testFunctionalityOfHideFiltersButtonOnProviderScreen() throws Exception {
 		ngHierarchyClientCreate();
@@ -221,8 +219,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().verifyListOfProviderMatchedSearchResult(listOfProviders);
 	}
 
-	// Sorting
-
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Providers FirstName, LastName, Status column sorting from ascending to descending and from ascending to descending")
 	public void testProviderFirstNameSortingToDescendingAndAscending() throws Exception {
 		ngHierarchyClientCreate();
@@ -244,8 +240,6 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().clickDscProvidersStatusSortToAsc();
 		ccui.getSearchProviderPage().verifyProvidersStatusAscendingSortIsVisible();
 	}
-
-	// Pagination
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Display of default pagination i.e., 10 items per page.")
 	public void testDefaultItemsPerPageAndDefaultProviderPaginationInProviderWebTable() throws Exception {
