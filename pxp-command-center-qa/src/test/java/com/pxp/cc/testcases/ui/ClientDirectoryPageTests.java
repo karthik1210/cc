@@ -351,10 +351,11 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 20.")
 	public void testPreviousPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException, AWTException {
-		ccui.getClientDirectoryPage().clickItemsPerPageDropdown();
-		String itemsPerPage = ccui.getClientDirectoryPage().clickTwentyItemsPerPage();
+		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
+		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
+		String itemsPerPage = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPage, "20");
-		ccui.getClientDirectoryPage()
+		clientDirectoryPageRefernce
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
 	}
 
