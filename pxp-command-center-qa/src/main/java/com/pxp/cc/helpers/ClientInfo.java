@@ -218,11 +218,6 @@ public class ClientInfo extends BaseRest {
 		return updateClientMap;
 	}
 
-	public Response getClientSolutionsDetails_DataLayer(int clientId) {
-		String url = ApiPath.CLIENT_SOLUTION_DL(clientId);
-		return given().spec(requestSpec).pathParam("clientId", clientId).when().get(url).then().extract().response();
-	}
-
 	public Response getClientOrgHierarchyDetails(int clientId) {
 		String url = ApiPath.CLIENT_ORG_HIERARCHY_BL(clientId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();

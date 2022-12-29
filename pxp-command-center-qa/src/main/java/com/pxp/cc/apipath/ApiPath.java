@@ -139,10 +139,6 @@ public class ApiPath {
 		return SERVICE_ORG_DL + "/v1/clients/" + clientId + "/orgsabcdfef";
 	}
 
-	public static final String CLIENT_SOLUTION_DL(int clientId) {
-		return SERVICE_CLIENT_DL + "/v1/clients/" + "{clientId}" + "/solutions";
-	}
-
 	public static final String SERVICE_USER_BL = "/service/user-service";
 	public static final String USER_ROLES_BL = SERVICE_USER_BL + "/usertypes/";
 
@@ -1943,6 +1939,19 @@ public class ApiPath {
 	}
 
 	public static final String SEARCH_RESOURCE_NULL_DL = SHARED_DL + "/v1/practices/null/resources-location";
+	
+	public static final String CREATE_STAFF_DL(int clientId) {
+        return SHARED_DL+ "/v1/clients/" + clientId + "/staff";
+	}
+	
+	public static final String STAFF_FOR_CLIENT_DL(String clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/staff";
+	}
+	
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_DL(int staffId) {
+		return SHARED_DL + "/v1/providers/" + staffId + "/practices";
+	}
+
 
 	public static final String SEND_ENROLLMENT_BL( String uriType) {
 		if (uriType.equalsIgnoreCase("Valid"))
