@@ -44,7 +44,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewResourcePage().verifyAddResourcePopupTitle();
 		runOnce = false;
 	}
-
+ 
 	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {
 			"buildvalidation" }, priority = 2, description = "Create new Resource using valid test data")
 	public void testAddNewResourcesFunctionalityUsingValidData() throws Exception {
@@ -273,8 +273,8 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 	    runOnce = false;
 	}
 	
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system filter in search provider screen")
-	public void testSearchExistingResourceByFilterSystem() throws Exception {
+	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system, enterprise, practice filter in search Resources screen")
+	public void testSearchExistingResourceByFilterSystemEnterprisePractice() throws Exception {
 		ngHierarchyClientCreate();
 		createResources();
 		ccui.getAddNewResourcePage().selectResource();
@@ -285,7 +285,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		listOfResources.add(resourceName);
 		logStep("PXPP-14899 Verify user can apply filter by clicking apply button in Filter container on resource search page");
 		ccui.getAddNewResourcePage().clickOnResourcesTab();
-		logStep("Apply filter for enterprise");
+		logStep("Apply filter for System");
 		ccui.getAddNewResourcePage().clickToSystemFilter();
 		ccui.getAddNewResourcePage().selectFilter(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getAddNewResourcePage().clickToApplyFilterButton();
