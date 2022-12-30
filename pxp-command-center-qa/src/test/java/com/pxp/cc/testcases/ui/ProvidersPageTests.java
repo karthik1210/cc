@@ -115,7 +115,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	// SearchAndFilterProviderTests
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify the visibility and presence of web elements of search and filter provider screen")
-	public void testSearchProviderScreenWebElements() throws Exception {
+	public void testSearchFilterProviderScreenWebElements() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-13325- Verify search textbox with search button is present in provider search page - Command Center Admin");
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
@@ -134,7 +134,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a provider")
-	public void testSearchExistingProviderOnProviderScreen() throws Exception {
+	public void testSearchExistingNonExistingProviderOnProviderScreen() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-13345, PXPP-13330 Verify user can search by provider name  in search textbox in provider search page - Command Center Admin");
 		providerNavigation();
@@ -164,7 +164,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system, enterprise, practice filter in search provider screen")
-	public void testSearchExistingProviderByFilterSystem() throws Exception {
+	public void testSearchExistingProviderByFilterSystemEnterprisePractice() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-13343 Verify user can apply filter by clicking apply button in Filter container on provider search page - Command Center Admin");
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
@@ -225,7 +225,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Providers FirstName, LastName, Status column sorting from ascending to descending and from ascending to descending")
-	public void testProviderFirstNameSortingToDescendingAndAscending() throws Exception {
+	public void testProviderFirstNameLastNameStatusColumnSorting() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-13335, PXPP-13338, PXPP-13340 Verify provider column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards - Command Center Admin");
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
