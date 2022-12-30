@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.CommonMethods;
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 			getClientSystementErpriseandPractice();
 		}
 	}
-	
+
 	String proOne, proTwo, proThree, proFour, proFive, proSix, proSeven, proEight, proNine, proTen, proEleven;
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Verify add new Resource popup")
@@ -44,7 +43,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewResourcePage().verifyAddResourcePopupTitle();
 		runOnce = false;
 	}
- 
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, groups = {
 			"buildvalidation" }, priority = 2, description = "Create new Resource using valid test data")
 	public void testAddNewResourcesFunctionalityUsingValidData() throws Exception {
@@ -133,31 +132,31 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		String defaultItemsPerPage = ccui.getAddNewResourcePage().getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
 		ccui.getAddNewResourcePage()
-		.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		ccui.getAddNewResourcePage().clickItemsPerPageDropdown();
 		String itemsPerPageTwenty = ccui.getAddNewResourcePage().clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwenty, "20");
 		ccui.getAddNewResourcePage()
-		.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		ccui.getAddNewResourcePage().clickItemsPerPageDropdown();
 		String itemsPerPageFifty = ccui.getAddNewResourcePage().clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageFifty, "50");
 		ccui.getAddNewResourcePage()
-		.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		ccui.getAddNewResourcePage().clickItemsPerPageDropdown();
 		String itemsPerPageHundred = ccui.getAddNewResourcePage().clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageHundred, "100");
 		ccui.getAddNewResourcePage()
-		.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		ccui.getAddNewResourcePage().clickItemsPerPageDropdown();
 		String itemsPerPageTwoHundred = ccui.getAddNewResourcePage().clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
 		ccui.getAddNewResourcePage()
-		.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
+				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
 		runOnce = false;
 	}
-	
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,priority = 13, description = "Verify search result when apply solution filter in search provider screen")
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 13, description = "Verify search result when apply solution filter in search provider screen")
 	public void testSearchExistingProviderByFilterSolution() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("Verify Purchased Solutions section is displayed");
@@ -171,7 +170,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		createResources();
 		logStep("Navigated to Resource details page");
 		ccui.getAddNewResourcePage().selectResource();
-	    ccui.getAddNewResourcePage().clickOnChatToggle();
+		ccui.getAddNewResourcePage().clickOnChatToggle();
 		ccui.getAddNewResourcePage().clickToBackButton();
 		ccui.getAddNewResourcePage().clickToSolutionFilter();
 		ccui.getAddNewResourcePage().selectFilter(testData.getProperty("solution.chat"));
@@ -179,8 +178,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class,priority = 11, description = "Check Last Button functionality")
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 11, description = "Check Last Button functionality")
 	public void testLastPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		createResources();
@@ -214,15 +212,15 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
 		logStep("Check Last Button functionality when Items Per Page value is = 200.");
 		ccui.getAddNewResourcePage().clickItemsPerPageDropdown();
-		String itemsPerPageTwoHundred =ccui.getAddNewResourcePage().clickTwoHundredItemsPerPage();
+		String itemsPerPageTwoHundred = ccui.getAddNewResourcePage().clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
 		log("Print the RHS Pagination : " + ccui.getAddNewResourcePage().getRHSPagination());
 		ccui.getAddNewResourcePage()
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 		runOnce = false;
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class,priority = 12,description = "Check Previous Button functionality")
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 12, description = "Check Previous Button functionality")
 	public void testPreviousPageButtonFunctionality() throws Exception {
 		ngHierarchyClientCreate();
 		createResources();
@@ -270,9 +268,9 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		logStep("PXPP-14904 Verify when user can search by resource name in search textbox and it is not found in resource web table should display message ' no data to display'");
 		ccui.getAddNewResourcePage().enterNonExistingResourceAndVerifyResult("NonExistingResources");
 		ccui.getAddNewResourcePage().verifyNoDataDisplayErrorMessage();
-	    runOnce = false;
+		runOnce = false;
 	}
-	
+
 	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply system, enterprise, practice filter in search Resources screen")
 	public void testSearchExistingResourceByFilterSystemEnterprisePractice() throws Exception {
 		ngHierarchyClientCreate();
@@ -303,29 +301,29 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewResourcePage().clickToApplyFilterButton();
 		runOnce = false;
 	}
-	
-    @Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 10, description = "Check Status, Resource name, Type, sorting from ascending to descending and from ascending to descending")
-    public void testResourcesSortingToDescendingAndAscending() throws Exception {
-        ngHierarchyClientCreate();
-        createResources();
-        logStep("PXPP-14897 Verify resource status column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
-        ccui.getAddNewResourcePage().clickAscResourcesStatusSortToDsc();
-        ccui.getAddNewResourcePage().verifyResourcesStatusDescendingSortIsVisible();
-        ccui.getAddNewResourcePage().clickDscResourcesStatusSortToAsc();
-        ccui.getAddNewResourcePage().verifyResourcesStatusAscendingSortIsVisible();
-        logStep("PXPP-14894 Verify resource first name column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
-        ccui.getAddNewResourcePage().clickAscResourcesFirstNameSortToDsc();
-        ccui.getAddNewResourcePage().verifyResourcesFirstNameDescendingSortIsVisible();
-        ccui.getAddNewResourcePage().clickDscResourcesFirstNameSortToAsc();
-        ccui.getAddNewResourcePage().verifyResourcesFirstNameAscendingSortIsVisible();
-        logStep("PXPP-14896 Verify resource type column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
-        ccui.getAddNewResourcePage().clickAscResourceTypeSortToDsc();
-        ccui.getAddNewResourcePage().verifyResourceTypeDescendingSortIsVisible();
-        ccui.getAddNewResourcePage().clickDscResourceTypeSortToAsc();
-        ccui.getAddNewResourcePage().verifyResourceTypeAscendingSortIsVisible();     
-        runOnce = false;
-    } 
-   
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 10, description = "Check Status, Resource name, Type, sorting from ascending to descending and from ascending to descending")
+	public void testResourcesSortingToDescendingAndAscending() throws Exception {
+		ngHierarchyClientCreate();
+		createResources();
+		logStep("PXPP-14897 Verify resource status column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
+		ccui.getAddNewResourcePage().clickAscResourcesStatusSortToDsc();
+		ccui.getAddNewResourcePage().verifyResourcesStatusDescendingSortIsVisible();
+		ccui.getAddNewResourcePage().clickDscResourcesStatusSortToAsc();
+		ccui.getAddNewResourcePage().verifyResourcesStatusAscendingSortIsVisible();
+		logStep("PXPP-14894 Verify resource first name column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
+		ccui.getAddNewResourcePage().clickAscResourcesFirstNameSortToDsc();
+		ccui.getAddNewResourcePage().verifyResourcesFirstNameDescendingSortIsVisible();
+		ccui.getAddNewResourcePage().clickDscResourcesFirstNameSortToAsc();
+		ccui.getAddNewResourcePage().verifyResourcesFirstNameAscendingSortIsVisible();
+		logStep("PXPP-14896 Verify resource type column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
+		ccui.getAddNewResourcePage().clickAscResourceTypeSortToDsc();
+		ccui.getAddNewResourcePage().verifyResourceTypeDescendingSortIsVisible();
+		ccui.getAddNewResourcePage().clickDscResourceTypeSortToAsc();
+		ccui.getAddNewResourcePage().verifyResourceTypeAscendingSortIsVisible();
+		runOnce = false;
+	}
+
 	@Test(enabled = false)
 	public void createResources() throws Exception {
 		createProvider();
@@ -347,7 +345,7 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Resource has been successfully created");
 		ccui.getAddNewResourcePage().enterResourceInSearchTextBox(resourceName);
 	}
-	
+
 	@Test(enabled = false)
 	public void ngHierarchyClientCreate() throws Exception {
 		if (!runOnce) {
