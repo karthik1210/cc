@@ -83,7 +83,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewProviderPage().enterExternalId(CCUtils.generateAlphaNumericString(51));
 		CCUtils.assertEquals(ccui.getAddNewProviderPage().getMaximumCharacterErrorForExternalIdField(),
 				"Maximum characters reached");
-		ccui.getAddNewProviderPage().enterCredentials(CCUtils.generateAlphaNumericString(51));
+		ccui.getAddNewProviderPage().enterCredentials(CCUtils.generateAlphaNumericString(101));
 		CCUtils.assertEquals(ccui.getAddNewProviderPage().getMaximumCharacterErrorForCredentialField(),
 				"Maximum characters reached");
 		logStep("Enter invalid value gender field and verify error message");
