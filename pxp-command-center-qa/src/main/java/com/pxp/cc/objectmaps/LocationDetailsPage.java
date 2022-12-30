@@ -339,7 +339,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'Successfully added provider')]")
 	private WebElement successToasterMessage;
 
-	@FindBy(xpath = "//span[@class='slider round']")
+	@FindBy(xpath = "//div//span[@class='slider round']")
 	private WebElement toggleButton;
 
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")

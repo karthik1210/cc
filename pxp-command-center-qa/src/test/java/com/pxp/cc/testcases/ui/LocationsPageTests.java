@@ -478,7 +478,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 	}
 
 	// Enable test case once issue is resolved #PXPP-27241
-	@Test(priority = 15, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search location screen")
+	@Test(priority = 15, enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply solution filter in search location screen")
 	public void testSearchExistingLocationByFilterSolution() throws Exception {
 		ngHierarchyClientCreate();
 		addPurchaseSolutionAtPracticeLevel();
@@ -486,6 +486,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
 		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		createlocation();
 		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
 		CCUtils.pressEnterKey();
 		ccui.getAddLocationPage().selectLocation();
