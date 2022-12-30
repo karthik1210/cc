@@ -217,6 +217,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().clickPreviousPageButton();
 		ccui.getSearchLocationDetailsPage().clickLastPageButton();
 		ccui.getSearchLocationDetailsPage().clickFirstPageButton();
+		runOnce = false;	
 	}
 
 	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality")
@@ -256,6 +257,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
 		ccui.getSearchLocationDetailsPage()
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
+		runOnce = false;
 	}
 
 	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Last Button functionality")
@@ -299,6 +301,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(itemsPerPageTwohundred, "200");
 		ccui.getSearchLocationDetailsPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwohundred));
+		runOnce = false;
 	}
 
 	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality")
@@ -337,6 +340,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
 		ccui.getSearchLocationDetailsPage()
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
+		runOnce = false;
 	}
 
 	@Test(priority = 10, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality")
@@ -375,6 +379,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
 		ccui.getSearchLocationDetailsPage()
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
+		runOnce = false;
 	}
 
 	@Test(priority = 11, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check location name and status sorting")
@@ -390,6 +395,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		logStep("PXPP-12735 Verify location status column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
 		ccui.getSearchLocationDetailsPage().clickAscLocationStatusSortToDsc();
 		ccui.getSearchLocationDetailsPage().clickDscLocationStatusSortToAsc();
+		runOnce = false;
 	}
 
 	@Test(priority = 12, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify the visibility and presence of web elements of search location screen")
@@ -413,6 +419,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		logStep("PXPP-12651 Verify Hide filters button should be present in locations page");
 		ccui.getSearchLocationDetailsPage().clickToHideFiltersButton();
 		ccui.getSearchLocationDetailsPage().verifyAllElementsOfFilterNotVisible();
+		runOnce = false;
 	}
 
 	@Test(priority = 13, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a location")
@@ -427,6 +434,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
 		logStep("PXPP-12920 Verify when user can search by location name and location ID in search textbox and it is not found in location web table should display message ' Location not found'");
 		ccui.getSearchLocationDetailsPage().searchNonExistingLocationAndVerifyResult("NonExistingLocation");
+		runOnce = false;
 	}
 
 	// SearchLocationsTests
@@ -466,6 +474,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().selectFilter(clientSystementErpriseandPractice.get("practiceName"));
 		ccui.getSearchLocationDetailsPage().clickToApplyFilterButton();
 		ccui.getSearchLocationDetailsPage().verifyListOfLocationMatchedSearchResult(listOfLocations);
+		runOnce = false;
 	}
 
 	// Enable test case once issue is resolved #PXPP-27241
@@ -493,6 +502,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 		List<String> listOfLocations = new ArrayList<String>();
 		listOfLocations.add(locationName);
 		ccui.getSearchLocationDetailsPage().verifyListOfLocationMatchedSearchResult(listOfLocations);
+		runOnce = false;
 	}
 
 	@Test(enabled = false)
