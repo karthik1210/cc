@@ -33,7 +33,7 @@
             <class name="com.pxp.cc.testcases.ui.AssociateDeassociateSolutionsOnResourceDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.PatientAccessDetailsTests"/>
             <class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
-            <class name="com.pxp.cc.testcases.ui.AddNewProviderTests" />
+            <class name="com.pxp.cc.testcases.ui.ProvidersPageTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewResourceTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests"/>
