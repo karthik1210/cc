@@ -44,7 +44,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[text()='Provider Details']")
 	private WebElement titleProviderDetails;
 
-	@FindBy(xpath = "//div[contains(text(),'Solutions Display Info')]")
+	@FindBy(xpath = "//div[contains(text(),'Provider Display Info')]")
 	private WebElement labelSolutionsSection;
 
 	@FindBy(id = "editDetailsBtn")
@@ -107,13 +107,14 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div//input[@id='inputCheckbox']")
 	private WebElement resourceCheckBox;
 
-	@FindBy(xpath = "//button[text()='+ ADD']")
+	@FindBy(id = "addResourceType")
 	private WebElement connectedResourcesAdd;
 
 	@FindBy(xpath = "//div[@class='title']")
 	private WebElement addResourceTitle;
 
-	@FindBy(xpath = "//input[id='Resource']")
+	// @FindBy(xpath = "//input[@id='Resource']")
+	@FindBy(id = "Resource")
 	private WebElement inputTextResource;
 
 	@FindBy(id = "save-icon")
@@ -159,7 +160,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	private WebElement connectedSolEngage;
 
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
-    private WebElement connectedSolChat;
+	private WebElement connectedSolChat;
 
 	@FindBy(xpath = "//div[@aria-label='Connected Locations']")
 	private WebElement connectedLocationSectionTitle;
@@ -178,13 +179,61 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//div[@aria-label='Connected Locations']//following::td[@id='no-result'])[1]")
 	private WebElement noDataDisplayConnectedLocations;
-	
+
 	@FindBy(xpath = "//span[@id='cancel-text']")
 	private WebElement crossIcon;
-	
+
 	@FindBy(xpath = "//label[@class='input']")
 	private WebElement labelPopup;
-	
+
+	@FindBy(id = "removeResourceBtn")
+	private WebElement removeConnection;
+
+	@FindBy(xpath = "(//td[@role='gridcell'])[2]")
+	private WebElement connectedResource;
+
+	@FindBy(xpath = "//span[normalize-space(text())='Success! Successfully removed image']")
+	private WebElement successToasterMessage;
+
+	@FindBy(id = "resourceName")
+	private WebElement columnResourceName;
+
+	@FindBy(xpath = "(//div[normalize-space(text())='No data to display'])[1]")
+	private WebElement noDataToDisplayMessage;
+
+	@FindBy(xpath = "(//mat-list-item[@role='listitem'])[1]")
+	private WebElement connectedLocation;
+
+	@FindBy(xpath = "//mat-icon[normalize-space(text())='cancel']")
+	private WebElement removeConnectionBtn;
+
+	@FindBy(xpath = "//div[normalize-space(text())='Resource ID']")
+	private WebElement columnResourceId;
+
+	@FindBy(xpath = "//label[@class='switch']")
+	private WebElement toggleButton;
+
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
+	private WebElement entepriseArrow;
+
+	@FindBy(xpath = "//span[contains(text(),'Provider Details updated successfully!')]")
+	private WebElement updateToasterMessage;
+
+	@FindBy(xpath = "//div[(normalize-space(text())='Provider info')]")
+	private WebElement providerInfoLabel;
+
+	@FindBy(xpath = "//div[normalize-space(text())='Provider ID']")
+	private WebElement labelProviderID;
+
+	@FindBy(xpath = "//div[normalize-space(text())='Command Center ID']")
+	private WebElement labelCommandCenterID;
+
+	@FindBy(xpath = "//div[normalize-space(text())='Staff ID']")
+	private WebElement labelStaffID;
+
+	@FindBy(xpath = "//p[@class='connected-solution-header']")
+	private WebElement connectedSolutionsTitle;
+
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
 	}
@@ -292,7 +341,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, labelSolutionsSection);
 		CCUtils.verifyAndWaitForElement(labelSolutionsSection, driver);
 		log("Verifying Solutions Display Info Label");
-		CCUtils.assertEquals(labelSolutionsSection.getText().trim(), "Solutions Display Info");
+		CCUtils.assertEquals(labelSolutionsSection.getText().trim(), "Provider Display Info");
 	}
 
 	public void verifyEditButtonLabel() {
@@ -489,6 +538,7 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	public void verifyAddResourceTitle() {
 		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
+		CCUtils.assertEquals(addResourceTitle.getText().trim(), "Add Resource(s)");
 		log("verify add resource title is displayed");
 	}
 
@@ -515,11 +565,13 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	public void verifyResourceLabel() {
 		CCUtils.verifyAndWaitForElement(popupLabelResource, driver);
+		CCUtils.assertEquals(popupLabelResource.getText().trim(), "Resource");
 		log("label resource is displayed in pop up");
 	}
 
 	public void verifyCancelButton() {
 		CCUtils.verifyAndWaitForElement(cancelPopupButton, driver);
+		CCUtils.assertEquals(cancelPopupButton.getText().trim(), "Cancel");
 		log("cancel button is displayed in pop up");
 	}
 
@@ -618,17 +670,17 @@ public class ProviderDetailsPage extends CCMainPage {
 	}
 
 	public void clickOnChatToggle() {
-        CCUtils.scrollPageViaElement(driver, connectedSolChat);
-        CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
-        CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
-        log("The toggle is not checked yet as aria-checked attribute value is "
-                + connectedSolChat.getAttribute("aria-checked").toString().trim());
-        log("click On Chat Toggle");
-        javascriptClick(connectedSolChat);
-        CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
-        log("The toggle is checked as aria-checked attribute value is "
-                + connectedSolChat.getAttribute("aria-checked").toString().trim());
-    }
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click On Chat Toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
 
 	public void clickOffChatToggle() {
 		CCUtils.scrollPageViaElement(driver, connectedSolChat);
@@ -646,14 +698,8 @@ public class ProviderDetailsPage extends CCMainPage {
 	public void clickOnPortalToggle() {
 		CCUtils.scrollPageViaElement(driver, connectedSolPortal);
 		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
-		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(), "false");
-		log("The toggle is not checked yet as aria-checked attribute value is "
-				+ connectedSolPortal.getAttribute("aria-checked").toString().trim());
-		log("click to portal toggle");
 		javascriptClick(connectedSolPortal);
-		CCUtils.assertEquals(connectedSolPortal.getAttribute("aria-checked").toString().trim(), "true");
-		log("The toggle is checked as aria-checked attribute value is "
-				+ connectedSolPortal.getAttribute("aria-checked").toString().trim());
+		log("clicked On Portal Toggle");
 	}
 
 	public void selectPractice(String practiceName) {
@@ -665,11 +711,22 @@ public class ProviderDetailsPage extends CCMainPage {
 		}
 	}
 
-	public void verifyConnectedLocationSection() {
+	public void verifyConnectedLocationsSectionLabel() {
 		CCUtils.scrollPageViaElement(driver, connectedLocationSectionTitle);
 		CCUtils.verifyAndWaitForElement(connectedLocationSectionTitle, driver);
 		CCUtils.assertEquals(connectedLocationSectionTitle.getText().toString().trim(), "Connected Locations");
-		log("verifying the presence of connected locations title");
+		log("verified the presence of connected locations title");
+	}
+
+	public void verifyConnectedLocationsSection() throws InterruptedException, AWTException {
+		verifyConnectedLocationsSectionLabel();
+		verifyConnectedLocationsAddButtonIsDisplayed();
+		log("Verified Connected Locations Section");
+	}
+
+	public void verifyConnectedLocationsAddButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(addLocationButton, driver);
+		log("Verified Add Button Is Displayed");
 	}
 
 	public void clickToAddLocationButton() {
@@ -701,23 +758,234 @@ public class ProviderDetailsPage extends CCMainPage {
 	public void verifyPopupTitle(String title) {
 		CCUtils.verifyAndWaitForElement(addResourceTitle, driver);
 		CCUtils.assertEquals(addResourceTitle.getText().trim(), title);
-		log("verifying title of pop up");
+		log("verified title of pop up");
 	}
-	
+
 	public void clickToRemoveParticularLocation(String locationName) {
 		WebElement locationData = driver.findElement(By.xpath(removeParticularLocation(locationName)));
 		CCUtils.verifyAndWaitForElement(locationData, driver);
 		locationData.click();
 		log("clicked to remove resource icon for resource : " + locationName);
 	}
-	
+
 	public void verifyNoDataDisplayConnectedLocationsMessage() {
-		CCUtils.verifyAndWaitForElement(noDataDisplayConnectedLocations,driver);
+		CCUtils.verifyAndWaitForElement(noDataDisplayConnectedLocations, driver);
 		log("No data to display message dispalyed in Connected locations");
 	}
-	
-	public void verifyPopupLabel() {
+
+	public void verifyAddLocationsPopupLabel() {
 		CCUtils.verifyAndWaitForElement(labelPopup, driver);
 		log("pop up is displayed in add popup");
 	}
+
+	public void clickToEntepriseArrow() {
+		CCUtils.verifyAndWaitForElement(entepriseArrow, driver);
+		entepriseArrow.click();
+		log("clicked to enteprise Arrow");
+	}
+
+	public void clickOnToggleButton() {
+		CCUtils.verifyAndWaitForElement(toggleButton, driver);
+		toggleButton.click();
+		log("clicked to toggle button");
+	}
+
+	public String getToasterMessage() {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		return toasterMessage.getText().trim();
+
+	}
+
+	public void verifyUpdateToasterMessage(String expectedToasterMessage) {
+		CCUtils.verifyAndWaitForElement(toasterMessage, driver);
+		Log4jUtil.log("Verifying success toaster message.");
+		if (toasterMessage.isDisplayed() == true)
+			CCUtils.assertEquals(toasterMessage.getText().trim(), expectedToasterMessage);
+		else
+			Log4jUtil.log("Success toaster is not displayed");
+	}
+
+	public void verifyProviderInfoSection() throws InterruptedException, AWTException {
+		verifyProviderInfoSectionLabel();
+		verifyProviderID();
+		verifyStaffID();
+		verifyCommandCenterID();
+		log("Verified Provider Info Section");
+	}
+
+	public void verifyProviderInfoSectionLabel() {
+		CCUtils.scrollPageViaElement(driver, providerInfoLabel);
+		CCUtils.verifyAndWaitForElement(providerInfoLabel, driver);
+		log("Verifying Provider Info Label");
+		CCUtils.assertEquals(providerInfoLabel.getText().trim(), "Provider info");
+	}
+
+	public void verifyCommandCenterID() {
+		CCUtils.verifyAndWaitForElement(labelCommandCenterID, driver);
+		CCUtils.assertEquals(labelCommandCenterID.getText().trim(), "Command Center ID");
+		log("Verified Command Center ID");
+	}
+
+	public void verifyProviderID() {
+		CCUtils.verifyAndWaitForElement(labelProviderID, driver);
+		CCUtils.assertEquals(labelProviderID.getText().trim(), "Provider ID");
+		log("Verified Provider ID");
+	}
+
+	public void verifyStaffID() {
+		CCUtils.verifyAndWaitForElement(labelStaffID, driver);
+		CCUtils.assertEquals(labelStaffID.isDisplayed(), true);
+		log("Verified Staff ID");
+	}
+
+	public void verifyConnectedSolutionsTitle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolutionsTitle);
+		CCUtils.verifyAndWaitForElement(connectedSolutionsTitle, driver);
+		CCUtils.assertTrue(connectedSolutionsTitle.isDisplayed(), "verifying connected solutions title");
+		log("Verified connected solutions Title");
+	}
+
+	public void clickOnEngageToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolEngage);
+		CCUtils.verifyAndWaitForElement(connectedSolEngage, driver);
+		javascriptClick(connectedSolEngage);
+		log("clicked On Engage Toggle");
+	}
+
+	public void clickOffEngageToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolEngage, driver);
+		javascriptClick(connectedSolEngage);
+		log("clicked Off Engage Toggle");
+	}
+
+	public void clickOnPayToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPay);
+		CCUtils.verifyAndWaitForElement(connectedSolPay, driver);
+		javascriptClick(connectedSolPay);
+		log("clicked On Pay Toggle");
+	}
+
+	public void clickOffPayToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPay, driver);
+		javascriptClick(connectedSolPay);
+		log("clicked off pay toggle");
+	}
+
+	public void clickOnVirtualVisitToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolVirtualVisits);
+		javascriptClick(connectedSolVirtualVisits);
+		log("clicked on virtual visit toggle");
+	}
+
+	public void clickOffVirtualVisitToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolVirtualVisits, driver);
+		javascriptClick(connectedSolVirtualVisits);
+		log("clicked of virtual visit toggle");
+	}
+
+	public void clickOnPSSToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPss);
+		CCUtils.verifyAndWaitForElement(connectedSolPss, driver);
+		javascriptClick(connectedSolPss);
+		log("clicked on Pss Toggle");
+	}
+
+	public void clickOffPSSToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPss, driver);
+		javascriptClick(connectedSolPss);
+		log("clicked Off PSS Toggle");
+	}
+
+	public void clickOffPortalToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
+		javascriptClick(connectedSolPortal);
+		log("clicked Off Portal Toggle");
+	}
+
+	public void verifyConnectedResourceInWebTable() {
+		CCUtils.verifyAndWaitForElement(connectedResource, driver);
+		CCUtils.assertEquals(connectedResource.isDisplayed(), true);
+		log("Connected Resource is present in connected scheduling resource table");
+	}
+
+	public void clickToRemoveConnectionButton() {
+		CCUtils.verifyAndWaitForElement(removeConnection, driver);
+		removeConnection.click();
+		log("clicked to remove connection");
+	}
+
+	public String getSuccessToasterMessage() {
+		CCUtils.verifyAndWaitForElement(successToasterMessage, driver);
+		return successToasterMessage.getText().trim();
+	}
+
+	public void verifyConnectedSchedulingResourcesSection() throws InterruptedException, AWTException {
+		verifyConnectedSchedulingResourcesSectionLabel();
+		verifyResourceNameColumn();
+		verifyResourceID();
+		verifyConnectedSchedulingResourcesAddButtonIsDisplayed();
+		verifyMessageWithNoConnectedResource();
+		log("Verified Connected Scheduling Resources Section");
+	}
+
+	public void verifyConnectedSchedulingResourcesSectionLabel() {
+		CCUtils.scrollPageViaElement(driver, labelConnectedResources);
+		CCUtils.verifyAndWaitForElement(labelConnectedResources, driver);
+		CCUtils.assertEquals(labelConnectedResources.getText().trim(), "Connected Scheduling Resources");
+		log("Verified Connected Scheduling Resources Section Label");
+	}
+
+	public void verifyResourceNameColumn() {
+		CCUtils.verifyAndWaitForElement(columnResourceName, driver);
+		CCUtils.assertEquals(columnResourceName.getText().trim(), "Resource Name");
+		log("Verified Resource Name Column");
+	}
+
+	public void verifyResourceID() {
+		CCUtils.verifyAndWaitForElement(columnResourceId, driver);
+		CCUtils.assertEquals(columnResourceId.getText().trim(), "Resource ID");
+		log("Verified Resource ID Column");
+	}
+
+	public void verifyConnectedSchedulingResourcesAddButtonIsDisplayed() {
+		CCUtils.verifyAndWaitForElement(connectedResourcesAdd, driver);
+		log("Verified Add Button Is Displayed");
+	}
+
+	public void verifyMessageWithNoConnectedResource() {
+		CCUtils.verifyAndWaitForElement(noDataToDisplayMessage, driver);
+		CCUtils.assertEquals(noDataToDisplayMessage.getText().trim(), "No data to display");
+		log("Verified 'No Data To Display Message' With No Connected Resource");
+	}
+
+	public void verifyAddResourcesPopupDetails() throws InterruptedException, AWTException {
+		verifyAddResourceTitle();
+		verifyResourceLabel();
+		verifyCancelButton();
+		verifyAddButton();
+		verifyCrossIcon();
+		log("Verified Add Resources Popup Details");
+	}
+
+	public void verifyConnectedLocationsPopupDetails() throws InterruptedException, AWTException {
+		verifyPopupTitle("Add Location(s)");
+		verifyAddLocationsPopupLabel();
+		verifyCrossIcon();
+		verifyCancelButton();
+		verifyAddButton();
+		log("Verified Connected Locations Popup Details");
+	}
+
+	public void verifyConnectedLocationInWebTable() {
+		CCUtils.verifyAndWaitForElement(connectedLocation, driver);
+		CCUtils.assertEquals(connectedLocation.isDisplayed(), true);
+		log("Connected Resource is present in connected Location table");
+	}
+
+	public void clickToRemoveConnectionBtn() {
+		CCUtils.verifyAndWaitForElement(removeConnection, driver);
+		removeConnection.click();
+		log("clicked to remove connection");
+	}
+
 }
