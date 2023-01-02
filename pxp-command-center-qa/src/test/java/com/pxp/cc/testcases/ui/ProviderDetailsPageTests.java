@@ -44,7 +44,7 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getProviderDetailsPage().uploadProviderImage();
 		logStep("PXPP-13892 Verify Command Center users is able to remove the uploaded provider image through remove image button- Command Center Admin");
 		ccui.getProviderDetailsPage().removeProviderImage();
-		//ccui.getProviderDetailsPage().getSuccessToasterMessage();
+		ccui.getProviderDetailsPage().getSuccessToasterMessage();
 		ccui.getProviderDetailsPage().verifyProviderDetailsTitle();
 		logStep("PXPP-27618 Verify invalid file type error message is displayed when invalid image file types is used to upload image for provider - Command Center Admin");
 		ccui.getProviderDetailsPage().uploadProviderInvalidImage();
@@ -145,6 +145,7 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchProviderPage().selectPracticeFilter(clientSystementErpriseandPractice.get("practiceName"));
 		ccui.getSearchProviderPage().clickToFirstPracticeOption();
 		ccui.getSearchProviderPage().clickToApplyFilterButton();
+		ccui.getSearchProviderPage().verifySearchProviderFound(providerFirstName);
 		ccui.getSearchProviderPage().verifyInactiveStatus();
 		runOnce = false;
 	}
@@ -284,6 +285,7 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getProviderDetailsPage().clickOffPSSToggle();
 		ccui.getProviderDetailsPage().clickOnVirtualVisitToggle();
 		ccui.getProviderDetailsPage().clickOffVirtualVisitToggle();
+
 		runOnce = false;
 	}
 

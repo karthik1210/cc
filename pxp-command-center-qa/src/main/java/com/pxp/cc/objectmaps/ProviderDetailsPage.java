@@ -104,7 +104,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Connected Scheduling Resources']")
 	private WebElement labelConnectedResources;
 
-	@FindBy(xpath = "//div//input[@id='inputCheckbox']")
+	@FindBy(xpath = "//div//input[@id='inputCheckbox']//following::label[@id='resourceName']")
 	private WebElement resourceCheckBox;
 
 	@FindBy(id = "addResourceType")
@@ -113,7 +113,6 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@class='title']")
 	private WebElement addResourceTitle;
 
-	// @FindBy(xpath = "//input[@id='Resource']")
 	@FindBy(id = "Resource")
 	private WebElement inputTextResource;
 
@@ -233,6 +232,9 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//p[@class='connected-solution-header']")
 	private WebElement connectedSolutionsTitle;
+	
+	@FindBy(id = "removeAppTypeBtn0")
+	private WebElement removeConnectionLocation;
 
 	public ProviderDetailsPage(WebDriver driver) {
 		super(driver);
@@ -983,8 +985,8 @@ public class ProviderDetailsPage extends CCMainPage {
 	}
 
 	public void clickToRemoveConnectionBtn() {
-		CCUtils.verifyAndWaitForElement(removeConnection, driver);
-		removeConnection.click();
+		CCUtils.verifyAndWaitForElement(removeConnectionLocation, driver);
+		removeConnectionLocation.click();
 		log("clicked to remove connection");
 	}
 
