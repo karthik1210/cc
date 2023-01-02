@@ -43,7 +43,8 @@ public class GetExternalInternalMapApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().get("clientId");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
@@ -109,7 +110,8 @@ public class GetExternalInternalMapApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getExternalInternalMapApiResponse);
 		CCUtils.assertEquals(getExternalInternalMapApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgId(getExternalInternalMapApiResponse, testData.getProperty("non.existing.practice.id"));
+		validation.verifyErrorMessageInResponseForInvalidOrgId(getExternalInternalMapApiResponse,
+				testData.getProperty("non.existing.practice.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, non-existing locationId to get ExternalId and verify response body")

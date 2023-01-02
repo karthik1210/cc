@@ -22,7 +22,7 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 	private OrgInfo orgInfo;
 	private Validations validation;
 	Response createClientApiResponse, getOrganizationListApiResponse, createOrgNodeApiResponse;
-	int clientId=15228;
+	int clientId = 15228;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -46,7 +46,8 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -143,8 +144,8 @@ public class GetListOfOrganizationByClientIdApiTests_DataLayer extends BaseRest 
 	public Object[][] getInvalidOrgType() throws Exception {
 		return new Object[][] { { " " + testData.getProperty("api.system.orgtype") },
 				{ " " + testData.getProperty("api.enterprise.orgtype") },
-				{ "   " + testData.getProperty("api.practice.orgtype") }, { " "+testData.getProperty("api.parenttype") },
-				{ "null" }, { "abcdfefd" } };
+				{ "   " + testData.getProperty("api.practice.orgtype") },
+				{ " " + testData.getProperty("api.parenttype") }, { "null" }, { "abcdfefd" } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 1, dataProvider = "invalidOrgType", description = "Enter invalid org type in type field and verify error response")

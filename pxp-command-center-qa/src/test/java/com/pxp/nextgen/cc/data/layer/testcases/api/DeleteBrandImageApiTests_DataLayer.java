@@ -15,14 +15,15 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
-	 private ClientInfo clientInfo;
+	private ClientInfo clientInfo;
 	private BrandsInfo brandInfo;
 	private Validations validation;
 	private BrandsValidations brandsValidations;
-	Response updateBrandImageApiResponse, getBrandImageApiResponse, deleteBrandImageApiResponse,createBrandApiResponse,createClientApiResponse;
+	Response updateBrandImageApiResponse, getBrandImageApiResponse, deleteBrandImageApiResponse, createBrandApiResponse,
+			createClientApiResponse;
 	int orgId;
-    String namePayLoad;
-    
+	String namePayLoad;
+
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
@@ -38,7 +39,7 @@ public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
         logStep("Create a new client");
         createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
                 clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-                Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.timezoneid"));
+                Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.timezoneid"),testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
         int clientId = createClientApiResponse.jsonPath().getInt("clientId");
         logStep("New client created with client id : " + clientId);
         logStep("Create a brand for a client");
@@ -77,8 +78,8 @@ public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing brandId & non-existing imageId  and verify error message")
 	public void testErrorMessageForNonExistingImageId() throws IOException {
-    	log("Enter existing brand & Id non-existing imageid");
-    	int brandId = createBrandApiResponse.jsonPath().getInt("brandId");
+		log("Enter existing brand & Id non-existing imageid");
+		int brandId = createBrandApiResponse.jsonPath().getInt("brandId");
 		String href = testData.getProperty("api.invalid.href");
 		deleteBrandImageApiResponse = brandInfo.deteteBrandImage_DL(brandId, href);
 		CCUtils.responseTimeValidation(deleteBrandImageApiResponse);
@@ -118,7 +119,7 @@ public class DeleteBrandImageApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(deleteBrandImageApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(deleteBrandImageApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value and verify error message")
 	public void testErrorMessageForNullValue() throws IOException {
 		log("Enter invalid url");

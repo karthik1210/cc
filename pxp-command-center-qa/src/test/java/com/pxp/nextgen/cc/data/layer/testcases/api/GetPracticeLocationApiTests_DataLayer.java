@@ -59,7 +59,8 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -136,7 +137,7 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 		locationsValidations.verifyGetPracticeLocationDetailsApiResponseBody(getPracticeLocationApiResponse,
 				locationName);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing locationId and existing practiceId to get Practice Location and verify response body")
 	public void testGetLocationsForNonExistingLocationIdAndExistingPracticeId() throws IOException {
 		logStep("Add product for practice");
@@ -157,7 +158,6 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageForInvalidInput(getPracticeLocationApiResponse);
 	}
 
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing locationId and non-existing practiceId to get Practice Location and verify response body")
 	public void testGetLocationsForExistingLocationIdAndNonExistingPracticeId() throws IOException {
 		logStep("Get Practice Location");
@@ -169,7 +169,7 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(getPracticeLocationApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(getPracticeLocationApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing locationId and existing practiceId to get Practice Location and verify response body")
 	public void testGetLocationsForNonExistingLocationIdAndNonExistingPracticeId() throws IOException {
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
@@ -182,7 +182,7 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(getPracticeLocationApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(getPracticeLocationApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter locationId and practiceId as null to get Practice Location and verify response body")
 	public void testGetLocationsForLocationIdAndPracticeIdAsNull() throws IOException {
 		logStep("Get Practice Location");

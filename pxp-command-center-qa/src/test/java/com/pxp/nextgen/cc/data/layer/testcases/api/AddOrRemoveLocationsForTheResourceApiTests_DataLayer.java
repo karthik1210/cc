@@ -27,7 +27,6 @@ public class AddOrRemoveLocationsForTheResourceApiTests_DataLayer extends BaseRe
 	private ResourceInfo resourceInfo;
 	private SharedInfo sharedInfo;
 	private LocationsValidations locationsValidations;
-	private LocationsInfo locationsInfo;
 	private Validations validation;
 	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
 			createEnterpriseApiResponse, createResourceApiResponse, createNewLocationApiResponse,
@@ -42,7 +41,6 @@ public class AddOrRemoveLocationsForTheResourceApiTests_DataLayer extends BaseRe
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		resourceInfo = new ResourceInfo();
-		locationsInfo = new LocationsInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		locationsValidations = new LocationsValidations();
@@ -53,7 +51,7 @@ public class AddOrRemoveLocationsForTheResourceApiTests_DataLayer extends BaseRe
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"),testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().get("clientId");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),

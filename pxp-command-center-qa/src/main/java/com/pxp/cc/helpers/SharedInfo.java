@@ -77,19 +77,14 @@ public class SharedInfo extends BaseRest {
 		return createProviderMap;
 	}
 
-	public Response getProviderDetails_DL(int providerId) {
-		String url = ApiPath.PROVIDER_DETAILS_DL(providerId);
+	public Response getProviderDetails_DL(int clientId, int providerId) {
+		String url = ApiPath.PROVIDER_DETAILS_DL(clientId, providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response getProviderDetailsInvalidUrl_DL(int providerId) {
 		String url = ApiPath.PROVIDER_DETAILS_INVALID_URL_DL(providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}
-
-	public Response invalidMethodCallGetProviderDetails_DL(int providerId) {
-		String url = ApiPath.PROVIDER_DETAILS_DL(providerId);
-		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 
 	public Response addOrRemoveResourcesForAppoinmentType(int practiceId, int appointmentTypeId,
@@ -648,8 +643,8 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(addNewLocationPayload).when().put(url).then().extract().response();
 	}
 
-	public Response getLocationDetails_DL(int locationId) {
-		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
+	public Response getLocationDetails_DL(int clientId,int locationId) {
+		String url = ApiPath.LOCATION_DETAILS_DL(clientId, locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -665,16 +660,6 @@ public class SharedInfo extends BaseRest {
 
 	public Response getLocationDetailsUsingInvalidMethod_BL(int locationId) {
 		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
-		return given().spec(requestSpec).when().post(url).then().extract().response();
-	}
-
-	public Response getLocationDetailsUsingInvalidUrl_DL(int locationId) {
-		String url = ApiPath.INVALID_PATH_LOCATION_DETAILS_DL(locationId);
-		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}
-
-	public Response getLocationDetailsUsingInvalidMethod_DL(int locationId) {
-		String url = ApiPath.LOCATION_DETAILS_DL(locationId);
 		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 

@@ -88,7 +88,8 @@ public class SearchConnectedResourcesForLocationAssociatedWithPracticeApiTests_D
 			String practiceParentType, String practiceTimeZone) throws IOException {
 		logStep("Create nge practice below the client with valid details");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber, testFlag, clientType,
-				clientTimezoneId);
+				clientTimezoneId, testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(status, "", systemName, sysOrgType, clientId, sysParentType, "",

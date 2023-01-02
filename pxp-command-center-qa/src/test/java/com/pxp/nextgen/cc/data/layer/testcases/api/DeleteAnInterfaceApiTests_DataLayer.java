@@ -19,121 +19,135 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DeleteAnInterfaceApiTests_DataLayer extends BaseRest {
-    private OrgInfo orgInfo;
-    private ClientInfo clientInfo;
-    private Validations validations;
-    Response deletePracticeInterfaceApiResponse, addPracticeInterfaceApiResponse, getPracticeInterfaceApiResponse, getByInterfaceResponse, createClientApiResponse, createPracticeApiResponse, createSystemApiResponse, createEnterpriseApiResponse;
-    HashMap<String, Object> params = new HashMap<String, Object>();
-    PracticeInterfaces practiceInterfacesObj;
+	private OrgInfo orgInfo;
+	private ClientInfo clientInfo;
+	private Validations validations;
+	Response deletePracticeInterfaceApiResponse, addPracticeInterfaceApiResponse, getPracticeInterfaceApiResponse,
+			getByInterfaceResponse, createClientApiResponse, createPracticeApiResponse, createSystemApiResponse,
+			createEnterpriseApiResponse;
+	HashMap<String, Object> params = new HashMap<String, Object>();
+	PracticeInterfaces practiceInterfacesObj;
 
-    @BeforeClass()
-    public void setBaseUri() throws Exception {
-        setupServiceRequestSpecificationBuilderForDataLayer();
-        orgInfo = new OrgInfo();
-        clientInfo = new ClientInfo();
-        validations= new Validations();
-    }
+	@BeforeClass()
+	public void setBaseUri() throws Exception {
+		setupServiceRequestSpecificationBuilderForDataLayer();
+		orgInfo = new OrgInfo();
+		clientInfo = new ClientInfo();
+		validations = new Validations();
+	}
 
-    @DataProvider(name = "invalidPracticeId")
-    public Object[][] invalidPracticeId() throws Exception {
-        return new Object[][]{{testData.getProperty("Non.existing.practice.id").trim(), "1"}, {testData.getProperty("api.client.id").trim(), "2"}, {testData.getProperty("api.system.id").trim(), "3"}, {testData.getProperty("api.enterprise.id").trim(), "4"}};
-    }
+	@DataProvider(name = "invalidPracticeId")
+	public Object[][] invalidPracticeId() throws Exception {
+		return new Object[][] { { testData.getProperty("Non.existing.practice.id").trim(), "1" },
+				{ testData.getProperty("api.client.id").trim(), "2" },
+				{ testData.getProperty("api.system.id").trim(), "3" },
+				{ testData.getProperty("api.enterprise.id").trim(), "4" } };
+	}
 
-    @DataProvider(name = "nullAndStringPracticeId")
-    public Object[][] nullAndStringPracticeId() throws Exception {
-        return new Object[][]{{testData.getProperty("api.practice.interface.practiceid") + "Sample", "12345XYZ"}, {null, null}, {"", ""}};
-    }
+	@DataProvider(name = "nullAndStringPracticeId")
+	public Object[][] nullAndStringPracticeId() throws Exception {
+		return new Object[][] { { testData.getProperty("api.practice.interface.practiceid") + "Sample", "12345XYZ" },
+				{ null, null }, { "", "" } };
+	}
 
-    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19958_delete Interface to given practiceId and interfaceId")
-    public void deletePracticeInterfaceApiSuccess() throws IOException {
-        logStep("TC 001_Verify the Response code as 200, when user try to delete the practice interface by using DELETE Request [DL]");
-        ArrayList<Integer> orgIds = createPractice();
-        logStep("Create a payload to Add an InterfaceId for a given practiceId");
-        int practiceId = orgIds.get(2);
-        String nextGenApiId = "NextGenApiId" + orgIds.get(0);
-        String nextGenEnterpriseId = "NextGenEnterpriseId" + orgIds.get(1);
-        String nextGenPracticeId = "NextGenPracticeId" + orgIds.get(2);
-        params.clear();
-        params.put("5", nextGenEnterpriseId);
-        params.put("6", nextGenPracticeId);
-        params.put("7", nextGenApiId);
-        int expectedExternalSystemId = Integer.parseInt(testData.getProperty("api.practice.interface.externalSystemId"));
-        String expectedName = testData.getProperty("api.practice.interface.name");
-        boolean active = true;
-        practiceInterfacesObj = new PracticeInterfaces(expectedExternalSystemId, params, active);
-        logStep("Add an InterfaceId for a given practiceId");
-        addPracticeInterfaceApiResponse = orgInfo.addPracticeInterfacesResponse("Valid", "DL", practiceId, practiceInterfacesObj);
-        logStep("Getting InterfaceId information for a given practiceId");
-        getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);
-        int interfaceId = getPracticeInterfaceApiResponse.jsonPath().get("interfaceId[0]");
-        logStep("Delete an InterfaceId for a given practiceId");
-        deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceResponse("Valid", "DL", practiceId, interfaceId);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
-        CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 200);
-        getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
-        if (getByInterfaceResponse.getStatusCode()==400)
-        logStep("Validating that interface is deleted successfully for "+interfaceId);
-        else
-            logStep("Validating that interface is not deleted for "+interfaceId);
-    }
+	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19958_delete Interface to given practiceId and interfaceId")
+	public void deletePracticeInterfaceApiSuccess() throws IOException {
+		logStep("TC 001_Verify the Response code as 200, when user try to delete the practice interface by using DELETE Request [DL]");
+		ArrayList<Integer> orgIds = createPractice();
+		logStep("Create a payload to Add an InterfaceId for a given practiceId");
+		int practiceId = orgIds.get(2);
+		String nextGenApiId = "NextGenApiId" + orgIds.get(0);
+		String nextGenEnterpriseId = "NextGenEnterpriseId" + orgIds.get(1);
+		String nextGenPracticeId = "NextGenPracticeId" + orgIds.get(2);
+		params.clear();
+		params.put("5", nextGenEnterpriseId);
+		params.put("6", nextGenPracticeId);
+		params.put("7", nextGenApiId);
+		int expectedExternalSystemId = Integer
+				.parseInt(testData.getProperty("api.practice.interface.externalSystemId"));
+		String expectedName = testData.getProperty("api.practice.interface.name");
+		boolean active = true;
+		practiceInterfacesObj = new PracticeInterfaces(expectedExternalSystemId, params, active);
+		logStep("Add an InterfaceId for a given practiceId");
+		addPracticeInterfaceApiResponse = orgInfo.addPracticeInterfacesResponse("Valid", "DL", practiceId,
+				practiceInterfacesObj);
+		logStep("Getting InterfaceId information for a given practiceId");
+		getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);
+		int interfaceId = getPracticeInterfaceApiResponse.jsonPath().get("interfaceId[0]");
+		logStep("Delete an InterfaceId for a given practiceId");
+		deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceResponse("Valid", "DL", practiceId, interfaceId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
+		CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 200);
+		getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
+		if (getByInterfaceResponse.getStatusCode() == 400)
+			logStep("Validating that interface is deleted successfully for " + interfaceId);
+		else
+			logStep("Validating that interface is not deleted for " + interfaceId);
+	}
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19959_delete an Interface to given practiceId and interfaceId with Invalid URI")
-    public void deletePracticeInterfaceWithInvalidUriApi() throws IOException {
-        logStep("TC 002_Verify the Response code as 404, when user try to give invalid URI for DELETE call of the practice interfaces for Interface SetUp [DL]");
-        int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
-        logStep("Getting InterfaceId information for a given practiceId");
-        getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);
-        int interfaceId = getPracticeInterfaceApiResponse.jsonPath().get("interfaceId[0]");
-        getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
-        logStep("delete an InterfaceId for a given practiceId");
-        deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceResponse("InValid", "DL", practiceId, interfaceId);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
-        CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 404);
-    }
+	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19959_delete an Interface to given practiceId and interfaceId with Invalid URI")
+	public void deletePracticeInterfaceWithInvalidUriApi() throws IOException {
+		logStep("TC 002_Verify the Response code as 404, when user try to give invalid URI for DELETE call of the practice interfaces for Interface SetUp [DL]");
+		int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
+		logStep("Getting InterfaceId information for a given practiceId");
+		getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);
+		int interfaceId = getPracticeInterfaceApiResponse.jsonPath().get("interfaceId[0]");
+		getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
+		logStep("delete an InterfaceId for a given practiceId");
+		deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceResponse("InValid", "DL", practiceId,
+				interfaceId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
+		CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 404);
+	}
 
-    @Test(priority = 3, dataProvider = "nullAndStringPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19960_PXPP-19962_delete Practice Interfaces for null and Invalid Datatype of PracticeId and interfaceId")
-    public void deletePracticeInterfacesWithInvalidDatatypePracticeApi(String practiceId, String interfaceId) throws IOException {
-        logStep("TC 003_TC 005_verify response code 400 when user enters null and Invalid Datatype value on practiceId and interfaceId by using DELETE Method [DL]");
-        logStep("delete an InterfaceId for a given practiceId");
-        deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceInvaliDatatypeResponse("DL", practiceId, interfaceId);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
-        CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 400);
-    }
+	@Test(priority = 3, dataProvider = "nullAndStringPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19960_PXPP-19962_delete Practice Interfaces for null and Invalid Datatype of PracticeId and interfaceId")
+	public void deletePracticeInterfacesWithInvalidDatatypePracticeApi(String practiceId, String interfaceId)
+			throws IOException {
+		logStep("TC 003_TC 005_verify response code 400 when user enters null and Invalid Datatype value on practiceId and interfaceId by using DELETE Method [DL]");
+		logStep("delete an InterfaceId for a given practiceId");
+		deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceInvaliDatatypeResponse("DL", practiceId,
+				interfaceId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
+		CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 400);
+	}
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19961_delete an Interface to given practiceId and interfaceId with Invalid Mathod Type")
-    public void deletePracticeInterfacesWithInvalidMethodApi() throws IOException {
-        logStep("TC 004_Verify the Response code as 405, when user try to Patch method instead of DELETE Request for practice interfaces [DL]");
-        int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
-        logStep("Getting InterfaceId information for a given practiceId");
-        getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);
-        int interfaceId = getPracticeInterfaceApiResponse.jsonPath().get("interfaceId[0]");
-        getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
-        logStep("delete an InterfaceId for a given practiceId");
-        deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceResponse("InValidMethod", "DL", practiceId, interfaceId);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
-        CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 405);
-    }
+	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19961_delete an Interface to given practiceId and interfaceId with Invalid Mathod Type")
+	public void deletePracticeInterfacesWithInvalidMethodApi() throws IOException {
+		logStep("TC 004_Verify the Response code as 405, when user try to Patch method instead of DELETE Request for practice interfaces [DL]");
+		int practiceId = Integer.parseInt(testData.getProperty("api.practice.interface.practiceid"));
+		logStep("Getting InterfaceId information for a given practiceId");
+		getPracticeInterfaceApiResponse = orgInfo.getPracticeInterfacesResponse("Valid", "DL", practiceId);
+		int interfaceId = getPracticeInterfaceApiResponse.jsonPath().get("interfaceId[0]");
+		getByInterfaceResponse = orgInfo.getByInterfaceResponse("Valid", "DL", practiceId, interfaceId);
+		logStep("delete an InterfaceId for a given practiceId");
+		deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceResponse("InValidMethod", "DL", practiceId,
+				interfaceId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
+		CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 405);
+	}
 
-    @Test(priority = 5, dataProvider = "invalidPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19963_delete Practice Interfaces for Invalid/nonexisting practiceId and interfaceId")
-    public void deletePracticeInterfacesWithInvalidPracticeApi(String practiceId, String interfaceId) throws IOException {
-        logStep("TC 006_Verify the Response code as 400, when user try to give invalid/non existing practice id and interface Id for practice interfaces by using DELETE Request[DL]");
-        logStep("delete an InterfaceId for a given practiceId");
-        deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceInvaliDatatypeResponse("DL", practiceId, interfaceId);
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
-        CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 400);
-    }
+	@Test(priority = 5, dataProvider = "invalidPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-19963_delete Practice Interfaces for Invalid/nonexisting practiceId and interfaceId")
+	public void deletePracticeInterfacesWithInvalidPracticeApi(String practiceId, String interfaceId)
+			throws IOException {
+		logStep("TC 006_Verify the Response code as 400, when user try to give invalid/non existing practice id and interface Id for practice interfaces by using DELETE Request[DL]");
+		logStep("delete an InterfaceId for a given practiceId");
+		deletePracticeInterfaceApiResponse = orgInfo.deleteAnInterfaceInvaliDatatypeResponse("DL", practiceId,
+				interfaceId);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(deletePracticeInterfaceApiResponse);
+		CCUtils.assertEquals(deletePracticeInterfaceApiResponse.getStatusCode(), 400);
+	}
 
-    @Test(enabled = false)
+	@Test(enabled = false)
     public ArrayList<Integer> createPractice() throws IOException {
         logStep("Create nge practice below the client with valid details");
         String clientName = testData.getProperty("api.client.name").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
         String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-        createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"), clientName, clientSapNumber, testData.getProperty("api.system.testclient"), Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.timezoneid"));
+        createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"), clientName, clientSapNumber, testData.getProperty("api.system.testclient"), Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.timezoneid"),testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
         int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
         logStep("Create a new system below client.");

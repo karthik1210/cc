@@ -38,8 +38,9 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
+	    clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
@@ -79,7 +80,7 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 		logStep("fetch newly created provider details using provider id");
-		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(clientId, providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
@@ -91,11 +92,11 @@ public class GetProviderDetailsApiTests_DataLayer extends BaseRest {
 	public void testErrorResponseCodeForNonExistingProviderId() throws IOException {
 		logStep("Enter non existing providerId");
 		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(clientId,providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForNonexistingproviderId(fetchProviderDetailsApiResponse, providerId);
+		validation.verifyErrorMessageForBlankField(fetchProviderDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")

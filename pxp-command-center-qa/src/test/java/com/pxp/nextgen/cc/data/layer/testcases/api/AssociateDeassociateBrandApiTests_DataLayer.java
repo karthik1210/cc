@@ -47,7 +47,8 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -111,8 +112,7 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 	public void testErrorMessageForNonExistingOrgId() throws Exception {
 		logStep("Enter non existing org id");
 		associateDeassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_DL(
-				Integer.parseInt(testData.getProperty("non.existing.org.id")),
-				brandITwo, false);
+				Integer.parseInt(testData.getProperty("non.existing.org.id")), brandITwo, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(associateDeassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDeassociateBrandApiResponse.getStatusCode(), 400);

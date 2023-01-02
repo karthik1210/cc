@@ -41,7 +41,7 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 		String clientTimezoneId = testData.getProperty("api.client.timezoneid");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId);
+				clientTimezoneId,testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -62,7 +62,7 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
 		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 		logStep("Fetch Newly Created location details using location id");
-		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails_DL(locationId);
+		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails_DL(clientId,locationId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
 		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);
@@ -98,7 +98,7 @@ public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
 		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 		logStep("Fetch Newly Created location details using location id");
-		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails_DL(locationId);
+		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails_DL(clientId,locationId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
 		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);

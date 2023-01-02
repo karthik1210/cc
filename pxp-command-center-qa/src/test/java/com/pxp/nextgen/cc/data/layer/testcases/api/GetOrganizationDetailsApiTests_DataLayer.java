@@ -40,7 +40,8 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		clientTimezoneId = testData.getProperty("api.client.timezoneid");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId);
+				clientTimezoneId, testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		systemName = testData.getProperty("api.system.name").concat(CCUtils.generateRandomString());
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "", systemName,
@@ -119,8 +120,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
-		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyWhenUserEnterClientIdInOrgIdField(fetchOrgDetailsApiResponse, clientId);
+		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 4, description = "Enter invalid url and validate error status code")

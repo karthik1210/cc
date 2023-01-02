@@ -45,7 +45,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"),testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
@@ -88,7 +88,6 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		return createProviderApiResponse.jsonPath().get("providerId");
 	}
 
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing username and validate error message ")
 	public void testErrorMessagesForExistingUsername() throws IOException {
 		logStep("Create internal user using valid details ");
@@ -98,20 +97,19 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
 		logStep("Create user using existing username");
 		String emailone = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		Long mobileNumberone = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName,
-				emailone, mobileNumberone, testData.getProperty("api.user.userStatus"), "NOT_SENT",
-				testData.getProperty("api.clientId.id"), null, null, roleIds, false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, emailone, mobileNumberone,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", testData.getProperty("api.clientId.id"), null,
+				null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -126,10 +124,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
@@ -137,10 +134,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumberone = CCUtils.generateMobileNumber();
 		String userNameone = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userNameone,
-				email, mobileNumberone, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null,
-				roleIds, false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userNameone, email, mobileNumberone,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -155,10 +151,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.invalid.userName");
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -208,10 +203,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName");
 		Long mobileNumber = CCUtils.generateinvalidMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -243,9 +237,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Client",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, null, false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -259,10 +253,10 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Client",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT",
-				testData.getProperty("api.clientId.id"), null, null, null, false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", testData.getProperty("api.clientId.id"), null,
+				null, null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
@@ -278,10 +272,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Internal", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", null, null, null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
@@ -302,10 +295,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Client",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
@@ -324,8 +316,8 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_DataLayer("VARReseller",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, testData.getProperty("api.resellerId"), null, roleIds,
-				false);
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null,
+				testData.getProperty("api.resellerId"), null, roleIds, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);

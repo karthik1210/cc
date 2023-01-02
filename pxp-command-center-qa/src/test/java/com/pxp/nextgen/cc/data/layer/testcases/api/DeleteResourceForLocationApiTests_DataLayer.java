@@ -44,7 +44,8 @@ public class DeleteResourceForLocationApiTests_DataLayer extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",

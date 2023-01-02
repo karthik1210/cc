@@ -50,7 +50,8 @@ public class GetAssociateEntitiesTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
@@ -110,7 +111,7 @@ public class GetAssociateEntitiesTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error message")
 	public void testErrorMessageInvalidUrl() throws IOException {
-		
+
 		fetchAssociateEntitiesApiResponse = userInfo.getAssociateEntitiesInvalidUrlDL(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
@@ -120,7 +121,7 @@ public class GetAssociateEntitiesTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "test to check error if PUT is used instead of GET")
 	public void testErrorForInvalidMethodCall() throws IOException {
-	
+
 		fetchAssociateEntitiesApiResponse = userInfo.invalidMethodCallGetAssociateEntitiesDL(userId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchAssociateEntitiesApiResponse);
