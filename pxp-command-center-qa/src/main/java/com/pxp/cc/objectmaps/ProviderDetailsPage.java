@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -142,6 +142,9 @@ public class ProviderDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='flex']/span")
 	private WebElement toasterMessage;
+	
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
+	private WebElement connectedSolChat;
 
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Pay ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolPay;
@@ -152,15 +155,12 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' PSS ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolPss;
 
-	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Portal ']//..//following::div[@id='toggleButton'])[1]")
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Patient Portal ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolPortal;
 
 	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
 	private WebElement connectedSolEngage;
-
-	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
-	private WebElement connectedSolChat;
-
+	
 	@FindBy(xpath = "//div[@aria-label='Connected Locations']")
 	private WebElement connectedLocationSectionTitle;
 
