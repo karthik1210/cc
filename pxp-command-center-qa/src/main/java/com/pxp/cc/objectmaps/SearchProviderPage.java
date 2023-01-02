@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2021-2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -33,7 +33,7 @@ public class SearchProviderPage extends CCMainPage {
 	@FindBy(xpath = "(//tbody[@role='rowgroup']//tr[@role='row']//td[1])")
 	private WebElement providerName;
 
-	@FindBy(id = "no-result")
+	@FindBy(xpath = "//div[normalize-space(text())='No data to display']")
 	private WebElement noDataDisplayMessage;
 
 	@FindBy(id = "applyBtn")
@@ -128,6 +128,12 @@ public class SearchProviderPage extends CCMainPage {
 
 	@FindBy(xpath = "//td[@aria-sort='descending']")
 	private WebElement providersDscSort;
+	
+	@FindBy(xpath = "//mat-icon[normalize-space(text())='check_circle']")
+	private WebElement activeStatus;
+	
+	@FindBy(xpath = "//mat-icon[normalize-space(text())='cancel']")
+	private WebElement inactiveStatus;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -688,6 +694,18 @@ public class SearchProviderPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(tabProvider, driver);
 		tabProvider.click();
 		log("clicked to provider tab");
+	}
+
+	public void verifyActiveStatus() {
+		CCUtils.verifyAndWaitForElement(activeStatus, driver);
+		CCUtils.assertEquals(activeStatus.isDisplayed(), true);
+		log("Verified active status");
+	}
+
+	public void verifyInactiveStatus() {
+		CCUtils.verifyAndWaitForElement(inactiveStatus, driver);
+		CCUtils.assertEquals(inactiveStatus.isDisplayed(), true);
+		log("Verified inactive status");
 	}
 
 }

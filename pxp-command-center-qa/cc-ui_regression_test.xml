@@ -35,6 +35,7 @@
             <class name="com.pxp.cc.testcases.ui.LocationsPageTests" />
             <class name="com.pxp.cc.testcases.ui.LocationDetailsPageTests" />
             <class name="com.pxp.cc.testcases.ui.ProvidersPageTests" />
+            <class name="com.pxp.cc.testcases.ui.ProviderDetailsPageTests" />
             <class name="com.pxp.cc.testcases.ui.ResourcesPageTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests"/>

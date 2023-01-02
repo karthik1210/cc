@@ -78,9 +78,9 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 	
 	// ViewLocationMapLocationInfoTests
 
-	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Location And Location Info Section")
-	public void verifyLocationAndLocationInfoSection() throws Exception {
-		logStep("PXPP-11512 Verify Command Center ID,External ID,Address,Latitude (based on address),Longitude (based on address) , Timezone and Google Maps Link are read only fields");		
+	@Test(priority = 1, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Location label And Location Info Section")
+	public void verifyLocationLabelAndLocationInfoSection() throws Exception {
+		logStep("PXPP-11512 Verify Command Center ID, External ID, Address, Latitude(based on address), Longitude(based on address), Timezone and Google Maps Link are read only fields");		
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
@@ -101,7 +101,7 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 
 	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verify location Display Info Section")
 	public void testLocationDisplayInfoSection() throws Exception {
-		logStep("	PXPP-11510, PXPP-11511, PXPP-11578, PXPP-11577Verify Location Display Name (EN), Location Display Name (ES), Address 2 (suite, floor, etc), Directions (EN) and Directions (ES) fields accept free text");
+		logStep("PXPP-11510, PXPP-11511, PXPP-11578, PXPP-11577 Verify Location Display Name (EN), Location Display Name (ES), Address 2 (suite, floor, etc), Directions (EN) and Directions (ES) fields accept free text");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
@@ -117,7 +117,7 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 
 	@Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in all input fields and verify save functionality")
 	public void testSaveFunctionalityWithValidDetailsInAllInputFields() throws Exception {
-		logStep("PXPP-11585 Verify changes are applied for all entities ");
+		logStep("PXPP-11585 Verify changes are applied for all entities");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
@@ -233,7 +233,7 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 
 	 // EnableDisablePracticesOnLocationsDetailsPageTests 
 	
-	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enabling and disable practice for created location")
+	@Test(priority = 8, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable and disable practice for created location")
 	public void testToEnableAndDisableLocationForPractice() throws Exception {
 		logStep("PXPP-11486 Test Cases for Location Details - Enable/Disable for Specific Practices");	
 		ngHierarchyClientCreate();
@@ -258,8 +258,8 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 	
 	// EnableDisableSolutionsOnLocationsDetailsPageTests
 	
-	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable solution of associated practice of location")
-	public void testToEnableSolutionForLocationForPractice() throws Exception {
+	@Test(priority = 9, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable and disable solution of associated practice of location")
+	public void testToEnableAndDisableSolutionForLocationForPractice() throws Exception {
 		logStep("PXPP-22192  Test Cases for Connected Solutions Section");
 		ngHierarchyClientCreate();
 		addPurchaseSolutionAtPracticeLevel();
@@ -290,8 +290,8 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 	
 	//AddOrRemoveConnectedProvidersToLocationTests
 
-	@Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "Verify add Connected Providers Functionality")
-	public void testAddConnectedProvidersFunctionality() throws Exception {
+	@Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "Verify Connected Providers popup, add & remove Connected Providers and search Connected Providers Functionality")
+	public void testAddRemoveSearchConnectedProvidersFunctionality() throws Exception {
 		logStep("PXPP-11645,PXPP-11653,PXPP-11656 Verify all the elements of container 'Connected Providers' in Location Details page ");
 		ngHierarchyClientCreate();
 		createProvider();
@@ -433,8 +433,8 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 	
 	// AddOrRemoveConnectedResourcesToLocationTests 
 
-	@Test(priority = 13, retryAnalyzer = RetryAnalyzer.class, description = "Verify add Connected Scheduling Resources Functionality")
-	public void testAddConnectedSchedulingResourcesFunctionality() throws Exception {
+	@Test(priority = 13, retryAnalyzer = RetryAnalyzer.class, description = "Verify Connected Resources popup, add & remove Connected Resources and search Connected Resources Functionality")
+	public void testAddRemoveSearchConnectedResourcesFunctionality() throws Exception {
 		logStep("Verify add Connected Scheduling Resources Functionality");
 		ngHierarchyClientCreate();
 		createProvider();
@@ -456,18 +456,15 @@ public class LocationDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getLocationDetailsPage().verifyConnectedSchedulingResourcesLabel();
 		ccui.getLocationDetailsPage().clickOnAddButton();
 		ccui.getLocationDetailsPage().verifyAddResourcePopupTitle();
-		//ccui.getLocationDetailsPage().verifyResourceNameLabelTextAndTextboxDefaultValue();
 		ccui.getLocationDetailsPage().enterResourceName(resourceName);
 		ccui.getLocationDetailsPage().clickFirstInAutoSuggestion();
 		ccui.getLocationDetailsPage().clickOnAddToSave();
 		logStep("Verify success toaster message"); 
-		//addLocationPage.verifyToasterMessage("Successfully added resource");
 		driver.navigate().refresh();
 		ccui.getLocationDetailsPage().verifyResourceNameColumnLabel();
 		ccui.getLocationDetailsPage().verifyNewlyAddedConnectedSchedulingResource();
 		ccui.getLocationDetailsPage().clickOnRemoveConnectionButton();
 		logStep("Verify success toaster message"); 
-		//addLocationPage.verifyToasterMessage("Successfully removed resources");
 		logStep("Verify Connected Scheduling Resources functionality with invalid resource");
 		ccui.getLocationDetailsPage().clickOnAddButton();
 		ccui.getLocationDetailsPage().enterResourceName(CCUtils.generateAlphaNumericString(8));
