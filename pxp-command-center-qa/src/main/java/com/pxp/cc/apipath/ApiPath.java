@@ -1915,49 +1915,59 @@ public class ApiPath {
 	}
 
 	public static final String SEARCH_PROVIDERS_LOCATION_NULL_DL = SHARED_DL + "/v1/practices/null/providers-location";
-	
+
 	public static final String SEARCH_PROVIDERS_DL(int clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
 	}
 
 	public static final String SEARCH_PROVIDERS_NULL_DL = SHARED_DL + "/v1/clients/null/providers";
-	
+
 	public static final String GET_RESOURCE_DISPLAY_DETAILS_DL(int resourceId, int practiceId) {
-        return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
-    }
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
 
-    public static final String GET_RESOURCE_DISPLAY_DETAILS_DL_NULL() {
-        return SHARED_DL + "/v1/practices/null/resources/null";
-    }
+	public static final String GET_RESOURCE_DISPLAY_DETAILS_DL_NULL() {
+		return SHARED_DL + "/v1/practices/null/resources/null";
+	}
 
-    public static final String SAVE_PRACTICE_RESOURCES_DL(int practiceId, int resourceId) {
-        return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
-    }
-    
-    public static final String SEARCH_RESOURCE_DL(int practiceId) {
+	public static final String SAVE_PRACTICE_RESOURCES_DL(int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String SEARCH_RESOURCE_DL(int practiceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources-location";
 	}
 
 	public static final String SEARCH_RESOURCE_NULL_DL = SHARED_DL + "/v1/practices/null/resources-location";
-	
+
 	public static final String CREATE_STAFF_DL(int clientId) {
-        return SHARED_DL+ "/v1/clients/" + clientId + "/staff";
+		return SHARED_DL + "/v1/clients/" + clientId + "/staff";
 	}
-	
+
 	public static final String STAFF_FOR_CLIENT_DL(String clientId) {
 		return SHARED_DL + "/v1/clients/" + clientId + "/staff";
 	}
-	
+
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_DL(int staffId) {
 		return SHARED_DL + "/v1/providers/" + staffId + "/practices";
 	}
 
-
-	public static final String SEND_ENROLLMENT_BL( String uriType) {
+	public static final String SEND_ENROLLMENT_BL(String uriType) {
 		if (uriType.equalsIgnoreCase("Valid"))
-				return SERVICE_USER_BL + "/v1/users/enrollments";
-			else
-				return SERVICE_USER_BL + "/v1/usersssss/enrollments";
+			return SERVICE_USER_BL + "/v1/users/enrollments";
+		else
+			return SERVICE_USER_BL + "/v1/usersssss/enrollments";
+	}
+	
+	public static final String CREATE_STAFF_BL(int clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff";
 	}
 
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_BL(int staffId) {
+		return SERVICE_SHARED_BL + "/v1/staff/" + staffId + "/practices";
+	}
+	
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/staff/null/practices";
+	}
 }
