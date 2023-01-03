@@ -473,7 +473,7 @@ public class CommonMethods extends CCMainPage {
         return iconUsernameValidationError.getAttribute("title").trim();
     }
 
-    public final List<String> expectedTimezoneValues = Arrays.asList("Select", "International Date Line West",
+    public final List<String> expectedTimezoneValues = Arrays.asList("International Date Line West",
             "Midway Island, Samoa", "Hawaii Standard Time", "Alaska Standard Time", "Pacific Standard Time",
             "Tijuana, Baja California", "Arizona Standard Time", "Chihuahua, La Paz, Mazatlan",
             "Mountain Standard Time", "Central America", "Central Standard Time", "Guadalajara, Mexico City, Monterrey",
@@ -495,6 +495,7 @@ public class CommonMethods extends CCMainPage {
     public void getTimezoneDropdownValue() {
         CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
         dropdownTimezone.click();
+        log("print the size of list of options : "+listOfOptions.size());
         for (int i = 0; i < listOfOptions.size(); i++) {
             actualtimezoneValues.add(listOfOptions.get(i).getText().trim());
         }
@@ -503,7 +504,12 @@ public class CommonMethods extends CCMainPage {
     }
 
     public void verifyTimezoneDropdownValues() throws InterruptedException {
+    	getTimezoneDropdownValue();
         CCUtils.assertEquals(actualtimezoneValues, expectedTimezoneValues);
+		/*
+		 * if(expectedTimezoneValues.contains(actualtimezoneValues)) {
+		 * CCUtils.assertTrue(true, "verification of timezones"); }
+		 */
     }
 
     public final List<String> expectedClientTypes = Arrays.asList("Direct Client", "Dedicated IT", "GBS", "Itelagen",

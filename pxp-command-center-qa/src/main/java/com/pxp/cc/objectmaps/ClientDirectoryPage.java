@@ -385,6 +385,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public String getDefaultItemsPerPage() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, defaultItemsPerPage);
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
 		highlightElement(defaultItemsPerPage);
 		return defaultItemsPerPage.getText().toString();
