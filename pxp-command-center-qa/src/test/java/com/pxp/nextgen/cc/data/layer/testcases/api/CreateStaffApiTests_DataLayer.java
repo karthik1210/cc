@@ -13,7 +13,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class CreateStaffApiTest_DataLayer extends BaseRest {
+public class CreateStaffApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private ClientInfo clientInfo;
@@ -44,7 +44,7 @@ public class CreateStaffApiTest_DataLayer extends BaseRest {
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in mandatory field and verify response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in mandatory fields and verify response body")
 	public void testAddNewStaffFunctionality() throws IOException {
 		logStep("Create new staff");
 		String firstName = testData.getProperty("staff.firstname").concat(CCUtils.generateAlphaNumericString(5));
@@ -60,7 +60,7 @@ public class CreateStaffApiTest_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test maximum character functionality for external id field")
 	public void testAddNewStaffFunctionalityUsingMaximumExternalIdFieldSize() throws IOException {
-		logStep("Enter 50 characters external id fields");
+		logStep("Enter 50 characters in external id field");
 		String firstName = testData.getProperty("staff.firstname").concat(CCUtils.generateAlphaNumericString(10));
 		String lastName = testData.getProperty("staff.lastname").concat(CCUtils.generateAlphaNumericString(10));
 		String externalId = CCUtils.generateAlphaNumericString(51);
@@ -72,9 +72,9 @@ public class CreateStaffApiTest_DataLayer extends BaseRest {
 		validation.verifyErrorResponseBodyForExternalIdField(createNewstaffApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = false, description = "Test maximum character functionality for  firstName,lastName  field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = false, description = "Test maximum character functionality for firstName, lastName fields")
 	public void testAddNewStaffFunctionalityUsingMaximumFirstNameLastnameFieldSize() throws IOException {
-		logStep("Enter 100 characters firstName,lastName fields");
+		logStep("Enter 100 characters in firstName, lastName fields");
 		String firstNameOne = testData.getProperty("staff.firstname").concat(CCUtils.generateAlphaNumericString(101));
 		String lastNameOne = testData.getProperty("staff.lastname").concat(CCUtils.generateAlphaNumericString(101));
 		String externalIdOne = CCUtils.generateAlphaNumericString(5);
@@ -87,7 +87,7 @@ public class CreateStaffApiTest_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid client id in clientId field and verify error response body")
 	public void testErrorResponseForNonExistingClientId() throws IOException {
-		logStep("Enter valid data in mandatory field and non existing client id");
+		logStep("Enter valid data in mandatory fields and non existing client id in clientId field");
 		String firstNameOne = testData.getProperty("staff.firstname").concat(CCUtils.generateAlphaNumericString(10));
 		String lastNameOne = testData.getProperty("staff.lastname").concat(CCUtils.generateAlphaNumericString(11));
 		String externalIdOne = CCUtils.generateAlphaNumericString(5);
@@ -99,12 +99,11 @@ public class CreateStaffApiTest_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createNewstaffApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForInvalidOrgId(createNewstaffApiResponse,
 				testData.getProperty("api.nonexisting.client.id"));
-
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatoty field and verify error response body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in mandatory fields and verify error response body")
 	public void testRequiredErrorMessageForNullValueMandatoryFields() throws IOException {
-		logStep("Enter null value in mandatoty field and verify error response body");
+		logStep("Enter null value in mandatory fields and verify error response body");
 		createNewstaffApiResponse = sharedInfo.createStaff_DL(clientId, null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewstaffApiResponse);
