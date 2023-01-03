@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -103,9 +103,9 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract().response();
 	}
 
-	public Response createNewClientUsingInvalidUrl(String active, String clientName, String sapNumber,
+	public Response createNewClientUsingInvalidUrl(String active, String clientName, String clientSapNumber,
 			String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
+		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, clientSapNumber, testClient, type,
 				timezoneId);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_BL;
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
@@ -162,17 +162,31 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClient_DataLayer(String active, String clientName, String sapNumber, String testClient,
-			int type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+			int type, String timezoneId,String ehrIdentifier,String pmIdentifier) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient_DL(active, clientName, sapNumber, testClient, type,
+				timezoneId,ehrIdentifier,pmIdentifier);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.CLIENT_DL).then().extract()
 				.response();
 	}
+	
+	private Map<String, Object> postCreateClient_DL(String active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId,String ehrIdentifier,String pmIdentifier) {
+		Map<String, Object> createClientMap = new HashMap<String, Object>();
+		createClientMap.put("active", active);
+		createClientMap.put("name", clientName);
+		createClientMap.put("sapNumber", clientSapNumber);
+		createClientMap.put("testClient", testClient);
+		createClientMap.put("type", type);
+		createClientMap.put("timezoneId", timezoneId);
+		createClientMap.put("ehrIdentifier", ehrIdentifier);
+		createClientMap.put("pmIdentifier", pmIdentifier);
+		return createClientMap;
+	}
 
-	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientName, String sapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId,String ehrIdentifier,String pmIdentifier) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient_DL(active, clientName, clientSapNumber, testClient, type,
+				timezoneId,ehrIdentifier,pmIdentifier);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_DL;
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
 				.response();

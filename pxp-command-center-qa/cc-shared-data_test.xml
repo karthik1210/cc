@@ -21,7 +21,10 @@
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
 				/> </class> -->
 			<!--Jira #PXPP-20235- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer"/> -->
-
+            <!--Jira #PXPP-PXPP-27647 <class 
+			name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientProviderApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer" /> -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer" />
 			<class
@@ -56,8 +59,6 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateProviderApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewLocationApiTests_DataLayer" />
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationDetailsApiTests_DataLayer" />
 			<class
@@ -97,8 +98,6 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetProviderByClientIdApiTest_DataLayer"></class>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientProviderApiTests_DataLayer"></class>
-			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetLocationForProviderApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociatePracticeForResource_DataLayer"></class>
@@ -121,15 +120,11 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchResourcesApiTests_DataLayer"></class>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
-			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ClientSearchProvidersApiTests_DataLayer"></class>
-			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetDisplayNameOfPracticeResourceApiTests_DataLayer"></class>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchConnectedResourcesForLocationAssociatedWithPracticeApiTests_DataLayer"></class>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientStaffApiTests_DataLayer_DataLayer"></class>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientStaffApiTests_DataLayer"></class>
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchConnectedResourcesForLocationAssociatedWithPracticeApiTests_DataLayer"></class>
 		</classes>
