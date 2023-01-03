@@ -1931,4 +1931,17 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response associateDeassociatePracticeForStaffUsingEmptyPayload_BL(int staffId) {
+ 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_BL(staffId);
+ 		Map<String, Object> associateDeassociatePracticeForStaffPayload = new HashMap<String, Object>();
+ 		return given().spec(requestSpec).body(associateDeassociatePracticeForStaffPayload).when().put(url).then()
+ 				.extract().response();
+ 	}
+ 	
+ 	public Response associateDeassociatePracticeForStaffUsingNullValue_BL() {
+ 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL();
+ 		return given().spec(requestSpec).when().put(url).then().extract().response();
+ 	}
+	
 }
