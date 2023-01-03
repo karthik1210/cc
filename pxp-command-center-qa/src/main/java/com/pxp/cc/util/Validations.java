@@ -3474,4 +3474,18 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "ExternalId size maximum 50 characters");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyResponseBodyForStaffDetail(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("value of firstName  is : " + jsonpath.get("firstName").toString());
+		Log4jUtil.log("value of lastName  is : " + jsonpath.get("lastName").toString());		
+		Log4jUtil.log("value of gender  is : " + jsonpath.get("gender").toString());
+		Log4jUtil.log("value of status  is : " + jsonpath.get("status").toString());
+	}	
+	
+	public void verifyErrorResponseBodyInvalidStaffId(Response response, int staffId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by id=" + staffId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }

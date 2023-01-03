@@ -1970,4 +1970,14 @@ public class ApiPath {
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/null/practices";
 	}
+	
+	public static final String GET_STAFF_DL(int staffId) {
+		return SHARED_DL + "/v1/staff/"+ staffId;
+	}
+
+	public static final String GET_STAFF_DL_NULL_VALUE() {
+		return SHARED_DL + "/v1/staff/null";
+	}
+
+	
 }
