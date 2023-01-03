@@ -3475,7 +3475,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 	
-	public void verifyResponseBodyForStaffDetail(Response response) throws IOException {
+	public void verifyResponseBodyForStaffDetails(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Log4jUtil.log("value of firstName  is : " + jsonpath.get("firstName").toString());
 		Log4jUtil.log("value of lastName  is : " + jsonpath.get("lastName").toString());		

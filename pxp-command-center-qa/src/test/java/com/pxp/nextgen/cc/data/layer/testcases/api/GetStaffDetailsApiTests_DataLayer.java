@@ -61,7 +61,7 @@ public class GetStaffDetailsApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyResponseBodyForStaffDetail(getStaffDetailsApiResponse);
+		validation.verifyResponseBodyForStaffDetails(getStaffDetailsApiResponse);
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing StaffId and verify response body")
