@@ -1978,6 +1978,4 @@ public class ApiPath {
 	public static final String GET_STAFF_DL_NULL_VALUE() {
 		return SHARED_DL + "/v1/staff/null";
 	}
-
-	
 }

@@ -1954,6 +1954,5 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_STAFF_DL_NULL_VALUE();
 		return given().spec(requestSpec).when().get(url).then().extract()
 				.response();
-	}
-	
+	}	
 }
