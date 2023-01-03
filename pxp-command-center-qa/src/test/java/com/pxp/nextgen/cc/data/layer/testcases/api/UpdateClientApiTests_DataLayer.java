@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -34,7 +34,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Edit Client Details");
 		String newClientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
@@ -61,7 +62,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Update client status from inactive to active and update timezone from not null value to null value");
 		updateClientApiResponse = clientInfo.UpdateClient_DataLayer(clientId,
@@ -115,7 +117,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientNameOne, clientSapNumberOne,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientIdOne = createClientApiResponse.jsonPath().getInt("clientId");
 		log("create another new client");
 		String clientName = testData.getProperty("api.client.name")
@@ -125,7 +128,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumberNew,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
@@ -153,7 +157,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientNameOne, clientSapNumberOne,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		log("create another new client");
 		String clientName = testData.getProperty("api.client.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
@@ -162,7 +167,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("false", clientName, clientSapNumberNew,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		fetchClientDetailsApiResponse = clientInfo.getClientDetails_DataLayer(clientId);
 		Boolean activeStatus = fetchClientDetailsApiResponse.jsonPath().getBoolean("active");
@@ -188,7 +194,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("true", clientNameOne, clientSapNumberOne,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		int nonExistingClientType = Integer.parseInt(testData.getProperty("invalid.client.type"));
 		logStep("Enter non existing client type while updating client and validate error message");
@@ -211,7 +218,8 @@ public class UpdateClientApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer("true", clientNameOne, clientSapNumberOne,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		String nonExistingTimezoneId = testData.getProperty("api.client.timezoneid")
 				.concat(CCUtils.generateRandomString());

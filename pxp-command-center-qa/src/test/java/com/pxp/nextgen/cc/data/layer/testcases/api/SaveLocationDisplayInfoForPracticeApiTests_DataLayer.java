@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -45,7 +45,8 @@ public class SaveLocationDisplayInfoForPracticeApiTests_DataLayer extends BaseRe
 		String clientTimezoneId = testData.getProperty("api.client.timezoneid");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId);
+				clientTimezoneId, testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 

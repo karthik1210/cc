@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -41,7 +41,8 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -78,7 +79,7 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		logStep("Create new location");
 		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
 		externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
-		createNewLocationApiResponse = sharedInfo. createNewLocation_DL(clientId,
+		createNewLocationApiResponse = sharedInfo.createNewLocation_DL(clientId,
 				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
@@ -87,7 +88,7 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
 		locationId = createNewLocationApiResponse.jsonPath().getInt("id");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid practiceid and locationId with valid details in request body and verify response code")
 	public void testResponseCodeToAssociateProviderToLocation() throws NullPointerException, IOException {
 		logStep("Associate location to practice");
@@ -100,11 +101,11 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		associateProvidersForLocationApiResponse = sharedInfo.associateProvidersToLocation_DL(locationId, practiceId,
 				providerIds);
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 207);
-		validation.verifyAssociateProvidersForLocationApiResponseBody(
-		associateProvidersForLocationApiResponse, providerIds, "SUCCESS", null);
-		
-   }
-	
+		validation.verifyAssociateProvidersForLocationApiResponseBody(associateProvidersForLocationApiResponse,
+				providerIds, "SUCCESS", null);
+
+	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid and existing locationId with invalid details in request body  and verify response code")
 	public void testResponseCodeForNonExistingProviderIdForLocation() throws NullPointerException, IOException {
 		logStep("Associate location to practice");
@@ -117,10 +118,10 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		associateProvidersForLocationApiResponse = sharedInfo.associateProvidersToLocation_DL(locationId, practiceId,
 				providerIds);
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 207);
-		validation.verifyAssociateProvidersForLocationApiResponseBody(
-				associateProvidersForLocationApiResponse, providerIds, "ERROR", "Invalid input");
+		validation.verifyAssociateProvidersForLocationApiResponseBody(associateProvidersForLocationApiResponse,
+				providerIds, "ERROR", "Invalid input");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceid and existing locationId with valid details in request body  and verify response code")
 	public void testErrorMessageForNonExistingPracticeIdAndExistingProviderIdForLocation()
 			throws NullPointerException, IOException {
@@ -133,7 +134,7 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForBlankField(associateProvidersForLocationApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid and non-existing locationId with valid details in request body  and verify response code")
 	public void testErrorMessageForExistingPracticeIdProviderIdAndNonExistingLocationId()
 			throws NullPointerException, IOException {
@@ -146,7 +147,7 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForBlankField(associateProvidersForLocationApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceid and non-existing locationId with invalid details in request body  and verify response code")
 	public void testErrorMessageForNonExistingInputInAllFields() throws NullPointerException, IOException {
 		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
@@ -159,7 +160,7 @@ public class AssociateProvidersToLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(associateProvidersForLocationApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForBlankField(associateProvidersForLocationApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values in all input fields and verify response code")
 	public void testResponseCodeForNullValuesInAllInputFields() throws NullPointerException, IOException {
 		associateProvidersForLocationApiResponse = sharedInfo.associateProvidersToLocation_DL();

@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -34,7 +34,8 @@ public class GetBrandDetailsApiTests_DataLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().get("clientId");
 		logStep("create brand");
 		name = testData.getProperty("client.org.brand.name")
@@ -45,7 +46,7 @@ public class GetBrandDetailsApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing brandId in brand id field and verify response body")
-	public void testGetBrandDetailsApi() throws IOException,NullPointerException {
+	public void testGetBrandDetailsApi() throws IOException, NullPointerException {
 		getBrandingDetailsApiResponse = sharedInfo.getBrandDetails_DL(brandId);
 		CCUtils.responseTimeValidation(getBrandingDetailsApiResponse);
 		CCUtils.assertEquals(getBrandingDetailsApiResponse.getStatusCode(), 200);
