@@ -203,12 +203,26 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response UpdateClient_DataLayer(int clientId, boolean active, String clientName, String sapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+			String testClient, int type, String timezoneId, String ehrIdentifier, String pmIdentifier) throws IOException {
+		Map<String, Object> updateClientPayload = putUpdateClient_DL(active, clientName, sapNumber, testClient, type,
+				timezoneId, ehrIdentifier, pmIdentifier);
 		String url = ApiPath.CLIENT_DETAILS_DL(clientId);
 		return given().spec(requestSpec).pathParam("clientId", clientId).body(updateClientPayload).when().put(url)
 				.then().extract().response();
+	}
+	
+	private Map<String, Object> putUpdateClient_DL(boolean active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId, String ehrIdentifier, String pmIdentifier) {
+		Map<String, Object> updateClientMap = new HashMap<String, Object>();
+		updateClientMap.put("active", active);
+		updateClientMap.put("name", clientName);
+		updateClientMap.put("sapNumber", clientSapNumber);
+		updateClientMap.put("testClient", testClient);
+		updateClientMap.put("type", type);
+		updateClientMap.put("timezoneId", timezoneId);
+		updateClientMap.put("ehrIdentifier", ehrIdentifier);
+		updateClientMap.put("pmIdentifier", pmIdentifier);
+		return updateClientMap;
 	}
 
 	public Response UpdateClientIsingInvalidUrl_DataLayer(int clientId, boolean active, String clientName,
