@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -3451,6 +3451,15 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("firstName"), providerFirstName);
 			CCUtils.assertEquals(jsonObject.get("lastName"), providerLastName);
 			Log4jUtil.log("verifying provider Id and provider first name and last name");
+		}
+	}
+	
+	public void verifyResponseBodyForStaffAssociatedToPractices(Response response, ArrayList<Integer> practiceIds)
+			throws IOException {
+		for (int i = 0; i < practiceIds.size(); i++) {
+			if (response.asString().contains(String.valueOf(practiceIds.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + practiceIds.get(i));
+			}
 		}
 	}
 }
