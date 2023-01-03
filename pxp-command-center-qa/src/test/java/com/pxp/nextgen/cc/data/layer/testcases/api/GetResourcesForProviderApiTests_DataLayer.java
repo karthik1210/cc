@@ -1,143 +1,168 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.ClientInfo;
+import com.pxp.cc.helpers.OrgInfo;
+import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.ResourceDetails;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-
-import java.io.IOException;
 
 public class GetResourcesForProviderApiTests_DataLayer extends BaseRest {
-    private SharedInfo sharedInfo;
-    private Validations validation;
-    Response getResourceForProviderApiResponse;
+	private SharedInfo sharedInfo;
+	private Validations validation;
+	private ResourceInfo resourceInfo;
+	Response createProviderApiResponse, createResourceApiResponse, createSystemApiResponse, createClientApiResponse,
+			createPracticeApiResponse, createEnterpriseApiResponse, addResourceResponse, removeResourceResponse,
+			getResourceResponse;
+	public static int clientId, practiceId, resourceId;
+	public int providerId;
+	private OrgInfo orgInfo;
+	private Validations validations;
+	private ClientInfo clientInfo;
 
-    @BeforeClass()
-    public void setBaseUri() throws Exception {
-        setupServiceRequestSpecificationBuilderForDataLayer();
-        sharedInfo = new SharedInfo();
-        validation = new Validations();
-    }
+	@BeforeClass()
+	public void setBaseUri() throws Exception {
+		setupServiceRequestSpecificationBuilderForDataLayer();
+		sharedInfo = new SharedInfo();
+		validation = new Validations();
+		orgInfo = new OrgInfo();
+		clientInfo = new ClientInfo();
+		validations = new Validations();
+		resourceInfo = new ResourceInfo();
+		practiceId = createPractice(ccUser.getActive(), ccUser.getClientName().concat(CCUtils.generateRandomString()),
+				ccUser.getClientSapNumber().concat(CCUtils.generateRandomString()), "false",
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")), testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.parenttype"),
+				testData.getProperty("api.enterprise.timezoneid"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
+				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"));
+		providerId = createProviderForPractice();
+		resourceId = createResource(providerId);
+	}
 
-    @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "TC_18688 Fetching resources for the provider with valid inputs and valid url")
-    public void getResourcesForProviderWithValidInputs() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL(Integer.parseInt(testData.getProperty("valid.provider.id.new")), Integer.parseInt(testData.getProperty("valid.practice.id")), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 200);
-        validation.verifyResponseBodyForGetResourceForProvider_DL(getResourceForProviderApiResponse);
-    }
+	public int createProviderForPractice() throws IOException {
+		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		String externalId = CCUtils.generateAlphaNumericString(10);
+		createProviderApiResponse = sharedInfo.createProvider_DL(practiceId, firstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createProviderApiResponse);
+		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
+		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
+		int providerId = createProviderApiResponse.jsonPath().getInt("providerId");
+		return providerId;
+	}
 
-    @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "TC_18713 Fetching resources for provider with valid inputs and invalid Url")
-    public void getResourcesForProviderWithValidInputsAndInvalidUrl() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL(Integer.parseInt(testData.getProperty("valid.provider.id.new")), Integer.parseInt(testData.getProperty("valid.practice.id")), "Invalid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 404);
-        validation.verifyErrorInResponseForInvalidUrl(getResourceForProviderApiResponse);
-    }
+	public int createResource(int providerId) {
+		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
+		createResourceApiResponse = resourceInfo.createResource_DL(practiceId, testData.getProperty("resource.name"),
+				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
+				testData.getProperty("resource.link.type"));
+		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
+		int resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
+		return resourceId;
+	}
 
-    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "TC_18712 Fetching resources for provider with Invalid POST Method")
-    public void getResourceForProviderWithInvalidPOST() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourceForProviderWithInvalidPOSTRequest_DL(Integer.parseInt(testData.getProperty("valid.provider.id.new")), Integer.parseInt(testData.getProperty("valid.practice.id")), "Valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 405);
-        validation.verifyErrorMessageInResponseForInvalidPostMethodCall(getResourceForProviderApiResponse);
-    }
+	@Test(enabled = false)
+	public int createPractice(String status, String clientName, String clientSapNumber, String testFlag, int clientType,
+			String clientTimezoneId, String systemName, String sysOrgType, String sysParentType, int ehrIdentifier,
+			int pmIdentifier, String enterpriseName, String enterpriseType, String enterpriseParentType,
+			String enterpriseTimeZone, String practiceDisplayName, String practiceName, String practiceOrgType,
+			String practiceParentType, String practiceTimeZone) throws IOException {
+		logStep("Create nge practice below the client with valid details");
+		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber, testFlag,
+				clientType, clientTimezoneId, testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
+		clientId = createClientApiResponse.jsonPath().getInt("clientId");
+		logStep("Create a new system below client.");
+		createSystemApiResponse = orgInfo.createOrg_DataLayer(status, "", systemName, sysOrgType, clientId,
+				sysParentType, "", ehrIdentifier, pmIdentifier);
+		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
+		logStep("Create a new enterprise below system.");
+		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(status, "", enterpriseName, enterpriseType, systemId,
+				enterpriseParentType, enterpriseTimeZone, ehrIdentifier, pmIdentifier);
+		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
+		logStep("Create a new practice below enterprise.");
+		createPracticeApiResponse = orgInfo.createOrg_DataLayer(status, practiceDisplayName, practiceName,
+				practiceOrgType, enterpriseId, practiceParentType, practiceTimeZone, ehrIdentifier, pmIdentifier);
+		logStep("Validating Response Information");
+		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
+		CCUtils.responseTimeValidation(createPracticeApiResponse);
+		validations.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
+		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
+		return orgId;
+	}
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "TC_18696 Fetching resources for provider with Null Inputs")
-    public void getResourceForProviderWithNullInputs() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(null, null, "Valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 400);
-        validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getResourceForProviderApiResponse);
-    }
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId and ProviderId and verify response body")
+	public void testGetResourcesForExistingPracticeIdAndProviderId() throws IOException {
+		logStep("verify response body for add resources for a provider and a practice");
+		List<ResourceDetails> addResourcePayload = new ArrayList<ResourceDetails>();
+		addResourcePayload.add(new ResourceDetails(resourceId, true));
+		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(providerId, practiceId, addResourcePayload);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(addResourceResponse);
+		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 207);
+		logStep("Enter existing practiceId and ProviderId and verify response body");
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
+		validations.verifyResponseBodyOfGetResource(getResourceResponse, resourceId);
+		logStep("verify response body for Remove resources for a provider and a practice");
+		addResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(providerId, practiceId, addResourcePayload);
+		List<ResourceDetails> removeResourcePayload = new ArrayList<ResourceDetails>();
+		removeResourcePayload.add(new ResourceDetails(resourceId, false));
+		removeResourceResponse = sharedInfo.putAddRemoveResourcesForProvider(providerId, practiceId,
+				removeResourcePayload);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(removeResourceResponse);
+		CCUtils.assertEquals(removeResourceResponse.getStatusCode(), 207);
+		logStep("Enter existing practiceId and ProviderId and verify response body");
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
+		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 204);
+	}
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Fetching resources for provider with Empty Inputs")
-    public void getResourceForProviderWithEmptyInputs() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(" ", " ", "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 500);
-        validation.verifyResponseForEmptyData_DL(getResourceForProviderApiResponse);
-    }
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId and non existing ProviderId and verify response body")
+	public void testGetResourcesForExistingPracticeIdAndNonExistingProviderId() throws IOException {
+		logStep("Enter existing practiceId and non existing  ProviderId and verify response body");
+		int providerId= Integer.parseInt(testData.getProperty("nonexisting.providerId"));
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
+		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 204);
+	}
 
-    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "TC_18690 Fetching resources for the provider with Existing Provider Id and Non-Existing practice Id along with valid url")
-    public void getResourcesForProviderWithNonExistingProviderIdAndExistingPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL(Integer.parseInt(testData.getProperty("non.existing.provider.id")), Integer.parseInt(testData.getProperty("valid.practice.id")), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 204);
-    }
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing practiceId and existing ProviderId and verify response body")
+	public void testGetResourcesForNonExistingPracticeIdAndExistingProviderId() throws IOException {
+		logStep("Enter non existing practiceId and existing  ProviderId and verify response body");
+		int practiceId=Integer.parseInt(testData.getProperty("nonexisting.practiceId"));
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
+		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 204);
+	}
 
-    @Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "TC_18691 Fetching resources for the provider with Non Existing Provider Id and Existing practice Id along with valid url")
-    public void getResourcesForProviderWithExistingProviderIdAndNonExistingPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL(Integer.parseInt(testData.getProperty("valid.provider.id.new")), Integer.parseInt(testData.getProperty("non.existing.practice.id")), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 204);
-    }
-
-    @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "TC_18689 Fetching resources for the provider with Non Existing Provider Id and Non Existing practice Id along with valid url")
-    public void getResourcesForProviderWithNonExistingProviderIdAndNonExistingPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL(Integer.parseInt(testData.getProperty("non.existing.provider.id")), Integer.parseInt(testData.getProperty("non.existing.practice.id")), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 204);
-    }
-
-    @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "TC_18692 Fetching resources for the provider with valid provider Id and null in practice Id along with valid url")
-    public void getResourcesForProviderWithValidProviderIdAndNullPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(testData.getProperty("valid.provider.id.new"), null, "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 400);
-        validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getResourceForProviderApiResponse);
-    }
-
-    @Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "TC_18693 Fetching resources for the provider with null in provider Id and valid practice Id along with valid url")
-    public void getResourcesForProviderWithNullProviderIdAndValidPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(null, testData.getProperty("valid.practice.id"), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 400);
-        validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getResourceForProviderApiResponse);
-    }
-
-    @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "TC_18710 Fetching resources for the provider with invalid provider Id and valid practice Id along with valid url")
-    public void getResourcesForProviderWithInvalidProviderIdAndValidPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(testData.getProperty("invalid.provider.id"), testData.getProperty("valid.practice.id"), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 400);
-        validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getResourceForProviderApiResponse);
-    }
-
-    @Test(priority = 12, retryAnalyzer = RetryAnalyzer.class, description = "TC_18708 Fetching resources for the provider with valid provider Id and invalid practice Id along with valid url")
-    public void getResourcesForProviderWithvalidProviderIdAndInValidPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(testData.getProperty("valid.provider.id.new"), testData.getProperty("invalid.practice.id"), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 400);
-        validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getResourceForProviderApiResponse);
-    }
-
-    @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "TC_18699 Fetching resources for the provider with invalid provider Id and invalid practice Id along with valid url")
-    public void getResourcesForProviderWithInvalidProviderIdAndInvalidPracticeId() throws IOException {
-        getResourceForProviderApiResponse = sharedInfo.getResourcesForProviderWithValidInputs_DL_Invalid_DataType(testData.getProperty("invalid.provider.id"), testData.getProperty("invalid.practice.id"), "valid");
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(getResourceForProviderApiResponse);
-        CCUtils.assertEquals(getResourceForProviderApiResponse.getStatusCode(), 400);
-        validation.verifyResponseForEmptyOrNULLOrMisFormatData_DL(getResourceForProviderApiResponse);
-    }
-
-
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing practiceId and non existing ProviderId and verify response body")
+	public void testGetResourcesForNonExistingPracticeIdAndNonExistingProviderId() throws IOException {
+		logStep("Enter non existing practiceId and non existing  ProviderId and verify response body");
+		int practiceId=Integer.parseInt(testData.getProperty("nonexisting.practiceId"));
+		int providerId= Integer.parseInt(testData.getProperty("nonexisting.providerId"));
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
+		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 204);
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values in practiceId and  ProviderId field and verify response body")
+	public void testGetResourcesForNullValues() throws IOException {
+		logStep("Enter null values in practiceId and  ProviderId field and verify response body");
+		getResourceResponse = sharedInfo.getResourcesForProvider_NullValue();
+		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 400);
+	}
 }

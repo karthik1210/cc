@@ -7,7 +7,6 @@ import com.pxp.cc.objectmaps.*;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 import org.openqa.selenium.WebDriver;
-
 import java.util.HashMap;
 
 public class CCUI extends CommandCenterGenericTest {
@@ -50,6 +49,7 @@ public class CCUI extends CommandCenterGenericTest {
 	AddNewInternalUsersPage addNewInternalUsersPage;
 	AddNewVarResellerUserPage addNewVarResellerUserPage;
 	VarResellerUsersPage varResellerUsersPage;
+	SearchProviderPage searchProviderPage;
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -60,7 +60,7 @@ public class CCUI extends CommandCenterGenericTest {
 	public static String systemOrEnterprise;
 	public static String timeZoneDisplayName;
 	public static String solution;
-
+	
 	public CCUI getCcui() throws InterruptedException {
 		if (ccui == null) {
 			ccui = new CCUI(testData, driver);
@@ -368,4 +368,11 @@ public class CCUI extends CommandCenterGenericTest {
 				systemOrEnterprise, timeZoneDisplayName, solution);
 		return practiceName;
 	}
+    
+    public SearchProviderPage getSearchProviderPage() throws Exception {
+        if (searchProviderPage == null) {
+        	searchProviderPage = new SearchProviderPage(driver);
+        }
+        return searchProviderPage;
+    }
 }

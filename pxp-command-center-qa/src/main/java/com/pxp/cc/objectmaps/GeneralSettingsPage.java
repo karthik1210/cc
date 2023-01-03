@@ -223,7 +223,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='purchaseTitle']")
 	private WebElement availableToPurchaseTitle;
 
-	@FindBy(id = "purchasedSolutionOrg")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg'])[1]")
 	private WebElement purchaseSolutionsTitle;
 
 	@FindBy(id = "unsavedConfirmBtn")

@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -19,7 +19,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRest {
+public class GetPracticesAssociatedToResourcesApiTests_DataLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private ResourceInfo resourceInfo;
@@ -27,7 +27,8 @@ public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRe
 	private Validations validation;
 	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
 			createEnterpriseApiResponse, createResourceApiResponse, createNewLocationApiResponse,
-			associateDeassociatePracticesForLocationApiResponse, addResourceForLocationApiResponse,updateLocationForResource,fetchResourceDetailsApiResponse;
+			associateDeassociatePracticesForLocationApiResponse, addResourceForLocationApiResponse,
+			updateLocationForResource, fetchResourceDetailsApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, resourceIdOne, locationId;
 	String clientName, clientSapNumber, externalId, firstName, lastName, resourceExternalId;
 	List<Locations> locationIds;
@@ -47,7 +48,8 @@ public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRe
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().get("clientId");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
@@ -83,9 +85,9 @@ public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRe
 				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
 				testData.getProperty("resource.link.type"));
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
-		resourceId= createResourceApiResponse.jsonPath().getInt("resourceId");
+		resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Check response for one resource associated with one practice")
 	public void testResponseCodeForOneResourceAssociatedWithOnePractice() throws IOException {
 		logStep("Enter existing resourceId");
@@ -97,7 +99,7 @@ public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRe
 		practiceIds.add(practiceId);
 		validation.verifyResponseBodyForResourceAssociatedToPractices(fetchResourceDetailsApiResponse, practiceIds);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing resourceId in resourceId field and validate status code")
 	public void testErrorResponseCodeForNonExistingResourceId() throws IOException {
 		logStep("Enter non existing resourceId");
@@ -107,13 +109,13 @@ public class GetPracticesAssociatedToResourcesApiTests_DataLayer  extends BaseRe
 		CCUtils.responseTimeValidation(fetchResourceDetailsApiResponse);
 		CCUtils.assertEquals(fetchResourceDetailsApiResponse.getStatusCode(), 204);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null  resourceId in resourceId field and validate status code")
 	public void testErrorResponseCodeForNullValues() throws IOException {
 		logStep("Enter null values in resourceId");
-		fetchResourceDetailsApiResponse  = sharedInfo.getPracticesAssociatedToResourceNullValues_DL();
-	logStep("Validating response information");
-	CCUtils.responseTimeValidation(fetchResourceDetailsApiResponse );
-	CCUtils.assertEquals(fetchResourceDetailsApiResponse.getStatusCode(), 400);
+		fetchResourceDetailsApiResponse = sharedInfo.getPracticesAssociatedToResourceNullValues_DL();
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(fetchResourceDetailsApiResponse);
+		CCUtils.assertEquals(fetchResourceDetailsApiResponse.getStatusCode(), 400);
 	}
 }

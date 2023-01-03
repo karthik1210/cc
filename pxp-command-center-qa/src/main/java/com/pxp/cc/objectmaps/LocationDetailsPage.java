@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2021-2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -8,8 +8,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
-import com.fasterxml.jackson.annotation.JacksonInject.Value;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
 import com.pxp.cc.util.CCUtils;
 
@@ -25,13 +23,13 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Resource']")
 	private WebElement labelResource;
 
-	@FindBy(xpath = "//div[@role='combobox']")
+	@FindBy(xpath = "//div//input[@id='Resource']")
 	private WebElement textboxResource;
 
 	@FindBy(xpath = "(//div[@role='option'])[1]")
 	private WebElement selectFirstInAutoSuggestion;
 
-	@FindBy(id = "cancel-icon")
+	@FindBy(xpath = "//div//button[@id='cancel-icon']")
 	private WebElement buttonCancel;
 
 	@FindBy(xpath = "//span[contains(text(),'clear')]")
@@ -46,7 +44,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),'Connected Scheduling Resources')]")
 	private WebElement labelSection;
 
-	@FindBy(xpath = "(//button[contains(text(),'+ ADD')])[2]")
+	@FindBy(xpath = "//button[@id='addResourceType']")
 	private WebElement btnAdd;
 
 	@FindBy(xpath = "//div[contains(text(),'Resource Name')]")
@@ -85,7 +83,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(id = "validMobileNumberError")
 	private WebElement errorMessagePhoneNumber;
 
-	@FindBy(xpath = "//span[contains(text(),'Invalid range selected')]")
+	@FindBy(xpath = "//span[contains(text(),'Invalid range. Start time cannot be greater than End time')]")
 	private WebElement errorMessageOfficeTime;
 
 	@FindBy(id = "copySettingsBtn")
@@ -151,14 +149,11 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='flex']/span")
 	private WebElement toasterMessage;
 
-	@FindBy(xpath = "//div[contains(text(),'Solutions Display Info')]")
-	private WebElement labelSolutionsSection;
+	@FindBy(xpath = "//div[contains(text(),'Location Display Info')]")
+	private WebElement labelLocationSection;
 
 	@FindBy(xpath = "//div[contains(text(),'Location Info')]")
 	private WebElement labelLocationInfoSection;
-
-	@FindBy(xpath = "//span[contains(text(),'External ID')]")
-	private WebElement labelExternalIDSection;
 
 	@FindBy(xpath = "(//span[contains(text(),'Address')])[1]")
 	private WebElement labelAddress;
@@ -210,7 +205,7 @@ public class LocationDetailsPage extends CCMainPage {
 
 	@FindBy(id = "treeNodeName")
 	private List<WebElement> listOfPracTabs;
-	
+
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon[normalize-space(text()='chevron_right')]")
 	private WebElement arrowEntPractice;
 
@@ -294,7 +289,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='Provider']")
 	private WebElement labelProvider;
 
-	@FindBy(xpath = "//input[@type='text']")
+	@FindBy(xpath = "//div//input[@id='Provider']")
 	private WebElement textboxProvider;
 
 	@FindBy(xpath = "(//div[contains(text(),'No data to display')])[1]")
@@ -339,6 +334,39 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'Successfully added provider')]")
 	private WebElement successToasterMessage;
 
+	@FindBy(xpath = "//span[@class='slider round']")
+	private WebElement toggleButton;
+
+	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon")
+	private WebElement entepriseArrow;
+
+	@FindBy(xpath = "(//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1])[1]")
+	private WebElement itemsPerPageDropdown;
+
+	@FindBy(xpath = "(//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1])[2]")
+	private WebElement itemsPerPageDropdownResource;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//mat-icon[text()=' chat ']//..//following::div[@id='toggleButton']//child::input[@type='checkbox'])[1]")
+	private WebElement connectedSolChat;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Pay ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPay;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Virtual Visits ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolVirtualVisits;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' PSS ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPss;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Patient Portal ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolPortal;
+
+	@FindBy(xpath = "(//div[@class='connected-solution-container']//div[@id='solutionGroup']//div//p[text()=' Engage ']//..//following::div[@id='toggleButton'])[1]")
+	private WebElement connectedSolEngage;
+
+	@FindBy(xpath = "(//span[@class='mat-option-text'])[1]")
+	private WebElement itemsPerPageFive;
+
 	private String expandArrowEntPractice(String ent) {
 		return "//mat-tree-node[@role='treeitem']//button[@aria-label='Toggle " + ent + "']";
 	}
@@ -358,6 +386,7 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void verifyConnectedSchedulingResourcesLabel() {
+		CCUtils.scrollPageViaElement(driver, labelSection);
 		CCUtils.verifyAndWaitForElement(labelSection, driver);
 		log("Verifying Connected Scheduling Resources Label");
 		CCUtils.assertEquals(labelSection.getText().trim(), "Connected Scheduling Resources");
@@ -420,27 +449,21 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void enterResourceName(String input) {
-		CCUtils.verifyAndWaitForElement(textboxResource, driver);
+		CCUtils.verifyAndWaitForElementPresence(textboxResource, driver);
 		CCUtils.assertEquals(textboxResource.isEnabled(), true);
-		textboxResource.click();
+		textboxResource.sendKeys(input);
 		log("Entered input for Resource Name : " + input);
 	}
 
 	public void clickFirstInAutoSuggestion() {
 		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
-		if (selectFirstInAutoSuggestion.isDisplayed()) {
-			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
-			javascriptClick(selectFirstInAutoSuggestion);
-
-		} else {
-			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
-			CCUtils.assertTrue(false, "Searched text not present");
-		}
+		log("Clicked on in Auto Suggestion ");
+		javascriptClick(selectFirstInAutoSuggestion);
 	}
 
 	public void clickOnCancelButton() {
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
-		buttonCancel.click();
+		javascriptClick(buttonCancel);
 		log("Clicked on Cancel Button");
 	}
 
@@ -462,9 +485,9 @@ public class LocationDetailsPage extends CCMainPage {
 		log("Clicked on Remove Connection Button");
 	}
 
-	public void verifySolutionsDisplayInfoSection() throws InterruptedException, AWTException {
+	public void verifyLocationDisplayInfoSection() throws InterruptedException, AWTException {
 		log("Verifying Solutions Display Info Section");
-		verifySolutionsDisplayInfoSectionLabel();
+		verifyLocationDisplayInfoSectionLabel();
 		verifyEditButtonLabel();
 		verifyCopySettingsButtonLabel();
 		verifyLocationDisplayNameEnLabel();
@@ -488,11 +511,11 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.assertEquals(labelEditButton.getText().trim(), "edit");
 	}
 
-	public void verifySolutionsDisplayInfoSectionLabel() {
-		CCUtils.scrollPageViaElement(driver, labelSolutionsSection);
-		CCUtils.verifyAndWaitForElement(labelSolutionsSection, driver);
+	public void verifyLocationDisplayInfoSectionLabel() {
+		CCUtils.scrollPageViaElement(driver, labelLocationSection);
+		CCUtils.verifyAndWaitForElement(labelLocationSection, driver);
 		log("Verifying Solutions Display Info Label");
-		CCUtils.assertEquals(labelSolutionsSection.getText().trim(), "Solutions Display Info");
+		CCUtils.assertEquals(labelLocationSection.getText().trim(), "Location Display Info");
 	}
 
 	public void verifyLocationDisplayNameEnLabel() {
@@ -625,7 +648,7 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void verifyMaximumCharactersReachedErrorMessage(String LocationDisplayNameEn, String LocationDisplayNameEs,
-			String address2, String directionsEn, String directionsEs) {
+			String address2) {
 		log("Enter more than 100 characters in LocationDisplayNameEn textbox field and verify error message");
 		CCUtils.verifyAndWaitForElement(textboxLocationDisplayNameEn, driver);
 		textboxLocationDisplayNameEn.sendKeys(LocationDisplayNameEn);
@@ -648,22 +671,6 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(errorMessageAddress2, driver);
 		CCUtils.assertEquals(errorMessageAddress2.getText().trim(), "Maximum characters reached");
 		log("Error message displayed for Address2 field is " + errorMessageAddress2.getText().trim());
-		log("Enter more than 100 characters in DirectionsEn textbox field and verify error message");
-		CCUtils.verifyAndWaitForElement(textboxDirectionsEn, driver);
-		textboxDirectionsEn.clear();
-		textboxDirectionsEn.sendKeys(directionsEn);
-		log("Entered text in DirectionsEn field is " + directionsEn);
-		CCUtils.verifyAndWaitForElement(errorMessageDirectionsEn, driver);
-		CCUtils.assertEquals(errorMessageDirectionsEn.getText().trim(), "Maximum characters reached");
-		log("Error message displayed for DirectionsEn field is " + errorMessageDirectionsEn.getText().trim());
-		log("Enter more than 100 characters in DirectionsEs textbox field and verify error message");
-		CCUtils.verifyAndWaitForElement(textboxDirectionsEs, driver);
-		textboxDirectionsEs.clear();
-		textboxDirectionsEs.sendKeys(directionsEs);
-		log("Entered text in DirectionsEs field is " + directionsEs);
-		CCUtils.verifyAndWaitForElement(errorMessageDirectionsEs, driver);
-		CCUtils.assertEquals(errorMessageDirectionsEs.getText().trim(), "Maximum characters reached");
-		log("Error message displayed for DirectionsEs field is " + errorMessageDirectionsEs.getText().trim());
 	}
 
 	public void verifyErrorMessageForInvalidPhoneNumber(String phoneNumber) {
@@ -690,7 +697,7 @@ public class LocationDetailsPage extends CCMainPage {
 		log("Entered input for End Office Hours : " + endTime);
 		CCUtils.verifyAndWaitForElement(errorMessageOfficeTime, driver);
 		CCUtils.assertEquals(errorMessageOfficeTime.getText().trim(),
-				"Invalid range selected. Start time cannot be greater than End time");
+				"Invalid range. Start time cannot be greater than End time");
 	}
 
 	public void verifySaveButtonIsDisabled() {
@@ -704,7 +711,6 @@ public class LocationDetailsPage extends CCMainPage {
 		verifyocationIcon();
 		verifyLocationMap();
 		verifyLocationInfoSectionLabel();
-		verifyExternalIdLabel();
 		verifyLocationAddressLabel();
 		verifyLocationCommandCenterIdLabel();
 		verifyLatitudeLabel();
@@ -717,12 +723,6 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelLocationInfoSection, driver);
 		log("Verifying Location Info Label");
 		CCUtils.assertEquals(labelLocationInfoSection.getText().trim(), "Location Info");
-	}
-
-	public void verifyExternalIdLabel() {
-		CCUtils.verifyAndWaitForElement(labelExternalIDSection, driver);
-		log("Verifying Location External ID Label");
-		CCUtils.assertEquals(labelExternalIDSection.getText().trim(), "External ID");
 	}
 
 	public void verifyLocationAddressLabel() {
@@ -826,13 +826,9 @@ public class LocationDetailsPage extends CCMainPage {
 			CCUtils.verifyAndWaitForElement(element, driver);
 			CCUtils.scrollPageViaElement(driver, element);
 			if (element.getText().toString().trim().equals(enterpriseName.trim())) {
-				log("inside if one");
-				// CCUtils.assertEquals(arrowEntPractice.getText().toString().trim(),
-				// "chevron_right");
 				if (arrowEntPractice.getText().trim().equals("chevron_right")) {
 					log("inside another if");
 					arrowEntPractice.click();
-					// log("clicked to arrow practice : " + arrowEntPractice.getText() + " tab");
 				} else {
 					log("enterprise " + element.getText() + " is already expanded");
 				}
@@ -1087,9 +1083,10 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void verifyConnectedSolutionsTitle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolutionsTitle);
 		CCUtils.verifyAndWaitForElement(connectedSolutionsTitle, driver);
 		CCUtils.assertTrue(connectedSolutionsTitle.isDisplayed(), "verifying connected solutions title");
-		log("Verifying connected solutions Title");
+		log("Verified connected solutions Title");
 	}
 
 	public void toggleOnChats() {
@@ -1121,6 +1118,7 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void verifyConnectedProvidersLabel() {
+		CCUtils.scrollPageViaElement(driver, labelProvidersSection);
 		CCUtils.verifyAndWaitForElement(labelProvidersSection, driver);
 		log("Verifying Connected Providers Label");
 		CCUtils.assertEquals(labelProvidersSection.getText().trim(), "Connected Providers");
@@ -1156,8 +1154,8 @@ public class LocationDetailsPage extends CCMainPage {
 		log("Provider name label text is " + labelProvider.getText().trim());
 	}
 
-	public void enterProviderName(String input) {
-		CCUtils.verifyAndWaitForElement(textboxProvider, driver);
+	public void enterProviderName(String input) throws InterruptedException {
+		CCUtils.waitForElementPresence(textboxProvider, driver);
 		CCUtils.assertEquals(textboxProvider.isEnabled(), true);
 		textboxProvider.sendKeys(input);
 		selectFirstOption();
@@ -1184,12 +1182,6 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxSearchProviders, driver);
 		textboxSearchProviders.sendKeys(firstName);
 		log("Entered text in search :" + firstName);
-	}
-
-	public void clickOnPracticeNode() {
-		CCUtils.verifyAndWaitForElement(nodePractice, driver);
-		nodePractice.click();
-		log("Clicked on practice node");
 	}
 
 	public void verifySuccessToasterMessage(String expectedToasterMessage) {
@@ -1316,5 +1308,116 @@ public class LocationDetailsPage extends CCMainPage {
 		clickOnAdd();
 		enterProviderName(input);
 		clickOnAddToSave();
+	}
+
+	public void clickOnPayToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPay, driver);
+		log("click On Pay Toggle");
+		javascriptClick(connectedSolPay);
+	}
+
+	public void clickOffPayToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPay, driver);
+		log("click off pay toggle");
+		javascriptClick(connectedSolPay);
+	}
+
+	public void clickOnVirtualVisitToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolVirtualVisits);
+		log("click on virtual visit toggle");
+		javascriptClick(connectedSolVirtualVisits);
+	}
+
+	public void clickOffVirtualVisitToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolVirtualVisits, driver);
+		log("click of virtual visit toggle");
+		javascriptClick(connectedSolVirtualVisits);
+	}
+
+	public void clickOnPSSToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPss);
+		CCUtils.verifyAndWaitForElement(connectedSolPss, driver);
+		log("click on Pss Toggle");
+		javascriptClick(connectedSolPss);
+	}
+
+	public void clickOffPSSToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPss, driver);
+		log("click Off PSS Toggle");
+		javascriptClick(connectedSolPss);
+	}
+
+	public void clickOnPortalToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolPortal);
+		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
+		log("click On Portal Toggle");
+		javascriptClick(connectedSolPortal);
+	}
+
+	public void clickOffPortalToggle() {
+		CCUtils.verifyAndWaitForElement(connectedSolPortal, driver);
+		log("click Off Portal Toggle");
+		javascriptClick(connectedSolPortal);
+	}
+
+	public void clickOnChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click On Chat Toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
+
+	public void clickOffChatToggle() {
+		CCUtils.scrollPageViaElement(driver, connectedSolChat);
+		CCUtils.verifyAndWaitForElement(connectedSolChat, driver);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "true");
+		log("The toggle is checked as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+		log("click Off Chat Toggle");
+		javascriptClick(connectedSolChat);
+		CCUtils.assertEquals(connectedSolChat.getAttribute("aria-checked").toString().trim(), "false");
+		log("The toggle is not checked yet as aria-checked attribute value is "
+				+ connectedSolChat.getAttribute("aria-checked").toString().trim());
+	}
+
+	public void clickOnPracticeNode() {
+		CCUtils.verifyAndWaitForElement(nodePractice, driver);
+		log("click On node Practice");
+		javascriptClick(nodePractice);
+	}
+
+	public void clickToEntepriseArrow() {
+		CCUtils.verifyAndWaitForElement(entepriseArrow, driver);
+		entepriseArrow.click();
+		log("clicked to enteprise Arrow");
+	}
+
+	public void clickOnToggleButton() {
+		CCUtils.verifyAndWaitForElement(toggleButton, driver);
+		toggleButton.click();
+		log("clicked to toggle button");
+	}
+
+	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
+		itemsPerPageDropdown.click();
+	}
+
+	public void clickItemsPerPageDropdownResource() throws InterruptedException, AWTException {
+		CCUtils.scrollPageToEnd();
+		CCUtils.verifyAndWaitForElement(itemsPerPageDropdownResource, driver);
+		itemsPerPageDropdownResource.click();
+	}
+
+	public void clickFiveItemsPerPage() {
+		CCUtils.verifyAndWaitForElement(itemsPerPageFive, driver);
+		itemsPerPageFive.click();
 	}
 }

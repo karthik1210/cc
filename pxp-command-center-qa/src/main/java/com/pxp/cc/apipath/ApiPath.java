@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.apipath;
 
@@ -477,8 +477,8 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/providersssss";
 	}
 
-	public static final String PROVIDER_DETAILS_DL(int providerId) {
-		return SHARED_DL + "/v1/providers/" + providerId;
+	public static final String PROVIDER_DETAILS_DL(int clientId, int providerId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/providers/" + providerId;
 	}
 
 	public static final String PROVIDER_DETAILS_INVALID_URL_DL(int providerId) {
@@ -1016,8 +1016,8 @@ public class ApiPath {
 		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
 	}
 
-	public static final String LOCATION_DETAILS_DL(int locationId) {
-		return SHARED_DL + "/v1/locations/" + locationId;
+	public static final String LOCATION_DETAILS_DL(int clientId, int locationId) {
+		return SHARED_DL + "/v1/clients/"+ clientId +"/locations/" + locationId;
 	}
 
 	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
