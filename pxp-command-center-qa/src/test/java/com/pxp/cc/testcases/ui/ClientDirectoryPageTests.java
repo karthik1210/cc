@@ -58,8 +58,9 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		return listOfFavoritingClient;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory")
-	public void testNewActiveClientCreationAndClientNameSearch() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to Search Client name in Client Directory and no result found error message when searching non-existing client")
+	public void testNewActiveClientCreationAndClientNameSearchAndNoSearchResultFoundErrorMessageAndClientTypeFilters() throws Exception {
+		logStep("PXPP-477 Verify whether new client is created when all mandatory values are provided");
 		logStep("Searching a newly created client in client directory");
 		clientName = ccui.getClient();
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
@@ -68,10 +69,39 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		clientDirectoryPageRefernce.clickSearchButton();
 		logStep("Verifying results for searched client");
 		clientDirectoryPageRefernce.verfiySearchResult(clientName);
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1863 Verify 'No Result Found' is displayed when no match is present for searched text");
+		logStep("Searching a non-existing client in client directory");
+		clientDirectoryPageRefernce.searchNode(testData.getProperty("search.non.existing.client"));
+		clientDirectoryPageRefernce.selectClientTypeDropDown();
+		clientDirectoryPageRefernce.selectClientType(testData.getProperty("api.client.thirteen.type"));
+		clientDirectoryPageRefernce.applyClientTypeFilter();
+		clientDirectoryPageRefernce.clickSearchButton();
+		logStep("Verifying no result found scenario");
+		boolean result = clientDirectoryPageRefernce.testToCheckNoResultsFound();
+		if (result == true) {
+			logStep("Test Case Pass, No Result For search text is displayed ");
+		} else {
+			logStep("Matching Result for Searched string found, "
+					+ "kindly provide client name that is not present in Commandcenter");
+		}
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1861 Verify Default text for Client Search & Client Type dropdown");
+		logStep("PXPP-1860 Verify Client types are searched based on Filters provided");
+		logStep("checking search button functionality");
+		clientDirectoryPageRefernce.verfiySearchButtonFunctionality(ccuser.searchClientInClientDirectory);
+		clientDirectoryPageRefernce.clearSearchTextInClientDirectory();
+		logStep("Apply Client Type Filter in Client Directory.");
+		clientDirectoryPageRefernce.selectClientTypeDropDown();
+		clientDirectoryPageRefernce.selectClientType(ccuser.getClientThreeType());
+		clientDirectoryPageRefernce.applyClientTypeFilter();
+		logStep("Verify client type filter");
+		clientDirectoryPageRefernce.verfiySearchResultForClientType(ccuser.getClientThreeType());
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify error messages on create client popup")
 	public void testErrorMessagesOnCreateClientPopUp() throws Exception {
+		logStep("PXPP-480 PXPP-481 Verify error for unique client name and sap id is displayed when user enters text and focus is shifted");
 		String searchClientName = ccui.getClient();
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		String SapId = ccui.getGeneralSettingsPage().getSAPIdValueForBasicInfo();
@@ -101,6 +131,7 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify create client popup")
 	public void testCreateClientPopUp() throws Exception {
+		logStep("PXPP-457,PXPP-459,PXPP-461,PXPP-463,PXPP-464,PXPP-466,PXPP-467,PXPP-471,PXPP-472,PXPP-473,PXPP-476 Verify the web elements of create client pop up");
 		logStep("Verify create client popup");
 		ccui.getNgHierarchyClientCreationPage().clickCreateClient();
 		ccui.getNgHierarchyClientCreationPage().verifyCreateClientPageTitle();
@@ -120,44 +151,10 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		ccui.getNgHierarchyClientCreationPage().verifyCreateButtonIsDisplayedAndIsDisabled();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check No results found is displayed if client name not present")
-	public void testToCheckNoResultsFound() throws Exception {
-		logStep("Searching a non-existing client in client directory");
-		clientDirectoryPageRefernce.searchNode(testData.getProperty("search.non.existing.client"));
-		clientDirectoryPageRefernce.selectClientTypeDropDown();
-		clientDirectoryPageRefernce.selectClientType(testData.getProperty("api.client.thirteen.type"));
-		clientDirectoryPageRefernce.applyClientTypeFilter();
-		clientDirectoryPageRefernce.clickSearchButton();
-		logStep("Verifying no result found scenario");
-		boolean result = clientDirectoryPageRefernce.testToCheckNoResultsFound();
-		if (result == true) {
-			logStep("Test Case Pass, No Result For search text is displayed ");
-		} else {
-			logStep("Matching Result for Searched string found, "
-					+ "kindly provide client name that is not present in Commandcenter");
-		}
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check Default text of Search bar & functionality of Search Button")
-	public void testDefaultTextInSearchBar() throws Exception {
-		logStep("checking search button functionality");
-		clientDirectoryPageRefernce.verfiySearchButtonFunctionality(ccuser.searchClientInClientDirectory);
-	}
-
-	@Test(enabled = true, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to check results after ClientType filter is applied")
-	public void testClientTypeFilters() throws Exception {
-		logStep("Apply Client Type Filter in Client Directory.");
-		clientDirectoryPageRefernce.selectClientTypeDropDown();
-		clientDirectoryPageRefernce.selectClientType(ccuser.getClientThreeType());
-		clientDirectoryPageRefernce.applyClientTypeFilter();
-		logStep("Verify client type filter");
-		clientDirectoryPageRefernce.verfiySearchResultForClientType(ccuser.getClientThreeType());
-	}
-
 	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite a client from client directory")
-	public void testFavoriteClient() throws Exception {
+	public void testFavoriteClientAndUnFavoriteClient() throws Exception {
+		logStep("PXPP-1787 Verify the features of Favorites functionality in Client Directory");
 		clientNameOne = ccui.getClient();
 		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
 		logStep("Verfying whether favorited client count is equal or less than five");
@@ -166,24 +163,22 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		clientDirectoryPageRefernce.searchNode(clientNameOne);
 		clientDirectoryPageRefernce.clickSearchButton();
 		clientDirectoryPageRefernce.FavoriteAClient();
+		logStep("PXPP-1787 Verify the features of Favorites functionality in Client Directory");
+		logStep("Verfying whether favorited client count is equal or less than five");
+		int noOfFavClients = clientDirectoryPageRefernce.getSizeListOfFavClients();
+		boolean data = clientDirectoryPageRefernce.checkNoOfFavClientsAndUnFavoriteThem(noOfFavClients);
+		clientDirectoryPageRefernce.FavoriteClientThenUnfavorite(data, clientNameOne);
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to favorite more than 5 client from client directory")
 	public void testMoreThanFiveClientFavoritedError() throws Exception {
+		logStep("PXPP-1787 Verify the features of Favorites functionality in Client Directory");
 		logStep("Verfying whether favorited client count is equal or less than five");
 		int noOfFavClients = clientDirectoryPageRefernce.getSizeListOfFavClients();
 		log("Print no of Fav clients : " + noOfFavClients);
 		clientDirectoryPageRefernce.validateFavClientsAndUnFavThem(noOfFavClients);
 		List<String> listOfFavoritingClient = listOfFavClients();
 		clientDirectoryPageRefernce.listOfFavoritingClients(listOfFavoritingClient);
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to unfavorite a client from client directory")
-	public void testUnFavoriteClient() throws Exception {
-		logStep("Verfying whether favorited client count is equal or less than five");
-		int noOfFavClients = clientDirectoryPageRefernce.getSizeListOfFavClients();
-		boolean data = clientDirectoryPageRefernce.checkNoOfFavClientsAndUnFavoriteThem(noOfFavClients);
-		clientDirectoryPageRefernce.FavoriteClientThenUnfavorite(data, ccuser.getProperty("favorite.client.name"));
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to check nodes can be searched in Client Directory screen")
@@ -211,9 +206,10 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		}
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify Display of default pagination i.e., 10 items per page.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Display of default pagination i.e., 10 items per page.")
 	public void testDefaultItemsPerPageAndDefaultClientPaginationInClientWebTable()
 			throws InterruptedException, RuntimeException {
+		logStep("PXPP-1711 PXPP-1713 Verify client directory web table and pagination features");
 		logStep("Now comparing the default Items per Page .Ideally it should be 10.");
 		CCUtils.assertEquals(clientDirectoryPageRefernce.getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(clientDirectoryPageRefernce.getDefaultPagination(), "1 – 10");
@@ -227,8 +223,9 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(clientDirectoryPageRefernce.isLastPageButtonDisabled(), true);
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify numbers of rows and Pagination should be change it we changes 'Items Per Page' value.")
 	public void testAllPaginationButtonsClickable() throws InterruptedException {
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		CCUtils.assertEquals(clientDirectoryPageRefernce.getDefaultItemsPerPage(), "10");
@@ -243,43 +240,36 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 		clientDirectoryPageRefernce.clickFirstPageButton();
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
-	public void testNextPageButtonWhenItemsPerPageValueisTen() throws InterruptedException {
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10,20,50,100,200.")
+	public void testNextPageButtonWhenItemsPerPageValueisTenTwentyyFiftyHundredTwoHundred() throws InterruptedException {
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		String defaultItemsPerPage = clientDirectoryPageRefernce.getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
 		clientDirectoryPageRefernce
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 20.")
-	public void testNextPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
 		String itemsPerPageTwenty = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwenty, "20");
 		clientDirectoryPageRefernce
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwenty));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 50.")
-	public void testNextPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
 		String itemsPerPageFifty = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageFifty, "50");
 		clientDirectoryPageRefernce
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageFifty));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
-	public void testNextPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
 		String itemsPerPageHundred = clientDirectoryPageRefernce.clickHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageHundred, "100");
 		clientDirectoryPageRefernce
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageHundred));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 200.")
-	public void testNextPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
 		String itemsPerPageTwoHundred = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
 		CCUtils.assertEquals(itemsPerPageTwoHundred, "200");
@@ -289,138 +279,116 @@ public class ClientDirectoryPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 10.")
 	public void testLastPageButtonWhenItemsPerPageValueisTen() throws InterruptedException {
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		String defaultItemsPerPage = clientDirectoryPageRefernce.getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
 		log("Print the RHS Pagination : " + clientDirectoryPageRefernce.getRHSPagination());
 		clientDirectoryPageRefernce
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 20.")
-
-	public void testLastPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "20");
+		String itemsPerPage_20 = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_20, "20");
 		log("get default pagination : " + clientDirectoryPageRefernce.getDefaultPagination());
 		log("Print the RHS Pagination : " + clientDirectoryPageRefernce.getRHSPagination());
-		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 50.")
-	public void testLastPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException {
+		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_20));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "50");
+		String itemsPerPage_50 = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_50, "50");
 		log("Print the RHS Pagination : " + clientDirectoryPageRefernce.getRHSPagination());
-		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 100.")
-	public void testLastPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException {
+		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_50));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickHundredItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "100");
+		String itemsPerPage_100 = clientDirectoryPageRefernce.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_100, "100");
 		log("Print the RHS Pagination : " + clientDirectoryPageRefernce.getRHSPagination());
-		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Next Button functionality when Items Per Page value is = 200.")
-	public void testLastPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException {
+		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_100));
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "200");
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
+		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
+		String itemsPerPage_200 = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_200, "200");
 		log("Print the RHS Pagination : " + clientDirectoryPageRefernce.getRHSPagination());
-		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+		clientDirectoryPageRefernce.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_200));
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 10.")
-	public void testPreviousPageButtonWhenItemsPerPageValueisTen() throws InterruptedException {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 10,20,50,100,200.")
+	public void testPreviousPageButtonWhenItemsPerPageValueisTenTwentyFiftyHundredTwoHundred() throws InterruptedException {
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		String defaultItemsPerPage = clientDirectoryPageRefernce.getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
 		clientDirectoryPageRefernce
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 20.")
-	public void testPreviousPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "20");
-		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 50.")
-	public void testPreviousPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException {
+		String itemsPerPage_20 = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_20, "20");
+		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_20));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "50");
-		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 100.")
-	public void testPreviousPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException {
+		String itemsPerPage_50 = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_50, "50");
+		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_50));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickHundredItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "100");
-		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check Previous Button functionality when Items Per Page value is = 200.")
-	public void testPreviousPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException {
+		String itemsPerPage_100 = clientDirectoryPageRefernce.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_100, "100");
+		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_100));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "200");
-		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+		String itemsPerPage_200 = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_200, "200");
+		clientDirectoryPageRefernce.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_200));
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 10.")
-	public void testFirstPageButtonWhenItemsPerPageValueisTen() throws InterruptedException {
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 10,20,50,100,200")
+	public void testFirstPageButtonWhenItemsPerPageValueisTenTwentyFiftyHundredTwoHundred() throws InterruptedException {
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		String defaultItemsPerPage = clientDirectoryPageRefernce.getDefaultItemsPerPage();
 		CCUtils.assertEquals(defaultItemsPerPage, "10");
 		clientDirectoryPageRefernce
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(defaultItemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 20.")
-	public void testFirstPageButtonWhenItemsPerPageValueisTwenty() throws InterruptedException {
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "20");
-		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 50.")
-	public void testFirstPageButtonWhenItemsPerPageValueisFifty() throws InterruptedException {
+		String itemsPerPage_20 = clientDirectoryPageRefernce.clickTwentyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_20, "20");
+		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_20));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "50");
-		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 100.")
-	public void testFirstPageButtonWhenItemsPerPageValueisHundred() throws InterruptedException {
+		String itemsPerPage_50 = clientDirectoryPageRefernce.clickFiftyItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_50, "50");
+		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_50));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickHundredItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "100");
-		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Check First Button functionality when Items Per Page value is = 200.")
-	public void testFirstPageButtonWhenItemsPerPageValueisTwoHundred() throws InterruptedException {
+		String itemsPerPage_100 = clientDirectoryPageRefernce.clickHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_100, "100");
+		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_100));
+		clientDirectoryPageRefernce.pageRefresh();
+		logStep("PXPP-1713 Verify Client's Web Table Pagination Features");
 		clientDirectoryPageRefernce.verifyClientDirectioryPageTitle();
 		clientDirectoryPageRefernce.clickItemsPerPageDropdown();
-		String itemsPerPage = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
-		CCUtils.assertEquals(itemsPerPage, "200");
-		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage));
+		String itemsPerPage_200 = clientDirectoryPageRefernce.clickTwoHundredItemsPerPage();
+		CCUtils.assertEquals(itemsPerPage_200, "200");
+		clientDirectoryPageRefernce.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPage_200));
 	}
 }

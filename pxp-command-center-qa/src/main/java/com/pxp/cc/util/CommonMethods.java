@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -506,10 +506,6 @@ public class CommonMethods extends CCMainPage {
     public void verifyTimezoneDropdownValues() throws InterruptedException {
     	getTimezoneDropdownValue();
         CCUtils.assertEquals(actualtimezoneValues, expectedTimezoneValues);
-		/*
-		 * if(expectedTimezoneValues.contains(actualtimezoneValues)) {
-		 * CCUtils.assertTrue(true, "verification of timezones"); }
-		 */
     }
 
     public final List<String> expectedClientTypes = Arrays.asList("Direct Client", "Dedicated IT", "GBS", "Itelagen",

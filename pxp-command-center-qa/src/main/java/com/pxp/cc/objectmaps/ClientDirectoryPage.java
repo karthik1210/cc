@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -14,8 +14,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import com.pxp.cc.util.CCUtils;
 
@@ -78,7 +76,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(id = "name-row")
 	private WebElement clientTableRow;
 
-	@FindBy(id="directoryStarContainer")
+	@FindBy(id = "directoryStarContainer")
 	private List<WebElement> listOfFavClients;
 
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
@@ -213,6 +211,12 @@ public class ClientDirectoryPage extends CCMainPage {
 		log("Entered text in Client Directory Search is : " + searchNodeName);
 	}
 
+	public void clearSearchTextInClientDirectory() {
+		CCUtils.assertEquals(buttonSearchClientDirectory.getText(), "CLEAR");
+		buttonSearchClientDirectory.click();
+		log("clicked to clear button");
+	}
+	
 	public void selectClientTypeDropDown() {
 		CCUtils.verifyAndWaitForElement(dropdownClientFilter, driver);
 		dropdownClientFilter.click();
@@ -558,8 +562,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		return currentItemPerPage;
 	}
 
-	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException {
+	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue) throws NumberFormatException {
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		if (noOfClients >= itemsPerPageValue) {
 			clickLastPageButton();
@@ -578,8 +581,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		}
 	}
 
-	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException {
+	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue) throws NumberFormatException {
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		log("Total number of clients is : " + noOfClients);
 		if (noOfClients >= itemsPerPageValue) {
@@ -623,8 +625,7 @@ public class ClientDirectoryPage extends CCMainPage {
 		}
 	}
 
-	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
-			throws NumberFormatException{
+	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue) throws NumberFormatException {
 		int noOfClients = Integer.valueOf(getTotalNoOfClients());
 		log("Total number of clients is : " + noOfClients);
 		checkLastPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
@@ -674,10 +675,10 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public void unFavoriteAllFavoritedClients() {
-		for(WebElement ele : listOfFavClients)
-				new Actions(driver).moveToElement(listOfFavClients.get(0)).pause(2000).click().build().perform();
+		for (WebElement ele : listOfFavClients)
+			new Actions(driver).moveToElement(listOfFavClients.get(0)).pause(2000).click().build().perform();
 	}
-	
+
 	public void FavoriteAClient() throws InterruptedException {
 		if (FavoritedStarIcon.isSelected()) {
 			log("client is already favorited");
@@ -760,6 +761,7 @@ public class ClientDirectoryPage extends CCMainPage {
 			log("Already deselected all clients");
 	}
 
-	public void gettoolTipMessage() {
+	public void pageRefresh() {
+		driver.navigate().refresh();
 	}
 }
