@@ -151,6 +151,14 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationsForAssociatingWithResource_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToResource_BusinessLayer" />	
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesForStaffApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer" />
+            <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateStaffApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffDetailsApiTests_BusinessLayer" />
 		</classes>
 	</test>
 </suite>

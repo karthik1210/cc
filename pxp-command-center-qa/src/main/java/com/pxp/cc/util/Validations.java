@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -188,15 +188,14 @@ public class Validations {
 	}
 
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String orgName, String orgType,
-			String displayName, String active,String timezoneId, String displayNameOne)
-			throws IOException {
+			String displayName, String active, String timezoneId, String displayNameOne) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), orgName);
 		CCUtils.assertEquals(jsonpath.get("orgType").toString(), orgType);
 		CCUtils.assertEquals(jsonpath.get("displayName").toString(), displayName);
-		CCUtils.assertEquals(jsonpath.get("active").toString(), active);	
+		CCUtils.assertEquals(jsonpath.get("active").toString(), active);
 		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
 		} else {
@@ -3452,5 +3451,41 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("lastName"), providerLastName);
 			Log4jUtil.log("verifying provider Id and provider first name and last name");
 		}
+	}
+
+	public void verifyResponseBodyForStaffAssociatedToPractices(Response response, ArrayList<Integer> practiceIds)
+			throws IOException {
+		for (int i = 0; i < practiceIds.size(); i++) {
+			if (response.asString().contains(String.valueOf(practiceIds.get(i)))) {
+				CCUtils.assertTrue(true, " : this value is present in response body" + practiceIds.get(i));
+			}
+		}
+	}
+
+	public void verifyResponseBodyForStaff(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("value of staff Id is :" + jsonpath.get("id"));
+		Log4jUtil.log("value of firstName  is : " + jsonpath.get("firstName").toString());
+		Log4jUtil.log("value of lastName  is : " + jsonpath.get("lastName").toString());
+	}
+
+	public void verifyErrorResponseBodyForExternalIdField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "ExternalId size maximum 50 characters");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyResponseBodyForStaffDetails(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("value of firstName  is : " + jsonpath.get("firstName").toString());
+		Log4jUtil.log("value of lastName  is : " + jsonpath.get("lastName").toString());		
+		Log4jUtil.log("value of gender  is : " + jsonpath.get("gender").toString());
+		Log4jUtil.log("value of status  is : " + jsonpath.get("status").toString());
+	}	
+	
+	public void verifyErrorResponseBodyInvalidStaffId(Response response, int staffId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by id=" + staffId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 }

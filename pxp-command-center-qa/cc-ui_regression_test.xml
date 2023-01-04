@@ -29,8 +29,7 @@
             <class name="com.pxp.cc.testcases.ui.PracticeLinksTests"/>
             <class name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest"/>
             <class name="com.pxp.cc.testcases.ui.InterfaceSetupTests"/>
-            <class name="com.pxp.cc.testcases.ui.EnableDisablePracticesOnResourceDetailsPageTests"/>
-            <class name="com.pxp.cc.testcases.ui.AssociateDeassociateSolutionsOnResourceDetailsPageTests"/>
+            <class name="com.pxp.cc.testcases.ui.ResourcesDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.PatientAccessDetailsTests"/>
             <class name="com.pxp.cc.testcases.ui.LocationsPageTests" />
             <class name="com.pxp.cc.testcases.ui.LocationDetailsPageTests" />
