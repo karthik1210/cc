@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.ui;
 
@@ -18,19 +18,39 @@ public class NGHierarchyClientCreation extends CCMainPage {
     public NGHierarchyClientCreation(WebDriver driver) {
         super(driver);
         PageFactory.initElements(driver, this);
+        ngHierarchyClientCreationPage = new NGHierarchyClientCreationPage(driver);
+        commonMethods = new CommonMethods(driver);
+        generalSettingsPage = new GeneralSettingsPage(driver);
     }
 
     public String createNewActiveClient(String clientNam, String clientSap, String clientType, String clientTimeZone) throws Exception {
-        ngHierarchyClientCreationPage = new NGHierarchyClientCreationPage(driver);
         logStep("Select create client button from new dropdown");
         ngHierarchyClientCreationPage.clickCreateClient();
-        commonMethods = new CommonMethods(driver);
         logStep("Enter valid details in mandatory fields");
         clientName = clientNam;
         String clientSapNumber = clientSap;
         ngHierarchyClientCreationPage.createNewClient(clientName, clientSapNumber, clientType, clientTimeZone);
         logStep("Verify active radio button is by default selected on the create client popup");
         ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
+        logStep("Click on create button on the create client popup");
+        ngHierarchyClientCreationPage.clickConfirmPopup();
+        String actualMessage = commonMethods.getToasterMessage();
+        logStep("Verify success toaster message");
+        CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
+        return clientName;
+    }
+    
+    public String createNewInactiveClient(String clientNam, String clientSap, String clientType, String clientTimeZone) throws Exception {
+    	logStep("Select create client button from new dropdown");
+        ngHierarchyClientCreationPage.clickCreateClient();
+        logStep("Enter valid details in mandatory fields");
+        clientName = clientNam;
+        String clientSapNumber = clientSap;
+        ngHierarchyClientCreationPage.createNewClient(clientName, clientSapNumber, clientType, clientTimeZone);
+        logStep("Verify active radio button is by default selected on the create client popup");
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
+        logStep("Click on the Inactive radio button");
+        ngHierarchyClientCreationPage.selectInactiveRadiobutton();
         logStep("Click on create button on the create client popup");
         ngHierarchyClientCreationPage.clickConfirmPopup();
         String actualMessage = commonMethods.getToasterMessage();
@@ -59,8 +79,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
     }
 
     public String createNewActiveEnterprise(String system, String enterprise, String timeZone) throws NullPointerException, InterruptedException {
-        logStep("Navigating To General Settings page");
-        generalSettingsPage = new GeneralSettingsPage(driver);
+        logStep("Navigating To General Settings page"); 
         logStep("Verify general settings page title");
         generalSettingsPage.verifyGeneralSettingsPageTitle();
         logStep("Verify manage client button is displayed");
@@ -82,7 +101,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
 
     public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws Exception {
         logStep("Navigating To General Settings page");
-        generalSettingsPage = new GeneralSettingsPage(driver);
         logStep("Verify manage client button is displayed");
         ngHierarchyClientCreationPage.verifyManageClientButton();
         logStep("Click on manage client button");

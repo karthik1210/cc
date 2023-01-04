@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -131,7 +131,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@role='group']//p[contains(text(),'FAVORITES')]//following::div[@role='option'][1]")
 	private WebElement favoriteFirstClient;
 
-	@FindBy(xpath = "//a[@id='headerBookIcon']/parent::div")
+	@FindBy(id = "headerBookIcon")
 	private WebElement backToClientDirectory;
 
 	@FindBy(xpath = "//div[@class='info']")
@@ -252,6 +252,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
 	private WebElement purchasedSolutionExpandButton;
+	
+	@FindBy(xpath = "(//div[@class='content'])[2]")
+	private WebElement SapIdReadValue;
 
 	private String purchaseActivateButton(String solutionImageIcon) {
 		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//span[contains(text(),'"
@@ -580,10 +583,10 @@ public class GeneralSettingsPage extends CCMainPage {
 		return favoritesSecondClient;
 	}
 
-	public ClientDirectoryPage clickClientDirectoryIcon() {
+	public void clickClientDirectoryIcon() {
 		CCUtils.verifyAndWaitForElement(backToClientDirectory, driver);
-		backToClientDirectory.click();
-		return PageFactory.initElements(driver, ClientDirectoryPage.class);
+		javascriptClick(backToClientDirectory);
+		log("clicked to client directory icon");
 	}
 
 	public String getGeneralSettingsRightSectionClientName() {
@@ -1253,5 +1256,12 @@ public class GeneralSettingsPage extends CCMainPage {
 		WebElement clientNode = driver
 				.findElement(By.xpath("//p[@id='treeNodeName']/span[normalize-space(text())='" + clientName + "']"));
 		javascriptClick(clientNode);
+	}
+	
+	public String getSAPIdValueForBasicInfo() {
+		CCUtils.scrollPageViaElement(driver, SapIdReadValue);
+		CCUtils.verifyAndWaitForElement(SapIdReadValue, driver);
+		log("fetched the value of sap id : "+SapIdReadValue.getText().trim());
+		return SapIdReadValue.getText().trim();
 	}
 }
