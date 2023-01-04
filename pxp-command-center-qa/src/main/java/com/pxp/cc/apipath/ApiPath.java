@@ -1978,4 +1978,8 @@ public class ApiPath {
 	public static final String GET_STAFF_DL_NULL_VALUE() {
 		return SHARED_DL + "/v1/staff/null";
 	}
+	
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/staff/null/practices";
+	}
 }
