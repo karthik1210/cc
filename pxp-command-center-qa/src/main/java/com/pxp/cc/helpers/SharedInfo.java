@@ -1955,4 +1955,16 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract()
 				.response();
 	}	
+	
+	public Response getStaffDetails_BL(int staffId) {
+		String url = ApiPath.GET_STAFF_BL(staffId);
+		return given().spec(requestSpec).when().get(url).then().extract()
+				.response();
+	}
+	
+	public Response getStaffDetails_BL_Null_value(){
+		String url = ApiPath.GET_STAFF_BL_NULL_VALUE();
+		return given().spec(requestSpec).when().get(url).then().extract()
+				.response();
+	}	
 }
