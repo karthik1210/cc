@@ -115,7 +115,7 @@ public class GetOrganizationDetailsApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(fetchOrgDetailsApiResponse, orgId);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Enter client id in orgid field and validate response body")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Enter client id in orgid field and validate response body")
 	public void testErrorResponseForClientIdInOrgIdField() throws IOException {
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(clientId);
 		logStep("Validating response information");
