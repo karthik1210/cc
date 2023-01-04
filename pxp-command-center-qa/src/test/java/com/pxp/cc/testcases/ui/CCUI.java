@@ -44,15 +44,12 @@ public class CCUI extends CommandCenterGenericTest {
     TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
     ResourceDetailsPage resourceDetailsPage;
     AddNewResourcePage addNewResourcePage;
-    AddNewProviderPage addNewProviderPage;
     UserBulkEnrollmentPage userBulkEnrollmentPage;
     AddNewInternalUsersPage addNewInternalUsersPage;
     AddNewVarResellerUserPage addNewVarResellerUserPage;
     PatientAccessPage PatientAccessPage;
     InternalUsersPage internalUsersPage;
     CommandCenterUsersPage commandCenterUsersPage;
-    AddNewInternalUsersPage addNewInternalUsersPage;
-    AddNewVarResellerUserPage addNewVarResellerUserPage;
     VarResellerUsersPage varResellerUsersPage;
     SearchProviderPage searchProviderPage;
 
@@ -71,18 +68,6 @@ public class CCUI extends CommandCenterGenericTest {
             ccui = new CCUI(testData, driver);
         }
         return ccui;
-    }
-
-    public AddNewInternalUsersPage getAddNewInternalUsersPage() throws InterruptedException {
-        if(addNewInternalUsersPage == null)
-            addNewInternalUsersPage = new AddNewInternalUsersPage((driver));
-        return addNewInternalUsersPage;
-    }
-
-    public AddNewVarResellerUserPage getAddNewVarResellerUserPage() throws InterruptedException {
-        if(addNewVarResellerUserPage == null)
-            addNewVarResellerUserPage = new AddNewVarResellerUserPage((driver));
-        return addNewVarResellerUserPage;
     }
 
     public UserBulkEnrollmentPage getUserBulkEnrollmentPage() throws InterruptedException {

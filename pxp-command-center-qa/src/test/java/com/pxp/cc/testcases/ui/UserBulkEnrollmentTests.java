@@ -116,7 +116,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Search Inactive Users on Bulk Enrollment")
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Search Inactive Users on Bulk Enrollment")
     public void inactiveUserSearchOnBulkEnrollment() throws Exception {
         logStep("PXPP-26642 TC 016_Verify that Inactive Internal Users are not fetched to User search table in Bulk Enrollment Screen");
         internalFirstName = createUsers("Internal", "NOT_SENT", "Inactive", "Inactive", "Active").get("firstName").toString();
@@ -140,7 +140,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Search for No Roles Users on Bulk Enrollment")
+    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Search for No Roles Users on Bulk Enrollment")
     public void noRolesUserSearchOnBulkEnrollment() throws Exception {
         internalFirstName = createUsers("Internal", "NOT_SENT", "NoRoles", "Active", "inactive").get("firstName").toString();
         varResellerFirstName = createUsers("VarReseller", "NOT_SENT", "NoRoles", "Active", "inactive").get("firstName").toString();
@@ -164,7 +164,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Search Locked Users on Bulk Enrollment")
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Search Locked Users on Bulk Enrollment")
     public void lockedUserSearchOnBulkEnrollment() throws InterruptedException, IOException {
         internalFirstName = createUsers("Internal", "NOT_SENT", "Locked", "Active", "active").get("firstName").toString();
         varResellerFirstName = createUsers("VarReseller", "NOT_SENT", "Locked", "Active", "active").get("firstName").toString();
@@ -198,7 +198,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(enabled = false, priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Search for Confirmed Users on Bulk Enrollment")
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Search for Confirmed Users on Bulk Enrollment")
     public void confirmedUserSearchOnBulkEnrollment() throws Exception {
         internalFirstName = createUsers("Internal", "CONFIRMED", "Confirmed", "Active", "active").get("firstName").toString();
         createUserWithStatus("Confirmed");
@@ -209,7 +209,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), internalFirstName);
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchButtonOnSearchFilterOnUserPage(), "Search Button on Search Filter");
-        ccui.getUserBulkEnrollmentPage().verifyElementPresence(ccui.getUserBulkEnrollmentPage().getSendEnrollmentButton(), "Send Enrollment Button");
+        ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSendEnrollmentButton(), "Send Enrollment Button");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getNoResultsFoundMessage(), "No Result Found Message");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getBulkEnrollmentCancelButton(), "Cancel On Bulk Enrollment Page");
         logStep("PXPP-26663 TC 027_Verify that VAR/Reseller Users are not fetched to User search table in Bulk Enrollment Screen when VAR/Reseller user Enrollment Status is Confirmed");
@@ -223,7 +223,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Search for NOT_SENT, PENDING and EXPIRED  on Internal Users on Bulk Enrollment")
+    @Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Search for NOT_SENT, PENDING and EXPIRED  on Internal Users on Bulk Enrollment")
     public void internalUserSearchOnBulkEnrollment() throws Exception {
         String internalFirstNameNotSent = createUsers("Internal", "NOT_SENT", "", "Active", "active").get("firstName").toString();
         createUserWithStatus("NOT_SENT");
@@ -324,7 +324,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Search for NOT_SENT, PENDING and EXPIRED on VAR/Reseller Users on Bulk Enrollment")
+    @Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Search for NOT_SENT, PENDING and EXPIRED on VAR/Reseller Users on Bulk Enrollment")
     public void varResellerUserSearchOnBulkEnrollment() throws Exception {
         String varResellerFirstNameNotSent = createUsers("VarReseller", "NOT_SENT", "", "Active", "active").get("firstName").toString();
         createUserWithStatus("NOT_SENT");
@@ -424,7 +424,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "Search for VAR/Reseller Users and verify Display message")
+    @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Search for VAR/Reseller Users and verify Display message")
     public void varResellerUserSearchToVerifyDisplayMessage() throws Exception {
         logStep("PXPP-26700 TC 041_Verify the Display message after Filter Search in Bulk Enrollment Screen For VAR/Reseller Users");
         HashMap<String, Object> payload = createUsers("VarReseller", "NOT_SENT", "", "Active", "active");
@@ -443,7 +443,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         runOnce = false;
     }
 
-    @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "Search for Internal Users and verify Display message")
+    @Test(priority = 10, retryAnalyzer = RetryAnalyzer.class, description = "Search for Internal Users and verify Display message")
     public void internalUserSearchToVerifyDisplayMessage() throws Exception {
         logStep("PXPP-26698 TC 039_Verify the Display message after Filter Search in Bulk Enrollment Screen For Internal Users");
         HashMap<String, Object> payload = createUsers("internal", "NOT_SENT", "", "Active", "active");
@@ -463,7 +463,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
     }
 
 
-    @Test(priority = 12, retryAnalyzer = RetryAnalyzer.class, description = "Verify Popup Message of Send Enrollment")
+    @Test(priority = 11, retryAnalyzer = RetryAnalyzer.class, description = "Verify Popup Message of Send Enrollment")
     public void verifyPopupMessageOfSendEnrollment() throws Exception {
         logStep("PXPP-26704 TC 045_Verify Send Enrollment Confirmation popup in Bulk Enrollment Screen");
         initialPreRequisite();
@@ -480,7 +480,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().verifyElementPresence(ccui.getUserBulkEnrollmentPage().getCancelButtonOnSendEnrollmentConfirmation(), "Cancel button");
     }
 
-    @Test(priority = 13, retryAnalyzer = RetryAnalyzer.class, description = "Select/de-select of users in Bulk Enrollment")
+    @Test(priority = 12, retryAnalyzer = RetryAnalyzer.class, description = "Select/de-select of users in Bulk Enrollment")
     public void selectAndDeselectInBulkEnrollment() throws Exception {
         initialPreRequisite();
         logStep("PXPP-26701 TC 042_Verify the select/de-select the list of users for User Search Table in Bulk Enrollment Screen of Internal Users");
@@ -528,7 +528,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().isChecked(false);
     }
 
-    @Test(priority = 14, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Clear and without Search button Functionality for Search Filter in Bulk Enrollment Screen")
+    @Test(priority = 13, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Clear and without Search button Functionality for Search Filter in Bulk Enrollment Screen")
     public void internalUserSearchToVerifyClearWithoutSearchOnSearchFilterInBulkEnrollmentScreen() throws Exception {
         logStep("PXPP-26697 TC 038_Verify the Clear and without Search button Functionality for Search Filter in Bulk Enrollment Screen");
         HashMap<String, Object> payload = createUsers("internal", "NOT_SENT", "", "Active", "active");
@@ -557,7 +557,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().verifyTextBoxIsEmpty("firstName");
     }
 
-    @Test(priority = 15, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Search Filter Functionality with all attributes in Bulk Enrollment Screen for Internal Users")
+    @Test(priority = 14, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Search Filter Functionality with all attributes in Bulk Enrollment Screen for Internal Users")
     public void verifyOnInternalUserSearchFunctionalityWithAllAttributes() throws Exception {
         logStep("PXPP-26694 TC 035_Verify the Search Filter Functionality with all attributes in Bulk Enrollment Screen for Internal Users");
         HashMap<String, Object> payload1 = createUsers("internal", "NOT_SENT", "", "Active", "active");
@@ -605,7 +605,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().checkFirstNameOfUserOnUserSearchTable(payload1.get("firstName").toString());
     }
 
-    @Test(priority = 16, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Search Filter Functionality with all attributes in Bulk Enrollment Screen for Internal Users")
+    @Test(priority = 15, retryAnalyzer = RetryAnalyzer.class, description = "Verify the Search Filter Functionality with all attributes in Bulk Enrollment Screen for Internal Users")
     public void verifyOnVarResellerUserSearchFunctionalityWithAllAttributes() throws Exception {
         logStep("PXPP-26696 TC 037_Verify the Search Filter Functionality with all attributes in Bulk Enrollment Screen for VAR/Reseller Users");
         HashMap<String, Object> payload2 = createUsers("varReseller", "NOT_SENT", "", "Active", "active");
