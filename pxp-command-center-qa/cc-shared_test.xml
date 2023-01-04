@@ -154,7 +154,7 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesForStaffApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociateStaffFromPractice_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer" />
             <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateStaffApiTests_BusinessLayer" />
 			<class

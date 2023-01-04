@@ -1967,4 +1967,15 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract()
 				.response();
 	}	
+
+	public Response associateDeassociatePracticeForStaffUsingEmptyPayload_DL(int staffId) {
+ 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_DL(staffId);
+ 		return given().spec(requestSpec).when().put(url).then()
+ 				.extract().response();
+ 	}
+	
+	public Response associateDeassociatePracticeForStaffUsingNullValue_DL() {
+ 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL();
+ 		return given().spec(requestSpec).when().put(url).then().extract().response();
+ 	}
 }
