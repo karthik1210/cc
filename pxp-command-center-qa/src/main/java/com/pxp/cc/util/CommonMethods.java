@@ -3,12 +3,9 @@
 package com.pxp.cc.util;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.keyStore;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.openqa.selenium.Keys;
