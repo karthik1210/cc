@@ -34,7 +34,7 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 	}
 
 	// AssociateDeassociateSolutionsOnResourcesDetailsPageTests
-	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Verify  solutions activated in a practice are associated and deasociate in resource details page")
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Verify  solutions activated in a practice are associated and deassociate in resource details page")
 	public void testAssociateDeassociateSolutionsWithResource() throws Exception {
 		ngHierarchyClientCreate();
 		addPurchaseSolutionAtPracticeLevel();
