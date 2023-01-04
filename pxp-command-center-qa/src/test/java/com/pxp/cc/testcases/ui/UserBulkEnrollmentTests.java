@@ -669,22 +669,22 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         String firstName;
         List<Integer> roleIds = new ArrayList<Integer>();
         if(firstNameValue.equalsIgnoreCase("Inactive"))
-            firstName = "Inactive"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "Inactive"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else if(firstNameValue.equalsIgnoreCase("NoRoles"))
-            firstName = "NoRoles"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "NoRoles"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else if(firstNameValue.equalsIgnoreCase("Locked"))
-            firstName = "Locked"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "Locked"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else if(firstNameValue.equalsIgnoreCase("Confirmed"))
-            firstName = "Confirmed"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "Confirmed"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else
-            firstName = testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
-        String lastName = testData.getProperty("api.user.lastName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
+        String lastName = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.lastName").concat(CCUtils.generateAlphaNumericString(5)));
         if(roleStatus.equalsIgnoreCase("active"))
             roleIds.add(Integer.parseInt(testData.getProperty("api.internal.user.roleId")));
         else
             roleIds = null;
-        String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-        String userName = testData.getProperty("api.user.userName").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+        String email = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5)));
+        String userName = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.userName").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5)));
         Long mobileNumber = CCUtils.generateMobileNumber();
         String userType = "Internal";
         baseRest.setupServiceRequestSpecificationBuilderForUI();
@@ -698,7 +698,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         userMap.put("username", userName);
         userMap.put("userType", userType);
         userMap.put("firstName", firstName);
-        userMap.put("lastName", testData.getProperty("api.user.lastName"));
+        userMap.put("lastName", lastName);
         userMap.put("mobile", mobileNumber);
         userMap.put("email", email);
         return userMap;
@@ -712,25 +712,26 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
             roleIds.add(Integer.parseInt(testData.getProperty("api.VAResellerUser.roleId")));
         else
             roleIds = null;
-        String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-        String userName = testData.getProperty("api.user.userName")
-                .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+        String email = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5)));
+        String userName = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.userName")
+                .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5)));
         Long mobileNumber = CCUtils.generateMobileNumber();
         baseRest.setupServiceRequestSpecificationBuilderForUI();
         String userType = "VARReseller";
+        String lastName = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.lastName"));
         String firstName;
         if(firstNameValue.equalsIgnoreCase("Inactive"))
-            firstName = "Inactive"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "Inactive"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else if(firstNameValue.equalsIgnoreCase("NoRoles"))
-            firstName = "NoRoles"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "NoRoles"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else if(firstNameValue.equalsIgnoreCase("Locked"))
-            firstName = "Locked"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "Locked"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else if(firstNameValue.equalsIgnoreCase("Confirmed"))
-            firstName = "Confirmed"+testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = "Confirmed"+(CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         else
-            firstName = testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5));
+            firstName = (CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5)).concat(testData.getProperty("api.user.firstName").concat(CCUtils.generateAlphaNumericString(5)));
         createUserApiResponse = userInfo.createNewUser_BusinessLayer(userType,
-                firstName, testData.getProperty("api.user.lastName"), userName, email,
+                firstName, lastName, userName, email,
                 mobileNumber, userStatus, enrollmentStatus, null, testData.getProperty("api.resellerId"), null, roleIds,
                 false);
         userId = createUserApiResponse.jsonPath().getInt("id");
@@ -739,7 +740,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         userMap.put("username", userName);
         userMap.put("userType", userType);
         userMap.put("firstName", firstName);
-        userMap.put("lastName", testData.getProperty("api.user.lastName"));
+        userMap.put("lastName", lastName);
         userMap.put("mobile", mobileNumber);
         userMap.put("email", email);
         return userMap;
