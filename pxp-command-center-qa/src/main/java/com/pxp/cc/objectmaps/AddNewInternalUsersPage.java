@@ -57,6 +57,9 @@ public class AddNewInternalUsersPage extends CCMainPage {
 	@FindBy(xpath = "//label[text()='User Roles']//following::input[@type='checkbox']")
 	private List<WebElement> listUserRoleCheckBox;
 
+	@FindBy(xpath = "//button[@id='createBtn' and normalize-space(text())='Yes, Save & Create']")
+	private WebElement cautionYes;
+
 	public AddNewInternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -141,6 +144,13 @@ public class AddNewInternalUsersPage extends CCMainPage {
 		} else {
 			log("Save & Add button is not displayed on add new internal user page");
 		}
+	}
+
+	public InternalUsersPage clickOnCautionYes() {
+		CCUtils.verifyAndWaitForElement(cautionYes, driver);
+		cautionYes.click();
+		log("Clicked on caution Yes button");
+		return PageFactory.initElements(driver, InternalUsersPage.class);
 	}
 
 	public InternalUsersPage clickOnSaveAndAddButton() {

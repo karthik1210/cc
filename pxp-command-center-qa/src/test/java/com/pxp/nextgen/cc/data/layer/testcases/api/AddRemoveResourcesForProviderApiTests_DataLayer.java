@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -87,7 +87,7 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 			String practiceParentType, String practiceTimeZone) throws IOException {
 		logStep("Create nge practice below the client with valid details");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber, testFlag,
-				clientType, clientTimezoneId);
+				clientType, clientTimezoneId,testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(status, "", systemName, sysOrgType, clientId,
@@ -118,7 +118,7 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(addResourceResponse.getStatusCode(), 207);
 		validations.verifyResponseBodyOfAddRemoveResource(addResourceResponse, resourceId,
 				testData.getProperty("status.success"));
-		getResourceResponse = sharedInfo.getRemoveResourcesForProvider(providerId, practiceId);
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
 		validations.verifyResponseBodyOfGetResource(getResourceResponse, resourceId);
 	}
 
@@ -134,7 +134,7 @@ public class AddRemoveResourcesForProviderApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(removeResourceResponse);
 		CCUtils.assertEquals(removeResourceResponse.getStatusCode(), 207);
-		getResourceResponse = sharedInfo.getRemoveResourcesForProvider(providerId, practiceId);
+		getResourceResponse = sharedInfo.getResourcesForProvider(providerId, practiceId);
 		CCUtils.assertEquals(getResourceResponse.getStatusCode(), 204);
 	}
 

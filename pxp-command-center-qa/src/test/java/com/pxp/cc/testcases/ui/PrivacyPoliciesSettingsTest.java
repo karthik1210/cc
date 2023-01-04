@@ -31,7 +31,7 @@ public class PrivacyPoliciesSettingsTest extends CommandCenterGenericTest {
         }
     }
 
-    @Test(priority = 7, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Smoke test for Privacy Policies")
+    @Test(priority = 7, groups = {"buildvalidation"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Smoke test for Privacy Policies")
     public void verifyingBasicPrivacyPolicies() throws Exception {
         ngHierarchyClientCreate();
         logStep("Smoke Validations for Privacy Policies Section at practice level");

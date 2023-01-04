@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.apipath;
 
@@ -48,6 +48,10 @@ public class ApiPath {
 
 	public static final String CLIENT_DETAILS_BL(String clientId) {
 		return CLIENT_BL + "/" + "{clientId}";
+	}
+
+	public static final String CLIENT_DETAILS_NULL_VALUES_BL() {
+		return CLIENT_BL + "/null";
 	}
 
 	public static final String CLIENTNAME_BL(String name) {
@@ -133,10 +137,6 @@ public class ApiPath {
 
 	public static final String INVALID_PATH_GET_ORGANIZATION_LIST_DL(int clientId) {
 		return SERVICE_ORG_DL + "/v1/clients/" + clientId + "/orgsabcdfef";
-	}
-
-	public static final String CLIENT_SOLUTION_DL(int clientId) {
-		return SERVICE_CLIENT_DL + "/v1/clients/" + "{clientId}" + "/solutions";
 	}
 
 	public static final String SERVICE_USER_BL = "/service/user-service";
@@ -477,8 +477,8 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/providersssss";
 	}
 
-	public static final String PROVIDER_DETAILS_DL(int providerId) {
-		return SHARED_DL + "/v1/providers/" + providerId;
+	public static final String PROVIDER_DETAILS_DL(int clientId, int providerId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/providers/" + providerId;
 	}
 
 	public static final String PROVIDER_DETAILS_INVALID_URL_DL(int providerId) {
@@ -1016,8 +1016,8 @@ public class ApiPath {
 		return SHARED_DL + "/v1/clients/" + clientId + "/locationssss";
 	}
 
-	public static final String LOCATION_DETAILS_DL(int locationId) {
-		return SHARED_DL + "/v1/locations/" + locationId;
+	public static final String LOCATION_DETAILS_DL(int clientId, int locationId) {
+		return SHARED_DL + "/v1/clients/"+ clientId +"/locations/" + locationId;
 	}
 
 	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
@@ -1803,6 +1803,12 @@ public class ApiPath {
 			return SERVICE_USER_BL + "/v1/users/enrollments/credentialsssss/" + enrollmentId;
 	}
 
+	public static final String SEARCH_RESOURCES_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/resources";
+	}
+
+	public static final String SEARCH_RESOURCES_NULL_DL = SHARED_DL + "/v1/clients/null/resources";
+
 	public static final String ADD_REMOVE_RESOURCE_FOR_PROVIDER(int providerId, int practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
@@ -1841,16 +1847,139 @@ public class ApiPath {
 		else
 			return SERVICE_USER_BL + "/v1/users/" + userId;
 	}
-	
+
 	public static final String SAVE_PRACTICE_RESOURCES_BL(int practiceId, int resourceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
 	}
-	
+
 	public static final String GET_PRACTICE_RESOURCES_BL(int practiceId, int resourceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
 	}
-	
+
 	public static final String SAVE_PRACTICE_RESOURCES_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_RESOURCE_BL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/locations";
+	}
+
+	public static final String UPDATE_LOCATION_FOR_RESOURCES_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/resources/null/practices/null/locations";
+	}
+
+	public static final String GET_DISPLAY_DETAILS_BL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String GET_DISPLAY_DETAILS_BL_NULL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null";
+	}
+
+	public static final String GET_RESOURCE_DETAILS_DL_NULL = SHARED_DL + "/v1/resources/null";
+
+	public static final String DELETE_RESOURCE_IMAGE_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId + "/images";
+	}
+
+	public static final String UPDATE_RESOURCE_DETAILS_BL(int resourceId) {
+		return SERVICE_SHARED_BL + "/v1/resources/" + resourceId;
+	}
+
+	public static final String UPDATE_RESOURCE_DETAILS_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/resources/null";
+	}
+
+	public static final String GET_RESOURCE_IMAGE_BL(String imageUrl) {
+		return SERVICE_SHARED_BL + "/v1/resources/image/" + imageUrl;
+	}
+
+	public static final String GET_RESOURCE_IMAGE_BL_NULL_VALUES() {
+		return SERVICE_SHARED_BL + "/v1/resources/image/null";
+	}
+
+	public static final String RESOURCE_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/resources";
+	}
+
+	public static final String SEARCH_LOCATION_FOR_RESOURCE_BL(int resourceId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/locations-resource";
+	}
+
+	public static final String SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/resources/null/locations-resource";
+	}
+
+	public static final String SEARCH_PROVIDERS_LOCATION_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/providers-location";
+	}
+
+	public static final String SEARCH_PROVIDERS_LOCATION_NULL_DL = SHARED_DL + "/v1/practices/null/providers-location";
+
+	public static final String SEARCH_PROVIDERS_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/providers";
+	}
+
+	public static final String SEARCH_PROVIDERS_NULL_DL = SHARED_DL + "/v1/clients/null/providers";
+
+	public static final String GET_RESOURCE_DISPLAY_DETAILS_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String GET_RESOURCE_DISPLAY_DETAILS_DL_NULL() {
+		return SHARED_DL + "/v1/practices/null/resources/null";
+	}
+
+	public static final String SAVE_PRACTICE_RESOURCES_DL(int practiceId, int resourceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId;
+	}
+
+	public static final String SEARCH_RESOURCE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources-location";
+	}
+
+	public static final String SEARCH_RESOURCE_NULL_DL = SHARED_DL + "/v1/practices/null/resources-location";
+
+	public static final String CREATE_STAFF_DL(int clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/staff";
+	}
+
+	public static final String STAFF_FOR_CLIENT_DL(String clientId) {
+		return SHARED_DL + "/v1/clients/" + clientId + "/staff";
+	}
+
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_DL(int staffId) {
+		return SHARED_DL + "/v1/providers/" + staffId + "/practices";
+	}
+
+	public static final String SEND_ENROLLMENT_BL(String uriType) {
+		if (uriType.equalsIgnoreCase("Valid"))
+			return SERVICE_USER_BL + "/v1/users/enrollments";
+		else
+			return SERVICE_USER_BL + "/v1/usersssss/enrollments";
+	}
+	
+	public static final String CREATE_STAFF_BL(int clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff";
+	}
+
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_BL(int staffId) {
+		return SERVICE_SHARED_BL + "/v1/staff/" + staffId + "/practices";
+	}
+	
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/staff/null/practices";
+	}
+	
+	public static final String GET_STAFF_DL(int staffId) {
+		return SHARED_DL + "/v1/staff/"+ staffId;
+	}
+
+	public static final String GET_STAFF_DL_NULL_VALUE() {
+		return SHARED_DL + "/v1/staff/null";
+	}
+	
+	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/staff/null/practices";
 	}
 }

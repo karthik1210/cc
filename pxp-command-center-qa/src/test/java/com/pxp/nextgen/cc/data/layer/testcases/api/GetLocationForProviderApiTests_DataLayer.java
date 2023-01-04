@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -46,7 +46,8 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		clientId = createClientApiResponse.jsonPath().get("clientId");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
 				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
@@ -108,17 +109,17 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 		locationsValidations.verifyResponseBodyForLocationAssociatedWithProviders(getLocationsForProviderResponse,
 				locationID);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing providerId and existing practiceId and verify response code")
 	public void testGetLocationUsingNonExistingProviderIdAndExistingPracticeId() throws Exception {
 		logStep("Enter non-existing providerId and existing practiceId");
-		int providerId= Integer.parseInt(testData.getProperty("non.existing.provider.id"));
+		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
 		getLocationsForProviderResponse = locationsInfo.getLocationsForProvider_DL(providerId, practiceId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getLocationsForProviderResponse);
 		CCUtils.assertEquals(getLocationsForProviderResponse.getStatusCode(), 204);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing ProviderId and non-existing practiceId and verify response code")
 	public void testGetLocationUsingExistingProviderIdAndNonExistingPracticeId() throws Exception {
 		logStep("Enter existing ProviderId and non-existing practiceId");
@@ -128,7 +129,7 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getLocationsForProviderResponse);
 		CCUtils.assertEquals(getLocationsForProviderResponse.getStatusCode(), 204);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing providerId and practiceId and verify response code")
 	public void testGetLocationUsingNonExistingProviderIdAndPracticeId() throws Exception {
 		logStep("Enter non-existing providerId and practiceId");
@@ -139,7 +140,7 @@ public class GetLocationForProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getLocationsForProviderResponse);
 		CCUtils.assertEquals(getLocationsForProviderResponse.getStatusCode(), 204);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter providerId and practiceId as null value and verify response code")
 	public void testGetLocationUsingNullValues() throws Exception {
 		logStep("Enter providerId and practice as null value");

@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -44,7 +44,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		clientTimezoneId = testData.getProperty("api.client.timezoneid");
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId);
+				clientTimezoneId,testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -67,8 +67,8 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId,
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.active"), testFlag, clientTimezoneId);
+				testData.getProperty("api.system.name"), testData.getProperty("api.system.active"), clientTimezoneId,
+				"");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter NULL value in mandatory field and validate error message")
@@ -103,9 +103,9 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.active"), testFlag,
-				testData.getProperty("api.enterprise.timezoneid"));
+				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"),
+				testData.getProperty("location.timezone.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Enter NULL value in mandatory field and validate error message")
@@ -143,8 +143,9 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, agnosticPracticeId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 4, description = "Create New NGE Practice and fetch newly created Practice details using Practice id")
@@ -168,8 +169,9 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId,
 				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 5, description = "Enter Non existing time zone id and validate error message")
@@ -284,7 +286,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForInvalidProductId(createOrgNodeApiResponse,0);
+		validation.verifyErrorResponseBodyForInvalidProductId(createOrgNodeApiResponse, 0);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getOrgDetails", priority = 9, description = "Enter invalid value in pmidentifier, ehr identifier field and validate error response body")
@@ -296,7 +298,7 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createOrgNodeApiResponse);
 		CCUtils.assertEquals(createOrgNodeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForInvalidProductId(createOrgNodeApiResponse,0);
+		validation.verifyErrorResponseBodyForInvalidProductId(createOrgNodeApiResponse, 0);
 	}
 
 	@DataProvider(name = "getOrgNodeDetails")
@@ -343,8 +345,9 @@ public class CreateOrgApiTests_DataLayer extends BaseRest {
 		fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		logStep("Validating response information");
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, agnosticPracticeId, practiceName,
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"), practiceName,
-				testData.getProperty("api.practice.active"), testFlag, testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.orgtype"), practiceName, testData.getProperty("api.practice.active"),
+				testData.getProperty("api.practice.timezoneid"),
+				testData.getProperty("api.practice.timezonedisplayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 12, description = "Enter NULL value in mandatory field and validate error message")

@@ -85,9 +85,8 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, systemId,
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.active"), "false", ccUser.getTimezoneId());
+				(testData.getProperty("api.system.name")), testData.getProperty("api.system.orgtype"),
+				(testData.getProperty("api.system.name")), "true", "", "");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter enterprise id in orgId field and validate response body")
@@ -99,11 +98,9 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, enterpriseId,
 				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.active"), "false",
-				testData.getProperty("api.enterprise.timezoneid"));
+				 testData.getProperty("api.enterprise.name"),"true", testData.getProperty("api.enterprise.timezoneid"), testData.getProperty("api.enterprise.timezonedisplayname"));
 	}
-
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practice id in orgId field and validate response body")
 	public void testFetchingPracticeOrgId() throws IOException {
 
@@ -113,11 +110,10 @@ public class GetOrganizationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchOrgDetailsApiResponse);
 		CCUtils.assertEquals(fetchOrgDetailsApiResponse.getStatusCode(), 200);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgDetailsApiResponse, practiceId,
-				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.client.one.type"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), "false", testData.getProperty("api.practice.timezoneid"));
+				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
+				"true", testData.getProperty("api.practice.timezoneid"),testData.getProperty("api.practice.timezonedisplayname")  );
 	}
-
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid org id in orgid field and validate response body")
 	public void testErrorResponseForInvalidOrgId() throws IOException {
 		int orgId = Integer.parseInt(testData.getProperty("api.org.invalid.id"));

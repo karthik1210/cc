@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -33,7 +33,7 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Update the Org Website")
     public void updateOrgWebsiteApiSuccess() throws IOException {
-        int orgId = createPractice();
+        int orgId = createPractice().get("PracticeId");
         logStep("Update websiteUrl for a given orgId");
         String generateWebsiteUrl=testData.getProperty("api.org.website.Url").concat(CCUtils.generateAlphaNumericString(2));
         websiteUrl.put("websiteUrl",generateWebsiteUrl);
@@ -47,7 +47,7 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 9, retryAnalyzer = RetryAnalyzer.class, description = "Update the Org Website for existing websiteUrl")
     public void updateExistingOrgWebsiteApiSuccess() throws IOException {
-        int orgId = createPractice();
+        int orgId = createPractice().get("PracticeId");
         logStep("Update websiteUrl for a given orgId");
         String generateWebsiteUrl=testData.getProperty("api.org.website.Url").concat(CCUtils.generateAlphaNumericString(2));
         websiteUrl.clear();
@@ -109,7 +109,7 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
 
     @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Update the Org Website for all org types")
     public void updateOrgWebsiteForAllOrgTypesApi() throws IOException {
-        int clientId = Integer.parseInt(testData.getProperty("api.client.id"));
+        int clientId = createPractice().get("ClientId");
         String generateWebsiteUrl=testData.getProperty("api.org.website.Url").concat(CCUtils.generateAlphaNumericString(2));
         websiteUrl.put("websiteUrl",generateWebsiteUrl);
         logStep("Update websiteUrl for a given orgId");
@@ -117,7 +117,7 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
         logStep("Validating response information");
         CCUtils.responseTimeValidation(updateOrgWebsiteApiResponse);
         CCUtils.assertEquals(updateOrgWebsiteApiResponse.getStatusCode(), 200);
-        int systemId = Integer.parseInt(testData.getProperty("api.system.id"));
+        int systemId = createPractice().get("SystemId");
         logStep("Update websiteUrl for a given orgId");
         updateOrgWebsiteApiResponse = orgInfo.updateGetOrgPracticeWebsitesResponse("Valid", "DL", systemId, websiteUrl);
         logStep("Validating response information");
@@ -125,7 +125,7 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(updateOrgWebsiteApiResponse.getStatusCode(), 200);
         fetchOrgDetailsApiResponse = orgInfo.getOrgId_DataLayer(systemId);
         CCUtils.assertEquals(fetchOrgDetailsApiResponse.jsonPath().get("websiteUrl"), generateWebsiteUrl);
-        int enterpriseId = Integer.parseInt(testData.getProperty("api.enterprise.id"));
+        int enterpriseId = createPractice().get("EnterpriseId");;
         logStep("Update websiteUrl for a given orgId");
         updateOrgWebsiteApiResponse = orgInfo.updateGetOrgPracticeWebsitesResponse("Valid", "DL", enterpriseId, websiteUrl);
         logStep("Validating response information");
@@ -172,7 +172,8 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
     }
 
     @Test(enabled = false)
-    public int createPractice() throws IOException {
+    public HashMap<String, Integer> createPractice() throws IOException {
+        HashMap<String, Integer> orgMap= new HashMap<String, Integer>();
         logStep("Create nge practice below the client with valid details");
         String clientName = testData.getProperty("api.client.name")
                 .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
@@ -180,7 +181,8 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
         createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
                 clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
                 Integer.parseInt(testData.getProperty("api.client.type")),
-                testData.getProperty("api.client.timezoneid"));
+                testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
         int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
         logStep("Create a new system below client.");
@@ -211,7 +213,12 @@ public class GetUpdateOrgWebsiteApiTests_DataLayer extends BaseRest {
         validations.verifyCreatePracticeResponseBody(createPracticeApiResponse,
                 testData.getProperty("api.practice.name"));
         int orgId = createPracticeApiResponse.jsonPath().get("orgId");
-        return orgId;
+        orgMap.clear();
+        orgMap.put("ClientId", clientId);
+        orgMap.put("SystemId", systemId);
+        orgMap.put("EnterpriseId", enterpriseId );
+        orgMap.put("PracticeId", orgId );
+        return orgMap;
     }
     
 }

@@ -246,6 +246,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         String practiceParentType = testData.getProperty("api.practice.parenttype");
         String practiceTimeZone = testData.getProperty("api.practice.timezoneid");
         orgListMap.clear();
+        setupServiceRequestSpecificationBuilderForDataLayer();
         orgListMap = ngOrgPracticeObj.getOrgHierPractice(status, clientName, clientSapNumber, testFlag, clientType, clientTimezoneId, systemName, orgType, parentType,
                 ehrIdentifier, pmIdentifier, enterpriseName, enterpriseType, enterpriseParentType, enterpriseTimeZone, practiceDisplayName, practiceName,
                 practiceOrgType, practiceParentType, practiceTimeZone);
@@ -273,6 +274,10 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
             CCUtils.assertEquals(updateExpiredStatusApiResponse.getStatusCode(), 200);
             searchUserWithEnrollmentStatus(status, userType1, userId);
         } else if (status.equalsIgnoreCase(testData.getProperty("pxpp.26460.enrollment.status.confirmed"))) {
+            Date date1 = new Date(System.currentTimeMillis() + 4 * 60 * 60 * 1000);
+            Date date2 = new Date(System.currentTimeMillis() - 20 * 60 * 60 * 1000);
+            String expiryTs = dateFormat.format(new Date(date1.getTime() + (1000 * 60 * 60 * 24)));
+            String initiatedTs = dateFormat.format(new Date(date2.getTime() + (1000 * 60 * 60 * 24)));
             internalEnrollmentId = CCUtils.generateAuthId();
             userSendEnrollmentConsumerPayloadObj = new UserSendEnrollmentConsumerDataLayer(internalEnrollmentId, initiatedTs, expiryTs, testData.getProperty("pxpp.26460.enrollment.status.pending"));
             sendUserEnrollmentConsumerResponse = userInfo.sendUserEnrollmentConsumerDL("Valid", userId, userSendEnrollmentConsumerPayloadObj);

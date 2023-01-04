@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -47,8 +47,9 @@ public class DeleteProviderForLocationApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
+	    clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
 				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
@@ -117,11 +118,11 @@ public class DeleteProviderForLocationApiTests_DataLayer extends BaseRest {
 				providerIdList);
 		CCUtils.assertEquals(addProviderForLocationApiResponse.getStatusCode(), 207);
 		logStep("Fetch provider name using providerId");
-		getProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(providerId);
+		getProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(clientId,providerId);
 		String name = locationsValidations.getFirstName(getProviderDetailsApiResponse);
 		logStep("Verify newly added provider is displayed for location");
 		getProvidersForLocationApiResponse = locationInfo.getProvidersForLocation_DL(locationId, practiceId, 0, 10,
-				name.trim());
+				name);
 		CCUtils.assertEquals(getProvidersForLocationApiResponse.getStatusCode(), 200);
 		logStep("Delete provider for location");
 		deleteProviderForLocationsApiResponse = sharedInfo.deleteProviderForLocation_DL(locationId, practiceId,
@@ -131,7 +132,7 @@ public class DeleteProviderForLocationApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(deleteProviderForLocationsApiResponse.getStatusCode(), 200);
 		logStep("Verify deleted provider is not displayed for location");
 		getProvidersForLocationApiResponse = locationInfo.getProvidersForLocation_DL(locationId, practiceId, 0, 10,
-				name.trim());
+				name);
 		CCUtils.assertEquals(getProvidersForLocationApiResponse.getStatusCode(), 204);
 	}
 

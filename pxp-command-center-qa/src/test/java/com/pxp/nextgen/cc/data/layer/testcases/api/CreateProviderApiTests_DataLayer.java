@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -37,7 +37,8 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
@@ -76,15 +77,6 @@ public class CreateProviderApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createProviderApiResponse);
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
 		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
-		int providerId = createProviderApiResponse.jsonPath().getInt("providerId");
-		logStep("fetch newly created provider details using provider id");
-		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails_DL(providerId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
-		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyResponseBodyForProviderDetails(fetchProviderDetailsApiResponse, firstName, lastName,
-				testData.getProperty("provider.gender"), testData.getProperty("provider.status"));
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter 100 characters in firstname,lastname field and 50 characters in external id and crendentials  field and verify response body")

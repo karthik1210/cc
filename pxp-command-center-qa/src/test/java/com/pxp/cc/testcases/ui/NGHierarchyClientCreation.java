@@ -36,18 +36,10 @@ public class NGHierarchyClientCreation extends CCMainPage {
         String actualMessage = commonMethods.getToasterMessage();
         logStep("Verify success toaster message");
         CCUtils.assertEquals(actualMessage, "Success! " + clientName + " has been successfully created");
-        /*commonMethods = new CommonMethods(driver);
-        logStep("Searching a client in client directory");
-        ngHierarchyClientCreationPage.searchNode(clientName);
-        ngHierarchyClientCreationPage.clickSearchButton();
-        ngHierarchyClientCreationPage.clickSearchResult(clientName);
-        logStep("Navigating To General Settings page");
-        generalSettingsPage = new GeneralSettingsPage(driver);
-        generalSettingsPage.verifyClientNodeIsSelected();*/
         return clientName;
     }
 
-    public String createNewActiveSystem(String system, String enterprise) throws NullPointerException, InterruptedException {
+    public String createNewActiveSystem(String system, String enterprise) throws Exception {
         logStep("Verify manage client button is displayed");
         ngHierarchyClientCreationPage.verifyManageClientButton();
         logStep("Click on manage client button");
@@ -88,7 +80,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
         return enterpriseName;
     }
 
-    public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws NullPointerException, InterruptedException {
+    public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws Exception {
         logStep("Navigating To General Settings page");
         generalSettingsPage = new GeneralSettingsPage(driver);
         logStep("Verify manage client button is displayed");

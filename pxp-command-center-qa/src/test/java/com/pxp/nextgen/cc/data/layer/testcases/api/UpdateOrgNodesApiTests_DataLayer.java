@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -150,8 +150,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
-
+				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
+				testData.getProperty("pm.identifier"));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -179,7 +179,6 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		int agnosticPracticeId = createOrgNode("false", "", "ag_practice_name_1",
 				testData.getProperty("api.practice.orgtype"), systemId, testData.getProperty("api.parenttype"),
 				"US/Hawaii");
-
 		logStep("Modify system node status from active to inactive");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer("system_name_1",
 				testData.getProperty("api.system.orgtype"), "", "false", "", systemId,
@@ -198,7 +197,6 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		validation.verifyOrgNodeStatus(fetchOrgNodeDetails, practiceId, "practice_name_1", "false");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyOrgNodeStatus(fetchOrgNodeDetails, agnosticPracticeId, "ag_practice_name_1", "false");
-
 		logStep("Modify system node status from inactive to active when parent node client is active");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer("system_name_1",
 				testData.getProperty("api.system.orgtype"), "", "true", "", systemId,
@@ -320,7 +318,6 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
 		validation.verifyInactivePracticeErrorResponsWhileUpdataingActivePractice(updateOrgNodeApiResponse);
-
 		logStep("Modify agnostic practice node status from inactive to active when system node is inactive and validate error response body");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer("ag_practice_name_1",
 				testData.getProperty("api.practice.orgtype"), "", "true", "US/Hawaii", agnosticPracticeId,
@@ -330,7 +327,6 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateOrgNodeApiResponse);
 		CCUtils.assertEquals(updateOrgNodeApiResponse.getStatusCode(), 400);
 		validation.verifyInactiveSystemErrorResponsForPractice(updateOrgNodeApiResponse);
-
 		logStep("Update system name value");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer(
 				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
@@ -346,10 +342,9 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(systemId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, systemId,
 				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
-				testData.getProperty("api.system.orgtype"), testData.getProperty("api.client.one.type"),
+				testData.getProperty("api.system.orgtype"),
 				"System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2 System_name_2@12",
-				"false", testData.getProperty("api.client.testclient"), testData.getProperty("api.client.timezoneid"));
-
+				"false", testData.getProperty("api.client.timezoneid"), "");
 		logStep("Update enterprise name, timezone");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer(
 				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
@@ -365,9 +360,9 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(enterpriseId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, enterpriseId,
 				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.client.one.type"),
+				testData.getProperty("api.enterprise.orgtype"),
 				"enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enterprise_name_2 enter@1234",
-				"false", testData.getProperty("api.client.testclient"), "US/Alaska");
+				"false", "US/Alaska", "Alaska Standard Time");
 
 		logStep("Update nge practice name, practice display name,timezone");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer(
@@ -385,9 +380,9 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(practiceId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, practiceId,
 				"practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2 practice_name_2@1234",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
+				testData.getProperty("api.practice.orgtype"),
 				"practice_display_name@123 practice_display_name@123 practice_display_name@123 practice_display_name1",
-				"false", testData.getProperty("api.client.testclient"), "US/Arizona");
+				"false", "US/Arizona", "Arizona Standard Time");
 
 		logStep("Update agnostic practice name, practice display name, timezone");
 		updateOrgNodeApiResponse = orgInfo.updateOrgNode_DataLayer("ag_Prac_2",
@@ -401,9 +396,8 @@ public class UpdateOrgNodesApiTests_DataLayer extends BaseRest {
 		logStep("Fetch updated agnostic practice details using agnostic practice id and verify sap number updated as null value and timezone fetch from its parent node");
 		fetchOrgNodeDetails = orgInfo.getOrgId_DataLayer(agnosticPracticeId);
 		validation.verifyGetOrgDeatilsApiResponseBody(fetchOrgNodeDetails, agnosticPracticeId, "ag_Prac_2",
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.client.one.type"),
-				"agnostic_practice_display_name", "false", testData.getProperty("api.client.testclient"),
-				"Canada/Atlantic");
+				testData.getProperty("api.practice.orgtype"), "agnostic_practice_display_name", "false",
+				"Canada/Atlantic", "Atlantic Standard Time");
 
 	}
 

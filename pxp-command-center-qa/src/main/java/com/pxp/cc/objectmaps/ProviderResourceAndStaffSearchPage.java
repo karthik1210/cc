@@ -31,6 +31,9 @@ public class ProviderResourceAndStaffSearchPage extends CCMainPage {
 
 	@FindBy(id = "searchButton")
 	private WebElement searchButton;
+	
+	@FindBy(xpath = "//a[@aria-label='General Setting']")
+	private WebElement generalSettingsIcon;
 
 	public ProviderResourceAndStaffSearchPage(WebDriver driver) {
 		super(driver);
@@ -82,5 +85,10 @@ public class ProviderResourceAndStaffSearchPage extends CCMainPage {
 		if ((listOfProviderFirstName.getText().toString().trim()).equalsIgnoreCase(listOfProvider.trim())) {
 			listOfProviderFirstName.click();
 		}
+	}
+	
+	public void clickGeneralSettingsIcon() {
+		CCUtils.verifyAndWaitForElement(generalSettingsIcon, driver);
+		generalSettingsIcon.click();
 	}
 }

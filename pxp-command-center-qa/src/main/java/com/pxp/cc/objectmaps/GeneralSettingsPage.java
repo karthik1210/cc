@@ -68,7 +68,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "orgTimezoneValue")
 	private WebElement labelOrgTimezoneValue;
 
-	@FindBy(xpath = "//span[@class='link inputvalue']")
+	@FindBy(xpath = "(//mat-icon[@id='treeActiveIcon'])[2]")
 	private WebElement labelOrgStatusValue;
 
 	@FindBy(id = "orgTitle")
@@ -223,7 +223,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='purchaseTitle']")
 	private WebElement availableToPurchaseTitle;
 
-	@FindBy(id = "purchasedSolutionOrg")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg'])[1]")
 	private WebElement purchaseSolutionsTitle;
 
 	@FindBy(id = "unsavedConfirmBtn")
@@ -308,6 +308,12 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'Changes updated successfully')]")
 	private WebElement toasterMessage;
+
+	@FindBy(xpath = "(//p[@id='treeNodeName']//span[@tabindex=0])[1]")
+	private WebElement clientNode;
+
+	@FindBy(id = "providerTile")
+	private WebElement providerAndResourcesTile;
 
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
 	private WebElement activeVirtualVisitsMoreOptions;
@@ -440,7 +446,18 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelOrgStatusValue, driver);
 		log("Verifying org node status is inactive for newly added org node when parent is inactive");
 		if (isParentInactive == true) {
-			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "inactive");
+			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "cancel");
+			log("Newly added org node status is inactive");
+		} else {
+			log("Newly added org node status is active");
+		}
+	}
+
+	public void verifyNewlyAddedOrgNodeStatusIsInactiveIfParentInactiveForPractice(Boolean isParentInactive) {
+		CCUtils.verifyAndWaitForElement(labelOrgStatusValue, driver);
+		log("Verifying org node status is inactive for newly added org node when parent is inactive");
+		if (isParentInactive == true) {
+			CCUtils.assertEquals(labelOrgStatusValue.getText().trim(), "check_circle");
 			log("Newly added org node status is inactive");
 		} else {
 			log("Newly added org node status is active");
@@ -590,11 +607,6 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void enterSearchText(String nodeName) {
-		CCUtils.verifyAndWaitForElement(searchIcon, driver);
-		searchIcon.click();
-//		CCUtils.verifyAndWaitForElement(searchIcon,driver);
-//		searchIcon.click();
-		log("click to search icon");
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
 		log("Entered text in search :" + nodeName);
@@ -624,7 +636,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void clickFirstInAutoSuggestion() {
-		CCUtils.verifyAndWaitForElement(selectFirstInAutoSuggestion, driver);
+		CCUtils.verifyAndWaitForElementPresence(selectFirstInAutoSuggestion, driver);
 		if (selectFirstInAutoSuggestion.isDisplayed()) {
 			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
 			javascriptClick(selectFirstInAutoSuggestion);
@@ -1026,6 +1038,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Verifying org name value");
 		CCUtils.verifyAndWaitForElement(labelNodeNameRightPanel, driver);
 		CCUtils.assertEquals(labelNodeNameRightPanel.isDisplayed(), true);
+		log("Verified Newly Added Org Node Details In Org Tree");
 	}
 
 	public void clickFirstOption() {
@@ -1211,10 +1224,34 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.assertEquals(cautionMessage.getText().toString(),
 				"Before continuing, are you sure " + practiceName + " has purchased this solution?");
 	}
-	
+
 	public void cautionTerminateMessage(String practiceName) {
 		CCUtils.verifyAndWaitForElement(cautionMessage, driver);
 		CCUtils.assertEquals(cautionMessage.getText().toString(),
-				"Before continuing, are you sure this solution is on no longer used by "+practiceName+"?");
+				"Before continuing, are you sure this solution is on no longer used by " + practiceName + "?");
+	}
+
+	public void clickToClientNode() {
+		CCUtils.verifyAndWaitForElement(clientNode, driver);
+		clientNode.click();
+		log("click to client node in general settings");
+	}
+
+	public void verifyProvidersAndResourcesTile() {
+		log("Verify 'ProvidersAndResources' Tile on General Settings page");
+		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
+		CCUtils.assertEquals(providerAndResourcesTile.isDisplayed(), true);
+	}
+
+	public void clickOnProvidersAndResourcesTile() {
+		CCUtils.verifyAndWaitForElement(providerAndResourcesTile, driver);
+		javascriptClick(providerAndResourcesTile);
+		log("Clicked on ProvidersAndResources tile");
+	}
+
+	public void navigatetoClientNode(String clientName) throws Exception {
+		WebElement clientNode = driver
+				.findElement(By.xpath("//p[@id='treeNodeName']/span[normalize-space(text())='" + clientName + "']"));
+		javascriptClick(clientNode);
 	}
 }

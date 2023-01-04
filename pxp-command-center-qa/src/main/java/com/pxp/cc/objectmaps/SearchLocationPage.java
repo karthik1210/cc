@@ -102,10 +102,10 @@ public class SearchLocationPage extends CCMainPage {
 	@FindBy(xpath = "//div//span//following::span[contains(text(),'10')]")
 	private WebElement defaultItemsPerPage;
 	
-	@FindBy(xpath = "//th[@aria-sort='ascending']")
+	@FindBy(xpath = "//td[@aria-sort='ascending']")
 	private WebElement locationNameAscSort;
 	
-	@FindBy(xpath = "//th[@aria-sort='descending']")
+	@FindBy(xpath = "//td[@aria-sort='descending']")
 	private WebElement locationNameDscSort;
 	
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
@@ -335,6 +335,15 @@ public class SearchLocationPage extends CCMainPage {
 			CCUtils.verifyForElementToBeClickable(listOfLocationName.get(0), driver);
 			javascriptClick(listOfLocationName.get(0));
 		return PageFactory.initElements(super.driver, LocationDetailsPage.class);
+	}
+	
+	public void clickToSearchLocation(String locationName) {
+		enterLocationInSearchTextBox(locationName);
+		clickToSearchButton();
+		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfLocationName, driver);
+			CCUtils.assertEquals(listOfLocationName.get(0).getText().toString().trim(), locationName);
+			CCUtils.verifyForElementToBeClickable(listOfLocationName.get(0), driver);
+			javascriptClick(listOfLocationName.get(0));
 	}
 	
 	public String getDefaultItemsPerPage() throws InterruptedException {
@@ -603,5 +612,17 @@ public class SearchLocationPage extends CCMainPage {
 	public void verifyAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(locationNameAscSort, driver);
 		log("verified after clicking to descendig sort location name sort arrow goes upwards to ascending sort");
+	}
+	
+	public void clickAscLocationStatusSortToDsc() {
+		CCUtils.verifyAndWaitForElement(locationNameAscSort, driver);
+		locationNameAscSort.click();
+		log("clicked to ascending location Status sort");
+	}
+	
+	public void clickDscLocationStatusSortToAsc() {
+		CCUtils.verifyAndWaitForElement(locationNameDscSort, driver);
+		locationNameDscSort.click();
+		log("clicked to descending location Status sort");
 	}
 }

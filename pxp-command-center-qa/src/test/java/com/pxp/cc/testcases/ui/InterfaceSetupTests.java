@@ -90,7 +90,7 @@ public class InterfaceSetupTests extends CommandCenterGenericTest {
     }
 
 
-    @Test(priority = 3, groups = {"smoke"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
+    @Test(priority = 3, groups = {"buildvalidation"}, retryAnalyzer = RetryAnalyzer.class, description = "Verifying Basic Functionality in Interface setup for the first time")
     public void verifyingBasicFunctionalityInInterfaceSetup() throws Exception {
         ngHierarchyClientCreate();
         createNewInterface("MedfusionREST - NextGen");

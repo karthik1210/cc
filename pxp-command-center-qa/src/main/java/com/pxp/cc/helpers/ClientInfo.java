@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -31,6 +31,12 @@ public class ClientInfo extends BaseRest {
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
 				timezoneId);
 		return given().spec(requestSpec).body(updateClientPayload).pathParam("clientId", clientId).when().put(url)
+				.then().extract().response();
+	}
+	
+	public Response updateClientNullValues_BL() throws IOException {
+		String url = ApiPath.CLIENT_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().put(url)
 				.then().extract().response();
 	}
 
@@ -97,9 +103,9 @@ public class ClientInfo extends BaseRest {
 		return given().spec(requestSpec).queryParam("query", searchData).when().get(url).then().extract().response();
 	}
 
-	public Response createNewClientUsingInvalidUrl(String active, String clientName, String sapNumber,
+	public Response createNewClientUsingInvalidUrl(String active, String clientName, String clientSapNumber,
 			String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
+		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, clientSapNumber, testClient, type,
 				timezoneId);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_BL;
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
@@ -156,17 +162,31 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClient_DataLayer(String active, String clientName, String sapNumber, String testClient,
-			int type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+			int type, String timezoneId,String ehrIdentifier,String pmIdentifier) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient_DL(active, clientName, sapNumber, testClient, type,
+				timezoneId,ehrIdentifier,pmIdentifier);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.CLIENT_DL).then().extract()
 				.response();
 	}
+	
+	private Map<String, Object> postCreateClient_DL(String active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId,String ehrIdentifier,String pmIdentifier) {
+		Map<String, Object> createClientMap = new HashMap<String, Object>();
+		createClientMap.put("active", active);
+		createClientMap.put("name", clientName);
+		createClientMap.put("sapNumber", clientSapNumber);
+		createClientMap.put("testClient", testClient);
+		createClientMap.put("type", type);
+		createClientMap.put("timezoneId", timezoneId);
+		createClientMap.put("ehrIdentifier", ehrIdentifier);
+		createClientMap.put("pmIdentifier", pmIdentifier);
+		return createClientMap;
+	}
 
-	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientName, String sapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+	public Response createNewClient_DataLayerUsingInvalidUrl(String active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId,String ehrIdentifier,String pmIdentifier) throws IOException {
+		Map<String, Object> createNewClientPayload = postCreateClient_DL(active, clientName, clientSapNumber, testClient, type,
+				timezoneId,ehrIdentifier,pmIdentifier);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_DL;
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
 				.response();
@@ -183,12 +203,26 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response UpdateClient_DataLayer(int clientId, boolean active, String clientName, String sapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+			String testClient, int type, String timezoneId, String ehrIdentifier, String pmIdentifier) throws IOException {
+		Map<String, Object> updateClientPayload = putUpdateClient_DL(active, clientName, sapNumber, testClient, type,
+				timezoneId, ehrIdentifier, pmIdentifier);
 		String url = ApiPath.CLIENT_DETAILS_DL(clientId);
 		return given().spec(requestSpec).pathParam("clientId", clientId).body(updateClientPayload).when().put(url)
 				.then().extract().response();
+	}
+	
+	private Map<String, Object> putUpdateClient_DL(boolean active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId, String ehrIdentifier, String pmIdentifier) {
+		Map<String, Object> updateClientMap = new HashMap<String, Object>();
+		updateClientMap.put("active", active);
+		updateClientMap.put("name", clientName);
+		updateClientMap.put("sapNumber", clientSapNumber);
+		updateClientMap.put("testClient", testClient);
+		updateClientMap.put("type", type);
+		updateClientMap.put("timezoneId", timezoneId);
+		updateClientMap.put("ehrIdentifier", ehrIdentifier);
+		updateClientMap.put("pmIdentifier", pmIdentifier);
+		return updateClientMap;
 	}
 
 	public Response UpdateClientIsingInvalidUrl_DataLayer(int clientId, boolean active, String clientName,
@@ -210,11 +244,6 @@ public class ClientInfo extends BaseRest {
 		updateClientMap.put("type", type);
 		updateClientMap.put("timezoneId", timezoneId);
 		return updateClientMap;
-	}
-
-	public Response getClientSolutionsDetails_DataLayer(int clientId) {
-		String url = ApiPath.CLIENT_SOLUTION_DL(clientId);
-		return given().spec(requestSpec).pathParam("clientId", clientId).when().get(url).then().extract().response();
 	}
 
 	public Response getClientOrgHierarchyDetails(int clientId) {
