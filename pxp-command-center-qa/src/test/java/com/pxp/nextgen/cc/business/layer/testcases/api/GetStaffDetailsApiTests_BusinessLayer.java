@@ -57,7 +57,7 @@ public class GetStaffDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(createNewStaffApiResponse.getStatusCode(), 200);
 		int staffId= createNewStaffApiResponse.jsonPath().getInt("id");
 		logStep("Enter existing StaffId to get staff details and verify response body");
-		getStaffDetailsApiResponse=sharedInfo.getStaff_DL(staffId);
+		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL(staffId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 200);
@@ -68,7 +68,7 @@ public class GetStaffDetailsApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForNonExistingStaffId() throws IOException {
 		logStep("Enter non-existing StaffId and verify response body");
 		int staffId= Integer.parseInt(testData.getProperty("api.nonexisting.id"));
-		getStaffDetailsApiResponse=sharedInfo.getStaff_DL(staffId);
+		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL(staffId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 400);
@@ -78,7 +78,7 @@ public class GetStaffDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in StaffId field and verify response code")
 	public void testErrorMessageForNullStaffId() throws IOException {
 		logStep("Enter null value in StaffId field and verify response code");
-		getStaffDetailsApiResponse=sharedInfo.getStaff_DL_Null_value();
+		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL_Null_value();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 400);
