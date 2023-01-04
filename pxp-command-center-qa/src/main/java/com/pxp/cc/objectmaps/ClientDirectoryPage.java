@@ -84,7 +84,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	@FindBy(xpath = "//tr[@class='mat-row cdk-row ng-star-inserted']//mat-icon[@id='star-icon']")
 	private List<WebElement> listOfNonFavClients;
 
-	@FindBy(id = "cmdCircleIcon")
+	@FindBy(xpath = "//a[@id='cmdCircleIcon']")
 	private WebElement iconCommandCenterUsers;
 
 	@FindBy(id = "mat-select-0")
@@ -379,7 +379,7 @@ public class ClientDirectoryPage extends CCMainPage {
 
 	public CommandCenterUsersPage clickOnCommandCenterUsersIcon() {
 		CCUtils.verifyAndWaitForElement(iconCommandCenterUsers, driver);
-		iconCommandCenterUsers.click();
+		new Actions(driver).moveToElement(iconCommandCenterUsers).pause(1000).click().build().perform();
 		log("Clicked on command center users icon");
 		return PageFactory.initElements(driver, CommandCenterUsersPage.class);
 	}

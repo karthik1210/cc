@@ -5,6 +5,7 @@ package com.pxp.cc.model;
 import static io.restassured.RestAssured.given;
 import java.io.IOException;
 import org.apache.log4j.BasicConfigurator;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -70,6 +71,20 @@ public class BaseRest extends BaseTestNG {
 	}
 
 	public void setupServiceRequestSpecificationBuilderForDataLayer() throws IOException {
+		RestAssured.baseURI = testData.getProperty("data.layer.service.base.url");
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
+				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
+	}
+
+	public void setupServiceRequestSpecificationBuilderForUI() throws IOException {
+		testData = new PropertyFileLoader();
+		RestAssured.baseURI = testData.getProperty("service.base.url");
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE).addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+	}
+
+	public void setupServiceRequestSpecificationBuilderForDataLayerForUI() throws IOException {
+		testData = new PropertyFileLoader();
 		RestAssured.baseURI = testData.getProperty("data.layer.service.base.url");
 		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
 				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();

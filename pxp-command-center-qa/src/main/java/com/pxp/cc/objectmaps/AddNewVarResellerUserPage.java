@@ -204,6 +204,13 @@ public class AddNewVarResellerUserPage extends CCMainPage {
 		enterVarResellerName(varResellerName);
 	}
 
+	public void addUserRoles() throws InterruptedException {
+		log("Select all user role");
+		for (int i = 0; i < listUserRoleRadioButtons.size(); i++) {
+			javascriptClick(listUserRoleRadioButtons.get(i));
+		}
+	}
+
 	public void selectUserRole(String userRole) {
 		if (listUserRoleRadioButtons.size() > 0) {
 			if (userRole.equals("Admin")) {

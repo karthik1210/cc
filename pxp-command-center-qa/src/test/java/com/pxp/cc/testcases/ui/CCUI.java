@@ -37,6 +37,9 @@ public class CCUI extends CommandCenterGenericTest {
     ResourceDetailsPage resourceDetailsPage;
     AddNewResourcePage addNewResourcePage;
     AddNewProviderPage addNewProviderPage;
+    UserBulkEnrollmentPage userBulkEnrollmentPage;
+    AddNewInternalUsersPage addNewInternalUsersPage;
+    AddNewVarResellerUserPage addNewVarResellerUserPage;
 
 
     ///////////Variables Test Data
@@ -54,6 +57,24 @@ public class CCUI extends CommandCenterGenericTest {
             ccui = new CCUI(testData, driver);
         }
         return ccui;
+    }
+
+    public AddNewInternalUsersPage getAddNewInternalUsersPage() throws InterruptedException {
+        if(addNewInternalUsersPage == null)
+            addNewInternalUsersPage = new AddNewInternalUsersPage((driver));
+        return addNewInternalUsersPage;
+    }
+
+    public AddNewVarResellerUserPage getAddNewVarResellerUserPage() throws InterruptedException {
+        if(addNewVarResellerUserPage == null)
+            addNewVarResellerUserPage = new AddNewVarResellerUserPage((driver));
+        return addNewVarResellerUserPage;
+    }
+
+    public UserBulkEnrollmentPage getUserBulkEnrollmentPage() throws InterruptedException {
+        if(userBulkEnrollmentPage == null)
+            userBulkEnrollmentPage = new UserBulkEnrollmentPage((driver));
+        return userBulkEnrollmentPage;
     }
 
     public CommonMethods getCommonMethods() throws InterruptedException {

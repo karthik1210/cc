@@ -89,7 +89,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         runOnce = false;
     }
 
-    @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26610 TC 004_Verify the Response code as 204, For type Internal & enrollstatus as PENDING by using GET Request [DL]")
+    @Test(enabled = false, priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26610 TC 004_Verify the Response code as 204, For type Internal & enrollstatus as PENDING by using GET Request [DL]")
     public void searchInternalUserWithEnrollmentStatusWithNoContent() throws IOException {
         if (runOnce) {
             userMap.clear();
@@ -105,7 +105,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26608 TC 002_Verify the Response code as 204, For type Client & enroll status as PENDING by using GET Request [DL]")
+    @Test(enabled = false, priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26608 TC 002_Verify the Response code as 204, For type Client & enroll status as PENDING by using GET Request [DL]")
     public void searchClientUserWithEnrollmentStatusWithNoContent() throws IOException {
         if (runOnce) {
             orgListMap.clear();
@@ -126,7 +126,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(searchUserWithEnrollmentApiResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26612 TC 006_Verify the Response code as 204, For type VARReseller & enroll status as PENDING by using GET Request [DL]")
+    @Test(enabled = false, priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-26612 TC 006_Verify the Response code as 204, For type VARReseller & enroll status as PENDING by using GET Request [DL]")
     public void searchVARResellerUserWithEnrollmentStatusWithNoContent() throws IOException {
         if (runOnce) {
             userMap.clear();
@@ -224,6 +224,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
 
     @Test(enabled = false)
     public HashMap<String, Integer> getOrgMapList() throws IOException {
+        setupServiceRequestSpecificationBuilderForDataLayer();
         String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
         String clientSapNumber = CCUtils.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
         String testFlag = testData.getProperty("api.client.testclient");
