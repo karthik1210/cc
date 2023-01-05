@@ -37,7 +37,9 @@ public class GetPracticesForStaffApiTests_BusinessLayer extends BaseRest {
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,

@@ -40,7 +40,9 @@ public class GetStaffDetailsApiTests_BusinessLayer extends BaseRest {
 		String clientTimezoneId = testData.getProperty("api.client.timezoneid");
 		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId);
+				clientTimezoneId,
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -57,7 +59,7 @@ public class GetStaffDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(createNewStaffApiResponse.getStatusCode(), 200);
 		int staffId= createNewStaffApiResponse.jsonPath().getInt("id");
 		logStep("Enter existing StaffId to get staff details and verify response body");
-		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL(staffId);
+		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL(clientId, staffId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 200);
@@ -68,11 +70,11 @@ public class GetStaffDetailsApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForNonExistingStaffId() throws IOException {
 		logStep("Enter non-existing StaffId and verify response body");
 		int staffId= Integer.parseInt(testData.getProperty("api.nonexisting.id"));
-		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL(staffId);
+		getStaffDetailsApiResponse=sharedInfo.getStaffDetails_BL(clientId,staffId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyInvalidStaffId(getStaffDetailsApiResponse,staffId);
+		validation.verifyErrorMessageForBlankField(getStaffDetailsApiResponse);
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value in StaffId field and verify response code")

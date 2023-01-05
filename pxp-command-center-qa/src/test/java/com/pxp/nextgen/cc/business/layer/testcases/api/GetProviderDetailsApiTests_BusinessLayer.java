@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -21,8 +21,8 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 	private OrgInfo orgInfo;
 	Response fetchProviderDetailsApiResponse, createClientApiResponse, createOrgNodeApiResponse,
 			createProviderApiResponse;
-	int clientId, systemId, enterpriseId, practiceId;
-	String clientName, clientSapNumber;
+	int clientId, systemId, enterpriseId, practiceId,providerId;
+	String clientName, clientSapNumber,providerFirstName,lastName;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -49,6 +49,14 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("api.practice.parenttype"), "US/Central",
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
+		providerFirstName = "Pro"
+				+ testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		logStep("Create provider for resourceId");
+		String externalId = CCUtils.generateAlphaNumericString(10);
+		createProviderApiResponse = sharedInfo.createProvider_BL(practiceId, providerFirstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
 	}
 
 	public int createClient(String status) throws Exception {
@@ -59,7 +67,9 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -73,8 +83,7 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing providerId in providerId field and validate status code")
 	public void testSuccessResponseCodeForExistingProviderId() throws NullPointerException, IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(clientId, providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
@@ -84,17 +93,16 @@ public class GetProviderDetailsApiTests_BusinessLayer extends BaseRest {
 	public void testErrorResponseCodeForNonExistingProviderId() throws IOException {
 		logStep("Enter non existing providerId");
 		int providerId = Integer.parseInt(testData.getProperty("non.existing.provider.id"));
-		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
+		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails(clientId, providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
 		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyForNonexistingproviderId(fetchProviderDetailsApiResponse, providerId);
+		validation.verifyErrorMessageForInvalidInput(fetchProviderDetailsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws IOException {
 		logStep("Enter existing providerId");
-		int providerId = Integer.parseInt(testData.getProperty("existing.provider.id"));
 		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetailsInvalidUrl(providerId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);

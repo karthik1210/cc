@@ -44,7 +44,9 @@ public class ApplyToInheritFromApiTests extends BaseRest {
 		logStep("Create a client with name: " + clientName);
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		logStep("Validating Response for create client");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);

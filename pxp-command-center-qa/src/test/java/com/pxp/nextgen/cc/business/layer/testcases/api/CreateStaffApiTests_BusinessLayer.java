@@ -35,7 +35,9 @@ public class CreateStaffApiTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientNameData, clientSapNumber,
-				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);

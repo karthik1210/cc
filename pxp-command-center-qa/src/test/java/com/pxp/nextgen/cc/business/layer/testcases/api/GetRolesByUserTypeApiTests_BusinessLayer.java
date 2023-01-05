@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -34,7 +34,9 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
 				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId());
+				ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		newClientId = createClientApiResponse.jsonPath().get("clientId").toString();
 	}
 

@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -23,10 +23,9 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private BrandsInfo brandsInfo;
 	private OrgInfo orgInfo;
-	int clientId, systemId, enterpriseId, practiceId,brandId=0;
-	Response associateDisassociateBrandApiResponse, createClientApiResponse,
-			createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
-			createBrandApiResponse;
+	int clientId, systemId, enterpriseId, practiceId, brandId = 0;
+	Response associateDisassociateBrandApiResponse, createClientApiResponse, createSystemApiResponse,
+			createEnterpriseApiResponse, createPracticeApiResponse, createBrandApiResponse;
 
 	@BeforeClass
 	public void setBaseUri() throws Exception {
@@ -36,7 +35,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
-		brandsInfo=new BrandsInfo();
+		brandsInfo = new BrandsInfo();
 		clientId = createClient(ccUser.getClientOneType());
 		systemId = createSystemNode(clientId);
 		enterpriseId = createEnterpriseNode(systemId);
@@ -44,50 +43,50 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	}
 
 	public int createClient(String clientType) throws Exception {
-        String clientName = testData.getProperty("api.client.name")
-                .concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-        String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-        createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-                clientSapNumber, testData.getProperty("api.client.testclient"),
-                Integer.parseInt(testData.getProperty("api.client.type")),
-                testData.getProperty("api.client.timezoneid"));
-        logStep("Validating response information");
-        CCUtils.responseTimeValidation(createClientApiResponse);
-        CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-        validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-        return createClientApiResponse.jsonPath().get("clientId");
-    }
+		String clientName = testData.getProperty("api.client.name")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
+		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
+				clientSapNumber, testData.getProperty("api.client.testclient"),
+				Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createClientApiResponse);
+		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
+		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
+		return createClientApiResponse.jsonPath().get("clientId");
+	}
 
-		public int createSystemNode(int clientId) throws Exception {
-				createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-                testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-                testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-                Integer.parseInt(testData.getProperty("pm.identifier")));
-        return createSystemApiResponse.jsonPath().get("orgId");
-    }
+	public int createSystemNode(int clientId) throws Exception {
+		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
+				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
+				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createSystemApiResponse.jsonPath().get("orgId");
+	}
 
-   public int createEnterpriseNode(int SystemId) throws Exception {
-        createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-                testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-                testData.getProperty("api.enterprise.timezoneid"), systemId,
-                testData.getProperty("api.enterprise.parenttype"),
-                Integer.parseInt(testData.getProperty("ehr.identifier")),
-                Integer.parseInt(testData.getProperty("pm.identifier")));
-        return createEnterpriseApiResponse.jsonPath().get("orgId");
-    }
+	public int createEnterpriseNode(int SystemId) throws Exception {
+		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
+				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
+				testData.getProperty("api.enterprise.timezoneid"), systemId,
+				testData.getProperty("api.enterprise.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createEnterpriseApiResponse.jsonPath().get("orgId");
+	}
 
-   public int createPracticeNode(int enterpriseId) throws Exception {
-        createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-                testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-                testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-                enterpriseId, testData.getProperty("api.practice.parenttype"),
-                Integer.parseInt(testData.getProperty("ehr.identifier")),
-                Integer.parseInt(testData.getProperty("pm.identifier")));
-        return createPracticeApiResponse.jsonPath().get("orgId");
-    }
-	
-	public int createBrandTemplate(int orgId)
-	{
+	public int createPracticeNode(int enterpriseId) throws Exception {
+		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
+				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
+				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
+				enterpriseId, testData.getProperty("api.practice.parenttype"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
+		return createPracticeApiResponse.jsonPath().get("orgId");
+	}
+
+	public int createBrandTemplate(int orgId) {
 		String name = testData.getProperty("client.org.brand.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		String color = testData.getProperty("client.org.brand.color");
@@ -99,76 +98,71 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to associate and disaasociate branding template at client level")
-	public void associateAndDisassociateBrandToClient() throws IOException
-	{
+	public void associateAndDisassociateBrandToClient() throws IOException {
 		logStep("Create new branding template at Client level");
-		brandId=createBrandTemplate(clientId);
+		brandId = createBrandTemplate(clientId);
 		logStep("associate branding template to Client");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(clientId, brandId, true);
 		logStep("Validating response Information");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 		logStep("disassociate Branding template to Client");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(clientId, brandId, false);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(clientId, brandId, false);
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to associate and disaasociate branding template at system level")
-	public void associateAndDisassociateBrandToSystem() throws IOException
-	{
+	public void associateAndDisassociateBrandToSystem() throws IOException {
 		logStep("Create new branding template at System level");
-		brandId=createBrandTemplate(systemId);
+		brandId = createBrandTemplate(systemId);
 		logStep("associate branding template to System");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(systemId, brandId, true);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(systemId, brandId, true);
 		logStep("Validating response Information");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 		logStep("disasscoiate branding template to system");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(systemId, brandId, false);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(systemId, brandId, false);
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to associate and disaasociate branding template at Enterprise level")
-	public void associateAndDisassociateBrandToEnterprise() throws IOException
-	{
+	public void associateAndDisassociateBrandToEnterprise() throws IOException {
 		logStep("Create new branding template at Enterprise level");
-		brandId=createBrandTemplate(enterpriseId);
+		brandId = createBrandTemplate(enterpriseId);
 		logStep("associate branding template to enterprise");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(enterpriseId, brandId, true);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(enterpriseId, brandId, true);
 		logStep("Validating respone information");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 		logStep("disassociate branding template to enterprise");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(enterpriseId, brandId, false);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(enterpriseId, brandId, false);
 		logStep("validating response information");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to associate and disaasociate branding template at Practice level")
-	public void associateAndDisassociateBrandToPractice() throws IOException
-	{
+	public void associateAndDisassociateBrandToPractice() throws IOException {
 		logStep("create new branding template at Practice level");
-		brandId= createBrandTemplate(practiceId);
+		brandId = createBrandTemplate(practiceId);
 		logStep("associate branding template to practice");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(practiceId, brandId, true);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(practiceId, brandId, true);
 		logStep("validating response information");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 		logStep("disassociate branding template to practice");
-		associateDisassociateBrandApiResponse=sharedInfo.associateDeassociateBrand_BL(practiceId, brandId, false);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(practiceId, brandId, false);
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing Org Id and existing brand id to verify error message")
 	public void testErrorMessageForNonExistingOrgId() throws Exception {
 		logStep("Enter non-existing Org Id and existing brand id");
 		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(
-				Integer.parseInt(testData.getProperty("non.existing.org.id")),
-				brandId, false);
+				Integer.parseInt(testData.getProperty("non.existing.org.id")), brandId, false);
 		logStep("Validating Response Body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
@@ -179,15 +173,15 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing org id and non-existing Brand Id to verify error message")
 	public void testErrorMessageForNonExistingBrandId() throws Exception {
 		logStep("Enter existing org id and non-existing Brand Id");
-		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(
-				clientId,Integer.parseInt(testData.getProperty("non.existing.brand.id")), true);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrand_BL(clientId,
+				Integer.parseInt(testData.getProperty("non.existing.brand.id")), true);
 		logStep("Validating Response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
 		brandingValidations.verifyErrorMessageInResponseForNonExistingBrandId(associateDisassociateBrandApiResponse,
 				testData.getProperty("non.existing.brand.id"));
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing org id and Brand Id to verify error message")
 	public void testErrorMessageForNonExistingOrgIdAndBrandId() throws Exception {
 		logStep("Enter non-existing org id and Brand Id");
@@ -200,7 +194,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 		brandingValidations.verifyErrorMessageInResponseForNonExistingBrandId(associateDisassociateBrandApiResponse,
 				testData.getProperty("non.existing.brand.id"));
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter Org Id as null to verify error message")
 	public void testErrorMessageForOrgIdAsNull() throws Exception {
 		logStep("Enter Org Id as null");
@@ -213,8 +207,7 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter empty payload and verify error message")
 	public void testErrorMessageForEmptyPayload() throws Exception {
 		logStep("Enter existing Client id");
-		associateDisassociateBrandApiResponse = sharedInfo
-				.associateDeassociateBrandUsingEmptyPayload_BL(clientId);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingEmptyPayload_BL(clientId);
 		logStep("validating Response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 400);
@@ -224,8 +217,8 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Hit invalid URL and verify error message")
 	public void testErrorMessageForInvalidURL() throws Exception {
 		logStep("Enter existing Org Id and brand id");
-		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingInvalidUrl_BL(
-				clientId,brandId, true);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingInvalidUrl_BL(clientId,
+				brandId, true);
 		logStep("Validate Response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 404);
@@ -235,8 +228,8 @@ public class AssociateDeassociateBrandApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Instead of PUT method call make POST call and verify error message")
 	public void testErrorMessageForInvalidMethodCall() throws Exception {
 		logStep("Enter existing Org id and brand id");
-		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingInvalidMethodCall_BL(
-				clientId,brandId, false);
+		associateDisassociateBrandApiResponse = sharedInfo.associateDeassociateBrandUsingInvalidMethodCall_BL(clientId,
+				brandId, false);
 		logStep("Validate response body");
 		CCUtils.responseTimeValidation(associateDisassociateBrandApiResponse);
 		CCUtils.assertEquals(associateDisassociateBrandApiResponse.getStatusCode(), 405);

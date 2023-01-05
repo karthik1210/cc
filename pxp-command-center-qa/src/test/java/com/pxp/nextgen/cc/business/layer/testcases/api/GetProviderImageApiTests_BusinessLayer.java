@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -40,7 +40,9 @@ public class GetProviderImageApiTests_BusinessLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
@@ -89,7 +91,7 @@ public class GetProviderImageApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(addProviderImageApiResponse);
 		CCUtils.assertEquals(addProviderImageApiResponse.getStatusCode(), 200);
 		logStep("fetch provider details using correct provider id");
-		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
+		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(clientId, providerId);
 		CCUtils.assertEquals(getProviderDetailsApiResponse.getStatusCode(), 200);
 		logStep("Get provider image using valid image id");
 		String imageId = sharedServiceApiValidations.getImageUrl(getProviderDetailsApiResponse);

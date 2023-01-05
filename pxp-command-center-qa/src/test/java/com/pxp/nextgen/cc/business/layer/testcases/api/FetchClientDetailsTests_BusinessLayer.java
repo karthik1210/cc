@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -18,7 +18,6 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
-
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validation;
@@ -73,7 +72,9 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
 				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId());
+				ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -100,7 +101,9 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
 				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId());
+				ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 
 		Map<String, Object> solutionMapOne = new HashMap<String, Object>();
@@ -165,7 +168,9 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
 				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId());
+				ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		logStep("create another active practice node without solutions");
 		createPracticeApiResponse = createAgnosticPractice(clientId, "true");
@@ -203,7 +208,9 @@ public class FetchClientDetailsTests_BusinessLayer extends BaseRest {
 		logStep("create a client node");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
 				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId());
+				ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		String clientId = createClientApiResponse.jsonPath().get("clientId").toString();
 		List<Map<String, Object>> solutionLists = new ArrayList<Map<String, Object>>();
 

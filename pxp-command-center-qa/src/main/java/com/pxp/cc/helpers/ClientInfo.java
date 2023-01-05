@@ -18,20 +18,34 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClient(String active, String clientName, String sapNumber, String testClient, int type,
-			String timezoneId) throws IOException {
+			String timezoneId,int ehrIdentifier,int pmIdentifier) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+				timezoneId,ehrIdentifier,pmIdentifier);
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(ApiPath.CLIENT_BL).then().extract()
 				.response();
 	}
 
 	public Response updateClient(Boolean active, String clientId, String clientName, String sapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId,int ehrIdentifier,int pmIdentifier) throws IOException {
 		String url = ApiPath.CLIENT_DETAILS_BL(clientId);
 		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
+				timezoneId,ehrIdentifier,pmIdentifier);
 		return given().spec(requestSpec).body(updateClientPayload).pathParam("clientId", clientId).when().put(url)
 				.then().extract().response();
+	}
+	
+	private Map<String, Object> putUpdateClient(boolean active, String clientName, String clientSapNumber,
+			String testClient, int type, String timezoneId, int ehrIdentifier, int pmIdentifier) {
+		Map<String, Object> updateClientMap = new HashMap<String, Object>();
+		updateClientMap.put("active", active);
+		updateClientMap.put("name", clientName);
+		updateClientMap.put("sapNumber", clientSapNumber);
+		updateClientMap.put("testClient", testClient);
+		updateClientMap.put("type", type);
+		updateClientMap.put("timezoneId", timezoneId);
+		updateClientMap.put("ehrIdentifier", ehrIdentifier);
+		updateClientMap.put("pmIdentifier", pmIdentifier);
+		return updateClientMap;
 	}
 	
 	public Response updateClientNullValues_BL() throws IOException {
@@ -40,24 +54,11 @@ public class ClientInfo extends BaseRest {
 				.then().extract().response();
 	}
 
-	public Response updateClientWithInvalidUrl(Boolean active, String clientId, String clientName, String sapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
-		String url = ApiPath.INVALID_PATH_CLIENT_DETAILS_BL(clientId);
-		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
-		return given().spec(requestSpec).body(updateClientPayload).pathParam("clientId", clientId).when().put(url)
-				.then().extract().response();
-	}
 
 	public Response getSapNumber(String clientSapNumber) throws IOException {
 		String url = ApiPath.CLIENTSAPNUMBER_BL(clientSapNumber);
 		return given().spec(requestSpec).pathParam("sapNumber", clientSapNumber).when().get(url).then().extract()
 				.response();
-	}
-
-	public Response patchClientStatus(String clientId, String clientStatus) throws IOException {
-		String url = ApiPath.GET_CLIENT + clientId + ApiPath.GET_CLIENT_STATUS + clientStatus;
-		return given().spec(requestSpec).when().patch(url).then().extract().response();
 	}
 
 	public Response getClientTypes() throws IOException {
@@ -82,7 +83,7 @@ public class ClientInfo extends BaseRest {
 	}
 
 	private Map<String, Object> postCreateClient(String active, String clientName, String clientSapNumber,
-			String testClient, int type, String timezoneId) {
+			String testClient, int type, String timezoneId,int ehrIdentifier,int pmIdentifier) {
 		Map<String, Object> createClientMap = new HashMap<String, Object>();
 		createClientMap.put("active", active);
 		createClientMap.put("name", clientName);
@@ -90,6 +91,8 @@ public class ClientInfo extends BaseRest {
 		createClientMap.put("testClient", testClient);
 		createClientMap.put("type", type);
 		createClientMap.put("timezoneId", timezoneId);
+		createClientMap.put("ehrIdentifier", ehrIdentifier);
+		createClientMap.put("pmIdentifier", pmIdentifier);
 		return createClientMap;
 	}
 
@@ -104,9 +107,9 @@ public class ClientInfo extends BaseRest {
 	}
 
 	public Response createNewClientUsingInvalidUrl(String active, String clientName, String clientSapNumber,
-			String testClient, int type, String timezoneId) throws IOException {
+			String testClient, int type, String timezoneId,int ehrIdentifier,int pmIdentifier) throws IOException {
 		Map<String, Object> createNewClientPayload = postCreateClient(active, clientName, clientSapNumber, testClient, type,
-				timezoneId);
+				timezoneId,ehrIdentifier,pmIdentifier);
 		String invalidUrl = ApiPath.INVALID_PATH_CLIENT_BL;
 		return given().spec(requestSpec).body(createNewClientPayload).when().post(invalidUrl).then().extract()
 				.response();
@@ -224,28 +227,7 @@ public class ClientInfo extends BaseRest {
 		updateClientMap.put("pmIdentifier", pmIdentifier);
 		return updateClientMap;
 	}
-
-	public Response UpdateClientIsingInvalidUrl_DataLayer(int clientId, boolean active, String clientName,
-			String sapNumber, String testClient, int type, String timezoneId) throws IOException {
-		Map<String, Object> updateClientPayload = putUpdateClient(active, clientName, sapNumber, testClient, type,
-				timezoneId);
-		String url = ApiPath.INVALID_PATH_CLIENT_DETAILS_DL(clientId);
-		return given().spec(requestSpec).pathParam("clientId", clientId).body(updateClientPayload).when().put(url)
-				.then().extract().response();
-	}
-
-	private Map<String, Object> putUpdateClient(boolean active, String clientName, String clientSapNumber,
-			String testClient, int type, String timezoneId) {
-		Map<String, Object> updateClientMap = new HashMap<String, Object>();
-		updateClientMap.put("active", active);
-		updateClientMap.put("name", clientName);
-		updateClientMap.put("sapNumber", clientSapNumber);
-		updateClientMap.put("testClient", testClient);
-		updateClientMap.put("type", type);
-		updateClientMap.put("timezoneId", timezoneId);
-		return updateClientMap;
-	}
-
+	
 	public Response getClientOrgHierarchyDetails(int clientId) {
 		String url = ApiPath.CLIENT_ORG_HIERARCHY_BL(clientId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();

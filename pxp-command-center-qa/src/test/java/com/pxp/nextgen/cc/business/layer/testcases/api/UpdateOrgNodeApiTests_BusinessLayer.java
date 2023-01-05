@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -60,7 +60,9 @@ public class UpdateOrgNodeApiTests_BusinessLayer extends BaseRest {
 		createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 

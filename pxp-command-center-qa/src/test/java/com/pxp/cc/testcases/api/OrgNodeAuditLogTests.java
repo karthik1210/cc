@@ -55,7 +55,9 @@ public class OrgNodeAuditLogTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
 		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
@@ -122,7 +124,9 @@ public class OrgNodeAuditLogTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
 		String practiceName = ccUser.getPracticeNameApi().concat(CCUtils.generateRandomString());
@@ -158,7 +162,9 @@ public class OrgNodeAuditLogTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
 		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());
@@ -198,7 +204,9 @@ public class OrgNodeAuditLogTests extends BaseRest {
 		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId());
+				ccUser.getTestClient(), Integer.parseInt(ccUser.getClientType()), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int clientId = createClientApiResponse.jsonPath().get("id");
 
 		String systemName = ccUser.getSystemNameApi().concat(CCUtils.generateRandomString());

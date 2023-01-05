@@ -45,7 +45,9 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 		createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber,
 				testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"));
+				testData.getProperty("api.client.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		return createClientApiResponse.jsonPath().getInt("clientId");
 	}
 
@@ -54,7 +56,6 @@ public class GetListOfOrganizationByClientIdApiTests_BusinessLayer extends BaseR
 		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType, "", status, timezoneId, parentId, parentType,
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
-
 		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 

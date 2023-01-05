@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -43,7 +43,9 @@ public class RemoveProviderImageApiTests_BusinessLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
@@ -99,7 +101,7 @@ public class RemoveProviderImageApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(deleteProviderImageApiResponse);
 		CCUtils.assertEquals(deleteProviderImageApiResponse.getStatusCode(), 200);
 		logStep("Fetch provider details using provider id");
-		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerId);
+		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(clientId, providerId);
 		CCUtils.assertEquals(getProviderDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify imageurl is not present for selected provider");
 		Boolean value = sharedServiceApiValidations.validateImageUrlValueIsNull(getProviderDetailsApiResponse);
@@ -109,7 +111,7 @@ public class RemoveProviderImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify image is not present for provider.Delete provider image using providerId and verify response code")
 	public void testErrorResponseCodeForInvalidImage() throws NullPointerException, IOException {
 		logStep("Fetch provider details using provider id");
-		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(providerIdTwo);
+		getProviderDetailsApiResponse = sharedInfo.getProviderDetails(clientId, providerIdTwo);
 		CCUtils.assertEquals(getProviderDetailsApiResponse.getStatusCode(), 200);
 		logStep("Verify imageurl is not present for selected provider");
 		Boolean value = sharedServiceApiValidations.validateImageUrlValueIsNull(getProviderDetailsApiResponse);

@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
@@ -48,7 +48,9 @@ public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
