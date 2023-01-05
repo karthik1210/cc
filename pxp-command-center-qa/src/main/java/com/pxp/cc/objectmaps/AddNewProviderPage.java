@@ -256,7 +256,7 @@ public class AddNewProviderPage extends CCMainPage {
 
 	public void editProvider() throws InterruptedException {
 		clickOnEdit();
-		enterProviderEmail(CCUtils.generateNewEmail(12));
+		enterProviderEmail(CCUtils.generateNewEmail(10));
 		clickOnSave();
 		clickOnBackArrow();
 	}
@@ -277,11 +277,12 @@ public class AddNewProviderPage extends CCMainPage {
 		}
 	}
 
-	public void enterProviderName(String providerName) {
+	public void enterProviderName(String providerName) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(textboxSearchProviderName, driver);
 		textboxSearchProviderName.click();
 		textboxSearchProviderName.sendKeys(providerName);
 		log("Entered input for search provider field : " + providerName);
+		Thread.sleep(3000);
 	}
 
 	public void searchProvider(String providerName) throws NullPointerException, InterruptedException {

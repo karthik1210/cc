@@ -430,6 +430,14 @@ public class CCUtils {
         new Actions(driver).moveToElement(element).click().perform();
     }
 
+    public static void mousehover(WebElement element, WebDriver driver) {
+        new Actions(driver).moveToElement(element).build().perform();
+    }
+
+    public static void focusOnElementAndClick(WebElement element, WebDriver driver) {
+        new Actions(driver).moveToElement(element).click().build().perform();
+    }
+
     public String getDefaultItemsPerPageOfWebPage(WebElement ele, WebDriver driver) throws InterruptedException {
         CCUtils.verifyAndWaitForElement(ele, driver);
         return ele.getText().toString();
@@ -548,6 +556,10 @@ public class CCUtils {
             sb.append(numericString.charAt(index));
         }
         return sb.toString();
+    }
+
+    public static void enterValueOnTextField(WebElement element, String value) {
+        element.sendKeys(value);
     }
 
 }
