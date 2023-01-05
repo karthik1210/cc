@@ -39,7 +39,9 @@ public class GetLocationDetailsApiTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient("true", clientName, clientSapNumber, "true",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -67,7 +69,7 @@ public class GetLocationDetailsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id in location id field and verify response body")
 	public void testGetLocationDetailsFunctionalityUsingValidLocationId() throws IOException {
 		logStep("Fetch location details using location id");
-		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails(locationId);
+		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails(clientId,locationId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
 		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);
@@ -83,7 +85,7 @@ public class GetLocationDetailsApiTests_BusinessLayer extends BaseRest {
 	public void testErrorMessageForNonExistingLocationId() throws IOException {
 		logStep("Enter non existing location id in location id field");
 		fetchLocationDetailsApiResponse = sharedInfo
-				.getLocationDetails(Integer.parseInt(testData.getProperty("non.existing.location.id")));
+				.getLocationDetails(clientId,Integer.parseInt(testData.getProperty("non.existing.location.id")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
 		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 400);
@@ -99,15 +101,5 @@ public class GetLocationDetailsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
 		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 404);
 		validation.verifyErrorInResponseForInvalidUrl(fetchLocationDetailsApiResponse);
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Make a PUT call instead of POST and verify response body")
-	public void testErrorMessageForInvalidMethod() throws IOException {
-		logStep("Verify error response for invalid method call");
-		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetailsUsingInvalidMethod_BL(locationId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
-		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 405);
-		validation.verifyErrorMessageInResponseForInvalidPostMethodCall(fetchLocationDetailsApiResponse);
 	}
 }

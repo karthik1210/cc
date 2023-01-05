@@ -32,8 +32,8 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response getProviderDetails(int providerId) {
-		String url = ApiPath.PROVIDER_DETAILS_BL(providerId);
+	public Response getProviderDetails(int clientId, int providerId) {
+		String url = ApiPath.GET_PROVIDER_DETAILS_BL(clientId, providerId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -583,8 +583,8 @@ public class SharedInfo extends BaseRest {
 		return createLocationMap;
 	}
 
-	public Response getLocationDetails(int locationId) {
-		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
+	public Response getLocationDetails(int clientId, int locationId){
+		String url = ApiPath.LOCATION_DETAILS_BL(clientId, locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
@@ -656,11 +656,6 @@ public class SharedInfo extends BaseRest {
 	public Response getLocationDetailsUsingInvalidUrl_BL(int locationId) {
 		String url = ApiPath.INVALID_PATH_LOCATION_DETAILS_BL(locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
-	}
-
-	public Response getLocationDetailsUsingInvalidMethod_BL(int locationId) {
-		String url = ApiPath.LOCATION_DETAILS_BL(locationId);
-		return given().spec(requestSpec).when().post(url).then().extract().response();
 	}
 
 	private Map<String, Object> associateDeassociatePracticeMapPayload(int practiceId, Boolean active) {
@@ -1956,8 +1951,8 @@ public class SharedInfo extends BaseRest {
 				.response();
 	}	
 	
-	public Response getStaffDetails_BL(int staffId) {
-		String url = ApiPath.GET_STAFF_DETAILS_BL(staffId);
+	public Response getStaffDetails_BL(int clientId, int staffId) {
+		String url = ApiPath.GET_STAFF_DETAILS_BL(clientId, staffId);
 		return given().spec(requestSpec).when().get(url).then().extract()
 				.response();
 	}

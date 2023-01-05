@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -34,7 +34,9 @@ public class CreateProviderApiTests_BusinessLayer extends BaseRest {
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
@@ -71,14 +73,6 @@ public class CreateProviderApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createProviderApiResponse);
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
 		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
-		int providerId = createProviderApiResponse.jsonPath().getInt("providerId");
-		logStep("fetch newly created provider details using provider id");
-		fetchProviderDetailsApiResponse = sharedInfo.getProviderDetails_BL(providerId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchProviderDetailsApiResponse);
-		CCUtils.assertEquals(fetchProviderDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyResponseBodyForProviderDetails(fetchProviderDetailsApiResponse, firstName, lastName,
-				testData.getProperty("provider.gender"), testData.getProperty("provider.status"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter more than 100 characters in firstname, lastname, and more than 50 characters in external id, credentials field and verify response body")

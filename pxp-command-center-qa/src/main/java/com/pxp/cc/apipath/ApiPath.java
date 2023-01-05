@@ -464,6 +464,10 @@ public class ApiPath {
 	public static final String PROVIDER_DETAILS_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId;
 	}
+	
+	public static final String GET_PROVIDER_DETAILS_BL(int clientId, int providerId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId +"/providers/" + providerId;
+	}
 
 	public static final String PROVIDER_DETAILS_INVALID_URL_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providerssss/" + providerId;
@@ -949,8 +953,8 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locationssss";
 	}
 
-	public static final String LOCATION_DETAILS_BL(int locationId) {
-		return SERVICE_SHARED_BL + "/v1/locations/" + locationId;
+	public static final String LOCATION_DETAILS_BL(int clientId, int locationId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/locations/" + locationId;
 	}
 
 	public static final String UPDATE_ORG_WEBSITES(String serviceLayer, int practiceId) {
@@ -1417,8 +1421,8 @@ public class ApiPath {
 		return SHARED_DL + "/v1/locations/" + null + "/practices/" + null;
 	}
 
-	public static final String UPLOAD_PROVIDER_IMAGE(int providerId) {
-		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/images";
+	public static final String UPLOAD_PROVIDER_IMAGE(int staffId) {
+		return SERVICE_SHARED_BL + "/v1/staff/" + staffId + "/images";
 	}
 
 	public static final String GET_STATES(String serviceLayer) {
@@ -1466,7 +1470,7 @@ public class ApiPath {
 	}
 
 	public static final String GET_PROVIDER_IMAGE(String imageId) {
-		return SERVICE_SHARED_BL + "/v1/providers/image/" + imageId;
+		return SERVICE_SHARED_BL + "/v1/staff/image/" + imageId;
 	}
 
 	public static final String GET_PATIENT_AGEOUT_DL(String uriType, int practiceId) {
@@ -1979,12 +1983,12 @@ public class ApiPath {
 		return SHARED_DL + "/v1/staff/null";
 	}
 	
-	public static final String GET_STAFF_DETAILS_BL(int staffId) {
-		return SERVICE_SHARED_BL + "/v1/staff/"+ staffId;
+	public static final String GET_STAFF_DETAILS_BL(int clientId, int staffId) {
+		return SERVICE_SHARED_BL + "/v1/clients/"+ clientId + "/staff/"+ staffId;
 	}
 
 	public static final String GET_STAFF_DETAILS_BL_NULL_VALUE() {
-		return SERVICE_SHARED_BL + "/v1/staff/null";
+		return SERVICE_SHARED_BL + "/v1/clients/null/staff/null";
 	}
 	
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL() {

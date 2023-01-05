@@ -36,7 +36,9 @@ public class AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer extends
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
@@ -72,16 +74,16 @@ public class AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer extends
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Associate practiceid for existing staffId and verify response body")
 	public void testResponseCodeToAssociatePracticeForStaff() throws NullPointerException, IOException {
 		logStep("Associate practiceid for existing staffId");
-		associateDeassociatePracticeForStaffApiResponse = sharedInfo.practicesAssociateToStaff_BL(staffId,
-				practiceId, true);
+		associateDeassociatePracticeForStaffApiResponse = sharedInfo.practicesAssociateToStaff_BL(staffId, practiceId,
+				true);
 		CCUtils.assertEquals(associateDeassociatePracticeForStaffApiResponse.getStatusCode(), 200);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Deassociate practiceid for existing staffId and verify response body")
 	public void testResponseCodeToDeassociatePracticeForStaff() throws NullPointerException, IOException {
 		logStep("Deassociate practiceid for existing staffId");
-		associateDeassociatePracticeForStaffApiResponse = sharedInfo.practicesAssociateToStaff_BL(staffId,
-				practiceId, false);
+		associateDeassociatePracticeForStaffApiResponse = sharedInfo.practicesAssociateToStaff_BL(staffId, practiceId,
+				false);
 		CCUtils.assertEquals(associateDeassociatePracticeForStaffApiResponse.getStatusCode(), 200);
 	}
 

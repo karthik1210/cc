@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -88,7 +88,9 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 			String practiceParentType, String practiceTimeZone) throws IOException {
 		logStep("Create nge practice below the client with valid details");
 		createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber, testFlag, clientType,
-				clientTimezoneId);
+				clientTimezoneId,
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		logStep("Create a new system below client.");
 		createSystemApiResponse = orgInfo.createOrg(status, "", systemName, sysOrgType, clientId, sysParentType, "",
@@ -138,7 +140,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing practice id associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingPracticeId() throws IOException {
 		searchResourceApiResponse = sharedInfo.getConnectedResource_BL(
-				Integer.parseInt(testData.getProperty("Non.existing.tou.id")), testData.getProperty("resource.name"));
+				Integer.parseInt(testData.getProperty("api.nonexisting.id")), testData.getProperty("resource.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);
 		CCUtils.assertEquals(searchResourceApiResponse.getStatusCode(), 204);
@@ -156,7 +158,7 @@ public class SearchConnectedResourcesForLocationAssciatedWithPracticeApiTests_Bu
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify get 204 status code when providing non-existing practice id and resource name associated with a location")
 	public void testNotFoundResourceWhenEnterNonExistingResourceNameAndPracticeId() throws IOException {
 		searchResourceApiResponse = sharedInfo.getConnectedResource_BL(
-				Integer.parseInt(testData.getProperty("Non.existing.tou.id")),
+				Integer.parseInt(testData.getProperty("api.nonexisting.id")),
 				testData.getProperty("non.existing.user.first.name"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchResourceApiResponse);

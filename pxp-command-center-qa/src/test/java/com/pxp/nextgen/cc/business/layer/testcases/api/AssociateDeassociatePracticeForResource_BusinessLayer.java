@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -15,7 +15,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class  AssociateDeassociatePracticeForResource_BusinessLayer extends BaseRest {
+public class AssociateDeassociatePracticeForResource_BusinessLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private ResourceInfo resourceInfo;
@@ -25,7 +25,7 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 			createEnterpriseApiResponse, createResourceApiResponse, associateDeassociatePracticeForResourceApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, resourceIdOne;
 	String clientName, clientSapNumber, externalId, firstName, lastName, resourceExternalId;
-	
+
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
@@ -38,7 +38,9 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
@@ -79,7 +81,7 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
 		return createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add practiceid for existing resourceId and verify response body")
 	public void testResponseCodeToAddPracticeForResource() throws NullPointerException, IOException {
 		logStep("Add practiceid for existing resourceId");
@@ -87,7 +89,7 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 				.associateDeassociatePracticeForResource_BL(resourceId, practiceId, "true");
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Remove practiceid for existing resourceId and verify response body")
 	public void testResponseCodeToRemovePracticeForResource() throws NullPointerException, IOException {
 		logStep("Remove practiceid for existing resourceId");
@@ -95,7 +97,7 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 				.associateDeassociatePracticeForResource_BL(resourceId, practiceId, "false");
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 200);
 	}
-     
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add existing practiceid for non-existing resourceId and verify response body")
 	public void testResponseCodeToAddPracticeForNonExistingResource() throws NullPointerException, IOException {
 		logStep("Add existing practiceid for non-existing resourceId");
@@ -104,7 +106,6 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(associateDeassociatePracticeForResourceApiResponse);
 	}
-	
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add non-existing practiceid for existing resourceId and verify response body")
 	public void testResponseCodeToAddNonExistingPracticeForResource() throws NullPointerException, IOException {
@@ -123,7 +124,7 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 400);
 		validation.verifyInvalidRequestValidation(associateDeassociatePracticeForResourceApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add practiceid for existing resourceId With Active Field As Null and verify response body")
 	public void testResponseCodeToAddPracticeForResourceWithActiveFieldAsNull()
 			throws NullPointerException, IOException {
@@ -133,7 +134,7 @@ public class  AssociateDeassociatePracticeForResource_BusinessLayer extends Base
 		CCUtils.assertEquals(associateDeassociatePracticeForResourceApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageForActiveStatusAsNull(associateDeassociatePracticeForResourceApiResponse);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practiceid, resourceId as null and verify response code")
 	public void testResponseCodeToAddPracticeWithResourceIdAsNull() throws NullPointerException, IOException {
 		logStep("Enter practiceid, resourceId as null");

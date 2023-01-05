@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -31,7 +31,8 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 	private Validations validation;
 	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
 			createEnterpriseApiResponse, createResourceApiResponse, createNewLocationApiResponse,
-			associateDeassociatePracticesForLocationApiResponse, addResourceForLocationApiResponse,updateLocationForResource;
+			associateDeassociatePracticesForLocationApiResponse, addResourceForLocationApiResponse,
+			updateLocationForResource;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, resourceIdOne, locationId;
 	String clientName, clientSapNumber, externalId, firstName, lastName, resourceExternalId;
 	List<Locations> locationIds;
@@ -49,7 +50,9 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
 		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		clientId = createClientApiResponse.jsonPath().getInt("clientId");
 		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
 				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
@@ -95,7 +98,7 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
 				testData.getProperty("resource.link.type"));
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
-		resourceId= createResourceApiResponse.jsonPath().getInt("resourceId");
+		resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add location id for existing ResourceId and practiceId and verify response body")
@@ -106,14 +109,13 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
 		logStep("Add valid location id for existing resourceId and practiceId");
 		locationIds = Arrays.asList(new Locations(locationId, true));
-		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(
-				resourceId,practiceId,locationIds);
+		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(resourceId, practiceId, locationIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForResource);
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 207);
 		locationsValidations.verifyAddOrRemoveLocationsApiResponseBody(updateLocationForResource, locationId);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Remove location id for existing resourceId and practiceId and verify response body")
 	public void testToRemoveExistingLocationIdForExistingResourceId() throws IOException {
 		logStep("Associate location to practice");
@@ -122,14 +124,13 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
 		logStep("Add valid location id for existing providerId and practiceId");
 		locationIds = Arrays.asList(new Locations(locationId, false));
-		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(
-				resourceId,practiceId,locationIds);
+		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(resourceId, practiceId, locationIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForResource);
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 207);
 		locationsValidations.verifyAddOrRemoveLocationsApiResponseBody(updateLocationForResource, locationId);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter nonexisting location id for existing resourceId and practiceId  and verify error message")
 	public void testToAddNonExistingLocationIdForExistingResourceId() throws IOException {
 		logStep("Associate location to practice");
@@ -139,8 +140,7 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		logStep("Enter nonexisting location id for existing resourceId and practiceId");
 		locationIds = Arrays
 				.asList(new Locations(Integer.parseInt(testData.getProperty("nonexisting.location.id")), true));
-		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(
-				resourceId,practiceId,locationIds);
+		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(resourceId, practiceId, locationIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForResource);
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 207);
@@ -149,7 +149,7 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		locationsValidations.verifyAddOrRemoveLocationsApiResponseBodyForInvalidInput(updateLocationForResource,
 				locationId, "ERROR", "Invalid input");
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id for nonexisting resource id and existing practice id and verify error message")
 	public void testValidLocationIdForNonExistingResourceId() throws IOException {
 		logStep("Associate location to practice");
@@ -158,14 +158,13 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		logStep("Enter valid location id for nonexisting resource id and existing practice id");
 		locationIds = Arrays.asList(new Locations(locationId, true));
 		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(
-				Integer.parseInt(testData.getProperty("nonexisting.resourceId")),
-				practiceId,locationIds);
+				Integer.parseInt(testData.getProperty("nonexisting.resourceId")), practiceId, locationIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForResource);
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(updateLocationForResource);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid location id for nonexisting resource and practiceId and verify error message")
 	public void testValidLocationIdForNonExistingResourceIdAndPracticeId() throws IOException {
 		logStep("Associate location to practice");
@@ -181,7 +180,7 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(updateLocationForResource);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter blank input in request payload and verify error message")
 	public void testErrorMessageForBlankRequestPayload() throws IOException {
 		logStep("Associate location to practice");
@@ -189,14 +188,13 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 				.associateDeassociatePracticeForLocation_BL(locationId, practiceId, true);
 		logStep("Add valid resource and practiceId");
 		locationIds = Arrays.asList();
-		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(
-				resourceId,practiceId,locationIds);
+		updateLocationForResource = sharedInfo.addOrRemoveLocationForResource_BL(resourceId, practiceId, locationIds);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForResource);
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 400);
 		validation.verifyErrorMessageForInvalidInput(updateLocationForResource);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values for resourceId and practiceId to add Locations and verify error message")
 	public void testAddToLocationForNullValues() throws IOException {
 		logStep("Associate location to practice");
@@ -206,5 +204,5 @@ public class AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer extends Ba
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateLocationForResource);
 		CCUtils.assertEquals(updateLocationForResource.getStatusCode(), 400);
-	}	
+	}
 }

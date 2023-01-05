@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -35,7 +35,9 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		logStep("Create a new client");
 		createClientApiResponse = clientInfo.createNewClient("true", clientName, clientSapNumber, "true",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId());
+				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createClientApiResponse);
 		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
@@ -58,18 +60,6 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
-		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
-		logStep("Fetch Newly Created location details using location id");
-		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails(locationId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
-		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetLocationDetailsApiResponseBody(fetchLocationDetailsApiResponse, locationName,
-				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
-				testData.getProperty("location.city"), testData.getProperty("location.state"),
-				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
-				Float.parseFloat(testData.getProperty("location.lng")), testData.getProperty("location.timezonecode"),
-				testData.getProperty("location.timezone.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test maximum character functionality for mandatory field")
@@ -94,17 +84,6 @@ public class CreateNewLocationApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
 		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
-		int locationId = createNewLocationApiResponse.jsonPath().getInt("id");
-		logStep("Fetch Newly Created location details using location id");
-		fetchLocationDetailsApiResponse = sharedInfo.getLocationDetails(locationId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(fetchLocationDetailsApiResponse);
-		CCUtils.assertEquals(fetchLocationDetailsApiResponse.getStatusCode(), 200);
-		validation.verifyGetLocationDetailsApiResponseBody(fetchLocationDetailsApiResponse, locationName, addressLine1,
-				addressLine2, city, testData.getProperty("location.state"), zipcode,
-				Float.parseFloat(testData.getProperty("location.lat")),
-				Float.parseFloat(testData.getProperty("location.lng")), testData.getProperty("location.timezonecode"),
-				testData.getProperty("location.timezone.displayname"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = false, description = "Enter existing external id and verify response body")

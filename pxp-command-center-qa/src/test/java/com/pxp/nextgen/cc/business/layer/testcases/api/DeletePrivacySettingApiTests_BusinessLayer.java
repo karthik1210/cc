@@ -1,4 +1,4 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -47,7 +47,6 @@ public class DeletePrivacySettingApiTests_BusinessLayer extends BaseRest {
         return new Object[][]{{testData.getProperty("api.valid.practice.id.tou").trim(), testData.getProperty("api.Non.existing.tou.id").trim()},
                 {testData.getProperty("api.Non.existing.practice.id").trim(), testData.getProperty("api.valid.tou.id.active").trim()},
                 {testData.getProperty("api.Non.existing.practice.id").trim(), testData.getProperty("api.Non.existing.tou.id").trim()}
-
         };
     }
 
@@ -219,7 +218,9 @@ public class DeletePrivacySettingApiTests_BusinessLayer extends BaseRest {
         createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"),
                 clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
                 Integer.parseInt(testData.getProperty("api.client.type")),
-                testData.getProperty("api.client.timezoneid"));
+                testData.getProperty("api.client.timezoneid"),
+				Integer.parseInt(testData.getProperty("ehr.identifier")),
+				Integer.parseInt(testData.getProperty("pm.identifier")));
         int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
         logStep("Create a new system below client.");

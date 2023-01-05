@@ -128,7 +128,7 @@
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateStaffApiTests_DataLayer"></class>
 			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStaffApiTests_DataLayer"></class>	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStaffDetailsApiTests_DataLayer"></class>	
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_DataLayer"></class>			
 			<class	
