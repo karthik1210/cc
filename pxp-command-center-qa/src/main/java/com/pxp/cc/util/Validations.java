@@ -39,8 +39,8 @@ public class Validations {
 	}
 
 	public void verifySearchClientResponseBody(Response response, String clientId, String clientName, int clientTypeId,
-			String type, String sapNumber, String active, String testClient, String timezoneId,
-			String timezoneDisplayName) throws IOException {
+											   String type, String sapNumber, String active, String testClient, String timezoneId,
+											   String timezoneDisplayName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
@@ -57,7 +57,7 @@ public class Validations {
 	}
 
 	public void validateTimeZoneInGetClientDetails(Response response, JsonPath jsonpath, String timezoneId,
-			String timezoneDisplayName) {
+												   String timezoneDisplayName) {
 		if (Objects.isNull(jsonpath.get("timezone"))) {
 			Log4jUtil.log("timezone is null");
 		} else {
@@ -188,7 +188,7 @@ public class Validations {
 	}
 
 	public void verifyGetOrgDeatilsApiResponseBody(Response response, int orgId, String orgName, String orgType,
-			String displayName, String active, String timezoneId, String displayNameOne) throws IOException {
+												   String displayName, String active, String timezoneId, String displayNameOne) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId"), orgId);
@@ -213,8 +213,8 @@ public class Validations {
 	}
 
 	public void verifySearchSystemResponseBody(Response response, String orgId, String systemName, String orgType,
-			String clientType, String displayName, String sapNumber, String systemeActive, String systemTestClient,
-			String timezoneId, String orgTimezoneDisplayNameApi, Boolean isPurchased) throws IOException {
+											   String clientType, String displayName, String sapNumber, String systemeActive, String systemTestClient,
+											   String timezoneId, String orgTimezoneDisplayNameApi, Boolean isPurchased) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -236,7 +236,7 @@ public class Validations {
 	}
 
 	public void verifySearchUpdatedSystemResponseBody(Response response, String orgId, String displayName,
-			String sapNumber, String systemeActive, String timezoneId) throws IOException {
+													  String sapNumber, String systemeActive, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -279,8 +279,8 @@ public class Validations {
 	}
 
 	public void verifySearchEnterpriseResponseBody(Response response, String enterpriseId, String enterpriseName,
-			String orgType, String clientType, String displayName, String sapNumber, String active, String testClient,
-			String timezoneId, String enterpriseTimezoneDisplayNameApi, Integer practiceCountValue, Boolean isPurchased)
+												   String orgType, String clientType, String displayName, String sapNumber, String active, String testClient,
+												   String timezoneId, String enterpriseTimezoneDisplayNameApi, Integer practiceCountValue, Boolean isPurchased)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -307,7 +307,7 @@ public class Validations {
 	}
 
 	public void verifySearchUpdatedEnterpriseResponseBody(Response response, String orgId, String displayName,
-			String sapNumber, String enterpriseActive, String timezoneId) throws IOException {
+														  String sapNumber, String enterpriseActive, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -328,8 +328,8 @@ public class Validations {
 	}
 
 	public void verifySearchPracticeResponseBody(Response response, String practiceId, String practiceName,
-			String orgType, String clientType, String displayName, String sapNumber, String active, String testClient,
-			String timezoneId, String orgTimezoneDisplayNameApi, Boolean isPurchased) throws IOException {
+												 String orgType, String clientType, String displayName, String sapNumber, String active, String testClient,
+												 String timezoneId, String orgTimezoneDisplayNameApi, Boolean isPurchased) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), practiceId);
@@ -351,7 +351,7 @@ public class Validations {
 	}
 
 	public void verifySearchUpdatedPracticeResponseBody(Response response, String orgId, String displayName,
-			String sapNumber, String active, String timezoneId) throws IOException {
+														String sapNumber, String active, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("orgId").toString(), orgId);
@@ -414,7 +414,7 @@ public class Validations {
 	}
 
 	public void verifyErrorMessageInResponseForParentTypeFieldEnterprise(Response response,
-			String orgEnterpriseParentType) throws IOException {
+																		 String orgEnterpriseParentType) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid parent type=" + orgEnterpriseParentType);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -721,7 +721,7 @@ public class Validations {
 	}
 
 	public List<ClientOrg> validateAddMultiplePractice(Response createPracticeApiResponse,
-			List<ClientOrg> actualClientOrgList) {
+													   List<ClientOrg> actualClientOrgList) {
 
 		JsonPath jsonpathPractice = new JsonPath(createPracticeApiResponse.getBody().asString());
 		int practiceId = jsonpathPractice.get("id");
@@ -772,7 +772,7 @@ public class Validations {
 	}
 
 	public void verifyAuditLogResponseBodyForUpdatedOrgNode(JSONObject jsonObject, int orgId, String context,
-			String field, String oldValue, String newValue) throws IOException {
+															String field, String oldValue, String newValue) throws IOException {
 		if (jsonObject.get("resourceId").equals(orgId)) {
 			CCUtils.assertEquals(jsonObject.get("context"), context);
 			CCUtils.assertEquals(jsonObject.get("activityType"), context + "-EDITED-SUCCEEDED");
@@ -865,7 +865,7 @@ public class Validations {
 	}
 
 	public void verifyAuditLogResponseBodyForMoveOrgNode(JSONObject jsonObject, int orgId, String context, String field,
-			String oldValue, String newValue) throws IOException {
+														 String oldValue, String newValue) throws IOException {
 		if (jsonObject.get("resourceId").equals(orgId)) {
 			CCUtils.assertEquals(jsonObject.get("context"), context);
 			CCUtils.assertEquals(jsonObject.get("activityType"), context + "-MOVED-SUCCEEDED");
@@ -880,7 +880,7 @@ public class Validations {
 	}
 
 	public void validateAuditLogForMoveOrgNodeWithDoNotInherit(Response response, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
+															   String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
 			throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		LocalDate date = LocalDate.now();
@@ -901,9 +901,9 @@ public class Validations {
 	}
 
 	public void validateAuditLogForMoveOrgNodeWithInherit(Response response, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
-			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
-			String newClientType) throws IOException {
+														  String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
+														  String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
+														  String newClientType) throws IOException {
 		JsonPath jsonPath = new JsonPath(response.getBody().asString());
 		LocalDate date = LocalDate.now();
 		JSONArray jsonArray = new JSONArray(jsonPath.getList(date.toString()));
@@ -934,12 +934,12 @@ public class Validations {
 		JSONObject jsonObject;
 		if ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
 				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
-						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric")))
+				&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric")))
 				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
-						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric"))
-						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))
+				&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("alphanumeric"))
+				&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))
 				|| ((CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("letter"))
-						&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))) {
+				&& (CCUtils.verifyCharacterIsNumberOrDigit(searchedData).equals("number")))) {
 			Log4jUtil.log("Checking search data " + searchedData + " is 'letter','alphanumeric' or number.");
 			for (int i = 0; i < jsonArray.length(); i++) {
 				jsonObject = jsonArray.getJSONObject(i);
@@ -961,7 +961,7 @@ public class Validations {
 	}
 
 	public void verifyAuditLogResponseForMoveOrgNodeWithDoNotInherit(Response response, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
+																	 String orgNodeName, String oldParentName, String newParentName, String oldClientType, String newClientType)
 			throws IOException {
 		CCUtils.responseTimeValidation(response);
 		CCUtils.assertEquals(response.getStatusCode(), 200);
@@ -970,9 +970,9 @@ public class Validations {
 	}
 
 	public void verifyAuditLogResponseForMoveOrgNodeWithInherit(Response response, int orgId, String context,
-			String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
-			String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
-			String newClientType) throws IOException {
+																String orgNodeName, String oldParentName, String newParentName, String oldTimezone, String newTimezone,
+																String oldSapId, String newSapId, String oldStatus, String newStatus, String oldClientType,
+																String newClientType) throws IOException {
 		CCUtils.responseTimeValidation(response);
 		CCUtils.assertEquals(response.getStatusCode(), 200);
 		validateAuditLogForMoveOrgNodeWithInherit(response, orgId, context, orgNodeName, oldParentName, newParentName,
@@ -1059,8 +1059,8 @@ public class Validations {
 	}
 
 	public void verifyGetClientDetailsApiResponseBody(Response response, String clientId, String clientName,
-			int clientTypeId, String type, String sapNumber, String active, String testClient, String timezoneId,
-			String timezoneDisplayName) throws IOException {
+													  int clientTypeId, String type, String sapNumber, String active, String testClient, String timezoneId,
+													  String timezoneDisplayName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("clientId").toString(), clientId);
@@ -1123,7 +1123,7 @@ public class Validations {
 	}
 
 	public void verifySearchClientIdSolutionsResponseBody(Response response, int orgId, String practiceName,
-			int solutionId, String status) throws IOException {
+														  int solutionId, String status) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject object = jsonArray.getJSONObject(i);
@@ -1283,9 +1283,9 @@ public class Validations {
 	}
 
 	public void verifyGetOrgNodeDetailsApiResponseBody(Response response, int orgId, String orgName, String orgType,
-			String clientType, String displayName, String sapNumber, String active, String testClient,
-			String timezoneId, String timezoneDisplayName, int practiceCount, Boolean isPurchased,
-			List<Map<String, Object>> purchasedSolutionList) throws IOException {
+													   String clientType, String displayName, String sapNumber, String active, String testClient,
+													   String timezoneId, String timezoneDisplayName, int practiceCount, Boolean isPurchased,
+													   List<Map<String, Object>> purchasedSolutionList) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
@@ -1369,7 +1369,7 @@ public class Validations {
 						for (int i = 0; i < jsonArray.length(); i++) {
 							jsonObject = jsonArray.getJSONObject(i);
 							CCUtils.assertTrue(actualSolutionList.contains(
-									new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("solutionId"))),
+											new Solutions(jsonObject.getInt("activeCount"), jsonObject.getInt("solutionId"))),
 									"Purchased Solution is not present");
 						}
 					} else if (jsonArray.length() == 0) {
@@ -1453,7 +1453,7 @@ public class Validations {
 	}
 
 	public void verifyOrgNodeDetailsApiResponseBody(Response response, int orgId, String orgName, String active,
-			String parentType, String sapNumber, String timezoneId) throws IOException {
+													String parentType, String sapNumber, String timezoneId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.getInt("orgId"), orgId);
@@ -1494,8 +1494,8 @@ public class Validations {
 	}
 
 	public void verifyClientUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus, String clientId,
-			String clientName, String providerId, String providerName, String statusMsg) throws NullPointerException {
+													String lastName, String userName, String email, String mobile, String userStatus, String clientId,
+													String clientName, String providerId, String providerName, String statusMsg) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("authId").toString(), authId);
@@ -1517,7 +1517,7 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBody(Response response, String authId, String userType, String firstName,
-			String lastName, String userName, String email, String mobile, String userStatus)
+											  String lastName, String userName, String email, String mobile, String userStatus)
 			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -1711,8 +1711,8 @@ public class Validations {
 	}
 
 	public void verifyClientUserDetailsResponseBodyForBusinessLayer(Response response, String authId, String userType,
-			String firstName, String lastName, String userName, String email, String mobile, String userStatus,
-			String clientId, String clientName, String providerId, String providerName, String statusMsg)
+																	String firstName, String lastName, String userName, String email, String mobile, String userStatus,
+																	String clientId, String clientName, String providerId, String providerName, String statusMsg)
 			throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
@@ -1734,7 +1734,7 @@ public class Validations {
 	}
 
 	public void verifyUserDetailsResponseBody(Response response, String userType, String firstName, String lastName,
-			String userName, String email) throws NullPointerException {
+											  String userName, String email) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("userType").toString(), userType);
@@ -1955,7 +1955,7 @@ public class Validations {
 	}
 
 	public void verifyActivateDeactivateUserApiResponseBody(Response response, List<Integer> userIds, String status,
-			String message) throws IOException {
+															String message) throws IOException {
 		List<UserStatus> actualUserStatusList = new ArrayList<UserStatus>();
 		for (int i = 0; i < userIds.size(); i++) {
 			actualUserStatusList.add(new UserStatus(userIds.get(i), status, message));
@@ -2222,7 +2222,7 @@ public class Validations {
 	}
 
 	public void verifyBrandingDetails(Response response, String orgId, String orgType, String name, String showLogo,
-			String color, int brandId, String logo, String favicon, String emailLogo, String active)
+									  String color, int brandId, String logo, String favicon, String emailLogo, String active)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		if (Objects.isNull(jsonpath.get("orgId"))) {
@@ -2256,7 +2256,7 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForProviderDetails(Response response, String firstName, String lastName,
-			String gender, String status) throws NullPointerException, IOException {
+													 String gender, String status) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
@@ -2279,7 +2279,7 @@ public class Validations {
 	}
 
 	public void verifyAddOrRemoveResourcesForAppointmentTypeApiResponseBody(Response response,
-			List<Integer> resourceIds, String status, String message) throws IOException {
+																			List<Integer> resourceIds, String status, String message) throws IOException {
 		List<ResourceStatus> actualResourceStatusList = new ArrayList<ResourceStatus>();
 		for (int i = 0; i < resourceIds.size(); i++) {
 			actualResourceStatusList.add(new ResourceStatus(resourceIds.get(i), status, message));
@@ -2305,7 +2305,7 @@ public class Validations {
 	}
 
 	public void verifyGetOrgIdSolutionsResponseBody(Response response, int orgId, String practiceName,
-			List<OrgSolutions> productList) throws IOException {
+													List<OrgSolutions> productList) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject object = jsonArray.getJSONObject(i);
@@ -2351,7 +2351,7 @@ public class Validations {
 	}
 
 	public void verifyUserInfoApiResponseBody(Response response, int userId, String firstName, String lastName,
-			String type, String clientId) throws NullPointerException {
+											  String type, String clientId) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.getInt("userId"), userId);
@@ -2464,7 +2464,7 @@ public class Validations {
 	}
 
 	public void verifyGetAppointmentResponseBody(Response response, String name, String externalId, int duration,
-			String durationUnit, String status) throws NullPointerException {
+												 String durationUnit, String status) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath, "Response is null");
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
@@ -2608,7 +2608,7 @@ public class Validations {
 	}
 
 	public void verifySuccessResponseBodyForExistingAppointmentTypeId(Response response, String name, String externalId,
-			String duration) {
+																	  String duration) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("name"), name);
 		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
@@ -2616,7 +2616,7 @@ public class Validations {
 	}
 
 	public void verifyBrandingDetails_BL(Response response, int orgId, String orgType, String name, String showLogo,
-			String color, String logo, String favicon, String emailLogo) throws IOException {
+										 String color, String logo, String favicon, String emailLogo) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		if (Objects.isNull(jsonpath.get("orgId"))) {
 			Log4jUtil.log("orgId is null");
@@ -2649,7 +2649,7 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForProviderDetails_BL(Response response, String firstName, String lastName,
-			String gender, String status) throws NullPointerException, IOException {
+														String gender, String status) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
@@ -2666,7 +2666,7 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForGetPracticeProvider(Response response, String en, String es, String email,
-			String mobile) throws NullPointerException, IOException {
+														 String mobile) throws NullPointerException, IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Map<String, String> displayName = response.jsonPath().getMap("displayName");
 		CCUtils.assertEquals(displayName.get("en").toString(), en);
@@ -2730,8 +2730,8 @@ public class Validations {
 	}
 
 	public void verifyGetLocationDetailsApiResponseBody(Response response, String locationName, String addressLine1,
-			String addressLine2, String city, String state, String zipcode, float lat, float lng, String code,
-			String timezoneDisplayName) throws IOException {
+														String addressLine2, String city, String state, String zipcode, float lat, float lng, String code,
+														String timezoneDisplayName) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.getString("name"), locationName);
 		Map<String, String> timezone = jsonpath.getMap("timezone");
@@ -2823,7 +2823,7 @@ public class Validations {
 	}
 
 	public void verifyBrandingImageDetails_BL(Response response, String orgId, String orgType, String name,
-			String showLogo, String color) throws IOException {
+											  String showLogo, String color) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		if (Objects.isNull(jsonpath.get("orgId"))) {
 			Log4jUtil.log("orgId is null");
@@ -2927,7 +2927,7 @@ public class Validations {
 				if ((responseName.equalsIgnoreCase(expectedName)
 						&& responseDescription.equalsIgnoreCase(expectedDescription))
 						|| responseName.equalsIgnoreCase(expectedName1)
-								&& responseDescription.equalsIgnoreCase(expectedDescription1)) {
+						&& responseDescription.equalsIgnoreCase(expectedDescription1)) {
 					Log4jUtil.log("Validation is Successful for " + responseName);
 				} else {
 					Log4jUtil.log("Validation is not Successful for " + responseName);
@@ -2943,7 +2943,7 @@ public class Validations {
 	}
 
 	public void verifyAddOrRemoveAppointmentTypesForResourceApiResponseBody(Response response,
-			List<Integer> appointmentTypeIds, String status, String message) throws IOException {
+																			List<Integer> appointmentTypeIds, String status, String message) throws IOException {
 		List<ResourceStatus> actualResourceStatusList = new ArrayList<ResourceStatus>();
 		for (int i = 0; i < appointmentTypeIds.size(); i++) {
 			actualResourceStatusList.add(new ResourceStatus(appointmentTypeIds.get(i), status, message));
@@ -3006,8 +3006,8 @@ public class Validations {
 	}
 
 	public void verifySaveDisplayInfoForPracticeApiResponseBody(Response response, String enDisplayName,
-			String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime,
-			String enDirection, String esDirection) throws IOException {
+																String esDisplayName, String addressExtension, String phoneNumber, String startTime, String endTime,
+																String enDirection, String esDirection) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Map<String, String> dsName = jsonpath.getMap("displayName");
 		CCUtils.assertEquals(dsName.get("en").toString(), enDisplayName);
@@ -3023,7 +3023,7 @@ public class Validations {
 	}
 
 	public void verifySaveDisplayInfoForSelectivePayloadApiResponseBody(Response response, String enDisplayName,
-			String esDisplayName, String addressExtension, String phoneNumber, String enDirection, String esDirection)
+																		String esDisplayName, String addressExtension, String phoneNumber, String enDirection, String esDirection)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Map<String, String> dsName = jsonpath.getMap("displayName");
@@ -3059,7 +3059,7 @@ public class Validations {
 	}
 
 	public void getTouIdDetailValidation(Response getTouApiResponse, int practiceId, int touId, String actualName,
-			String englishContent, String spanishContent) {
+										 String englishContent, String spanishContent) {
 		String expectedName = getTouApiResponse.jsonPath().get("name");
 		String expectedEnglishContent = getTouApiResponse.jsonPath().get("content.en");
 		String expectedSpanishContent = getTouApiResponse.jsonPath().get("content.es");
@@ -3132,7 +3132,7 @@ public class Validations {
 	}
 
 	public void verifyAssociateProvidersForLocationApiResponseBody(Response response, List<Integer> providerIds,
-			String status, String message) throws IOException {
+																   String status, String message) throws IOException {
 		List<ProviderStatus> actualProvidersStatusList = new ArrayList<ProviderStatus>();
 		for (int i = 0; i < providerIds.size(); i++) {
 			actualProvidersStatusList.add(new ProviderStatus(providerIds.get(i), status, message));
@@ -3152,7 +3152,7 @@ public class Validations {
 	}
 
 	public void verifyOutputFromValidInputForGetPatientAccessSettings(Response getPatientAccessSettingApiResponse,
-			boolean linkAccounts, boolean autoAgeout) {
+																	  boolean linkAccounts, boolean autoAgeout) {
 		boolean actualLinkAccounts = getPatientAccessSettingApiResponse.jsonPath().get("linkAccounts");
 		boolean actualAutoAgeout = getPatientAccessSettingApiResponse.jsonPath().get("autoAgeout");
 		CCUtils.assertEquals(actualLinkAccounts, linkAccounts);
@@ -3160,7 +3160,7 @@ public class Validations {
 	}
 
 	public void verifyOutputFromValidInputForGetPatientAgeOutAccess(Response getPatientAccessAgeOutApiResponse,
-			int defaultAgeout, ArrayList<PatientAccessAgeoutRules> patientAccessAgeoutRulesList, int accessTillAge) {
+																	int defaultAgeout, ArrayList<PatientAccessAgeoutRules> patientAccessAgeoutRulesList, int accessTillAge) {
 		int actualDefaultAgeout = getPatientAccessAgeOutApiResponse.jsonPath().get("defaultAgeout");
 		int actualAccessTillAge = getPatientAccessAgeOutApiResponse.jsonPath().get("accessTillAge");
 		CCUtils.assertEquals(actualDefaultAgeout, defaultAgeout);
@@ -3182,7 +3182,7 @@ public class Validations {
 	}
 
 	public void verifyOutputFromValidInputForGetPatientGuardianAccess(Response getPatientAccessGaurdianApiResponse,
-			ArrayList<PatientAccessPermission> patientAccessPermissionList) {
+																	  ArrayList<PatientAccessPermission> patientAccessPermissionList) {
 		List<String> featureIds = getPatientAccessGaurdianApiResponse.jsonPath().get("featureId");
 		for (int i = 0; i < featureIds.size(); i++) {
 			for (int j = 0; j < featureIds.size(); j++) {
@@ -3202,7 +3202,7 @@ public class Validations {
 	}
 
 	public void verifyPatientAccessGetBL(Response getPatientAccessDetailApiResponse, boolean linkAccounts,
-			boolean autoAgeout, int defaultAgeout) {
+										 boolean autoAgeout, int defaultAgeout) {
 		boolean actualLinkAccounts = getPatientAccessDetailApiResponse.jsonPath().get("settings.linkAccounts");
 		boolean actualAutoAgeout = getPatientAccessDetailApiResponse.jsonPath().get("ageout.autoAgeout");
 		int actualDefaultAgeout = getPatientAccessDetailApiResponse.jsonPath().get("ageout.defaultAgeout");
@@ -3222,7 +3222,7 @@ public class Validations {
 	}
 
 	public void verifyGetProvidersByClientIdResponseBody(Response response, List<Integer> providerId, String firstname,
-			String lastname) throws IOException {
+														 String lastname) throws IOException {
 		List<Provider> actualRProvidersList = new ArrayList<Provider>();
 		for (int i = 0; i < providerId.size(); i++) {
 			actualRProvidersList.add(new Provider(providerId.get(i), firstname, lastname));
@@ -3249,7 +3249,7 @@ public class Validations {
 	}
 
 	public void validateGetPracticeProviderResponseBodyWithEmailAndMobile(Response response, String providerName,
-			String email, String mobile) {
+																		  String email, String mobile) {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(response.jsonPath().get(), "Response is null");
 		CCUtils.assertEquals(jsonpath.get("displayName.en").toString().trim(), providerName.trim());
@@ -3258,7 +3258,7 @@ public class Validations {
 	}
 
 	public void validateGetConnectedPracticeProvidersResponseBody(Response response, int providerId,
-			String providerName) {
+																  String providerName) {
 		JSONArray responseBody = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject;
 		CCUtils.assertTrue(responseBody.length() > 0, "provider list is empty");
@@ -3346,7 +3346,7 @@ public class Validations {
 	}
 
 	public void verifyGetProviderByClientIdApiResponseBody(Response response, List<Integer> providerIds,
-			String firstName, String lastName) throws IOException {
+														   String firstName, String lastName) throws IOException {
 		List<ProviderInfo> actualProviderInfoList = new ArrayList<ProviderInfo>();
 		for (int i = 0; i < providerIds.size(); i++) {
 			actualProviderInfoList.add(new ProviderInfo(providerIds.get(i), firstName, lastName));
@@ -3366,7 +3366,7 @@ public class Validations {
 	}
 
 	public void verifySearchResourcesToAssociateWithProviderApiResponseBody(Response response, int resourceId,
-			String resourceName) throws IOException {
+																			String resourceName) throws IOException {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -3441,7 +3441,7 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyOfProvidersLocation(Response response, int providerId, String providerFirstName,
-			String providerLastName) {
+													  String providerLastName) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -3474,18 +3474,33 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "ExternalId size maximum 50 characters");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyResponseBodyForStaffDetails(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		Log4jUtil.log("value of firstName  is : " + jsonpath.get("firstName").toString());
-		Log4jUtil.log("value of lastName  is : " + jsonpath.get("lastName").toString());		
+		Log4jUtil.log("value of lastName  is : " + jsonpath.get("lastName").toString());
 		Log4jUtil.log("value of gender  is : " + jsonpath.get("gender").toString());
 		Log4jUtil.log("value of status  is : " + jsonpath.get("status").toString());
-	}	
-	
+	}
+
 	public void verifyErrorResponseBodyInvalidStaffId(Response response, int staffId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by id=" + staffId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyGetTemplateListDetails(Response getTemplateListApiResponse) {
+		List<String> templateNames = Arrays.asList("Patient Portal Invitaion (Adults)", "Patient Portal Invitaion (Parent/Guardian)",
+				"Patient Portal Invitaion (Trusted Representative)", "New Health Data Notification", "New Message Notification",
+				"Electronic Statement Notification", "Online Payment Confirmation", "Password Reset Email");
+		List<String> templateIdCount = getTemplateListApiResponse.jsonPath().get("templateId");
+		for (int i = 0; i < templateNames.size(); i++) {
+			String responseName = getTemplateListApiResponse.jsonPath().get("name[" + i + "]");
+			String expectedName = templateNames.get(i).toString();
+			if (templateNames.contains(responseName))
+				Log4jUtil.log(responseName + " is available for templates");
+			else
+				Log4jUtil.log(responseName + " is not available for templates");
+		}
 	}
 }
