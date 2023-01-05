@@ -224,6 +224,7 @@ public class SearchUserWithEnrollmentStatusApiTests_DataLayer extends BaseRest {
 
     @Test(enabled = false)
     public HashMap<String, Integer> getOrgMapList() throws IOException {
+        setupServiceRequestSpecificationBuilderForDataLayer();
         String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
         String clientSapNumber = CCUtils.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
         String testFlag = testData.getProperty("api.client.testclient");

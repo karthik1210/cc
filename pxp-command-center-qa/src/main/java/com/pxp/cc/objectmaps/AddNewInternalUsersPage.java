@@ -25,6 +25,9 @@ public class AddNewInternalUsersPage extends CCMainPage {
 	@FindBy(id = "addNewInternalSave")
 	private WebElement buttonSaveAndAdd;
 
+	@FindBy(xpath = "//button[@id='createBtn']")
+	private WebElement saveAndCreate;
+
 	@FindBy(id = "cancel-text")
 	private WebElement crossIcon;
 
@@ -153,6 +156,13 @@ public class AddNewInternalUsersPage extends CCMainPage {
 	public InternalUsersPage clickOnSaveAndAddButton() {
 		CCUtils.verifyAndWaitForElement(buttonSaveAndAdd, driver);
 		buttonSaveAndAdd.click();
+		log("Clicked on Save&Add button");
+		return PageFactory.initElements(driver, InternalUsersPage.class);
+	}
+
+	public InternalUsersPage clickOnSaveAndCreateButton() {
+		CCUtils.verifyAndWaitForElement(saveAndCreate, driver);
+		saveAndCreate.click();
 		log("Clicked on Save&Add button");
 		return PageFactory.initElements(driver, InternalUsersPage.class);
 	}

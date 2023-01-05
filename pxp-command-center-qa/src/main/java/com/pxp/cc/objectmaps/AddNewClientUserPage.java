@@ -119,7 +119,7 @@ public class AddNewClientUserPage extends CCMainPage {
 	@FindBy(xpath = "//div[text()='No Clients found']")
 	private WebElement errorNoClientsFound;
 	
-	@FindBy(xpath = "//input[@id='createUserInactiveRadio-input']")
+	@FindBy(xpath = "//input[@id='createUserInactiveRadio-input'] | //input[@id='createUserInactiveRadio-input']/preceding-sibling::div/following-sibling::div[@class='mat-radio-inner-circle'] | //input[@id='createUserInactiveRadio-input']/../div[@class='mat-radio-inner-circle']")
 	private WebElement inactiveStatus;
 
 	public String columnNameValue;
