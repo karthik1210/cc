@@ -18,6 +18,8 @@
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSocialApiTests_DataLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStatesApiTests_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetTemplateListApiTests_DataLayer"/>
 		</classes>
 	</test>
 </suite>

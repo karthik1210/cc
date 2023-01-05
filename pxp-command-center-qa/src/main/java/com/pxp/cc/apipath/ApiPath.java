@@ -1990,4 +1990,19 @@ public class ApiPath {
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/staff/null/practices";
 	}
+
+	public static final String GET_COMMON_TEMPLATE_LIST_DL(String validURI) {
+		if (validURI.equalsIgnoreCase("Valid"))
+			return SERVICE_COMMONS_DL + "/v1/comm-templates";
+		else
+			return SERVICE_COMMONS_DL + "/v1/comm-templatesss";
+	}
+
+	public static final String GET_COMMON_TEMPLATE_LIST_BL(String validURI) {
+		if (validURI.equalsIgnoreCase("Valid"))
+			return SERVICE_COMMONS_BL + "/v1/comm-templates";
+		else
+			return SERVICE_COMMONS_BL + "/v1/comm-templatesss";
+	}
+
 }

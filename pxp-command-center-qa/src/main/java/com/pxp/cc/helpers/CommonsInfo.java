@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-23 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -63,6 +63,32 @@ public class CommonsInfo extends BaseRest {
 		} else  {
 			String url = ApiPath.GET_STATES(serviceLayer);
 			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
+	}
+
+	public Response getCommonTemplatesResponse_DL(String validURI, String product) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_COMMON_TEMPLATE_LIST_DL(validURI);
+			return given().spec(requestSpec).when().queryParam("product", product).get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_COMMON_TEMPLATE_LIST_DL(validURI);
+			return given().spec(requestSpec).when().queryParam("product", product).get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_COMMON_TEMPLATE_LIST_DL("Valid");
+			return given().spec(requestSpec).when().queryParam("product", product).delete(url).then().extract().response();
+		}
+	}
+
+	public Response getCommonTemplatesResponse_BL(String validURI, String product, String type) {
+		if (validURI.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_COMMON_TEMPLATE_LIST_BL(validURI);
+			return given().spec(requestSpec).when().queryParam("product", product).queryParam("type", type).get(url).then().extract().response();
+		} else if (validURI.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_COMMON_TEMPLATE_LIST_BL(validURI);
+			return given().spec(requestSpec).when().queryParam("product", product).queryParam("type", type).get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_COMMON_TEMPLATE_LIST_BL("Valid");
+			return given().spec(requestSpec).when().queryParam("product", product).queryParam("type", type).delete(url).then().extract().response();
 		}
 	}
 }
