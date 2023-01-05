@@ -257,7 +257,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getEnrollButton(), "Send Enrollment Button");
         logStep("PXPP-26667 TC 031_Verify the Send Enrollment Functionality in Bulk Enrollment Screen, When Internal User Enrollment Status as Not-Sent, Pending and Expired");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getYesSendButton(), "Yes, Send Button");
-        ccui.getCommonMethods().verifyToasterMessage("Enrollment sent to users successfully");
+        ccui.getCommonMethods().verifyToasterMessage("Success! Enrollment email has been sent");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getClearAll(), "Clear All");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), internalFirstNameNotSent);
@@ -285,7 +285,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSelectAllUserOnPage(), "Selecting All users on current page");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getEnrollButton(), "Send Enrollment Button");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getYesSendButton(), "Yes, Send Button");
-        ccui.getCommonMethods().verifyToasterMessage("Enrollment sent to users successfully");
+        ccui.getCommonMethods().verifyToasterMessage("Success! Enrollment email has been sent");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getClearAll(), "Clear All");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), internalFirstNamePending);
@@ -313,7 +313,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSelectAllUserOnPage(), "Selecting All users on current page");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getEnrollButton(), "Send Enrollment Button");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getYesSendButton(), "Yes, Send Button");
-        ccui.getCommonMethods().verifyToasterMessage("Enrollment sent to users successfully");
+        ccui.getCommonMethods().verifyToasterMessage("Success! Enrollment email has been sent");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getClearAll(), "Clear All");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), internalFirstNameExpired);
@@ -357,7 +357,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getEnrollButton(), "Send Enrollment Button");
         logStep("PXPP-26693 TC 034_Verify the Send Enrollment Functionality in Bulk Enrollment Screen, When VAR/Reseller User Enrollment Status as Not-Sent, Pending and Expired");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getYesSendButton(), "Yes, Send Button");
-        ccui.getCommonMethods().verifyToasterMessage("Enrollment sent to users successfully");
+        ccui.getCommonMethods().verifyToasterMessage("Success! Enrollment email has been sent");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getClearAll(), "Clear All");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), varResellerFirstNameNotSent);
@@ -385,7 +385,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSelectAllUserOnPage(), "Selecting All users on current page");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getEnrollButton(), "Send Enrollment Button");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getYesSendButton(), "Yes, Send Button");
-        ccui.getCommonMethods().verifyToasterMessage("Enrollment sent to users successfully");
+        ccui.getCommonMethods().verifyToasterMessage("Success! Enrollment email has been sent");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getClearAll(), "Clear All");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), varResellerFirstNamePending);
@@ -413,7 +413,7 @@ public class UserBulkEnrollmentTests extends CommandCenterGenericTest {
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSelectAllUserOnPage(), "Selecting All users on current page");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getEnrollButton(), "Send Enrollment Button");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getYesSendButton(), "Yes, Send Button");
-        ccui.getCommonMethods().verifyToasterMessage("Enrollment sent to users successfully");
+        ccui.getCommonMethods().verifyToasterMessage("Success! Enrollment email has been sent");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getClearAll(), "Clear All");
         ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getSearchOptionsButton(), "Search Options Button");
         ccui.getUserBulkEnrollmentPage().enterValue(ccui.getUserBulkEnrollmentPage().getFirstNameTextBoxOnSearchFilter(), varResellerFirstNameExpired);
