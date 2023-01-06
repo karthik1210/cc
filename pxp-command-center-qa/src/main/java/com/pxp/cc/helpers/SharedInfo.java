@@ -1983,4 +1983,9 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response addOrRemoveResourcesForProviderForNullValues_DL() {
+		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
 }
