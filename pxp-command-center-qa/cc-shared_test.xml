@@ -22,7 +22,7 @@
 			<!-- Enable test suite once pipeline issue is addressed for for shared 
 				services Jira #PXPP-27207 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer"
 				/> -->
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer" />
