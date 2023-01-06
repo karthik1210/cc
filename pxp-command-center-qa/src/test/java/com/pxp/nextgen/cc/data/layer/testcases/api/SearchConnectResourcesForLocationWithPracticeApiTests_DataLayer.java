@@ -16,7 +16,7 @@ import com.pxp.cc.util.ResourceValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class SearchConnectedResourcesForLocationAssociatedWithPracticeApiTests_DataLayer extends BaseRest {
+public class SearchConnectResourcesForLocationWithPracticeApiTests_DataLayer extends BaseRest {
 
 	private SharedInfo sharedInfo;
 	private Validations validation;
