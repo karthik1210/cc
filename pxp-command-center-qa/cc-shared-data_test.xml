@@ -132,7 +132,9 @@
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_DataLayer"></class>			
 			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesForStaffApiTests_DataLayer"></class>		
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesForStaffApiTests_DataLayer"></class>	
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_DataLayer"></class>		
 				
 		</classes>
 	</test>

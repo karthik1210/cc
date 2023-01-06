@@ -101,19 +101,19 @@ public class SearchClientStaffApiTests_DataLayer extends BaseRest {
 				null, null, null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchStaffResult);
-		CCUtils.assertEquals(searchStaffResult.getStatusCode(), 204);
+		CCUtils.assertEquals(searchStaffResult.getStatusCode(), 200);
 		logStep("Search staff for client using clientId and enterpriseId");
 		searchStaffResult = sharedInfo.getStaffForClient_DL(String.valueOf(clientId), null, null,
 				String.valueOf(enterpriseId), String.valueOf(practiceId), null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchStaffResult);
-		CCUtils.assertEquals(searchStaffResult.getStatusCode(), 204);
+		CCUtils.assertEquals(searchStaffResult.getStatusCode(), 200);
 		logStep("Search staff for client using clientId and practiceId");
 		searchStaffResult = sharedInfo.getStaffForClient_DL(String.valueOf(clientId), null, null, null,
 				String.valueOf(practiceId), null, null);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(searchStaffResult);
-		CCUtils.assertEquals(searchStaffResult.getStatusCode(), 204);
+		CCUtils.assertEquals(searchStaffResult.getStatusCode(), 200);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Search  Staff for non-existing clientId and verify response code")

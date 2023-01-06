@@ -2008,5 +2008,9 @@ public class ApiPath {
 		else
 			return SERVICE_COMMONS_BL + "/v1/comm-templatesss";
 	}
+	
+	public static final String UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/providers/null/practices/null/resources";
+	}
 
 }
