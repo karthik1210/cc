@@ -20,7 +20,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class AddOrRemoveAppointmentTypesAssociatedWithResourceApiTests_BusinessLayer extends BaseRest {
+public class AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer extends BaseRest {
 	List<AppointmentTypeDetails> appointmentTypeList;
 	private ClientInfo clientInfo;
 	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId, resourceId, appointmentTypeId;
