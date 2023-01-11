@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.util;
 
@@ -53,5 +53,11 @@ public class BrandsValidations {
 		jsonPath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonPath.get("message").toString().trim(),
 				"Brand not found by id=" + brandId);
+	}
+	
+	public void verifyErrorMessageForInvaliBrandUrl(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message"),"Error while download the file");
 	}
 }

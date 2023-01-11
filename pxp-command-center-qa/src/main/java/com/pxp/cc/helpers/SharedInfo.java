@@ -2004,4 +2004,13 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_NULLVALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response getStaffForClient_BL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.STAFF_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
 }
