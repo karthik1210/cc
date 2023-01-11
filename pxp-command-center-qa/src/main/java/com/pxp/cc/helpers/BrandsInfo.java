@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -368,5 +368,15 @@ public class BrandsInfo extends BaseRest {
 	public Response deteteBrandImage_NullValue_BL() {
 		String url = ApiPath.DETETE_BRAND_IMAGE_NullValue_BL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+	
+	public Response getBrandImageUrl_BL(Object imageId) {
+		String url = ApiPath.GET_BRAND_IMAGE_URL_BL(imageId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getBrandImageUrl_Null_Value_BL() {
+		String url = ApiPath.GET_BRAND_IMAGE_URL_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
