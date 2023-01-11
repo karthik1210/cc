@@ -135,7 +135,11 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesForStaffApiTests_DataLayer"></class>	
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_DataLayer"></class>		
-				
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppoiTypesAssocWithResApiTests_DataLayer"></class>	
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppoiTypesForResApiTests_DataLayer"></class>		
+					
 		</classes>
 	</test>
 
