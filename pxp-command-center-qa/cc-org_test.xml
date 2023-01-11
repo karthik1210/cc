@@ -58,7 +58,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeAccessApiTests_BusinessLayer"/>
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateUpdatePatientAccessApiTests_BusinessLayer"/>
-
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
