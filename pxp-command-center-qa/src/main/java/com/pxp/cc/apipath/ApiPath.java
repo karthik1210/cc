@@ -2024,4 +2024,26 @@ public class ApiPath {
 	public static final String STAFF_FOR_CLIENT_BL(String clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff";
 	}
+	
+	public static final String CREATE_TEMPLATE_VERSION(String serviceLayer, String uriType, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions";
+			else
+				return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId + "/template-versions";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions";
+			else
+				return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId + "/template-versions";
+		}
+	}
+
+	public static final String CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(String serviceLayer,
+																			 String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions";
+	}
 }
