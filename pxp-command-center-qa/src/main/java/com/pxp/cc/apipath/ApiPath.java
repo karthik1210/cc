@@ -2013,6 +2013,18 @@ public class ApiPath {
 		return SHARED_DL + "/v1/providers/null/practices/null/resources";
 	}
 
+	public static final String GET_BRAND_IMAGE_URL_BL(Object imageId) {
+		return SERVICE_SHARED_BL + "/v1/brands/image/" + imageId;
+	}
+	
+	public static final String GET_BRAND_IMAGE_URL_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/brands/image/null";
+	}
+	
+	public static final String STAFF_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff";
+	}
+	
 	public static final String CREATE_TEMPLATE_VERSION(String serviceLayer, String uriType, int practiceId) {
 		if (serviceLayer.equalsIgnoreCase("BL")) {
 			if (uriType.equalsIgnoreCase("Valid"))

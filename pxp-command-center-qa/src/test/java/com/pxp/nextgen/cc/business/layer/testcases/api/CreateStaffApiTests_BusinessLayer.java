@@ -73,7 +73,7 @@ public class CreateStaffApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorResponseBodyForExternalIdField(createNewstaffApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = false, description = "Test maximum character functionality for  firstName, lastName  fields")
+	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = true, description = "Test maximum character functionality for  firstName, lastName  fields")
 	public void testAddNewStaffFunctionalityUsingMaximumFirstNameLastnameFieldSize() throws IOException {
 		logStep("Enter 100 characters in firstName, lastName fields");
 		String firstNameOne = testData.getProperty("staff.firstname").concat(CCUtils.generateAlphaNumericString(101));
