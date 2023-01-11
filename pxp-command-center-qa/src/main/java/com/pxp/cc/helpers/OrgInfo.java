@@ -1193,4 +1193,22 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.GET_ORG_SOLUTIONS_NULL_VALUES_DL();
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
+
+    public Response createTemplateVersionResponse(String validURI, String serviceLayer, int practiceId, CreateTemplateVersion createTemplateVersionPayload) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.CREATE_TEMPLATE_VERSION(serviceLayer,"Valid", practiceId);
+            return given().spec(requestSpec).body(createTemplateVersionPayload).when().post(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.CREATE_TEMPLATE_VERSION(serviceLayer,"InValid", practiceId);
+            return given().spec(requestSpec).body(createTemplateVersionPayload).when().post(url).then().extract().response();
+        } else {
+            String url = ApiPath.CREATE_TEMPLATE_VERSION(serviceLayer,"Valid", practiceId);
+            return given().spec(requestSpec).body(createTemplateVersionPayload).when().delete(url).then().extract().response();
+        }
+    }
+
+    public Response createTemplateVersionInvalidDatatypeResponse(String serviceLayer, String practiceId,CreateTemplateVersion createTemplateVersionPayload) {
+        String url = ApiPath.CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+        return given().spec(requestSpec).body(createTemplateVersionPayload).when().post(url).then().extract().response();
+    }
 }
