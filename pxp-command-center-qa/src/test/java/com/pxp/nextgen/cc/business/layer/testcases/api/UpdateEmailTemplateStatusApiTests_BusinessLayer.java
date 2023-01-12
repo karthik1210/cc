@@ -142,33 +142,33 @@ public class UpdateEmailTemplateStatusApiTests_BusinessLayer extends BaseRest {
         CCUtils.assertEquals(updateTemplateVersionStatusResponse.getStatusCode(), 400);
     }
 
-        @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27461 _ Update Email Template Version status for practice with Invalid URI")
+    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27461 _ Update Email Template Version status for practice with Invalid URI")
     public void updateTemplateVersionStatusToPracticeWithInvalidURI() throws Exception {
         logStep("TC 005_Verify the Response code as 404, when user try to give invalid URI for Practice Email Template versions by using PUT Request [BL/DL]");
         practiceId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
         templateVersionMap = getTemplateDetails(practiceId);
         templateVersionId = Long.parseLong(templateVersionMap.get("versionId").toString());
-            logStep("Create Payload for Update Email Template Version Status");
-            requestMap.clear();
-            requestMap.put("delete", true);
-            logStep("Update the Email Template Version Status for practice : " + practiceId);
-            updateTemplateVersionStatusResponse = orgInfo.updateTemplateVersionStatusResponse("InValid", "BL", practiceId, templateVersionId, requestMap);
+        logStep("Create Payload for Update Email Template Version Status");
+        requestMap.clear();
+        requestMap.put("delete", true);
+        logStep("Update the Email Template Version Status for practice : " + practiceId);
+        updateTemplateVersionStatusResponse = orgInfo.updateTemplateVersionStatusResponse("InValid", "BL", practiceId, templateVersionId, requestMap);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(updateTemplateVersionStatusResponse);
         CCUtils.assertEquals(updateTemplateVersionStatusResponse.getStatusCode(), 404);
     }
 
-        @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27462 _ Update Email Template Version status for Invalid Method Type")
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27462 _ Update Email Template Version status for Invalid Method Type")
     public void updateTemplateVersionToPracticeInvalidMethodType() throws Exception {
         logStep("TC 006_Verify the Response code as 405, when user try to DELETE method instead of PATCH Request for update Template version status[BL/DL]");
         practiceId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
         templateVersionMap = getTemplateDetails(practiceId);
         templateVersionId = Long.parseLong(templateVersionMap.get("versionId").toString());
-            logStep("Create Payload for Update Email Template Version Status");
-            requestMap.clear();
-            requestMap.put("delete", true);
-            logStep("Update the Email Template Version Status for practice : " + practiceId);
-            updateTemplateVersionStatusResponse = orgInfo.updateTemplateVersionStatusResponse("InValidMethod", "BL", practiceId, templateVersionId, requestMap);
+        logStep("Create Payload for Update Email Template Version Status");
+        requestMap.clear();
+        requestMap.put("delete", true);
+        logStep("Update the Email Template Version Status for practice : " + practiceId);
+        updateTemplateVersionStatusResponse = orgInfo.updateTemplateVersionStatusResponse("InValidMethod", "BL", practiceId, templateVersionId, requestMap);
         logStep("Validating response Code");
         CCUtils.responseTimeValidation(updateTemplateVersionStatusResponse);
         CCUtils.assertEquals(updateTemplateVersionStatusResponse.getStatusCode(), 405);
@@ -182,7 +182,7 @@ public class UpdateEmailTemplateStatusApiTests_BusinessLayer extends BaseRest {
         templateVersionMap = getTemplateDetails(practiceId);
         templateVersionId = Long.parseLong(templateVersionMap.get("versionId").toString());
         templateId = Integer.parseInt(templateVersionMap.get("templateId").toString());
-        versionName=templateVersionMap.get("name").toString();
+        versionName = templateVersionMap.get("name").toString();
         logStep("Create Payload for Update Email Template Version Status");
         requestMap.clear();
         requestMap.put("active", true);
