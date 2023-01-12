@@ -2055,4 +2055,25 @@ public class ApiPath {
 		return SHARED_DL + "/v1/resources/null/practices/null/appointment-types";
 	}
 
+	public static final String UPDATE_TEMPLATE_VERSION(String serviceLayer, String uriType, int practiceId, Long templateVersionId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions/"+templateVersionId;
+			else
+				return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId + "/template-versions/"+templateVersionId;
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions/"+templateVersionId;
+			else
+				return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId + "/template-versions/"+templateVersionId;
+		}
+	}
+
+	public static final String UPDATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(String serviceLayer,
+																			 String practiceId, String templateVersionId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions/"+templateVersionId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions/"+templateVersionId;
+	}
 }

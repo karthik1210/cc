@@ -20,7 +20,7 @@ import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
-public class AddOrRemoveAppoiTypesForResApiTests_DataLayer extends BaseRest {
+public class AddOrRemoveAppTypesForResApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private ClientInfo clientInfo;
