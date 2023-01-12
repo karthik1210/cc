@@ -24,7 +24,7 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateVARResellerUsersApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUsersStatusApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchIntVarUsersStatusApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" />
 			<class
