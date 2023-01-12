@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
@@ -19,13 +19,13 @@ public class PatchIntVarUsersStatusApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response createUserApiResponse, fetchUserDetailsApiResponse, updateInternalUserDetailsApiResponse;
-	int id,varResellerId;
+	int id, varResellerId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
-		validation = new Validations();	
+		validation = new Validations();
 		id = createIntenalUser();
 		varResellerId = createNewVarResellerUser();
 	}
@@ -46,6 +46,24 @@ public class PatchIntVarUsersStatusApiTests_BusinessLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
 		return createUserApiResponse.jsonPath().getInt("id");
+	}
+
+	public int createNewVarResellerUser() throws IOException {
+		logStep("Create Var/Reseller user using valid details ");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("VARReseller",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null,
+				testData.getProperty("api.resellerId"), null, roleIds, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		return varResellerId = createUserApiResponse.jsonPath().getInt("id");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user and update user status of newly created internal user from active to inactive using user id")
@@ -131,26 +149,7 @@ public class PatchIntVarUsersStatusApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForInvalidUserStatus(updateInternalUserDetailsApiResponse);
 	}
-	
-	
-	public int createNewVarResellerUser() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_BusinessLayer("VARReseller",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, testData.getProperty("api.resellerId"), null, roleIds,
-				false);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createUserApiResponse);
-		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
-		return varResellerId = createUserApiResponse.jsonPath().getInt("id");
-	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new VarReseller user and update user status of newly created VarReseller user from active to inactive using user id")
 	public void testCreateNewVarResellerlUserAndUpdateUserStatusInactive() throws IOException {
 		logStep("Modify status of the newly created Internal user");

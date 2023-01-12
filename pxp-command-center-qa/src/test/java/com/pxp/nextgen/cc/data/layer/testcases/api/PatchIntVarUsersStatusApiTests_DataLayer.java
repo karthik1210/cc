@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
@@ -18,7 +18,7 @@ public class PatchIntVarUsersStatusApiTests_DataLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response createUserApiResponse, updateInternalUserDetailsApiResponse;
-	public int userId,varResellerId;
+	public int userId, varResellerId;
 	List<Integer> roleIds;
 	String email, userName;
 	Long mobileNumber;
@@ -47,7 +47,24 @@ public class PatchIntVarUsersStatusApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
 		return createUserApiResponse.jsonPath().getInt("id");
-
+	}
+	
+	public int createNewVarResellerUser() throws IOException {
+		logStep("Create Var/Reseller user using valid details ");
+		List<Integer> roleIds = new ArrayList<Integer>();
+		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_DataLayer("VARReseller",
+				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
+				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, testData.getProperty("api.resellerId"), null, roleIds,
+				false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		return varResellerId = createUserApiResponse.jsonPath().getInt("id");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Update user status of newly created internal user from active to inactive using user id")
@@ -133,24 +150,6 @@ public class PatchIntVarUsersStatusApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageInResponseForInvalidUserStatus(updateInternalUserDetailsApiResponse);
-	}
-	
-	public int createNewVarResellerUser() throws IOException {
-		logStep("Create Var/Reseller user using valid details ");
-		List<Integer> roleIds = new ArrayList<Integer>();
-		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
-		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = testData.getProperty("api.user.userName")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
-		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("VARReseller",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", null, testData.getProperty("api.resellerId"), null, roleIds,
-				false);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createUserApiResponse);
-		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
-		return varResellerId = createUserApiResponse.jsonPath().getInt("id");
 	}
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new VarReseller user and update user status of newly created VarReseller user from active to inactive using user id")

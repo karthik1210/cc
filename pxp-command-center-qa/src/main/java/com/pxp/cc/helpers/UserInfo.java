@@ -784,5 +784,52 @@ public class UserInfo extends BaseRest {
             return given().spec(requestSpec).queryParam("type", type).queryParam("enrollstatus", enrollmentStatus).queryParam("userstatus", userStatus)
                     .when().get(url).then().extract().response();
         }
+    
+
+    
+    public Response addRoleLocation_BL(int userId ,int orgId, int roleId, String name,
+			int locationId, String nameone) {
+		String url = ApiPath.ADD_ROLE_LOCATION_BL(userId,orgId);
+		Map<String, Object> locationIdPayload = locationsIdRequestPayload(locationId, nameone);
+		List<Object> locationsPayload = locationRequestPayload(locationIdPayload);
+		Map<String, Object> addRoleLocationPayload = addRoleLocationRequestPayload(roleId, name,
+				locationsPayload);
+		return given().spec(requestSpec).body(addRoleLocationPayload).when().put(url).then().extract()
+				.response();
+	}
+
+	private List<Object> locationRequestPayload(Map<String, Object> locationIdPayload) {
+		List<Object> Locations = new ArrayList<Object>();
+		Locations.add(locationIdPayload);
+		return Locations;
+	}
+
+	private Map<String, Object> locationsIdRequestPayload(int locationId, String nameone) {
+		Map<String, Object> locationMap = new HashMap<String, Object>();
+		locationMap.put("locationId", locationId);
+		locationMap.put("name", nameone);
+		return locationMap;
+	}
+
+	private Map<String, Object> addRoleLocationRequestPayload(int roleId, String name,
+			List<Object> locationsPayload) {
+		Map<String, Object> addRoleLocationMap = new HashMap<String, Object>();
+
+		addRoleLocationMap.put("roleId", roleId);
+		addRoleLocationMap.put("name", name);
+		addRoleLocationMap.put("locations", locationsPayload);
+		return addRoleLocationMap;
+	}
+	
+	public Response addRoleLocation_DL(int userId ,int orgId, int roleId, String name,
+			int locationId, String nameone) {
+		String url = ApiPath.ADD_ROLE_LOCATION_DL(userId,orgId);
+		Map<String, Object> locationIdPayload = locationsIdRequestPayload(locationId, nameone);
+		List<Object> locationsPayload = locationRequestPayload(locationIdPayload);
+		Map<String, Object> addRoleLocationPayload = addRoleLocationRequestPayload(roleId, name,
+				locationsPayload);
+		return given().spec(requestSpec).body(addRoleLocationPayload).when().put(url).then().extract()
+				.response();
+	}
 
 }

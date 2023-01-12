@@ -27,6 +27,8 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchIntVarUsersStatusApiTests_BusinessLayer" />
 			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UserAddRoleLocations_BusinessLayer" />		
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchIntenalUserApiTest_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ManageAssociateEntitiesForClientUserTests_BusinessLayer" />
