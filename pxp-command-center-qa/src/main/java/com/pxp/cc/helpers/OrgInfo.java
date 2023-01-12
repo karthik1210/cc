@@ -19,6 +19,7 @@ import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.pojos.PracticeSocials;
 import com.pxp.cc.pojos.*;
 import io.restassured.response.Response;
+import org.json.JSONObject;
 
 public class OrgInfo extends BaseRest {
 
@@ -1246,5 +1247,23 @@ public class OrgInfo extends BaseRest {
     public Response getTemplateVersionInvalidDatatypeResponse(String serviceLayer, String practiceId, String templateId) {
         String url = ApiPath.CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
         return given().spec(requestSpec).queryParams("templateId",templateId).when().get(url).then().extract().response();
+    }
+
+    public Response updateTemplateVersionStatusResponse(String validURI, String serviceLayer, int practiceId, Long templateVersionId, HashMap<String, Boolean> requestMap) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.UPDATE_TEMPLATE_VERSION(serviceLayer, "Valid", practiceId, templateVersionId);
+            return given().spec(requestSpec).body(requestMap).when().patch(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.UPDATE_TEMPLATE_VERSION(serviceLayer, "InValid", practiceId, templateVersionId);
+            return given().spec(requestSpec).body(requestMap).when().patch(url).then().extract().response();
+        } else {
+            String url = ApiPath.UPDATE_TEMPLATE_VERSION(serviceLayer, "Valid", practiceId, templateVersionId);
+            return given().spec(requestSpec).body(requestMap).when().delete(url).then().extract().response();
+        }
+    }
+
+    public Response updateTemplateVersionStatusInvalidDatatypeResponse(String serviceLayer, String practiceId, String templateVersionId, HashMap<String, Boolean> requestMap) {
+        String url = ApiPath.UPDATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, templateVersionId);
+        return given().spec(requestSpec).body(requestMap).when().patch(url).then().extract().response();
     }
 }
