@@ -2046,4 +2046,13 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions";
 	}
+	
+	public static final String ADD_ROLE_LOCATION_BL(int userId,int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/"+ orgId ;
+	}
+	
+	public static final String ADD_ROLE_LOCATION_DL(int userId,int orgId) {
+		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/"+ orgId ;
+	}
+
 }

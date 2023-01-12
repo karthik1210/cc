@@ -3501,5 +3501,10 @@ public class Validations {
 				Log4jUtil.log(responseName + " is not available for templates");
 		}
 	}
-
+	
+	public void verifyErrorResponseBodyForLocationField(Response response, String locationId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Location not found for locationId=" + locationId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
