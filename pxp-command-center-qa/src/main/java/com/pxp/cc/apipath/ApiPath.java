@@ -464,9 +464,9 @@ public class ApiPath {
 	public static final String PROVIDER_DETAILS_BL(int providerId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId;
 	}
-	
+
 	public static final String GET_PROVIDER_DETAILS_BL(int clientId, int providerId) {
-		return SERVICE_SHARED_BL + "/v1/clients/" + clientId +"/providers/" + providerId;
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/providers/" + providerId;
 	}
 
 	public static final String PROVIDER_DETAILS_INVALID_URL_BL(int providerId) {
@@ -1021,7 +1021,7 @@ public class ApiPath {
 	}
 
 	public static final String LOCATION_DETAILS_DL(int clientId, int locationId) {
-		return SHARED_DL + "/v1/clients/"+ clientId +"/locations/" + locationId;
+		return SHARED_DL + "/v1/clients/" + clientId + "/locations/" + locationId;
 	}
 
 	public static final String UPDATE_LOCATION_FOR_PRACTICE_DL(int locationId) {
@@ -1962,7 +1962,7 @@ public class ApiPath {
 		else
 			return SERVICE_USER_BL + "/v1/usersssss/enrollments";
 	}
-	
+
 	public static final String CREATE_STAFF_BL(int clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff";
 	}
@@ -1970,27 +1970,27 @@ public class ApiPath {
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_BL(int staffId) {
 		return SERVICE_SHARED_BL + "/v1/staff/" + staffId + "/practices";
 	}
-	
+
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/null/practices";
 	}
-	
+
 	public static final String GET_STAFF_DL(int staffId) {
-		return SHARED_DL + "/v1/staff/"+ staffId;
+		return SHARED_DL + "/v1/staff/" + staffId;
 	}
 
 	public static final String GET_STAFF_DL_NULL_VALUE() {
 		return SHARED_DL + "/v1/staff/null";
 	}
-	
+
 	public static final String GET_STAFF_DETAILS_BL(int clientId, int staffId) {
-		return SERVICE_SHARED_BL + "/v1/clients/"+ clientId + "/staff/"+ staffId;
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff/" + staffId;
 	}
 
 	public static final String GET_STAFF_DETAILS_BL_NULL_VALUE() {
 		return SERVICE_SHARED_BL + "/v1/clients/null/staff/null";
 	}
-	
+
 	public static final String PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/staff/null/practices";
 	}
@@ -2008,7 +2008,7 @@ public class ApiPath {
 		else
 			return SERVICE_COMMONS_BL + "/v1/comm-templatesss";
 	}
-	
+
 	public static final String UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/providers/null/practices/null/resources";
 	}
@@ -2016,15 +2016,15 @@ public class ApiPath {
 	public static final String GET_BRAND_IMAGE_URL_BL(Object imageId) {
 		return SERVICE_SHARED_BL + "/v1/brands/image/" + imageId;
 	}
-	
+
 	public static final String GET_BRAND_IMAGE_URL_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/brands/image/null";
 	}
-	
+
 	public static final String STAFF_FOR_CLIENT_BL(String clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/staff";
 	}
-	
+
 	public static final String CREATE_TEMPLATE_VERSION(String serviceLayer, String uriType, int practiceId) {
 		if (serviceLayer.equalsIgnoreCase("BL")) {
 			if (uriType.equalsIgnoreCase("Valid"))
@@ -2039,20 +2039,49 @@ public class ApiPath {
 		}
 	}
 
-	public static final String CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(String serviceLayer,
-																			 String practiceId) {
+	public static final String CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions";
 		else
 			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions";
 	}
-	
-	public static final String ADD_ROLE_LOCATION_BL(int userId,int orgId) {
-		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/"+ orgId ;
-	}
-	
-	public static final String ADD_ROLE_LOCATION_DL(int userId,int orgId) {
-		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/"+ orgId ;
+
+	public static final String ADD_ROLE_LOCATION_BL(int userId, int orgId) {
+		return SERVICE_USER_BL + "/v1/users/" + userId + "/entities/" + orgId;
 	}
 
+	public static final String ADD_ROLE_LOCATION_DL(int userId, int orgId) {
+		return SERVICE_USER_DL + "/v1/users/" + userId + "/entities/" + orgId;
+	}
+
+	public static final String APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/resources/" + resourceId + "/practices/" + practiceId + "/appointment-types";
+	}
+
+	public static final String APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_NULLVALUES_DL() {
+		return SHARED_DL + "/v1/resources/null/practices/null/appointment-types";
+	}
+
+	public static final String UPDATE_TEMPLATE_VERSION(String serviceLayer, String uriType, int practiceId,
+			Long templateVersionId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
+			else
+				return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId + "/template-versions/" + templateVersionId;
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
+			else
+				return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId + "/template-versions/" + templateVersionId;
+		}
+	}
+
+	public static final String UPDATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId,
+			String templateVersionId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
+	}
 }

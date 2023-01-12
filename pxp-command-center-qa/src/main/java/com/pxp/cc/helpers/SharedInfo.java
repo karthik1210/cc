@@ -1989,6 +1989,22 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
 	
+	public Response addOrRemoveAppointmentTypesForResources_DL(int resourceId, int practiceId,
+			List<AppointmentTypeDetails> appointmentTypeList) {
+		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_DL(resourceId, practiceId);
+		return given().spec(requestSpec).body(appointmentTypeList).when().put(url).then().extract().response();
+	}
+	
+	public Response getAppointmentTypesAssociatedToResource_DL(int resourceId, int practiceId) {
+		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_DL(resourceId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response appointmentTypesAssociatedToResource_NullValues_DL() {
+		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_NULLVALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
 	public Response getStaffForClient_BL(String clientId, String name, String systemid, String enterpriseid,
 			String practiceid, String solutionid, String pagesize) {
 		String url = ApiPath.STAFF_FOR_CLIENT_BL(clientId);
