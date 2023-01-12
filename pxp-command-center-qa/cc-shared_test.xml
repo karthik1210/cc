@@ -56,12 +56,6 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" />
-			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_BusinessLayer" />
@@ -87,12 +81,6 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForLocationApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForLocationApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsByPracticeApiTests_Businesslayer" />
 			<class
@@ -138,13 +126,9 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer" />
-			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetDisplayNameOfPracticeResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateResourceApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer" />
 			<class	
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientResourceApiTests_BusinessLayer" />
 			<class
@@ -160,9 +144,26 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffDetailsApiTests_BusinessLayer" />
 			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientStaffApiTests_BusinessLayer" />
+            <!-- It is commented to check java heap space Problem in AWS-->
+			<!-- <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" />
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientStaffApiTests_BusinessLayer" />		
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer" />	
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer" />	
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" /> -->
 		</classes>
 	</test>
 </suite>
