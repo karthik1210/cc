@@ -1211,4 +1211,40 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
         return given().spec(requestSpec).body(createTemplateVersionPayload).when().post(url).then().extract().response();
     }
+
+    public Response updateTemplateVersionResponse(String validURI, String serviceLayer, int practiceId, Long templateVersionId, UpdateTemplateVersion updateTemplateVersionPayload) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.UPDATE_TEMPLATE_VERSION(serviceLayer, "Valid", practiceId, templateVersionId);
+            return given().spec(requestSpec).body(updateTemplateVersionPayload).when().put(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.UPDATE_TEMPLATE_VERSION(serviceLayer, "InValid", practiceId, templateVersionId);
+            return given().spec(requestSpec).body(updateTemplateVersionPayload).when().put(url).then().extract().response();
+        } else {
+            String url = ApiPath.UPDATE_TEMPLATE_VERSION(serviceLayer, "Valid", practiceId, templateVersionId);
+            return given().spec(requestSpec).body(updateTemplateVersionPayload).when().delete(url).then().extract().response();
+        }
+    }
+
+    public Response updateTemplateVersionInvalidDatatypeResponse(String serviceLayer, String practiceId, String templateVersionId, UpdateTemplateVersion updateTemplateVersionPayload) {
+        String url = ApiPath.UPDATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, templateVersionId);
+        return given().spec(requestSpec).body(updateTemplateVersionPayload).when().put(url).then().extract().response();
+    }
+
+    public Response getTemplateVersionResponse(String validURI, String serviceLayer, int practiceId, int templateId) {
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.CREATE_TEMPLATE_VERSION(serviceLayer, "Valid", practiceId);
+            return given().spec(requestSpec).queryParams("templateId",templateId).when().get(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.CREATE_TEMPLATE_VERSION(serviceLayer, "InValid", practiceId);
+            return given().spec(requestSpec).queryParams("templateId",templateId).when().get(url).then().extract().response();
+        } else {
+            String url = ApiPath.CREATE_TEMPLATE_VERSION(serviceLayer, "Valid", practiceId);
+            return given().spec(requestSpec).queryParams("templateId",templateId).when().delete(url).then().extract().response();
+        }
+    }
+
+    public Response getTemplateVersionInvalidDatatypeResponse(String serviceLayer, String practiceId, String templateId) {
+        String url = ApiPath.CREATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+        return given().spec(requestSpec).queryParams("templateId",templateId).when().get(url).then().extract().response();
+    }
 }
