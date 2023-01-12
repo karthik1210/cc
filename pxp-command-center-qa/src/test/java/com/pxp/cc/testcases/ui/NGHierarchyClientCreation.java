@@ -70,7 +70,28 @@ public class NGHierarchyClientCreation extends CCMainPage {
         systemName = "S" + CCUtils.generateRandomStringWithoutSymbolsOrNumbers(18).toLowerCase();
         ngHierarchyClientCreationPage.enterSystemName(systemName);
         ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(system, enterprise);
-        ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
+        logStep("Click on save and add button");
+        ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
+        logStep("Verify success toaster message");
+        ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
+        return systemName;
+    }
+    
+    public String createNewInactiveSystem(String pmSystem, String ehrSystem) throws Exception {
+        logStep("Verify manage client button is displayed");
+        ngHierarchyClientCreationPage.verifyManageClientButton();
+        logStep("Click on manage client button");
+        ngHierarchyClientCreationPage.clickOnManageClient();
+        ngHierarchyClientCreationPage.verifyAddSystemButton();
+        ngHierarchyClientCreationPage.clickOnAddSystem();
+        logStep("Enter data in all input fields");
+        systemName = "S" + CCUtils.generateRandomStringWithoutSymbolsOrNumbers(18).toLowerCase();
+        ngHierarchyClientCreationPage.enterSystemName(systemName);
+        ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(pmSystem,ehrSystem);
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
+        ngHierarchyClientCreationPage.verifyInactiveRadioButton();
+        ngHierarchyClientCreationPage.clickToInactiveRadioButton();
         logStep("Click on save and add button");
         ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
@@ -79,11 +100,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
     }
 
     public String createNewActiveEnterprise(String system, String enterprise, String timeZone) throws NullPointerException, InterruptedException {
-        logStep("Navigating To General Settings page"); 
-        logStep("Verify general settings page title");
-        generalSettingsPage.verifyGeneralSettingsPageTitle();
-        logStep("Verify manage client button is displayed");
-        ngHierarchyClientCreationPage.clickOnManageClient();
         ngHierarchyClientCreationPage.clickOnExpandArrow(systemName);
         ngHierarchyClientCreationPage.verifyAddEnterpriseButton();
         ngHierarchyClientCreationPage.clickOnAddEnterprise();
@@ -98,13 +114,27 @@ public class NGHierarchyClientCreation extends CCMainPage {
         ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
         return enterpriseName;
     }
+    
+    public String createNewInactiveEnterprise(String system, String enterprise, String timeZone) throws NullPointerException, InterruptedException {
+        ngHierarchyClientCreationPage.clickOnExpandArrow(systemName);
+        ngHierarchyClientCreationPage.verifyAddEnterpriseButton();
+        ngHierarchyClientCreationPage.clickOnAddEnterprise();
+        logStep("Enter data in all input fields");
+        enterpriseName = "E" + CCUtils.generateRandomStringWithoutSymbolsOrNumbers(18).toLowerCase();
+        ngHierarchyClientCreationPage.enterEnterpriseName(enterpriseName);
+        ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(system, enterprise);
+        ngHierarchyClientCreationPage.addTimezone(timeZone);
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
+        ngHierarchyClientCreationPage.verifyInactiveRadioButton();
+        ngHierarchyClientCreationPage.clickToInactiveRadioButton();
+        logStep("Click on save and add button");
+        ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
+        logStep("Verify success toaster message");
+        ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
+        return enterpriseName;
+    }
 
     public String createNewActivePractice(String system, String enterprise, String timeZone, String solution) throws Exception {
-        logStep("Navigating To General Settings page");
-        logStep("Verify manage client button is displayed");
-        ngHierarchyClientCreationPage.verifyManageClientButton();
-        logStep("Click on manage client button");
-        ngHierarchyClientCreationPage.clickOnManageClient();
         logStep("Click on arrow");
         ngHierarchyClientCreationPage.clickOnExpandArrow(systemName);
         ngHierarchyClientCreationPage.clickOnEnterpriseExpandArrow(enterpriseName);
@@ -117,7 +147,31 @@ public class NGHierarchyClientCreation extends CCMainPage {
         ngHierarchyClientCreationPage.addPracticePmSystemAndEhrSystem(system, enterprise);
         ngHierarchyClientCreationPage.addTimezone(timeZone);
         ngHierarchyClientCreationPage.enterSolutionsDisplayName(solution);
-        ngHierarchyClientCreationPage.verifyActiveRadioButtonIsByDefaultSelected();
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
+        logStep("Click on save and add button");
+        ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
+        logStep("Verify success toaster message");
+        ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
+        ngHierarchyClientCreationPage.clickOnCloseButton();
+        return practiceName;
+    }
+    
+    public String createNewInactivePractice(String system, String enterprise, String timeZone, String solution) throws Exception {
+        logStep("Click on arrow");
+        ngHierarchyClientCreationPage.clickOnExpandArrow(systemName);
+        ngHierarchyClientCreationPage.clickOnEnterpriseExpandArrow(enterpriseName);
+        logStep("Verify add new practice page");
+        ngHierarchyClientCreationPage.verifyAddPracticeButton();
+        ngHierarchyClientCreationPage.clickOnAddPracticeButton();
+        logStep("Enter data in all input fields");
+        practiceName = "P" + CCUtils.generateRandomStringWithoutSymbolsOrNumbers(18).toLowerCase();
+        ngHierarchyClientCreationPage.enterPracticeName(practiceName);
+        ngHierarchyClientCreationPage.addPracticePmSystemAndEhrSystem(system, enterprise);
+        ngHierarchyClientCreationPage.addTimezone(timeZone);
+        ngHierarchyClientCreationPage.enterSolutionsDisplayName(solution);
+        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
+        ngHierarchyClientCreationPage.verifyInactiveRadioButton();
+        ngHierarchyClientCreationPage.clickToInactiveRadioButton();
         logStep("Click on save and add button");
         ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");

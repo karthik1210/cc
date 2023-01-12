@@ -131,7 +131,7 @@ public class AddOrgNodePage extends CCMainPage {
 
 	@FindBy(id = "manageClientLabel")
 	private WebElement btnManageClient;
-	
+
 	@FindBy(xpath = "//div[normalize-space(text())='MANAGE CLIENT']")
 	private WebElement labelManageClient;
 
@@ -228,6 +228,15 @@ public class AddOrgNodePage extends CCMainPage {
 	@FindBy(xpath = "//div[contains(text(),'Maximum characters reached')] ")
 	private WebElement errorMessage;
 
+	@FindBy(xpath = "//input[@id='searchInput']")
+	private WebElement manageClientSearch;
+
+	@FindBy(xpath = "//span[@class='mat-option-text']")
+	private WebElement selectFirstInAutoSuggestion;
+	
+	@FindBy(id = "searchIcon")
+	private WebElement searchIcon;
+
 	List<String> actualSolutionValues = new ArrayList<String>();
 
 	public final List<String> expectedSolutionValues = Arrays.asList("Chat", "Engage", "Forms", "PSS", "Pay", "Portal",
@@ -235,6 +244,12 @@ public class AddOrgNodePage extends CCMainPage {
 
 	public AddOrgNodePage(WebDriver driver) {
 		super(driver);
+	}
+
+	public String dynamicSearchResult(String orgName) {
+		String locator = "//div[@class='mat-tree-node-click bordernode']//button//following::p//span[text()='" + orgName
+				+ "']";
+		return locator;
 	}
 
 	public void verifyActiveButtonByDefaultSelected() {
@@ -699,13 +714,14 @@ public class AddOrgNodePage extends CCMainPage {
 
 	public void clickOnExpandArrow(String orgName) {
 		CCUtils.verifyAndWaitForElement(expandArrow, driver);
-		if (expandArrow.getAttribute("aria-label").equals("toggle "+orgName)) {
+		if (expandArrow.getAttribute("aria-label").equals("toggle " + orgName)) {
 			javascriptClick(expandArrow);
 		}
-		log("Clicked on expand Arrow button for Org : "+orgName);
+		log("Clicked on expand Arrow button for Org : " + orgName);
 	}
 
 	public void clickOnAddSystem() {
+		CCUtils.scrollPageViaElement(driver, btnAddSystem);
 		CCUtils.verifyAndWaitForElement(btnAddSystem, driver);
 		javascriptClick(btnAddSystem);
 		log("Clicked on Add System  button");
@@ -1056,11 +1072,36 @@ public class AddOrgNodePage extends CCMainPage {
 		CCUtils.assertEquals(orgName.isDisplayed(), true);
 		log("Org node is displayed");
 	}
-	
+
 	public void createPracticeWithinSystem(String systemName) {
 		clickOnExpandArrow(systemName);
 		driver.navigate().refresh();
-	    clickOnManageClient();
-	    clickOnExpandArrow(systemName);
+		clickOnManageClient();
+		clickOnExpandArrow(systemName);
 	}
+
+	public void verifySearchIconAndSearchTextBox() {
+		log("verify search icon and search text box present");
+		CCUtils.verifyAndWaitForElement(searchIcon, driver);
+		CCUtils.verifyAndWaitForElement(manageClientSearch, driver);
+	}
+	
+	public void enterSearchValue(String orgName) {
+		CCUtils.verifyAndWaitForElement(manageClientSearch, driver);
+		manageClientSearch.click();
+		manageClientSearch.sendKeys(orgName);
+	}
+
+	public void clickFirstInAutoSuggestion() {
+		CCUtils.verifyAndWaitForElementPresence(selectFirstInAutoSuggestion, driver);
+		if (selectFirstInAutoSuggestion.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			javascriptClick(selectFirstInAutoSuggestion);
+
+		} else {
+			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present in client");
+		}
+	}
+
 }
