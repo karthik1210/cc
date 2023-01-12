@@ -69,5 +69,17 @@ public class AppointmentTypeInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then()
 				.extract().response();
 	}
+	
+	public Response createAppointmentType_DL(int practiceId, String name, String externalId, String duration,
+			String categoryId, String nameone, String externalIdone) {
+		String url = ApiPath.CREATE_APPOINTMENT_TYPE_DL(practiceId);
+		Map<String, Object> categoriesIdPayload = categoriesIdRequestPayload(categoryId, nameone, externalIdone);
+		List<Object> categoriesPayload = categoriesRequestPayload(categoriesIdPayload);
+		Map<String, Object> createAppointmentTypePayload = createAppointmentTypeRequestPayload(name, externalId,
+				duration, categoriesPayload);
+
+		return given().spec(requestSpec).body(createAppointmentTypePayload).when().post(url).then().extract()
+				.response();
+	}
 
 }
