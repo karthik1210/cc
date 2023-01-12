@@ -148,7 +148,7 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientAppTypesApiTests_BusinessLayer" />
 		    
-            <!-- It is commented to check java heap space Problem in AWS-->
+            <!-- Enable test classes once Path identification for image upload in AWS issue is addressed Jira PXPP-28190-->
 			<!-- <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" />
 			<class
