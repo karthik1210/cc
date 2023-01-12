@@ -145,6 +145,9 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientStaffApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientAppTypesApiTests_BusinessLayer" />
+		    
             <!-- It is commented to check java heap space Problem in AWS-->
 			<!-- <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" />

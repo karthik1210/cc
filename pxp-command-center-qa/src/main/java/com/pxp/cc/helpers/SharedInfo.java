@@ -2013,4 +2013,13 @@ public class SharedInfo extends BaseRest {
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
 	}
+	
+	public Response getAppTypesForClient_BL(String clientId, String name, String systemid, String enterpriseid,
+			String practiceid, String solutionid, String pagesize) {
+		String url = ApiPath.APP_TYPES_FOR_CLIENT_BL(clientId);
+		return given().spec(requestSpec).queryParam("name", name).queryParam("systemid", systemid)
+				.queryParam("enterpriseid", enterpriseid).queryParam("practiceid", practiceid)
+				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
+				.response();
+	}
 }
