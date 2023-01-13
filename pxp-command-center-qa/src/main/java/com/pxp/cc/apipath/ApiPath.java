@@ -2092,4 +2092,8 @@ public class ApiPath {
 	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/null/practices/null";
 	}
+	
+	public static final String APP_TYPES_FOR_CLIENT_BL(String clientId) {
+		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/appointment-types";
+	}
 }

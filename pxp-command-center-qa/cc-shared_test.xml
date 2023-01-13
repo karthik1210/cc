@@ -17,12 +17,12 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderDetailsApiTests_BusinessLayer" />
 			<!-- Jira #PXPP-22944 -->
-			<!-- <class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" />-->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" 
+				/> -->
 			<!-- Enable test suite once pipeline issue is addressed for for shared 
 				services Jira #PXPP-27207 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer"
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer" 
 				/> -->
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer" />
@@ -129,17 +129,17 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetDisplayNameOfPracticeResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateResourceApiTests_BusinessLayer" />
-			<class	
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationsForAssociatingWithResource_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToResource_BusinessLayer" />	
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToResource_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesForStaffApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer" />
-            <class
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateStaffApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffDetailsApiTests_BusinessLayer" />
@@ -147,25 +147,21 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientStaffApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveAppTypesDisplayInfoApiTests_BusinessLayer" />
-            <!-- It is commented to check java heap space Problem in AWS-->
-			<!-- <class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer" />	
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer" />	
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" />
-			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" /> -->
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientAppTypesApiTests_BusinessLayer" />
+
+			<!-- Enable test classes once Path identification for image upload in 
+				AWS issue is addressed Jira PXPP-28190 -->
+			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" 
+				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" 
+				/> -->
 		</classes>
 	</test>
 </suite>
