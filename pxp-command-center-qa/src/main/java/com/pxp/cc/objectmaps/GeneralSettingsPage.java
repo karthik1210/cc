@@ -362,6 +362,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	
 	@FindBy(xpath = "//div[@id='purchasedSolutionOrg'][normalize-space(text())='Purchased Solutions Add-Ons']")
 	private WebElement purchasedSolutionsAddOnsTitle;
+	
+	@FindBy(xpath = "//span[@id='locationTile']//following::span[1]")
+	private WebElement locationCount;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -1311,5 +1314,10 @@ public class GeneralSettingsPage extends CCMainPage {
 	public String getClientNameErrorMessage() {
 		CCUtils.verifyAndWaitForElement(clientNameRequiredErrorMessage, driver);
 		return clientNameRequiredErrorMessage.getText().trim();
+	}
+	
+	public String getLocationCount() {
+		CCUtils.verifyAndWaitForElement(locationCount, driver);
+		return locationCount.getText().trim();
 	}
 }

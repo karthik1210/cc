@@ -485,9 +485,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonNew, driver);
 		buttonNew.click();
 		log("Clicked on new button");
-//        CCUtils.verifyAndWaitForElement(buttonCreateClient, driver);
-//        buttonCreateClient.click();
-//        log("Clicked on Create client button");
 	}
 
 	public String verifyClientPopupText() {
@@ -765,13 +762,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		verifyNoItemsFound();
 	}
 
-	/*
-	 * public void verifyNoItemsFound() {
-	 * CCUtils.verifyAndWaitForElement(textNoItemsFound, driver);
-	 * CCUtils.assertEquals(textNoItemsFound.getText().trim(), "No items found");
-	 * log("No items found for the entered text"); }
-	 */
-
 	List<String> actualSsoLinks = new ArrayList<String>();
 	List<String> nodeUnderClientInGeneralSetting = new ArrayList<String>();
 
@@ -870,9 +860,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	public void clickSearchResult(String clientName) {
 		WebElement clientDisplay = driver.findElement(By.xpath("//td[normalize-space(text())='" + clientName + "']"));
 		CCUtils.verifyAndWaitForElement(clientDisplay, driver);
-		// String searchResultText =
-		// tableClientNameInSearchResult.get(0).getText().trim();
-		// tableClientNameInSearchResult.get(0).click();
 		new Actions(driver).moveToElement(clientDisplay).click().build().perform();
 		log("Clicked on Client :" + clientName);
 	}
@@ -918,18 +905,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		CCUtils.assertEquals(buttonSearchClientDirectory.getText(), "CLEAR");
 		log("Text present in Client search button after it is clicked is : " + buttonSearchClientDirectory.getText());
 	}
-
-	// private String xpathRequiredClientType =
-	// "//label[normalize-space()='valueToReplace']";
-
-	
-	/*
-	 * public void selectClientType(String clientTypeName) {
-	 * 
-	 * WebElement clientType =
-	 * prepareWebElementWithDynamicXpath(xpathRequiredClientType, clientTypeName);
-	 * log("Clicked on : " + clientTypeName); clientType.click(); }
-	 */
 
 	public String clickTwoHundredItemsPerPage() {
 		String currentItemPerPage = null;
@@ -1164,13 +1139,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		CCUtils.assertEquals(textboxName.getAttribute("placeholder").toString(), "Input Text");
 	}
 
-	/*
-	 * public void selectInactiveRadiobutton() {
-	 * CCUtils.verifyAndWaitForElement(radioButtonInactive, driver);
-	 * javascriptClick(radioButtonInactive);
-	 * log("Clicked on inactive radiobutton in popup"); }
-	 */
-
 	public void selectActiveRadiobutton() {
 		CCUtils.verifyAndWaitForElement(radioButtonActive, driver);
 		javascriptClick(radioButtonActive);
@@ -1254,38 +1222,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		clickOnSaveAndAddButton();
 	}
 
-	/*
-	 * public void verifyStatusLabelTextAndRadioButtons() {
-	 * CCUtils.verifyAndWaitForElement(labelStatus, driver);
-	 * CCUtils.assertTrue(labelStatus.isDisplayed(),
-	 * "Status label is not displayed on add new node popup");
-	 * log("Verifying status label text");
-	 * CCUtils.assertEquals(labelStatus.getText().trim(), "Status *");
-	 * log("Status label text is " + labelStatus.getText().trim());
-	 * log("Verifying active label and radio button are displayed on add new node popup"
-	 * ); CCUtils.assertEquals(labelActive.getText().trim(), "Active");
-	 * CCUtils.assertTrue(radioButtonActive.isDisplayed(),
-	 * "Active radiobutton is not present on add new node popup");
-	 * log("Verifying inactive label and radio button are displayed on add new node popup"
-	 * ); CCUtils.assertEquals(labelInactive.getText().trim(), "Inactive");
-	 * CCUtils.assertTrue(radioButtonInactive.isDisplayed(),
-	 * "Inactive radiobutton is not present on add new node popup"); }
-	 */
-
-	/*
-	 * public void selectTimeZone(String newTimezone) { WebElement newClientTimezone
-	 * = prepareDynamicXpathForTimezone(xpathRequiredNewTimezone, newTimezone);
-	 * newClientTimezone.click(); log("Clicked on : " + newTimezone); }
-	 */
-
-	/*
-	 * public void verifyActiveRadioButtonIsByDefaultSelected() {
-	 * CCUtils.verifyAndWaitForElement(radioBtnActive, driver);
-	 * log("Verifying active radio button is by default selected");
-	 * CCUtils.assertTrue(radioBtnActive.isSelected(),
-	 * "Active radio button is by default selected"); }
-	 */
-
 	public void clickToInactiveRadioButton() {
 		CCUtils.verifyAndWaitForElement(radioBtnInactiveAddNode, driver);
 		radioBtnInactiveAddNode.click();
@@ -1297,45 +1233,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		newClientTimezone.click();
 		log("Clicked on : " + newTimezone);
 	}
-
-	/*
-	 * public void
-	 * verifyErrorMessageForClientNameAndSapIdFieldWhenUserEnterBlankSpace(String
-	 * clientName, String sapId) {
-	 * CCUtils.verifyAndWaitForElement(textboxClientName, driver);
-	 * textboxClientName.clear(); textboxClientName.sendKeys(clientName);
-	 * log("Entered text in client name field is " + clientName);
-	 * CCUtils.verifyAndWaitForElement(errorEmptyClientName, driver);
-	 * CCUtils.assertEquals(errorEmptyClientName.getText().trim(),
-	 * "Client name cannot be empty");
-	 * log("Error Message displayed for client name field is :" +
-	 * errorEmptyClientName.getText().trim());
-	 * CCUtils.verifyAndWaitForElement(textboxSapId, driver);
-	 * textboxSapId.sendKeys(sapId); log("Entered text in SAP ID field : " + sapId);
-	 * CCUtils.verifyAndWaitForElement(errorEmptyClientSapId, driver);
-	 * CCUtils.assertEquals(errorEmptyClientSapId.getText().trim(),
-	 * "SAP ID cannot be empty");
-	 * log("Error Message displayed for sap id field is :" +
-	 * errorEmptyClientSapId.getText().trim()); }
-	 */
-
-	/*
-	 * public void verifyNoItemsFound() {
-	 * CCUtils.verifyAndWaitForElement(textNoItemsFound, driver);
-	 * CCUtils.assertEquals(textNoItemsFound.getText().trim(), "No items found");
-	 * log("No items found for the entered text"); }
-	 */
-
-	// private String xpathRequiredClientType =
-	// "//label[normalize-space()='valueToReplace']";
-
-	/*
-	 * public void selectClientType(String clientTypeName) {
-	 * 
-	 * WebElement clientType =
-	 * prepareWebElementWithDynamicXpath(xpathRequiredClientType, clientTypeName);
-	 * log("Clicked on : " + clientTypeName); clientType.click(); }
-	 */
 
 	public void verfiySearchResultForClientType(String resultClientType) {
 		CCUtils.verifyAndWaitForElement(tableClientTypeInSearchResult.get(0), driver);
@@ -1988,12 +1885,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		selectTimeZone(newTimezone);
 	}
 
-	/*
-	 * public void selectTimeZone(String newTimezone) { WebElement newClientTimezone
-	 * = prepareDynamicXpathForTimezone(xpathRequiredNewTimezone, newTimezone);
-	 * newClientTimezone.click(); log("Clicked on : " + newTimezone); }
-	 */
-
 	public void clickOnAddPractice() {
 		CCUtils.verifyAndWaitForElement(btnAddPractice, driver);
 		javascriptClick(btnAddPractice);
@@ -2211,14 +2102,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		log("Box text for Solutions Display Name textbox field is "
 				+ textboxSolutionsName.getAttribute("placeholder").trim());
 	}
-
-	/*
-	 * public void verifyActiveRadioButtonIsByDefaultSelected() {
-	 * CCUtils.verifyAndWaitForElement(radioBtnActive, driver);
-	 * log("Verifying active radio button is by default selected");
-	 * CCUtils.assertTrue(radioBtnActive.isSelected(),
-	 * "Active radio button is by default selected"); }
-	 */
 
 	public void verifyActiveInactiveRadioButtonStatusLabel() {
 		CCUtils.verifyAndWaitForElement(labelActive, driver);

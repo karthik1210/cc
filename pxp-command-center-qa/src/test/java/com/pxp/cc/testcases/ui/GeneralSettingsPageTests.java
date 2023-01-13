@@ -28,6 +28,46 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		}
 	}
 
+	@Test(enabled = false)
+	public void addLocationPopUp() throws Exception {
+		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
+		logStep("Verify Locations tab is displayed");
+		ccui.getGeneralSettingsPage().verifyLocationsTab();
+		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("Click on Add button");
+		ccui.getAddLocationPage().verifyLocationsPageTitle();
+	}
+
+	@Test(enabled = false)
+	public String testAddNewLocationFunctionalityWithAllValidDetails() throws Exception {
+		logStep("Enter data in all input fields");
+		ccui.getAddLocationPage().verifyAddLocationButton();
+		ccui.getAddLocationPage().clickOnAddLocationButton();
+		String locationName = "Loc".concat(CCUtils.generateAlphaNumericString(10));
+		ccui.getAddLocationPage().enterLocationName(locationName);
+		ccui.getAddLocationPage().enterLocationDisplayName(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterAddressOne(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterAddressTwo(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterCity(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterLocationIdExternal(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterZip(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().addStateAndTimezone(testData.getProperty("new.locations.state"),
+				testData.getProperty("new.locations.timezone"));
+		logStep("Click on save and add button");
+		ccui.getAddLocationPage().clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		ccui.getAddLocationPage().verifyToasterMessage("Success! New location has been successfully created");
+		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
+		CCUtils.pressEnterKey();
+		ccui.getAddLocationPage().selectLocation();
+		ccui.getLocationDetailsPage().verifyLocationDetailsTitle();
+		ccui.getLocationDetailsPage().clickToEntepriseArrow();
+		ccui.getLocationDetailsPage().clickOnToggleButton();
+		ccui.getLocationDetailsPage().clickToBackButton();
+		ccui.getSearchLocationDetailsPage().verifyLocationTitle();
+		return locationName;
+	}
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system,enterprise,practice page web elements and max character reached error")
 	public void testAddNewSystemEnterprisePracticePageWebElementsAndMaxCharacterReachedErrorMessage() throws Exception {
 		ccui.getGeneralSettingsPage().clickClientDirectory();
@@ -172,8 +212,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(errorMessage, "Client name is required");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save System name and status")
-	public void editAndSaveNameAndStatusAtSystemLevel() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save System,enterprise,practice name and status")
+	public void editAndSaveNameAndStatusAtSystemEnterprisePracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
 		logStep("Edit and save System name and status");
@@ -183,44 +223,84 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.editOrgDetailsGeneralSettingsPage().EditAndSaveNameAndStatus(orgName);
 		logStep("Verify success toaster message");
 		ccui.editOrgDetailsGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
-		runOnce = false;
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save Enterprise name and status")
-	public void editAndSaveNameAndStatusAtEnterpriseLevel() throws Exception {
-		ngHierarchyClientCreate();
 		ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getPrivacyPolicySettingsPage()
 				.clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
 		logStep("Edit and save Enterprise name and status");
 		ccui.editBasicInfoGeneralSettingsPage().clickEnterpriseOrg();
 		ccui.editOrgDetailsGeneralSettingsPage().clickEditButton();
-		String orgName = CCUtils.generateAlphaNumericString(8);
-		ccui.editOrgDetailsGeneralSettingsPage().EditAndSaveNameAndStatus(orgName);
+		String entName = CCUtils.generateAlphaNumericString(8);
+		ccui.editOrgDetailsGeneralSettingsPage().EditAndSaveNameAndStatus(entName);
 		logStep("Verify success toaster message");
 		ccui.editOrgDetailsGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
-		runOnce = false;
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save Practice name and status")
-	public void editAndSaveNameAndStatusAtPracticeLevel() throws Exception {
-		ngHierarchyClientCreate();
 		ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getPrivacyPolicySettingsPage()
 				.clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
 		ccui.getPrivacyPolicySettingsPage().clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
 		logStep("Edit and save Practice name and status");
 		ccui.editOrgDetailsGeneralSettingsPage().clickEditButton();
-		String orgName = CCUtils.generateAlphaNumericString(8);
-		ccui.editOrgDetailsGeneralSettingsPage().EditAndSaveNameAndStatus(orgName);
+		String pracName = CCUtils.generateAlphaNumericString(8);
+		ccui.editOrgDetailsGeneralSettingsPage().EditAndSaveNameAndStatus(pracName);
 		logStep("Verify success toaster message");
 		ccui.editOrgDetailsGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
+		runOnce = false;
+	}
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save Practice name and status")
+	public void tabCountforLocationsTabAtClientSystemEnterprisePracticeLevel() throws Exception {
+		ngHierarchyClientCreate();
+		logStep("create multiple locations at client level");
+		addLocationPopUp();
+		testAddNewLocationFunctionalityWithAllValidDetails();
+		testAddNewLocationFunctionalityWithAllValidDetails();
+		testAddNewLocationFunctionalityWithAllValidDetails();
+		testAddNewLocationFunctionalityWithAllValidDetails();
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		String clientLocationTabCount = ccui.getGeneralSettingsPage().getLocationCount();
+		ccui.getGeneralSettingsPage().clickOnLocationsTile();
+		String noOfLocations = ccui.getSearchLocationDetailsPage().getTotalNoOfLocations();
+		logStep("verifying the no of location on location tab in general settings and location details page at client level");
+		CCUtils.assertEquals(clientLocationTabCount, noOfLocations.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching a system node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String systemLocationTabCount = ccui.getGeneralSettingsPage().getLocationCount();
+		ccui.getGeneralSettingsPage().clickOnLocationsTile();
+		String noOfLocationsSystemFilter = ccui.getSearchLocationDetailsPage().getTotalNoOfLocations();
+		logStep("verifying the no of location on location tab in general settings and location details page at system level");
+		CCUtils.assertEquals(systemLocationTabCount, noOfLocationsSystemFilter.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching an enterprise node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String enterpriseLocationTabCount = ccui.getGeneralSettingsPage().getLocationCount();
+		ccui.getGeneralSettingsPage().clickOnLocationsTile();
+		String noOfLocationsEnterpriseFilter = ccui.getSearchLocationDetailsPage().getTotalNoOfLocations();
+		logStep("verifying the no of location on location tab in general settings and location details page at enterprise level");
+		CCUtils.assertEquals(enterpriseLocationTabCount, noOfLocationsEnterpriseFilter.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching a practice node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String practiceLocationTabCount = ccui.getGeneralSettingsPage().getLocationCount();
+		ccui.getGeneralSettingsPage().clickOnLocationsTile();
+		String noOfLocationsPracticeFilter = ccui.getSearchLocationDetailsPage().getTotalNoOfLocations();
+		logStep("verifying the no of location on location tab in general settings and location details page at practice level");
+		CCUtils.assertEquals(practiceLocationTabCount, noOfLocationsPracticeFilter.trim());
 		runOnce = false;
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality")
 	public void testGeneralSettingScreen() throws Exception {
 		ngHierarchyClientCreate();
+		logStep("PXPP-12909 PXPP-12910 PXPP-12911 PXPP-12921 Verify default text, autosuggestions ,search icon and search node functionality ");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Verifying default text");
 		String actualDefaultText = ccui.getGeneralSettingsPage().defaultTextInSearch();
@@ -235,6 +315,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
 	public void testAutoSuggestionForSingleCharacterSearch() throws Exception {
 		ngHierarchyClientCreate();
+		logStep("PXPP-12967 Verify Auto suggestion list is displayed when searched text is entered - Command Center Admin");
 		createNewSystemForNumberSymbolSearch();
 		logStep("Searching for nodes with single character name in General settings search");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -258,23 +339,18 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = false, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system node functionality in Client's General settings page")
-	public void testNodeSearch() throws Exception {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system,enterprise,practice node functionality in Client's General settings page")
+	public void testSystemEnterprisePracticeNodeSearch() throws Exception {
 		ngHierarchyClientCreate();
-		logStep("Verify general settings page title");
+		logStep("PXPP-12979 Verify full & partial search can be performed on general setting screen - Command Center Admin");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
+		logStep("Verified general settings page title");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a system node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search enterprise node functionality in Client's General settings page")
-	public void testEnterpriseNodeSearch() throws Exception {
-		ngHierarchyClientCreate();
 		logStep("Verify general settings page title");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -283,12 +359,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search practice node functionality in Client's General settings page")
-	public void testPracticeNodeSearch() throws Exception {
-		ngHierarchyClientCreate();
 		logStep("Verify general settings page title");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -310,49 +380,22 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles are present at Client level")
-	public void verifyVisibilityOfTabsAndTilesAtClientLevel() throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents at Client level");
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles navigate respective pages at Client,System,Enterprise,Practice level")
+	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientSystemEnterprisePracticeLevel() throws Exception {
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client,System,Enterprise,Practice level");
 		ngHierarchyClientCreate();
 		ccui.editBasicInfoGeneralSettingsPage().clickClientOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles navigate respective pages at Client level")
-	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientLevel() throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client level");
-		ngHierarchyClientCreate();
-		ccui.editBasicInfoGeneralSettingsPage().clickClientOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTile();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles are present at System level")
-	public void verifyVisibilityOfTabsAndTilesAtSystemLevel() throws Exception {
-		ngHierarchyClientCreate();
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents At System Level");
+		ccui.getGeneralSettingsPage().clickOnGeneralSettingsTab();
 		ccui.editBasicInfoGeneralSettingsPage().clickSystemOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles navigate respective pages at System Level")
-	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtSystemLevel() throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at System Level");
-		ngHierarchyClientCreate();
-		ccui.editBasicInfoGeneralSettingsPage().clickSystemOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTile();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles are present at Enterprise level")
-	public void verifyVisibilityOfTabsAndTilesAtEnterpriseLevel() throws Exception {
-		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().clickOnGeneralSettingsTab();
 		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents At Enterprise Level");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -360,41 +403,21 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		// ccui.editBasicInfoGeneralSettingsPage().clickEnterpriseOrg();
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level");
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level")
-	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtEnterpriseLevel() throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level");
-		ngHierarchyClientCreate();
+		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
+		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTile();
+		ccui.getGeneralSettingsPage().clickOnGeneralSettingsTab();
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		// ccui.editBasicInfoGeneralSettingsPage().clickEnterpriseOrg();
-		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
-		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTile();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles are present at Practice level")
-	public void verifyVisibilityOfTabsAndTilesAtPracticeLevel() throws Exception {
-		ngHierarchyClientCreate();
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles is presents At Practice Level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at practice Level");
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources,, Appointment types tab & tiles navigate respective pages at Practice Level")
-	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtPracticeLevel() throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Enterprise Level");
-		ngHierarchyClientCreate();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTile();
 		runOnce = false;
@@ -411,37 +434,18 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
 		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
-		/*
-		 * ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
-		 * ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
-		 * ccui.getCommonMethods().
-		 * verifyToasterMessage("Success! Solution has been successfully updated");
-		 */
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfPaySolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfEngageSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
-		/*
-		 * ccui.getGeneralSettingsPage().clickToActivateButtonOfChatSolution();
-		 * ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
-		 * ccui.getCommonMethods().
-		 * verifyToasterMessage("Success! Solution has been successfully updated");
-		 */
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfPortalSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfPSSSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
-		/*
-		 * ccui.getGeneralSettingsPage().clickToVirtualVisitsMoreOptions();
-		 * ccui.getGeneralSettingsPage().clickToTerminateOption();
-		 * ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
-		 * ccui.getCommonMethods().
-		 * verifyToasterMessage("Success! Solution has been successfully updated");
-		 */
 		ccui.getGeneralSettingsPage().clickToPayMoreOptions();
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
@@ -454,13 +458,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
-		/*
-		 * ccui.getGeneralSettingsPage().clickToPatientPortalMoreOptions();
-		 * ccui.getGeneralSettingsPage().clickToTerminateOption();
-		 * ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
-		 * ccui.getCommonMethods().
-		 * verifyToasterMessage("Success! Solution has been successfully updated");
-		 */
 		ccui.getGeneralSettingsPage().clickToPSSMoreOptions();
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
