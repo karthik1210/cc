@@ -1,10 +1,10 @@
-//Copyright 2023 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
-import java.io.IOException;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import java.io.IOException;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
@@ -22,32 +22,31 @@ public class UserAddRoleLocations_DataLayer extends BaseRest {
 	private ClientInfo clientInfo;
 	private SharedInfo sharedInfo;
 	Response createUserApiResponse, fetchUserDetailsApiResponse, createSystemApiResponse, createEnterpriseApiResponse,
-			addRoleLocationResponse, createClientApiResponse, createPracticeApiResponse, createNewLocationApiResponse,
-			createProviderApiResponse, associateDeassociatePracticesForLocationApiResponse;
-	String systemName, enterpriseName, practiceName, locname;
-	int clientId, systemId, enterpriseId, practiceId, locationId, userId, providerId;
+			createNewLocationApiResponse, associateDeassociatePracticesForLocationApiResponse, createClientApiResponse,
+			createPracticeApiResponse, createProviderApiResponse, addRoleLocationResponse;
+	String clientName, clientSapNumber, systemName, enterpriseName, practiceName, locname;
+	int clientId, systemId, enterpriseId, practiceId, providerId, locationId,userId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
-		setupServiceRequestSpecificationBuilder();
+		setupServiceRequestSpecificationBuilderForDataLayer();
 		userInfo = new UserInfo();
 		validation = new Validations();
 		orgInfo = new OrgInfo();
 		clientInfo = new ClientInfo();
 		sharedInfo = new SharedInfo();
-		clientId = createClient();
+		clientId = createClient(ccUser.getClientOneType());
 		systemId = createSystemNode(clientId);
 		enterpriseId = createEnterpriseNode(systemId);
 		practiceId = createPracticeNode(enterpriseId);
 		providerId = createProvider(practiceId);
-		userId = createClientUser();
-		locationId = createLocation(clientId);
+		userId=testCreateNewClientUser();
+		locationId=createLocation(clientId);
 	}
 
-	public int createClient() throws Exception {
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
+	public int createClient(String clientType) throws Exception {
+		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
+		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
 		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
 				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
 				Integer.parseInt(testData.getProperty("api.client.type")),
@@ -93,22 +92,23 @@ public class UserAddRoleLocations_DataLayer extends BaseRest {
 		createProviderApiResponse = sharedInfo.createProvider_DL(practiceId, firstName, lastName,
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		return createProviderApiResponse.jsonPath().get("providerId");
+
 	}
 
-	public int createClientUser() throws Exception {
+	public int testCreateNewClientUser() throws Exception {
 		logStep("Create client user using valid details ");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
 		Long mobileNumber = CCUtils.generateMobileNumber();
-		createUserApiResponse = userInfo.createNewUser_DataLayer("Client",
-				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
-				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null,
-				false);
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
 		return createUserApiResponse.jsonPath().getInt("id");
+
 	}
 
 	public int createLocation(int clientId) throws Exception {
@@ -121,7 +121,7 @@ public class UserAddRoleLocations_DataLayer extends BaseRest {
 				CCUtils.generateAlphaNumericStringIncludingSpecialChar(5),
 				testData.getProperty("location.timezonecode"), "");
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
-		return locationId = createNewLocationApiResponse.jsonPath().getInt("id");
+		return createNewLocationApiResponse.jsonPath().getInt("id");
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add location for existing userId,orgId  and validate response code")
@@ -136,6 +136,7 @@ public class UserAddRoleLocations_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(addRoleLocationResponse);
 		CCUtils.assertEquals(addRoleLocationResponse.getStatusCode(), 200);
 	}
+	
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add location for existing userId and non existing orgId and validate response code")
 	public void testToAddLocationForExistingUserIdAndNonExistingOrgId() throws IOException {
@@ -211,3 +212,5 @@ public class UserAddRoleLocations_DataLayer extends BaseRest {
 		CCUtils.assertEquals(addRoleLocationResponse.getStatusCode(), 400);
 	}
 }
+
+
