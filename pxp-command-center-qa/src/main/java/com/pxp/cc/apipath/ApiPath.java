@@ -2084,4 +2084,12 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
 	}
+	
+	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_BL(int appointmentTypeId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/appointment-types/" + appointmentTypeId + "/practices/" + practiceId;
+	}
+	
+	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/appointment-types/null/practices/null";
+	}
 }
