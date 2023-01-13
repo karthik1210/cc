@@ -1480,7 +1480,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=" + existingUsername);
 	}
 
-	public void verifyErrorResponseForDuplicateMobile(Response response, String existingMobileNumber)
+	public void verifyErrorResponseForDuplicateMobile(Response response, long existingMobileNumber)
 			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");

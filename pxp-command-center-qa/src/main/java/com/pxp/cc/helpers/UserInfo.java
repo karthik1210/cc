@@ -58,7 +58,7 @@ public class UserInfo extends BaseRest {
         return given().spec(requestSpec).pathParam("userId", userId).when().get(url).then().extract().response();
     }
 
-    public Response validateUserDetails(String email, String username, String mobileNumber) {
+    public Response validateUserDetails(String email, String username, long mobileNumber) {
         String url = ApiPath.VALIDATE_USER_BL();
         return given().spec(requestSpec).queryParam("email", email).queryParam("username", username)
                 .queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
@@ -80,7 +80,7 @@ public class UserInfo extends BaseRest {
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
 
-    public Response validateUserDetails_DL(String email, String username, String mobileNumber) {
+    public Response validateUserDetails_DL(String email, String username, long mobileNumber) {
         String url = ApiPath.VALIDATE_USER_DL();
         return given().spec(requestSpec).queryParam("email", email).queryParam("username", username)
                 .queryParam("mobile", mobileNumber).when().get(url).then().extract().response();
