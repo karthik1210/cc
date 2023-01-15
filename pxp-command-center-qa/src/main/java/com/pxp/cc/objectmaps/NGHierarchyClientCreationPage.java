@@ -535,6 +535,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		log("click to dropdown of Timezone");
 		dropdownTimezone.click();
 		selectTimeZone(newTimezone);
+		CCUtils.scrollPageViaElement(driver, ehrSystemInputText);
 		log("click to EHR system");
 		ehrSystemInputText.click();
 		log("select nextgen enterprise from dropdown");
@@ -547,7 +548,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 
 	public void clickConfirmPopup() throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, buttonConfirm);
-		//CCUtils.verifyAndWaitForElementPresence(buttonConfirm, driver);
+		CCUtils.verifyAndWaitForElementPresence(buttonConfirm, driver);
 		javascriptClick(buttonConfirm);
 		log("Clicked on create button");
 	}

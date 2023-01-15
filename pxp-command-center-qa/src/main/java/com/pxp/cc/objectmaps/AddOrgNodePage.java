@@ -233,7 +233,7 @@ public class AddOrgNodePage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text']")
 	private WebElement selectFirstInAutoSuggestion;
-	
+
 	@FindBy(id = "searchIcon")
 	private WebElement searchIcon;
 
@@ -250,6 +250,15 @@ public class AddOrgNodePage extends CCMainPage {
 		String locator = "//div[@class='mat-tree-node-click bordernode']//button//following::p//span[text()='" + orgName
 				+ "']";
 		return locator;
+	}
+
+	public String manageClientSearchResult(String systemName) {
+		char c = systemName.charAt(0);
+		String remainingLetter = systemName.substring(1);
+		String firstLetter = String.valueOf(c).toUpperCase();
+		String finalValue = firstLetter.concat(remainingLetter);
+		String xpathLocator = "//p[@id='treeNodeName']//span[text()='" + finalValue + "']";
+		return xpathLocator;
 	}
 
 	public void verifyActiveButtonByDefaultSelected() {
@@ -1085,11 +1094,17 @@ public class AddOrgNodePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(searchIcon, driver);
 		CCUtils.verifyAndWaitForElement(manageClientSearch, driver);
 	}
-	
+
 	public void enterSearchValue(String orgName) {
 		CCUtils.verifyAndWaitForElement(manageClientSearch, driver);
 		manageClientSearch.click();
 		manageClientSearch.sendKeys(orgName);
+	}
+	
+	public void pressKeyEnterInManageSearch() {
+		CCUtils.verifyAndWaitForElement(manageClientSearch, driver);
+		manageClientSearch.sendKeys(Keys.ENTER);
+		log("press enter in manage search");
 	}
 
 	public void clickFirstInAutoSuggestion() {
@@ -1097,11 +1112,15 @@ public class AddOrgNodePage extends CCMainPage {
 		if (selectFirstInAutoSuggestion.isDisplayed()) {
 			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
 			javascriptClick(selectFirstInAutoSuggestion);
-
 		} else {
 			log(selectFirstInAutoSuggestion.getText() + " is not present in Auto Suggestion");
 			CCUtils.assertTrue(false, "Searched text not present in client");
 		}
 	}
 
+	public void verifySearchOrgResult(String systemName) {
+		WebElement searchResult = driver.findElement(By.xpath(manageClientSearchResult(systemName)));
+		CCUtils.verifyAndWaitForElement(searchResult, driver);
+		log("search org name is displayed in manage client search result");
+	}
 }

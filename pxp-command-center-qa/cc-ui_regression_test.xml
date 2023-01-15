@@ -18,10 +18,6 @@
             <class name="com.pxp.cc.testcases.ui.GeneralSettingsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.AddOrgNodeTests"/>
             <class name="com.pxp.cc.testcases.ui.EditOrgNodeTest"/>
-            <class name="com.pxp.cc.testcases.ui.MoveSystemTests"/>
-            <class name="com.pxp.cc.testcases.ui.MoveEnterpriseTests"/>
-            <class name="com.pxp.cc.testcases.ui.MoveNgePracticeTests"/>
-            <class name="com.pxp.cc.testcases.ui.MoveAgnosticPracticeTests"/>
             <!--<class name="com.pxp.cc.testcases.ui.DeactivateUserTests" />-->
             <class name="com.pxp.cc.testcases.ui.EditInternalUserTests"/>
             <class name="com.pxp.cc.testcases.ui.SearchOptionsTests"/>

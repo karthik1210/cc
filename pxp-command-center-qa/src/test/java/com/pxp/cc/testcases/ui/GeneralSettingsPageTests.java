@@ -70,6 +70,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system,enterprise,practice page web elements and max character reached error")
 	public void testAddNewSystemEnterprisePracticePageWebElementsAndMaxCharacterReachedErrorMessage() throws Exception {
+		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickClientDirectory();
 		clientName = ccui.getClient();
 		logStep("Verify manage client button is displayed");
@@ -105,10 +106,12 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getAddOrgNodePage().verifyAddNewPracticePage();
 		ccui.getAddOrgNodePage().verifyMaximumCharactersReachedErrorMessage(CCUtils.generateAlphaNumericString(101));
 		ccui.getAddOrgNodePage().clickOnOrgCloseButton();
+		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create inactive client and all inactive orgs")
-	public void testCreateInactiveClientAndItsOrgs() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create inactive and active client and all inactive orgs")
+	public void testCreateInactiveAndActiveClientAndItsOrgs() throws Exception {
+		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickClientDirectory();
 		logStep("ceate inactive client");
 		ccui.getInactiveClient();
@@ -118,11 +121,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getInactiveEnterprise();
 		logStep("create inactive practice");
 		ccui.getInactivePractice();
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create active client and all inactive orgs")
-	public void testCreateActiveClientAndInactiveOrgs() throws Exception {
-		ccui.getGeneralSettingsPage().clickClientDirectory();
+		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
+		logStep("create active client and inactive orgs");
 		logStep("ceate active client");
 		ccui.getClient();
 		logStep("create inactive system");
@@ -131,11 +131,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getInactiveEnterprise();
 		logStep("create inactive practice");
 		ccui.getInactivePractice();
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create active client and active system and inactive enterprise and practice")
-	public void testCreateActiveClientAndSystemAndInactiveEnterpriseAndPractice() throws Exception {
-		ccui.getGeneralSettingsPage().clickClientDirectory();
+		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
+		logStep("create active client and system and inactive enterprise and practice");
 		logStep("ceate active client");
 		ccui.getClient();
 		logStep("create active system");
@@ -144,12 +141,9 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getInactiveEnterprise();
 		logStep("create inactive practice");
 		ccui.getInactivePractice();
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "create active client,system,enterprise and inactive practice")
-	public void testCreateActiveClientSystemEnterpriseAndInactivePractice() throws Exception {
-		ccui.getGeneralSettingsPage().clickClientDirectory();
-		logStep("ceate inactive client");
+		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
+		logStep("create active client,system and enterprise and inactive practice");
+		logStep("ceate active client");
 		ccui.getClient();
 		logStep("create active system");
 		ccui.getSystem();
@@ -157,17 +151,20 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getEnterprise();
 		logStep("create inactive practice");
 		ccui.getInactivePractice();
+		runOnce = false;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button at add org page and when user click on 'CLOSE' button User redirected to general setting page")
 	public void testSearchCancelAndCloseButtonFunctionalityOfManageClientPage() throws Exception {
-		ccui.getGeneralSettingsPage().clickClientDirectory();
-		clientDirectorPage.searchAndSelectClientNameInClientTable(clientSystementErpriseandPractice.get("clientNam"));
+		ngHierarchyClientCreate();
 		logStep("Verify manage client button is displayed");
 		ccui.getAddOrgNodePage().verifyManageClientButton();
 		logStep("Click on manage client button");
 		ccui.getAddOrgNodePage().clickOnManageClient();
 		ccui.getAddOrgNodePage().verifySearchIconAndSearchTextBox();
+		ccui.getAddOrgNodePage().enterSearchValue(clientSystementErpriseandPractice.get("systemName"));
+		ccui.getAddOrgNodePage().clickFirstInAutoSuggestion();
+		ccui.getAddOrgNodePage().verifySearchOrgResult(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getAddOrgNodePage().verifyAddSystemButton();
 		ccui.getAddOrgNodePage().clickOnAddSystem();
 		logStep("Click on cancel button");
@@ -178,23 +175,12 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getAddOrgNodePage().clickOnCloseButton();
 		logStep("Verify after clicking on close button user redirected to General Settings page");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client name and client status")
-	public void testEditClientNameAndStatus() throws Exception {
-		ccui.getClientDirectoryPage().selectSearchedClientNameInClientTable();
-		logStep("user redirected to General Settings page");
-		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
-		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
-		String newClientName = CCUtils.generateAlphaNumericString(10);
-		ccui.getGeneralSettingsPage().enterClientName(newClientName);
-		ccui.getGeneralSettingsPage().changeStatusToInactive();
-		logStep("Verify success toaster message");
-		ccui.getGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
+		runOnce = false;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button and verify error mesaages- 'Maximum characters reached' and 'Client name required' ")
 	public void testEditClientCancelButtonAndClientRequiredAndMaxCharacterReachedError() throws Exception {
+		ngHierarchyClientCreate();
 		ccui.getClientDirectoryPage().selectSearchedClientNameInClientTable();
 		logStep("user redirected to General Settings page");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
@@ -210,11 +196,21 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		String errorMessage = ccui.getGeneralSettingsPage().getClientNameErrorMessage();
 		logStep("Verify Client name required error message");
 		CCUtils.assertEquals(errorMessage, "Client name is required");
+		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save System,enterprise,practice name and status")
-	public void editAndSaveNameAndStatusAtSystemEnterprisePracticeLevel() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client,system,enterprise and practice name and client status")
+	public void testEditClientSystemEnterprisePracticeNameAndStatus() throws Exception {
 		ngHierarchyClientCreate();
+		logStep("Edit and save client name and status");
+		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
+		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
+		String newClientName = CCUtils.generateAlphaNumericString(10);
+		ccui.getGeneralSettingsPage().enterClientName(newClientName);
+		ccui.getGeneralSettingsPage().changeStatusToInactive();
+		logStep("Verify success toaster message");
+		ccui.getGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
 		ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
 		logStep("Edit and save System name and status");
 		ccui.editBasicInfoGeneralSettingsPage().clickSystemOrg();
@@ -297,8 +293,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality")
-	public void testGeneralSettingScreen() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality and test to select and verify Auto Suggestion list for symbol and number search in node name")
+	public void testGeneralSettingScreenAndAutoSuggestionForSingleCharacterSearchAndNumberSearch() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-12909 PXPP-12910 PXPP-12911 PXPP-12921 Verify default text, autosuggestions ,search icon and search node functionality ");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -309,29 +305,17 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		logStep("Verifying Auto-suggestion list is displayed");
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getGeneralSettingsPage().verifyAutoSuggestionList(clientSystementErpriseandPractice.get("systemName"));
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for symbol search in node name")
-	public void testAutoSuggestionForSingleCharacterSearch() throws Exception {
-		ngHierarchyClientCreate();
 		logStep("PXPP-12967 Verify Auto suggestion list is displayed when searched text is entered - Command Center Admin");
 		createNewSystemForNumberSymbolSearch();
 		logStep("Searching for nodes with single character name in General settings search");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
-		ccui.getGeneralSettingsPage().enterSearchText(ccuser.searchSymbolInGeneralSetting);
+		ccui.getGeneralSettingsPage().enterSearchText(systemName);
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to select and verify Auto Suggestion list for numbers search in node name")
-	public void testAutoSuggestionForNumbersSearch() throws Exception {
-		ngHierarchyClientCreate();
 		createNewSystemForNumberSymbolSearch();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
-		ccui.getGeneralSettingsPage().enterSearchText(ccuser.searchNumberInGeneralSetting);
+		ccui.getGeneralSettingsPage().enterSearchText(systemName);
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
@@ -339,8 +323,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = false, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system,enterprise,practice node functionality in Client's General settings page")
-	public void testSystemEnterprisePracticeNodeSearch() throws Exception {
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system,enterprise,practice node and non-existing node functionality in Client's General settings page")
+	public void testSystemEnterprisePracticeNodeSearchAndNonExistingNodeSearch() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-12979 Verify full & partial search can be performed on general setting screen - Command Center Admin");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
@@ -367,12 +351,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
-		runOnce = false;
-	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Test to search node which is not available in Client's General settings page")
-	public void testNoResultFound() throws Exception {
-		ngHierarchyClientCreate();
 		logStep("Searching invalid node under client in general settings page, to check client details are highlighted");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		ccui.getGeneralSettingsPage().enterSearchText(ccuser.searchInvalidNodeInGeneralSetting);
@@ -446,6 +424,9 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfPSSSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		ccui.getGeneralSettingsPage().clickToPayMoreOptions();
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
@@ -462,11 +443,15 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToVirtualVisitsAddOnsMoreOptions();
+		ccui.getGeneralSettingsPage().clickToTerminateOption();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		runOnce = false;
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section add ons")
-	public void testAddPurchaseSolutionAddOnsAtPracticeLevel() throws Exception {
+	public void testandVerifyAddPurchaseSolutionAddOnsAtPracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
@@ -476,14 +461,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsAddOnsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutionsAddOns();
 		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
-		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
-		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
-		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfChatSolution();
-		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
-		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
-		ccui.getGeneralSettingsPage().clickToVirtualVisitsAddOnsMoreOptions();
-		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		ccui.getGeneralSettingsPage().clickToPatientChatAddOnsMoreOptions();
@@ -536,23 +514,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		runOnce = false;
 	}
-
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify activate pop up web elements")
-	public void testPurchasedSolutionsAddOns() throws Exception {
-		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
-		ccui.getGeneralSettingsPage().verifySearchedResult();
-		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsAddOnsSection();
-		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutionsAddOns();
-		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
-		runOnce = false;
-	}
-
+	
 	@Test(enabled = false)
 	public void ngHierarchyClientCreate() throws Exception {
 		if (!runOnce) {
