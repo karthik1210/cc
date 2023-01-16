@@ -72,8 +72,7 @@ public class CreateNGHierachyClientCreation_BusinessLayer extends BaseRest {
 		clientInfo = new ClientInfo();
 		validations = new Validations();
 		createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber, testFlag, clientType,
-				clientTimezoneId, Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
+				clientTimezoneId, ehrIdentifier, pmIdentifier);
 		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
 
 		logStep("Create a new system below client.");
