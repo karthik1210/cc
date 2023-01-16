@@ -28,7 +28,7 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UserAddRoleLocations_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateIntVarUserApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ManageAssociateEntitiesForClientUserTests_DataLayer" />
 			<class
