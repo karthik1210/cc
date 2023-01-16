@@ -24,11 +24,11 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateVARResellerUsersApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchIntVarUsersStatusApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchUsersStatusApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UserAddRoleLocations_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateIntVarUserApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateUserApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ManageAssociateEntitiesForClientUserTests_DataLayer" />
 			<class
