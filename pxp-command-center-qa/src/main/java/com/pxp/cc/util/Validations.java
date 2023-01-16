@@ -3518,4 +3518,11 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("appointmentTypeId"), appointmentTypeId);
 		}
 	}
+	
+	public void verifyErrorResponseBodyForInvalidInput(Response response, int appointmentTypeId, int practiceId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Appointment not found for appointmentTypeId=" + appointmentTypeId + " and practiceId=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
 }

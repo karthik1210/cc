@@ -2014,6 +2014,20 @@ public class SharedInfo extends BaseRest {
 				.response();
 	}
 	
+	public Response saveAppTypesInfoForPractice_BL(int appointmentTypeId, int practiceId, String enDisplayName,
+			String esDisplayName) {
+		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_BL(appointmentTypeId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response saveAppTypesInfoForPracticeNullValues_BL(String enDisplayName,
+			String esDisplayName) {
+		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_BL();
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+	}
+	
 	public Response getAppTypesForClient_BL(String clientId, String name, String systemid, String enterpriseid,
 			String practiceid, String solutionid, String pagesize) {
 		String url = ApiPath.APP_TYPES_FOR_CLIENT_BL(clientId);
