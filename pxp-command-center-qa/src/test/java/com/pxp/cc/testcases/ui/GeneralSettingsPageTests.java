@@ -28,48 +28,31 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		}
 	}
 
-	@Test(enabled = false)
-	public void addLocationPopUp() throws Exception {
-		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
-		logStep("Verify Locations tab is displayed");
-		ccui.getGeneralSettingsPage().verifyLocationsTab();
-		ccui.getGeneralSettingsPage().clickOnLocationsTab();
-		logStep("Click on Add button");
-		ccui.getAddLocationPage().verifyLocationsPageTitle();
-	}
-
-	@Test(enabled = false)
-	public String testAddNewLocationFunctionalityWithAllValidDetails() throws Exception {
-		logStep("Enter data in all input fields");
-		ccui.getAddLocationPage().verifyAddLocationButton();
-		ccui.getAddLocationPage().clickOnAddLocationButton();
-		String locationName = "Loc".concat(CCUtils.generateAlphaNumericString(10));
-		ccui.getAddLocationPage().enterLocationName(locationName);
-		ccui.getAddLocationPage().enterLocationDisplayName(CCUtils.generateAlphaNumericString(18));
-		ccui.getAddLocationPage().enterAddressOne(CCUtils.generateAlphaNumericString(18));
-		ccui.getAddLocationPage().enterAddressTwo(CCUtils.generateAlphaNumericString(18));
-		ccui.getAddLocationPage().enterCity(CCUtils.generateAlphaNumericString(18));
-		ccui.getAddLocationPage().enterLocationIdExternal(CCUtils.generateAlphaNumericString(18));
-		ccui.getAddLocationPage().enterZip(CCUtils.generateAlphaNumericString(18));
-		ccui.getAddLocationPage().addStateAndTimezone(testData.getProperty("new.locations.state"),
-				testData.getProperty("new.locations.timezone"));
-		logStep("Click on save and add button");
-		ccui.getAddLocationPage().clickOnSaveAndAddButton();
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button and verify error mesaages- 'Maximum characters reached' and 'Client name required' ")
+	public void testEditClientCancelButtonAndClientRequiredAndMaxCharacterReachedError() throws Exception {
+		ngHierarchyClientCreate();
+		logStep("PXPP-13069 PXPP-13071 PXPP-26024 PXPP-26025 Verify functionality client name edit error and cancel button functionality");
+		ccui.getClientDirectoryPage().selectSearchedClientNameInClientTable();
+		logStep("user redirected to General Settings page");
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
+		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
+		String newClientName = CCUtils.generateAlphaNumericString(101);
+		ccui.getGeneralSettingsPage().enterClientName(newClientName);
+		String actualNameError = ccui.getGeneralSettingsPage().getErrorMessage();
+		logStep("Verify Maximum charater reached error message");
+		CCUtils.assertEquals(actualNameError, "Maximum characters reached");
+		ccui.getGeneralSettingsPage().clearClientNameField();
 		logStep("Verify success toaster message");
-		ccui.getAddLocationPage().verifyToasterMessage("Success! New location has been successfully created");
-		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
-		CCUtils.pressEnterKey();
-		ccui.getAddLocationPage().selectLocation();
-		ccui.getLocationDetailsPage().verifyLocationDetailsTitle();
-		ccui.getLocationDetailsPage().clickToEntepriseArrow();
-		ccui.getLocationDetailsPage().clickOnToggleButton();
-		ccui.getLocationDetailsPage().clickToBackButton();
-		ccui.getSearchLocationDetailsPage().verifyLocationTitle();
-		return locationName;
+		ccui.getGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
+		String errorMessage = ccui.getGeneralSettingsPage().getClientNameErrorMessage();
+		logStep("Verify Client name required error message");
+		CCUtils.assertEquals(errorMessage, "Client name is required");
+		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system,enterprise,practice page web elements and max character reached error")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system, enterprise, practice page web elements and max character reached error")
 	public void testAddNewSystemEnterprisePracticePageWebElementsAndMaxCharacterReachedErrorMessage() throws Exception {
+		logStep("PXPP-12565 PXPP-15268 PXPP-12569 PXPP-12571 PXPP-12572 PXPP-12573 PXPP-12746 PXPP-12749 PXPP-12755 PXPP-12769 PXPP-12756 PXPP-12757 PXPP-12765 PXPP-12763 PXPP-12758  verify adding orgs within a client in manage client page");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickClientDirectory();
 		clientName = ccui.getClient();
@@ -123,7 +106,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getInactivePractice();
 		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
 		logStep("create active client and inactive orgs");
-		logStep("ceate active client");
 		ccui.getClient();
 		logStep("create inactive system");
 		ccui.getInactiveSystem();
@@ -133,7 +115,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getInactivePractice();
 		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
 		logStep("create active client and system and inactive enterprise and practice");
-		logStep("ceate active client");
 		ccui.getClient();
 		logStep("create active system");
 		ccui.getSystem();
@@ -143,7 +124,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getInactivePractice();
 		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
 		logStep("create active client,system and enterprise and inactive practice");
-		logStep("ceate active client");
 		ccui.getClient();
 		logStep("create active system");
 		ccui.getSystem();
@@ -156,6 +136,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button at add org page and when user click on 'CLOSE' button User redirected to general setting page")
 	public void testSearchCancelAndCloseButtonFunctionalityOfManageClientPage() throws Exception {
+		logStep("PXPP-12548 PXPP-12561 PXPP-12565 PXPP-12772 verify cancel and close button of manage client page");
 		ngHierarchyClientCreate();
 		logStep("Verify manage client button is displayed");
 		ccui.getAddOrgNodePage().verifyManageClientButton();
@@ -178,29 +159,9 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button and verify error mesaages- 'Maximum characters reached' and 'Client name required' ")
-	public void testEditClientCancelButtonAndClientRequiredAndMaxCharacterReachedError() throws Exception {
-		ngHierarchyClientCreate();
-		ccui.getClientDirectoryPage().selectSearchedClientNameInClientTable();
-		logStep("user redirected to General Settings page");
-		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
-		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
-		String newClientName = CCUtils.generateAlphaNumericString(101);
-		ccui.getGeneralSettingsPage().enterClientName(newClientName);
-		String actualNameError = ccui.getGeneralSettingsPage().getErrorMessage();
-		logStep("Verify Maximum charater reached error message");
-		CCUtils.assertEquals(actualNameError, "Maximum characters reached");
-		ccui.getGeneralSettingsPage().clearClientNameField();
-		logStep("Verify success toaster message");
-		ccui.getGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
-		String errorMessage = ccui.getGeneralSettingsPage().getClientNameErrorMessage();
-		logStep("Verify Client name required error message");
-		CCUtils.assertEquals(errorMessage, "Client name is required");
-		runOnce = false;
-	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client,system,enterprise and practice name and client status")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
 	public void testEditClientSystemEnterprisePracticeNameAndStatus() throws Exception {
+		logStep("PXPP-13064 PXPP-13063 PXPP-13061 PXPP-13059 PXPP-12739 PXPP-12741 PXPP-12742 PXPP-12744 edit client, system, enterprise, practice name and status");
 		ngHierarchyClientCreate();
 		logStep("Edit and save client name and status");
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
@@ -242,7 +203,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Edit and save Practice name and status")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify locations tab count value at general settings page for client, system, enterprise, practice should match with no of location in corresponding locations details page")
 	public void tabCountforLocationsTabAtClientSystemEnterprisePracticeLevel() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("create multiple locations at client level");
@@ -323,7 +284,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = false, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system,enterprise,practice node and non-existing node functionality in Client's General settings page")
+			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system, enterprise, practice node and non-existing node functionality in Client's General settings page")
 	public void testSystemEnterprisePracticeNodeSearchAndNonExistingNodeSearch() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-12979 Verify full & partial search can be performed on general setting screen - Command Center Admin");
@@ -358,9 +319,9 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations,Providers & Resources, Appointment types tab & tiles navigate respective pages at Client,System,Enterprise,Practice level")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level")
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientSystemEnterprisePracticeLevel() throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client,System,Enterprise,Practice level");
+		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level");
 		ngHierarchyClientCreate();
 		ccui.editBasicInfoGeneralSettingsPage().clickClientOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
@@ -516,23 +477,45 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	}
 	
 	@Test(enabled = false)
-	public void ngHierarchyClientCreate() throws Exception {
-		if (!runOnce) {
-			ccui = new CCUI(testData, driver);
-			logStep("Login to command center portal");
-			LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
-			loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
-			logStep("Select create client button from new dropdown");
-			logStep("Searching a client in client directory");
-			ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
-			ccui.getNgHierarchyClientCreationPage().clickSearchButton();
-			ccui.getNgHierarchyClientCreationPage()
-					.clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
-			logStep("Navigating To General Settings page");
-			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
-		}
+	public void addLocationPopUp() throws Exception {
+		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
+		logStep("Verify Locations tab is displayed");
+		ccui.getGeneralSettingsPage().verifyLocationsTab();
+		ccui.getGeneralSettingsPage().clickOnLocationsTab();
+		logStep("Click on Add button");
+		ccui.getAddLocationPage().verifyLocationsPageTitle();
 	}
 
+	@Test(enabled = false)
+	public String testAddNewLocationFunctionalityWithAllValidDetails() throws Exception {
+		logStep("Enter data in all input fields");
+		ccui.getAddLocationPage().verifyAddLocationButton();
+		ccui.getAddLocationPage().clickOnAddLocationButton();
+		String locationName = "Loc".concat(CCUtils.generateAlphaNumericString(10));
+		ccui.getAddLocationPage().enterLocationName(locationName);
+		ccui.getAddLocationPage().enterLocationDisplayName(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterAddressOne(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterAddressTwo(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterCity(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterLocationIdExternal(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().enterZip(CCUtils.generateAlphaNumericString(18));
+		ccui.getAddLocationPage().addStateAndTimezone(testData.getProperty("new.locations.state"),
+				testData.getProperty("new.locations.timezone"));
+		logStep("Click on save and add button");
+		ccui.getAddLocationPage().clickOnSaveAndAddButton();
+		logStep("Verify success toaster message");
+		ccui.getAddLocationPage().verifyToasterMessage("Success! New location has been successfully created");
+		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
+		CCUtils.pressEnterKey();
+		ccui.getAddLocationPage().selectLocation();
+		ccui.getLocationDetailsPage().verifyLocationDetailsTitle();
+		ccui.getLocationDetailsPage().clickToEntepriseArrow();
+		ccui.getLocationDetailsPage().clickOnToggleButton();
+		ccui.getLocationDetailsPage().clickToBackButton();
+		ccui.getSearchLocationDetailsPage().verifyLocationTitle();
+		return locationName;
+	}
+	
 	private void createNewSystemForNumberSymbolSearch() throws NullPointerException, InterruptedException {
 		logStep("Verify manage client button is displayed");
 		ccui.getAddOrgNodePage().verifyManageClientButton();
@@ -552,5 +535,23 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getAddOrgNodePage().clickOnSaveAndAddButton();
 		logStep("Verify success toaster message");
 		ccui.getAddOrgNodePage().verifyToasterMessage("Changes updated successfully");
+	}
+	
+	@Test(enabled = false)
+	public void ngHierarchyClientCreate() throws Exception {
+		if (!runOnce) {
+			ccui = new CCUI(testData, driver);
+			logStep("Login to command center portal");
+			LoginPage loginPage = new LoginPage(driver, testData.getProperty("base.url"));
+			loginPage.login(testData.getProperty("user.name"), testData.getProperty("user.password"));
+			logStep("Select create client button from new dropdown");
+			logStep("Searching a client in client directory");
+			ccui.getNgHierarchyClientCreationPage().searchNode(clientSystementErpriseandPractice.get("clientNam"));
+			ccui.getNgHierarchyClientCreationPage().clickSearchButton();
+			ccui.getNgHierarchyClientCreationPage()
+					.clickSearchResult(clientSystementErpriseandPractice.get("clientNam"));
+			logStep("Navigating To General Settings page");
+			ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+		}
 	}
 }
