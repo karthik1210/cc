@@ -68,7 +68,12 @@
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUpdatePracticePatientAccessApiTests_DataLayer"/>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrgSolutionsApiTests_DataLayer" />
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_DataLayer"></class>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetEmailTemplateVersionsListApiTests_DataLayer"/>
+			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateApiTests_DataLayer"/>
         </classes>
     </test>
 </suite>
