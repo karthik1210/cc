@@ -88,7 +88,7 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 		return createProviderApiResponse.jsonPath().get("providerId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate internal user and verify status code and responce body ")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate internal user and verify status code and response body ")
 	public void testToValidateInternalUser() throws IOException {
 		logStep("Create internal user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
@@ -124,15 +124,14 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
 		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 409);
 		validation.verifyErrorResponseForDuplicateEmail(getValidateUserApiResponse, email);
-		logStep("Enter alreadynon existing Email, userName, mobileNumber and verify error message in response body");
+		logStep("Enter non existing Email, userName, mobileNumber and verify error message in response body");
 		getValidateUserApiResponse = userInfo.validateUserDetails_DL("aa@tt.as", "qq12", 1001001001);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
 		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 200);
-
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate client user and verify status code and responce body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Validate client user and verify status code and response body")
 	public void testToValidateClientUser() throws Exception {
 		logStep("Create client user using valid details ");
 		clientId = createClient(ccUser.getClientOneType());
@@ -172,15 +171,14 @@ public class ValidateUserDetailsApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
 		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 409);
 		validation.verifyErrorResponseForDuplicateEmail(getValidateUserApiResponse, email);
-		logStep("Enter already non existing Email, userName, mobileNumber and verify error message in response body");
+		logStep("Enter non existing Email, userName, mobileNumber and verify error message in response body");
 		getValidateUserApiResponse = userInfo.validateUserDetails_DL("aa@tt.as", "qq12", 1001001001);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getValidateUserApiResponse);
 		CCUtils.assertEquals(getValidateUserApiResponse.getStatusCode(), 200);
-
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = true, description = "Validate Var/Reseller user and verify status code and responce body")
+	@Test(retryAnalyzer = RetryAnalyzer.class, enabled = true, description = "Validate Var/Reseller user and verify status code and response body")
 	public void testToValidateVarResellerUser() throws IOException {
 		logStep("Create Var/Reseller user using valid details ");
 		List<Integer> roleIds = new ArrayList<Integer>();
