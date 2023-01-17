@@ -2096,4 +2096,16 @@ public class ApiPath {
 	public static final String APP_TYPES_FOR_CLIENT_BL(String clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/appointment-types";
 	}
+	
+	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_BL(int appointmentTypeId, int practiceId){ 
+		return   SERVICE_SHARED_BL+ "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
+     }
+	
+	public static final String UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/appointment-types/null/solutions";
+	}
+	
+	public static final String GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL(){ 
+		return   SERVICE_SHARED_BL+ "/v1/practices/null/appointment-types/null/solutions";
+     }
 }
