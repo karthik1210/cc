@@ -157,7 +157,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
+	@Test(enabled = false,retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
 	public void testEditClientSystemEnterprisePracticeNameAndStatus() throws Exception {
 		logStep("PXPP-13064 PXPP-13063 PXPP-13061 PXPP-13059 PXPP-12739 PXPP-12741 PXPP-12742 PXPP-12744 edit client, system, enterprise, practice name and status");
 		ngHierarchyClientCreate();

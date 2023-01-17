@@ -324,7 +324,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "providerTile")
 	private WebElement providerAndResourcesTile;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activeVirtualVisitsMoreOptions;
 	
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
