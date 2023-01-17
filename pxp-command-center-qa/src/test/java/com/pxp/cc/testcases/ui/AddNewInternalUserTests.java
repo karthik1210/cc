@@ -107,9 +107,9 @@ public class AddNewInternalUserTests extends CommandCenterGenericTest {
         logStep("Create a new active internal user with user roles and verify success toaster");
         ccui.getCommonMethods().enterFirstName(firstName);
         ccui.getCommonMethods().enterLastName(lastName);
-        ccui.getCommonMethods().enterEmail(email);
-        ccui.getCommonMethods().enterUserName(userName);
-        ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobileNumber));
+        ccui.getCommonMethods().enterEmail(testData.getProperty("valid.user.first.name").concat(CCUtils.generateNewEmail(12)));
+        ccui.getCommonMethods().enterUserName(testData.getProperty("new.client.name2").concat(CCUtils.generateAlphaNumericString(20)));
+        ccui.getCommonMethods().enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
         ccui.getAddNewInternalUsersPage().addUserRoles();
         ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
         ccui.getCommonMethods().verifyToasterMessage("Success! New User has been successfully added");

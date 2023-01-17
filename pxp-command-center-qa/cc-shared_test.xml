@@ -149,6 +149,10 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveAppTypesDisplayInfoApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientAppTypesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForAppTypesApiTests_BusinessLayer" />
 
 			<!-- Enable test classes once Path identification for image upload in 
 				AWS issue is addressed Jira PXPP-28190 -->
