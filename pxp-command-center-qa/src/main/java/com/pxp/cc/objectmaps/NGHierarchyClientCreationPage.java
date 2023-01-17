@@ -461,6 +461,9 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 
 	@FindBy(xpath = "//input[@id='addNodeInactiveRadio-input']")
 	private WebElement radioBtnInactiveAddNode;
+	
+	@FindBy(xpath = "//mat-radio-button[@id='addNodeInactiveRadio']")
+	private WebElement inactiveRadioButton;
 
 	@FindBy(xpath = "//div[contains(text(),'Maximum characters reached')] ")
 	private WebElement errorMessage;
@@ -1224,8 +1227,8 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	}
 
 	public void clickToInactiveRadioButton() {
-		CCUtils.verifyAndWaitForElement(radioBtnInactiveAddNode, driver);
-		radioBtnInactiveAddNode.click();
+		CCUtils.verifyAndWaitForElement(inactiveRadioButton, driver);
+		inactiveRadioButton.click();
 		log("Clicked to Inactive Radio Button");
 	}
 

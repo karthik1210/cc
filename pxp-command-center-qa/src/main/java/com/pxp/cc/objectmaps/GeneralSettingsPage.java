@@ -34,6 +34,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "detailEditLabel")
 	private WebElement buttonClientInfoEdit;
+	
+	@FindBy(id = "detailCancelBtn")
+	private WebElement buttonClientInfoEditCancel;
 
 	@FindBy(id = "addNodeActiveRadio-input")
 	private WebElement radioButtonActive;
@@ -527,10 +530,21 @@ public class GeneralSettingsPage extends CCMainPage {
 		clickSystemNode.click();
 	}
 
+	public void verifyEditButtonIsVisible() {
+		CCUtils.verifyAndWaitForElement(editClientButton, driver);
+		log("Edit button is displayed");
+	}
+	
 	public void clickEditButtonOfClient() {
 		CCUtils.verifyAndWaitForElement(editClientButton, driver);
 		editClientButton.click();
 		log("Clicked on edit button");
+	}
+	
+	public void clickCancelButtonOfEditClient() {
+		CCUtils.verifyAndWaitForElement(buttonClientInfoEditCancel, driver);
+		buttonClientInfoEditCancel.click();
+		log("Clicked on cancel button");
 	}
 
 	public void editClientNodeOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)

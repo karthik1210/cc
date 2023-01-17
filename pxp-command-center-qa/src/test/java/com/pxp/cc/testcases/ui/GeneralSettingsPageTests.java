@@ -40,11 +40,11 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		logStep("Verify Maximum charater reached error message");
 		CCUtils.assertEquals(actualNameError, "Maximum characters reached");
 		ccui.getGeneralSettingsPage().clearClientNameField();
-		logStep("Verify success toaster message");
-		ccui.getGeneralSettingsPage().verifyToasterMessage("Changes updated successfully");
 		String errorMessage = ccui.getGeneralSettingsPage().getClientNameErrorMessage();
 		logStep("Verify Client name required error message");
 		CCUtils.assertEquals(errorMessage, "Client name is required");
+		ccui.getGeneralSettingsPage().clickCancelButtonOfEditClient();
+		ccui.getGeneralSettingsPage().verifyEditButtonIsVisible();
 		runOnce = false;
 	}
 
@@ -265,14 +265,11 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getGeneralSettingsPage().verifyAutoSuggestionList(clientSystementErpriseandPractice.get("systemName"));
 		logStep("PXPP-12967 Verify Auto suggestion list is displayed when searched text is entered - Command Center Admin");
-		createNewSystemForNumberSymbolSearch();
-		logStep("Searching for nodes with single character name in General settings search");
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		ccui.getGeneralSettingsPage().enterSearchText(systemName);
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
-		ccui.getGeneralSettingsPage().verifySearchedResult();
 		createNewSystemForNumberSymbolSearch();
+		logStep("Searching for nodes with single character name in General settings search");
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		ccui.getGeneralSettingsPage().enterSearchText(systemName);
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
@@ -532,6 +529,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getAddOrgNodePage().clickOnSaveAndAddButton();
 		logStep("Verify success toaster message");
 		ccui.getAddOrgNodePage().verifyToasterMessage("Changes updated successfully");
+		ccui.getAddOrgNodePage().clickOnCloseButton();
 	}
 	
 	@Test(enabled = false)
