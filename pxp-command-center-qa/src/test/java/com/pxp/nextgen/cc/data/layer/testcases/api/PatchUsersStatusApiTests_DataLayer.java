@@ -291,7 +291,6 @@ public class PatchUsersStatusApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateInternalUserDetailsApiResponse);
 		CCUtils.assertEquals(updateInternalUserDetailsApiResponse.getStatusCode(), 200);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new Client user and update user status of newly created client user from inactive to active using user id")
