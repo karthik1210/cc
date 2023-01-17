@@ -306,7 +306,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "headerBookIcon")
 	private WebElement clientTab;
 
-	@FindBy(xpath = "//mat-select[@role ='combobox']")
+	@FindBy(xpath = "(//mat-select[@role ='combobox']//div)[3]")
 	private WebElement statusArrow;
 
 	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
@@ -1170,6 +1170,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void changeStatusToInactive() {
 		CCUtils.verifyAndWaitForElement(statusArrow, driver);
 		statusArrow.click();
+		log("clicked to arrow button");
 		inactiveStatus.click();
 		log("Clicked on inactive status");
 		saveBtn.click();

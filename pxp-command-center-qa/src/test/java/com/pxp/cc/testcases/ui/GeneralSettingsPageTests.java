@@ -278,7 +278,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = false, groups = {
+	@Test(enabled = true, groups = {
 			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Test to search system, enterprise, practice node and non-existing node functionality in Client's General settings page")
 	public void testSystemEnterprisePracticeNodeSearchAndNonExistingNodeSearch() throws Exception {
 		ngHierarchyClientCreate();
