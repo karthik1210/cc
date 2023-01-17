@@ -223,7 +223,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='purchaseTitle']")
 	private WebElement availableToPurchaseTitle;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg'])[1]")
+	@FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']")
 	private WebElement purchaseSolutionsTitle;
 
 	@FindBy(id = "unsavedConfirmBtn")
@@ -297,7 +297,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
 	private WebElement labelSolutionsActive;
 
-	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
+	@FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
 	private WebElement textboxError;
 
 	@FindBy(id = "headerBookIcon")

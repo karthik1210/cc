@@ -32,8 +32,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void testEditClientCancelButtonAndClientRequiredAndMaxCharacterReachedError() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-13069 PXPP-13071 PXPP-26024 PXPP-26025 Verify functionality client name edit error and cancel button functionality");
-		ccui.getClientDirectoryPage().selectSearchedClientNameInClientTable();
-		logStep("user redirected to General Settings page");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
 		String newClientName = CCUtils.generateAlphaNumericString(101);
@@ -323,7 +321,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientSystemEnterprisePracticeLevel() throws Exception {
 		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level");
 		ngHierarchyClientCreate();
-		ccui.editBasicInfoGeneralSettingsPage().clickClientOrg();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyNavigationOfTab();
@@ -396,7 +393,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
-		ccui.getGeneralSettingsPage().clickToPatientChatMoreOptions();
+		ccui.getGeneralSettingsPage().clickToPatientPortalMoreOptions();
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");

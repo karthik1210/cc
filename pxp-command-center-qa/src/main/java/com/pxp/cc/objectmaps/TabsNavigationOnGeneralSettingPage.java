@@ -110,7 +110,7 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 
 	public void verifyNavigationProvidersAndResourcesTab() {
 		CCUtils.verifyAndWaitForElement(providersAndResourcesTab, driver);
-		providersAndResourcesTab.click();
+		javascriptClick(providersAndResourcesTab);
 		log("ProvidersAndResources tab is Clickable");
 		verifyProvidersAndResourceslabel();
 	}
