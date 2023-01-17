@@ -35,7 +35,6 @@ public class Validations {
 		CCUtils.assertNotNull(jsonpath.get("clientId"), "Client id is not in the response");
 		CCUtils.assertNotNull(jsonpath.get("name"), "Client name is not in the response");
 		CCUtils.assertEquals(response.jsonPath().get("name").toString(), clientNameValue);
-
 	}
 
 	public void verifySearchClientResponseBody(Response response, String clientId, String clientName, int clientTypeId,
@@ -3525,4 +3524,31 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
+	public void verifyErrorMessageForNonExistingField(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input either id or object null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyResponseBodyOfAppTypesSolutions(Response response, int solutionId, String status) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("solutionId"), solutionId);
+			CCUtils.assertEquals(jsonObject.get("status"), status);
+		}
+	}
+	
+	public void verifyNoOfSolutionsFetchedSolutionNameandId(Response response) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		jsonArray = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(jsonArray.length() > 0, "Product list is empty");
+		Log4jUtil.log("Number of Solution fetched is " + jsonArray.length());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			Log4jUtil.log("print the solution name : " + jsonObject.getString("name") + " and solution Id : "
+					+ jsonObject.get("solutionId"));
+		}
+	}
 }
