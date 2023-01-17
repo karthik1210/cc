@@ -681,6 +681,23 @@ public class GeneralSettingsPage extends CCMainPage {
 			CCUtils.assertTrue(false, "Searched text not present in client");
 		}
 	}
+	
+	public String autosuggestion(String orgName) {
+		return "//span[@class='mat-option-text']//span//b[normalize-space(text())='"+orgName+"']";
+	}
+	
+	public void clickFirstInAutoSuggestion(String orgName) {
+		WebElement orgAutoSuggestionOption = driver.findElement(By.xpath(autosuggestion(orgName)));
+		CCUtils.verifyAndWaitForElementPresence(orgAutoSuggestionOption, driver);
+		if (orgAutoSuggestionOption.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			javascriptClick(orgAutoSuggestionOption);
+
+		} else {
+			log(orgAutoSuggestionOption.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present in client");
+		}
+	}
 
 	public void verifyAutoSuggestionList(String searchedNode) {
 		CCUtils.verifyAndWaitForElement(listOfSuggestions.get(0), driver);

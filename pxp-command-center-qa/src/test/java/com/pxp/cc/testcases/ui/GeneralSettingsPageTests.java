@@ -44,6 +44,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		logStep("Verify Client name required error message");
 		CCUtils.assertEquals(errorMessage, "Client name is required");
 		ccui.getGeneralSettingsPage().clickCancelButtonOfEditClient();
+		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().verifyEditButtonIsVisible();
 		runOnce = false;
 	}
@@ -288,7 +289,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a system node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion(clientSystementErpriseandPractice.get("systemName"));
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
 		logStep("Verify general settings page title");
@@ -296,7 +297,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a enterprise node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion(clientSystementErpriseandPractice.get("enterpriseName"));
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
 		logStep("Verify general settings page title");
@@ -304,7 +305,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion(clientSystementErpriseandPractice.get("practiceName"));
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
 		logStep("Searching invalid node under client in general settings page, to check client details are highlighted");
