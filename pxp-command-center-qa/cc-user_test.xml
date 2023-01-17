@@ -23,9 +23,9 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateVAResellerUsersApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateInternalUserApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateUserApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchIntVarUsersStatusApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchUsersStatusApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UserAddRoleLocations_BusinessLayer" />
 			<class
