@@ -2108,4 +2108,6 @@ public class ApiPath {
 	public static final String GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL(){ 
 		return   SERVICE_SHARED_BL+ "/v1/practices/null/appointment-types/null/solutions";
      }
+		
+	public static final String UPDATE_USER_STATUS_DL = SERVICE_USER_DL + "/v1/users/status";
 }
