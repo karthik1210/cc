@@ -24,24 +24,25 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateVARResellerUsersApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchIntVarUsersStatusApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchUsersStatusApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.UserAddRoleLocations_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateInternalUserApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ActivateDeactivateUserApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.ManageAssociateEntitiesForClientUserTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAssociateEntitiesTests_DataLayer" />
 			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.ValidateUserDetailsApiTests_DataLayer" />
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserRolesForUserTypeApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetRolesByUserApiTests_DataLayer" />
-				
-				 <!-- Enable test class once below issue is resolved  # PXPP-26529-->
+
+			<!-- Enable test class once below issue is resolved # PXPP-26529 -->
 			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.PatchInternalUserRoleApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetInternalUserLoginDetailsApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.ValidateUserDetailsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetVarResellerUserLoginDetailsApiTests_DataLayer" 
 				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserInfoApiTests_DataLayer" 
 				/> -->
@@ -51,9 +52,11 @@
 
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserEnrollmentApiTests_DataLayer" />
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateExpiredStatusApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateExpiredStatusApiTests_DataLayer" />
 			<!-- Enable test class Once mentioned issue resolved https://nextgenhealthcare.atlassian.net/browse/PXPP-27222 -->
-			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchUserWithEnrollmentStatusApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchUserWithEnrollmentStatusApiTests_DataLayer" />
 		</classes>
 	</test>
 </suite>

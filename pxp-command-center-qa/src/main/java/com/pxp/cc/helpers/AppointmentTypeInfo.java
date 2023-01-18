@@ -1,20 +1,14 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
-import com.pxp.cc.pojos.AppointmentTypeDetails;
-
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -60,16 +54,14 @@ public class AppointmentTypeInfo extends BaseRest {
 
 	public Response getAppoinmentTypesAssociatedWithResources_BL(int practiceId, int resourceId) {
 		String url = ApiPath.ADD_OR_REMOVE_APPOINTMENT_TYPES_FOR_RESOURCE_BL(resourceId, practiceId);
-		return given().spec(requestSpec).when().get(url).then()
-				.extract().response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getAppoinmentTypesAssociatedWithResourcesNullValues_BL() {
 		String url = ApiPath.GET_APPOINTMENT_TYPES_FOR_RESOURCE_NULL_VALUE_BL();
-		return given().spec(requestSpec).when().get(url).then()
-				.extract().response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response createAppointmentType_DL(int practiceId, String name, String externalId, String duration,
 			String categoryId, String nameone, String externalIdone) {
 		String url = ApiPath.CREATE_APPOINTMENT_TYPE_DL(practiceId);
@@ -82,4 +74,42 @@ public class AppointmentTypeInfo extends BaseRest {
 				.response();
 	}
 
+	public Response enableOrDisableSolutionsForAppTypes_BL(int appointmentTypeId, int practiceId, int solutionId,
+			boolean status) {
+		String url = ApiPath.SOLUTIONS_FOR_APPOINTMENT_TYPE_BL(appointmentTypeId, practiceId);
+		Map<String, Object> solutionsIdPayload = solutionIdRequestPayload(solutionId, status);
+		List<Object> solutionsPayload = solutionsRequestPayload(solutionsIdPayload);
+		return given().spec(requestSpec).body(solutionsPayload).when().put(url).then().extract().response();
+	}
+
+	private List<Object> solutionsRequestPayload(Map<String, Object> solutionsPayload) {
+		List<Object> solutions = new ArrayList<Object>();
+		solutions.add(solutionsPayload);
+		return solutions;
+	}
+
+	private Map<String, Object> solutionIdRequestPayload(int solutionId, boolean active) {
+		Map<String, Object> solutionsMap = new HashMap<String, Object>();
+		solutionsMap.put("solutionId", solutionId);
+		solutionsMap.put("active", active);
+		return solutionsMap;
+	}
+	
+	public Response enableOrDisableSolutionsForAppTypes_NullValues_BL(int solutionId,
+			boolean status) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_BL();
+		Map<String, Object> solutionsIdPayload = solutionIdRequestPayload(solutionId, status);
+		List<Object> solutionsPayload = solutionsRequestPayload(solutionsIdPayload);
+		return given().spec(requestSpec).body(solutionsPayload).when().put(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForAppTypes_BL(int appointmentTypeId, int practiceId) {
+		String url = ApiPath.SOLUTIONS_FOR_APPOINTMENT_TYPE_BL(appointmentTypeId, practiceId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getSolutionsForAppTypesNullValues_BL() {
+		String url = ApiPath.GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

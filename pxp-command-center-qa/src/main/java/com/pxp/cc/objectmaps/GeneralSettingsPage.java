@@ -34,6 +34,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(id = "detailEditLabel")
 	private WebElement buttonClientInfoEdit;
+	
+	@FindBy(id = "detailCancelBtn")
+	private WebElement buttonClientInfoEditCancel;
 
 	@FindBy(id = "addNodeActiveRadio-input")
 	private WebElement radioButtonActive;
@@ -223,7 +226,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='purchaseTitle']")
 	private WebElement availableToPurchaseTitle;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg'])[1]")
+	@FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']")
 	private WebElement purchaseSolutionsTitle;
 
 	@FindBy(id = "unsavedConfirmBtn")
@@ -252,6 +255,9 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
 	private WebElement purchasedSolutionExpandButton;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[2]")
+	private WebElement purchasedSolutionAddOnsExpandButton;
 	
 	@FindBy(xpath = "(//div[@class='content'])[2]")
 	private WebElement SapIdReadValue;
@@ -294,13 +300,13 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//div[@id='clientSolutionTitle']")
 	private WebElement labelSolutionsActive;
 
-	@FindBy(xpath = "(//div[@class='text-danger ng-star-inserted'])")
+	@FindBy(xpath = "//div[normalize-space(text())='Maximum characters reached']")
 	private WebElement textboxError;
 
-	@FindBy(xpath = "//mat-icon[normalize-space()='menu_book']")
+	@FindBy(id = "headerBookIcon")
 	private WebElement clientTab;
 
-	@FindBy(xpath = "//mat-select[@role ='combobox']")
+	@FindBy(xpath = "(//mat-select[@role ='combobox']//div)[3]")
 	private WebElement statusArrow;
 
 	@FindBy(xpath = "//span[contains(text(),'Inactive')]")
@@ -318,22 +324,28 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "providerTile")
 	private WebElement providerAndResourcesTile;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activeVirtualVisitsMoreOptions;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Virtual Visits ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
+	private WebElement activeVirtualVisitsAddOnsMoreOptions;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Pay ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Pay ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activePayMoreOptions;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Engage ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Engage ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activeEngageMoreOptions;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Portal ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Portal ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activePatientPortalMoreOptions;
 
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Chat ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
 	private WebElement activePatientChatMoreOptions;
+	
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Chat ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
+	private WebElement activePatientChatAddOnsMoreOptions;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' PSS ']//following::div[@id='purchaseStatus']//following::div[@class='more'])[1]")
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' PSS ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activePSSMoreOptions;
 
 	@FindBy(xpath = "//button[@id='highlight_off']")
@@ -347,6 +359,15 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[@class='backCaution']//p")
 	private WebElement cautionMessage;
+	
+	@FindBy(id = "detailNameValidation")
+	private WebElement clientNameRequiredErrorMessage;
+	
+	@FindBy(xpath = "//div[@id='purchasedSolutionOrg'][normalize-space(text())='Purchased Solutions Add-Ons']")
+	private WebElement purchasedSolutionsAddOnsTitle;
+	
+	@FindBy(xpath = "//span[@id='locationTile']//following::span[1]")
+	private WebElement locationCount;
 
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
@@ -509,10 +530,21 @@ public class GeneralSettingsPage extends CCMainPage {
 		clickSystemNode.click();
 	}
 
+	public void verifyEditButtonIsVisible() {
+		CCUtils.verifyAndWaitForElement(editClientButton, driver);
+		log("Edit button is displayed");
+	}
+	
 	public void clickEditButtonOfClient() {
 		CCUtils.verifyAndWaitForElement(editClientButton, driver);
 		editClientButton.click();
 		log("Clicked on edit button");
+	}
+	
+	public void clickCancelButtonOfEditClient() {
+		CCUtils.verifyAndWaitForElement(buttonClientInfoEditCancel, driver);
+		buttonClientInfoEditCancel.click();
+		log("Clicked on cancel button");
 	}
 
 	public void editClientNodeOnGeneralSettingPage(String sapId, String solutionsDisplayName, String timezone)
@@ -649,6 +681,23 @@ public class GeneralSettingsPage extends CCMainPage {
 			CCUtils.assertTrue(false, "Searched text not present in client");
 		}
 	}
+	
+	public String autosuggestion(String orgName) {
+		return "//span[@class='mat-option-text']//span//b[normalize-space(text())='"+orgName+"']";
+	}
+	
+	public void clickFirstInAutoSuggestion(String orgName) {
+		WebElement orgAutoSuggestionOption = driver.findElement(By.xpath(autosuggestion(orgName)));
+		CCUtils.verifyAndWaitForElementPresence(orgAutoSuggestionOption, driver);
+		if (orgAutoSuggestionOption.isDisplayed()) {
+			log("Clicked on " + selectFirstInAutoSuggestion.getText() + " in Auto Suggestion ");
+			javascriptClick(orgAutoSuggestionOption);
+
+		} else {
+			log(orgAutoSuggestionOption.getText() + " is not present in Auto Suggestion");
+			CCUtils.assertTrue(false, "Searched text not present in client");
+		}
+	}
 
 	public void verifyAutoSuggestionList(String searchedNode) {
 		CCUtils.verifyAndWaitForElement(listOfSuggestions.get(0), driver);
@@ -760,7 +809,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void clickClientDirectory() {
 		CCUtils.verifyAndWaitForElement(clientTab, driver);
-		clientTab.click();
+		javascriptClick(clientTab);
 		log("clicked on client directory tab:");
 	}
 
@@ -1069,6 +1118,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(purchaseSolutionsTitle, driver);
 		CCUtils.assertEquals(purchaseSolutionsTitle.isDisplayed(), true);
 	}
+	
+	public void verifyPurchaseSolutionsAddOnsSection() {
+		log("Verify 'Purchase Solutions Add Ons' section on General Settings page");
+		CCUtils.scrollPageViaElement(driver, purchasedSolutionsAddOnsTitle);
+		CCUtils.verifyAndWaitForElement(purchasedSolutionsAddOnsTitle, driver);
+		CCUtils.assertEquals(purchasedSolutionsAddOnsTitle.isDisplayed(), true);
+	}
 
 	public void clickToActivateButtonOfVirtualVisitsSolution() {
 		CCUtils.scrollPageViaElement(driver, virtualVisitsActivateButton);
@@ -1128,9 +1184,10 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("Entered text in Client name field is :" + clientName);
 	}
 
-	public void changeStatus() {
+	public void changeStatusToInactive() {
 		CCUtils.verifyAndWaitForElement(statusArrow, driver);
 		statusArrow.click();
+		log("clicked to arrow button");
 		inactiveStatus.click();
 		log("Clicked on inactive status");
 		saveBtn.click();
@@ -1152,12 +1209,26 @@ public class GeneralSettingsPage extends CCMainPage {
 		purchasedSolutionExpandButton.click();
 		log("click to purchased solution expand button");
 	}
+	
+	public void clickToExpandPurchaseSolutionsAddOns() {
+		CCUtils.scrollPageViaElement(driver, purchasedSolutionAddOnsExpandButton);
+		CCUtils.verifyAndWaitForElement(purchasedSolutionAddOnsExpandButton, driver);
+		purchasedSolutionAddOnsExpandButton.click();
+		log("click to purchased solution add ons expand button");
+	}
 
 	public void clickToVirtualVisitsMoreOptions() {
 		CCUtils.scrollPageViaElement(driver, activeVirtualVisitsMoreOptions);
 		CCUtils.verifyAndWaitForElement(activeVirtualVisitsMoreOptions, driver);
 		activeVirtualVisitsMoreOptions.click();
 		log("click to virtual visits more options");
+	}
+	
+	public void clickToVirtualVisitsAddOnsMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activeVirtualVisitsAddOnsMoreOptions);
+		CCUtils.verifyAndWaitForElement(activeVirtualVisitsAddOnsMoreOptions, driver);
+		activeVirtualVisitsAddOnsMoreOptions.click();
+		log("click to virtual visits add ons more options");
 	}
 
 	public void clickToPayMoreOptions() {
@@ -1186,6 +1257,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(activePatientChatMoreOptions, driver);
 		activePatientChatMoreOptions.click();
 		log("click to patient chat more options");
+	}
+	
+	public void clickToPatientChatAddOnsMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activePatientChatAddOnsMoreOptions);
+		CCUtils.verifyAndWaitForElement(activePatientChatAddOnsMoreOptions, driver);
+		activePatientChatAddOnsMoreOptions.click();
+		log("click to patient chat add ons more options");
 	}
 
 	public void clickToPSSMoreOptions() {
@@ -1263,5 +1341,15 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(SapIdReadValue, driver);
 		log("fetched the value of sap id : "+SapIdReadValue.getText().trim());
 		return SapIdReadValue.getText().trim();
+	}
+	
+	public String getClientNameErrorMessage() {
+		CCUtils.verifyAndWaitForElement(clientNameRequiredErrorMessage, driver);
+		return clientNameRequiredErrorMessage.getText().trim();
+	}
+	
+	public String getLocationCount() {
+		CCUtils.verifyAndWaitForElement(locationCount, driver);
+		return locationCount.getText().trim();
 	}
 }

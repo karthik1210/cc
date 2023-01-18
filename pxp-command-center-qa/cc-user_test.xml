@@ -23,11 +23,11 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateVAResellerUsersApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateInternalUserApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ActivateDeactivateUserApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchIntVarUsersStatusApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchUsersStatusApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UserAddRoleLocations_BusinessLayer" />		
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UserAddRoleLocations_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSearchIntenalUserApiTest_BusinessLayer" />
 			<class
@@ -35,18 +35,20 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAssociateEntitiesTests_BusinessLayer" />
 			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" />
+			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserTypeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetRolesByUserApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateExpiredStatusApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateExpiredStatusApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePasswordDuringEnrollmentApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePasswordDuringEnrollmentApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchUsersWithEnrollmentStatusApiTests_BusinessLayer" />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchUsersWithEnrollmentStatusApiTests_BusinessLayer" />
 			<class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.SendEnrollmentApiTests_BusinessLayer" />
-                <!-- Enable test class once below issue is resolved  # PXPP-26529-->
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SendEnrollmentApiTests_BusinessLayer" />
+			<!-- Enable test class once below issue is resolved # PXPP-26529 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListRoleLocationsApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetInternalUserLoginDetailsApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetClientUserLoginDetailsApiTests_BusinessLayer" 
@@ -54,7 +56,6 @@
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.PatchUserRoleApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateUserRolesApiTests_BusinessLayer" 
 				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUserInfoApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.ValidateUserDetailsApiTests_BusinessLayer" 
 				/> -->
 
 		</classes>

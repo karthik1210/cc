@@ -89,7 +89,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         systemName = "S" + CCUtils.generateRandomStringWithoutSymbolsOrNumbers(18).toLowerCase();
         ngHierarchyClientCreationPage.enterSystemName(systemName);
         ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(pmSystem,ehrSystem);
-        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
         ngHierarchyClientCreationPage.verifyInactiveRadioButton();
         ngHierarchyClientCreationPage.clickToInactiveRadioButton();
         logStep("Click on save and add button");
@@ -124,7 +123,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         ngHierarchyClientCreationPage.enterEnterpriseName(enterpriseName);
         ngHierarchyClientCreationPage.addPmSystemAndEhrSystem(system, enterprise);
         ngHierarchyClientCreationPage.addTimezone(timeZone);
-        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
         ngHierarchyClientCreationPage.verifyInactiveRadioButton();
         ngHierarchyClientCreationPage.clickToInactiveRadioButton();
         logStep("Click on save and add button");
@@ -169,7 +167,6 @@ public class NGHierarchyClientCreation extends CCMainPage {
         ngHierarchyClientCreationPage.addPracticePmSystemAndEhrSystem(system, enterprise);
         ngHierarchyClientCreationPage.addTimezone(timeZone);
         ngHierarchyClientCreationPage.enterSolutionsDisplayName(solution);
-        ngHierarchyClientCreationPage.verifyActiveRadioButtonForOrgIsByDefaultSelected();
         ngHierarchyClientCreationPage.verifyInactiveRadioButton();
         ngHierarchyClientCreationPage.clickToInactiveRadioButton();
         logStep("Click on save and add button");
