@@ -139,9 +139,12 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(id = "activate")
 	private WebElement makeActiveButton;
 
-	@FindBy(xpath = "//mat-icon[contains(text(),'expand_less')]")
+	@FindBy(xpath = "//mat-icon[contains(text(),'keyboard_arrow_down')]")
 	private WebElement expandArrow;
 
+	@FindBy(xpath = "//mat-icon[contains(text(),'expand_more')]")
+	private WebElement showOtherVersions;
+	
 	@FindBy(id = "save-icon")
 	private WebElement saveButtonOnConfirmationDialogBox;
 
@@ -518,10 +521,17 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void clickOnExpandArrow() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(expandArrow, driver);
 		javascriptClick(expandArrow);
 		log("Clicked on expand Arrow");
 	}
 
+	public void clickOnShowOtherVersionsArrow() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(showOtherVersions, driver);
+		javascriptClick(showOtherVersions);
+		log("Clicked on show other versions");
+	}
+	
 	public void editBrandVersionName(String newVersion) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(textboxVersion, driver);
 		textboxVersion.clear();

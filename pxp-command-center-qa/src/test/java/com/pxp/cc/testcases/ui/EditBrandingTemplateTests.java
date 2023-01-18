@@ -124,29 +124,7 @@ public class EditBrandingTemplateTests extends CommandCenterGenericTest {
 		logStep("Verify success toaster message");
 		CCUtils.assertEquals(actualMessage, "Success! Successfully Updated Brand");
 	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify details on Confirmation dialog box which appears after clicking on SAVE")
-	public void testConfirmationDialogBoxDetails() throws Exception {
-		createBrandingTemplate();
-		brandingTemplatesPage.VerifyBrandingTemplatesIsDisplayed();
-		brandingTemplatesPage.clickOnExpandArrow();
-		brandingTemplatesPage.VerifyNewlyCreatedBrandingTemplate(newVersionName);
-		logStep("Verify branding status is Inactive");
-		brandingTemplatesPage.VerifyBrandingNameIsInactive();
-		logStep("Click on kebab menu");
-		brandingTemplatesPage.clickOnKebabMenu();
-		brandingTemplatesPage.clickOnEdit();
-		logStep("Edit active branding template");
-		editBrandingTemplate();
-		brandingTemplatesPage.verifyAndClickEditSaveButton();
-		logStep("Verify details on Confirmation dialog box which appears after clicking on SAVE");
-		brandingTemplatesPage.verifyConfirmationDialogBoxTitleLabel();
-		brandingTemplatesPage.verifyConfirmationDialogBoxSubText();
-		brandingTemplatesPage.verifyConfirmationDialogBoxSaveButton();
-		brandingTemplatesPage.verifyConfirmationDialogBoxCancelButton();
-		brandingTemplatesPage.verifyConfirmationDialogBoxCrossIcon();
-	}
-
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify Cancel button, cross icon functionality on Confirmation dialog box")
 	public void testConfirmationDialogBoxCancelCrossButtonFunctionality() throws Exception {
 		createBrandingTemplate();

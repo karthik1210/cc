@@ -52,6 +52,7 @@ public class CCUI extends CommandCenterGenericTest {
     VarResellerUsersPage varResellerUsersPage;
     SearchProviderPage searchProviderPage;
     AppointmentTypePage appointmentTypePage;
+    BrandingTemplatesPage brandingTemplatesPage;
 
     ///////////Variables Test Data
     public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -388,5 +389,12 @@ public class CCUI extends CommandCenterGenericTest {
 			appointmentTypePage = new AppointmentTypePage(driver);
 		}
 		return appointmentTypePage;
+	}
+    //brandingTemplatesPage
+    public BrandingTemplatesPage getBrandingTemplatesPage() throws Exception {
+		if (brandingTemplatesPage == null) {
+			brandingTemplatesPage = new BrandingTemplatesPage(driver);
+		}
+		return brandingTemplatesPage;
 	}
 }
