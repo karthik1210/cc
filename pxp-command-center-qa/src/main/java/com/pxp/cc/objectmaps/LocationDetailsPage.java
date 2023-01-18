@@ -805,7 +805,7 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.scrollPageToStart();
 		CCUtils.verifyElementToBeClickable(backIcon, driver);
 		CCUtils.verifyAndWaitForElement(backIcon, driver);
-		backIcon.click();
+		javascriptClick(backIcon);
 		log("clicked to back button in location details page");
 	}
 
