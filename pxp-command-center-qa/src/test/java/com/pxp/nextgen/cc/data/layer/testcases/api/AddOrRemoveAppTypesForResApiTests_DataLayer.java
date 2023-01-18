@@ -92,7 +92,7 @@ public class AddOrRemoveAppTypesForResApiTests_DataLayer extends BaseRest {
 		String externalIdApp = CCUtils.generateAlphaNumericString(4);
 		String duration = CCUtils.generateNumericString(2);
 		String categoryId = CCUtils.generateNumericString(5);
-		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_DL(practiceId, name, externalIdApp,
+		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_DL(practiceId, testData.getProperty("default.solution.id"), name, externalIdApp,
 				duration, categoryId, name, externalIdApp);
 		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
 		appointmentTypeId = createAppointmentTypeApiResponse.jsonPath().getInt("id");
