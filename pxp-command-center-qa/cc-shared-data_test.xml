@@ -136,9 +136,9 @@
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_DataLayer"></class>		
 			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppoiTypesAssocWithResApiTests_DataLayer"></class>	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppTypesAssocWithResApiTests_DataLayer"></class>	
 			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppoiTypesForResApiTests_DataLayer"></class>		
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppTypesForResApiTests_DataLayer"></class>		
 					
 		</classes>
 	</test>

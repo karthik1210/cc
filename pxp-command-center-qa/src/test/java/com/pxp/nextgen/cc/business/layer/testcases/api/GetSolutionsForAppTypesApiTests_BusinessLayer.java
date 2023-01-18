@@ -64,7 +64,7 @@ public class GetSolutionsForAppTypesApiTests_BusinessLayer extends BaseRest {
 		String externalId = CCUtils.generateAlphaNumericString(4);
 		String duration = CCUtils.generateNumericString(2);
 		String categoryId = CCUtils.generateNumericString(5);
-		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, name, externalId,
+		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, testData.getProperty("default.solution.id"), name, externalId,
 				duration, categoryId, name, externalId);
 		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
 		validation.verifyCreateLocationApiResponseBody(createAppointmentTypeApiResponse, name);

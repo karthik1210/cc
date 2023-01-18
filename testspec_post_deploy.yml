@@ -9,8 +9,8 @@ phases:
       - |
         if expr "${APPLICATION_NAME}" : ".*-ui" >/dev/null; then
            echo "Downloading supported web browser driver for $APPLICATION_NAME";
-           export google_chrome_version="103.0.5060.114"
-           export chrome_driver_version="103.0.5060.134"
+           export google_chrome_version="109.0.5414.74-1"
+           export chrome_driver_version="109.0.5414.74"
            yum update -y
            yum install GConf2 liberation-fonts-common gtk3 libappindicator-gtk3 yum-utils libXScrnSaver redhat-lsb-core alsa-lib-devel dbus-x11 ImageMagick Xvfb net-tools -y
            curl -O https://dl.google.com/linux/chrome/rpm/stable/x86_64/google-chrome-stable-${google_chrome_version}.x86_64.rpm

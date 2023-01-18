@@ -2129,4 +2129,14 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-attributes";
 	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_BL(int practiceId, int appointmentTypeId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" +  appointmentTypeId;
+	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL +"/v1/practices/null/appointment-types/null";
+	}
+
+	public static final String UPDATE_USER_STATUS_DL = SERVICE_USER_DL + "/v1/users/status";
 }

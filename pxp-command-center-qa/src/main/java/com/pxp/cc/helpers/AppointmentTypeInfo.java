@@ -16,15 +16,14 @@ public class AppointmentTypeInfo extends BaseRest {
 
 	public static RequestSpecification requestSpecification;
 
-	public Response createAppointmentType_BL(int practiceId, String name, String externalId, String duration,
+	public Response createAppointmentType_BL(int practiceId, String externalsystem, String name, String externalId, String duration,
 			String categoryId, String nameone, String externalIdone) {
 		String url = ApiPath.CREATE_APPOINTMENT_TYPE_BL(practiceId);
 		Map<String, Object> categoriesIdPayload = categoriesIdRequestPayload(categoryId, nameone, externalIdone);
 		List<Object> categoriesPayload = categoriesRequestPayload(categoriesIdPayload);
 		Map<String, Object> createAppointmentTypePayload = createAppointmentTypeRequestPayload(name, externalId,
 				duration, categoriesPayload);
-
-		return given().spec(requestSpec).body(createAppointmentTypePayload).when().post(url).then().extract()
+		return given().spec(requestSpec).header("x-external-system", externalsystem).body(createAppointmentTypePayload).when().post(url).then().extract()
 				.response();
 	}
 
@@ -62,15 +61,14 @@ public class AppointmentTypeInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
-	public Response createAppointmentType_DL(int practiceId, String name, String externalId, String duration,
+	public Response createAppointmentType_DL(int practiceId, String externalsystem, String name, String externalId, String duration,
 			String categoryId, String nameone, String externalIdone) {
 		String url = ApiPath.CREATE_APPOINTMENT_TYPE_DL(practiceId);
 		Map<String, Object> categoriesIdPayload = categoriesIdRequestPayload(categoryId, nameone, externalIdone);
 		List<Object> categoriesPayload = categoriesRequestPayload(categoriesIdPayload);
 		Map<String, Object> createAppointmentTypePayload = createAppointmentTypeRequestPayload(name, externalId,
 				duration, categoriesPayload);
-
-		return given().spec(requestSpec).body(createAppointmentTypePayload).when().post(url).then().extract()
+		return given().spec(requestSpec).header("x-external-system", externalsystem).body(createAppointmentTypePayload).when().post(url).then().extract()
 				.response();
 	}
 
@@ -112,4 +110,20 @@ public class AppointmentTypeInfo extends BaseRest {
 		String url = ApiPath.GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	 public Response enableDisableAppType_BL(int practiceId, int appointmentTypeId, String active) {
+	        Map<String, Object> enableDisablePayload = enableDisableAppType(active);
+	        String url = ApiPath.ENABLE_DISABLE_APP_TYPES_BL(practiceId, appointmentTypeId);
+	        return given().spec(requestSpec).body(enableDisablePayload).when().patch(url).then().extract().response();
+	    }
+	 private Map<String, Object> enableDisableAppType(String active) {
+		        Map<String, Object> enableDisablePayload = new HashMap<String, Object>();
+		        enableDisablePayload.put("active", active);
+		        return enableDisablePayload;
+	 }
+	 
+	 public Response enableDisableAppTypes_NullValues_BL() {
+			String url = ApiPath.ENABLE_DISABLE_APP_TYPES_NULL_VALUES_BL();
+			return given().spec(requestSpec).when().patch(url).then().extract().response();
+		}
 }
