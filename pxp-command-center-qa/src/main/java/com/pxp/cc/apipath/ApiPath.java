@@ -2108,4 +2108,25 @@ public class ApiPath {
 	public static final String GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL(){ 
 		return   SERVICE_SHARED_BL+ "/v1/practices/null/appointment-types/null/solutions";
      }
+
+	public static final String GET_TEMPLATE_ATTRIBUTE(String serviceLayer, String uriType, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-attributes";
+			else
+				return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId + "/template-attributes";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-attributes";
+			else
+				return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId + "/template-attributes";
+		}
+	}
+
+	public static final String GET_TEMPLATE_ATTRIBUTE_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-attributes";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-attributes";
+	}
 }

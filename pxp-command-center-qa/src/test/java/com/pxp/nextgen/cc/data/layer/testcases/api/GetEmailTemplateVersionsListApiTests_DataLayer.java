@@ -86,7 +86,7 @@ public class GetEmailTemplateVersionsListApiTests_DataLayer extends BaseRest {
 
     }
 
-    @Test(priority = 3, dataProvider = "nullAndStringPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "Get Email Template Version for Alphanumeric/Null/Empty practice")
+    @Test(priority = 2, dataProvider = "nullAndStringPracticeId", retryAnalyzer = RetryAnalyzer.class, description = "Get Email Template Version for Alphanumeric/Null/Empty practice")
     public void getTemplateVersionForAlphaNumericNullEmptyPractice(String practiceId, String templateId, String testCaseName) throws
             IOException {
         logStep(testCaseName);
@@ -98,7 +98,7 @@ public class GetEmailTemplateVersionsListApiTests_DataLayer extends BaseRest {
     }
 
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27231 _ Get Email Template Version for practice with Invalid URI")
+    @Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27231 _ Get Email Template Version for practice with Invalid URI")
     public void getTemplateVersionToPracticeWithInvalidURI() throws Exception {
         logStep("TC 005_verify response code 404 and error message when user enters valid org id and valid on template id to get list of template versions by using GET Request with Invalid URI [BL/DL]");
         practiceId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
@@ -110,7 +110,7 @@ public class GetEmailTemplateVersionsListApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27232 _ get Email Template Version for Invalid Method Type")
-    public void updateTemplateVersionToPracticeInvalidMethodType() throws Exception {
+    public void getTemplateVersionToPracticeInvalidMethodType() throws Exception {
         logStep("TC 006_verify response code 405 and error message when user enters valid org id and valid on template id to get list of template versions by using DELETE Request [BL/DL]");
         practiceId = Integer.parseInt(testData.getProperty("PXPP.18282.api.practice.id"));
         templateId = Integer.parseInt(testData.getProperty("email.template.id1"));
@@ -132,7 +132,7 @@ public class GetEmailTemplateVersionsListApiTests_DataLayer extends BaseRest {
         CCUtils.assertEquals(getTemplateVersionResponse.getStatusCode(), 204);
     }
 
-    @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27378 _ Get Email Template Version for practice with non existing org")
+    @Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-27378 _ Get Email Template Version for practice with non existing org")
     public void getTemplateVersionToPracticeWithNonExistingOrg() throws Exception {
         logStep("TC 008_verify response code 200 and default should be displayed on response body when user enters non-existing ord id and valid template id to get list of template version by using GET Request [BL/DL]");
         practiceId = Integer.parseInt(testData.getProperty("Non.existing.practice.id"));
