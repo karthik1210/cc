@@ -75,6 +75,8 @@
 			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateApiTests_DataLayer"/>
 			<class
+					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetTemplateAttributesApiTests_DataLayer"/>
+			<class
 					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateStatusApiTests_DataLayer"/>
 
         </classes>
