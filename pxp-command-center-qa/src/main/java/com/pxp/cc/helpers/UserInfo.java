@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.pxp.cc.pojos.PatientAccessDetailsBusinessLayer;
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;

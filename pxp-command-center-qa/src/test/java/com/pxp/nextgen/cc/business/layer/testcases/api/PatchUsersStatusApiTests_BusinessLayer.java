@@ -18,6 +18,7 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class PatchUsersStatusApiTests_BusinessLayer extends BaseRest {
+	
 	private UserInfo userInfo;
 	private Validations validation;
 	private OrgInfo orgInfo;
