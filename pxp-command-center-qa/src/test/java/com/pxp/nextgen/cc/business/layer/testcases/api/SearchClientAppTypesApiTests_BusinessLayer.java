@@ -62,7 +62,7 @@ public class SearchClientAppTypesApiTests_BusinessLayer extends BaseRest {
 		String externalIdApp = CCUtils.generateAlphaNumericString(4);
 		String duration = CCUtils.generateNumericString(2);
 		String categoryId = CCUtils.generateNumericString(5);
-		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, name, externalIdApp,
+		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId, testData.getProperty("default.solution.id"), name, externalIdApp,
 				duration, categoryId, name, externalIdApp);
 		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
 		appointmentTypeId = createAppointmentTypeApiResponse.jsonPath().getInt("id");
