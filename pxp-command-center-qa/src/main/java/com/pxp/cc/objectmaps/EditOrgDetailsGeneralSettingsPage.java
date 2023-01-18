@@ -34,7 +34,7 @@ public class EditOrgDetailsGeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "detailNameInput")
 	private WebElement textBox;
 
-	@FindBy(xpath = "//mat-select[@role ='combobox']")
+	@FindBy(xpath = "(//mat-select[@role ='combobox']//div)[3]")
 	private WebElement statusArrow;
 
 	@FindBy(xpath = "//span[normalize-space(text())='Changes updated successfully']")

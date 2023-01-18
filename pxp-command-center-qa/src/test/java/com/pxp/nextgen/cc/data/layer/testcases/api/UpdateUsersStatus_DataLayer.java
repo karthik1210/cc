@@ -220,8 +220,7 @@ public class UpdateUsersStatus_DataLayer extends BaseRest {
 				testData.getProperty("api.user.userStatus"), varResellerUserName);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateUserApiResponse);
-		CCUtils.assertEquals(updateUserApiResponse.getStatusCode(), 200);
-
+		CCUtils.assertEquals(updateUserApiResponse.getStatusCode(), 200);                                                                                         
 		logStep("Modify the status of  VarReseller users from inactive to active");
 		updateUserApiResponse = userInfo.updateUsersStatus_DL(varResellerId,
 				testData.getProperty("api.user.userStatus"), "Modified", "Inactive", varResellerUserName);

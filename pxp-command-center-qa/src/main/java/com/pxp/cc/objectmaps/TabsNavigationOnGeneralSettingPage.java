@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
@@ -110,7 +110,7 @@ public class TabsNavigationOnGeneralSettingPage extends CCMainPage {
 
 	public void verifyNavigationProvidersAndResourcesTab() {
 		CCUtils.verifyAndWaitForElement(providersAndResourcesTab, driver);
-		providersAndResourcesTab.click();
+		javascriptClick(providersAndResourcesTab);
 		log("ProvidersAndResources tab is Clickable");
 		verifyProvidersAndResourceslabel();
 	}

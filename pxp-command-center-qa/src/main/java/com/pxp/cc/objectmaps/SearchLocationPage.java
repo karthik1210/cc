@@ -20,6 +20,9 @@ public class SearchLocationPage extends CCMainPage {
 	}
 
 	public CommonMethods commonMethods;
+	
+	@FindBy(xpath = "//span[@aria-label='Locations']")
+	private WebElement locationTitle;
 
 	@FindBy(id = "searchOrgInput")
 	private WebElement searchTextBox;
@@ -36,6 +39,9 @@ public class SearchLocationPage extends CCMainPage {
 	@FindBy(id = "no-result")
 	private WebElement noDataDisplayMessage;
 
+	@FindBy(id = "headerSettingIcon")
+	private WebElement generalSettingsNavigation;
+	
 	@FindBy(id = "applyBtn")
 	private WebElement filterApplyButton;
 
@@ -114,6 +120,12 @@ public class SearchLocationPage extends CCMainPage {
 		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
 	}
 
+	public void verifyLocationTitle() {
+		CCUtils.verifyAndWaitForElement(locationTitle, driver);
+		CCUtils.assertEquals(locationTitle.getText().trim(), "Locations");
+		log("verify the presence of location title");
+	}
+	
 	public void selectFilter(String filterName) {
 		WebElement clientType = prepareDynamicXpath(xpathRequiredClientType, filterName);
 		CCUtils.verifyAndWaitForElement(clientType, driver);
@@ -624,5 +636,11 @@ public class SearchLocationPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(locationNameDscSort, driver);
 		locationNameDscSort.click();
 		log("clicked to descending location Status sort");
+	}
+	
+	public void clickToGeneralSettingsIcon() {
+		CCUtils.verifyAndWaitForElement(generalSettingsNavigation, driver);
+		generalSettingsNavigation.click();
+		log("click to general settings icon and navigate to general settings page");
 	}
 }
