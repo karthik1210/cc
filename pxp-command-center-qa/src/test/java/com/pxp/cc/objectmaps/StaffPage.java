@@ -17,7 +17,6 @@ public class StaffPage extends CCMainPage {
 
 	public StaffPage(WebDriver driver) {
 		super(driver);
-		// TODO Auto-generated constructor stub
 	}
 
 	@FindBy(xpath = "//div[@role='tab'][3]")
@@ -54,7 +53,7 @@ public class StaffPage extends CCMainPage {
 	private WebElement crossIcon;
 
 	@FindBy(xpath = "//span[contains(text(),' Providers, Resources & Staff')]")
-	private WebElement lableProvidersAndResourcesPageTitle;
+	private WebElement labelProvidersAndResourcesPageTitle;
 
 	@FindBy(xpath = "//div[text()='No items found']")
 	private WebElement textNoItemsFound;
@@ -268,8 +267,8 @@ public class StaffPage extends CCMainPage {
 	}
 
 	public void verifyProvidersAndResourcesAndStaffTitle() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(lableProvidersAndResourcesPageTitle, driver);
-		CCUtils.assertEquals(lableProvidersAndResourcesPageTitle.isDisplayed(), true);
+		CCUtils.verifyAndWaitForElement(labelProvidersAndResourcesPageTitle, driver);
+		CCUtils.assertEquals(labelProvidersAndResourcesPageTitle.isDisplayed(), true);
 	}
 
 	public void clickOnCrossIcon() {
@@ -738,7 +737,7 @@ public class StaffPage extends CCMainPage {
 
 	public void verifyStaffTypeDescendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(staffDscSort, driver);
-		log("verified after clicking to acsendig sort staff type first  name sort arrow goes downwards to descending sort");
+		log("verified after clicking to ascending sort staff type first  name sort arrow goes downwards to descending sort");
 	}
 
 	public void clickDscStaffTypeSortToAsc() {
@@ -749,7 +748,7 @@ public class StaffPage extends CCMainPage {
 
 	public void verifyStaffTypeAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(staffAscSort, driver);
-		log("verified after clicking to descendig sort staff first name sort arrow goes upwards to ascending sort");
+		log("verified after clicking to descending sort staff first name sort arrow goes upwards to ascending sort");
 	}
 
 	public void clickAscStaffLastNameSortToDsc() {
@@ -762,18 +761,18 @@ public class StaffPage extends CCMainPage {
 
 	public void verifyStaffLastNameDescendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(staffDscSort, driver);
-		log("verified after clicking to acsendig sort staff last name sort arrow goes downwards to descending sort");
+		log("verified after clicking to ascending sort staff last name sort arrow goes downwards to descending sort");
 	}
 
-	public void clickDscStaffLasttNameSortToAsc() {
+	public void clickDscStaffLastNameSortToAsc() {
 		CCUtils.verifyAndWaitForElement(staffDscSort, driver);
 		staffDscSort.click();
 		log("clicked to descending Staff last name sort");
 	}
 
-	public void verifyStafflastNameAscendingSortIsVisible() {
+	public void verifyStaffLastNameAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(staffAscSort, driver);
-		log("verified after clicking to descendig sort staff last name sort arrow goes upwards to ascending sort");
+		log("verified after clicking to descending sort staff last name sort arrow goes upwards to ascending sort");
 	}
 
 	public void clickStaffStatusSortToDsc() {
@@ -782,7 +781,7 @@ public class StaffPage extends CCMainPage {
 		log("clicked on staff status column label");
 		CCUtils.verifyAndWaitForElement(staffAscSort, driver);
 		staffAscSort.click();
-		log("clicked to ascending Staff status sort");
+		log("clicked to ascending arrow to get descending order");
 	}
 
 	public void verifyStaffStatusDescendingSortIsVisible() {
@@ -793,7 +792,7 @@ public class StaffPage extends CCMainPage {
 	public void clickDscStaffStatusSortToAsc() {
 		CCUtils.verifyAndWaitForElement(staffDscSort, driver);
 		staffDscSort.click();
-		log("clicked to descending Staff status sort");
+		log("clicked to descending arrow to get ascending order");
 	}
 
 	public void verifyStaffStatusAscendingSortIsVisible() {

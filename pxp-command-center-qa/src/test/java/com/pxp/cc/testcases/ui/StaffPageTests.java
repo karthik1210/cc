@@ -34,10 +34,8 @@ public class StaffPageTests extends CommandCenterGenericTest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Create new Staff using valid test data")
 	public void testAddNewStaffFunctionalityUsingValidData() throws Exception {
 		navigatetoStaff();
-		logStep("Verify add new Resource popup");
 		ccui.getStaffPage().verifyAddStaffPopupTitle();
 		logStep("PXPP-26546 Verify ADD button is displayed on Providers, Resources, & Staff tab Staff page for the client ");
-		logStep("Enter data in mandatory fields");
 		String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
 		logStep("PXPP-26550 Verify Add Staff dialog box contains First Name, Last Name, External ID, Gender fields");
 		ccui.getStaffPage().enterFirstName(firstName);
@@ -48,7 +46,7 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		logStep("PXPP-26551 Verify Add Staff dialog box contains Save & Add button ");
 		ccui.getStaffPage().clickOnSaveAndAddButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Staff has been successfully created");
-		runOnce = false;
+		runOnce = false;  
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Verify navigation to Staff page with Staff tab and Staff tile on General Settins page")
@@ -226,7 +224,6 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	// Searching Staff
 	@Test(priority = 7, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result of a staff")
 	public void testSearchExistingStaffAndNonExistingStaffOnStaffScreen() throws Exception {
 		testAddNewStaffFunctionalityUsingValidData();
@@ -252,25 +249,22 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		ccui.getStaffPage().clickToEntepriseArrow();
 		ccui.getStaffPage().clickToBackButton();
 		ccui.getStaffPage().clickOnStaffTab();
-		logStep("Apply filter for System");
 		logStep("PXPP-13257 Verify Users can FILTER Staff  by System, Enterprise, Practice and Solutions they are associated within CC");
 		ccui.getStaffPage().clickToSystemFilter();
+		logStep("Apply filter for System");
 		ccui.getStaffPage().selectFilter(clientSystementErpriseandPractice.get("systemName"));
-		//ccui.getStaffPage().clickFirstInAutoSuggestion();
 		ccui.getStaffPage().clickToApplyFilterButton();
 		ccui.getStaffPage().clickToClearFilterButton();
 		ccui.getStaffPage().clickOnStaffTab();
 		logStep("Apply filter for enterprise");
 		ccui.getStaffPage().clickToEnterpriseFilter();
 		ccui.getStaffPage().selectFilter(clientSystementErpriseandPractice.get("enterpriseName"));
-	//	ccui.getStaffPage().clickFirstInAutoSuggestion();
 		ccui.getStaffPage().clickToApplyFilterButton();
 		ccui.getStaffPage().clickToClearFilterButton();
 		ccui.getStaffPage().clickOnStaffTab();
 		logStep("Apply filter for Practice");
 		ccui.getStaffPage().clickToPracticeFilter();
-		 ccui.getStaffPage().selectFilter(clientSystementErpriseandPractice.get("practiceName"));
-		//ccui.getStaffPage().clickFirstInAutoSuggestion();
+		ccui.getStaffPage().selectFilter(clientSystementErpriseandPractice.get("practiceName"));
 		ccui.getStaffPage().clickToApplyFilterButton();
 		ccui.getStaffPage().clickOnStaffTab();
 		runOnce = false;
@@ -294,8 +288,8 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		logStep(" Verify staff last name column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
 		ccui.getStaffPage().clickAscStaffLastNameSortToDsc();
 		ccui.getStaffPage().verifyStaffLastNameDescendingSortIsVisible();
-		ccui.getStaffPage().clickDscStaffLasttNameSortToAsc();
-		ccui.getStaffPage().verifyStafflastNameAscendingSortIsVisible();
+		ccui.getStaffPage().clickDscStaffLastNameSortToAsc();
+		ccui.getStaffPage().verifyStaffLastNameAscendingSortIsVisible();
 		logStep("Verify staff status column can be arranged in descending order by clicking to Ascending/descending filter pointing downwards");
 		ccui.getStaffPage().clickStaffStatusSortToDsc();
 		ccui.getStaffPage().verifyStaffStatusDescendingSortIsVisible();
@@ -322,8 +316,7 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		createStaff();
 		createStaff();
 		createStaff();
-		createStaff();
-		//ccui.getStaffPage().clickOnStaffTab();	
+		createStaff();	
 		logStep("Now comparing the default Items per Page. Ideally it should be 10.");
 		CCUtils.scrollPageToEnd();
 		CCUtils.assertEquals(ccui.getStaffPage().getDefaultItemsPerPage(), "10");
@@ -339,7 +332,6 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = false)
 	public void createStaff() throws Exception {
 		ccui.getStaffPage().clickOnStaffTab();
 		logStep("PXPP-26548 Verify dialog box opens after clicking on +ADD button");
@@ -362,7 +354,6 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Staff has been successfully created");
 
 	}
-
 	@Test(enabled = false)
 	public void navigatetoStaff() throws Exception {
 		ngHierarchyClientCreate();
