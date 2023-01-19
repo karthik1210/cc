@@ -91,4 +91,22 @@ public class CommonsInfo extends BaseRest {
 			return given().spec(requestSpec).when().queryParam("product", product).queryParam("type", type).delete(url).then().extract().response();
 		}
 	}
+
+	public Response getTemplateVariableList(String serviceLayer, String uriType, int templateId, String type) {
+		if (uriType.equalsIgnoreCase("Valid")) {
+			String url = ApiPath.GET_TEMPLATE_VARIABLE_LISTS(serviceLayer, uriType, templateId);
+			return given().spec(requestSpec).when().queryParam("type", type).get(url).then().extract().response();
+		} else if (uriType.equalsIgnoreCase("InValid")) {
+			String url = ApiPath.GET_TEMPLATE_VARIABLE_LISTS(serviceLayer, uriType, templateId);
+			return given().spec(requestSpec).when().queryParam("type", type).get(url).then().extract().response();
+		} else {
+			String url = ApiPath.GET_TEMPLATE_VARIABLE_LISTS(serviceLayer, "valid", templateId);
+			return given().spec(requestSpec).when().queryParam("type", type).delete(url).then().extract().response();
+		}
+	}
+
+	public Response getTemplateVariableList(String serviceLayer, String uriType, String templateId, String type) {
+		String url = ApiPath.GET_TEMPLATE_VARIABLE_LISTS_WITH_INVLAID_DATATYPE(serviceLayer, templateId);
+		return given().spec(requestSpec).when().queryParam("type", type).get(url).then().extract().response();
+	}
 }

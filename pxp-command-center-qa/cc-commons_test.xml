@@ -20,7 +20,8 @@
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStatesApiTests_BusinessLayer" />
 			<class
 					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateListApiTests_BusinessLayer" />
-
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateVariableListsApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>
