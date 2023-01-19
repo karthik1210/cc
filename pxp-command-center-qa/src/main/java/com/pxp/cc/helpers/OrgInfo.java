@@ -1266,4 +1266,32 @@ public class OrgInfo extends BaseRest {
         String url = ApiPath.UPDATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(serviceLayer, practiceId, templateVersionId);
         return given().spec(requestSpec).body(requestMap).when().patch(url).then().extract().response();
     }
+
+    public Response getTemplateAttributesResponse(String validURI, String serviceLayer, int practiceId, Integer templateId, Long versionId, String type ) {
+        HashMap<String, Object> queryParamMap=new HashMap<String, Object>();
+        queryParamMap.clear();
+        queryParamMap.put("templateId",templateId);
+        queryParamMap.put("versionId",versionId);
+        queryParamMap.put("type",type);
+        if (validURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.GET_TEMPLATE_ATTRIBUTE(serviceLayer, "Valid", practiceId);
+            return given().spec(requestSpec).queryParams(queryParamMap).when().get(url).then().extract().response();
+        } else if (validURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.GET_TEMPLATE_ATTRIBUTE(serviceLayer, "InValid", practiceId);
+            return given().spec(requestSpec).queryParams(queryParamMap).when().get(url).then().extract().response();
+        } else {
+            String url = ApiPath.GET_TEMPLATE_ATTRIBUTE(serviceLayer, "Valid", practiceId);
+            return given().spec(requestSpec).queryParams(queryParamMap).when().delete(url).then().extract().response();
+        }
+    }
+
+    public Response getTemplateAttributesInvalidDatatypeResponse(String serviceLayer, String practiceId, String templateId, String versionId, String type) {
+        HashMap<String, String> queryParamMap=new HashMap<String, String>();
+        queryParamMap.clear();
+        queryParamMap.put("templateId",templateId);
+        queryParamMap.put("versionId",versionId);
+        queryParamMap.put("type",type);
+        String url = ApiPath.GET_TEMPLATE_ATTRIBUTE_WITH_INVLAID_DATATYPE(serviceLayer, practiceId);
+        return given().spec(requestSpec).queryParams(queryParamMap).when().get(url).then().extract().response();
+    }
 }
