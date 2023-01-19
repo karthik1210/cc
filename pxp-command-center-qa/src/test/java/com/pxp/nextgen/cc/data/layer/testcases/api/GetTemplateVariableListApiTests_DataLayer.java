@@ -22,7 +22,7 @@ public class GetTemplateVariableListApiTests_DataLayer extends BaseRest {
     }
 
     @DataProvider(name = "invalidOrNullOnTemplateIdAndInvalidOrNullOnType")
-    public Object[][] invalidData() throws Exception {
+    public Object[][] invalidData() {
         return new Object[][] {
                 {testData.getProperty("email.template.id1").concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(3)),  testData.getProperty("template.type.email")},
                 {testData.getProperty("email.template.id1"), testData.getProperty("template.type.email.invaliddatatype")},
@@ -34,7 +34,7 @@ public class GetTemplateVariableListApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-28318 Get template variables list with valid template id")
-    public void getTemplateVariableListsApiSuccess() throws Exception{
+    public void getTemplateVariableListsApiSuccess() {
         logStep("verify response code 200 and response body when user enters valid template id and type to get template variables list");
         getTemplateVariableResponse = commonsInfo.getTemplateVariableList("DL", "valid", Integer.parseInt(testData.getProperty("email.template.id1")),testData.getProperty("template.type.email"));
         logStep("Validating response information");
@@ -43,7 +43,7 @@ public class GetTemplateVariableListApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-28321 Get Template variable List with non-existing template id")
-    public void getTemplateVariableListsWithNonExistingTemplateId() throws Exception {
+    public void getTemplateVariableListsWithNonExistingTemplateId() {
         logStep("verify response code 204 when user enters non-existing template id and valid type to get template variable list");
         getTemplateVariableResponse = commonsInfo.getTemplateVariableList("DL", "valid", Integer.parseInt(testData.getProperty("email.template.id.nonexisting")),testData.getProperty("template.type.email"));
         logStep("Validating response information");
@@ -52,7 +52,7 @@ public class GetTemplateVariableListApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 3, dataProvider = "invalidOrNullOnTemplateIdAndInvalidOrNullOnType", retryAnalyzer = RetryAnalyzer.class, description = "PXPP-28322 Get Template variable list with invalid/null on template id/type")
-    public void getTemplateVariableListsWithInvalidOrNullOnTemplateIdOrType(String templateId, String type) throws Exception {
+    public void getTemplateVariableListsWithInvalidOrNullOnTemplateIdOrType(String templateId, String type) {
         logStep("TC 003_verify response code 400 and error code when user enters invalid/null on template id/type to get template variables list");
         getTemplateVariableResponse = commonsInfo.getTemplateVariableList("DL", "valid", templateId, type);
         logStep("Validating response information");
@@ -62,7 +62,7 @@ public class GetTemplateVariableListApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-28323 Get Template variable list with invalid URI")
-    public void getTemplateVariableListWithInvalidURI() throws Exception {
+    public void getTemplateVariableListWithInvalidURI() {
         logStep("verify response code 404 and error message when user enters valid template id and type to get template variable list with invalid URI");
         getTemplateVariableResponse = commonsInfo.getTemplateVariableList("DL", "Invalid", Integer.parseInt(testData.getProperty("email.template.id1")),testData.getProperty("template.type.email"));
         CCUtils.responseTimeValidation(getTemplateVariableResponse);
@@ -71,7 +71,7 @@ public class GetTemplateVariableListApiTests_DataLayer extends BaseRest {
     }
 
     @Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "PXPP-28324 Get Template variable list with DELETE Request")
-    public void getTemplateVariableListWithDELETERequest() throws Exception {
+    public void getTemplateVariableListWithDELETERequest() {
         logStep("verify response code 405 and error message when user enters valid template id and type to get template variable list with DELETE request");
         getTemplateVariableResponse = commonsInfo.getTemplateVariableList("DL", "", Integer.parseInt(testData.getProperty("email.template.id1")),testData.getProperty("template.type.email"));
         CCUtils.responseTimeValidation(getTemplateVariableResponse);
