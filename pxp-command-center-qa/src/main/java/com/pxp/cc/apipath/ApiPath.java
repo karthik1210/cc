@@ -2169,4 +2169,12 @@ public class ApiPath {
 		else
 			return SERVICE_COMMONS_DL + "/v1/comm-templates/" + templateId + "/variables";
 	}
+	
+	public static final String ENABLE_DISABLE_APP_TYPES_DL(int practiceId, int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId;
+	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/appointment-types/null";
+	}
 }
