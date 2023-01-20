@@ -139,6 +139,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppTypesAssocWithResApiTests_DataLayer"></class>	
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppTypesForResApiTests_DataLayer"></class>		
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>		
 					
 		</classes>
 	</test>
