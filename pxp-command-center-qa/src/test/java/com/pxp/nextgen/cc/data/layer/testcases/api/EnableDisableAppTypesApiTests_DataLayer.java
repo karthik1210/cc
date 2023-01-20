@@ -87,7 +87,7 @@ public class EnableDisableAppTypesApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing PracticeId and non-existing appointmentTypeId and verify response body")
-	public void testErrorMessagesForNonexistingAppointmentTypeId() throws IOException {
+	public void testErrorMessagesForNonexistingAppointmentTypeIdAndExistingPracticeId() throws IOException {
 		logStep("Enter existing PracticeId and non-existing appointmentTypeId");
 		int appointmentTypeId = Integer.parseInt(testData.getProperty("non.existing.appointment.type.id"));
 		enableDisableAppointmentApiResponse = appointmentTypeInfo.enableDisableAppType_DL(practiceId, appointmentTypeId,
