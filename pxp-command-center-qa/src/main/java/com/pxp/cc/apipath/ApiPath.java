@@ -2098,7 +2098,8 @@ public class ApiPath {
 	}
 
 	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_BL(int appointmentTypeId, int practiceId) {
-		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/solutions";
 	}
 
 	public static final String UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_BL() {
@@ -2139,6 +2140,14 @@ public class ApiPath {
 	}
 
 	public static final String UPDATE_USER_STATUS_DL = SERVICE_USER_DL + "/v1/users/status";
+	
+	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_DL(int appointmentTypeId, int practiceId){ 
+		return  SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
+     }
+	
+	public static final String UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/practices/null/appointment-types/null/solutions";
+	}
 
 	public static final String GET_TEMPLATE_VARIABLE_LISTS(String serviceLayer, String uriType, int templateId) {
 		if (serviceLayer.equalsIgnoreCase("BL")) {

@@ -137,4 +137,19 @@ public class AppointmentTypeInfo extends BaseRest {
 		String url = ApiPath.ENABLE_DISABLE_APP_TYPES_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().patch(url).then().extract().response();
 	}
+	
+	public Response enableOrDisableSolutionsForAppTypes_DL(int appointmentTypeId, int practiceId, int solutionId,
+			boolean status) {
+		String url = ApiPath.SOLUTIONS_FOR_APPOINTMENT_TYPE_DL(appointmentTypeId, practiceId);
+		Map<String, Object> solutionsIdPayload = solutionIdRequestPayload(solutionId, status);
+		List<Object> solutionsPayload = solutionsRequestPayload(solutionsIdPayload);
+		return given().spec(requestSpec).body(solutionsPayload).when().put(url).then().extract().response();
+	}
+	
+	public Response enableOrDisableSolutionsForAppTypes_NullValues_DL(int solutionId, boolean status) {
+		String url = ApiPath.UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_DL();
+		Map<String, Object> solutionsIdPayload = solutionIdRequestPayload(solutionId, status);
+		List<Object> solutionsPayload = solutionsRequestPayload(solutionsIdPayload);
+		return given().spec(requestSpec).body(solutionsPayload).when().put(url).then().extract().response();
+	}
 }
