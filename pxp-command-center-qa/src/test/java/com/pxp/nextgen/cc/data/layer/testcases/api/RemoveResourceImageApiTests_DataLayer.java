@@ -17,7 +17,6 @@ import io.restassured.response.Response;
 
 public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
-	private Validations validation;
 	private SharedServiceApiValidations sharedServiceApiValidations;
 	private ClientInfo clientInfo;
 	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId, resourceId;
@@ -32,10 +31,8 @@ public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
-		validation = new Validations();
 		sharedServiceApiValidations = new SharedServiceApiValidations();
 		clientInfo = new ClientInfo();
-		validation = new Validations();
 		orgInfo = new OrgInfo();
 		sharedInfo = new SharedInfo();
 		resourceInfo = new ResourceInfo();
@@ -85,8 +82,8 @@ public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 		resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add resource Url functionality")
-	public void testAddImageUrlFunctionality() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify remove resource Url functionality")
+	public void testRemoveImageUrlFunctionality() throws Exception {
 		logStep("Add Resouce image url");
 		addResourceImageUrlApiResponse = sharedInfo.addResourceImage_DL(resourceId, testData.getProperty("imageurl"));
 		logStep("Validating response information");
@@ -114,8 +111,8 @@ public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("non.existing.resource.id")));
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter empty payload and verify response body ")
-	public void testErrorResponseForEmptyPayload() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values payload and verify response body ")
+	public void testErrorResponseForNullValues() throws Exception {
 		logStep("Enter empty payload");
 		deleteResourceImageApiResponse = sharedInfo.deleteResourceImageNullValues_DL();
 		logStep("Validating response information");
