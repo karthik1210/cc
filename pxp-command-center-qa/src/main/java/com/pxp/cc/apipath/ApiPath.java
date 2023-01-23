@@ -2178,7 +2178,7 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/null/appointment-types/null";
 	}
 	
-	public static final String RESOURCE_IMAGE_NULL_VLAUES_DL() {
+	public static final String RESOURCE_IMAGE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/resources/null/images";
 	}
 

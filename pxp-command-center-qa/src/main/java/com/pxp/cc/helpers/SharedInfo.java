@@ -2038,7 +2038,7 @@ public class SharedInfo extends BaseRest {
 	}
 	
 	public Response deleteResourceImageNullValues_DL() {
-		String url = ApiPath.RESOURCE_IMAGE_NULL_VLAUES_DL();
+		String url = ApiPath.RESOURCE_IMAGE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 }

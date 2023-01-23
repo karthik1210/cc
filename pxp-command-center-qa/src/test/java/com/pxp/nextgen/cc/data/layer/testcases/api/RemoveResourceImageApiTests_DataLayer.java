@@ -89,11 +89,10 @@ public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(addResourceImageUrlApiResponse.getStatusCode(), 200);
-		logStep("delete resource imageurl");
+		logStep("Delete resource image url");
 		deleteResourceImageApiResponse = sharedInfo.deleteResourceImage_DL(resourceId);
 		CCUtils.responseTimeValidation(addResourceImageUrlApiResponse);
 		CCUtils.assertEquals(deleteResourceImageApiResponse.getStatusCode(), 200);
-		logStep("Resource image url is deleted");
 		getResourceDetailsApiResponse = sharedInfo.getResourceDetails_DL(resourceId);
 		CCUtils.assertTrue(sharedServiceApiValidations.validateImageUrlValueIsNull(getResourceDetailsApiResponse),
 				"imageUrl is present");
@@ -113,7 +112,7 @@ public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values payload and verify response body ")
 	public void testErrorResponseForNullValues() throws Exception {
-		logStep("Enter empty payload");
+		logStep("Enter null values payload");
 		deleteResourceImageApiResponse = sharedInfo.deleteResourceImageNullValues_DL();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(deleteResourceImageApiResponse);
