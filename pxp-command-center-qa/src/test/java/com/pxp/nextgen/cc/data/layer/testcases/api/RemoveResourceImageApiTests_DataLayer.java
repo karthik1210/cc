@@ -110,9 +110,8 @@ public class RemoveResourceImageApiTests_DataLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("non.existing.resource.id")));
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values payload and verify response body ")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values and verify response body ")
 	public void testErrorResponseForNullValues() throws Exception {
-		logStep("Enter null values payload");
 		deleteResourceImageApiResponse = sharedInfo.deleteResourceImageNullValues_DL();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(deleteResourceImageApiResponse);
