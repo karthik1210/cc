@@ -2177,4 +2177,9 @@ public class ApiPath {
 	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/appointment-types/null";
 	}
+	
+	public static final String RESOURCE_IMAGE_NULL_VLAUES_DL() {
+		return SHARED_DL + "/v1/resources/null/images";
+	}
+
 }

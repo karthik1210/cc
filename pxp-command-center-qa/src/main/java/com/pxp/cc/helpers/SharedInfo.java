@@ -2036,4 +2036,9 @@ public class SharedInfo extends BaseRest {
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
 	}
+	
+	public Response deleteResourceImageNullValues_DL() {
+		String url = ApiPath.RESOURCE_IMAGE_NULL_VLAUES_DL();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
 }
