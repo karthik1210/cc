@@ -456,7 +456,7 @@ public class ApiPath {
 	}
 
 	public static final String INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId,
-																						 int appointmentTypeId) {
+			int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcessssss";
 	}
@@ -503,7 +503,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_INVALID_URL(int practiceId,
-																				  int appointmentTypeId) {
+			int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -519,7 +519,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/resources";
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-																				  int appointmentTypeId) {
+			int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -543,7 +543,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/solutions";
 
 	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-																				  int appointmentTypeId) {
+			int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/solutionsblabla";
 	}
@@ -699,7 +699,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId,
-																				   String practiceId) {
+			String practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
@@ -712,7 +712,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(String providerId,
-																						 String practiceId) {
+			String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
@@ -1216,7 +1216,7 @@ public class ApiPath {
 	}
 
 	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID(String serviceLayer, int practiceId,
-																   int interfaceId) {
+			int interfaceId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces/" + interfaceId;
 		else
@@ -1224,7 +1224,7 @@ public class ApiPath {
 	}
 
 	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_DATATYPE(String serviceLayer,
-																						 String practiceId, String interfaceId) {
+			String practiceId, String interfaceId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfaces/" + interfaceId;
 		else
@@ -1232,7 +1232,7 @@ public class ApiPath {
 	}
 
 	public static final String PRACTICE_INTERFACE_WITH_INTERFACEID_WITH_INVLAID_URI(String serviceLayer, int practiceId,
-																					int interfaceId) {
+			int interfaceId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/interfacesss/" + interfaceId;
 		else
@@ -1247,7 +1247,7 @@ public class ApiPath {
 	}
 
 	public static final String GET_EXTERNAL_SYSTEMID_WITH_INVLAID_DATATYPE(String serviceLayer,
-																		   String externalSystemId) {
+			String externalSystemId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_PRODUCT_BL + "/v1/externalsystems/" + externalSystemId;
 		else
@@ -1288,7 +1288,7 @@ public class ApiPath {
 	}
 
 	public static final String UPDATE_SOLUTIONS_FOR_PRACICE_AND_LOCATION_INVALID_URL_BL(int locationId,
-																						int practiceId) {
+			int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/locations/" + locationId + "/practicesError/" + practiceId + "/solutions";
 	}
 
@@ -1373,7 +1373,7 @@ public class ApiPath {
 	}
 
 	public static final String GET_UPDATE_DELETE_TOUID_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId,
-																			 String touId) {
+			String touId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/tous/" + touId;
 		else
@@ -1381,7 +1381,7 @@ public class ApiPath {
 	}
 
 	public static final String GET_UPDATE_DELETE_TOUID_WITH_INVLAID_URI(String serviceLayer, int practiceId,
-																		int touId) {
+			int touId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practice-tou/practices/" + practiceId + "/toussss/" + touId;
 		else
@@ -1542,7 +1542,7 @@ public class ApiPath {
 	}
 
 	public static final String CREATE_UPDATE_PATIENT_ACCESS_WITH_INVLAID_DATATYPE(String serviceLayer,
-																				  String practiceId) {
+			String practiceId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/practices/" + practiceId + "/patient-access";
 		else
@@ -2063,7 +2063,7 @@ public class ApiPath {
 	}
 
 	public static final String UPDATE_TEMPLATE_VERSION(String serviceLayer, String uriType, int practiceId,
-													   Long templateVersionId) {
+			Long templateVersionId) {
 		if (serviceLayer.equalsIgnoreCase("BL")) {
 			if (uriType.equalsIgnoreCase("Valid"))
 				return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
@@ -2078,7 +2078,7 @@ public class ApiPath {
 	}
 
 	public static final String UPDATE_TEMPLATE_VERSION_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId,
-																			 String templateVersionId) {
+			String templateVersionId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
 		else
@@ -2140,11 +2140,11 @@ public class ApiPath {
 	}
 
 	public static final String UPDATE_USER_STATUS_DL = SERVICE_USER_DL + "/v1/users/status";
-	
-	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_DL(int appointmentTypeId, int practiceId){ 
-		return  SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
-     }
-	
+
+	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_DL(int appointmentTypeId, int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
+	}
+
 	public static final String UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/practices/null/appointment-types/null/solutions";
 	}
@@ -2163,13 +2163,14 @@ public class ApiPath {
 		}
 	}
 
-	public static final String GET_TEMPLATE_VARIABLE_LISTS_WITH_INVLAID_DATATYPE(String serviceLayer, String templateId) {
+	public static final String GET_TEMPLATE_VARIABLE_LISTS_WITH_INVLAID_DATATYPE(String serviceLayer,
+			String templateId) {
 		if (serviceLayer.equalsIgnoreCase("BL"))
 			return SERVICE_COMMONS_BL + "/v1/comm-templates/" + templateId + "/variables";
 		else
 			return SERVICE_COMMONS_DL + "/v1/comm-templates/" + templateId + "/variables";
 	}
-	
+
 	public static final String ENABLE_DISABLE_APP_TYPES_DL(int practiceId, int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId;
 	}
@@ -2177,17 +2178,25 @@ public class ApiPath {
 	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/appointment-types/null";
 	}
-	
+
 	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_DL(int appointmentTypeId, int practiceId) {
 		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId + "/practices/" + practiceId;
 	}
-	
+
 	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/appointment-types/null/practices/null";
 	}
 
 	public static final String RESOURCE_IMAGE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/resources/null/images";
+	}
+
+	public static final String STAFF_IMAGE_DL(int staffId) {
+        return SHARED_DL + "/v1/staff/" + staffId + "/images";
+	}
+
+	public static final String GET_STAFF_DETAILS_DL(int staffId) {
+		 return SHARED_DL + "/v1/staff/" + staffId;
 	}
 
 }
