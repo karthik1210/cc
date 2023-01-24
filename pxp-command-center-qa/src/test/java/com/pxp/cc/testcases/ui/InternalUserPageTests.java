@@ -554,8 +554,8 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 29, description = "Check Sorting functionality for Firstname, Lastname, Email, Enrollment status, UserStatus columns")
 	public void testSortingFunctionality() throws Exception {
 		logStep("Check firstName sorting");
-		ccui.getInternalUsersPage().clickAscfirstNameSortToDsc();
-		ccui.getInternalUsersPage().clickDscfirstNameSortToAsc();
+		ccui.getInternalUsersPage().clickAscFirstNameSortToDsc();
+		ccui.getInternalUsersPage().clickDscFirstNameSortToAsc();
 		logStep("Check flastName sorting");
 		ccui.getInternalUsersPage().clickAscLastNameSortToDsc();
 		ccui.getInternalUsersPage().clickDscLastNameSortToAsc();
@@ -569,5 +569,4 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		ccui.getInternalUsersPage().clickAscUserStatusSortToDsc();
 		ccui.getInternalUsersPage().clickDscUserStatusSortToAsc();
 	}
-
 }
