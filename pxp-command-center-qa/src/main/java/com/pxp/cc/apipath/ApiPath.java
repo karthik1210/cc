@@ -456,7 +456,7 @@ public class ApiPath {
 	}
 
 	public static final String INVALID_PATH_ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE(int practiceId,
-			int appointmentTypeId) {
+																						 int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcessssss";
 	}
@@ -503,7 +503,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_BL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -519,7 +519,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/resources";
 
 	public static final String FETCH_RESOURCES_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/resourcesblabla";
 	}
@@ -543,7 +543,7 @@ public class ApiPath {
 			+ "/v1/practices/null/appointment-types/null/solutions";
 
 	public static final String FETCH_SOLUTIONS_FOR_APPOINTMENTTYPE_DL_INVALID_URL(int practiceId,
-			int appointmentTypeId) {
+																				  int appointmentTypeId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
 				+ "/solutionsblabla";
 	}
@@ -699,7 +699,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCES_FOR_PROVIDERS_WITH_INVALID_DATATYPE(String providerId,
-			String practiceId) {
+																				   String practiceId) {
 		return SERVICE_SHARED_BL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
@@ -712,7 +712,7 @@ public class ApiPath {
 	}
 
 	public static final String FETCH_RESOURCE_FOR_PROVIDER_VALID_URL_DL_INVALID_DATATYPE(String providerId,
-			String practiceId) {
+																						 String practiceId) {
 		return SHARED_DL + "/v1/providers/" + providerId + "/practices/" + practiceId + "/resources";
 	}
 
