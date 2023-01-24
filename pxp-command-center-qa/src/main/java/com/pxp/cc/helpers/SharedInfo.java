@@ -2036,4 +2036,23 @@ public class SharedInfo extends BaseRest {
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
 	}
+	
+	public Response saveAppTypesInfoForPractice_DL(int appointmentTypeId, int practiceId, String enDisplayName,
+			String esDisplayName) {
+		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_DL(appointmentTypeId, practiceId);
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response saveAppTypesInfoForPracticeNullValues_DL(String enDisplayName,
+			String esDisplayName) {
+		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_DL();
+		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+	}
+	
+	public Response deleteResourceImageNullValues_DL() {
+		String url = ApiPath.RESOURCE_IMAGE_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
 }

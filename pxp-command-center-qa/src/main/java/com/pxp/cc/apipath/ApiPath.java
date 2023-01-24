@@ -2177,4 +2177,17 @@ public class ApiPath {
 	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/appointment-types/null";
 	}
+	
+	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_DL(int appointmentTypeId, int practiceId) {
+		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId + "/practices/" + practiceId;
+	}
+	
+	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/appointment-types/null/practices/null";
+	}
+
+	public static final String RESOURCE_IMAGE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/resources/null/images";
+	}
+
 }
