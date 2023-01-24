@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2021-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.testcases.ui;
 
@@ -46,7 +46,6 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		ccui.getCommandCenterUsersPage().verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
 		ccui.getCommandCenterUsersPage().verifyInternalUsersTabByDefaultSelected();
-
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 1, description = "Verify add new internal user popup")
@@ -152,9 +151,9 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(ccui.getCommonMethods().getRequiredErrorForUsernameField(), "Username is required");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 7, description = "Enter more than 100 characters in firstname, last name,username and email field and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 7, description = "Enter more than 100 characters in firstname, last name, username and email field and verify error message")
 	public void testMaximumCharactersErrorMessageForInputFields1() throws Exception {
-		logStep("PXPP-3491 Maximum characters reached\" error message for First Name, Last Name, Username and email fields when user enters more than 100 characters");
+		logStep("PXPP-3491 Maximum characters reached error message for First Name, Last Name, Username and email fields when user enters more than 100 characters");
 		ccui.getInternalUsersPage().clickToMoreOptions();
 		logStep("Click on new button");
 		ccui.getInternalUsersPage().clickOnNewButton();
@@ -172,23 +171,38 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 				"Maximum characters reached");
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 8, dependsOnMethods = {
-			"testCreateActiveInternalUserWithRoles" }, description = "Enter already existing username, email and mobile number on add new internal user page and verify error message.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 8, description = "Enter already existing username, email and mobile number on add new internal user page and verify error message.")
 	public void testUniqueErrorMessage() throws Exception {
 		logStep("PXPP-3508 Enter existing data in Username, Email and mobile number field and verify error message");
 		ccui.getInternalUsersPage().clickToMoreOptions();
 		logStep("Click on new button");
+		String firstname = CCUtils.generateAlphaNumericString(5);
+		String lastname = CCUtils.generateAlphaNumericString(5);
+		String emailOne = testData.getProperty("valid.user.first.name").concat(CCUtils.generateNewEmail(12));
+		String username = testData.getProperty("new.client.name2").concat(CCUtils.generateAlphaNumericString(12));
+		long mobilenumber = CCUtils.generateMobileNumber();
 		ccui.getInternalUsersPage().clickOnNewButton();
-		ccui.getCommonMethods().enterFirstName(firstName);
-		ccui.getCommonMethods().enterLastName(lastName);
-		ccui.getCommonMethods().enterEmail(email);
-		ccui.getCommonMethods().enterUserName(userName);
-		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobileNumber));
-		ccui.getCommonMethods().focusOnInactiveRadioButton();
+		ccui.getCommonMethods().enterFirstName(firstname);
+		ccui.getCommonMethods().enterLastName(lastname);
+		ccui.getCommonMethods().enterEmail(emailOne);
+		ccui.getCommonMethods().enterUserName(username);
+		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
+		ccui.getAddNewInternalUsersPage().addUserRoles();
+		ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
+		driver.navigate().refresh();
+		ccui.getInternalUsersPage().clickToMoreOptions();
+		logStep("Click on new button");
+		ccui.getInternalUsersPage().clickOnNewButton();
+		ccui.getCommonMethods().enterFirstName(firstname);
+		ccui.getCommonMethods().enterLastName(lastname);
+		ccui.getCommonMethods().enterEmail(emailOne);
+		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForEmailField(), "Email already in use");
+		ccui.getCommonMethods().enterUserName(username);
+		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
+		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
 		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForMobileNumberField(),
 				"Mobile number already in use");
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForEmailField(), "Email already in use");
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
+		ccui.getCommonMethods().focusOnInactiveRadioButton();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 9, dataProvider = "invalidTestData", description = "Enter invalid data in first name, last name, email, username and mobile number field and verify error message")
@@ -246,7 +260,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		ccui.getSearchOptionsPage().verifySearchInternalUserPopup();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 13,description = "Verify required error message is displayed when all fields of search options are blank")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 13, description = "Verify required error message is displayed when all fields of search options are blank")
 	public void testErrorMessageWhenAllFieldsOfSearchOptionsAreBlank() throws Exception {
 		logStep("Verify required error message is displayed for mandatory fields");
 		ccui.getInternalUsersPage().clickOnSearchOptionPage();
@@ -303,7 +317,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		ccui.getSearchOptionsPage().verifySearchFilterCrossIcon();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,priority = 18,description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 18, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		logStep("PXPP-5027 Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result");
 		ccui.getInternalUsersPage().clickOnSearchOptionPage();
@@ -376,7 +390,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		ccui.getInternalUsersPage().verifyToasterMessageIsDisplayedIfMoreThanFiftyMatchesReturn();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,  priority = 23,description = "Verify Display of default pagination i.e., 10 items per page.")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 23, description = "Verify Display of default pagination i.e., 10 items per page.")
 	public void testDefaultItemsPerPageAndPaginationInInternalUsersWebTable()
 			throws InterruptedException, RuntimeException, AWTException {
 		logStep("Now comparing the default Items per Page .Ideally it should be 10.");
@@ -393,7 +407,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(ccui.getInternalUsersPage().isLastPageButtonDisabled(), true);
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,  priority = 24,description = "Verify numbers of rows and Pagination should be change as per 'Items Per Page value")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 24, description = "Verify numbers of rows and Pagination should be change as per 'Items Per Page value")
 	public void testAllPaginationButtonsClickable() throws InterruptedException, AWTException {
 		logStep("Now comparing the default Items per Page" + ".Ideally it should be 10.");
 		CCUtils.assertEquals(ccui.getInternalUsersPage().getDefaultItemsPerPage(), "10");
@@ -408,7 +422,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 		ccui.getInternalUsersPage().clickFirstPageButton();
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 25, description = "Check Next Button functionality ")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 25, description = "Check Next Button functionality")
 	public void testNextPageButtonFunctionality() throws InterruptedException, AWTException {
 		logStep("Check Next Button functionality when Items Per Page value is = 20.");
 		String defaultItemsPerPage = ccui.getInternalUsersPage().getDefaultItemsPerPage();
@@ -441,7 +455,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 				.checkNextPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,  priority = 26,description = "Check Last Button functionality")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 26, description = "Check Last Button functionality")
 	public void testLastPageButtonFunctionality() throws InterruptedException, AWTException {
 		String defaultItemsPerPage = ccui.getInternalUsersPage().getDefaultItemsPerPage();
 		logStep("Check Last Button functionality when Items Per Page value is = 10.");
@@ -474,7 +488,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 				.checkLastPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwohundred));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,  priority = 27,description = "Check Previous Button functionality")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 27, description = "Check Previous Button functionality")
 	public void testPreviousPageButtonFunctionality() throws InterruptedException, AWTException {
 		String defaultItemsPerPage = ccui.getInternalUsersPage().getDefaultItemsPerPage();
 		logStep("Check Previous Button functionality when Items Per Page value is = 10.");
@@ -504,7 +518,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 				.checkPreviousPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwohundred));
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class,  priority = 28,description = "Check First Button functionality ")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 28, description = "Check First Button functionality")
 	public void testFirstPageButtonFunctionality() throws InterruptedException, AWTException {
 		String defaultItemsPerPage = ccui.getInternalUsersPage().getDefaultItemsPerPage();
 		logStep("Check First Button functionality when Items Per Page value is = 10.");
@@ -537,19 +551,18 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 				.checkFirstPageButtonFunctionalityTillGetDisabled(Integer.parseInt(itemsPerPageTwoHundred));
 	}
 
-	@Test( enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 29, description = "test Sorting Functionality")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 29, description = "Check Sorting functionality for Firstname, Lastname, Email, Enrollment status, UserStatus columns")
 	public void testSortingFunctionality() throws Exception {
-
-		logStep("Check firstName  sorting");
+		logStep("Check firstName sorting");
 		ccui.getInternalUsersPage().clickAscfirstNameSortToDsc();
 		ccui.getInternalUsersPage().clickDscfirstNameSortToAsc();
-		logStep("Check flastName  sorting");
+		logStep("Check flastName sorting");
 		ccui.getInternalUsersPage().clickAscLastNameSortToDsc();
 		ccui.getInternalUsersPage().clickDscLastNameSortToAsc();
-		logStep("Check email  sorting");
+		logStep("Check email sorting");
 		ccui.getInternalUsersPage().clickAscEmailSortToDsc();
 		ccui.getInternalUsersPage().clickDscEmailSortToAsc();
-		logStep("Check enrollment status  sorting");
+		logStep("Check enrollment status sorting");
 		ccui.getInternalUsersPage().clickAscEnrollmentStatusSortToDsc();
 		ccui.getInternalUsersPage().clickDscEnrollmentStatusSortToAsc();
 		logStep("Check UserStatus sorting");

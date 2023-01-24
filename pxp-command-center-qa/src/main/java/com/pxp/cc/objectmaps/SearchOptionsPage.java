@@ -475,7 +475,7 @@ public class SearchOptionsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelEnrollmentStatus, driver);
 		if (labelEnrollmentStatus.isDisplayed()) {
 			log("Verifying status label text");
-			CCUtils.assertEquals(labelEnrollmentStatus.getText().trim(), "Enrollment Status");
+			CCUtils.assertEquals(labelEnrollmentStatus.getText().trim(), "Enrollment Email Status");
 			log("Enrollment Status label text is " + labelEnrollmentStatus.getText().trim());
 			log("Verifying Enrollment status label are displayed on search  user page");
 			verifyEnrollmentStatusValues();
