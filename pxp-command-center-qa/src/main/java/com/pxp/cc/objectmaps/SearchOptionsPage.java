@@ -177,7 +177,7 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[contains(text(),'No roles assigned')]")
 	private WebElement noRolesAssignedCheckbox;
-	
+
 	@FindBy(xpath = "//span[contains(text(),'Active')]")
 	private WebElement activeCheckbox;
 
@@ -193,43 +193,8 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']/span[normalize-space(text())='Not Sent']/../preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
 	private WebElement notSentStatusCheckBox;
 
-	List<String> actualUserStatusValues = new ArrayList<String>();
-	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
-
-	public final List<String> expectedUserStatusValues = Arrays.asList("Active", "Inactive", "Locked out",
-			"No roles assigned");
-
-	List<String> actualEnrollmentStatusValues = new ArrayList<String>();
-
-	public final List<String> expectedEnrollmentStatusValues = Arrays.asList("Confirmed", "Delivered", "Pending",
-			"Email Issue", "Expired", "Not Sent");
-
 	public final List<String> expectedListOfEnrollmentStatusValues = Arrays.asList("Delivered", "Pending",
 			"Email Issue", "Expired", "Not Sent");
-
-	public void selectEnrollmentStatus(String status) {
-		if(status.equalsIgnoreCase("Confirmed"))
-			confirmedStatusCheckBox.click();
-		else if(status.equalsIgnoreCase("Pending"))
-			pendingStatusCheckBox.click();
-		else if(status.equalsIgnoreCase("Expired"))
-			expiredStatusCheckBox.click();
-		else if(status.equalsIgnoreCase("Not Sent"))
-			notSentStatusCheckBox.click();
-	}
-
-	public void selectEnrollment(List<String> enrollmentStatus) {
-		for(String each : enrollmentStatus) {
-			if(each.equalsIgnoreCase("Confirmed"))
-				confirmedStatusCheckBox.click();
-			else if(each.equalsIgnoreCase("Pending"))
-				pendingStatusCheckBox.click();
-			else if(each.equalsIgnoreCase("Expired"))
-				expiredStatusCheckBox.click();
-			else if(each.equalsIgnoreCase("Not Sent"))
-				notSentStatusCheckBox.click();
-		}
-	}
 
 	public void verifySearchInternalUserPopup() throws InterruptedException, AWTException {
 		log("Verifying search internal user pop-up");
@@ -534,39 +499,6 @@ public class SearchOptionsPage extends CCMainPage {
 					"User role checkboxes are already selected");
 			checkboxEnrollmentAndUserStatusList.get(i).click();
 		}
-	}
-
-	public void verifyEnrollmentStatusValues() throws InterruptedException {
-		log("Verifying enrollmentStatus Confirmed");
-		CCUtils.verifyAndWaitForElement(enrollmentStatusConfirmed, driver);
-		CCUtils.assertEquals(enrollmentStatusConfirmed.getText().trim(), "Confirmed");
-		log("Confirmed  enrollment status label text is " + enrollmentStatusConfirmed.getText().trim());
-
-		log("Verifying enrollmentStatus Delivered");
-		CCUtils.verifyAndWaitForElement(enrollmentStatusDelivered, driver);
-		CCUtils.assertEquals(enrollmentStatusDelivered.getText().trim(), "Delivered");
-		log("Delivered  enrollment status label text is " + enrollmentStatusDelivered.getText().trim());
-
-		log("Verifying enrollmentStatus Pending");
-		CCUtils.verifyAndWaitForElement(enrollmentStatusPending, driver);
-		CCUtils.assertEquals(enrollmentStatusPending.getText().trim(), "Pending");
-		log("Pending  enrollment status label text is " + enrollmentStatusPending.getText().trim());
-
-		log("Verifying enrollmentStatus Email Issue");
-		CCUtils.verifyAndWaitForElement(enrollmentStatusEmailIssue, driver);
-		CCUtils.assertEquals(enrollmentStatusEmailIssue.getText().trim(), "Email Issue");
-		log("Email Issue enrollment status label text is " + enrollmentStatusEmailIssue.getText().trim());
-
-		log("Verifying enrollmentStatus Expired");
-		CCUtils.verifyAndWaitForElement(enrollmentStatusExpired, driver);
-		CCUtils.assertEquals(enrollmentStatusExpired.getText().trim(), "Expired");
-		log("Expired enrollment status label text is " + enrollmentStatusExpired.getText().trim());
-
-		log("Verifying enrollmentStatus Not Sent");
-		CCUtils.verifyAndWaitForElement(enrollmentStatusNotSent, driver);
-		CCUtils.assertEquals(enrollmentStatusNotSent.getText().trim(), "Not Sent");
-		log("Not Sent  enrollment status label text is " + enrollmentStatusNotSent.getText().trim());
-
 	}
 
 	public void verifyEnrollmentStatusCheckboxesAreNotByDefaultSelected() throws InterruptedException {
@@ -954,4 +886,64 @@ public class SearchOptionsPage extends CCMainPage {
 		log("Clicked on no roles assigned User Status checkbox on Search Options popup");
 	}
 
+	List<String> actualUserStatusValues = new ArrayList<String>();
+	List<String> actualListOfEnrollmentStatusValues = new ArrayList<String>();
+
+	public final List<String> expectedUserStatusValues = Arrays.asList("Active", "Inactive", "Locked out",
+			"No roles assigned");
+
+	List<String> actualEnrollmentStatusValues = new ArrayList<String>();
+
+	public final List<String> expectedEnrollmentStatusValues = Arrays.asList("Confirmed", "Pending", "Expired",
+			"Not Sent");
+	public final List<String> expectedListEnrollmentStatusValues = Arrays.asList("Confirmed", "Pending", "Expired",
+			"Not Sent");
+
+	public void selectEnrollmentStatus(String status) {
+		if (status.equalsIgnoreCase("Confirmed"))
+			confirmedStatusCheckBox.click();
+		else if (status.equalsIgnoreCase("Pending"))
+			pendingStatusCheckBox.click();
+		else if (status.equalsIgnoreCase("Expired"))
+			expiredStatusCheckBox.click();
+		else if (status.equalsIgnoreCase("Not Sent"))
+			notSentStatusCheckBox.click();
 	}
+
+	public void selectEnrollment(List<String> enrollmentStatus) {
+		for (String each : enrollmentStatus) {
+			if (each.equalsIgnoreCase("Confirmed"))
+				confirmedStatusCheckBox.click();
+			else if (each.equalsIgnoreCase("Pending"))
+				pendingStatusCheckBox.click();
+			else if (each.equalsIgnoreCase("Expired"))
+				expiredStatusCheckBox.click();
+			else if (each.equalsIgnoreCase("Not Sent"))
+				notSentStatusCheckBox.click();
+		}
+	}
+
+	public void verifyEnrollmentStatusValues() throws InterruptedException {
+		log("Verifying enrollmentStatus Confirmed");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusConfirmed, driver);
+		CCUtils.assertEquals(enrollmentStatusConfirmed.getText().trim(), "Confirmed");
+		log("Confirmed  enrollment status label text is " + enrollmentStatusConfirmed.getText().trim());
+
+		log("Verifying enrollmentStatus Pending");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusPending, driver);
+		CCUtils.assertEquals(enrollmentStatusPending.getText().trim(), "Pending");
+		log("Pending  enrollment status label text is " + enrollmentStatusPending.getText().trim());
+
+		log("Verifying enrollmentStatus Expired");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusExpired, driver);
+		CCUtils.assertEquals(enrollmentStatusExpired.getText().trim(), "Expired");
+		log("Expired enrollment status label text is " + enrollmentStatusExpired.getText().trim());
+
+		log("Verifying enrollmentStatus Not Sent");
+		CCUtils.verifyAndWaitForElement(enrollmentStatusNotSent, driver);
+		CCUtils.assertEquals(enrollmentStatusNotSent.getText().trim(), "Not Sent");
+		log("Not Sent  enrollment status label text is " + enrollmentStatusNotSent.getText().trim());
+
+	}
+
+}

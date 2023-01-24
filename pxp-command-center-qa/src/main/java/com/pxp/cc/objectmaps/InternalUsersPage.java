@@ -110,6 +110,13 @@ public class InternalUsersPage extends CCMainPage {
 
 	@FindBy(id = "deactivate")
 	private WebElement buttonBulkDeactivate;
+	
+	@FindBy(xpath = "//th[@aria-sort='ascending']")
+	private WebElement firstNameAscSort;
+	
+	@FindBy(xpath = "//th[@aria-sort='descending']")
+	private WebElement firstNameDscSort;
+	
 
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
@@ -458,4 +465,60 @@ public class InternalUsersPage extends CCMainPage {
 		log("clicked to more options button");
 
 	}
+	
+	public void clickAscfirstNameSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending firstName sort");
+	}
+	public void clickDscfirstNameSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending first name sort");
+	}
+	
+	public void clickAscLastNameSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending Last Name sort");
+	}
+	public void clickDscLastNameSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending Last name sort");
+	}
+	
+	public void clickAscEmailSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending email sort");
+	}
+	public void clickDscEmailSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending email sort");
+	}
+	
+	public void clickAscEnrollmentStatusSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending Enrollment Status sort");
+	}
+	public void clickDscEnrollmentStatusSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending Enrollment Status sort");
+	}
+	
+	public void clickAscUserStatusSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending UserStatus sort");
+	}
+	public void clickDscUserStatusSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending emUserStatusail sort");
+	}
+	
 }

@@ -416,4 +416,12 @@ public class CCUI extends CommandCenterGenericTest {
 		}
 		return staffTypePage;
 	}
+    
+    SearchOptionsPage searchOptionsPage;
+    public  SearchOptionsPage getSearchOptionsPage() throws Exception {
+           if ( searchOptionsPage == null) {
+           	 searchOptionsPage = new  SearchOptionsPage(driver);
+           }
+           return  searchOptionsPage;
+}
 }
