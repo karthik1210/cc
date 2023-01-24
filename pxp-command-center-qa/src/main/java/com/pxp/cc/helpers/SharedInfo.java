@@ -583,7 +583,7 @@ public class SharedInfo extends BaseRest {
 		return createLocationMap;
 	}
 
-	public Response getLocationDetails(int clientId, int locationId){
+	public Response getLocationDetails(int clientId, int locationId) {
 		String url = ApiPath.LOCATION_DETAILS_BL(clientId, locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
@@ -643,7 +643,7 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(addNewLocationPayload).when().put(url).then().extract().response();
 	}
 
-	public Response getLocationDetails_DL(int clientId,int locationId) {
+	public Response getLocationDetails_DL(int clientId, int locationId) {
 		String url = ApiPath.LOCATION_DETAILS_DL(clientId, locationId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
@@ -1921,90 +1921,85 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).body(staffAssociateToPracticePayload).when().put(url).then().extract()
 				.response();
 	}
-	
+
 	public Response getPracticesAssociatedToStaff_NullValues_BL() {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response associateDeassociatePracticeForStaffUsingEmptyPayload_BL(int staffId) {
- 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_BL(staffId);
- 		Map<String, Object> associateDeassociatePracticeForStaffPayload = new HashMap<String, Object>();
- 		return given().spec(requestSpec).body(associateDeassociatePracticeForStaffPayload).when().put(url).then()
- 				.extract().response();
- 	}
- 	
- 	public Response associateDeassociatePracticeForStaffUsingNullValue_BL() {
- 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL();
- 		return given().spec(requestSpec).when().put(url).then().extract().response();
- 	}
- 	
- 	public Response getStaff_DL(int staffId) {
-		String url = ApiPath.GET_STAFF_DL(staffId);
-		return given().spec(requestSpec).when().get(url).then().extract()
-				.response();
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_BL(staffId);
+		Map<String, Object> associateDeassociatePracticeForStaffPayload = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(associateDeassociatePracticeForStaffPayload).when().put(url).then()
+				.extract().response();
 	}
-	
-	public Response getStaff_DL_Null_value(){
+
+	public Response associateDeassociatePracticeForStaffUsingNullValue_BL() {
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
+	public Response getStaff_DL(int staffId) {
+		String url = ApiPath.GET_STAFF_DL(staffId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getStaff_DL_Null_value() {
 		String url = ApiPath.GET_STAFF_DL_NULL_VALUE();
-		return given().spec(requestSpec).when().get(url).then().extract()
-				.response();
-	}	
-	
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
 	public Response getStaffDetails_BL(int clientId, int staffId) {
 		String url = ApiPath.GET_STAFF_DETAILS_BL(clientId, staffId);
-		return given().spec(requestSpec).when().get(url).then().extract()
-				.response();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
-	public Response getStaffDetails_BL_Null_value(){
+
+	public Response getStaffDetails_BL_Null_value() {
 		String url = ApiPath.GET_STAFF_DETAILS_BL_NULL_VALUE();
-		return given().spec(requestSpec).when().get(url).then().extract()
-				.response();
-	}	
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 	public Response associateDeassociatePracticeForStaffUsingEmptyPayload_DL(int staffId) {
- 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_DL(staffId);
- 		return given().spec(requestSpec).when().put(url).then()
- 				.extract().response();
- 	}
-	
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_DL(staffId);
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 	public Response associateDeassociatePracticeForStaffUsingNullValue_DL() {
- 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL();
- 		return given().spec(requestSpec).when().put(url).then().extract().response();
- 	}
-	
+		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().put(url).then().extract().response();
+	}
+
 	public Response getPracticesAssociatedToStaff_DL(int staffId) {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_DL(staffId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-   
+
 	public Response getPracticesAssociatedToStaff_NullValues_DL() {
 		String url = ApiPath.PRACTICES_ASSOCIATED_TO_STAFF_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response addOrRemoveResourcesForProviderForNullValues_DL() {
 		String url = ApiPath.UPDATE_RESOURCES_FOR_PROVIDER_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().put(url).then().extract().response();
 	}
-	
+
 	public Response addOrRemoveAppointmentTypesForResources_DL(int resourceId, int practiceId,
 			List<AppointmentTypeDetails> appointmentTypeList) {
 		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_DL(resourceId, practiceId);
 		return given().spec(requestSpec).body(appointmentTypeList).when().put(url).then().extract().response();
 	}
-	
+
 	public Response getAppointmentTypesAssociatedToResource_DL(int resourceId, int practiceId) {
 		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_DL(resourceId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response appointmentTypesAssociatedToResource_NullValues_DL() {
 		String url = ApiPath.APPOINTMENT_TYPES_ASSOCIATED_TO_RESOURCE_NULLVALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getStaffForClient_BL(String clientId, String name, String systemid, String enterpriseid,
 			String practiceid, String solutionid, String pagesize) {
 		String url = ApiPath.STAFF_FOR_CLIENT_BL(clientId);
@@ -2013,21 +2008,22 @@ public class SharedInfo extends BaseRest {
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
 	}
-	
+
 	public Response saveAppTypesInfoForPractice_BL(int appointmentTypeId, int practiceId, String enDisplayName,
 			String esDisplayName) {
 		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_BL(appointmentTypeId, practiceId);
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
-		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract()
+				.response();
 	}
-	
-	public Response saveAppTypesInfoForPracticeNullValues_BL(String enDisplayName,
-			String esDisplayName) {
+
+	public Response saveAppTypesInfoForPracticeNullValues_BL(String enDisplayName, String esDisplayName) {
 		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_BL();
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
-		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract()
+				.response();
 	}
-	
+
 	public Response getAppTypesForClient_BL(String clientId, String name, String systemid, String enterpriseid,
 			String practiceid, String solutionid, String pagesize) {
 		String url = ApiPath.APP_TYPES_FOR_CLIENT_BL(clientId);
@@ -2036,23 +2032,46 @@ public class SharedInfo extends BaseRest {
 				.queryParam("solutionid", solutionid).queryParam("pagesize", pagesize).when().get(url).then().extract()
 				.response();
 	}
-	
+
 	public Response saveAppTypesInfoForPractice_DL(int appointmentTypeId, int practiceId, String enDisplayName,
 			String esDisplayName) {
 		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_DL(appointmentTypeId, practiceId);
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
-		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract()
+				.response();
 	}
-	
-	public Response saveAppTypesInfoForPracticeNullValues_DL(String enDisplayName,
-			String esDisplayName) {
+
+	public Response saveAppTypesInfoForPracticeNullValues_DL(String enDisplayName, String esDisplayName) {
 		String url = ApiPath.SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_DL();
 		Map<String, Object> createEnESDisplayNamePayload = createDisplayNamePayload(enDisplayName, esDisplayName);
-		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract().response();
+		return given().spec(requestSpec).body(createEnESDisplayNamePayload).when().patch(url).then().extract()
+				.response();
 	}
-	
+
 	public Response deleteResourceImageNullValues_DL() {
 		String url = ApiPath.RESOURCE_IMAGE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+
+	public Response addStaffImage_DL(int staffId, String imageUrl) {
+		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
+		  return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
+		 .response();
+	}
+
+	public Response getStaffDetails_DL(int staffId) {
+		 String url = ApiPath.GET_STAFF_DETAILS_DL(staffId);
+		 return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response deleteStaffImage_DL(int staffId) {
+		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
+		 return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response addStaffImageWithEmptyPayload_DL(int staffId) {
+		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
+		  Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
+		 return given().spec(requestSpec).body(addImageUrlMap).when().patch(url).then().extract().response();
+	 }
 }
