@@ -2198,5 +2198,10 @@ public class ApiPath {
 	public static final String GET_STAFF_DETAILS_DL(int staffId) {
 		 return SHARED_DL + "/v1/staff/" + staffId;
 	}
+	
+	public static final String DETETE_STAFF_IMAGE_NullValue_DL() {
+		return SHARED_DL + "/v1/staff/null/images";
+	}
+
 
 }
