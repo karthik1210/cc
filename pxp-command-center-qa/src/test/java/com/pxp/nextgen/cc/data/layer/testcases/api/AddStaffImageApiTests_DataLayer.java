@@ -59,7 +59,7 @@ public class AddStaffImageApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addStaffImageUrlApiResponse);
 		CCUtils.assertEquals(addStaffImageUrlApiResponse.getStatusCode(), 200);
-		logStep("Get resource ImageUrl Details");
+		logStep("Get staff ImageUrl Details");
 		getStaffDetailsApiResponse = sharedInfo
 				.getStaffDetails_DL(staffId);
 		logStep("Validating response information");
