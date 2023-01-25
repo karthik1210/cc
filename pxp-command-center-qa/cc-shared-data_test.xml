@@ -151,6 +151,8 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.RemoveResourceImageApiTests_DataLayer"></class>	
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddStaffImageApiTests_DataLayer"></class>
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>	
 		</classes>
 	</test>
 

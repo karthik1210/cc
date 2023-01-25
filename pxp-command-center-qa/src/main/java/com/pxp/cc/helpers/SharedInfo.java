@@ -2073,5 +2073,10 @@ public class SharedInfo extends BaseRest {
 		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
 		  Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
 		 return given().spec(requestSpec).body(addImageUrlMap).when().patch(url).then().extract().response();
-	 }
+   }
+	
+	public Response deleteStaffImage_NullValues_DL() {
+		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}	
 }
