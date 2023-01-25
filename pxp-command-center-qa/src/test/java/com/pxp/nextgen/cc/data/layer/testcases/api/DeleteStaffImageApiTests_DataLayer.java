@@ -17,7 +17,8 @@ public class DeleteStaffImageApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private ClientInfo clientInfo;
-	Response createNewstaffApiResponse,createClientApiResponse,addStaffImageUrlApiResponse,getStaffDetailsApiResponse,deleteStaffImageApiResponse ;
+	Response createNewstaffApiResponse, createClientApiResponse, addStaffImageUrlApiResponse, getStaffDetailsApiResponse,
+	deleteStaffImageApiResponse ;
 	int clientId,staffId;
 	
 	@BeforeClass()
@@ -82,10 +83,10 @@ public class DeleteStaffImageApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseBodyForNonExistingStaffId(deleteStaffImageApiResponse, nonExistingStaffId);
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value and verify error message")
-	public void testErrorMessageForNullValue() throws IOException {
-		log("Enter null vlaues");
-		deleteStaffImageApiResponse = sharedInfo.deteteStaffImage_NullValues_DL();
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values and verify error message")
+	public void testErrorMessageForNullValues() throws IOException {
+		log("Enter null values");
+		deleteStaffImageApiResponse = sharedInfo.deleteStaffImage_NullValues_DL();
 		CCUtils.responseTimeValidation(deleteStaffImageApiResponse);
 		CCUtils.assertEquals(deleteStaffImageApiResponse.getStatusCode(), 400);
 	}
