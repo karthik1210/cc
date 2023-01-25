@@ -81,9 +81,8 @@ public class GetSolutionsForProvidersApiTests_BusinessLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		practiceIdOne = createPracticeApiResponse.jsonPath().get("orgId");
-		String externalIdOne = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProvider_BL(practiceIdOne, firstName, lastName,
-				testData.getProperty("provider.gender"), externalIdOne, testData.getProperty("provider.credentials"));
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		providerIdOne = createProviderApiResponse.jsonPath().getInt("providerId");
 
 	}
