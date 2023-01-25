@@ -84,8 +84,8 @@ public class DeleteStaffImageApiTests_DataLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null value and verify error message")
 	public void testErrorMessageForNullValue() throws IOException {
-		log("Enter invalid url");
-		deleteStaffImageApiResponse = sharedInfo.deteteStaffImage_NullValue_DL();
+		log("Enter null vlaues");
+		deleteStaffImageApiResponse = sharedInfo.deteteStaffImage_NullValues_DL();
 		CCUtils.responseTimeValidation(deleteStaffImageApiResponse);
 		CCUtils.assertEquals(deleteStaffImageApiResponse.getStatusCode(), 400);
 	}

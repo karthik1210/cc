@@ -2199,7 +2199,7 @@ public class ApiPath {
 		 return SHARED_DL + "/v1/staff/" + staffId;
 	}
 	
-	public static final String DETETE_STAFF_IMAGE_NullValue_DL() {
+	public static final String DETETE_STAFF_IMAGE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/staff/null/images";
 	}
 
