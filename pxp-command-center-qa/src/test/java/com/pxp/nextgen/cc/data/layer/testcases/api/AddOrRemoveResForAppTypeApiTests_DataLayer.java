@@ -150,7 +150,7 @@ public class AddOrRemoveResForAppTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addOrRemoveResForAppTypeApiResponse);
 		CCUtils.assertEquals(addOrRemoveResForAppTypeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(addOrRemoveResForAppTypeApiResponse);
+		validation.verifyErrorMessageForInvalidInput(addOrRemoveResForAppTypeApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practice id in practiceId field and verify response body")
@@ -163,7 +163,7 @@ public class AddOrRemoveResForAppTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addOrRemoveResForAppTypeApiResponse);
 		CCUtils.assertEquals(addOrRemoveResForAppTypeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(addOrRemoveResForAppTypeApiResponse);
+		validation.verifyErrorMessageForInvalidInput(addOrRemoveResForAppTypeApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing practiceId, non-existing appointmentTypeId and verify response body")
@@ -177,7 +177,7 @@ public class AddOrRemoveResForAppTypeApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(addOrRemoveResForAppTypeApiResponse);
 		CCUtils.assertEquals(addOrRemoveResForAppTypeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(addOrRemoveResForAppTypeApiResponse);
+		validation.verifyErrorMessageForInvalidInput(addOrRemoveResForAppTypeApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practiceId, appointmentTypeId as null and verify response body")
