@@ -2191,6 +2191,14 @@ public class ApiPath {
 		return SHARED_DL + "/v1/resources/null/images";
 	}
 
+	public static final String ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE_DL(int practiceId, int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/resources";
+	}
+
+	public static final String ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/appointment-types/null/resources";
+	}
+	
 	public static final String STAFF_IMAGE_DL(int staffId) {
         return SHARED_DL + "/v1/staff/" + staffId + "/images";
 	}
