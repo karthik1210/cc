@@ -68,6 +68,8 @@
                     name="com.pxp.nextgen.cc.business.layer.testcases.api.GetEmailTemplateVersionsListApiTests_BusinessLayer"/>
             <class
                     name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateListApiTests_BusinessLayer"/>
+            <class
+                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateAttributesApiTests_BusinessLayer"/>
         </classes>
     </test>
 </suite>

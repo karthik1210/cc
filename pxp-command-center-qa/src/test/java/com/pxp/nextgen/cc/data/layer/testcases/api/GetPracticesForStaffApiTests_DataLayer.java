@@ -77,12 +77,6 @@ public class GetPracticesForStaffApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createNewstaffApiResponse);
 		CCUtils.assertEquals(createNewstaffApiResponse.getStatusCode(), 200);
 		staffId = createNewstaffApiResponse.jsonPath().get("id");
-		createNewstaffApiResponse = sharedInfo.createStaff_DL(clientId, staffName, lastName,
-				testData.getProperty("staff.gender"), externalId);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createNewstaffApiResponse);
-		CCUtils.assertEquals(createNewstaffApiResponse.getStatusCode(), 200);
-		staffId = createNewstaffApiResponse.jsonPath().get("id");
 		logStep("Create staff to get staffId");
 		staffNameOne = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
 		lastNameOne = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));

@@ -136,10 +136,25 @@
 			<class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_DataLayer"></class>		
 			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppoiTypesAssocWithResApiTests_DataLayer"></class>	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppTypesAssocWithResApiTests_DataLayer"></class>	
 			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppoiTypesForResApiTests_DataLayer"></class>		
-					
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppTypesForResApiTests_DataLayer"></class>		
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableAppTypesApiTests_DataLayer"></class>			
+            <class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>		
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SaveAppTypesDisplayInfoApiTests_DataLayer"></class>
+			<class		
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>	
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.RemoveResourceImageApiTests_DataLayer"></class>	
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddStaffImageApiTests_DataLayer"></class>
+			<class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResForAppTypeApiTests_DataLayer"></class>
+            <class	
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>	
 		</classes>
 	</test>
 

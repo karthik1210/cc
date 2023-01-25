@@ -2084,28 +2084,132 @@ public class ApiPath {
 		else
 			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-versions/" + templateVersionId;
 	}
-	
+
 	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_BL(int appointmentTypeId, int practiceId) {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/" + appointmentTypeId + "/practices/" + practiceId;
 	}
-	
+
 	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/appointment-types/null/practices/null";
 	}
-	
+
 	public static final String APP_TYPES_FOR_CLIENT_BL(String clientId) {
 		return SERVICE_SHARED_BL + "/v1/clients/" + clientId + "/appointment-types";
 	}
-	
-	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_BL(int appointmentTypeId, int practiceId){ 
-		return   SERVICE_SHARED_BL+ "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
-     }
-	
+
+	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_BL(int appointmentTypeId, int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId
+				+ "/solutions";
+	}
+
 	public static final String UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/practices/null/appointment-types/null/solutions";
 	}
+
+	public static final String GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/appointment-types/null/solutions";
+	}
+
+	public static final String GET_TEMPLATE_ATTRIBUTE(String serviceLayer, String uriType, int practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-attributes";
+			else
+				return SERVICE_ORG_BL + "/v1/orgsss/" + practiceId + "/template-attributes";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-attributes";
+			else
+				return SERVICE_ORG_DL + "/v1/orgsss/" + practiceId + "/template-attributes";
+		}
+	}
+
+	public static final String GET_TEMPLATE_ATTRIBUTE_WITH_INVLAID_DATATYPE(String serviceLayer, String practiceId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_ORG_BL + "/v1/orgs/" + practiceId + "/template-attributes";
+		else
+			return SERVICE_ORG_DL + "/v1/orgs/" + practiceId + "/template-attributes";
+	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_BL(int practiceId, int appointmentTypeId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId;
+	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/appointment-types/null";
+	}
+
+	public static final String UPDATE_USER_STATUS_DL = SERVICE_USER_DL + "/v1/users/status";
+
+	public static final String SOLUTIONS_FOR_APPOINTMENT_TYPE_DL(int appointmentTypeId, int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/solutions";
+	}
+
+	public static final String UPDATE_SOLUTIONS_FOR_APPOINTMENT_TYPE_USING_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/practices/null/appointment-types/null/solutions";
+	}
+
+	public static final String GET_TEMPLATE_VARIABLE_LISTS(String serviceLayer, String uriType, int templateId) {
+		if (serviceLayer.equalsIgnoreCase("BL")) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_COMMONS_BL + "/v1/comm-templates/" + templateId + "/variables";
+			else
+				return SERVICE_COMMONS_BL + "/v1/comm-templatesssss/" + templateId + "/variables";
+		} else {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_COMMONS_DL + "/v1/comm-templates/" + templateId + "/variables";
+			else
+				return SERVICE_COMMONS_DL + "/v1/comm-templatesssss/" + templateId + "/variables";
+		}
+	}
+
+	public static final String GET_TEMPLATE_VARIABLE_LISTS_WITH_INVLAID_DATATYPE(String serviceLayer,
+			String templateId) {
+		if (serviceLayer.equalsIgnoreCase("BL"))
+			return SERVICE_COMMONS_BL + "/v1/comm-templates/" + templateId + "/variables";
+		else
+			return SERVICE_COMMONS_DL + "/v1/comm-templates/" + templateId + "/variables";
+	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_DL(int practiceId, int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId;
+	}
+
+	public static final String ENABLE_DISABLE_APP_TYPES_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/appointment-types/null";
+	}
+
+	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_DL(int appointmentTypeId, int practiceId) {
+		return SHARED_DL + "/v1/appointment-types/" + appointmentTypeId + "/practices/" + practiceId;
+	}
+
+	public static final String SAVE_APP_TYPES_INFO_FOR_PRACTICE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/appointment-types/null/practices/null";
+	}
+
+	public static final String RESOURCE_IMAGE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/resources/null/images";
+	}
+
+	public static final String ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE_DL(int practiceId, int appointmentTypeId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/appointment-types/" + appointmentTypeId + "/resources";
+	}
+
+	public static final String ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/appointment-types/null/resources";
+	}
 	
-	public static final String GET_SOLUTIONS_FOR_APPOINTMENT_TYPE_NULL_VALUES_BL(){ 
-		return   SERVICE_SHARED_BL+ "/v1/practices/null/appointment-types/null/solutions";
-     }
+	public static final String STAFF_IMAGE_DL(int staffId) {
+        return SHARED_DL + "/v1/staff/" + staffId + "/images";
+	}
+
+	public static final String GET_STAFF_DETAILS_DL(int staffId) {
+		 return SHARED_DL + "/v1/staff/" + staffId;
+	}
+	
+	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/staff/null/images";
+	}
+
+
 }

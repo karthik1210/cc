@@ -111,6 +111,12 @@ public class InternalUsersPage extends CCMainPage {
 	@FindBy(id = "deactivate")
 	private WebElement buttonBulkDeactivate;
 
+	@FindBy(xpath = "//th[@aria-sort='ascending']")
+	private WebElement firstNameAscSort;
+
+	@FindBy(xpath = "//th[@aria-sort='descending']")
+	private WebElement firstNameDscSort;
+
 	public InternalUsersPage(WebDriver driver) {
 		super(driver);
 	}
@@ -458,4 +464,65 @@ public class InternalUsersPage extends CCMainPage {
 		log("clicked to more options button");
 
 	}
+
+	public void clickAscFirstNameSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending arrow for firstName column sort");
+	}
+
+	public void clickDscFirstNameSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending arrow for firstName column sort");
+	}
+
+	public void clickAscLastNameSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending arrow for LastName column sort");
+	}
+
+	public void clickDscLastNameSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending arrow for Lastname column sort");
+	}
+
+	public void clickAscEmailSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending arrow for email column sort");
+	}
+
+	public void clickDscEmailSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending arrow for email column sort");
+	}
+
+	public void clickAscEnrollmentStatusSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending arrow for Enrollment Status column sort");
+	}
+
+	public void clickDscEnrollmentStatusSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending arrow for Enrollment Status column sort");
+	}
+
+	public void clickAscUserStatusSortToDsc() {
+		CCUtils.verifyAndWaitForElement(firstNameAscSort, driver);
+		firstNameAscSort.click();
+		log("clicked to ascending arrow for UserStatus column sort");
+	}
+
+	public void clickDscUserStatusSortToAsc() {
+		CCUtils.verifyAndWaitForElement(firstNameDscSort, driver);
+		firstNameDscSort.click();
+		log("clicked to descending arrow for UserStatus column sort");
+	}
+
 }

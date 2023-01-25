@@ -196,7 +196,7 @@ public class UpdateEmailTemplateStatusApiTests_BusinessLayer extends BaseRest {
         updateTemplateVersionStatusResponse = orgInfo.updateTemplateVersionStatusResponse("Valid", "BL", practiceId, templateVersionId, requestMap);
         logStep("Validating Response Information");
         CCUtils.assertEquals(updateTemplateVersionStatusResponse.getStatusCode(), 400);
-        CCUtils.assertEquals(updateTemplateVersionStatusResponse.jsonPath().get("message"), "Active template version cannot be deleted");
+        CCUtils.assertEquals(updateTemplateVersionStatusResponse.jsonPath().get("message"), "Invalid input parameter");
     }
 
     @Test(enabled = false)

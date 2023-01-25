@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.pxp.cc.pojos.PatientAccessDetailsBusinessLayer;
 import io.restassured.response.Response;
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
@@ -831,5 +829,28 @@ public class UserInfo extends BaseRest {
 		return given().spec(requestSpec).body(addRoleLocationPayload).when().put(url).then().extract()
 				.response();
 	}
+	
+	public Response updateUsersStatus_DL(int userId, String status, String message, String oldStatus, String username) {
+		String url = ApiPath.UPDATE_USER_STATUS_DL;
+		Map<String, Object> usersStatus = userStatusRequestPayload(userId, status, message, oldStatus, username);
+		List<Object> userStatusPayload = userStatusPayload(usersStatus);
+		return given().spec(requestSpec).body(userStatusPayload).when().put(url).then().extract().response();
+	}
 
+	private List<Object> userStatusPayload(Map<String, Object> usersStatus) {
+		List<Object> userStatus = new ArrayList<Object>();
+		userStatus.add(usersStatus);
+		return userStatus;
+	}
+
+	private Map<String, Object> userStatusRequestPayload(int userId, String status, String message, String oldStatus,
+			String username) {
+		Map<String, Object> userStatusMap = new HashMap<String, Object>();
+		userStatusMap.put("userId", userId);
+		userStatusMap.put("status", status);
+		userStatusMap.put("message", message);
+		userStatusMap.put("oldStatus", oldStatus);
+		userStatusMap.put("username", username);
+		return userStatusMap;
+	}
 }
