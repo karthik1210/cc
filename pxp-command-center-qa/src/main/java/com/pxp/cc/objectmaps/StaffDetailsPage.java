@@ -58,12 +58,12 @@ public class StaffDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//div/span[contains(text(),'REMOVE IMAGE')]")
 	private WebElement removeImage;
 	
-    public String validImagePath = "\\src\\test\\resources\\data-driven\\images\\logo.png";
+    public String validImagePath = "/src/test/resources/data-driven/images/logo.png";
     
     @FindBy(xpath = "//div[contains(text(),'REMOVE IMAGE')]")
 	private WebElement removeImageInactive;
 	  
-	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
+	public String invalidImagePath = "/src/test/resources/data-driven/images/223267.jpg";
 	
 	@FindBy(xpath = "//p[contains(text(),'Invalid file type')]")
 	private WebElement invalidFileType;
@@ -147,7 +147,7 @@ public class StaffDetailsPage extends CCMainPage {
 		log("Clicked on edit image");
 		String projectpath = System.getProperty("user.dir");
 		uploadStaffImage.sendKeys(projectpath + validImagePath);
-		log("Verifying Image uploaded");
+		log("Verified Image uploaded");
    } 
 	
 	public void uploadStaffInvalidImage() throws InterruptedException, AWTException {
@@ -155,7 +155,7 @@ public class StaffDetailsPage extends CCMainPage {
 		log("Clicked on edit image");
 		String projectpath = System.getProperty("user.dir");
 		uploadStaffImage.sendKeys(projectpath + invalidImagePath);
-		log("Verifying staff image uploaded");
+		log("Verified staff image uploaded");
 	}
 	
 	public void removeStaffImage() {
