@@ -24,6 +24,7 @@
 			<class name="com.pxp.cc.testcases.ui.LocationsPageTests" />
 			<class name="com.pxp.cc.testcases.ui.BrandTemplatePageTests" />
 			<class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
+			<class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
 			<class
 				name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
 			<class name="com.pxp.cc.testcases.ui.InternalUserPageTests" />
