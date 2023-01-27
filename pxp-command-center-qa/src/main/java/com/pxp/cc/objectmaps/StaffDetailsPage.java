@@ -108,7 +108,7 @@ public class StaffDetailsPage extends CCMainPage {
 	
 	public void verifyNoDataDisplay() {
 		CCUtils.verifyAndWaitForElement(labelNoData, driver);
-		log("Verifying label Add button is displayed");
+		log("Verifying label No data is displayed");
 		CCUtils.assertEquals(labelNoData.isDisplayed(),true);
 	}
 
