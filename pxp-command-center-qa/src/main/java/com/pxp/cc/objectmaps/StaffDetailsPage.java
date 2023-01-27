@@ -61,6 +61,12 @@ public class StaffDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//div[contains(text(),' REMOVE IMAGE ')]")
 	private WebElement labelRemoveImage;
+	
+	@FindBy(xpath="//button[contains(text(),'+ ADD')]")
+	private WebElement labelAddButton;
+	
+	@FindBy(xpath="//div[contains(text(),'No data to display')]")
+	private WebElement labelNoData;
 
 	public void verifyStaffInfoSectionLabel() {
 		CCUtils.verifyAndWaitForElement(labelStaffInfoSection, driver);
@@ -93,6 +99,18 @@ public class StaffDetailsPage extends CCMainPage {
 		log("Verifying label Staff Id Label");
 	    CCUtils.assertEquals(labelStaffId.isDisplayed(),true);
 	 }
+	
+	public void verifyAddButtonLabel() {
+		CCUtils.verifyAndWaitForElement(labelAddButton, driver);
+		log("Verifying label Add button is displayed");
+		CCUtils.assertEquals(labelAddButton.isDisplayed(),true);
+	}
+	
+	public void verifyNoDataDisplay() {
+		CCUtils.verifyAndWaitForElement(labelNoData, driver);
+		log("Verifying label Add button is displayed");
+		CCUtils.assertEquals(labelNoData.isDisplayed(),true);
+	}
 
 	public void verifyStaffInfoSection() throws InterruptedException, AWTException {
 		log("Verifying Staff Info Section");
@@ -101,6 +119,8 @@ public class StaffDetailsPage extends CCMainPage {
 		verifyTaskGroups();
 		verifyRemoveImageLabel();
 		verifyStaffIdLabel();
+		verifyAddButtonLabel();
+		verifyNoDataDisplay();
 	}
 
 	public void uploadStaffImage() throws InterruptedException, AWTException {

@@ -30,7 +30,6 @@ public class StaffDetailsPageTests extends CommandCenterGenericTest {
 			getClientSystementErpriseandPractice();
 		}
 	}
-
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable and disable practice for created staff")
 	public void testToEnableAndDisableStaffForPractice() throws Exception {
 		ngHierarchyClientCreate();
