@@ -1479,8 +1479,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate username=" + existingUsername);
 	}
 
-	public void verifyErrorResponseForDuplicateMobile(Response response, long existingMobileNumber)
-			throws IOException {
+	public void verifyErrorResponseForDuplicateMobile(Response response, long existingMobileNumber) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertNotNull(jsonpath.get("error").toString(), "Bad request");
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Duplicate mobile no=" + existingMobileNumber);
@@ -3501,7 +3500,7 @@ public class Validations {
 				Log4jUtil.log(responseName + " is not available for templates");
 		}
 	}
-	
+
 	public void verifyErrorResponseBodyForLocationField(Response response, String locationId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Location not found for locationId=" + locationId);
@@ -3517,10 +3516,12 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("appointmentTypeId"), appointmentTypeId);
 		}
 	}
-	
-	public void verifyErrorResponseBodyForInvalidInput(Response response, int appointmentTypeId, int practiceId) throws IOException {
+
+	public void verifyErrorResponseBodyForInvalidInput(Response response, int appointmentTypeId, int practiceId)
+			throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Appointment not found for appointmentTypeId=" + appointmentTypeId + " and practiceId=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"Appointment not found for appointmentTypeId=" + appointmentTypeId + " and practiceId=" + practiceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
@@ -3529,7 +3530,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input either id or object null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-	
+
 	public void verifyResponseBodyOfAppTypesSolutions(Response response, int solutionId, String status) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
@@ -3539,7 +3540,7 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("status"), status);
 		}
 	}
-	
+
 	public void verifyNoOfSolutionsFetchedSolutionNameandId(Response response) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		jsonArray = new JSONArray(response.getBody().asString());
@@ -3551,4 +3552,25 @@ public class Validations {
 					+ jsonObject.get("solutionId"));
 		}
 	}
+
+	public void verifyResponseBodyForExistingStaffd(Response response) throws IOException {
+	 JsonPath jsonpath = new JsonPath(response.getBody().asString());
+	 Log4jUtil.log("value of staffId is : " + jsonpath.get("staffId").toString());
+	 Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
+	 Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
+	 Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imgUrl"));
+	}
+
+	public void verifyErrorMessageInResponseBodyForNonExistingStaffId(Response response, int nonExistingStaffId)
+	throws IOException {
+	 JsonPath jsonpath = new JsonPath(response.getBody().asString());
+	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by id=" + nonExistingStaffId);
+     CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	 }
+
+	public void verifyErrorResponseForImageUrlField(Response response) throws IOException {
+	JsonPath jsonpath = new JsonPath(response.getBody().asString());
+	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
+	 CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	 }
 }
