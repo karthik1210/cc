@@ -271,7 +271,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 		javascriptClick(browseSolLogo);
 		log("Clicked on BROWSE");
 		String projectpath = System.getProperty("user.dir");
-		browseSolLogo.sendKeys(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		browseSolLogo.sendKeys(projectpath + "/src/test/resources/data-driven/images/logo.png");
 		log("Verifying Image uploaded");
 	}
 
