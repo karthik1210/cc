@@ -4,7 +4,6 @@ package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -124,7 +123,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-radio-button[@value='true']")
 	private WebElement logoRadioButton;
-	
+
 	@FindBy(id = "radioBtnPracticeName-input")
 	private WebElement practiceNameRadioButton;
 
@@ -154,7 +153,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	@FindBy(xpath = "//p[contains(text(),' Hide other versions')]")
 	private WebElement hideOtherVersions;
-	
+
 	@FindBy(id = "save-icon")
 	private WebElement saveButtonOnConfirmationDialogBox;
 
@@ -184,7 +183,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, brandingTemplatesLabel);
 		CCUtils.verifyAndWaitForElement(brandingTemplatesLabel, driver);
 		log("Verifying Inactive status text");
-		if(brandingTemplatesLabel.getText().trim().contains("Branding Templates")) {
+		if (brandingTemplatesLabel.getText().trim().contains("Branding Templates")) {
 			CCUtils.assertTrue(true, "verifying branding title");
 		}
 	}
@@ -221,7 +220,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 				+ "']//..//..//following::span//mat-icon)[1]";
 		WebElement elem = driver.findElement(By.xpath(xpathLocator));
 		javascriptClick(elem);
-		log("Clicked on kebabMenu of brand : "+brandName);
+		log("Clicked on kebabMenu of brand : " + brandName);
 	}
 
 	public void clickOnkebabMenuForActiveStatus() throws InterruptedException {
@@ -242,7 +241,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Entered text in Version name field : " + newVersion);
 
 	}
-	
+
 	public void removeEnteredBrand() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(textboxVersion, driver);
 		textboxVersion.clear();
@@ -251,7 +250,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void verifyAndClickSaveButton() throws InterruptedException, AWTException {
-		CCUtils.scrollPageViaElement(driver,saveButton);
+		CCUtils.scrollPageViaElement(driver, saveButton);
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		log("Verifying SAVE is displayed");
 		CCUtils.assertEquals(saveButton.getText().trim(), "Save");
@@ -259,7 +258,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 		javascriptClick(saveButton);
 		log("Clicked on SAVE");
 	}
-	
+
 	public void clickEditSaveButton() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElementPresent(editSaveButton, driver);
 		CCUtils.assertEquals(editSaveButton.getText().trim(), "Save");
@@ -287,14 +286,14 @@ public class BrandingTemplatesPage extends CCMainPage {
 		altTextFaviconBox.sendKeys(Keys.BACK_SPACE);
 		log("Remove entered text in Version name field");
 	}
-	
+
 	public void enterAltTextForPatientCommunication(String altText) throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, altTextPatientCommunicationBox);
 		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
 		altTextPatientCommunicationBox.sendKeys(altText);
 		log("Entered text in Alt Text field of Patient Communication is : " + altText);
 	}
-	
+
 	public void removeEnterAltTextForPatientCommunication() throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, altTextPatientCommunicationBox);
 		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
@@ -316,7 +315,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 		altTextFaviconBox.sendKeys(Keys.BACK_SPACE);
 		log("Removed entered text in Alt Text field of Favicon");
 	}
-	
+
 	public void verifyRemoveButton() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(removeImageButton, driver);
 		log("Verifying REMOVE is displayed");
@@ -573,7 +572,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 		javascriptClick(practiceNameRadioButton);
 		log("clicked to practice name button");
 	}
-	
+
 	public void clickOnMakeActive() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(makeActiveButton, driver);
 		javascriptClick(makeActiveButton);
@@ -702,9 +701,9 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	public void VerifyNewlyCreatedBrandingTemplate(String input) throws InterruptedException {
 		CCUtils.scrollPageViaElement(driver, hideOtherVersions);
-		for(WebElement ele : newlyCreatedBrandName) {
+		for (WebElement ele : newlyCreatedBrandName) {
 			CCUtils.verifyAndWaitForElement(ele, driver);
-			if(ele.getText().trim().equals(input)){
+			if (ele.getText().trim().equals(input)) {
 				CCUtils.assertTrue(true, "verifying newly created brand is present in brand section");
 				log("verifying newly created brand is present in brand section");
 			}
@@ -719,10 +718,10 @@ public class BrandingTemplatesPage extends CCMainPage {
 		javascriptClick(editSaveButton);
 		log("Clicked on SAVE");
 	}
-	
+
 	public void pageRefresh() {
 		driver.navigate().refresh();
 		log("Refreshing page");
-		
+
 	}
 }

@@ -7,7 +7,6 @@ import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.objectmaps.BrandingTemplatesPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
