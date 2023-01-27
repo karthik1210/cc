@@ -57,7 +57,7 @@ public class StaffDetailsPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Staff label, Staff Info Section and Task Groups")
-	public void verifyStaffLabelAndStaffInfoSection() throws Exception {
+	public void verifyStaffLabelStaffInfoAndTaskGroupsSection() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Providers And Resources tab is displayed");

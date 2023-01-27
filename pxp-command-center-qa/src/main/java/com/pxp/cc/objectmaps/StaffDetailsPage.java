@@ -68,7 +68,6 @@ public class StaffDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(taskGroups, driver);
 		log("Verifying Task Group Label");
 		CCUtils.assertEquals(taskGroups.getText().trim(), "Task Groups");
-
 	}
 
 	public void verifyRemoveImageLabel() {
@@ -126,5 +125,4 @@ public class StaffDetailsPage extends CCMainPage {
 		backIcon.click();
 		log("clicked to back button in staff details page");
 	}
-
 }
