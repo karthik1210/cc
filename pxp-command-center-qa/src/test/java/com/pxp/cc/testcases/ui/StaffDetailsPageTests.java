@@ -30,6 +30,7 @@ public class StaffDetailsPageTests extends CommandCenterGenericTest {
 			getClientSystementErpriseandPractice();
 		}
 	}
+	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify enable and disable practice for created staff")
 	public void testToEnableAndDisableStaffForPractice() throws Exception {
 		ngHierarchyClientCreate();
@@ -55,7 +56,7 @@ public class StaffDetailsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Staff label And Staff Info Section")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Staff label, Staff Info Section and Task Groups")
 	public void verifyStaffLabelAndStaffInfoSection() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
