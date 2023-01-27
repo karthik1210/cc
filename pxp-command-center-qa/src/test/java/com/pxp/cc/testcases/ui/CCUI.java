@@ -54,6 +54,7 @@ public class CCUI extends CommandCenterGenericTest {
 	AppointmentTypePage appointmentTypePage;
 	StaffPage staffTypePage;
 	SearchOptionsPage searchOptionsPage;
+	StaffDetailsPage staffDetailsPage;
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -254,6 +255,13 @@ public class CCUI extends CommandCenterGenericTest {
 			staffTypePage = new StaffPage(driver);
 		}
 		return staffTypePage;
+	}
+	
+	public StaffDetailsPage getStaffDetailsPage() throws Exception {
+		 if (staffDetailsPage == null) {
+		  staffDetailsPage = new StaffDetailsPage(driver);
+		 }
+	      return staffDetailsPage;
 	}
 
 	public SearchOptionsPage getSearchOptionsPage() throws Exception {
