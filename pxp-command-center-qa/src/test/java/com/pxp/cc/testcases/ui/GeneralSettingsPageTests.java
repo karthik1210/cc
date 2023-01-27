@@ -4,6 +4,10 @@ package com.pxp.cc.testcases.ui;
 
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -24,7 +28,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 			logStep("Login to command center portal");
 			clientDirectorPage = ccui.getClientDirectoryPage();
 			ccui.initializeTestData();
-			getClientSystementErpriseandPractice();
+			//getClientSystementErpriseandPractice();
 		}
 	}
 
@@ -158,7 +162,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = false,retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
 	public void testEditClientSystemEnterprisePracticeNameAndStatus() throws Exception {
 		logStep("PXPP-13064 PXPP-13063 PXPP-13061 PXPP-13059 PXPP-12739 PXPP-12741 PXPP-12742 PXPP-12744 edit client, system, enterprise, practice name and status");
 		ngHierarchyClientCreate();
@@ -253,6 +257,122 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify providers & resources tab count value at general settings page for client, system, enterprise, practice should match with no of providers and resources in corresponding providers/resources details page")
+	public void tabCountforProvidersAndResourcesTabAtClientSystemEnterprisePracticeLevel() throws Exception {
+		 ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching an practice node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		logStep("create provider and resource at client level");
+		String providerOne = testAddNewProviderFunctionalityUsingValidData();
+		testAddNewResourcesFunctionalityUsingValidData(providerOne);
+		ccui.getResourceAndStaffSearchPage().clickGeneralSettingsIcon();
+		String clientProviderAndResourcesTabCount = ccui.getGeneralSettingsPage().getProviderAndResourcesCount();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTile();
+		int noOfProviders = Integer.parseInt(ccui.getSearchProviderPage().getTotalNoOfProviders());
+		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
+		int noOfResources = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
+		String noOfProviderAndResources = String.valueOf(noOfProviders + noOfResources);
+		logStep("verifying the no of providers and resources at providers and resources tab in general settings and providers/resource details page at client level");
+		CCUtils.assertEquals(clientProviderAndResourcesTabCount, noOfProviderAndResources.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching a system node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("systemName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String systemProviderAndResourcesTabCount = ccui.getGeneralSettingsPage().getProviderAndResourcesCount();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTile();
+		int noOfProvidersSys = Integer.parseInt(ccui.getSearchProviderPage().getTotalNoOfProviders());
+		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
+		int noOfResourcesSys = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
+		String noOfProviderAndResourcesSys = String.valueOf(noOfProvidersSys + noOfResourcesSys);
+		logStep("verifying the no of location on location tab in general settings and location details page at system level");
+		CCUtils.assertEquals(systemProviderAndResourcesTabCount, noOfProviderAndResourcesSys.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching an enterprise node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String entProviderAndResourcesTabCount = ccui.getGeneralSettingsPage().getProviderAndResourcesCount();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTile();
+		int noOfProvidersEnt = Integer.parseInt(ccui.getSearchProviderPage().getTotalNoOfProviders());
+		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
+		int noOfResourcesEnt = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
+		String noOfProviderAndResourcesEnt = String.valueOf(noOfProvidersEnt + noOfResourcesEnt);
+		logStep("verifying the no of location on location tab in general settings and location details page at enterprise level");
+		CCUtils.assertEquals(entProviderAndResourcesTabCount, noOfProviderAndResourcesEnt.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching a practice node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String pracProviderAndResourcesTabCount = ccui.getGeneralSettingsPage().getProviderAndResourcesCount();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTile();
+		int noOfProvidersPrac = Integer.parseInt(ccui.getSearchProviderPage().getTotalNoOfProviders());
+		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
+		int noOfResourcesPrac = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
+		String noOfProviderAndResourcesPrac = String.valueOf(noOfProvidersPrac + noOfResourcesPrac);
+		logStep("verifying the no of location on location tab in general settings and location details page at practice level");
+		CCUtils.assertEquals(pracProviderAndResourcesTabCount, noOfProviderAndResourcesPrac.trim());
+		runOnce = false;
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify providers & resources tab count value at general settings page for client, system, enterprise, practice should match with no of providers and resources in corresponding providers/resources details page")
+	public void tabCountforAppointmenTypeTabAtClientSystemEnterprisePracticeLevel() throws Exception {
+		// ngHierarchyClientCreate();
+		clientDirectorPage.verifyClientDirectioryPageTitle();
+		clientDirectorPage.searchAndSelectClientNameInClientTable("Qa_test_client_01m4%kcs6t7$>0");
+		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
+		String clientAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
+		ccui.getGeneralSettingsPage().clickToAppointmentTypeTile();
+		String noOfAppointmentTypes = ccui.getAppointmentTypePage().getTotalNoOfAppointmentTypes();
+		logStep("verifying the no of appointment types at appointment types tab in general settings and appointment types details page at client level");
+		CCUtils.assertEquals(clientAppointmentTypeTabCount, noOfAppointmentTypes.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching a system node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText("Qa_automation_system_01");
+		//clientSystementErpriseandPractice.get("systemName")
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String systAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
+		ccui.getGeneralSettingsPage().clickToAppointmentTypeTile();
+		String noOfAppointmentTypesSyst = ccui.getAppointmentTypePage().getTotalNoOfAppointmentTypes();
+		logStep("verifying the no of appointment types at appointment types tab in general settings and appointment types details page at system level");
+		CCUtils.assertEquals(systAppointmentTypeTabCount, noOfAppointmentTypesSyst.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching an enterprise node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText("Qa_automation_enterprise_01");
+		//clientSystementErpriseandPractice.get("enterpriseName")
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String entAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
+		ccui.getGeneralSettingsPage().clickToAppointmentTypeTile();
+		String noOfAppointmentTypesEnt = ccui.getAppointmentTypePage().getTotalNoOfAppointmentTypes();
+		logStep("verifying the no of appointment types at appointment types tab in general settings and appointment types details page at enterprise level");
+		CCUtils.assertEquals(entAppointmentTypeTabCount, noOfAppointmentTypesEnt.trim());
+		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
+		ccui.getGeneralSettingsPage().clickSearchIcon();
+		logStep("Searching a practice node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText("Qa_automation_practice_01");
+		//clientSystementErpriseandPractice.get("practiceName")
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		String pracAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
+		ccui.getGeneralSettingsPage().clickToAppointmentTypeTile();
+		String noOfAppointmentTypesPrac = ccui.getAppointmentTypePage().getTotalNoOfAppointmentTypes();
+		logStep("verifying the no of appointment types at appointment types tab in general settings and appointment types details page at practice level");
+		CCUtils.assertEquals(pracAppointmentTypeTabCount, noOfAppointmentTypesPrac.trim());
+		runOnce = false;
+	}
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality and test to select and verify Auto Suggestion list for symbol and number search in node name")
 	public void testGeneralSettingScreenAndAutoSuggestionForSingleCharacterSearchAndNumberSearch() throws Exception {
 		ngHierarchyClientCreate();
@@ -297,7 +417,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a enterprise node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("enterpriseName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion(clientSystementErpriseandPractice.get("enterpriseName"));
+		ccui.getGeneralSettingsPage()
+				.clickFirstInAutoSuggestion(clientSystementErpriseandPractice.get("enterpriseName"));
 		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifySearchedResult();
 		logStep("Verify general settings page title");
@@ -316,7 +437,8 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level")
-	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientSystemEnterprisePracticeLevel() throws Exception {
+	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientSystemEnterprisePracticeLevel()
+			throws Exception {
 		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level");
 		ngHierarchyClientCreate();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
@@ -470,7 +592,59 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		runOnce = false;
 	}
-	
+
+	@Test(enabled = false)
+	public void providerNavigation() throws Exception {
+		logStep("Verify Providers And Resources tab is displayed");
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		logStep("Verify ADD button is enabled for client level on provider page");
+		ccui.getAddNewProviderPage().verifyAddButtonIsEnabled();
+		ccui.getAddNewProviderPage().clickOnAddProviderButton();
+	}
+
+	@Test(enabled = false)
+	public String testAddNewProviderFunctionalityUsingValidData() throws Exception {
+		providerNavigation();
+		String firstName = "ProvFirst "
+				+ CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(6));
+		String lastName = "ProvLast " + CCUtils.generateAlphaNumericString(5).concat("-")
+				.concat(CCUtils.generateAlphaNumericString(6)).concat("'s");
+		String credentials = testData.getProperty("provider.credentials");
+		String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
+		logStep("Enter valid details in mandatory fields to Create new Male provider and verify success toaster message");
+		ccui.getAddNewProviderPage().enterFirstName(firstName);
+		ccui.getAddNewProviderPage().enterLastName(lastName);
+		ccui.getAddNewProviderPage().enterCredentials(credentials);
+		ccui.getAddNewProviderPage().enterExternalId(externalId);
+		ccui.getAddNewProviderPage().selectGenderValue("Male");
+		ccui.getAddNewProviderPage().verifySaveAndAddButtonIsEnabled();
+		ccui.getAddNewProviderPage().clickOnSaveAndAddButton();
+		ccui.getCommonMethods().verifyToasterMessage("Success! New Provider has been successfully created");
+		return firstName;
+	}
+
+	@Test(enabled = false)
+	public String testAddNewResourcesFunctionalityUsingValidData(String firstName) throws Exception {
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
+		ccui.getAddNewResourcePage().verifyAddButtonIsEnabled();
+		ccui.getAddNewResourcePage().clickOnAddResourceButton();
+		String resourceName = "New"
+				+ CCUtils.generateAlphaNumericString(5).concat(CCUtils.generateAlphaNumericString(6));
+		String externalIds = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
+		ccui.getAddNewResourcePage().enterResourceName(resourceName);
+		ccui.getAddNewResourcePage().enterExternalId(externalIds);
+		ccui.getAddNewResourcePage().selectResourceType("Person");
+		ccui.getAddNewResourcePage().enterConnectedProvider(firstName);
+		ccui.getAddNewResourcePage().clickFirstInAutoSuggestion();
+		ccui.getAddNewResourcePage().verifySaveAndAddButtonIsEnabled();
+		logStep(" PXPP-27259 Verify on Add a Resource dialog box Save & Add button is displayed");
+		ccui.getAddNewResourcePage().clickOnSaveAndAddButton();
+		ccui.getCommonMethods().verifyToasterMessage("Success! New Resource has been successfully created");
+		return resourceName;
+	}
+
 	@Test(enabled = false)
 	public void addLocationPopUp() throws Exception {
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
@@ -510,7 +684,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getSearchLocationDetailsPage().verifyLocationTitle();
 		return locationName;
 	}
-	
+
 	private void createNewSystemForNumberSymbolSearch() throws NullPointerException, InterruptedException {
 		logStep("Verify manage client button is displayed");
 		ccui.getAddOrgNodePage().verifyManageClientButton();
@@ -532,7 +706,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getAddOrgNodePage().verifyToasterMessage("Changes updated successfully");
 		ccui.getAddOrgNodePage().clickOnCloseButton();
 	}
-	
+
 	@Test(enabled = false)
 	public void ngHierarchyClientCreate() throws Exception {
 		if (!runOnce) {

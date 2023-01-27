@@ -369,6 +369,15 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[@id='locationTile']//following::span[1]")
 	private WebElement locationCount;
 
+	@FindBy(xpath = "//span[@id='providerTile']//following::span[1]")
+	private WebElement providerAndResourcesCount;
+	
+	@FindBy(xpath = "//span[@id='appointmentTile']//following::span[1]")
+	private WebElement appointmentTypeCount;
+	
+	@FindBy(id = "appointmentTile")
+	private WebElement appointmentTypeTile;
+	
 	private String xpathRequiredClientType = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	List<String> activeSolutionName = new ArrayList<String>();
@@ -1350,6 +1359,27 @@ public class GeneralSettingsPage extends CCMainPage {
 	
 	public String getLocationCount() {
 		CCUtils.verifyAndWaitForElement(locationCount, driver);
+		log("get location tab count which is : "+locationCount.getText().trim());
 		return locationCount.getText().trim();
 	}
+	
+	public String getProviderAndResourcesCount() {
+		CCUtils.verifyAndWaitForElement(providerAndResourcesCount, driver);
+		log("get provider and resources tab count which is : "+providerAndResourcesCount.getText().trim());
+		return providerAndResourcesCount.getText().trim();
+	}
+	
+	public String getAppointmenTypeCount() {
+		CCUtils.verifyAndWaitForElement(appointmentTypeCount, driver);
+		log("get appointment type tab count which is : "+appointmentTypeCount.getText().trim());
+		return appointmentTypeCount.getText().trim();
+	}
+	
+	public void clickToAppointmentTypeTile() {
+		CCUtils.verifyAndWaitForElement(appointmentTypeTile, driver);
+		appointmentTypeTile.click();
+		log("click to appointment type tile");
+	}
+	
+	
 }
