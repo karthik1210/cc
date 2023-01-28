@@ -4,6 +4,9 @@ package com.pxp.cc.model;
 
 import static io.restassured.RestAssured.given;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.BasicConfigurator;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
@@ -12,6 +15,8 @@ import org.testng.annotations.BeforeMethod;
 import com.intuit.ifs.csscat.core.BaseTestNG;
 import com.medfusion.common.utils.PropertyFileLoader;
 import com.pxp.cc.apipath.ApiPath;
+import com.pxp.cc.util.CCUtils;
+
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.RequestLoggingFilter;
@@ -66,8 +71,8 @@ public class BaseRest extends BaseTestNG {
 
 	public void setupServiceRequestSpecificationBuilder() throws IOException {
 		RestAssured.baseURI = testData.getProperty("service.base.url");
-		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE).addFilter(new ResponseLoggingFilter())
-				.addFilter(new RequestLoggingFilter()).build();
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
+				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
 
 	public void setupServiceRequestSpecificationBuilderForDataLayer() throws IOException {
@@ -79,8 +84,8 @@ public class BaseRest extends BaseTestNG {
 	public void setupServiceRequestSpecificationBuilderForUI() throws IOException {
 		testData = new PropertyFileLoader();
 		RestAssured.baseURI = testData.getProperty("service.base.url");
-		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE).addFilter(new ResponseLoggingFilter())
-				.addFilter(new RequestLoggingFilter()).build();
+		requestSpec = new RequestSpecBuilder().setContentType(ApiPath.CONTENT_TYPE)
+				.addFilter(new ResponseLoggingFilter()).addFilter(new RequestLoggingFilter()).build();
 	}
 
 	public void setupServiceRequestSpecificationBuilderForDataLayerForUI() throws IOException {

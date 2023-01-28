@@ -7,64 +7,32 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AppointmentTypeInfo;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class EnableDisableSolutionsForAppTypesApiTests_DataLayer extends BaseRest {
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
 	private AppointmentTypeInfo appointmentTypeInfo;
 	private Validations validation;
-	Response createClientApiResponse, createSystemApiResponse, createPracticeApiResponse, createEnterpriseApiResponse,
-			createAppointmentTypeApiResponse, updateSolutionsApiResponse;
+	private CreateClientHierarchy_DL clientHierObj;
+	Response createAppointmentTypeApiResponse, updateSolutionsApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, appointmentTypeId, solutionId;
-	String clientName, clientSapNumber, externalId, firstName, lastName;
+	String externalId, firstName, lastName;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
 		validation = new Validations();
 		appointmentTypeInfo = new AppointmentTypeInfo();
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
-		validation = new Validations();
 		appointmentTypeInfo = new AppointmentTypeInfo();
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().get("clientId");
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"),
-				testData.getProperty("api.system.displayname"), testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"),
-				testData.getProperty("api.system.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		systemId = createSystemApiResponse.jsonPath().get("orgId");
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.displayname"), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		enterpriseId = createEnterpriseApiResponse.jsonPath().get("orgId");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		logStep("Create new AppointmentType");
 		String name = CCUtils.generateAlphaNumericString(10);
 		String externalIdApp = CCUtils.generateAlphaNumericString(4);

@@ -6,8 +6,6 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -17,53 +15,21 @@ import io.restassured.response.Response;
 public class CreateProviderApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
-	Response createProviderApiResponse, createClientApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, fetchProviderDetailsApiResponse;
-	int practiceId;
+	private CreateClientHierarchy_DL clientHierObj;
+	Response createProviderApiResponse, fetchProviderDetailsApiResponse;
+	int clientId, systemId, enterpriseId, practiceId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
-		logStep("Create nge practice below the client with valid details");
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testData.getProperty("api.system.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		int clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		logStep("Create a new system below client.");
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new enterprise below system.");
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
-				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new practice below enterprise.");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating Response Information");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in firstname,lastname,gender and external id field and verify response body")

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
@@ -19,13 +17,10 @@ import io.restassured.response.Response;
 public class ManageAssociateEntitiesForClientUserTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	private OrgInfo orgInfo;
-	private ClientInfo clientInfo;
 	private SharedInfo sharedInfo;
-	Response createUserApiResponse, fetchUserDetailsApiResponse, createSystemApiResponse, createEnterpriseApiResponse,
-			createClientApiResponse, createPracticeApiResponse, createProviderApiResponse,
+	private CreateClientHierarchy_BL clientHierObj;
+	Response createUserApiResponse, fetchUserDetailsApiResponse, createProviderApiResponse,
 			addAssociatedEntitiesResponse;
-	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
 	int clientId, systemId, enterpriseId, practiceId, providerId, userId;
 
 	@BeforeClass()
@@ -33,54 +28,15 @@ public class ManageAssociateEntitiesForClientUserTests_BusinessLayer extends Bas
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
-		orgInfo = new OrgInfo();
-		clientInfo = new ClientInfo();
 		sharedInfo = new SharedInfo();
-		clientId = createClient(ccUser.getClientOneType());
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
+		clientHierObj = new CreateClientHierarchy_BL();
+
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
 		providerId = createProvider(practiceId);
 		userId = createClientUser();
-	}
-
-	public int createClient(String clientType) throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createPracticeNode(int enterpriseId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
 	}
 
 	public int createProvider(int practiceId) throws Exception {

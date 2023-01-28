@@ -10,15 +10,11 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ClientDirectory;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.GeneralSettingsClientDropdown;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.ClientDirectoryValidations;
 import com.pxp.cc.util.ClientTopNavDropdownValidations;
-import com.pxp.cc.util.Validations;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
@@ -27,73 +23,23 @@ public class SearchClientsFromClientDirectoryApiTest_BusinessLayer extends BaseR
 	private ClientDirectoryValidations clientDirectoryValidations;
 	JsonPath jsonPath;
 	List<String> list = null;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_BL clientHierObj;
 	int clientId, systemId, enterpriseId, practiceId;
 	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
-	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse;
-	private Validations validation;
-	private OrgInfo orgInfo;
-
+	
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
-		validation = new Validations();
-		orgInfo = new OrgInfo();
 		clientDirectory = new ClientDirectory();
 		new GeneralSettingsClientDropdown();
 		new ClientTopNavDropdownValidations();
 		clientDirectoryValidations = new ClientDirectoryValidations();
-		clientId = createClient(ccUser.getClientOneType());
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient(String clientType) throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		systemName = testData.getProperty("api.system.name").concat(CCUtils.generateAlphaNumericString(5));
-		createSystemApiResponse = orgInfo.createOrgNode_BL(systemName, testData.getProperty("api.system.orgtype"), "",
-				testData.getProperty("api.system.active"), "", clientId, testData.getProperty("api.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createEnterpriseNode(int SystemId) throws Exception {
-		enterpriseName = testData.getProperty("api.enterprise.name").concat(CCUtils.generateAlphaNumericString(5));
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(enterpriseName,
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createPracticeNode(int enterpriseId) throws Exception {
-		practiceName = testData.getProperty("api.practice.name").concat(CCUtils.generateAlphaNumericString(5));
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(practiceName, testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.timezoneid"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
 	}
 
 	@DataProvider(name = "clientdatawithoutfilter")

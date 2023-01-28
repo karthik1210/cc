@@ -6,8 +6,6 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -16,35 +14,26 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class SearchProviderInLocationsApiTests_DataLayer extends BaseRest {
-
 	private SharedInfo sharedInfo;
-	Response createProviderApiResponse, createSystemApiResponse, createClientApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, getProvidersApiResponse, createNewLocationApiResponse,
+	Response createProviderApiResponse, getProvidersApiResponse, createNewLocationApiResponse,
 			associateDeassociatePracticesForLocationApiResponse, searchProvidersLocationResponse;
 	public static int clientId, systemId, enterpriseId, practiceId;
 	public static String locationName, providerFirstName, providerLastName;
 	public int providerId, locationId;
-	private OrgInfo orgInfo;
 	private Validations validations;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
-		orgInfo = new OrgInfo();
-		clientInfo = new ClientInfo();
 		validations = new Validations();
-		practiceId = createPractice(ccUser.getActive(), ccUser.getClientName().concat(CCUtils.generateRandomString()),
-				ccUser.getClientSapNumber().concat(CCUtils.generateRandomString()), "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.parenttype"),
-				testData.getProperty("api.enterprise.timezoneid"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"));
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		providerId = createProviderForPractice();
 		locationId = createLocation();
 	}
@@ -79,35 +68,7 @@ public class SearchProviderInLocationsApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
 		return createNewLocationApiResponse.jsonPath().getInt("id");
 	}
-
-	@Test(enabled = false)
-	public int createPractice(String status, String clientName, String clientSapNumber, String testFlag, int clientType,
-			String clientTimezoneId, String systemName, String sysOrgType, String sysParentType, int ehrIdentifier,
-			int pmIdentifier, String enterpriseName, String enterpriseType, String enterpriseParentType,
-			String enterpriseTimeZone, String practiceDisplayName, String practiceName, String practiceOrgType,
-			String practiceParentType, String practiceTimeZone) throws IOException {
-		logStep("Create nge practice below the client with valid details");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber, testFlag,
-				clientType, clientTimezoneId, testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		logStep("Create a new system below client.");
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(status, "", systemName, sysOrgType, clientId,
-				sysParentType, "", ehrIdentifier, pmIdentifier);
-		systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new enterprise below system.");
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(status, "", enterpriseName, enterpriseType, systemId,
-				enterpriseParentType, enterpriseTimeZone, ehrIdentifier, pmIdentifier);
-		enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new practice below enterprise.");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(status, practiceDisplayName, practiceName,
-				practiceOrgType, enterpriseId, practiceParentType, practiceTimeZone, ehrIdentifier, pmIdentifier);
-		logStep("Validating Response Information");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
-		return orgId;
-	}
-
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response body when searching providers by inputing correct practice id and provider name")
 	public void testSerachProvidersLocation() throws IOException {
 		searchProvidersLocationResponse = sharedInfo.searchProviderLocation_DL(practiceId, providerFirstName.trim());
