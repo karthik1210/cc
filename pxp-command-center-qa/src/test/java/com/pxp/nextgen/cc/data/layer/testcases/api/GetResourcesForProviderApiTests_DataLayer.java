@@ -8,8 +8,6 @@ import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
@@ -42,6 +40,8 @@ public class GetResourcesForProviderApiTests_DataLayer extends BaseRest {
 		systemId = clientHierObj.createSystem_DL(clientId);
 		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
 		practiceId = clientHierObj.createPractice_DL(enterpriseId);
+		providerId = createProviderForPractice();
+		resourceId = createResource(providerId);
 	}
 
 	public int createProviderForPractice() throws IOException {

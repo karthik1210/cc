@@ -16,13 +16,13 @@ import io.restassured.response.Response;
 
 public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 	private BrandsInfo brandsInfo;
-	private ClientInfo clientInfo;
 	Response updateBrandImageApiResponse, createClientApiResponse, createBrandApiResponse;
 	public int orgId;
 	public int brandId;
 	public String namePayLoad;
 	private Validations validation;
 	private BrandsValidations brandsValidations;
+	private CreateClientHierarchy_DL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -30,21 +30,7 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 		brandsInfo = new BrandsInfo();
 		validation = new Validations();
 		brandsValidations = new BrandsValidations();
-		clientInfo = new ClientInfo();
-	}
-
-	public int createClient() throws NullPointerException, IOException {
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(30))));
-		String clientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(25))));
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"), testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		return createClientApiResponse.jsonPath().getInt("clientId");
+		clientHierObj = new CreateClientHierarchy_DL();
 	}
 
 	public int createBrand(int orgId) {
@@ -61,7 +47,7 @@ public class UploadBrandLogoApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify response code when creating a new brand logo")
 	public void testResponseCodeForCreateBrandLogo() throws IOException {
 		log("Create new brandId & update brand image");
-		orgId = createClient();
+		orgId = clientHierObj.createClient_DL();
 		brandId = createBrand(orgId);
 		String logoType = testData.getProperty("api.logoType");
 		String altText = testData.getProperty("api.altText");

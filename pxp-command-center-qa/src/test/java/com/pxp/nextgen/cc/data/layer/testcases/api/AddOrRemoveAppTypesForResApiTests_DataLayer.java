@@ -82,7 +82,6 @@ public class AddOrRemoveAppTypesForResApiTests_DataLayer extends BaseRest {
 		appointmentTypeIds.add(appointmentTypeId);
 		validation.verifyAppointmentTypesForResourcesApiResponseBody(updateAppointmentTypesForResourcesApiResponse,
 				appointmentTypeId);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Remove Appointment Types for existing resourceId and practiceId and verify response body")

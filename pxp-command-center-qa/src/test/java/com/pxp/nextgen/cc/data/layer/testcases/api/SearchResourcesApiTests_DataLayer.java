@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
@@ -18,6 +19,7 @@ import io.restassured.response.Response;
 public class SearchResourcesApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private ResourceInfo resourceInfo;
+	private OrgInfo orgInfo;
 	Response createProviderApiResponse, createResourceApiResponse, searchResourceApiResponse, getResourcesApiResponse,
 			updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse, updateSolutionForResources;
 	public static int clientId, systemId, enterpriseId, practiceId, resourceId;
@@ -32,6 +34,7 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 		sharedInfo = new SharedInfo();
 		validations = new Validations();
 		resourceInfo = new ResourceInfo();
+		orgInfo = new OrgInfo();
 		clientHierObj = new CreateClientHierarchy_DL();
 
 		clientId = clientHierObj.createClient_DL();
@@ -40,7 +43,6 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		providerId = createProviderForPractice();
 		resourceId = createResource(providerId);
-		enableSolutionForResource();
 	}
 
 	public int createProviderForPractice() throws IOException {
@@ -65,13 +67,6 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
 		int resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
 		return resourceId;
-	}
-
-	public void enableSolutionForResource() throws IOException {
-		int solutionId = Integer.parseInt(testData.getProperty("Portal.id"));
-		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
-				solutionId, true);
-		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
 	}
 
 	@DataProvider(name = "resourcevaliddata")
@@ -102,7 +97,13 @@ public class SearchResourcesApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "resourcevaliddata", description = "Search resources for valid client id ,system id, enterprise id, practice id and solution id")
-	public void testSearchResourcesForValidData(String[] getSearchResources) throws NullPointerException {
+	public void testSearchResourcesForValidData(String[] getSearchResources) throws IOException {
+		logStep("Enable existing solution id for existing resourceId  and practiceId ");
+		int solutionId = Integer.parseInt(testData.getProperty("api.solution.id"));
+		updateSolutionsApiResponse = orgInfo.updateOrgsSolutionsDetails_DataLayer(solutionId, "New", practiceId);
+		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForResource_DL(resourceId, practiceId,
+				solutionId, true);
+		CCUtils.assertEquals(updateSolutionForResources.getStatusCode(), 200);
 		getResourcesApiResponse = resourceInfo.searchResources_DL(getSearchResources[0], getSearchResources[1],
 				getSearchResources[2], getSearchResources[3], getSearchResources[4], getSearchResources[5],
 				getSearchResources[6], getSearchResources[7]);

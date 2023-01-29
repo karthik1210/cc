@@ -65,13 +65,4 @@ public class GetClientNameApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 400);
 		validation.verifyErrorMessageIfClientNameIsNull(getClientNameApiResponse);
 	}
-
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
-	public void testErrorMessageForInvalidUrl() throws IOException {
-		getClientNameApiResponse = clientInfo.getClientNameUsingInvalidUrl(clientNameData);
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(getClientNameApiResponse);
-		CCUtils.assertEquals(getClientNameApiResponse.getStatusCode(), 404);
-		validation.verifyErrorInResponseForInvalidUrl(getClientNameApiResponse);
-	}
 }

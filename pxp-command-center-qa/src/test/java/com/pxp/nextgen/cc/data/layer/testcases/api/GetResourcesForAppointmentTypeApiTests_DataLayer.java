@@ -1,11 +1,10 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -75,15 +74,15 @@ public class GetResourcesForAppointmentTypeApiTests_DataLayer extends BaseRest {
 				externalIdApp);
 		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
 		appointmentTypeId = createAppointmentTypeApiResponse.jsonPath().getInt("id");
-		List<ResourceDetails> resourceList = Arrays.asList(new ResourceDetails(resourceId, false));
-		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType(practiceId,
+		List<ResourceDetails> resourceList = Arrays.asList(new ResourceDetails(resourceId, true));
+		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType_DL(practiceId,
 				appointmentTypeId, resourceList);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch all the resources of appointment type of a practice")
 	public void testGetResourceForAppointmentType() throws IOException {
 		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo
-				.getResourcesForAppointmentType_DL(resourceId, appointmentTypeId);
+				.getResourcesForAppointmentType_DL(practiceId, appointmentTypeId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchResourcesForAppointmentTypeResponse);
 		CCUtils.assertEquals(fetchResourcesForAppointmentTypeResponse.getStatusCode(), 200);

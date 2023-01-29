@@ -120,7 +120,7 @@ public class GetProvidersForLocationApiTests_BusinessLayer extends BaseRest {
 		int page = Integer.parseInt(testData.getProperty("api.page.number"));
 		int pageSize = Integer.parseInt(testData.getProperty("api.page.size"));
 		String name = null;
-		fetchProvidersForLocationResponse = locationsInfo.getProvidersForLocation_BL(locationIdOne, practiceIdOne, page,
+		fetchProvidersForLocationResponse = locationsInfo.getProvidersForLocation_BL(locationIdOne, practiceId, page,
 				pageSize, name);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchProvidersForLocationResponse);
