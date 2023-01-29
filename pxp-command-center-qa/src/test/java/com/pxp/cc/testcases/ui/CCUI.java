@@ -35,6 +35,7 @@ import com.pxp.cc.objectmaps.ResourceDetailsPage;
 import com.pxp.cc.objectmaps.SearchLocationPage;
 import com.pxp.cc.objectmaps.SearchOptionsPage;
 import com.pxp.cc.objectmaps.SearchProviderPage;
+import com.pxp.cc.objectmaps.StaffDetailsPage;
 import com.pxp.cc.objectmaps.StaffPage;
 import com.pxp.cc.objectmaps.TabsNavigationOnGeneralSettingPage;
 import com.pxp.cc.objectmaps.UserBulkEnrollmentPage;

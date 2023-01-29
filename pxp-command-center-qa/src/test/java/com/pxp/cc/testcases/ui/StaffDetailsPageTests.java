@@ -56,8 +56,8 @@ public class StaffDetailsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Staff label, Staff Info Section and Task Groups")
-	public void verifyStaffLabelStaffInfoAndTaskGroupsSection() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify Staff label And Staff Info Section")
+	public void verifyStaffLabelAndStaffInfoSection() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Providers And Resources tab is displayed");
@@ -73,6 +73,30 @@ public class StaffDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getStaffDetailsPage().verifyStaffInfoSection();
 		runOnce = false;
 	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify staff image is successfully added and removed and Verify invalid file type error is displayed when uploading invalid format image file")
+	 public void testAddRemoveStaffImageFunctionalityAndInvalidFileTypeMessage() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
+		logStep("Verify Providers And Resources tab is displayed");
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		createStaff();
+	    ccui.getStaffPage().enterStaffInSearchTextBox(firstName);
+	    logStep("PXPP-26559 Verify details of Staff Name and Staff Image section");
+	    ccui.getStaffPage().selectStaff();
+	    ccui.getStaffPage().verifyStaffDetailsTitle();
+	    logStep("PXPP-26567 Verify Upload staff image functionality");
+	    ccui.getStaffDetailsPage().uploadStaffImage();
+	    logStep("PXPP-26568 Verify remove uploaded image functionality");
+	    ccui.getStaffDetailsPage().removeStaffImage();
+	    ccui.getStaffPage().verifyStaffDetailsTitle();
+	    ccui.getStaffDetailsPage().uploadStaffInvalidImage();
+	    logStep("PXPP-26572 Verify error message is displayed when invalid format image is uploaded");
+	    ccui.getStaffDetailsPage().verifyInvalidFileTypeErrorMessage();
+	     runOnce = false;
+	 }
 
 	public void createStaff() throws Exception {
 		ccui.getStaffPage().clickOnStaffTab();
