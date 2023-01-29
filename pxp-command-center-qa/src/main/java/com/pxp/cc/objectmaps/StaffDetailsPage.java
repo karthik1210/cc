@@ -51,6 +51,22 @@ public class StaffDetailsPage extends CCMainPage {
 	
 	@FindBy(xpath="//div[contains(text(),'No data to display')]")
 	private WebElement labelNoData;
+	
+	@FindBy(xpath = "//input[@type='file']")
+	private WebElement uploadStaffImage;
+
+	@FindBy(xpath = "//div/span[contains(text(),'REMOVE IMAGE')]")
+	private WebElement removeImage;
+	
+    public String validImagePath = "/src/test/resources/data-driven/images/logo.png";
+    
+    @FindBy(xpath = "//div[contains(text(),'REMOVE IMAGE')]")
+	private WebElement removeImageInactive;
+	  
+	public String invalidImagePath = "/src/test/resources/data-driven/images/223267.jpg";
+	
+	@FindBy(xpath = "//p[contains(text(),'Invalid file type')]")
+	private WebElement invalidFileType;
 
 	public void verifyStaffInfoSectionLabel() {
 		CCUtils.verifyAndWaitForElement(labelStaffInfoSection, driver);
@@ -125,4 +141,34 @@ public class StaffDetailsPage extends CCMainPage {
 		backIcon.click();
 		log("clicked to back button in staff details page");
 	}
+	
+	public void uploadStaffImage() throws InterruptedException, AWTException {
+		javascriptClick(uploadStaffImage);
+		log("Clicked on edit image");
+		String projectpath = System.getProperty("user.dir");
+		uploadStaffImage.sendKeys(projectpath + validImagePath);
+		log("Verified Image uploaded");
+   } 
+	
+	public void uploadStaffInvalidImage() throws InterruptedException, AWTException {
+		javascriptClick(uploadStaffImage);
+		log("Clicked on edit image");
+		String projectpath = System.getProperty("user.dir");
+		uploadStaffImage.sendKeys(projectpath + invalidImagePath);
+		log("Verified staff image uploaded");
+	}
+	
+	public void removeStaffImage() {
+	   CCUtils.verifyAndWaitForElement(removeImage, driver);
+	   log("Verified that remove image button is visible if image is already uploaded");
+	   removeImage.click();
+	   log("clicked to remove image button");
+	   CCUtils.verifyAndWaitForElement(removeImageInactive, driver);
+	   log("verified that remove image button got disabled");
+	}
+	
+	public void verifyInvalidFileTypeErrorMessage() {
+	  CCUtils.verifyAndWaitForElement(invalidFileType, driver);
+	  log("Verified invalid file type error message is displayed");
+   }
 }
