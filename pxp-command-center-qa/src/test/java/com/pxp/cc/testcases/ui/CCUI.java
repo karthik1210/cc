@@ -55,6 +55,8 @@ public class CCUI extends CommandCenterGenericTest {
 	StaffPage staffTypePage;
 	SearchOptionsPage searchOptionsPage;
 	StaffDetailsPage staffDetailsPage;
+	InternalUserDetailsPage internalUserDetailsPage;
+    DeactivateUserConfirmationPage deactivateUserConfirmationPage;
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -305,6 +307,20 @@ public class CCUI extends CommandCenterGenericTest {
 		}
 		return locationDetailsPage;
 	}
+	
+	public InternalUserDetailsPage getInternalUserDetailsPage() throws Exception {
+		if (internalUserDetailsPage == null) {
+			internalUserDetailsPage = new InternalUserDetailsPage(driver);
+		}
+		return internalUserDetailsPage;
+	}
+	
+	 public DeactivateUserConfirmationPage getDeactivateUserConfirmationPage() throws Exception {  
+	        if (deactivateUserConfirmationPage == null) {
+	        	deactivateUserConfirmationPage = new DeactivateUserConfirmationPage(driver);
+	        }
+	        return deactivateUserConfirmationPage;
+	    }
 
 	public static void getClientSystementErpriseandPractice() throws Exception {
 
