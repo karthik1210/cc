@@ -3,17 +3,13 @@
 package com.pxp.cc.testcases.ui;
 
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
-import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
+import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
 public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	static boolean runOnce = true;
@@ -28,7 +24,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 			logStep("Login to command center portal");
 			clientDirectorPage = ccui.getClientDirectoryPage();
 			ccui.initializeTestData();
-			//getClientSystementErpriseandPractice();
+			getClientSystementErpriseandPractice();
 		}
 	}
 
@@ -208,6 +204,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify locations tab count value at general settings page for client, system, enterprise, practice should match with no of location in corresponding locations details page")
 	public void tabCountforLocationsTabAtClientSystemEnterprisePracticeLevel() throws Exception {
+		logStep("PXPP-28739 PXPP-28745 PXPP-28752 PXPP-28753 PXPP-28797 PXPP-28811 PXPP-28825 PXPP-28826 verify location tab count should match with no of locations in location search page");
 		ngHierarchyClientCreate();
 		logStep("create multiple locations at client level");
 		addLocationPopUp();
@@ -257,9 +254,10 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify providers & resources tab count value at general settings page for client, system, enterprise, practice should match with no of providers and resources in corresponding providers/resources details page")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify providers & resources tab count value at general settings page for client, system, enterprise, practice should match with no of providers and resources in corresponding providers/resources search page")
 	public void tabCountforProvidersAndResourcesTabAtClientSystemEnterprisePracticeLevel() throws Exception {
-		 ngHierarchyClientCreate();
+		logStep("PXPP-28746 PXPP-28747 PXPP-28754 PXPP-28756 PXPP-28813 PXPP-28814 PXPP-28827 PXPP-28828 verify providers and resources tab count should match with no of providers and resources in providers/resources search page");
+		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching an practice node under client in general settings page");
@@ -322,10 +320,12 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(pracProviderAndResourcesTabCount, noOfProviderAndResourcesPrac.trim());
 		runOnce = false;
 	}
-	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify providers & resources tab count value at general settings page for client, system, enterprise, practice should match with no of providers and resources in corresponding providers/resources details page")
+
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify Appointment type tab count value at general settings page for client, system, enterprise, practice should match with no of appointment types in appointment type search page")
 	public void tabCountforAppointmenTypeTabAtClientSystemEnterprisePracticeLevel() throws Exception {
-		// ngHierarchyClientCreate();
+		logStep("PXPP-28750 PXPP-28734 PXPP-28757 PXPP-28812 PXPP-28824 PXPP-28829 Verify appointment type tab count should match with no of appointment type in appointment type search page");
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
 		clientDirectorPage.verifyClientDirectioryPageTitle();
 		clientDirectorPage.searchAndSelectClientNameInClientTable("Qa_test_client_01m4%kcs6t7$>0");
 		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
@@ -338,7 +338,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a system node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText("Qa_automation_system_01");
-		//clientSystementErpriseandPractice.get("systemName")
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		String systAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
@@ -350,7 +349,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching an enterprise node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText("Qa_automation_enterprise_01");
-		//clientSystementErpriseandPractice.get("enterpriseName")
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		String entAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
@@ -362,7 +360,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
 		ccui.getGeneralSettingsPage().enterSearchText("Qa_automation_practice_01");
-		//clientSystementErpriseandPractice.get("practiceName")
 		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
 		CCUtils.pressEnterKey();
 		String pracAppointmentTypeTabCount = ccui.getGeneralSettingsPage().getAppointmenTypeCount();
