@@ -16,10 +16,9 @@ public class CreateNewAppTypesApiTests_DataLayer extends BaseRest {
 	private Validations validation;	
 	private AppointmentTypeInfo appointmentTypeInfo;
 	private CreateClientHierarchy_DL clientHierObj;
-	Response createClientApiResponse, createSystemApiResponse, createPracticeApiResponse, createEnterpriseApiResponse,
-			createAppointmentTypeApiResponse;
+	Response createAppointmentTypeApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, appointmentTypeId;
-	String clientName, clientSapNumber, externalId, firstName, lastName;
+	String  externalId, firstName, lastName;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {

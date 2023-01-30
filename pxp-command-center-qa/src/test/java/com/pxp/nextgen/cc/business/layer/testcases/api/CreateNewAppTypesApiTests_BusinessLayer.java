@@ -18,7 +18,7 @@ public class CreateNewAppTypesApiTests_BusinessLayer extends BaseRest {
 	private CreateClientHierarchy_BL clientHierObj;
 	Response createAppointmentTypeApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, appointmentTypeId;
-	String clientName, clientSapNumber, externalId, firstName, lastName;
+	String externalId, firstName, lastName;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
