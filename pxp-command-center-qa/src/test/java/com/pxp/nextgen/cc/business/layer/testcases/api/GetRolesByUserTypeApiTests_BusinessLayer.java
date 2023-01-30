@@ -17,16 +17,12 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response getUserRolesApiResponse, createClientApiResponse;
-	int newClientId;
-	private CreateClientHierarchy_BL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
-		clientHierObj = new CreateClientHierarchy_BL();
-		newClientId = clientHierObj.createClient_BL();
 	}
 
 	@DataProvider(name = "userTypeValue")
@@ -34,13 +30,6 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		return new Object[][] { { testData.getProperty("user.type.internal").trim() },
 				{ testData.getProperty("user.type.client").trim() },
 				{ testData.getProperty("user.type.varreseller").trim() } };
-	}
-
-	@DataProvider(name = "userType")
-	public Object[][] getUserType() throws Exception {
-		return new Object[][] {
-				{ testData.getProperty("user.type.internal").concat(CCUtils.generateAlphaNumericString(5)) },
-				{ newClientId } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userTypeValue", description = "Get user roles by userType")

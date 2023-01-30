@@ -27,7 +27,6 @@ public class EnableDisableAppTypesApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 		appointmentTypeInfo = new AppointmentTypeInfo();
 		clientHierObj = new CreateClientHierarchy_DL();
-
 		clientId = clientHierObj.createClient_DL();
 		systemId = clientHierObj.createSystem_DL(clientId);
 		enterpriseId = clientHierObj.createEnterprise_DL(systemId);

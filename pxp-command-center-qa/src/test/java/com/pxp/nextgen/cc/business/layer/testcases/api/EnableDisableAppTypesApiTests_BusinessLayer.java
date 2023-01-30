@@ -27,7 +27,6 @@ public class EnableDisableAppTypesApiTests_BusinessLayer extends BaseRest {
 		validation = new Validations();
 		appointmentTypeInfo = new AppointmentTypeInfo();
 		clientHierObj = new CreateClientHierarchy_BL();
-
 		clientId = clientHierObj.createClient_BL();
 		systemId = clientHierObj.createSystem_BL(clientId);
 		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
