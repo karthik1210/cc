@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.BrandsValidations;
@@ -18,12 +17,12 @@ import io.restassured.response.Response;
 public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 	private BrandsInfo brandInfo;
 	private Validations validation;
-	Response getListofBrandsResponse, createClientApiResponse, createBrandApiResponse;
+	Response getListofBrandsResponse, createBrandApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId;
 	String clientName, clientSapNumber;
-	private ClientInfo clientInfo;
 	private BrandsValidations brandValidations;
-
+	private CreateClientHierarchy_BL clientHierObj;
+	
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
@@ -31,23 +30,9 @@ public class GetListOfBrandsApiTests_BusinessLayer extends BaseRest {
 		new SharedInfo();
 		validation = new Validations();
 		brandValidations= new BrandsValidations();
-		clientInfo = new ClientInfo();
-		clientId = createClient();
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient() throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
+		clientId = clientHierObj.createClient_BL();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create Branding Template at Client Level and fetch newly created brand details using brandId")

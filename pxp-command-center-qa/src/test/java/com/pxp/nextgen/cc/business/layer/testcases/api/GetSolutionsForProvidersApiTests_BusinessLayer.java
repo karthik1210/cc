@@ -16,52 +16,30 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetSolutionsForProvidersApiTests_BusinessLayer extends BaseRest {
-	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private LocationsValidations locationsValidations;
-	Response getResourceDetailsApiResponse, createClientApiResponse, createProviderApiResponse, createSystemApiResponse,
-			createPracticeApiResponse, createEnterpriseApiResponse, updateSolutionsApiResponse,
+	private CreateClientHierarchy_BL clientHierObj;
+	Response getResourceDetailsApiResponse, createProviderApiResponse, updateSolutionsApiResponse,
 			updateSolutionForResources, fetchSolutionsForProviders;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, practiceIdOne, providerIdOne;
-	String clientName, clientSapNumber;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		locationsValidations = new LocationsValidations();
 
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		clientHierObj = new CreateClientHierarchy_BL();
+
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
+		practiceIdOne = clientHierObj.createPractice_BL(enterpriseId);
 		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		String externalId = CCUtils.generateAlphaNumericString(10);
@@ -74,18 +52,10 @@ public class GetSolutionsForProvidersApiTests_BusinessLayer extends BaseRest {
 		updateSolutionForResources = sharedInfo.enableOrDisableSolutionsForProvider_BL(providerId, practiceId,
 				solutionId, true);
 		CCUtils.assertEquals(updateSolutionForResources.getStatusCode(), 200);
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		practiceIdOne = createPracticeApiResponse.jsonPath().get("orgId");
 		String externalIdOne = CCUtils.generateAlphaNumericString(10);
 		createProviderApiResponse = sharedInfo.createProvider_BL(practiceIdOne, firstName, lastName,
 				testData.getProperty("provider.gender"), externalIdOne, testData.getProperty("provider.credentials"));
 		providerIdOne = createProviderApiResponse.jsonPath().getInt("providerId");
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceId, providerId to get solutions and verify response body")

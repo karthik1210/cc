@@ -22,6 +22,7 @@ public class GetListOfBrandsApiTests_DataLayer extends BaseRest {
 	int clientId, brandId;
 	String clientName, clientSapNumber;
 	private ClientInfo clientInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -31,13 +32,9 @@ public class GetListOfBrandsApiTests_DataLayer extends BaseRest {
 		brandsInfo = new BrandsInfo();
 		clientInfo = new ClientInfo();
 		validations = new Validations();
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().get("clientId");
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
 		logStep("Create a new brand");
 		String name = testData.getProperty("client.org.brand.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
