@@ -7,9 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AppointmentTypeInfo;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
-import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -17,17 +14,15 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
-
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
-	private ResourceInfo resourceInfo;
+	
+	private CreateClientHierarchy_BL clientHierObj;
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private AppointmentTypeInfo appointmentTypeInfo;
 	Response createClientApiResponse, createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
 			createResourceApiResponse, createNewLocationApiResponse, createProviderApiResponse,
 			createAppointmentTypeApiResponse, getStatisticsDataResponse,
-			associateDeassociatePracticesForLocationApiResponse;
+			associatePracticesForLocationApiResponse;
 	public int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, locationId, appointmentTypeId;
 	String clientName, clientSapNumber, externalId, firstName, lastName, resourceExternalId;
 	public static int countLocationClient = 0;
@@ -46,46 +41,22 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
-		resourceInfo = new ResourceInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		appointmentTypeInfo = new AppointmentTypeInfo();
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
-		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
-		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
-		logStep("Create new provider");
-		String externalId = CCUtils.generateAlphaNumericString(10);
-		createProviderApiResponse = sharedInfo.createProvider_BL(practiceId, firstName, lastName,
-				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
-		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
-		logStep("Create new location");
+		clientHierObj = new CreateClientHierarchy_BL();
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
+		locationId = createLocation(clientId);
+		providerId = createProvider(practiceId);
+		appointmentTypeId = createNewAppointmentType(practiceId);
+		associateLocationToPractice(practiceId);
+	}
+
+	public int createLocation(int clientId) throws Exception {
+		logStep("create new location");
 		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
 		externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
 		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId,
@@ -94,32 +65,46 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
 				Float.parseFloat(testData.getProperty("location.lng")), locationName, externalId,
 				testData.getProperty("location.timezonecode"), "");
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
-		locationId = createNewLocationApiResponse.jsonPath().getInt("id");
-		logStep("Associate NGE practice with loacation");
-		associateDeassociatePracticesForLocationApiResponse = sharedInfo
-				.associateDeassociatePracticeForLocation_BL(locationId, practiceId, true);
-		CCUtils.assertEquals(associateDeassociatePracticesForLocationApiResponse.getStatusCode(), 200);
-		logStep("Create new resource");
-		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
-		String resourceName = CCUtils.generateAlphaNumericString(8);
-		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, resourceName,
-				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
-				testData.getProperty("resource.link.type"));
-		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
-		resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
+		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
+		return createNewLocationApiResponse.jsonPath().getInt("id");
+	}
+	
+	public int createProvider(int practiceId) throws Exception  {
+		logStep("Create new provider");
+		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		String externalId = CCUtils.generateAlphaNumericString(10);
+		createProviderApiResponse = sharedInfo.createProvider_BL(practiceId, firstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createProviderApiResponse);
+		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
+		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
+		return createProviderApiResponse.jsonPath().getInt("providerId");
+	}
+	
+	public int createNewAppointmentType(int practiceId) {
 		logStep("Create new AppointmentType");
-		String aptName = CCUtils.generateAlphaNumericString(10);
-		String aptExternalId = CCUtils.generateAlphaNumericString(4);
+		String name = CCUtils.generateAlphaNumericString(10);
+		String externalId = CCUtils.generateAlphaNumericString(4);
 		String duration = CCUtils.generateNumericString(2);
 		String categoryId = CCUtils.generateNumericString(5);
 		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_BL(practiceId,
-				testData.getProperty("default.solution.id"), aptName, externalId, duration, categoryId, aptName,
-				aptExternalId);
+				testData.getProperty("default.solution.id"), name, externalId, duration, categoryId, name, externalId);
 		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
-		appointmentTypeId = createAppointmentTypeApiResponse.jsonPath().getInt("id");
+		return createAppointmentTypeApiResponse.jsonPath().getInt("id");
 	}
-
+	
+	public void associateLocationToPractice(int practiceId) {
+		logStep("Associate practice with location");
+		associatePracticesForLocationApiResponse = sharedInfo.associateDeassociatePracticeForLocation_BL(locationId,
+				practiceId, true);
+		CCUtils.assertEquals(associatePracticesForLocationApiResponse.getStatusCode(), 200);
+	}
+	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify can get correct statistics data of org type client")
 	public void testToGetStatisticsDataOfOrgClient() throws IOException {
 		logStep("get statistics data for client");
@@ -134,6 +119,7 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 						+ ((resourceId != 0) ? countResourcesClient++ : 0),
 				countAppointmentTypeClient = (appointmentTypeId != 0) ? ++countAppointmentTypeClient : 0);
 	}
+
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify can get correct statistics data of org type system")
 	public void testToGetStatisticsDataOfOrgSystem() throws IOException {
@@ -190,5 +176,16 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getStatisticsDataResponse);
 		validation.verifyResponseBodyOfStatisticsData(getStatisticsDataResponse, 0, 0, 0);
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify can statistics data of null data")
+	public void testToGetStatisticsDataOfNullOrg() throws IOException {
+		logStep("get statistics data for practice");
+		getStatisticsDataResponse = sharedInfo
+				.getStatisticsData_NULL_BL();
+		logStep("Validate response code is 400");
+		CCUtils.assertEquals(getStatisticsDataResponse.getStatusCode(), 400);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(getStatisticsDataResponse);
 	}
 }

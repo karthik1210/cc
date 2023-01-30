@@ -2095,4 +2095,8 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_STATISTICS_DATA_BL();
 		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
 	}
+	
+	public Response getStatisticsData_NULL_BL() {
+		return given().spec(requestSpec).when().get(ApiPath.GET_STATISTICS_DATA_NULL_BL).then().extract().response();
+	}
 }

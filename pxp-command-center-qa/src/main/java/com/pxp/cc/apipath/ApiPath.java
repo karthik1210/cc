@@ -2210,11 +2210,10 @@ public class ApiPath {
 	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/staff/null/images";
 	}
-<<<<<<< HEAD
 
 	public static final String GET_STATISTICS_DATA_BL() {
 		return SERVICE_SHARED_BL+ "/v1/data-stats";
 	}
-=======
->>>>>>> 2411ed96e66e6162817ce011dfacfdf7aceb1e66
+	
+	public static final String GET_STATISTICS_DATA_NULL_BL = SERVICE_SHARED_BL + "/v1/data-stats?orgid=null";
 }
