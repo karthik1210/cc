@@ -2,13 +2,11 @@
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
@@ -19,61 +17,29 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseRest {
-
 	private Validations validation;
-	private ClientInfo clientInfo;
 	private SharedInfo sharedInfo;
 	private LocationsValidations locationValidation;
 	private OrgInfo orgInfo;
-	public int clientId, systemId, agPracticeId, locationId;
+	private CreateClientHierarchy_DL clientHierObj;
+	public int clientId, systemId, agPracticeId, locationId, enterpriseId;
 	public String externalId;
-	Response createSystemApiResponse, createPracticeApiResponse, updateSolutionsApiResponse, createClientApiResponse,
-			enableDisableSolutionForLocation, getSolutionForLocation, createNewLocationApiResponse,
-			associateDeassociatePracticesForLocationApiResponse;
+	Response updateSolutionsApiResponse, enableDisableSolutionForLocation, getSolutionForLocation,
+			createNewLocationApiResponse, associateDeassociatePracticesForLocationApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		locationValidation = new LocationsValidations();
-	}
+		clientHierObj = new CreateClientHierarchy_DL();
 
-	public int createClient() throws NumberFormatException, NullPointerException, IOException {
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-		String clientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-		String testFlag = testData.getProperty("api.client.testclient");
-		String clientTimezoneId = testData.getProperty("api.client.timezoneid");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId, testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
-		return createClientApiResponse.jsonPath().getInt("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		log("create a system within a client");
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createAgnosticPracticeNode(int systemId) throws Exception {
-		log("create a agnostic practice within a system");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		agPracticeId = clientHierObj.createPractice_DL(enterpriseId);
 	}
 
 	public int createLocationWithinClient(int clientId) throws Exception {
@@ -92,9 +58,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable existing solution id for existing locationId and practiceId and verify response body")
 	public void testToEnableExistingSolutionIdForExistingLocationId() throws Exception {
 		logStep("Enable existing solution id for existing resourceId  and practiceId ");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -117,9 +80,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Disable existing solution id for existing locationId and practiceId and verify response body")
 	public void testToDisableExistingSolutionIdForExistingLocationId() throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -143,9 +103,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable Disable solution for non existing locationId and existing practiceId and verify response body")
 	public void testErrorEnableDisableSolutionForExistingPracticeIdNonExistingLocationId() throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -164,9 +121,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable Disable solution for non existing locationId and existing practiceId and verify response body")
 	public void testErrorEnableDisableSolutionForNonExistingPracticeIdExistingLocationId() throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -185,9 +139,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable Disable solution for both non existing locationId and practiceId and verify response body")
 	public void testErrorEnableDisableSolutionForBothNonExistingPracticeIdAndLocationId() throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -207,9 +158,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	public void testErrorEnableDisableSolutionForBothExistingPracticeIdAndLocationIdWthSolutionIDNULL()
 			throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -228,9 +176,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable Disable solution for both existing locationId and practiceId and by giving active as null and verify response body")
 	public void testErrorEnableDisableSolutionForBothExistingPracticeIdAndLocationIdWthActiveNULL() throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -250,9 +195,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 	public void testErrorEnableDisableSolutionForBothExistingPracticeIdAndLocationIdWthBothActiveAndSolutionIdNULL()
 			throws Exception {
 		logStep("Disable existing solution id for existing locationId and practiceId");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -270,9 +212,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable disable solutions with correct practiceId and location id with invalid method call : patch")
 	public void testEnableDisableSolutionForLoactionIdAndPracticeIdInvalidMethodCall() throws Exception {
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);
@@ -288,9 +227,6 @@ public class EnableOrDisableSolutionsForLocationApiTests_DataLayer extends BaseR
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable disable solutions with correct practiceId and location id with invalid url")
 	public void testEnableDisableSolutionForLoactionIdAndPracticeIdInvalidUrl() throws Exception {
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agPracticeId = createAgnosticPracticeNode(systemId);
 		locationId = createLocationWithinClient(clientId);
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo
 				.associateDeassociatePracticeForLocation_DL(locationId, agPracticeId, true);

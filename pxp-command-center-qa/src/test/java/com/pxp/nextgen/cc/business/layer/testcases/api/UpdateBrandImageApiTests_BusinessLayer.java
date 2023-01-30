@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
@@ -20,33 +19,18 @@ public class UpdateBrandImageApiTests_BusinessLayer extends BaseRest {
 	private Validations validation;
 	Response updateBrandingLogoApiResponse, getBrandingDetailsApiResponse, createBrandApiResponse,
 			createClientApiResponse, getBrandImageApiResponse;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_BL clientHierObj;
 	int clientId, brandId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
 		brandsInfo = new BrandsInfo();
 		validation = new Validations();
-		clientId = createClient(ccUser.getClientOneType());
-		brandId = createBrand(clientId);
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient(String clientType) throws Exception {
-		String clientName = testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(10));
-		String clientSapNumber = testData.getProperty("api.client.sapnumber").concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		return createClientApiResponse.jsonPath().get("clientId");
+		clientId = clientHierObj.createClient_BL();
+		brandId = createBrand(clientId);
 	}
 
 	public int createBrand(int clientId) throws Exception {

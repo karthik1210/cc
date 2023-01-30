@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -18,13 +16,11 @@ import io.restassured.response.Response;
 public class ToggleProviderAssociationToPracticeApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
-	Response createProviderApiResponse, createClientApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, fetchProviderDetailsApiResponse,associateDeassociatePracticesForProviderApiResponse,
+	private CreateClientHierarchy_BL clientHierObj;
+	Response createProviderApiResponse, fetchProviderDetailsApiResponse,associateDeassociatePracticesForProviderApiResponse,
 	        getPracticesAssociateToProviderApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, providerId;
-	String clientName, clientSapNumber, externalId, firstName, lastName;	
+	String externalId, firstName, lastName;	
 	ArrayList<Integer> associatePracticeIds; 
 	
 	@BeforeClass()
@@ -32,37 +28,12 @@ public class ToggleProviderAssociationToPracticeApiTests_BusinessLayer extends B
 		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating Response Information");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		clientHierObj = new CreateClientHierarchy_BL();
+
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
 		providerId=createProvider(clientId);
 	}
 	

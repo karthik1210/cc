@@ -3,14 +3,11 @@
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
-
 import com.pxp.cc.helpers.UserInfo;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
@@ -20,24 +17,17 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response getUserRolesApiResponse, createClientApiResponse;
-	String clientName, clientSapNumber, newClientId;
-	private ClientInfo clientInfo;
+	int newClientId;
+	private CreateClientHierarchy_BL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber,
-				ccUser.getTestClient(), Integer.parseInt(testData.getProperty("api.client.type")),
-				ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		newClientId = createClientApiResponse.jsonPath().get("clientId").toString();
+		clientHierObj = new CreateClientHierarchy_BL();
+
+		newClientId = clientHierObj.createClient_BL();
 	}
 
 	@DataProvider(name = "userTypeValue")

@@ -7,8 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.DuplicateBrandingValidations;
@@ -17,80 +15,25 @@ import io.restassured.response.Response;
 
 public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 	private BrandsInfo brandInfo;
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
 	private Validations validation;
+	private CreateClientHierarchy_BL clientHierObj;
 	private DuplicateBrandingValidations duplicateBrandingValidations;
-	Response fetchDuplicateBrandApiResponse, createClientApiResponse, createSystemNodeApiResponse,
-			createEnterpriseNodeApiResponse, createNgPracticeApiResponse, createAgnosticPracticeApiResponse,
-			createBrandApiResponse;
-	public int clientID;
-	public int systemId;
-	public int enterpriseId;
-	public int ngPracticeId;
-	public int agnosticPracticeId;
-	public int brandId;
+	Response fetchDuplicateBrandApiResponse, createBrandApiResponse;
+	public int clientId, systemId, enterpriseId, ngPracticeId, agnosticPracticeId, brandId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		brandInfo = new BrandsInfo();
-		orgInfo = new OrgInfo();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
 		duplicateBrandingValidations = new DuplicateBrandingValidations();
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient() throws NullPointerException, IOException {
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
-		String clientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
-		createClientApiResponse = clientInfo.createNewClient(testData.getProperty("api.client.active"), clientName,
-				clientSapNumber, testData.getProperty("api.client.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createClientApiResponse.jsonPath().getInt("clientId");
-	}
-
-	public int createSystem(int clientId) throws NumberFormatException, NullPointerException, IOException {
-		createSystemNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", "false", "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemNodeApiResponse.jsonPath().getInt("orgId");
-	}
-
-	public int createEnterprise(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createEnterpriseNodeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseNodeApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createNGPractice(int enterpriseId) throws NumberFormatException, NullPointerException, IOException {
-		createNgPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createNgPracticeApiResponse.jsonPath().getInt("orgId");
-	}
-
-	public int createAgnosticPractice(int systemId) throws NumberFormatException, NullPointerException, IOException {
-		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
-				testData.getProperty("api.system.orgtype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createAgnosticPracticeApiResponse.jsonPath().getInt("orgId");
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		ngPracticeId = clientHierObj.createPractice_BL(enterpriseId);
+		agnosticPracticeId = clientHierObj.createAgnosticPractice_BL(systemId);
 	}
 
 	public int createBrand(int orgId) {
@@ -106,10 +49,9 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created client Org")
 	public void testDuplicateBrandToClientOrg() throws IOException {
-		clientID = createClient();
-		brandId = createBrand(clientID);
+		brandId = createBrand(clientId);
 		logStep("Duplicating Brand to newly created client org");
-		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(brandId, clientID);
+		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(brandId, clientId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchDuplicateBrandApiResponse);
 		CCUtils.assertEquals(fetchDuplicateBrandApiResponse.getStatusCode(), 200);
@@ -117,8 +59,7 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created system Org")
 	public void testDuplicateBrandToSystemOrg() throws IOException {
-		systemId = createSystem(clientID);
-		brandId = createBrand(clientID);
+		brandId = createBrand(clientId);
 		logStep("Duplicating Brand to newly created system org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(brandId, systemId);
 		logStep("Validating response information");
@@ -128,7 +69,6 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created enterprise Org")
 	public void testDuplicateBrandToEnterpriseOrg() throws IOException {
-		enterpriseId = createEnterprise(systemId);
 		logStep("Duplicating Brand to newly created enterprise org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(brandId, enterpriseId);
 		logStep("Validating response information");
@@ -138,7 +78,6 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@Test(priority = 3, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created ng practice Org")
 	public void testDuplicateBrandToNgPracticeOrg() throws IOException {
-		ngPracticeId = createNGPractice(enterpriseId);
 		logStep("Duplicating Brand to newly created Ng practice org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(brandId, ngPracticeId);
 		logStep("Validating response information");
@@ -148,7 +87,6 @@ public class DuplicateBrandingApiTests_BusinessLayer extends BaseRest {
 
 	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Duplicate existing brand to another newly created ng practice Org")
 	public void testDuplicateBrandToAgnosticPracticeOrg() throws IOException {
-		agnosticPracticeId = createAgnosticPractice(systemId);
 		logStep("Duplicating Brand to newly created agnostic practice org");
 		fetchDuplicateBrandApiResponse = brandInfo.postDuplicateBrandBL(brandId, agnosticPracticeId);
 		logStep("Validating response information");

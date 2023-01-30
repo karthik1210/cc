@@ -17,6 +17,7 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 
 	private ClientInfo clientData;
 	private Validations validation;
+	private CreateClientHierarchy_DL clientHierObj;
 	Response getSearchedClientDetailsApiResponse, createClientApiResponse;
 	public int clientIdOne;
 	public int clientIdTwo;
@@ -28,23 +29,12 @@ public class ClientAutoSuggestionApiTests_DataLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		clientData = new ClientInfo();
 		validation = new Validations();
-		clientIdOne = createClient();
-		clientIdTwo = createClient();
-		clientIdThree = createClient();
-		clientIdFour = createClient();
-	}
+		clientHierObj = new CreateClientHierarchy_DL();
 
-	public int createClient() throws NullPointerException, IOException {
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(78))));
-		String clientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(45))));
-		createClientApiResponse = clientData.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testData.getProperty("api.client.testclient"),
-				Integer.parseInt(testData.getProperty("api.client.type")),
-				testData.getProperty("api.client.timezoneid"),testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
-		return createClientApiResponse.jsonPath().getInt("clientId");
+		clientIdOne = clientHierObj.createClient_DL();
+		clientIdTwo = clientHierObj.createClient_DL();
+		clientIdThree = clientHierObj.createClient_DL();
+		clientIdFour = clientHierObj.createClient_DL();
 	}
 
 	@DataProvider(name = "typesofsearchdata")
