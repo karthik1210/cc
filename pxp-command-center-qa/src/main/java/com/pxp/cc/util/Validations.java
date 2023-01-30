@@ -3569,7 +3569,6 @@ public class Validations {
 	}
 
 	public void verifyErrorResponseForImageUrlField(Response response) throws IOException {
-<<<<<<< HEAD
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
@@ -3591,16 +3590,11 @@ public class Validations {
 				Log4jUtil.log("appointment type count "+appointmentTypeCount+" matches with response body appointment type statistics data count : "+jsonObject.get("count"));
 			}
 		}
-=======
-	JsonPath jsonpath = new JsonPath(response.getBody().asString());
-	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
-	 CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	 }
+	}
 	
 	public void verifyCreateAppTypeResponseBody(Response response, int id, String name) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("id"), id);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
->>>>>>> cb4d473f08f8f31e29d4fd9505d72f9d00cdc3c8
 	}
 }
