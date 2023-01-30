@@ -17,14 +17,12 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response getUserRolesApiResponse, createClientApiResponse;
-	private CreateClientHierarchy_BL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
-		clientHierObj = new CreateClientHierarchy_BL();
 		}
 
 	@DataProvider(name = "userTypeValue")
