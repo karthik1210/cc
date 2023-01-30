@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AppointmentTypeInfo;
+import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -18,9 +19,9 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 	private CreateClientHierarchy_BL clientHierObj;
 	private SharedInfo sharedInfo;
 	private Validations validation;
+	private ResourceInfo resourceInfo;
 	private AppointmentTypeInfo appointmentTypeInfo;
-	Response createClientApiResponse, createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
-			createResourceApiResponse, createNewLocationApiResponse, createProviderApiResponse,
+	Response createResourceApiResponse, createNewLocationApiResponse, createProviderApiResponse,
 			createAppointmentTypeApiResponse, getStatisticsDataResponse,
 			associatePracticesForLocationApiResponse;
 	public int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, locationId, appointmentTypeId;
@@ -43,6 +44,7 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		resourceInfo = new ResourceInfo();
 		appointmentTypeInfo = new AppointmentTypeInfo();
 		clientHierObj = new CreateClientHierarchy_BL();
 		clientId = clientHierObj.createClient_BL();
@@ -51,6 +53,7 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 		practiceId = clientHierObj.createPractice_BL(enterpriseId);
 		locationId = createLocation(clientId);
 		providerId = createProvider(practiceId);
+		resourceId = createNewResource(providerId,practiceId);
 		appointmentTypeId = createNewAppointmentType(practiceId);
 		associateLocationToPractice(practiceId);
 	}
@@ -84,6 +87,17 @@ public class GetStatisticsDataApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
 		validation.verifyCreateProviderApiResponseBody(createProviderApiResponse, firstName, lastName);
 		return createProviderApiResponse.jsonPath().getInt("providerId");
+	}
+	
+	public int createNewResource(int providerId,int practiceId) {
+		logStep("Create new resource");
+		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
+		String resourceName = CCUtils.generateAlphaNumericString(8);
+		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, resourceName,
+				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
+				testData.getProperty("resource.link.type"));
+		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
+		return createResourceApiResponse.jsonPath().getInt("resourceId");
 	}
 	
 	public int createNewAppointmentType(int practiceId) {
