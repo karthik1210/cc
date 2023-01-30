@@ -7,7 +7,6 @@ import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
@@ -16,73 +15,19 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetOrgSolutionsApiTests_DataLayer extends BaseRest {
-	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validation;
-	Response updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse, createClientApiResponse,
-			createPracticeApiResponse, createSystemApiResponse, createEnterpriseApiResponse, getOrgSolutionsResponse,
-			createAgnosticPracticeApiResponse;
+	Response updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse, getOrgSolutionsResponse,
+			createAgnosticPracticeApiResponse, createPracticeApiResponse;
 	List<Integer> solutionList = null;
 	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId;
-	String clientName, clientSapNumber;
+	private CreateClientHierarchy_DL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		orgInfo = new OrgInfo();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
-	}
-
-	public int createClient() throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(), testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
-				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), SystemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createPracticeNode(int enterpriseId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createAgnosticActivePracticeNode(int systemId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), systemId, testData.getProperty("api.practice.parenttype"),
-				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
 	}
 
 	public int createAgnosticInactivePracticeNode(int systemId) throws Exception {
@@ -98,11 +43,11 @@ public class GetOrgSolutionsApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as Active Implementation")
 	public void testToGetOrgSolution() throws Exception {
 		log("Update org details by adding up only one solution as Active Implementation");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
-		agnosticPracticeId = createAgnosticActivePracticeNode(systemId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
+		agnosticPracticeId = clientHierObj.createAgnosticPractice_DL(systemId);
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, practiceId);
@@ -119,9 +64,9 @@ public class GetOrgSolutionsApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as Active Implementation for active agnostic practice")
 	public void testToGetOrgSolutionForActiveAgnosticPractice() throws Exception {
 		log("Update org details by adding up only one solution as Active Implementation for active agnostic practice");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		agnosticPracticeId = createAgnosticActivePracticeNode(systemId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		agnosticPracticeId = clientHierObj.createAgnosticPractice_DL(systemId);
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
 		updateSolutionsApiResponse = orgInfo.updateOrgsSolutions_DataLayer(productList, agnosticPracticeId);
@@ -138,8 +83,8 @@ public class GetOrgSolutionsApiTests_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as Active Implementation for inactive agnostic practice")
 	public void testToGetOrgSolutionForInactiveAgnosticPractice() throws Exception {
 		log("Update org details by adding up only one solution as Active Implementation for inactive agnostic practice");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
 		agnosticPracticeId = createAgnosticInactivePracticeNode(systemId);
 		List<OrgSolutions> productList = Arrays.asList(
 				new OrgSolutions(testData.getProperty("Portal.id"), testData.getProperty("status.newly.purchased")));
@@ -156,10 +101,10 @@ public class GetOrgSolutionsApiTests_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type is NGE")
 	public void testToGetOrgSolutionForTypeNGE() throws Exception {
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		log("Get org solution as type is NGE");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_DataLayer(practiceId, testData.getProperty("ecosystem.nge"));
 		logStep("Validating response information");

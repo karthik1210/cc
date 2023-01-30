@@ -12,19 +12,22 @@
 	</listeners>
 	<test name="CC Shared Data Test">
 		<classes>
-			<!-- Enable test suite once pipeline issue is addressed for for data services 
-				Jira # PXPP-16483 -->
-			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" 
-				/><class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.DuplicateBrandingApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" 
-				/> <class name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" 
-				/> </class> -->
-			<!--Jira #PXPP-20235- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer"/> -->
-            <!--Jira #PXPP-PXPP-27647 <class 
-			name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientProviderApiTests_DataLayer"></class>
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer" /> -->
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsForAppointmentTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DuplicateBrandingApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetResourcesForProviderApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateBrandApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientProviderApiTests_DataLayer"/>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_DataLayer" />
 			<class
@@ -125,38 +128,40 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchConnectResourcesForLocationWithPracticeApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientStaffApiTests_DataLayer"></class>
-			<class	
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateStaffApiTests_DataLayer"></class>
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStaffDetailsApiTests_DataLayer"></class>	
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_DataLayer"></class>			
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesForStaffApiTests_DataLayer"></class>	
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_DataLayer"></class>		
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppTypesAssocWithResApiTests_DataLayer"></class>	
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppTypesForResApiTests_DataLayer"></class>		
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableAppTypesApiTests_DataLayer"></class>			
-            <class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>		
-			<class	
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStaffDetailsApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticesForStaffApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppTypesAssocWithResApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveAppTypesForResApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableAppTypesApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SaveAppTypesDisplayInfoApiTests_DataLayer"></class>
-			<class		
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>	
-			<class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.RemoveResourceImageApiTests_DataLayer"></class>	
-			<class	
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.RemoveResourceImageApiTests_DataLayer"></class>
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddStaffImageApiTests_DataLayer"></class>
-			<class	
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResForAppTypeApiTests_DataLayer"></class>
             <class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>	
 			 <class	
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewAppTypesApiTests_DataLayer"></class>	
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>
 		</classes>
 	</test>
 

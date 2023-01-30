@@ -1,24 +1,38 @@
-//Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
+import com.pxp.cc.helpers.AppointmentTypeInfo;
 import com.pxp.cc.helpers.PracticeAppointmentTypeInfo;
+import com.pxp.cc.helpers.ResourceInfo;
+import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.ResourceDetails;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.PracticeAppointmentTypeValidations;
 import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetResourcesForAppointmentTypeApiTests_DataLayer extends BaseRest {
-
 	private PracticeAppointmentTypeInfo practiceAppointmentTypeInfo;
 	private Validations validations;
+	private SharedInfo sharedInfo;
 	private PracticeAppointmentTypeValidations practiceAppointmentTypeValidations;
 	Response fetchResourcesForAppointmentTypeResponse;
+	private ResourceInfo resourceInfo;
+	private AppointmentTypeInfo appointmentTypeInfo;
+	Response getAppointmentTypeApiResponse, createProviderApiResponse, createResourceApiResponse,
+			updateAppointmentTypesForResourcesApiResponse, createAppointmentTypeApiResponse,
+			addOrRemoveResourcesForAppointmentTypeApiResponse;
+	private CreateClientHierarchy_DL clientHierObj;
+	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, appointmentTypeId;
+	String externalId, firstName, lastName, resourceExternalId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -26,13 +40,49 @@ public class GetResourcesForAppointmentTypeApiTests_DataLayer extends BaseRest {
 		practiceAppointmentTypeInfo = new PracticeAppointmentTypeInfo();
 		validations = new Validations();
 		practiceAppointmentTypeValidations = new PracticeAppointmentTypeValidations();
+		resourceInfo = new ResourceInfo();
+		appointmentTypeInfo = new AppointmentTypeInfo();
+		sharedInfo = new SharedInfo();
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
+		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
+		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
+		logStep("Create provider for resourceId");
+		String externalId = CCUtils.generateAlphaNumericString(10);
+		createProviderApiResponse = sharedInfo.createProvider_DL(practiceId, firstName, lastName,
+				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
+		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
+		logStep("Create new resource");
+		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
+		String resourceName = CCUtils.generateAlphaNumericString(8);
+		createResourceApiResponse = resourceInfo.createResource_DL(practiceId, resourceName,
+				testData.getProperty("resource.type"), resourceExternalId, String.valueOf(providerId),
+				testData.getProperty("resource.link.type"));
+		CCUtils.assertEquals(createResourceApiResponse.getStatusCode(), 200);
+		resourceId = createResourceApiResponse.jsonPath().getInt("resourceId");
+		logStep("Create new AppointmentType");
+		String name = testData.getProperty("api.appointment.name");
+		String externalIdApp = testData.getProperty("api.appointment.externalId");
+		String duration = testData.getProperty("api.appointment.duration");
+		String categoryId = CCUtils.generateNumericString(5);
+		createAppointmentTypeApiResponse = appointmentTypeInfo.createAppointmentType_DL(practiceId,
+				testData.getProperty("default.solution.id"), name, externalIdApp, duration, categoryId, name,
+				externalIdApp);
+		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 200);
+		appointmentTypeId = createAppointmentTypeApiResponse.jsonPath().getInt("id");
+		List<ResourceDetails> resourceList = Arrays.asList(new ResourceDetails(resourceId, true));
+		addOrRemoveResourcesForAppointmentTypeApiResponse = sharedInfo.addOrRemoveResourcesForAppoinmentType_DL(practiceId,
+				appointmentTypeId, resourceList);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Fetch all the resources of appointment type of a practice")
 	public void testGetResourceForAppointmentType() throws IOException {
-		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo.getResourcesForAppointmentType_DL(
-				Integer.parseInt(testData.getProperty("get.resources.practice.id")),
-				Integer.parseInt(testData.getProperty("get.resources.appointment.type.id")));
+		fetchResourcesForAppointmentTypeResponse = practiceAppointmentTypeInfo
+				.getResourcesForAppointmentType_DL(practiceId, appointmentTypeId);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(fetchResourcesForAppointmentTypeResponse);
 		CCUtils.assertEquals(fetchResourcesForAppointmentTypeResponse.getStatusCode(), 200);

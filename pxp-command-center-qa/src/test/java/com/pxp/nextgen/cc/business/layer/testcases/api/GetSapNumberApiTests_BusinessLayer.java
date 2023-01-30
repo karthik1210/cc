@@ -14,9 +14,9 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
-
 	private ClientInfo clientInfo;
 	private Validations validation;
+	private CreateClientHierarchy_BL clientHierObj;
 	Response getSapNumberApiResponse, createClientApiResponse;
 	int clientId;
 	String clientName, clientSapNumber;
@@ -26,22 +26,9 @@ public class GetSapNumberApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		clientInfo = new ClientInfo();
 		validation = new Validations();
-		clientName = ccUser.getClientName().trim().concat(CCUtils.generateRandomString()).trim();
-		clientSapNumber = "SAP_01_number_".trim().concat(CCUtils.generateAlphaNumericString(5)).trim();
-		clientId = createClient(clientName, clientSapNumber);
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient(String name, String sapNumber) throws Exception {
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), name, sapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, name);
-		return createClientApiResponse.jsonPath().get("clientId");
+		clientId = clientHierObj.createClient_BL();
 	}
 
 	@DataProvider(name = "clientSapNumber")
