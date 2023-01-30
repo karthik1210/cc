@@ -65,7 +65,7 @@ public class EnableDisableAppTypesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(enableDisableAppointmentApiResponse);
 		CCUtils.assertEquals(enableDisableAppointmentApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(enableDisableAppointmentApiResponse);
+		validation.verifyErrorMessageForBlankField(enableDisableAppointmentApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing PracticeId and existing AppointmentTypeId and verify response body")
@@ -77,7 +77,7 @@ public class EnableDisableAppTypesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(enableDisableAppointmentApiResponse);
 		CCUtils.assertEquals(enableDisableAppointmentApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(enableDisableAppointmentApiResponse);
+		validation.verifyErrorMessageForBlankField(enableDisableAppointmentApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing PracticeId and non-existing AppointmentTypeId and verify response body")
@@ -90,7 +90,7 @@ public class EnableDisableAppTypesApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(enableDisableAppointmentApiResponse);
 		CCUtils.assertEquals(enableDisableAppointmentApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(enableDisableAppointmentApiResponse);
+		validation.verifyErrorMessageForBlankField(enableDisableAppointmentApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enable existing Practiceid for existing appointmentTypeId With Active Status As Null and verify response body")
