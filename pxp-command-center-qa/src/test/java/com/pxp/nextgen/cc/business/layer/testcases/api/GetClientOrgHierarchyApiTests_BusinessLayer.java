@@ -17,7 +17,6 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetClientOrgHierarchyApiTests_BusinessLayer extends BaseRest {
-
 	private ClientInfo clientInfo;
 	private OrgInfo orgInfo;
 	private Validations validation;

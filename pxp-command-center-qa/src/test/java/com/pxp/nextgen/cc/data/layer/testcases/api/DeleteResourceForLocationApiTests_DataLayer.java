@@ -19,14 +19,12 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class DeleteResourceForLocationApiTests_DataLayer extends BaseRest {
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
 	private ResourceInfo resourceInfo;
 	private SharedInfo sharedInfo;
 	private LocationsValidations locationsValidations;
 	private Validations validation;
-	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, createResourceApiResponse, createNewLocationApiResponse,
+	private CreateClientHierarchy_DL clientHierObj;
+	Response createProviderApiResponse, createResourceApiResponse, createNewLocationApiResponse,
 			addResourceForLocationApiResponse, deleteResourceForLocationsApiResponse,
 			getResourcesForLocationApiResponse, associateDeassociatePracticesForLocationApiResponse,
 			getResourceDetailsApiResponse;
@@ -35,37 +33,16 @@ public class DeleteResourceForLocationApiTests_DataLayer extends BaseRest {
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
 		resourceInfo = new ResourceInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		locationsValidations = new LocationsValidations();
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
+		clientHierObj = new CreateClientHierarchy_DL();
 
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
-				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		locationId = createLocation(clientId);
 		logStep("Associate NGE practice with loacation");
 		associateDeassociatePracticesForLocationApiResponse = sharedInfo

@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -16,33 +15,19 @@ import io.restassured.response.Response;
 public class CreateNewLocationApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
-	Response createNewLocationApiResponse, createClientApiResponse, fetchLocationDetailsApiResponse;
+	private CreateClientHierarchy_DL clientHierObj;
+	Response createNewLocationApiResponse, fetchLocationDetailsApiResponse;
 	String externalId;
 	int clientId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
-		clientId = createClient();
-	}
+		clientHierObj = new CreateClientHierarchy_DL();
 
-	public int createClient() throws NumberFormatException, NullPointerException, IOException {
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-		String clientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-		String testFlag = testData.getProperty("api.client.testclient");
-		String clientTimezoneId = testData.getProperty("api.client.timezoneid");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId,testData.getProperty("ehr.identifier"),testData.getProperty("pm.identifier"));
-		return createClientApiResponse.jsonPath().getInt("clientId");
+		clientId = clientHierObj.createClient_DL();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in mandatory field and verify response body")

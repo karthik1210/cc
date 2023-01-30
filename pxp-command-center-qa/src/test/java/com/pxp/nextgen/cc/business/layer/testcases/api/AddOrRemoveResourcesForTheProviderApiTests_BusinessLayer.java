@@ -22,50 +22,25 @@ import io.restassured.response.Response;
 public class AddOrRemoveResourcesForTheProviderApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
 	List<ResourceDetails> resourceList;
 	private ResourceInfo resourceInfo;
-	Response createClientApiResponse, createProviderApiResponse, createSystemApiResponse, createPracticeApiResponse,
-			createEnterpriseApiResponse, createResourceApiResponse, updateResourcesForProvider;
+	private CreateClientHierarchy_BL clientHierObj;
+	Response createProviderApiResponse, createResourceApiResponse, updateResourcesForProvider;
 	int clientId, systemId, enterpriseId, practiceId, providerId, resourceId;
-	String clientName, clientSapNumber, externalId, firstName, lastName, resourceExternalId;
+	String externalId, firstName, lastName, resourceExternalId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
 		resourceInfo = new ResourceInfo();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
+		clientHierObj = new CreateClientHierarchy_BL();
+		
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
 		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
 		logStep("Create provider for resourceId");
