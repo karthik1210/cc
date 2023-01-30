@@ -3554,23 +3554,43 @@ public class Validations {
 	}
 
 	public void verifyResponseBodyForExistingStaffd(Response response) throws IOException {
-	 JsonPath jsonpath = new JsonPath(response.getBody().asString());
-	 Log4jUtil.log("value of staffId is : " + jsonpath.get("staffId").toString());
-	 Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
-	 Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
-	 Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imgUrl"));
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("value of staffId is : " + jsonpath.get("staffId").toString());
+		Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
+		Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
+		Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imgUrl"));
 	}
 
 	public void verifyErrorMessageInResponseBodyForNonExistingStaffId(Response response, int nonExistingStaffId)
-	throws IOException {
-	 JsonPath jsonpath = new JsonPath(response.getBody().asString());
-	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by id=" + nonExistingStaffId);
-     CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	 }
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by id=" + nonExistingStaffId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 	public void verifyErrorResponseForImageUrlField(Response response) throws IOException {
-	JsonPath jsonpath = new JsonPath(response.getBody().asString());
-	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
-	 CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	 }
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyResponseBodyOfStatisticsData(Response response, int locationCount, int resourceCount,
+			int appointmentTypeCount) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		jsonArray = new JSONArray(response.getBody().asString());
+		CCUtils.assertTrue(jsonArray.length() > 0, "statistics list is empty");
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			if(jsonObject.get("key").equals("LOCATION")) {
+				CCUtils.assertEquals(jsonObject.get("count"), locationCount);
+				Log4jUtil.log("Location count "+locationCount+" matches with response body location statistics data count : "+jsonObject.get("count"));
+			}else if(jsonObject.get("key").equals("RESOURCE")) {
+				CCUtils.assertEquals(jsonObject.get("count"), resourceCount);
+				Log4jUtil.log("resource count "+resourceCount+" matches with response body resource statistics data count : "+jsonObject.get("count"));
+			}else if(jsonObject.get("key").equals("APPOINTMENTTYPE")) {
+				CCUtils.assertEquals(jsonObject.get("count"), appointmentTypeCount);
+				Log4jUtil.log("appointment type count "+appointmentTypeCount+" matches with response body appointment type statistics data count : "+jsonObject.get("count"));
+			}
+		}
+	}
 }

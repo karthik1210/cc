@@ -2211,5 +2211,7 @@ public class ApiPath {
 		return SHARED_DL + "/v1/staff/null/images";
 	}
 
-
+	public static final String GET_STATISTICS_DATA_BL() {
+		return SERVICE_SHARED_BL+ "/v1/data-stats";
+	}
 }
