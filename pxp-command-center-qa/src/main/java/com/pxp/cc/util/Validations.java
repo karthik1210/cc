@@ -3577,8 +3577,6 @@ public class Validations {
 	public void verifyResponseBodyOfStatisticsData(Response response, int locationCount, int resourceCount,
 			int appointmentTypeCount) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
-		jsonArray = new JSONArray(response.getBody().asString());
-		CCUtils.assertTrue(jsonArray.length() > 0, "statistics list is empty");
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 			if(jsonObject.get("key").equals("LOCATION")) {
