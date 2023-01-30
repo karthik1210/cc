@@ -14,9 +14,9 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
-
 	private ClientInfo clientData;
 	private Validations validation;
+	private CreateClientHierarchy_BL clientHierObj;
 	Response getSearchedClientDetailsApiResponse, createClientApiResponse;
 	int clientId;
 	String clientNameData, clientSapNumber;
@@ -26,22 +26,9 @@ public class ClientAutoSuggestionApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		clientData = new ClientInfo();
 		validation = new Validations();
-		clientId = createClient();
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient() throws Exception {
-		clientNameData = "Client@12".concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientData.createNewClient(ccUser.getActive(), clientNameData, clientSapNumber,
-				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientNameData);
-		return createClientApiResponse.jsonPath().get("clientId");
+		clientId = clientHierObj.createClient_BL();
 	}
 
 	@DataProvider(name = "searchData")

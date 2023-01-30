@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -17,9 +16,9 @@ import io.restassured.response.Response;
 public class GetLocationDetailsApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_BL clientHierObj;
 	private LocationsValidations locationValidation;
-	Response createNewLocationApiResponse, createClientApiResponse, fetchLocationDetailsApiResponse;
+	Response createNewLocationApiResponse, fetchLocationDetailsApiResponse;
 	String externalId, locationName;
 	int clientId, locationId;
 
@@ -28,25 +27,11 @@ public class GetLocationDetailsApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
-		clientId = createClient();
+		clientHierObj = new CreateClientHierarchy_BL();
+		   
+		clientId = clientHierObj.createClient_BL();
 		locationValidation = new LocationsValidations();
 		locationId = createLocation(clientId);
-	}
-
-	public int createClient() throws IOException {
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient("true", clientName, clientSapNumber, "true",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	public int createLocation(int clientId) throws Exception {

@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -20,9 +18,8 @@ public class GetPracticesAssociatedToLocationApiTests_BusinessLayer extends Base
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private LocationsValidations locationValidation;
-	private ClientInfo clientInfo;
-	private OrgInfo orgInfo;
-	Response createNewLocationApiResponse, createClientApiResponse, fetchLocationDetailsApiResponse,
+	private CreateClientHierarchy_BL clientHierObj;
+	Response createNewLocationApiResponse, fetchLocationDetailsApiResponse,
 			createOrgNodeApiResponse, associateDeassociatePracticesForLocationApiResponse,
 			getPracticesAssociateToLocationApiResponse;
 	String externalId, locationName;
@@ -34,51 +31,15 @@ public class GetPracticesAssociatedToLocationApiTests_BusinessLayer extends Base
 		setupServiceRequestSpecificationBuilder();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
 		locationValidation = new LocationsValidations();
+		clientHierObj = new CreateClientHierarchy_BL();
 
-		clientId = createClient();
-		logStep("Create active system, enterprise ,nge practice and inactive agnostic practice nodes below active client");
-		systemId = createOrgNode(testData.getProperty("api.system.active"), "", testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), clientId, testData.getProperty("api.parenttype"), "",
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		enterpriseId = createOrgNode(testData.getProperty("api.enterprise.active"), "",
-				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), systemId,
-				testData.getProperty("api.enterprise.parenttype"), "US/Eastern",
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		ngePracticeId = createOrgNode(testData.getProperty("api.practice.active"), "",
-				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), "US/Central",
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		ngePracticeId = clientHierObj.createPractice_BL(enterpriseId);
 		locationId = createLocation(clientId);
 		locationIdOne = createLocation(clientId);
-
-	}
-
-	public int createClient() throws IOException {
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient("true", clientName, clientSapNumber, "true",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createOrgNode(String status, String displayName, String name, String orgType, int parentId,
-			String parentType, String timezoneId, int ehridentifier, int pmIdentifier) throws Exception {
-		createOrgNodeApiResponse = orgInfo.createOrgNode_BL(name, orgType, displayName, status, timezoneId, parentId,
-				parentType, ehridentifier, pmIdentifier);
-		return createOrgNodeApiResponse.jsonPath().getInt("orgId");
 	}
 
 	public int createLocation(int clientId) throws Exception {

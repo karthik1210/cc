@@ -6,68 +6,30 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
-import com.pxp.cc.util.ResourceValidations;
 import io.restassured.response.Response;
 
 public class UpdateResourceApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
-	private ClientInfo clientInfo;
 	private ResourceInfo resourceInfo;
+	private CreateClientHierarchy_BL clientHierObj;
 	int clientId, systemId, enterpriseId, practiceId, resourceId, solutionId, providerId;
-	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
-	Response createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse, createClientApiResponse,
-			createProviderApiResponse, updateResourceDetailsApiResponse, createResourceApiResponse;
-	private OrgInfo orgInfo;
+	Response createProviderApiResponse, updateResourceDetailsApiResponse, createResourceApiResponse;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
 		resourceInfo = new ResourceInfo();
 		sharedInfo = new SharedInfo();
+		clientHierObj = new CreateClientHierarchy_BL();
 
-		logStep("Create nge practice below the client with valid details");
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		logStep("Create a new system below client.");
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new enterprise below system.");
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new practice below enterprise.");
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating Response Information");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		practiceId = createPracticeApiResponse.jsonPath().get("orgId");
-
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
 		logStep("Create new provider");
 		String firstName = testData.getProperty("provider.firstname").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("provider.lastname").concat(CCUtils.generateAlphaNumericString(5));
@@ -76,7 +38,6 @@ public class UpdateResourceApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("provider.gender"), externalId, testData.getProperty("provider.credentials"));
 		CCUtils.assertEquals(createProviderApiResponse.getStatusCode(), 200);
 		providerId = createProviderApiResponse.jsonPath().getInt("providerId");
-
 		logStep("Create new resource");
 		String resourceExternalId = CCUtils.generateAlphaNumericString(10);
 		createResourceApiResponse = resourceInfo.createResource_BL(practiceId, testData.getProperty("resource.name"),
