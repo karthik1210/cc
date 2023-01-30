@@ -19,7 +19,7 @@ public class AddLocationPage extends CCMainPage {
 		super(driver);
 	}
 
-	@FindBy(id = "generalLabel")
+	@FindBy(id = "locationTitle")
 	private WebElement labelLocationsPageTitle;
 
 	@FindBy(id = "openDialog")
