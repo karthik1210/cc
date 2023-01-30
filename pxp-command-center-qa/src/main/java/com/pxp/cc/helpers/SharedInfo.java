@@ -2090,4 +2090,12 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}	
+	
+	public Response addStaffImage_BL(int staffId, File file, String fileType) {
+		String url = ApiPath.STAFF_IMAGE_BL(staffId);
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data").multiPart("file", file, fileType)
+				.post(url).then().extract().response();
+	}
 }

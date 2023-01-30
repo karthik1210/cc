@@ -3573,4 +3573,14 @@ public class Validations {
 	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
 	 CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	 }
+	
+	public void verifyResponseBodyForExistingStaffId_BL(Response response) throws IOException {
+		 JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		 Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
+		 Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
+		 Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imageUrl"));
+		 Log4jUtil.log("value of gender is  :"+jsonpath.get("gender"));
+		 Log4jUtil.log("value of externalId is  :"+jsonpath.get("externalId"));
+		 Log4jUtil.log("value of status is  :"+jsonpath.get("status"));	
+		}
 }
