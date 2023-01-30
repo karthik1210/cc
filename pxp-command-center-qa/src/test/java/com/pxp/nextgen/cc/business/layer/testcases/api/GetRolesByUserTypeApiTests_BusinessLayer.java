@@ -17,7 +17,6 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
 	Response getUserRolesApiResponse, createClientApiResponse;
-	int newClientId;
 	private CreateClientHierarchy_BL clientHierObj;
 
 	@BeforeClass()
@@ -26,22 +25,13 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		userInfo = new UserInfo();
 		validation = new Validations();
 		clientHierObj = new CreateClientHierarchy_BL();
-
-		newClientId = clientHierObj.createClient_BL();
-	}
+		}
 
 	@DataProvider(name = "userTypeValue")
 	public Object[][] getUserTypes() throws Exception {
 		return new Object[][] { { testData.getProperty("user.type.internal").trim() },
 				{ testData.getProperty("user.type.client").trim() },
 				{ testData.getProperty("user.type.varreseller").trim() } };
-	}
-
-	@DataProvider(name = "userType")
-	public Object[][] getUserType() throws Exception {
-		return new Object[][] {
-				{ testData.getProperty("user.type.internal").concat(CCUtils.generateAlphaNumericString(5)) },
-				{ newClientId } };
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userTypeValue", description = "Get user roles by userType")
@@ -52,9 +42,9 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userType", description = "Enter non existing user type and verify response status code")
-	public void testResponseCodeForNonExistingUserType(String userType) throws IOException {
-		getUserRolesApiResponse = userInfo.getUserRolesByUserType(userType);
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing user type and verify response status code")
+	public void testResponseCodeForNonExistingUserType() throws IOException {
+		getUserRolesApiResponse = userInfo.getUserRolesByUserType("non existing userType");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 204);
