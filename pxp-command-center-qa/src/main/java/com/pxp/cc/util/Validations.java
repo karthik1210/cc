@@ -3573,4 +3573,10 @@ public class Validations {
 	 CCUtils.assertEquals(jsonpath.get("message").toString(), "Image url can not be null");
 	 CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	 }
+	
+	public void verifyCreateAppTypeResponseBody(Response response, int id, String name) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("id"), id);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+	}
 }
