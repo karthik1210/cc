@@ -1,4 +1,5 @@
 // Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
@@ -13,15 +14,14 @@ import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.ClientDirectoryValidations;
 import com.pxp.cc.util.Validations;
-
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 
 public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
-	private ClientInfo clientInfo;
 	private ClientDirectory clientDirectory;
 	private ClientDirectoryValidations clientDirectoryValidations;
 	private Validations validation;
+	private CreateClientHierarchy_BL clientHierObj;
 	JsonPath jsonPath;
 	List<String> list = null;
 	int clientIdOne, clientIdTwo, clientIdThree, clientIdFour, clientIdFive, clientIdSix;
@@ -32,30 +32,16 @@ public class FavoriteUnFavoriteClientApiTests_BusinessLayer extends BaseRest {
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
 		clientDirectory = new ClientDirectory();
-		clientInfo = new ClientInfo();
 		clientDirectoryValidations = new ClientDirectoryValidations();
 		validation = new Validations();
-		clientIdOne = createClient();
-		clientIdTwo = createClient();
-		clientIdThree = createClient();
-		clientIdFour = createClient();
-		clientIdFive = createClient();
-		clientIdSix = createClient();
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient() throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
+		clientIdOne = clientHierObj.createClient_BL();
+		clientIdTwo = clientHierObj.createClient_BL();
+		clientIdThree = clientHierObj.createClient_BL();
+		clientIdFour = clientHierObj.createClient_BL();
+		clientIdFive = clientHierObj.createClient_BL();
+		clientIdSix = clientHierObj.createClient_BL();
 	}
 
 	public List<String> listOfFavoritingClients() throws Exception {

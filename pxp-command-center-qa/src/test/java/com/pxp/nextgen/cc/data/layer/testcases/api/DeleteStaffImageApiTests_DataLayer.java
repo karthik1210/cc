@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -16,30 +15,19 @@ import io.restassured.response.Response;
 public class DeleteStaffImageApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
-	Response createNewstaffApiResponse, createClientApiResponse, addStaffImageUrlApiResponse, getStaffDetailsApiResponse,
+	private CreateClientHierarchy_DL clientHierObj;
+	Response createNewstaffApiResponse, addStaffImageUrlApiResponse, getStaffDetailsApiResponse,
 	deleteStaffImageApiResponse ;
 	int clientId,staffId;
 	
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
-		String clientName = CCUtils.getName(CCUtils.generateStringWithSpace(testData.getProperty("api.client.name")
-				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-		String clientSapNumber = CCUtils
-				.getSapNumber(CCUtils.generateStringWithSpace(testData.getProperty("api.client.sapnumber")
-						.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5))));
-		String testFlag = testData.getProperty("api.client.testclient");
-		String clientTimezoneId = testData.getProperty("api.client.timezoneid");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(testData.getProperty("api.client.active"),
-				clientName, clientSapNumber, testFlag, Integer.parseInt(testData.getProperty("api.client.type")),
-				clientTimezoneId, testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().get("clientId");
-	
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
 		logStep("Create new staff");
 		String firstName = testData.getProperty("staff.firstname").concat(CCUtils.generateAlphaNumericString(5));
 		String lastName = testData.getProperty("staff.lastname").concat(CCUtils.generateAlphaNumericString(5));

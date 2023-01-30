@@ -8,7 +8,6 @@ import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.pojos.OrgSolutions;
@@ -17,12 +16,10 @@ import com.pxp.cc.util.Validations;
 import io.restassured.response.Response;
 
 public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
-
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 	private OrgInfo orgInfo;
 	private Validations validation;
-	Response createClientApiResponse, createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
-			updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse;
+	Response updateSolutionsApiResponse, fetchOrgSolutionDetailsApiResponse;
 	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId;
 	String clientName, clientSapNumber;
 	List<OrgSolutions> finalList;
@@ -30,60 +27,9 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		clientInfo = new ClientInfo();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
-	}
-
-	public int createClient() throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(), testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
-				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), SystemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createPracticeNode(int enterpriseId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createAgnosticePracticeNode(int SystemId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), SystemId, testData.getProperty("api.practice.parenttype"),
-				testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
+		clientHierObj = new CreateClientHierarchy_DL();
 	}
 
 	public void updateOrgSolutions(int orgId) throws IOException {
@@ -109,10 +55,10 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter incorrect type and existing org id in orgId field and verify status code")
 	public void testStatusCodeWhenEnterIncorrectTypeAndExistingOrgId() throws Exception {
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		updateOrgSolutions(practiceId);
 		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(practiceId, "incorrect");
 		logStep("Validating response information");
@@ -123,10 +69,10 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid url and validate error status code")
 	public void testErrorMessageForInvalidUrl() throws Exception {
 		logStep("Enter invalid url  and validate error message");
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		updateOrgSolutions(practiceId);
 		fetchOrgSolutionDetailsApiResponse = orgInfo.getSolutionOrgIdUsingInvalidUrl_DataLayer(practiceId,
 				testData.getProperty("get.org.type"));
@@ -149,10 +95,10 @@ public class GetSolutionsByOrgIdApiTest_DataLayer extends BaseRest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Test for fetching solutions for correct org id")
 	public void testForFetchingSolutionsForOrgId() throws Exception {
-		clientId = createClient();
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		updateOrgSolutions(practiceId);
 		fetchOrgSolutionDetailsApiResponse = orgInfo.getOrgSolutionsDetails_DataLayer(practiceId,
 				testData.getProperty("get.org.type"));
