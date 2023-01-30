@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -17,8 +16,8 @@ import io.restassured.response.Response;
 public class GetBrandDetailsApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
 	private BrandsInfo brandInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 	Response getBrandingDetailsApiResponse, createBrandApiResponse, createClientApiResponse;
 	int clientId, brandId;
 	String name, color;
@@ -28,15 +27,10 @@ public class GetBrandDetailsApiTests_DataLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
 		brandInfo = new BrandsInfo();
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().get("clientId");
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
 		logStep("create brand");
 		name = testData.getProperty("client.org.brand.name")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));

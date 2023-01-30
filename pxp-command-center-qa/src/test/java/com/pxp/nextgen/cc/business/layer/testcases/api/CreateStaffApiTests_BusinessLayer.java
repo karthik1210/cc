@@ -6,7 +6,6 @@ import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -16,33 +15,18 @@ import io.restassured.response.Response;
 public class CreateStaffApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	private ClientInfo clientInfo;
-	Response createNewstaffApiResponse, createClientApiResponse;
+	private CreateClientHierarchy_BL clientHierObj;
+	Response createNewstaffApiResponse;
 	int clientId;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilder();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
-		clientId = createClient();
-	}
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	public int createClient() throws NumberFormatException, NullPointerException, IOException {
-		logStep("Create client using valid details in client name, sap number, active, testclient, client type and timezone field");
-		String clientNameData = "Client@12".concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(ccUser.getActive(), clientNameData, clientSapNumber,
-				"false", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientNameData);
-		return createClientApiResponse.jsonPath().getInt("clientId");
+		clientId = clientHierObj.createClient_BL();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter valid details in mandatory fields and verify response body")
