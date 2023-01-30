@@ -31,7 +31,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button and verify error mesaages- 'Maximum characters reached' and 'Client name required' ")
 	public void testEditClientCancelButtonAndClientRequiredAndMaxCharacterReachedError() throws Exception {
 		ngHierarchyClientCreate();
-		logStep("PXPP-13069 PXPP-13071 PXPP-26024 PXPP-26025 Verify functionality client name edit error and cancel button functionality");
+		logStep("PXPP-13069, PXPP-13071, PXPP-26024, PXPP-26025 Verify functionality client name edit error and cancel button functionality");
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
 		String newClientName = CCUtils.generateAlphaNumericString(101);
@@ -51,7 +51,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify add new system, enterprise, practice page web elements and max character reached error")
 	public void testAddNewSystemEnterprisePracticePageWebElementsAndMaxCharacterReachedErrorMessage() throws Exception {
-		logStep("PXPP-12565 PXPP-15268 PXPP-12569 PXPP-12571 PXPP-12572 PXPP-12573 PXPP-12746 PXPP-12749 PXPP-12755 PXPP-12769 PXPP-12756 PXPP-12757 PXPP-12765 PXPP-12763 PXPP-12758  verify adding orgs within a client in manage client page");
+		logStep("PXPP-12565, PXPP-15268, PXPP-12569, PXPP-12571, PXPP-12572, PXPP-12573, PXPP-12746, PXPP-12749, PXPP-12755, PXPP-12769, PXPP-12756, PXPP-12757, PXPP-12765, PXPP-12763, PXPP-12758  verify adding orgs within a client in manage client page");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickClientDirectory();
 		clientName = ccui.getClient();
@@ -135,7 +135,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of cancel button at add org page and when user click on 'CLOSE' button User redirected to general setting page")
 	public void testSearchCancelAndCloseButtonFunctionalityOfManageClientPage() throws Exception {
-		logStep("PXPP-12548 PXPP-12561 PXPP-12565 PXPP-12772 verify cancel and close button of manage client page");
+		logStep("PXPP-12548, PXPP-12561, PXPP-12565, PXPP-12772 verify cancel and close button of manage client page");
 		ngHierarchyClientCreate();
 		logStep("Verify manage client button is displayed");
 		ccui.getAddOrgNodePage().verifyManageClientButton();
@@ -158,9 +158,9 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of edit client, system, enterprise, practice name and status")
 	public void testEditClientSystemEnterprisePracticeNameAndStatus() throws Exception {
-		logStep("PXPP-13064 PXPP-13063 PXPP-13061 PXPP-13059 PXPP-12739 PXPP-12741 PXPP-12742 PXPP-12744 edit client, system, enterprise, practice name and status");
+		logStep("PXPP-13064, PXPP-13063, PXPP-13061, PXPP-13059, PXPP-12739, PXPP-12741, PXPP-12742, PXPP-12744 edit client, system, enterprise, practice name and status");
 		ngHierarchyClientCreate();
 		logStep("Edit and save client name and status");
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
@@ -204,7 +204,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify locations tab count value at general settings page for client, system, enterprise, practice should match with no of location in corresponding locations details page")
 	public void tabCountforLocationsTabAtClientSystemEnterprisePracticeLevel() throws Exception {
-		logStep("PXPP-28739 PXPP-28745 PXPP-28752 PXPP-28753 PXPP-28797 PXPP-28811 PXPP-28825 PXPP-28826 verify location tab count should match with no of locations in location search page");
+		logStep("PXPP-28739, PXPP-28745, PXPP-28752, PXPP-28753, PXPP-28797, PXPP-28811, PXPP-28825, PXPP-28826 verify location tab count should match with no of locations in location search page");
 		ngHierarchyClientCreate();
 		logStep("create multiple locations at client level");
 		addLocationPopUp();
@@ -256,7 +256,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify providers & resources tab count value at general settings page for client, system, enterprise, practice should match with no of providers and resources in corresponding providers/resources search page")
 	public void tabCountforProvidersAndResourcesTabAtClientSystemEnterprisePracticeLevel() throws Exception {
-		logStep("PXPP-28746 PXPP-28747 PXPP-28754 PXPP-28756 PXPP-28813 PXPP-28814 PXPP-28827 PXPP-28828 verify providers and resources tab count should match with no of providers and resources in providers/resources search page");
+		logStep("PXPP-28746, PXPP-28747, PXPP-28754, PXPP-28756, PXPP-28813, PXPP-28814, PXPP-28827, PXPP-28828 verify providers and resources tab count should match with no of providers and resources in providers/resources search page");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -323,7 +323,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify Appointment type tab count value at general settings page for client, system, enterprise, practice should match with no of appointment types in appointment type search page")
 	public void tabCountforAppointmenTypeTabAtClientSystemEnterprisePracticeLevel() throws Exception {
-		logStep("PXPP-28750 PXPP-28734 PXPP-28757 PXPP-28812 PXPP-28824 PXPP-28829 Verify appointment type tab count should match with no of appointment type in appointment type search page");
+		logStep("PXPP-28750, PXPP-28734, PXPP-28757, PXPP-28812, PXPP-28824, PXPP-28829 Verify appointment type tab count should match with no of appointment type in appointment type search page");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickClientDirectoryIcon();
 		clientDirectorPage.verifyClientDirectioryPageTitle();
@@ -373,7 +373,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify default text, search icon and search node functionality and test to select and verify Auto Suggestion list for symbol and number search in node name")
 	public void testGeneralSettingScreenAndAutoSuggestionForSingleCharacterSearchAndNumberSearch() throws Exception {
 		ngHierarchyClientCreate();
-		logStep("PXPP-12909 PXPP-12910 PXPP-12911 PXPP-12921 Verify default text, autosuggestions ,search icon and search node functionality ");
+		logStep("PXPP-12909, PXPP-12910, PXPP-12911, PXPP-12921 Verify default text, autosuggestions ,search icon and search node functionality ");
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Verifying default text");
 		String actualDefaultText = ccui.getGeneralSettingsPage().defaultTextInSearch();
@@ -436,7 +436,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level")
 	public void verifyVisibilityOfTabsAndTilesNavigateRespectivePagesAtClientSystemEnterprisePracticeLevel()
 			throws Exception {
-		logStep("Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level");
+		logStep("PXPP-28739, PXPP-28745 Verify locations, Providers & Resources, Appointment types tab & tiles navigate respective pages at Client, System, Enterprise, Practice level");
 		ngHierarchyClientCreate();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTab();
 		ccui.tabsNavigationOnGeneralSettingPage().verifyVisibilityOfTiles();
