@@ -6,6 +6,7 @@ import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -645,6 +646,12 @@ public class GeneralSettingsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
 		textboxSearchInGeneralSetting.sendKeys(nodeName);
 		log("Entered text in search :" + nodeName);
+	}
+	
+	public void pressEnterInSearchText() {
+		CCUtils.verifyAndWaitForElement(textboxSearchInGeneralSetting, driver);
+		textboxSearchInGeneralSetting.sendKeys(Keys.ENTER);
+		log("press enter key");
 	}
 
 	public void clearSearchText() {

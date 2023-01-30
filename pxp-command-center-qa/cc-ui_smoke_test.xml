@@ -19,16 +19,15 @@
 		<classes>
 			<class name="com.pxp.cc.testcases.ui.LoginScreenTests" />
 			<class name="com.pxp.cc.testcases.ui.PasswordResetTests" />
-			<class name="com.pxp.cc.testcases.ui.ClientDirectoryTests" />
-			<class
-				name="com.pxp.cc.testcases.ui.GeneralSettingsSearchTests" />
-			<class name="com.pxp.cc.testcases.ui.AddOrgNodeTests" />
-			<class name="com.pxp.cc.testcases.ui.SearchOptionsTests" />
-			<class name="com.pxp.cc.testcases.ui.AddNewLocationTests" />
+			<class name="com.pxp.cc.testcases.ui.ClientDirectoryPageTests" />
+			<class name="com.pxp.cc.testcases.ui.GeneralSettingsPageTests" />
+			<class name="com.pxp.cc.testcases.ui.LocationsPageTests" />
+			<class name="com.pxp.cc.testcases.ui.BrandTemplatePageTests" />
 			<class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
+			<class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
 			<class
 				name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
-			<class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
+			<class name="com.pxp.cc.testcases.ui.InternalUserPageTests" />
 			<class
 				name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests" />
 			<class
@@ -36,15 +35,7 @@
 			<class
 				name="com.pxp.cc.testcases.ui.InternalUserDeactivationFromKebabMenuTests" />
 			<class
-				name="com.pxp.cc.testcases.ui.FavoriteUnFavoriteClientsTests" />
-			<class
-				name="com.pxp.cc.testcases.ui.EditClientAndOrgDetailsGeneralSettingsTests" />
-			<class
-				name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
-			<class name="com.pxp.cc.testcases.ui.CreateClientTests" />
-			<class
 				name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests" />
-			<class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
 			<class name="com.pxp.cc.testcases.ui.InterfaceSetupTests" />
 
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
@@ -59,14 +50,9 @@
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
 			<!-- <class name="com.pxp.cc.testcases.ui.VarResellerUserDeactivationFromKebabMenuTests" 
 				/> -->
-			<!-- <class name="com.pxp.cc.testcases.ui.MoveSystemTests" /> <class name="com.pxp.cc.testcases.ui.MoveEnterpriseTests" 
-				/> <class name="com.pxp.cc.testcases.ui.MoveNgePracticeTests" /> <class name="com.pxp.cc.testcases.ui.MoveAgnosticPracticeTests" 
-				/> -->
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
 			<!-- <class name="com.pxp.cc.testcases.ui.VarResellerUsersSearchOptionsTests" 
 				/> <class name="com.pxp.cc.testcases.ui.EditVarResellerUserTests" /> -->
-			<!-- its blocked due to path identificationfor image upload in AWS. class 
-				name="com.pxp.cc.testcases.ui.CreateBrandTemplateTests" / -->
 		</classes>
 	</test>
 </suite>

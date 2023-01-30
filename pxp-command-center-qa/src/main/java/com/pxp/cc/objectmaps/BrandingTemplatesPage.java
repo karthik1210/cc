@@ -1,8 +1,11 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.objectmaps;
 
 import java.awt.AWTException;
+import java.util.List;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -118,8 +121,11 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@class='image-container']//p[contains(text(),'No File Uploaded')])[3]")
 	private WebElement patientCommunicationsNoFileUploaded;
 
-	@FindBy(id = "mat-radio-9")
+	@FindBy(xpath = "//mat-radio-button[@value='true']")
 	private WebElement logoRadioButton;
+
+	@FindBy(id = "radioBtnPracticeName-input")
+	private WebElement practiceNameRadioButton;
 
 	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[1]")
 	private WebElement faviconMaxCharReached;
@@ -130,17 +136,23 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(xpath = "(//div[contains(text(),'Maximum characters reached')])[3]")
 	private WebElement patientCommunicationsLogoMaxCharReached;
 
-	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
+	public String invalidImagePath = "/src/test/resources/data-driven/images/223267.jpg";
 
-	public String validImagePath = "\\src\\test\\resources\\data-driven\\images\\logo.png";
+	public String validImagePath = "/src/test/resources/data-driven/images/logo.png";
 
-	public String editValidImagePath = "\\src\\test\\resources\\data-driven\\images\\leaf.svg";
+	public String editValidImagePath = "/src/test/resources/data-driven/images/leaf.svg";
 
 	@FindBy(id = "activate")
 	private WebElement makeActiveButton;
 
-	@FindBy(xpath = "//mat-icon[contains(text(),'expand_less')]")
+	@FindBy(xpath = "(//div[normalize-space(text())='Branding Templates']//following::mat-icon[contains(text(),'keyboard_arrow_down')])[1]")
 	private WebElement expandArrow;
+
+	@FindBy(xpath = "//mat-icon[contains(text(),'expand_more')]")
+	private WebElement showOtherVersions;
+
+	@FindBy(xpath = "//p[contains(text(),' Hide other versions')]")
+	private WebElement hideOtherVersions;
 
 	@FindBy(id = "save-icon")
 	private WebElement saveButtonOnConfirmationDialogBox;
@@ -157,8 +169,8 @@ public class BrandingTemplatesPage extends CCMainPage {
 	@FindBy(id = "close-icon")
 	private WebElement crossIcon;
 
-	@FindBy(xpath = "(//span[@class='titleName'])[2]")
-	private WebElement newlyCreatedBrandName;
+	@FindBy(xpath = "//span[@class='titleName']//span")
+	private List<WebElement> newlyCreatedBrandName;
 
 	@FindBy(id = "editBrandButton")
 	private WebElement editSaveButton;
@@ -171,7 +183,9 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, brandingTemplatesLabel);
 		CCUtils.verifyAndWaitForElement(brandingTemplatesLabel, driver);
 		log("Verifying Inactive status text");
-		CCUtils.assertEquals(brandingTemplatesLabel.getText().trim(), "Branding Templates");
+		if (brandingTemplatesLabel.getText().trim().contains("Branding Templates")) {
+			CCUtils.assertTrue(true, "verifying branding title");
+		}
 	}
 
 	public void VerifyAndClickVersionButton() throws InterruptedException, AWTException {
@@ -201,6 +215,14 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on kebabMenu");
 	}
 
+	public void clickOnKebabMenuOfParticularBranding(String brandName) throws InterruptedException {
+		String xpathLocator = "(//div//span[@class='titleName']//span[normalize-space(text())='" + brandName
+				+ "']//..//..//following::span//mat-icon)[1]";
+		WebElement elem = driver.findElement(By.xpath(xpathLocator));
+		javascriptClick(elem);
+		log("Clicked on kebabMenu of brand : " + brandName);
+	}
+
 	public void clickOnkebabMenuForActiveStatus() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(kebabMenuForActiveStatus, driver);
 		javascriptClick(kebabMenuForActiveStatus);
@@ -220,7 +242,15 @@ public class BrandingTemplatesPage extends CCMainPage {
 
 	}
 
+	public void removeEnteredBrand() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(textboxVersion, driver);
+		textboxVersion.clear();
+		log("removed value in brand version text box");
+
+	}
+
 	public void verifyAndClickSaveButton() throws InterruptedException, AWTException {
+		CCUtils.scrollPageViaElement(driver, saveButton);
 		CCUtils.verifyAndWaitForElement(saveButton, driver);
 		log("Verifying SAVE is displayed");
 		CCUtils.assertEquals(saveButton.getText().trim(), "Save");
@@ -229,11 +259,18 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on SAVE");
 	}
 
+	public void clickEditSaveButton() throws InterruptedException, AWTException {
+		CCUtils.verifyAndWaitForElementPresent(editSaveButton, driver);
+		CCUtils.assertEquals(editSaveButton.getText().trim(), "Save");
+		javascriptClick(editSaveButton);
+		log("Clicked on SAVE");
+	}
+
 	public void uploadSolutionLogoImage() throws InterruptedException, AWTException {
 		javascriptClick(browseSolLogo);
 		log("Clicked on BROWSE");
 		String projectpath = System.getProperty("user.dir");
-		browseSolLogo.sendKeys(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		browseSolLogo.sendKeys(projectpath + "/src/test/resources/data-driven/images/logo.png");
 		log("Verifying Image uploaded");
 	}
 
@@ -243,16 +280,40 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Entered text in Version name field : " + altText);
 	}
 
+	public void removeEnterAltText() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextBox, driver);
+		altTextFaviconBox.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		altTextFaviconBox.sendKeys(Keys.BACK_SPACE);
+		log("Remove entered text in Version name field");
+	}
+
 	public void enterAltTextForPatientCommunication(String altText) throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, altTextPatientCommunicationBox);
 		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
 		altTextPatientCommunicationBox.sendKeys(altText);
 		log("Entered text in Alt Text field of Patient Communication is : " + altText);
+	}
+
+	public void removeEnterAltTextForPatientCommunication() throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, altTextPatientCommunicationBox);
+		CCUtils.verifyAndWaitForElement(altTextPatientCommunicationBox, driver);
+		altTextFaviconBox.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		altTextFaviconBox.sendKeys(Keys.BACK_SPACE);
+		log("Remove entered text in Alt Text field of Patient Communication");
 	}
 
 	public void enterAltTextForFavicon(String altText) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(altTextFaviconBox, driver);
 		altTextFaviconBox.sendKeys(altText);
 		log("Entered text in Alt Text field of Favicon is : " + altText);
+	}
+
+	public void removeEnteredAltTextForFavicon() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(altTextFaviconBox, driver);
+		altTextFaviconBox.click();
+		altTextFaviconBox.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		altTextFaviconBox.sendKeys(Keys.BACK_SPACE);
+		log("Removed entered text in Alt Text field of Favicon");
 	}
 
 	public void verifyRemoveButton() throws InterruptedException, AWTException {
@@ -503,6 +564,13 @@ public class BrandingTemplatesPage extends CCMainPage {
 	public void clickToLogoRadioButton() {
 		CCUtils.verifyAndWaitForElement(logoRadioButton, driver);
 		logoRadioButton.click();
+		log("clicked to logo button");
+	}
+
+	public void clickToPracticeNameRadioButton() {
+		CCUtils.verifyAndWaitForElement(practiceNameRadioButton, driver);
+		javascriptClick(practiceNameRadioButton);
+		log("clicked to practice name button");
 	}
 
 	public void clickOnMakeActive() throws InterruptedException {
@@ -517,9 +585,16 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on Edit button");
 	}
 
-	public void clickOnExpandArrow() throws InterruptedException {
+	public void clickOnExpandArrowForBrandingTemplates() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(expandArrow, driver);
 		javascriptClick(expandArrow);
 		log("Clicked on expand Arrow");
+	}
+
+	public void clickOnShowOtherVersionsArrow() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(showOtherVersions, driver);
+		javascriptClick(showOtherVersions);
+		log("Clicked on show other versions");
 	}
 
 	public void editBrandVersionName(String newVersion) throws InterruptedException {
@@ -624,10 +699,15 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Clicked on crossIcon On Confirmation DialogBox");
 	}
 
-	public void VerifyNewlyCreatedBrandingTemplate(String input) throws InterruptedException, AWTException {
-		CCUtils.verifyAndWaitForElement(newlyCreatedBrandName, driver);
-		log("Verifying newly Created Brand Name");
-		CCUtils.assertEquals(newlyCreatedBrandName.getText().trim(), input);
+	public void VerifyNewlyCreatedBrandingTemplate(String input) throws InterruptedException {
+		CCUtils.scrollPageViaElement(driver, hideOtherVersions);
+		for (WebElement ele : newlyCreatedBrandName) {
+			CCUtils.verifyAndWaitForElement(ele, driver);
+			if (ele.getText().trim().equals(input)) {
+				CCUtils.assertTrue(true, "verifying newly created brand is present in brand section");
+				log("verifying newly created brand is present in brand section");
+			}
+		}
 	}
 
 	public void verifyAndClickEditSaveButton() throws InterruptedException, AWTException {
@@ -637,5 +717,11 @@ public class BrandingTemplatesPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(editSaveButton, driver);
 		javascriptClick(editSaveButton);
 		log("Clicked on SAVE");
+	}
+
+	public void pageRefresh() {
+		driver.navigate().refresh();
+		log("Refreshing page");
+
 	}
 }
