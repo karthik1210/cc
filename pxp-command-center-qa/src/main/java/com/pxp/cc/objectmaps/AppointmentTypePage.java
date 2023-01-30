@@ -339,7 +339,7 @@ public class AppointmentTypePage extends CCMainPage {
 		return data.trim();
 	}
 
-	public String getTotalNoOfLocations() {
+	public String getTotalNoOfAppointmentTypes() {
 		CCUtils.verifyAndWaitForElement(displayPagination, driver);
 		CCUtils.scrollPageViaElement(driver, displayPagination);
 		String s1 = displayPagination.getText().toString();
@@ -446,7 +446,7 @@ public class AppointmentTypePage extends CCMainPage {
 	
 	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
 		if (noOfLocations >= itemsPerPageValue) {
 			clickLastPageButton();
 			log("verifying RHS Pagination value : " + Integer.parseInt(getRHSPagination())
@@ -466,7 +466,7 @@ public class AppointmentTypePage extends CCMainPage {
 	
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
 		log("Total number of locations is : " + noOfLocations);
 		if (noOfLocations >= itemsPerPageValue) {
 			checkNextPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
@@ -489,7 +489,7 @@ public class AppointmentTypePage extends CCMainPage {
 
 	public void checkFirstPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
 		log("Total number of clients is : " + noOfLocations);
 		checkLastPageButtonFunctionalityTillGetDisabled(itemsPerPageValue);
 		if (isFirstPageButtonDisabled() == true) {
@@ -509,7 +509,7 @@ public class AppointmentTypePage extends CCMainPage {
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		CCUtils.scrollPageToEnd();
-		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
+		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
 		log("Total number of clients is : " + noOfLocations);
 		if (noOfLocations >= itemsPerPageValue) {
 			int LHSPaginationValue = 1;
