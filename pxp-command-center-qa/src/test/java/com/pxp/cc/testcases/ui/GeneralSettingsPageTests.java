@@ -288,7 +288,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
 		int noOfResourcesSys = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
 		String noOfProviderAndResourcesSys = String.valueOf(noOfProvidersSys + noOfResourcesSys);
-		logStep("verifying the no of location on location tab in general settings and location details page at system level");
+		logStep("verifying the no of providers and resources on providers and resources tab in general settings and providers and resources search page at system level");
 		CCUtils.assertEquals(systemProviderAndResourcesTabCount, noOfProviderAndResourcesSys.trim());
 		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -302,7 +302,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
 		int noOfResourcesEnt = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
 		String noOfProviderAndResourcesEnt = String.valueOf(noOfProvidersEnt + noOfResourcesEnt);
-		logStep("verifying the no of location on location tab in general settings and location details page at enterprise level");
+		logStep("verifying the no of providers and resources on providers and resources tab in general settings and providers and resources search page at enterprise level");
 		CCUtils.assertEquals(entProviderAndResourcesTabCount, noOfProviderAndResourcesEnt.trim());
 		ccui.getSearchLocationDetailsPage().clickToGeneralSettingsIcon();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
@@ -316,7 +316,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getResourceAndStaffSearchPage().clickToResourcesTab();
 		int noOfResourcesPrac = Integer.parseInt(ccui.getAddNewResourcePage().getTotalNoOfResources());
 		String noOfProviderAndResourcesPrac = String.valueOf(noOfProvidersPrac + noOfResourcesPrac);
-		logStep("verifying the no of location on location tab in general settings and location details page at practice level");
+		logStep("verifying the no of providers and resources on providers and resources tab in general settings and providers and resources search page at practice level");
 		CCUtils.assertEquals(pracProviderAndResourcesTabCount, noOfProviderAndResourcesPrac.trim());
 		runOnce = false;
 	}

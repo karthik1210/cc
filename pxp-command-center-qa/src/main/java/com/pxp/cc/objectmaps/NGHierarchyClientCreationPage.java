@@ -1227,8 +1227,8 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	}
 
 	public void clickToInactiveRadioButton() {
-		CCUtils.verifyAndWaitForElement(inactiveRadioButton, driver);
-		inactiveRadioButton.click();
+		CCUtils.verifyAndWaitForElement(radioBtnInactiveAddNode, driver);
+		radioBtnInactiveAddNode.click();
 		log("Clicked to Inactive Radio Button");
 	}
 
