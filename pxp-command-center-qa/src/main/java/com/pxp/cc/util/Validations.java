@@ -3582,5 +3582,11 @@ public class Validations {
 		 Log4jUtil.log("value of gender is  :"+jsonpath.get("gender"));
 		 Log4jUtil.log("value of externalId is  :"+jsonpath.get("externalId"));
 		 Log4jUtil.log("value of status is  :"+jsonpath.get("status"));	
-		}
+	}
+	
+	public void verifyCreateAppTypeResponseBody(Response response, int id, String name) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("id"), id);
+		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
+	}
 }

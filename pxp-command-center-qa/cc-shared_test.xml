@@ -152,6 +152,8 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableAppTypesApiTests_BusinessLayer" />
             <class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddStaffImageApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewAppTypesApiTests_BusinessLayer" />
 			<!-- Enable test classes once Path identification for image upload in 
 				AWS issue is addressed Jira PXPP-28190 -->
 			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" 
