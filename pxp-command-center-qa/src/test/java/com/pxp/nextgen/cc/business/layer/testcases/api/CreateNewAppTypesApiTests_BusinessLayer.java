@@ -88,7 +88,7 @@ public class CreateNewAppTypesApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("default.solution.id"), name, externalIdApp, duration, categoryId, name,
 				externalIdApp);
 		CCUtils.assertEquals(createAppointmentTypeApiResponse.getStatusCode(), 400);
-		validation.verifyErrorResponseBodyNonExistingPracticeIdForAppType(createAppointmentTypeApiResponse, practiceId);
+		validation.verifyErrorMessageInResponseForInvalidOrgId(createAppointmentTypeApiResponse, testData.getProperty("non.existing.practice.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create new AppointmentType for blank responseBody and verify response body")

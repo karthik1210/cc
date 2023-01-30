@@ -3579,10 +3579,4 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("id"), id);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
-	
-	public void verifyErrorResponseBodyNonExistingPracticeIdForAppType(Response response,int orgId) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Org not found for OrgId="+orgId);
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
 }
