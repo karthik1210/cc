@@ -26,7 +26,6 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		userInfo = new UserInfo();
 		validation = new Validations();
 		clientHierObj = new CreateClientHierarchy_BL();
-
 		newClientId = clientHierObj.createClient_BL();
 	}
 
@@ -52,9 +51,9 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 200);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "userType", description = "Enter non existing user type and verify response status code")
-	public void testResponseCodeForNonExistingUserType(String userType) throws IOException {
-		getUserRolesApiResponse = userInfo.getUserRolesByUserType(userType);
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non existing user type and verify response status code")
+	public void testResponseCodeForNonExistingUserType() throws IOException {
+		getUserRolesApiResponse = userInfo.getUserRolesByUserType("non existing userType");
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getUserRolesApiResponse);
 		CCUtils.assertEquals(getUserRolesApiResponse.getStatusCode(), 204);
