@@ -14,6 +14,7 @@ import com.pxp.cc.objectmaps.AddNewResourcePage;
 import com.pxp.cc.objectmaps.AddNewVarResellerUserPage;
 import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.AppointmentTypePage;
+import com.pxp.cc.objectmaps.AppointmentTypesDetailsPage;
 import com.pxp.cc.objectmaps.BrandingTemplatesPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
@@ -94,6 +95,8 @@ public class CCUI extends CommandCenterGenericTest {
 	StaffDetailsPage staffDetailsPage;
 	InternalUserDetailsPage internalUserDetailsPage;
     DeactivateUserConfirmationPage deactivateUserConfirmationPage;
+	AppointmentTypesDetailsPage appointmentTypesDetailsPage;
+	
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -282,7 +285,7 @@ public class CCUI extends CommandCenterGenericTest {
 		return searchProviderPage;
 	}
 
-	AppointmentTypePage getAppointmentTypePage() throws Exception {
+	public AppointmentTypePage getAppointmentTypePage() throws Exception {
 		if (appointmentTypePage == null) {
 			appointmentTypePage = new AppointmentTypePage(driver);
 		}
@@ -358,6 +361,13 @@ public class CCUI extends CommandCenterGenericTest {
 	        }
 	        return deactivateUserConfirmationPage;
 	    }
+
+	public AppointmentTypesDetailsPage getAppointmentTypesDetailsPage() throws Exception {
+		if (appointmentTypesDetailsPage == null) {
+			appointmentTypesDetailsPage = new AppointmentTypesDetailsPage(driver);
+		}
+		return appointmentTypesDetailsPage;
+	}
 
 	public static void getClientSystementErpriseandPractice() throws Exception {
 
