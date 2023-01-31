@@ -11,12 +11,7 @@ import com.pxp.cc.util.CCUtils;
 public class AppointmentTypesDetailsPageTests extends CommandCenterGenericTest {
 	static boolean runOnce = true;
 	public CCUI ccui;
-	String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
-	String firstName = "New"
-			+ CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(6));
-	String lastName = CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(6))
-			.concat("'s");
-	String resourceName, AppointmentTypeName, providerFirstName;
+	String resourceName, providerFirstName;
 
 	@BeforeMethod(alwaysRun = true)
 	public void loginToCommandCenterPortal() throws Exception {
