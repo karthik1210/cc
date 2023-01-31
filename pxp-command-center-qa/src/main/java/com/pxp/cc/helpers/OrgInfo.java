@@ -1,27 +1,27 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
 import static io.restassured.RestAssured.given;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import com.pxp.cc.apipath.ApiPath;
 import com.pxp.cc.model.BaseRest;
+import com.pxp.cc.pojos.CreateTemplateVersion;
 import com.pxp.cc.pojos.OrgSolutions;
 import com.pxp.cc.pojos.OrgWebsites;
+import com.pxp.cc.pojos.PatientAccessDetails;
+import com.pxp.cc.pojos.PatientAccessDetailsBusinessLayer;
+import com.pxp.cc.pojos.PracticeInterfaces;
+import com.pxp.cc.pojos.PracticeSocials;
+import com.pxp.cc.pojos.PracticeTouDetails;
 import com.pxp.cc.pojos.SavePracticeWebsite;
 import com.pxp.cc.pojos.UpdateProductStatus;
-import com.pxp.cc.pojos.PracticeSocials;
-import com.pxp.cc.pojos.*;
+import com.pxp.cc.pojos.UpdateTemplateVersion;
 import io.restassured.response.Response;
-
-import org.apache.xalan.lib.sql.QueryParameter;
-import org.json.JSONObject;
 
 public class OrgInfo extends BaseRest {
 
