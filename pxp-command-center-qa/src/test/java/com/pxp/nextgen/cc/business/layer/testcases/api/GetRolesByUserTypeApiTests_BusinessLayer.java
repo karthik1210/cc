@@ -23,7 +23,7 @@ public class GetRolesByUserTypeApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
-		}
+	}
 
 	@DataProvider(name = "userTypeValue")
 	public Object[][] getUserTypes() throws Exception {

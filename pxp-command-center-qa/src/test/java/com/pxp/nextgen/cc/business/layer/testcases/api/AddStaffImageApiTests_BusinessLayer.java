@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.SharedInfo;
@@ -44,10 +45,19 @@ public class AddStaffImageApiTests_BusinessLayer extends BaseRest {
 	    return createNewstaffApiResponse.jsonPath().get("id");
 	}
 	
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Add Staff image with valid staffId and verify response code")
-	public void testResponseCodeToAddStaffImageWithValidStaffId() throws NullPointerException, IOException {
+	@DataProvider(name = "getImage")
+	public Object[] getImageFile() {
+		Object[][] obj = new Object[][] { { "logo.png" }, { "TestImage_GIF_Format.gif" },
+				{ "TestImage_JPEG_Format.jpeg" }, { "TestImage_JPG_Format.jpg" }, { "TestImage_RAW_Format.raw" },
+				{ "TestImage_TIF_Format.tif" }, { "TestImage_TIFF_Format.tiff" } };
+		return obj;
+	}
+	
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getImage", description = "Add Staff image with valid staffId and verify response code")
+	public void testResponseCodeToAddStaffImageWithValidStaffId(String getImageValue) throws NullPointerException, IOException {
 		logStep("Enter valid staffId with valid image format");
-		URL url = ClassLoader.getSystemResource("data-driven/images/TestImage_JPG_Format.jpg");
+		URL url = ClassLoader.getSystemResource("data-driven/images/" + getImageValue);
 		File file = new File(url.getFile());
 		String fileType = "image/png";
 		addStaffImageApiResponse = sharedInfo.addStaffImage_BL(staffId, file, fileType);
