@@ -2089,6 +2089,15 @@ public class SharedInfo extends BaseRest {
 	public Response deleteStaffImage_NullValues_DL() {
 		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}	
+	
+	public Response getStatisticsData_BL(int orgId) {
+		String url = ApiPath.GET_STATISTICS_DATA_BL();
+		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
+	}
+	
+	public Response getStatisticsData_NULL_BL() {
+		return given().spec(requestSpec).when().get(ApiPath.GET_STATISTICS_DATA_NULL_BL).then().extract().response();
 	}
 
 	public Response searchAppointmentTypeForAssociatingWithResource_BL(int practiceId, int resourceId, String name) {

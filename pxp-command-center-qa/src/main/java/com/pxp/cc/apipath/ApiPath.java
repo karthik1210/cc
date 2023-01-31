@@ -2210,6 +2210,12 @@ public class ApiPath {
 	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/staff/null/images";
 	}
+
+	public static final String GET_STATISTICS_DATA_BL() {
+		return SERVICE_SHARED_BL+ "/v1/data-stats";
+	}
+	
+	public static final String GET_STATISTICS_DATA_NULL_BL = SERVICE_SHARED_BL + "/v1/data-stats?orgid=null";
 	
 	public static final String SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_BL(int practiceId, int resourceId) {
 		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/appointmenttype-resource";			
