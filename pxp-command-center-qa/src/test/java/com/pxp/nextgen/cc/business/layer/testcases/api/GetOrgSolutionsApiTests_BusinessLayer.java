@@ -45,7 +45,7 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionsApiResponse);
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
-		log("Get org solution as Active Implementation");
+		log("Get org solution of org");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(practiceId,
 				testData.getProperty("ecosystem.pxp"));
 		logStep("Validating response information");
@@ -62,7 +62,7 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionsApiResponse);
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
-		log("Get org solution as Active Implementation");
+		log("Get org solution of org");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(practiceId,
 				testData.getProperty("add.on.solution.type"));
 		logStep("Validating response information");
@@ -79,7 +79,7 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionsApiResponse);
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
-		log("Get solution as Active Implementation for active agnostic practice");
+		log("Get org solution of agnostic org");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(agnosticPracticeId,
 				testData.getProperty("ecosystem.pxp"));
 		logStep("Validating response information");
@@ -98,7 +98,7 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateSolutionsApiResponse);
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 200);
-		log("Get solution as Active Implementation for active agnostic practice");
+		log("Get org solution of agnostic org");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(agnosticPracticeId,
 				testData.getProperty("add.on.solution.type"));
 		logStep("Validating response information");
