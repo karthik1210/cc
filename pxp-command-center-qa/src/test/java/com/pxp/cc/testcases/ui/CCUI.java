@@ -4,42 +4,10 @@ package com.pxp.cc.testcases.ui;
 
 import java.util.HashMap;
 
+import com.pxp.cc.objectmaps.*;
 import org.openqa.selenium.WebDriver;
 
 import com.medfusion.common.utils.PropertyFileLoader;
-import com.pxp.cc.objectmaps.AddLocationPage;
-import com.pxp.cc.objectmaps.AddNewInternalUsersPage;
-import com.pxp.cc.objectmaps.AddNewProviderPage;
-import com.pxp.cc.objectmaps.AddNewResourcePage;
-import com.pxp.cc.objectmaps.AddNewVarResellerUserPage;
-import com.pxp.cc.objectmaps.AddOrgNodePage;
-import com.pxp.cc.objectmaps.AppointmentTypePage;
-import com.pxp.cc.objectmaps.BrandingTemplatesPage;
-import com.pxp.cc.objectmaps.ClientDirectoryPage;
-import com.pxp.cc.objectmaps.CommandCenterUsersPage;
-import com.pxp.cc.objectmaps.EditBasicInfoGeneralSettingsPage;
-import com.pxp.cc.objectmaps.EditOrgDetailsGeneralSettingsPage;
-import com.pxp.cc.objectmaps.GeneralSettingsPage;
-import com.pxp.cc.objectmaps.InterfaceSetupPage;
-import com.pxp.cc.objectmaps.InternalUsersPage;
-import com.pxp.cc.objectmaps.LocationDetailsPage;
-import com.pxp.cc.objectmaps.LoginPage;
-import com.pxp.cc.objectmaps.MoveAgnosticPracticePage;
-import com.pxp.cc.objectmaps.NGHierarchyClientCreationPage;
-import com.pxp.cc.objectmaps.PatientAccessPage;
-import com.pxp.cc.objectmaps.PracticeLinksPage;
-import com.pxp.cc.objectmaps.PrivacyPolicySettingsPage;
-import com.pxp.cc.objectmaps.ProviderDetailsPage;
-import com.pxp.cc.objectmaps.ProviderResourceAndStaffSearchPage;
-import com.pxp.cc.objectmaps.ResourceDetailsPage;
-import com.pxp.cc.objectmaps.SearchLocationPage;
-import com.pxp.cc.objectmaps.SearchOptionsPage;
-import com.pxp.cc.objectmaps.SearchProviderPage;
-import com.pxp.cc.objectmaps.StaffDetailsPage;
-import com.pxp.cc.objectmaps.StaffPage;
-import com.pxp.cc.objectmaps.TabsNavigationOnGeneralSettingPage;
-import com.pxp.cc.objectmaps.UserBulkEnrollmentPage;
-import com.pxp.cc.objectmaps.VarResellerUsersPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -90,6 +58,7 @@ public class CCUI extends CommandCenterGenericTest {
 	StaffPage staffTypePage;
 	SearchOptionsPage searchOptionsPage;
 	StaffDetailsPage staffDetailsPage;
+	InternalVarResellerUserBulkEnrollmentPage internalVarResellerUserBulkEnrollmentPage;
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -106,6 +75,12 @@ public class CCUI extends CommandCenterGenericTest {
 			ccui = new CCUI(testData, driver);
 		}
 		return ccui;
+	}
+
+	public InternalVarResellerUserBulkEnrollmentPage getInternalVarResellerUserBulkEnrollmentPage() throws InterruptedException {
+		if(internalVarResellerUserBulkEnrollmentPage == null)
+			internalVarResellerUserBulkEnrollmentPage = new InternalVarResellerUserBulkEnrollmentPage(driver);
+		return internalVarResellerUserBulkEnrollmentPage;
 	}
 
 	public UserBulkEnrollmentPage getUserBulkEnrollmentPage() throws InterruptedException {
