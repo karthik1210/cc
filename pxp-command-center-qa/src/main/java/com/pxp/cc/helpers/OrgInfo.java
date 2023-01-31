@@ -847,7 +847,7 @@ public class OrgInfo extends BaseRest {
     }
     
     public Response getOrgsSolutions_Null_BusinessLayer() throws IOException {
-        String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL;
+        String url = ApiPath.GET_ORG_SOLUTIONS_BL;
         return given().spec(requestSpec).when().get(url).then().extract().response();
     }
 

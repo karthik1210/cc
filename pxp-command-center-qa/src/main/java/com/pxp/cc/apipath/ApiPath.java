@@ -497,7 +497,7 @@ public class ApiPath {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
 	}
 	
-	public static final String UPDATE_ORG_SOLUTIONS_BL = SERVICE_ORG_BL + "/v1/orgs/null/solutions?type=null";
+	public static final String GET_ORG_SOLUTIONS_BL = SERVICE_ORG_BL + "/v1/orgs/null/solutions?type=null";
 
 	public static final String INVALID_PATH_UPDATE_ORG_SOLUTIONS_DL(int orgId) {
 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutionsssss";
