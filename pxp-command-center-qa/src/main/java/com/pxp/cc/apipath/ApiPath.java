@@ -2215,10 +2215,16 @@ public class ApiPath {
 		return SHARED_DL + "/v1/staff/null/images";
 	}
 
+	public static final String GET_STATISTICS_DATA_DL() {
+		return SHARED_DL + "/v1/data-stats";
+	}
+
 	public static final String STAFF_IMAGE_BL(int staffId) {
 		return SERVICE_SHARED_BL + "/v1/staff/" + staffId + "/images";
 	}
 
+	public static final String GET_STATISTICS_DATA_NULL_DL = SHARED_DL + "/v1/data-stats?orgid=null";
+	
 	public static final String GET_STATISTICS_DATA_BL() {
 		return SERVICE_SHARED_BL + "/v1/data-stats";
 	}

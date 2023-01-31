@@ -116,21 +116,21 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getOrgSolutionsResponse.getStatusCode(), 204);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for nonexisting orgId")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for non existing orgId")
 	public void testToGetOrSolutionForNonexistingOrgId() throws Exception {
-		int practiceId = Integer.parseInt(testData.getProperty("non.existing.practice.id"));
-		log("Get org solution for nonexisting orgId");
+		log("Get org solution for non existing orgId");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(practiceId,
 				testData.getProperty("ecosystem.pxp"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrgSolutionsResponse);
 		CCUtils.assertEquals(getOrgSolutionsResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(getOrgSolutionsResponse, practiceId);
+		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(getOrgSolutionsResponse,
+				Integer.parseInt(testData.getProperty("non.existing.practice.id")));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for Null values in orgId field")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for Null values in orgId and type field")
 	public void testGetOrgSolutionForNullOrgId() throws Exception {
-		log("Get org solution for Null values in orgId field");
+		log("Get org solution for Null values in orgId field and type field");
 		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_Null_BusinessLayer();
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrgSolutionsResponse);
