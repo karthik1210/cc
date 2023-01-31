@@ -2210,6 +2210,10 @@ public class ApiPath {
 	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/staff/null/images";
 	}
+	
+	public static final String STAFF_IMAGE_BL(int staffId) {
+		return SERVICE_SHARED_BL + "/v1/staff/" + staffId + "/images";
+	}	
 
 	public static final String GET_STATISTICS_DATA_BL() {
 		return SERVICE_SHARED_BL+ "/v1/data-stats";
