@@ -33,6 +33,7 @@
             <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests"/>
             <class name="com.pxp.cc.testcases.ui.UserBulkEnrollmentTests" />
             <class name="com.pxp.cc.testcases.ui.StaffPageTests"/>
+            <class name="com.pxp.cc.testcases.ui.NewUserBulkEnrollmentTests"/>
         </classes>
     </test>
 </suite>

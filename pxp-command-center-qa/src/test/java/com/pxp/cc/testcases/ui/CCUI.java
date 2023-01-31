@@ -53,6 +53,7 @@ public class CCUI extends CommandCenterGenericTest {
     SearchProviderPage searchProviderPage;
     AppointmentTypePage appointmentTypePage;
     StaffPage staffTypePage;
+	InternalVarResellerUserBulkEnrollmentPage internalVarResellerUserBulkEnrollmentPage;
     
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -69,6 +70,12 @@ public class CCUI extends CommandCenterGenericTest {
 			ccui = new CCUI(testData, driver);
 		}
 		return ccui;
+	}
+
+	public InternalVarResellerUserBulkEnrollmentPage getInternalVarResellerUserBulkEnrollmentPage() throws InterruptedException {
+		if(internalVarResellerUserBulkEnrollmentPage == null)
+			internalVarResellerUserBulkEnrollmentPage = new InternalVarResellerUserBulkEnrollmentPage(driver);
+		return internalVarResellerUserBulkEnrollmentPage;
 	}
 
 	public UserBulkEnrollmentPage getUserBulkEnrollmentPage() throws InterruptedException {
