@@ -3607,4 +3607,16 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("id"), id);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
+	
+	public void verifyResponseBodyOfOrgSol(Response response,int solution) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			if(jsonObject.get("solutionId").equals("solution")) {
+				CCUtils.assertEquals(jsonObject.get("active"), "true");
+				Log4jUtil.log("solution Id "+jsonObject.get("solutionId")+" is activated");
+			}else 
+				Log4jUtil.log("solution Id "+jsonObject.get("solutionId")+" is not activated");
+		}
+	}
 }

@@ -19,6 +19,8 @@ import com.pxp.cc.pojos.UpdateProductStatus;
 import com.pxp.cc.pojos.PracticeSocials;
 import com.pxp.cc.pojos.*;
 import io.restassured.response.Response;
+
+import org.apache.xalan.lib.sql.QueryParameter;
 import org.json.JSONObject;
 
 public class OrgInfo extends BaseRest {
@@ -837,6 +839,16 @@ public class OrgInfo extends BaseRest {
     public Response updateOrgsSolutions_DataLayer(List<OrgSolutions> productList, int orgId) throws IOException {
         String url = ApiPath.UPDATE_ORG_SOLUTIONS_DL(orgId);
         return given().spec(requestSpec).body(productList).when().put(url).then().extract().response();
+    }
+    
+    public Response getOrgsSolutions_BusinessLayer(int orgId,String type) throws IOException {
+        String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL(orgId);
+        return given().spec(requestSpec).queryParam("type", type).when().get(url).then().extract().response();
+    }
+    
+    public Response getOrgsSolutions_Null_BusinessLayer() throws IOException {
+        String url = ApiPath.UPDATE_ORG_SOLUTIONS_BL;
+        return given().spec(requestSpec).when().get(url).then().extract().response();
     }
 
     public Response updateOrgSolutions_OrgNULLValue_DL(List<OrgSolutions> productList) {
