@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -6,7 +6,6 @@ import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -118,7 +117,7 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(id = "filterClearBtn")
 	private WebElement buttonClear;
 
-	@FindBy(id = "filterSearchBtn")
+	@FindBy(xpath = "//span[normalize-space(text())='SEARCH OPTIONS']")
 	private WebElement buttonSearch;
 
 	@FindBy(id = "searchFilterBtn")
@@ -192,6 +191,9 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']/span[normalize-space(text())='Not Sent']/../preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
 	private WebElement notSentStatusCheckBox;
+	
+	@FindBy(id = "filterSearchBtn")
+	private WebElement searchButton;
 
 	public final List<String> expectedListOfEnrollmentStatusValues = Arrays.asList("Delivered", "Pending",
 			"Email Issue", "Expired", "Not Sent");
@@ -446,9 +448,9 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickOnSearchButton() throws InterruptedException {
-		CCUtils.scrollPageViaElement(driver, buttonSearch);
-		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		javascriptClick(buttonSearch);
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
+		javascriptClick(searchButton);
 	}
 
 	public void clickOnClearAllSearchData() throws InterruptedException {
