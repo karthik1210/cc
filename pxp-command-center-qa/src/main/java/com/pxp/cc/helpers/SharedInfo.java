@@ -2089,5 +2089,10 @@ public class SharedInfo extends BaseRest {
 	public Response deleteStaffImage_NullValues_DL() {
 		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+
+	public Response getStatisticsData_DL(int orgId) {
+		String url = ApiPath.GET_STATISTICS_DATA_DL();
+		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
 	}	
 }
