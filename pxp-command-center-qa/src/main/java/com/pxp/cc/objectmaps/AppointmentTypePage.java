@@ -55,7 +55,7 @@ public class AppointmentTypePage extends CCMainPage {
 
 	@FindBy(id = "solutionSelect")
 	private WebElement solutionDropdownFilter;
-	
+
 	@FindBy(id = "toggleFilters")
 	private WebElement hideFiltersButton;
 
@@ -64,13 +64,13 @@ public class AppointmentTypePage extends CCMainPage {
 
 	@FindBy(xpath = "//div[normalize-space(text())='No data to display']")
 	private WebElement noDataDisplayMessage;
-	
+
 	@FindBy(xpath = "//th[@aria-sort='ascending']")
 	private WebElement appointTypeNameAscSort;
-	
+
 	@FindBy(xpath = "//th[@aria-sort='descending']")
 	private WebElement appointTypeNameDscSort;
-	
+
 	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
 	private WebElement itemsPerPageDropdown;
 
@@ -97,19 +97,27 @@ public class AppointmentTypePage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
 	private WebElement itemsPerPageTwoHundred;
-	
+
 	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
 	private WebElement displayPagination;
-	
+
 	@FindBy(xpath = "//div//span//following::span[contains(text(),'10')]")
 	private WebElement defaultItemsPerPage;
-	
+
+	@FindBy(id = "headerNavbar")
+	private WebElement appointmentTypeTitle;
+
+	@FindBy(xpath = "(//tr[@role='row'])[2]")
+	private WebElement selectAppType;
+
+	@FindBy(id = "headerSettingIcon")
+	private WebElement generalSettingsTab;
+
 	private String xpathRequiredClientType = "//ng-dropdown-panel[@role='listbox']";
-	
+
 	private WebElement prepareDynamicXpath(String xpathValue, String substitutionValue) {
 		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
 	}
-
 
 	public AppointmentTypePage(WebDriver driver) {
 		super(driver);
@@ -266,65 +274,65 @@ public class AppointmentTypePage extends CCMainPage {
 		searchTextBox.clear();
 		searchTextBox.sendKeys(AppointmentTypeName);
 		log("AppointmentType name : " + AppointmentTypeName + " entered in serach textbox");
-		}
-	
+	}
 
 	public void verifyNoDataDisplayErrorMessage() {
 		CCUtils.verifyAndWaitForElement(noDataDisplayMessage, driver);
 		CCUtils.assertTrue(noDataDisplayMessage.isDisplayed(), "No Data to Display");
 		log("No Data to Display error message is displayed");
 	}
-	
+
 	public void clickAscappointTypeNameSortToDsc() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameAscSort, driver);
 		appointTypeNameAscSort.click();
 		log("clicked to ascending appointType name sort");
 	}
-	
+
 	public void verifyDescendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameDscSort, driver);
 		log("verified after clicking to acsendig sort appointType name sort arrow goes downwards to descending sort");
 	}
-	
+
 	public void clickDscappointTypeNameSortToAsc() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameDscSort, driver);
 		appointTypeNameDscSort.click();
 		log("clicked to descending appointType name sort");
 	}
-	
+
 	public void verifyAscendingSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameAscSort, driver);
 		log("verified after clicking to descendig sort appointType name sort arrow goes upwards to ascending sort");
 	}
-	
+
 	public void clickAscappointTypeStatusSortToDsc() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameAscSort, driver);
 		appointTypeNameAscSort.click();
 		log("clicked to ascending appointType Status sort");
 	}
-	
+
 	public void clickDscappointTypeStatusSortToAsc() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameDscSort, driver);
 		appointTypeNameDscSort.click();
 		log("clicked to descending appointType Status sort");
 	}
-	
+
 	public void clickAscappointTypeCategoriesSortToDsc() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameAscSort, driver);
 		appointTypeNameAscSort.click();
 		log("clicked to ascending appointType Categories sort");
 	}
-	
+
 	public void verifyDescendingCategoriesSortIsVisible() {
 		CCUtils.verifyAndWaitForElement(appointTypeNameDscSort, driver);
 		log("verified after clicking to acsendig sort appointType Categories sort arrow goes downwards to descending sort");
 	}
+
 	public String getDefaultItemsPerPage() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
 		highlightElement(defaultItemsPerPage);
 		return defaultItemsPerPage.getText().toString();
 	}
-	
+
 	public String getDefaultPagination() {
 		CCUtils.verifyAndWaitForElement(displayPagination, driver);
 		CCUtils.scrollPageViaElement(driver, displayPagination);
@@ -363,14 +371,14 @@ public class AppointmentTypePage extends CCMainPage {
 		log("Print the value of default Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
 		CCUtils.scrollPageToEnd();
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
 	}
-	
+
 	public void clickNextPageButton() {
 		CCUtils.verifyAndWaitForElement(buttonNextPage, driver);
 		buttonNextPage.click();
@@ -414,7 +422,7 @@ public class AppointmentTypePage extends CCMainPage {
 		boolean buttonStatus = CCUtils.isPaginationButtonDisabled(buttonFirstPage, driver);
 		return buttonStatus;
 	}
-	
+
 	public String getNoOfRowsPagination() {
 		String data = splitingPagination();
 		String noOfRowsPagination = data.substring(0, 2).trim();
@@ -427,7 +435,7 @@ public class AppointmentTypePage extends CCMainPage {
 		String value = null;
 		for (String w : words) {
 			value = w.trim();
-			log("print the value of data : "+value);
+			log("print the value of data : " + value);
 			break;
 		}
 		log("Print the value of LHS Pagination : " + value.trim());
@@ -443,7 +451,7 @@ public class AppointmentTypePage extends CCMainPage {
 		log("Print the value of RHS Pagination : " + data.trim());
 		return data.trim();
 	}
-	
+
 	public void checkLastPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
@@ -463,7 +471,7 @@ public class AppointmentTypePage extends CCMainPage {
 			CCUtils.assertTrue(isPreviousPageButtonDisabled() == false, "Previous Page Button should get disabled");
 		}
 	}
-	
+
 	public void checkPreviousPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
@@ -505,7 +513,7 @@ public class AppointmentTypePage extends CCMainPage {
 			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
 		}
 	}
-	
+
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
 		CCUtils.scrollPageToEnd();
@@ -528,7 +536,7 @@ public class AppointmentTypePage extends CCMainPage {
 			CCUtils.assertEquals(isPreviousPageButtonDisabled(), false);
 		}
 	}
-	
+
 	public String clickTwentyItemsPerPage() {
 		String currentItemPerPage = null;
 		CCUtils.verifyAndWaitForElement(itemsPerPageTwenty, driver);
@@ -564,7 +572,7 @@ public class AppointmentTypePage extends CCMainPage {
 		itemsPerPageTwoHundred.click();
 		return currentItemPerPage;
 	}
-	
+
 	public void selectFilter(String filterName) {
 		WebElement clientType = prepareDynamicXpath(xpathRequiredClientType, filterName);
 		CCUtils.verifyAndWaitForElement(clientType, driver);
@@ -591,7 +599,7 @@ public class AppointmentTypePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(solutionDropdownFilter, driver);
 		solutionDropdownFilter.click();
 	}
-	
+
 	public void clickToApplyFilterButton() {
 		CCUtils.verifyAndWaitForElement(filterApplyButton, driver);
 		filterApplyButton.click();
@@ -603,4 +611,23 @@ public class AppointmentTypePage extends CCMainPage {
 		filterClearButton.click();
 		log("clicked to clear filter button");
 	}
+
+	public void verifyAppointmentTypesTitle() {
+		CCUtils.verifyAndWaitForElement(appointmentTypeTitle, driver);
+		appointmentTypeTitle.click();
+		log("AppointmentTypes Title is displayed");
+	}
+
+	public void selectSearchedAppType() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(selectAppType, driver);
+		selectAppType.click();
+		log("Clicked on first Appointment Type");
+	}
+
+	public void clickOnGeneralSettingsTab() {
+		CCUtils.verifyAndWaitForElement(generalSettingsTab, driver);
+		javascriptClick(generalSettingsTab);
+		log("Clicked on General Settings Tab");
+	}
+
 }
