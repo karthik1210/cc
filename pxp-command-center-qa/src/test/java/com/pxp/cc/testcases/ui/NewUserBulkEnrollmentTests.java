@@ -58,7 +58,7 @@ public class NewUserBulkEnrollmentTests extends CommandCenterGenericTest {
     @Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "select and de-select users on bulk enrollment")
     public void validingSelectAndDeSelectUsers() throws Exception {
         initialPreRequisite();
-        //ccui.getInternalVarResellerUserBulkEnrollmentPage().selectAndDeselectInBulkEnrollment("Internal");
+        ccui.getInternalVarResellerUserBulkEnrollmentPage().selectAndDeselectInBulkEnrollment("Internal");
         ccui.getInternalVarResellerUserBulkEnrollmentPage().selectAndDeselectInBulkEnrollment("VarReseller");
         runOnce = false;
     }
