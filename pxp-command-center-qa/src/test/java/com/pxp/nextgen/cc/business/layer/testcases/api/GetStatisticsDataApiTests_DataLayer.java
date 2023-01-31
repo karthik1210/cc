@@ -1,3 +1,5 @@
+//Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.business.layer.testcases.api;
 
 import java.io.IOException;
@@ -26,6 +28,7 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 	Response createResourceApiResponse, createNewLocationApiResponse, createProviderApiResponse,
 			createAppointmentTypeApiResponse, getStatisticsDataResponse, associatePracticesForLocationApiResponse;
 	public int clientId, systemId, enterpriseId, practiceId, providerId, resourceId, locationId, appointmentTypeId;
+	String externalId;
 	public static int countLocationClient = 0;
 	public static int countResourcesClient = 0;
 	public static int countAppointmentTypeClient = 0;
@@ -44,23 +47,25 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
+		resourceInfo = new ResourceInfo();
+		appointmentTypeInfo =  new AppointmentTypeInfo();
 		clientHierObj = new CreateClientHierarchy_DL();
 		clientId = clientHierObj.createClient_DL();
 		systemId = clientHierObj.createSystem_DL(clientId);
 		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
 		practiceId = clientHierObj.createPractice_DL(enterpriseId);
-		locationId = createLocation(clientId);
 		providerId = createProviderForPractice(practiceId);
 		resourceId = createResource(providerId);
 		appointmentTypeId = createAppointmentType(practiceId);
+		locationId = createLocation();
 		associateLocationToPractice(practiceId);
 	}
 
-	public int createLocation(int clientId) throws Exception {
-		logStep("Enter valid data in mandatory field");
+	public int createLocation() throws Exception {
+		logStep("create new location");
 		String locationName = testData.getProperty("location.name").concat(CCUtils.generateAlphaNumericString(3));
-		String externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
-		createNewLocationApiResponse = sharedInfo.createNewLocation_BL(clientId,
+		externalId = testData.getProperty("location.external.id").concat(CCUtils.generateAlphaNumericString(3));
+		createNewLocationApiResponse = sharedInfo.createNewLocation_DL(clientId,
 				testData.getProperty("location.addressline.one"), testData.getProperty("location.addressline.two"),
 				testData.getProperty("location.city"), testData.getProperty("location.state"),
 				testData.getProperty("location.zipcode"), Float.parseFloat(testData.getProperty("location.lat")),
@@ -69,8 +74,8 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
-		validation.verifyCreateLocationApiResponseBody(createNewLocationApiResponse, locationName);
 		return createNewLocationApiResponse.jsonPath().getInt("id");
+		
 	}
 
 	public int createProviderForPractice(int practiceId) throws IOException {
