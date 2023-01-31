@@ -2091,6 +2091,13 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}	
 	
+	public Response addStaffImage_BL(int staffId, File file, String fileType) {
+		String url = ApiPath.STAFF_IMAGE_BL(staffId);
+		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
+				.addFilter(new RequestLoggingFilter()).build();
+		return given().spec(requestSpecification).contentType("multipart/form-data").multiPart("file", file, fileType)
+				.post(url).then().extract().response();
+    }
 	public Response getStatisticsData_BL(int orgId) {
 		String url = ApiPath.GET_STATISTICS_DATA_BL();
 		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
