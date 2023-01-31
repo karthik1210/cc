@@ -8,7 +8,6 @@ import java.util.List;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.LocationsInfo;
 import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
@@ -26,11 +25,9 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 	private LocationsInfo locationsInfo;
 	private LocationsValidations locationsValidations;
 	JsonPath jsonPath;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 	int clientId, systemId, enterpriseId, practiceId, locationId, solutionId, providerId;
-	String clientName, clientSapNumber, systemName, enterpriseName, practiceName;
-	Response createClientApiResponse, createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
-			getPracticeLocationApiResponse, enableDisableSolutionForLocation,
+	Response getPracticeLocationApiResponse, enableDisableSolutionForLocation,
 			associateDeassociatePracticesForLocationApiResponse, createLocationApiResponse,
 			updateLocationForPracticesResponse, updateSolutionsApiResponse;
 	private Validations validation;
@@ -40,59 +37,19 @@ public class GetPracticeLocationApiTests_DataLayer extends BaseRest {
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
 		setupServiceRequestSpecificationBuilderForDataLayer();
-		clientInfo = new ClientInfo();
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
 		locationsInfo = new LocationsInfo();
 		orgInfo = new OrgInfo();
 		locationsValidations = new LocationsValidations();
 		locationInfo = new LocationsInfo();
-		clientId = createClient(ccUser.getClientOneType());
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 		locationId = createLocation(clientId);
-	}
-
-	public int createClient(String clientType) throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(), testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.system.active"), "",
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"), clientId,
-				testData.getProperty("api.parenttype"), "", Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.enterprise.active"), "",
-				testData.getProperty("api.enterprise.name"), testData.getProperty("api.enterprise.orgtype"), SystemId,
-				testData.getProperty("api.enterprise.parenttype"), testData.getProperty("api.enterprise.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createPracticeNode(int enterpriseId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(testData.getProperty("api.practice.active"),
-				testData.getProperty("api.practice.displayname"), testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), enterpriseId,
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
 	}
 
 	public int createLocation(int clientId) throws Exception {

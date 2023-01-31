@@ -340,7 +340,7 @@ public class SearchProviderPage extends CCMainPage {
 
 	public void selectProvider() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(selectProvider, driver);
-		selectProvider.click();
+		javascriptClick(selectProvider);
 		log("Clicked on first Provider");
 	}
 

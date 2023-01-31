@@ -16,6 +16,7 @@
             <class name="com.pxp.cc.testcases.ui.PasswordResetTests"/>
             <class name="com.pxp.cc.testcases.ui.ClientDirectoryPageTests"/>
             <class name="com.pxp.cc.testcases.ui.GeneralSettingsPageTests"/>
+            <class name="com.pxp.cc.testcases.ui.BrandTemplatePageTests"/>
             <!--<class name="com.pxp.cc.testcases.ui.DeactivateUserTests" />-->
             <class name="com.pxp.cc.testcases.ui.EditInternalUserTests"/>
             <class name="com.pxp.cc.testcases.ui.SearchOptionsTests"/>
@@ -29,10 +30,11 @@
             <class name="com.pxp.cc.testcases.ui.ProvidersPageTests" />
             <class name="com.pxp.cc.testcases.ui.ProviderDetailsPageTests" />
             <class name="com.pxp.cc.testcases.ui.ResourcesPageTests" />
-            <class name="com.pxp.cc.testcases.ui.AddNewInternalUserTests" />
+            <class name="com.pxp.cc.testcases.ui.InternalUserPageTests" />
             <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests"/>
             <class name="com.pxp.cc.testcases.ui.UserBulkEnrollmentTests" />
             <class name="com.pxp.cc.testcases.ui.StaffPageTests"/>
+            <class name="com.pxp.cc.testcases.ui.StaffDetailsPageTests"/>
             <class name="com.pxp.cc.testcases.ui.NewUserBulkEnrollmentTests"/>
         </classes>
     </test>

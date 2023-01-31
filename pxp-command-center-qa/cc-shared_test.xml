@@ -16,21 +16,16 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandDetailsApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderDetailsApiTests_BusinessLayer" />
-			<!-- Jira #PXPP-22944 -->
-			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" 
-				/> -->
-			<!-- Enable test suite once pipeline issue is addressed for for shared 
-				services Jira #PXPP-27207 -->
-			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer" 
-				/> -->
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer" />
-
-			<!-- Enable test suite once pipeline issue is addressed for for shared 
-				services Jira #PXPP-20360 -->
-			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_BusinessLayer" 
-				/> -->
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForResourcesApiTests_BusinessLayer" />
 			<class
@@ -155,6 +150,12 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForAppTypesApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableAppTypesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStatisticsDataApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewAppTypesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchAppTypeForAssoWithResource_BusinessLayer" />
 
 			<!-- Enable test classes once Path identification for image upload in 
 				AWS issue is addressed Jira PXPP-28190 -->

@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.BrandsInfo;
-import com.pxp.cc.helpers.ClientInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
@@ -19,13 +18,11 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private DuplicateBrandingValidations brandingValidations;
 	private Validations validation;
-	Response associateDeassociateBrandApiResponse, getBrandListApiResponse, createBrandApiResponse,
-			createSystemApiResponse, createEnterpriseApiResponse, createPracticeApiResponse,
-			createAgnosticPracticeApiResponse, createClientApiResponse;
+	Response associateDeassociateBrandApiResponse, getBrandListApiResponse, createBrandApiResponse;
 	private BrandsInfo brandInfo;
 	int orgId, brandIdone, brandITwo;
 	String clientName, clientSapNumber;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -35,25 +32,10 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		validation = new Validations();
 		brandInfo = new BrandsInfo();
 		validation = new Validations();
-		clientInfo = new ClientInfo();
-		orgId = createClient();
+		clientHierObj = new CreateClientHierarchy_DL();
+		orgId = clientHierObj.createClient_DL();
 		brandIdone = CreateBrandOne(orgId);
 		brandITwo = CreateBrandTwo(orgId);
-
-	}
-
-	public int createClient() throws Exception {
-		clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(ccUser.getActive(), clientName, clientSapNumber,
-				"true", Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				testData.getProperty("ehr.identifier"), testData.getProperty("pm.identifier"));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
 	}
 
 	public int CreateBrandOne(int orgId) throws IOException {
@@ -93,7 +75,6 @@ public class AssociateDeassociateBrandApiTests_DataLayer extends BaseRest {
 		getBrandListApiResponse = sharedInfo.getBrandList_DL(orgId);
 		logStep("Verify branding template status is changed from active to inactive");
 		brandingValidations.VerifyActiveFlagStatus(getBrandListApiResponse, false, brandIdone);
-
 	}
 
 	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to activate branding template")

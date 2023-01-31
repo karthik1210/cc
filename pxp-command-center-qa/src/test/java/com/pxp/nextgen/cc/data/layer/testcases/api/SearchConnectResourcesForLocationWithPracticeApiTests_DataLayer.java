@@ -21,14 +21,11 @@ public class SearchConnectResourcesForLocationWithPracticeApiTests_DataLayer ext
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private ResourceInfo resourceInfo;
-	Response createProviderApiResponse, createResourceApiResponse, createSystemApiResponse, createClientApiResponse,
-			createPracticeApiResponse, createEnterpriseApiResponse, createNewLocationApiResponse,
+	Response createProviderApiResponse, createResourceApiResponse, createNewLocationApiResponse,
 			associateDeassociatePracticesForLocationApiResponse, searchResourceApiResponse;
-	public static int clientId, practiceId, locationId, resourceId;
+	public static int clientId, practiceId, locationId, resourceId, systemId, enterpriseId;
 	public int providerId;
-	private OrgInfo orgInfo;
-	private Validations validations;
-	private ClientInfo clientInfo;
+	private CreateClientHierarchy_DL clientHierObj;
 	private ResourceValidations resourceValidations;
 
 	@BeforeClass()
@@ -36,11 +33,14 @@ public class SearchConnectResourcesForLocationWithPracticeApiTests_DataLayer ext
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
-		orgInfo = new OrgInfo();
-		clientInfo = new ClientInfo();
-		validations = new Validations();
 		resourceInfo = new ResourceInfo();
 		resourceValidations = new ResourceValidations();
+		clientHierObj = new CreateClientHierarchy_DL();
+
+		clientId = clientHierObj.createClient_DL();
+		systemId = clientHierObj.createSystem_DL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_DL(systemId);
+		practiceId = clientHierObj.createPractice_DL(enterpriseId);
 	}
 
 	public int createProviderForPractice() throws IOException {
@@ -80,48 +80,8 @@ public class SearchConnectResourcesForLocationWithPracticeApiTests_DataLayer ext
 		return locationId;
 	}
 
-	@Test(enabled = false)
-	public int createPractice(String status, String clientName, String clientSapNumber, String testFlag, int clientType,
-			String clientTimezoneId, String systemName, String sysOrgType, String sysParentType, int ehrIdentifier,
-			int pmIdentifier, String enterpriseName, String enterpriseType, String enterpriseParentType,
-			String enterpriseTimeZone, String practiceDisplayName, String practiceName, String practiceOrgType,
-			String practiceParentType, String practiceTimeZone) throws IOException {
-		logStep("Create nge practice below the client with valid details");
-		createClientApiResponse = clientInfo.createNewClient_DataLayer(status, clientName, clientSapNumber, testFlag, clientType,
-				clientTimezoneId, testData.getProperty("ehr.identifier"),
-				testData.getProperty("pm.identifier"));
-		clientId = createClientApiResponse.jsonPath().getInt("clientId");
-		logStep("Create a new system below client.");
-		createSystemApiResponse = orgInfo.createOrg_DataLayer(status, "", systemName, sysOrgType, clientId, sysParentType, "",
-				ehrIdentifier, pmIdentifier);
-		int systemId = createSystemApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new enterprise below system.");
-		createEnterpriseApiResponse = orgInfo.createOrg_DataLayer(status, "", enterpriseName, enterpriseType, systemId,
-				enterpriseParentType, enterpriseTimeZone, ehrIdentifier, pmIdentifier);
-		int enterpriseId = createEnterpriseApiResponse.jsonPath().getInt("orgId");
-		logStep("Create a new practice below enterprise.");
-		createPracticeApiResponse = orgInfo.createOrg_DataLayer(status, practiceDisplayName, practiceName, practiceOrgType,
-				enterpriseId, practiceParentType, practiceTimeZone, ehrIdentifier, pmIdentifier);
-		logStep("Validating Response Information");
-		CCUtils.assertEquals(createPracticeApiResponse.getStatusCode(), 200);
-		CCUtils.responseTimeValidation(createPracticeApiResponse);
-		validations.verifyCreatePracticeResponseBody(createPracticeApiResponse, practiceName);
-		int orgId = createPracticeApiResponse.jsonPath().get("orgId");
-		return orgId;
-	}
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get list of resource for a practice associated with a location and verify response body")
 	public void testGetConnectedResource() throws IOException {
-		practiceId = createPractice(ccUser.getActive(), ccUser.getClientName().concat(CCUtils.generateRandomString()),
-				ccUser.getClientSapNumber().concat(CCUtils.generateRandomString()), "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				testData.getProperty("api.system.name"), testData.getProperty("api.system.orgtype"),
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")), testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), testData.getProperty("api.enterprise.parenttype"),
-				testData.getProperty("api.enterprise.timezoneid"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.name"), testData.getProperty("api.practice.orgtype"),
-				testData.getProperty("api.practice.parenttype"), testData.getProperty("api.practice.timezoneid"));
 		locationId = createLocation();
 		providerId = createProviderForPractice();
 		resourceId = createResource(providerId);

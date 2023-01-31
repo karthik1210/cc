@@ -18,12 +18,10 @@ import io.restassured.response.Response;
 public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
-	Response getBrandingDetailsApiResponse, createBrandApiResponse, createClientApiResponse, createSystemApiResponse,
-			createEnterpriseApiResponse, createPracticeApiResponse, createAgnosticPracticeApiResponse;
+	Response getBrandingDetailsApiResponse, createBrandApiResponse, createAgnosticPracticeApiResponse;
 	private BrandsInfo brandInfo;
-	private ClientInfo clientInfo;
 	int clientId, systemId, enterpriseId, practiceId, agnosticPracticeId, brandId;
-	private OrgInfo orgInfo;
+	private CreateClientHierarchy_BL clientHierObj;
 
 	@BeforeClass()
 	public void setBaseUri() throws Exception {
@@ -31,66 +29,13 @@ public class GetBrandDetailsApiTests_BusinessLayer extends BaseRest {
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		brandInfo = new BrandsInfo();
-		clientInfo = new ClientInfo();
-		orgInfo = new OrgInfo();
-		clientId = createClient("true", "true");
-		systemId = createSystemNode(clientId);
-		enterpriseId = createEnterpriseNode(systemId);
-		practiceId = createPracticeNode(enterpriseId);
-		agnosticPracticeId = createAgnosticPracticeNode(systemId);
+		clientHierObj = new CreateClientHierarchy_BL();
 
-	}
-
-	public int createClient(String status, String testClient) throws Exception {
-		String clientName = ccUser.getClientName().concat(CCUtils.generateRandomString());
-		String clientSapNumber = ccUser.getClientSapNumber().concat(CCUtils.generateRandomString());
-		logStep("Create a new client");
-		createClientApiResponse = clientInfo.createNewClient(status, clientName, clientSapNumber, testClient,
-				Integer.parseInt(testData.getProperty("api.client.type")), ccUser.getTimezoneId(),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		logStep("Validating response information");
-		CCUtils.responseTimeValidation(createClientApiResponse);
-		CCUtils.assertEquals(createClientApiResponse.getStatusCode(), 201);
-		validation.verifyCreateAndUpdateClientResponseBody(createClientApiResponse, clientName);
-		return createClientApiResponse.jsonPath().get("clientId");
-	}
-
-	public int createSystemNode(int clientId) throws Exception {
-		createSystemApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.system.name"),
-				testData.getProperty("api.system.orgtype"), "", testData.getProperty("api.system.active"), "", clientId,
-				testData.getProperty("api.parenttype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createSystemApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createEnterpriseNode(int SystemId) throws Exception {
-		createEnterpriseApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.enterprise.name"),
-				testData.getProperty("api.enterprise.orgtype"), "", testData.getProperty("api.enterprise.active"),
-				testData.getProperty("api.enterprise.timezoneid"), systemId,
-				testData.getProperty("api.enterprise.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createEnterpriseApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createPracticeNode(int enterpriseId) throws Exception {
-		createPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				enterpriseId, testData.getProperty("api.practice.parenttype"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createPracticeApiResponse.jsonPath().get("orgId");
-	}
-
-	public int createAgnosticPracticeNode(int systemId) throws Exception {
-		createAgnosticPracticeApiResponse = orgInfo.createOrgNode_BL(testData.getProperty("api.practice.name"),
-				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
-				testData.getProperty("api.system.orgtype"), Integer.parseInt(testData.getProperty("ehr.identifier")),
-				Integer.parseInt(testData.getProperty("pm.identifier")));
-		return createAgnosticPracticeApiResponse.jsonPath().get("orgId");
+		clientId = clientHierObj.createClient_BL();
+		systemId = clientHierObj.createSystem_BL(clientId);
+		enterpriseId = clientHierObj.createEnterprise_BL(systemId);
+		practiceId = clientHierObj.createPractice_BL(enterpriseId);
+		agnosticPracticeId = clientHierObj.createAgnosticPractice_BL(systemId);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter non-existing brandId in brand id field and verify error response")
