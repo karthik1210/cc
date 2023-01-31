@@ -53,7 +53,6 @@ public class AddStaffImageApiTests_BusinessLayer extends BaseRest {
 		return obj;
 	}
 	
-	
 	@Test(retryAnalyzer = RetryAnalyzer.class, dataProvider = "getImage", description = "Add Staff image with valid staffId and verify response code")
 	public void testResponseCodeToAddStaffImageWithValidStaffId(String getImageValue) throws NullPointerException, IOException {
 		logStep("Enter valid staffId with valid image format");
