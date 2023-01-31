@@ -25,7 +25,7 @@
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetAppointmentTypeApiTests_DataLayer" />
 			<class
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientProviderApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientProviderApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchClientLocationApiTests_DataLayer" />
 			<class
@@ -156,16 +156,18 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddStaffImageApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddOrRemoveResForAppTypeApiTests_DataLayer"></class>
-            <class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>	
-			 <class	
-				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewAppTypesApiTests_DataLayer"></class>	
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewAppTypesApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteStaffImageApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewAppTypesApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchAppTypeForAssoWithResource_DataLayer"></class>
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStatisticsDataApiTests_DataLayer"></class>
 		</classes>
 	</test>
 
