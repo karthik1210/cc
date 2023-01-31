@@ -28,7 +28,10 @@ public class UpdateBrandApiTests_DataLayer extends BaseRest {
 		new SharedInfo();
 		validation = new Validations();
 		clientHierObj = new CreateClientHierarchy_DL();
-
+		clientBrandId = createBrand(clientId);
+		systemBrandId = createBrand(systemId);
+		enterpriseBrandId = createBrand(enterpriseId);
+		practiceBrandId = createBrand(practiceId);	
 		clientId = clientHierObj.createClient_DL();
 		systemId = clientHierObj.createSystem_DL(clientId);
 		enterpriseId = clientHierObj.createEnterprise_DL(systemId);

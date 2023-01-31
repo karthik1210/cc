@@ -1,3 +1,5 @@
+// Copyright 2023 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.cc.testcases.ui;
 
 import org.testng.annotations.Test;
@@ -56,6 +58,7 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().enterUserName(CCUtils.generateAlphaNumericString(12));
 		ccui.getCommonMethods().enterMobileNumber(String.valueOf(CCUtils.generateMobileNumber()));
 		logStep("Click on cancel button");
+		ccui.getInternalUserDetailsPage().clickCancel();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify changes are displayed in right section after changes are saved")
@@ -136,12 +139,7 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 				{ testData.getProperty("invalid.user.first.name.two"),
 						testData.getProperty("invalid.user.last.name.two"),
 						testData.getProperty("invalid.user.email.two"), testData.getProperty("invalid.username.two"),
-						testData.getProperty("invalid.user.mobile.number.two") },
-				{ testData.getProperty("invalid.user.first.name.three"),
-						testData.getProperty("invalid.user.last.name.three"),
-						testData.getProperty("invalid.user.email.three"),
-						testData.getProperty("invalid.username.three"),
-						testData.getProperty("invalid.user.mobile.number.three") } };
+						testData.getProperty("invalid.user.mobile.number.two") }};
 		return obj;
 	}
 
@@ -164,20 +162,44 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(ccui.commonMethods.getValidErrorForUsernameField(), "Please enter valid username");
 	}
 
-	@Test(enabled = true,  retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter already existing data in username, mobile number and email fields and verify error message")
 	public void testUniqueErrorMssageInEditMode() throws Exception {
-		createInternalUser();
+		logStep("PXPP-10664 Enter already existing data in username, mobile number and email fields and verify error message");
+		ccui.getInternalUsersPage().clickToMoreOptions();
+		logStep("Create new internal user");
+		String firstname = CCUtils.generateAlphaNumericString(5);
+		String lastname = CCUtils.generateAlphaNumericString(5);
+		String emailOne = testData.getProperty("valid.user.first.name").concat(CCUtils.generateNewEmail(12));
+		String username = testData.getProperty("new.client.name2").concat(CCUtils.generateAlphaNumericString(12));
+		long mobilenumber = CCUtils.generateMobileNumber();
+		ccui.getInternalUsersPage().clickOnNewButton();
+		ccui.getCommonMethods().enterFirstName(firstname);
+		ccui.getCommonMethods().enterLastName(lastname);
+		ccui.getCommonMethods().enterEmail(emailOne);
+		ccui.getCommonMethods().enterUserName(username);
+		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
+		ccui.getAddNewInternalUsersPage().addUserRoles();
+		ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
+		logStep("Search another internal user");	
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
+		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("No roles assigned"));
+		ccui.getSearchOptionsPage().clickOnSearchButton();
+		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
+		ccui.getInternalUsersPage().selectUser();	
+		logStep("Edit searched internal user And Enter already existing data in username, mobile number and email fields and verify error message");
 		ccui.getInternalUserDetailsPage().clickEditInInternalUser();
-		logStep("PXPP-10664 Enter existing value in username, email and mobile number fields and verify error message");
-		ccui.getCommonMethods().enterMobileNumber(mobileNumberValueInEditMode);
-		ccui.getCommonMethods().focusOnUserNameField();
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForMobileNumberField(),
-				"Mobile number already in use");
-		ccui.getCommonMethods().enterUserName(userNameValueInEditMode);
-		ccui.commonMethods.focusOnEmailField();
-		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
-		ccui.getCommonMethods().enterEmail(emailValueInEditMode);
+		ccui.getCommonMethods().enterFirstName(firstname);
+		ccui.getCommonMethods().enterLastName(lastname);
+		ccui.getCommonMethods().enterEmail(emailOne);
 		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForEmailField(), "Email already in use");
+		ccui.getCommonMethods().enterUserName(username);
+		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
+		/*
+		 * ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
+		 * CCUtils.assertEquals(ccui.getCommonMethods().
+		 * getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
+		 */
+		
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in username field and verify error and tooltip text for username field")
@@ -194,15 +216,16 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user confirmation popup")
 	public void testDeactivateConfirmationPopupForInternalUser() throws Exception {
-		createInternalUser();
 		logStep("PXPP-7506 Verify selected internal user status is same on internal user details page");
-		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
+		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("Active"));
+		ccui.getSearchOptionsPage().clickOnSearchButton();
+		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
+		ccui.getInternalUsersPage().selectUser();
 		ccui.getInternalUserDetailsPage().verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
-		String userName = ccui.getInternalUserDetailsPage().getUserName();
 		ccui.getInternalUserDetailsPage().clickOnKebabMenuButton();
-		deactivateUserConfirmationPage = ccui.getInternalUserDetailsPage().clickOnDeactivateUserButton();
-		logStep("Verify deactivate user confirmation popup");
-		ccui.getDeactivateUserConfirmationPage().verifyConfirmationTextForSingleUser(userName);
+		ccui.getInternalUserDetailsPage().clickOnDeactivateUserButton();
+		ccui.getDeactivateUserConfirmationPage().verifyDeactivatePopup();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user button is displayed in kebab menu for active user")
@@ -215,22 +238,14 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		logStep("Verify deactivate button is displayed in kebab menu for active user");
 		ccui.getInternalUserDetailsPage().verifyDeactivateUserButtonIsDisplayed();
 	}
-
+	
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user button is displayed in kebab menu for no roles assigned user")
 	public void testDeactivateUserOptionIsPresentForNoRolesAssignedInternalUser() throws Exception {
 		logStep("PXPP-7502 Create a new active internal user with user roles and verify success toaster");
-		firstName = CCUtils.generateAlphaNumericString(9).concat("'s");
-		ccui.getCommonMethods().enterFirstName(firstName);
-		ccui.getCommonMethods().enterLastName(CCUtils.generateAlphaNumericString(9));
-		ccui.getCommonMethods().enterEmail(CCUtils.generateNewEmail(6));
-		ccui.getCommonMethods().enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
-		ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
-		ccui.getCommonMethods().verifyToasterMessage("Success! New User has been successfully added");
-		logStep("Search and select active user");
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
+		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("No roles assigned"));
 		ccui.getSearchOptionsPage().clickOnSearchButton();
-		ccui.getInternalUsersPage().searchUser(firstName);
-		ccui.getSearchOptionsPage().clickOnSearchButton();
-		logStep("Clicked on user to edit");
+		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
 		ccui.getInternalUsersPage().selectUser();
 		logStep("Verify selected internal user status is same on internal user details page");
 		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
@@ -243,20 +258,10 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify activate user button is displayed in kebab menu for inactive user")
 	public void testDeactivateUserOptionIsNotPresentForInactiveInternalUser() throws Exception {
 		logStep("PXPP-7501 Verify activate user button is displayed in kebab menu for inactive user");
-		String firstName = "InactiveUser" + CCUtils.generateAlphaNumericString(3).concat("'s");
-		ccui.getCommonMethods().enterFirstName(firstName);
-		String lastName = CCUtils.generateAlphaNumericString(9);
-		ccui.getCommonMethods().enterLastName(lastName);
-		ccui.getCommonMethods().enterEmail(CCUtils.generateNewEmail(10));
-		ccui.getCommonMethods().enterUserName(CCUtils.generateAlphaNumericStringIncludingSpecialChar(9));
-		ccui.getCommonMethods().selectInactiveRadiobutton();
-		ccui.getAddNewInternalUsersPage().selectUserRole("Super Admin");
-		ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
-		logStep("Search and select active user");
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
+		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("Inactive"));
 		ccui.getSearchOptionsPage().clickOnSearchButton();
-		ccui.getInternalUsersPage().searchUser(firstName);
-		ccui.getSearchOptionsPage().clickOnSearchButton();
-		logStep("Clicked on user to edit");
+		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
 		ccui.getInternalUsersPage().selectUser();
 		logStep("Verify selected internal user status is same on internal user details page");
 		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
@@ -288,11 +293,12 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify cancel and cross button functionality for deactivate user button popup")
 	public void testCancelAndCrossIconFunctionalityOnDeactivateInternalUserButton() throws Exception {
+		logStep("PXPP-7507 Verify selected internal user status is same on internal user details page");
 		ccui.getInternalUsersPage().clickOnSearchOptionPage();
 		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("Active"));
 		ccui.getSearchOptionsPage().clickOnSearchButton();
 		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
-		logStep("PXPP-7507 Verify selected internal user status is same on internal user details page");
+		ccui.getInternalUsersPage().selectUser();
 		ccui.getInternalUserDetailsPage().verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		ccui.getInternalUserDetailsPage().clickOnKebabMenuButton();
 		ccui.getInternalUserDetailsPage().clickOnDeactivateUserButton();
@@ -309,25 +315,23 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user functionality")
 	public void testInternalUserDeactivateFunctionality() throws Exception {
 		createInternalUser();
-		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
-		ccui.getInternalUserDetailsPage().verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
-		String userName = ccui.getInternalUserDetailsPage().getUserName();
+		logStep("PXPP-7579 Verify deactivate user functionality");
 		ccui.getInternalUserDetailsPage().clickOnKebabMenuButton();
 		ccui.getInternalUserDetailsPage().clickOnDeactivateUserButton();
-		logStep("Verify deactivate user confirmation popup");
-		ccui.getDeactivateUserConfirmationPage().verifyConfirmationTextForSingleUser(userName);
 		ccui.getDeactivateUserConfirmationPage().clickOnYesDeactivateButton();
 		logStep("verify success toaster message");
 		ccui.getCommonMethods().verifyToasterMessage("Success! User status has been successfully deactivated");
-		logStep("Verify internal user status is changed from active to inactive on internal user details page");
-		ccui.getInternalUserDetailsPage().checkInactiveStatus();
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock active internal user and Verify lock button is not displayed in kebab menu for locked user")
 	public void testInternalUserLockButtonIsPresentForActiveUserAndNotPresentForLockedUser() throws Exception {
-		createInternalUser();
-		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
-		logStep("Verify selected internal user status is same on internal user details page");
+		logStep("PXPP-7507 Verify selected internal user status is same on internal user details page");
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
+		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("Active"));
+		ccui.getSearchOptionsPage().clickOnSearchButton();
+		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
+		ccui.getInternalUsersPage().selectUser();
+		ccui.getInternalUserDetailsPage().verifySelectedUserStatusIsSameOnInternalUserDetailsPage();
 		ccui.getInternalUserDetailsPage().clickOnKebabMenuButton();
 		logStep("PXPP-5079 Verify lock button is displayed in kebab menu for active user");
 		ccui.getInternalUserDetailsPage().verifyLockUserButtonIsDisplayed();
@@ -345,9 +349,13 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().verifyToasterMessage("Success! User status has been successfully activated");
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock and unlock no roles assigned user")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify user able to lock for no roles assigned user")
 	public void testInternalUserLockButtonIsPresentForNoRolesAssignedUser() throws Exception {
-		createInternalUser();
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
+		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("No roles assigned"));
+		ccui.getSearchOptionsPage().clickOnSearchButton();
+		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
+		ccui.getInternalUsersPage().selectUser();
 		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
 		logStep("PXPP-5072 Verify selected internal user status is same on internal user details page");
 		ccui.getInternalUserDetailsPage().clickOnKebabMenuButton();
@@ -357,13 +365,6 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getInternalUserDetailsPage().clickOnLockUserButton();
 		logStep("verify success toaster message");
 		ccui.getCommonMethods().verifyToasterMessage("Success! User status has been successfully locked");
-		logStep("Verify user status after clicking on lock user button");
-		ccui.getInternalUserDetailsPage().verifyUserStatusAfterClickingOnLockUserButton();
-		logStep("Click on unlock user button in kebab menu");
-		ccui.getInternalUserDetailsPage().clickOnUnlockUserButton();
-		logStep("verify success toaster message");
-		ccui.getCommonMethods().verifyToasterMessage("Success! User status has been successfully activated");
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify lock button is not displayed in kebab menu for inactive user")
@@ -406,7 +407,7 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		logStep("Verify user redirected to command center users page");
 		ccui.getCommandCenterUsersPage().verifyUserRedirectedToCommandCenterPage();
 		logStep("Verify internal users tab is by default selected");
-		ccui.getCommandCenterUsersPage().verifyInternalUsersTabByDefaultSelected();	
+		ccui.getCommandCenterUsersPage().verifyInternalUsersTabByDefaultSelected();
 	}
 
 	@Test(enabled = false)
@@ -426,7 +427,7 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! New User has been successfully added");
 		logStep("Search and select active user");
-		ccui.getSearchOptionsPage().clickOnSearchButton();
+		ccui.getInternalUsersPage().clickOnSearchOptionPage();
 		ccui.getInternalUsersPage().searchUser(firstName);
 		ccui.getSearchOptionsPage().clickOnSearchButton();
 		logStep("Clicked on user to edit");

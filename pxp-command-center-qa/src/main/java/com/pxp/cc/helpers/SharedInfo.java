@@ -2054,40 +2054,69 @@ public class SharedInfo extends BaseRest {
 	}
 
 	public Response addStaffImage_DL(int staffId, String imageUrl) {
-		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
-		  return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
-		 .response();
+		String url = ApiPath.STAFF_IMAGE_DL(staffId);
+		return given().spec(requestSpec).body(addImageUrlPayload(imageUrl)).when().patch(url).then().extract()
+				.response();
 	}
 
 	public Response getStaffDetails_DL(int staffId) {
-		 String url = ApiPath.GET_STAFF_DETAILS_DL(staffId);
-		 return given().spec(requestSpec).when().get(url).then().extract().response();
+		String url = ApiPath.GET_STAFF_DETAILS_DL(staffId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 
 	public Response deleteStaffImage_DL(int staffId) {
-		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
-		 return given().spec(requestSpec).when().delete(url).then().extract().response();
+		String url = ApiPath.STAFF_IMAGE_DL(staffId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 
 	public Response addStaffImageWithEmptyPayload_DL(int staffId) {
-		 String url = ApiPath.STAFF_IMAGE_DL(staffId);
-		  Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
-		 return given().spec(requestSpec).body(addImageUrlMap).when().patch(url).then().extract().response();
-	 }
-	
+		String url = ApiPath.STAFF_IMAGE_DL(staffId);
+		Map<String, Object> addImageUrlMap = new HashMap<String, Object>();
+		return given().spec(requestSpec).body(addImageUrlMap).when().patch(url).then().extract().response();
+	}
+
 	public Response addOrRemoveResourcesForAppoinmentType_DL(int practiceId, int appointmentTypeId,
 			List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE_DL(practiceId, appointmentTypeId);
 		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
 	}
-	
+
 	public Response addOrRemoveResourcesForAppoinmentType_NullValues_DL(List<ResourceDetails> resourceList) {
 		String url = ApiPath.ADD_OR_REMOVE_RESOURCES_FOR_APPOINTMENT_TYPE_NULL_VALUES_DL();
 		return given().spec(requestSpec).body(resourceList).when().put(url).then().extract().response();
 	}
-   
+
 	public Response deleteStaffImage_NullValues_DL() {
 		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}	
+	
+	public Response getStatisticsData_BL(int orgId) {
+		String url = ApiPath.GET_STATISTICS_DATA_BL();
+		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
+	}
+	
+	public Response getStatisticsData_NULL_BL() {
+		return given().spec(requestSpec).when().get(ApiPath.GET_STATISTICS_DATA_NULL_BL).then().extract().response();
+	}
+
+	public Response searchAppointmentTypeForAssociatingWithResource_BL(int practiceId, int resourceId, String name) {
+		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_BL(practiceId, resourceId);
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response searchAppointmentTypeForAssociatingWithResource_NullValues_BL() {
+		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response searchAppointmentTypeForAssociatingWithResource_DL(int practiceId, int resourceId, String name) {
+		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_DL(practiceId, resourceId);
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response searchAppointmentTypeForAssociatingWithResource_NullValues_DL() {
+		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

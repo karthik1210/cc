@@ -118,7 +118,7 @@ public class SearchOptionsPage extends CCMainPage {
 	@FindBy(id = "filterClearBtn")
 	private WebElement buttonClear;
 
-	@FindBy(id = "filterSearchBtn")
+	@FindBy(xpath = "//span[normalize-space(text())='SEARCH OPTIONS']")
 	private WebElement buttonSearch;
 
 	@FindBy(id = "searchFilterBtn")
@@ -192,6 +192,9 @@ public class SearchOptionsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-checkbox-label']/span[normalize-space(text())='Not Sent']/../preceding-sibling::div/input/../../../label[@class='mat-checkbox-layout']")
 	private WebElement notSentStatusCheckBox;
+	
+	@FindBy(id = "filterSearchBtn")
+	private WebElement searchButton;
 
 	public final List<String> expectedListOfEnrollmentStatusValues = Arrays.asList("Delivered", "Pending",
 			"Email Issue", "Expired", "Not Sent");
@@ -446,9 +449,9 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickOnSearchButton() throws InterruptedException {
-		CCUtils.scrollPageViaElement(driver, buttonSearch);
-		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		javascriptClick(buttonSearch);
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
+		javascriptClick(searchButton);
 	}
 
 	public void clickOnClearAllSearchData() throws InterruptedException {
