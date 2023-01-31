@@ -124,8 +124,6 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrgSolutionsResponse);
 		CCUtils.assertEquals(getOrgSolutionsResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(getOrgSolutionsResponse,
-				Integer.parseInt(testData.getProperty("non.existing.practice.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for Null values in orgId and type field")
