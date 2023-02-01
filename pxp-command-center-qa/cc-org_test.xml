@@ -1,75 +1,77 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="CCOrgTestSuite">
-    <listeners>
-        <listener
-                class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener"/>
-        <listener class-name="org.uncommons.reportng.HTMLReporter"/>
-        <listener
-                class-name="org.uncommons.reportng.JUnitXMLReporter"/>
-        <listener
-                class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
-    </listeners>
-    <test name="CC Org Test">
-        <classes>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrganizationDetailsApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateOrgNodeApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePrivacySettingApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePracticeWebsitesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeSocialsApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeWebsitesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.AddUpdatePracticeSocialsApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgSolutionsApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeInterfacesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.AddAnInterfaceApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateAnInterfacesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteAnInterfacesApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetByInterfaceApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeAccessApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateUpdatePatientAccessApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_BusinessLayer"/>
-            <class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateEmailTemplateApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateEmailTemplateStatusApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetEmailTemplateVersionsListApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateListApiTests_BusinessLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateAttributesApiTests_BusinessLayer"/>
-        </classes>
-    </test>
+	<listeners>
+		<listener
+			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener
+			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+		<listener
+			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+	</listeners>
+	<test name="CC Org Test">
+		<classes>
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrganizationDetailsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateOrgNodeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgNodeApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePrivacySettingApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddTouApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateTouApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddPracticeWebsitesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeletePracticeWebsitesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdatePracticeWebsitesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetUpdateOrgWebsiteApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeSocialsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeWebsitesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddUpdatePracticeSocialsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateOrgSolutionsApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeInterfacesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddAnInterfaceApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateAnInterfacesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteAnInterfacesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetByInterfaceApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeAccessApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateUpdatePatientAccessApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateEmailTemplateApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateEmailTemplateStatusApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetEmailTemplateVersionsListApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateListApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateAttributesApiTests_BusinessLayer" />
+			<class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgSolutionsApiTests_BusinessLayer"/>
+		</classes>
+	</test>
 </suite>

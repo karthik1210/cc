@@ -493,6 +493,12 @@ public class ApiPath {
 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutions";
 	}
 
+	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
+		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
+	}
+
+	public static final String GET_ORG_SOLUTIONS_BL = SERVICE_ORG_BL + "/v1/orgs/null/solutions?type=null";
+
 	public static final String INVALID_PATH_UPDATE_ORG_SOLUTIONS_DL(int orgId) {
 		return SERVICE_ORG_DL + "/v1/orgs/" + orgId + "/solutionsssss";
 	}
@@ -644,10 +650,6 @@ public class ApiPath {
 
 	public static final String INVALID_PATH_DELETE_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
-	}
-
-	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
-		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
 	}
 
 	public static final String UPDATE_ORG_SOLUTIONS_BL_INVALID_URL(int orgId) {
@@ -2220,7 +2222,7 @@ public class ApiPath {
 	}
 
 	public static final String GET_STATISTICS_DATA_NULL_DL = SHARED_DL + "/v1/data-stats?orgid=null";
-	
+
 	public static final String GET_STATISTICS_DATA_BL() {
 		return SERVICE_SHARED_BL + "/v1/data-stats";
 	}
@@ -2244,5 +2246,41 @@ public class ApiPath {
 
 	public static final String SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/resources/null/appointmenttype-resource";
+	}
+	
+	public static final String SEARCH_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/locations-resource";
+	}
+
+	public static final String SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/resources/null/locations-resource";
+	}
+
+	public static final String SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_BL(int practiceId) {
+		return SERVICE_SHARED_BL + "/v1/practices/" + practiceId + "/resources-appt";
+	}
+
+	public static final String SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_NULL_VALUE_BL() {
+		return SERVICE_SHARED_BL + "/v1/practices/null/resources-appt";
+	}
+
+	public static final String SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_DL(int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources-appt";
+	}
+
+	public static final String SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_NULL_VALUE_DL() {
+		return SHARED_DL + "/v1/practices/null/resources-appt";
+	}
+
+	public static final String UPDATE_STAFF_FOR_PRACTICE_DL(int staffId) {
+		return SHARED_DL + "/v1/staff/" + staffId + "/practices";
+	}
+
+	public static final String DELETE_PRACTICE_STAFF_DL(int practiceId, String externalId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/external/" + externalId + "/staff";
+	}
+
+	public static final String DELETE_PRACTICE_STAFF_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/external/null/staff";
 	}
 }

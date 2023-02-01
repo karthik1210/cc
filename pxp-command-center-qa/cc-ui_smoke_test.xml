@@ -27,15 +27,13 @@
 			<class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
 			<class
 				name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
-			<class name="com.pxp.cc.testcases.ui.InternalUserPageTests" />
-			<class
-				name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests" />
 			<class
 				name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
 			<class
-				name="com.pxp.cc.testcases.ui.InternalUserDeactivationFromKebabMenuTests" />
+				name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
+			<class name="com.pxp.cc.testcases.ui.InternalUserPageTests" />
 			<class
-				name="com.pxp.cc.testcases.ui.InternalUserLockFromKebabMenuTests" />
+				name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
 			<class name="com.pxp.cc.testcases.ui.InterfaceSetupTests" />
 
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
