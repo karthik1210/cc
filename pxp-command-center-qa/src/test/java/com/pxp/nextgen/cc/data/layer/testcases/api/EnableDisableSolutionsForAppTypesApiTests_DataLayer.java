@@ -86,7 +86,7 @@ public class EnableDisableSolutionsForAppTypesApiTests_DataLayer extends BaseRes
 				practiceId, solutionId, true);
 		logStep("Validating response information");
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(updateSolutionsApiResponse);
+		validation.verifyErrorMessageForInvalidInput(updateSolutionsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter existing practiceid and nonexisting appointmentTypeId with valid details in request body and verify response code")
@@ -98,7 +98,7 @@ public class EnableDisableSolutionsForAppTypesApiTests_DataLayer extends BaseRes
 				practiceId, solutionId, true);
 		logStep("Validating response information");
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(updateSolutionsApiResponse);
+		validation.verifyErrorMessageForInvalidInput(updateSolutionsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter nonexisting practiceid and nonexisting appointmentTypeId with valid details in request body and verify response code")
@@ -111,7 +111,7 @@ public class EnableDisableSolutionsForAppTypesApiTests_DataLayer extends BaseRes
 				practiceId, solutionId, true);
 		logStep("Validating response information");
 		CCUtils.assertEquals(updateSolutionsApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageForNonExistingField(updateSolutionsApiResponse);
+		validation.verifyErrorMessageForInvalidInput(updateSolutionsApiResponse);
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter practiceid, appointmentTypeId as null and verify response code")

@@ -1,4 +1,4 @@
-// Copyright 2021 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2021-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -192,7 +192,13 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(className = "locked-label")
 	private WebElement labelLockedUser;
-
+	
+	@FindBy(id="editUser")
+	private WebElement edit;
+	
+	@FindBy(className = "applyBtn")
+	private WebElement deactivateButton;
+	
 	private String xpathHoverTextMessage = "//div[@id='cdk-describedby-message-container']//following-sibling::div[@id='valueToReplace']";
 
 	private WebElement prepareDynamicXpath(String xpathValue, String substitutionValue) {
@@ -755,4 +761,18 @@ public class InternalUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonEditInternalUser, driver);
 		log("verifying if edit button is present on internal users details page");
 	}
+	
+	public AddNewInternalUsersPage clickoneditbutton() {
+		CCUtils.verifyAndWaitForElement(edit, driver);
+		edit.click();
+		log("Clicked on edit in command center users page");
+		return PageFactory.initElements(driver, AddNewInternalUsersPage.class);
+	}
+	
+	public void  clickYesDeactivate() {
+		CCUtils.verifyAndWaitForElement(deactivateButton, driver);
+		deactivateButton.click();
+		log("Clicked on Yes, Deactivate");
+	}
+
 }

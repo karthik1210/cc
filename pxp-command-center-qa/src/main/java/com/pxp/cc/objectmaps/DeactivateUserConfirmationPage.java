@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.objectmaps;
 
@@ -25,6 +25,9 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 	@FindBy(id = "applyBtn")
 	private WebElement buttonYesDeactivate;
 
+	@FindBy(id = "applyDeactivate")
+	private WebElement titleDeactivate;
+
 	public void verifyConfirmationTextForSingleUser(String userName) {
 		CCUtils.verifyAndWaitForElement(labelConfirmationQuestion, driver);
 		if (labelConfirmationQuestion.isDisplayed() == true) {
@@ -50,5 +53,20 @@ public class DeactivateUserConfirmationPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonYesDeactivate, driver);
 		log("Click on yes deactivate button");
 		buttonYesDeactivate.click();
+	}
+
+	public void verifyDeactivatePopup() {
+		log("Verify 'Deactivate?' title");
+		CCUtils.verifyAndWaitForElement(titleDeactivate, driver);
+		CCUtils.assertEquals(titleDeactivate.getText().trim(), "Deactivate?");
+		log("Verify Cancel button displayed");
+		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
+		CCUtils.assertEquals(buttonCancel.getText().trim(), "Cancel");
+		log("Verify cross button displayed");
+		CCUtils.verifyAndWaitForElement(closeWindowIcon, driver);
+		CCUtils.assertEquals(closeWindowIcon.getText().trim(), "clear");
+		log("Verify button Yes, Deactivate displayed");
+		CCUtils.verifyAndWaitForElement(buttonYesDeactivate, driver);
+		CCUtils.assertEquals(buttonYesDeactivate.getText().trim(), "Yes, deactivate");
 	}
 }

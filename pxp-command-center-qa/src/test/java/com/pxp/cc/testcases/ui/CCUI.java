@@ -8,6 +8,42 @@ import com.pxp.cc.objectmaps.*;
 import org.openqa.selenium.WebDriver;
 
 import com.medfusion.common.utils.PropertyFileLoader;
+import com.pxp.cc.objectmaps.AddLocationPage;
+import com.pxp.cc.objectmaps.AddNewInternalUsersPage;
+import com.pxp.cc.objectmaps.AddNewProviderPage;
+import com.pxp.cc.objectmaps.AddNewResourcePage;
+import com.pxp.cc.objectmaps.AddNewVarResellerUserPage;
+import com.pxp.cc.objectmaps.AddOrgNodePage;
+import com.pxp.cc.objectmaps.AppointmentTypePage;
+import com.pxp.cc.objectmaps.AppointmentTypesDetailsPage;
+import com.pxp.cc.objectmaps.BrandingTemplatesPage;
+import com.pxp.cc.objectmaps.ClientDirectoryPage;
+import com.pxp.cc.objectmaps.CommandCenterUsersPage;
+import com.pxp.cc.objectmaps.DeactivateUserConfirmationPage;
+import com.pxp.cc.objectmaps.EditBasicInfoGeneralSettingsPage;
+import com.pxp.cc.objectmaps.EditOrgDetailsGeneralSettingsPage;
+import com.pxp.cc.objectmaps.GeneralSettingsPage;
+import com.pxp.cc.objectmaps.InterfaceSetupPage;
+import com.pxp.cc.objectmaps.InternalUserDetailsPage;
+import com.pxp.cc.objectmaps.InternalUsersPage;
+import com.pxp.cc.objectmaps.LocationDetailsPage;
+import com.pxp.cc.objectmaps.LoginPage;
+import com.pxp.cc.objectmaps.MoveAgnosticPracticePage;
+import com.pxp.cc.objectmaps.NGHierarchyClientCreationPage;
+import com.pxp.cc.objectmaps.PatientAccessPage;
+import com.pxp.cc.objectmaps.PracticeLinksPage;
+import com.pxp.cc.objectmaps.PrivacyPolicySettingsPage;
+import com.pxp.cc.objectmaps.ProviderDetailsPage;
+import com.pxp.cc.objectmaps.ProviderResourceAndStaffSearchPage;
+import com.pxp.cc.objectmaps.ResourceDetailsPage;
+import com.pxp.cc.objectmaps.SearchLocationPage;
+import com.pxp.cc.objectmaps.SearchOptionsPage;
+import com.pxp.cc.objectmaps.SearchProviderPage;
+import com.pxp.cc.objectmaps.StaffDetailsPage;
+import com.pxp.cc.objectmaps.StaffPage;
+import com.pxp.cc.objectmaps.TabsNavigationOnGeneralSettingPage;
+import com.pxp.cc.objectmaps.UserBulkEnrollmentPage;
+import com.pxp.cc.objectmaps.VarResellerUsersPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
 
@@ -57,6 +93,10 @@ public class CCUI extends CommandCenterGenericTest {
 	StaffPage staffTypePage;
 	SearchOptionsPage searchOptionsPage;
 	StaffDetailsPage staffDetailsPage;
+	InternalUserDetailsPage internalUserDetailsPage;
+    DeactivateUserConfirmationPage deactivateUserConfirmationPage;
+	AppointmentTypesDetailsPage appointmentTypesDetailsPage;
+
 	InternalVarResellerUserBulkEnrollmentPage internalVarResellerUserBulkEnrollmentPage;
 
 	/////////// Variables Test Data
@@ -246,7 +286,7 @@ public class CCUI extends CommandCenterGenericTest {
 		return searchProviderPage;
 	}
 
-	AppointmentTypePage getAppointmentTypePage() throws Exception {
+	public AppointmentTypePage getAppointmentTypePage() throws Exception {
 		if (appointmentTypePage == null) {
 			appointmentTypePage = new AppointmentTypePage(driver);
 		}
@@ -307,6 +347,27 @@ public class CCUI extends CommandCenterGenericTest {
 			locationDetailsPage = new LocationDetailsPage(driver);
 		}
 		return locationDetailsPage;
+	}
+
+	public InternalUserDetailsPage getInternalUserDetailsPage() throws Exception {
+		if (internalUserDetailsPage == null) {
+			internalUserDetailsPage = new InternalUserDetailsPage(driver);
+		}
+		return internalUserDetailsPage;
+	}
+
+	 public DeactivateUserConfirmationPage getDeactivateUserConfirmationPage() throws Exception {
+	        if (deactivateUserConfirmationPage == null) {
+	        	deactivateUserConfirmationPage = new DeactivateUserConfirmationPage(driver);
+	        }
+	        return deactivateUserConfirmationPage;
+	    }
+
+	public AppointmentTypesDetailsPage getAppointmentTypesDetailsPage() throws Exception {
+		if (appointmentTypesDetailsPage == null) {
+			appointmentTypesDetailsPage = new AppointmentTypesDetailsPage(driver);
+		}
+		return appointmentTypesDetailsPage;
 	}
 
 	public static void getClientSystementErpriseandPractice() throws Exception {

@@ -3525,12 +3525,6 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
-	public void verifyErrorMessageForNonExistingField(Response response) throws IOException {
-		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "Invalid input either id or object null");
-		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-	}
-
 	public void verifyResponseBodyOfAppTypesSolutions(Response response, int solutionId, String status) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
@@ -3590,6 +3584,16 @@ public class Validations {
 				Log4jUtil.log("appointment type count "+appointmentTypeCount+" matches with response body appointment type statistics data count : "+jsonObject.get("count"));
 			}
 		}
+	}
+	
+	public void verifyResponseBodyForExistingStaffId_BL(Response response) throws IOException {
+		 JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		 Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
+		 Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
+		 Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imageUrl"));
+		 Log4jUtil.log("value of gender is  :"+jsonpath.get("gender"));
+		 Log4jUtil.log("value of externalId is  :"+jsonpath.get("externalId"));
+		 Log4jUtil.log("value of status is  :"+jsonpath.get("status"));	
 	}
 	
 	public void verifyCreateAppTypeResponseBody(Response response, int id, String name) throws IOException {
