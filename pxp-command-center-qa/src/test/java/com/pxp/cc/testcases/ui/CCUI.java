@@ -42,7 +42,6 @@ import com.pxp.cc.objectmaps.SearchProviderPage;
 import com.pxp.cc.objectmaps.StaffDetailsPage;
 import com.pxp.cc.objectmaps.StaffPage;
 import com.pxp.cc.objectmaps.TabsNavigationOnGeneralSettingPage;
-import com.pxp.cc.objectmaps.UserBulkEnrollmentPage;
 import com.pxp.cc.objectmaps.VarResellerUsersPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
