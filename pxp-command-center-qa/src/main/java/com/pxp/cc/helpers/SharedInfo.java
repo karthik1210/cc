@@ -2094,24 +2094,25 @@ public class SharedInfo extends BaseRest {
 	public Response getStatisticsData_DL(int orgId) {
 		String url = ApiPath.GET_STATISTICS_DATA_DL();
 		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
-	}	
-	
+	}
+
 	public Response addStaffImage_BL(int staffId, File file, String fileType) {
 		String url = ApiPath.STAFF_IMAGE_BL(staffId);
 		requestSpecification = new RequestSpecBuilder().addFilter(new ResponseLoggingFilter())
 				.addFilter(new RequestLoggingFilter()).build();
 		return given().spec(requestSpecification).contentType("multipart/form-data").multiPart("file", file, fileType)
 				.post(url).then().extract().response();
-    }
+	}
+
 	public Response getStatisticsData_BL(int orgId) {
 		String url = ApiPath.GET_STATISTICS_DATA_BL();
 		return given().spec(requestSpec).queryParam("orgid", orgId).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getStatisticsData_NULL_BL() {
 		return given().spec(requestSpec).when().get(ApiPath.GET_STATISTICS_DATA_NULL_BL).then().extract().response();
 	}
-	
+
 	public Response getStatisticsData_NULL_DL() {
 		return given().spec(requestSpec).when().get(ApiPath.GET_STATISTICS_DATA_NULL_DL).then().extract().response();
 	}
@@ -2125,7 +2126,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response searchAppointmentTypeForAssociatingWithResource_DL(int practiceId, int resourceId, String name) {
 		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_DL(practiceId, resourceId);
 		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
@@ -2133,6 +2134,26 @@ public class SharedInfo extends BaseRest {
 
 	public Response searchAppointmentTypeForAssociatingWithResource_NullValues_DL() {
 		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response searchResourceForAppointmentType_BL(int practiceId, String name) {
+		String url = ApiPath.SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_BL(practiceId);
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response searchResourceForAppointmentType_NullValue_BL() {
+		String url = ApiPath.SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_NULL_VALUE_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response searchResourceForAppointmentType_DL(int practiceId, String name) {
+		String url = ApiPath.SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_DL(practiceId);
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response searchResourceForAppointmentType_NullValue_DL() {
+		String url = ApiPath.SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_NULL_VALUE_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
