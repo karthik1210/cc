@@ -2136,6 +2136,16 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response searchLocationForResource_DL(int ResourceId, int practiceId, String name) {
+		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_DL(ResourceId, practiceId);
+		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
+	}
+
+	public Response searchLocationForResource_NullValue_DL() {
+		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 
 	public Response searchResourceForAppointmentType_BL(int practiceId, String name) {
 		String url = ApiPath.SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_BL(practiceId);
