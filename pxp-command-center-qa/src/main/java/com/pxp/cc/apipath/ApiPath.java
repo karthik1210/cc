@@ -2263,4 +2263,16 @@ public class ApiPath {
 	public static final String SEARCH_RESOURCE_FOR_APPOINTMENT_TYPE_NULL_VALUE_DL() {
 		return SHARED_DL + "/v1/practices/null/resources-appt";
 	}
+
+	public static final String UPDATE_STAFF_FOR_PRACTICE_DL(int staffId) {
+		return SHARED_DL + "/v1/staff/" + staffId + "/practices";
+	}
+
+	public static final String DELETE_PRACTICE_STAFF_DL(int practiceId, String externalId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/external/" + externalId + "/staff";
+	}
+
+	public static final String DELETE_PRACTICE_STAFF_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/external/null/staff";
+	}
 }

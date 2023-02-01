@@ -119,5 +119,4 @@ public class AppointmentTypeSearchResourcesApiTests_BusinessLayer extends BaseRe
 		CCUtils.responseTimeValidation(SearchResourcesApiResponse);
 		CCUtils.assertEquals(SearchResourcesApiResponse.getStatusCode(),400);
 	}
-
 }
