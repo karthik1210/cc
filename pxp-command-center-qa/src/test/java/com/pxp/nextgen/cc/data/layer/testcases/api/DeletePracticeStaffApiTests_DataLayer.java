@@ -83,7 +83,7 @@ public class DeletePracticeStaffApiTests_DataLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Delete staff for practice for blank responseBody and verify response body")
 	public void testToDeleteStaffTypesForBlankResponseBody() throws IOException {
-		logStep("Add practiceid for existing resourceId");
+		logStep("Add practiceid for existing staffId");
 		associateDeassociatePracticeForStaffApiResponse = sharedInfo
 				.associateDeassociatePracticeForStaff_DL(staffId, practiceId, "true");
 		CCUtils.assertEquals(associateDeassociatePracticeForStaffApiResponse.getStatusCode(), 200);
