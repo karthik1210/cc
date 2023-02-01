@@ -30,6 +30,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		userInfo = new UserInfo();
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
+		clientHierObj= new CreateClientHierarchy_DL();
 	}
 
 	public int createProvider(int practiceId) throws Exception {

@@ -4,6 +4,7 @@ package com.pxp.cc.testcases.ui;
 
 import java.util.HashMap;
 
+import com.pxp.cc.objectmaps.*;
 import org.openqa.selenium.WebDriver;
 
 import com.medfusion.common.utils.PropertyFileLoader;
@@ -41,7 +42,6 @@ import com.pxp.cc.objectmaps.SearchProviderPage;
 import com.pxp.cc.objectmaps.StaffDetailsPage;
 import com.pxp.cc.objectmaps.StaffPage;
 import com.pxp.cc.objectmaps.TabsNavigationOnGeneralSettingPage;
-import com.pxp.cc.objectmaps.UserBulkEnrollmentPage;
 import com.pxp.cc.objectmaps.VarResellerUsersPage;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.CommonMethods;
@@ -80,7 +80,6 @@ public class CCUI extends CommandCenterGenericTest {
 	TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
 	ResourceDetailsPage resourceDetailsPage;
 	AddNewResourcePage addNewResourcePage;
-	UserBulkEnrollmentPage userBulkEnrollmentPage;
 	AddNewInternalUsersPage addNewInternalUsersPage;
 	AddNewVarResellerUserPage addNewVarResellerUserPage;
 	PatientAccessPage PatientAccessPage;
@@ -96,7 +95,8 @@ public class CCUI extends CommandCenterGenericTest {
 	InternalUserDetailsPage internalUserDetailsPage;
     DeactivateUserConfirmationPage deactivateUserConfirmationPage;
 	AppointmentTypesDetailsPage appointmentTypesDetailsPage;
-	
+
+	InternalVarResellerUserBulkEnrollmentPage internalVarResellerUserBulkEnrollmentPage;
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -115,10 +115,10 @@ public class CCUI extends CommandCenterGenericTest {
 		return ccui;
 	}
 
-	public UserBulkEnrollmentPage getUserBulkEnrollmentPage() throws InterruptedException {
-		if (userBulkEnrollmentPage == null)
-			userBulkEnrollmentPage = new UserBulkEnrollmentPage((driver));
-		return userBulkEnrollmentPage;
+	public InternalVarResellerUserBulkEnrollmentPage getInternalVarResellerUserBulkEnrollmentPage() throws InterruptedException {
+		if(internalVarResellerUserBulkEnrollmentPage == null)
+			internalVarResellerUserBulkEnrollmentPage = new InternalVarResellerUserBulkEnrollmentPage(driver);
+		return internalVarResellerUserBulkEnrollmentPage;
 	}
 
 	public CommonMethods getCommonMethods() throws InterruptedException {
@@ -347,15 +347,15 @@ public class CCUI extends CommandCenterGenericTest {
 		}
 		return locationDetailsPage;
 	}
-	
+
 	public InternalUserDetailsPage getInternalUserDetailsPage() throws Exception {
 		if (internalUserDetailsPage == null) {
 			internalUserDetailsPage = new InternalUserDetailsPage(driver);
 		}
 		return internalUserDetailsPage;
 	}
-	
-	 public DeactivateUserConfirmationPage getDeactivateUserConfirmationPage() throws Exception {  
+
+	 public DeactivateUserConfirmationPage getDeactivateUserConfirmationPage() throws Exception {
 	        if (deactivateUserConfirmationPage == null) {
 	        	deactivateUserConfirmationPage = new DeactivateUserConfirmationPage(driver);
 	        }

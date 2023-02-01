@@ -16,8 +16,7 @@ public class DeletePracticeStaffApiTests_DataLayer extends BaseRest {
 	private SharedInfo sharedInfo;
 	private Validations validation;
 	private CreateClientHierarchy_DL clientHierObj;
-	Response createNewstaffApiResponse,createClientApiResponse,
-	DeletePracticeStaffTypeApiResponse,associateDeassociatePracticeForStaffApiResponse ;
+	Response createNewstaffApiResponse, DeletePracticeStaffTypeApiResponse, associateDeassociatePracticeForStaffApiResponse ;
 	int clientId, systemId, enterpriseId, practiceId, staffId;
 	String externalId;
 	
@@ -46,7 +45,7 @@ public class DeletePracticeStaffApiTests_DataLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Delete staff for practice using valid externalId,practiceId and verify response body")
 	public void testDeteteStaffForPracticeFunctionality() throws IOException {
-		logStep("Add practiceid for existing resourceId");
+		logStep("Add practiceid for existing staffId");
 		associateDeassociatePracticeForStaffApiResponse = sharedInfo
 				.associateDeassociatePracticeForStaff_DL(staffId, practiceId, "true");
 		CCUtils.assertEquals(associateDeassociatePracticeForStaffApiResponse.getStatusCode(), 200);
@@ -58,11 +57,11 @@ public class DeletePracticeStaffApiTests_DataLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Verify response body for invalid practice id")
 	public void testErrorMessageForInvalidPracticeId() throws IOException {
-		logStep("Add practiceid for existing resourceId");
+		logStep("Add practiceid for existing staffId");
 		associateDeassociatePracticeForStaffApiResponse = sharedInfo
 				.associateDeassociatePracticeForStaff_DL(staffId, practiceId, "true");
 		CCUtils.assertEquals(associateDeassociatePracticeForStaffApiResponse.getStatusCode(), 200);
-		logStep("Delete Practice Staff");
+		logStep("Delete Practice Staff Invalid PracticeId");
 		int practiceids=Integer.parseInt(testData.getProperty("api.Non.existing.practice.id"));
 		DeletePracticeStaffTypeApiResponse = sharedInfo.deleteStaffPracticeType_DL(practiceids,
 				testData.getProperty("default.solution.id"),externalId);
@@ -72,11 +71,11 @@ public class DeletePracticeStaffApiTests_DataLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 2, description = "Verify response body for invalid extrenal id")
 	public void testErrorMessageForInvalidExternalId() throws IOException {
-		logStep("Add practiceid for existing resourceId");
+		logStep("Add practiceid for existing staffId");
 		associateDeassociatePracticeForStaffApiResponse = sharedInfo
 				.associateDeassociatePracticeForStaff_DL(staffId, practiceId, "true");
 		CCUtils.assertEquals(associateDeassociatePracticeForStaffApiResponse.getStatusCode(), 200);
-		logStep("Delete Practice Staff");
+		logStep("Delete Practice Staff with Invalid ExternalId");
 		DeletePracticeStaffTypeApiResponse = sharedInfo.deleteStaffPracticeType_DL(practiceId,
 				testData.getProperty("default.solution.id"),testData.getProperty("template.product.name"));
 		CCUtils.assertEquals(DeletePracticeStaffTypeApiResponse.getStatusCode(), 400);	
