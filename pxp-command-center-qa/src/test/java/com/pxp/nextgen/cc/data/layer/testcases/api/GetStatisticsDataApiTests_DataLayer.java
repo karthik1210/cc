@@ -1,21 +1,17 @@
 //Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.nextgen.cc.business.layer.testcases.api;
+package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AppointmentTypeInfo;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-import com.pxp.nextgen.cc.data.layer.testcases.api.CreateClientHierarchy_DL;
-
 import io.restassured.response.Response;
 
 public class GetStatisticsDataApiTests_DataLayer extends BaseRest {

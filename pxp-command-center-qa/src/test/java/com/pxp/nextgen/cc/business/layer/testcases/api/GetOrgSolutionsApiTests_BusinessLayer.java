@@ -53,7 +53,8 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getOrgSolutionsResponse.getStatusCode(), 200);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for ng Practice")
+	//will enable this test case once this JIRA ID issue - PXPP-28907 is resolved 
+	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for ng Practice")
 	public void testToGetOrgSolutionTypeAddonForActiveNGPractice() throws Exception {
 		log("Update org details by adding up only one solution as newly purchased");
 		List<OrgSolutions> productList = Arrays.asList(
@@ -89,7 +90,8 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("Portal.id")));
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for active agnostic practice")
+	//will enable this test case once this JIRA ID issue - PXPP-28907 is resolved 
+	@Test(enabled = false,retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for active agnostic practice")
 	public void testToGetOrgSolutionForTypeAddonForActiveAgnosticPractice() throws Exception {
 		log("Update org details by adding up only one solution as newly purchased for active agnostic practice");
 		List<OrgSolutions> productList = Arrays.asList(
@@ -119,11 +121,14 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for non existing orgId")
 	public void testToGetOrSolutionForNonexistingOrgId() throws Exception {
 		log("Get org solution for non existing orgId");
-		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(practiceId,
+		getOrgSolutionsResponse = orgInfo.getOrgsSolutions_BusinessLayer(
+				Integer.parseInt(testData.getProperty("non.existing.practice.id")),
 				testData.getProperty("ecosystem.pxp"));
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(getOrgSolutionsResponse);
 		CCUtils.assertEquals(getOrgSolutionsResponse.getStatusCode(), 400);
+		validation.verifyErrorMessageInResponseForInvalidOrgIdInOrgIdField(getOrgSolutionsResponse,
+				Integer.parseInt(testData.getProperty("non.existing.practice.id")));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Get org solution for Null values in orgId and type field")
