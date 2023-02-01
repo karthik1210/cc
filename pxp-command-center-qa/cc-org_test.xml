@@ -71,7 +71,8 @@
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetTemplateAttributesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgSolutionsApiTests_BusinessLayer />
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgSolutionsApiTests_BusinessLayer>
+			</class>
 		</classes>
 	</test>
 </suite>

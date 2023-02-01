@@ -496,7 +496,7 @@ public class ApiPath {
 	public static final String UPDATE_ORG_SOLUTIONS_BL(int orgId) {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutions";
 	}
-	
+
 	public static final String GET_ORG_SOLUTIONS_BL = SERVICE_ORG_BL + "/v1/orgs/null/solutions?type=null";
 
 	public static final String INVALID_PATH_UPDATE_ORG_SOLUTIONS_DL(int orgId) {
@@ -651,8 +651,6 @@ public class ApiPath {
 	public static final String INVALID_PATH_DELETE_BRAND_DETAILS_BL(int brandId) {
 		return SERVICE_SHARED_BL + "/v1/brandsssss/" + brandId;
 	}
-
-	
 
 	public static final String UPDATE_ORG_SOLUTIONS_BL_INVALID_URL(int orgId) {
 		return SERVICE_ORG_BL + "/v1/orgs/" + orgId + "/solutionsinvalidurl";
@@ -2224,7 +2222,7 @@ public class ApiPath {
 	}
 
 	public static final String GET_STATISTICS_DATA_NULL_DL = SHARED_DL + "/v1/data-stats?orgid=null";
-	
+
 	public static final String GET_STATISTICS_DATA_BL() {
 		return SERVICE_SHARED_BL + "/v1/data-stats";
 	}
