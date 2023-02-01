@@ -2126,4 +2126,29 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
+	
+	public Response associateDeassociatePracticeForStaff_DL(int staffId, int practiceId, String active) {
+		String url = ApiPath.UPDATE_STAFF_FOR_PRACTICE_DL(staffId);
+		Map<String, Object> associateDeassociatePracticeForStaffPayload = associateDeassociatePracticeForStaffMapPayload(
+				practiceId, active);
+		return given().spec(requestSpec).body(associateDeassociatePracticeForStaffPayload).when().put(url).then()
+				.extract().response();
+	}
+	
+	private Map<String, Object> associateDeassociatePracticeForStaffMapPayload(int practiceId, String active) {
+		Map<String, Object> associateDeassociatePracticeMap = new HashMap<String, Object>();
+		associateDeassociatePracticeMap.put("practiceId", practiceId);
+		associateDeassociatePracticeMap.put("active", active);
+		return associateDeassociatePracticeMap;
+	}
+	
+	public Response deleteStaffPracticeType_DL(int practiceId, String externalsystem,String externalId) {
+		String url = ApiPath.DELETE_PRACTICE_STAFF_DL(practiceId,externalId);
+		return given().spec(requestSpec).header("x-external-system", externalsystem).when().delete(url).then().extract().response();
+	}
+	
+	public Response deleteStaffPracticeType_NullValues_DL(){
+		String url = ApiPath.DELETE_PRACTICE_STAFF_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();	
+	}
 }
