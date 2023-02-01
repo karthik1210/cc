@@ -3573,29 +3573,33 @@ public class Validations {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
-			if(jsonObject.get("key").equals("LOCATION")) {
+			if (jsonObject.get("key").equals("LOCATION")) {
 				CCUtils.assertEquals(jsonObject.get("count"), locationCount);
-				Log4jUtil.log("Location count "+locationCount+" matches with response body location statistics data count : "+jsonObject.get("count"));
-			}else if(jsonObject.get("key").equals("RESOURCE")) {
+				Log4jUtil.log("Location count " + locationCount
+						+ " matches with response body location statistics data count : " + jsonObject.get("count"));
+			} else if (jsonObject.get("key").equals("RESOURCE")) {
 				CCUtils.assertEquals(jsonObject.get("count"), resourceCount);
-				Log4jUtil.log("resource count "+resourceCount+" matches with response body resource statistics data count : "+jsonObject.get("count"));
-			}else if(jsonObject.get("key").equals("APPOINTMENTTYPE")) {
+				Log4jUtil.log("resource count " + resourceCount
+						+ " matches with response body resource statistics data count : " + jsonObject.get("count"));
+			} else if (jsonObject.get("key").equals("APPOINTMENTTYPE")) {
 				CCUtils.assertEquals(jsonObject.get("count"), appointmentTypeCount);
-				Log4jUtil.log("appointment type count "+appointmentTypeCount+" matches with response body appointment type statistics data count : "+jsonObject.get("count"));
+				Log4jUtil.log("appointment type count " + appointmentTypeCount
+						+ " matches with response body appointment type statistics data count : "
+						+ jsonObject.get("count"));
 			}
 		}
 	}
-	
+
 	public void verifyResponseBodyForExistingStaffId_BL(Response response) throws IOException {
-		 JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		 Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
-		 Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
-		 Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imageUrl"));
-		 Log4jUtil.log("value of gender is  :"+jsonpath.get("gender"));
-		 Log4jUtil.log("value of externalId is  :"+jsonpath.get("externalId"));
-		 Log4jUtil.log("value of status is  :"+jsonpath.get("status"));	
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName"));
+		Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName"));
+		Log4jUtil.log("value of imgUrl is : " + jsonpath.get("imageUrl"));
+		Log4jUtil.log("value of gender is  :" + jsonpath.get("gender"));
+		Log4jUtil.log("value of externalId is  :" + jsonpath.get("externalId"));
+		Log4jUtil.log("value of status is  :" + jsonpath.get("status"));
 	}
-	
+
 	public void verifyCreateAppTypeResponseBody(Response response, int id, String name) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("id"), id);
@@ -3606,5 +3610,17 @@ public class Validations {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for practiceId=" + practiceId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+
+	public void verifyResponseBodyOfOrgSol(Response response, int solution) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			if (jsonObject.get("solutionId").equals("solution")) {
+				CCUtils.assertEquals(jsonObject.get("active"), "true");
+				Log4jUtil.log("solution Id " + jsonObject.get("solutionId") + " is activated");
+			} else
+				Log4jUtil.log("solution Id " + jsonObject.get("solutionId") + " is not activated");
+		}
 	}
 }

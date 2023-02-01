@@ -1,21 +1,17 @@
 //Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
-package com.pxp.nextgen.cc.business.layer.testcases.api;
+package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.AppointmentTypeInfo;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.model.BaseRest;
 import com.pxp.cc.util.CCUtils;
 import com.pxp.cc.util.Validations;
-import com.pxp.nextgen.cc.data.layer.testcases.api.CreateClientHierarchy_DL;
-
 import io.restassured.response.Response;
 
 public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
@@ -48,7 +44,7 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 		sharedInfo = new SharedInfo();
 		validation = new Validations();
 		resourceInfo = new ResourceInfo();
-		appointmentTypeInfo =  new AppointmentTypeInfo();
+		appointmentTypeInfo = new AppointmentTypeInfo();
 		clientHierObj = new CreateClientHierarchy_DL();
 		clientId = clientHierObj.createClient_DL();
 		systemId = clientHierObj.createSystem_DL(clientId);
@@ -75,7 +71,7 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(createNewLocationApiResponse);
 		CCUtils.assertEquals(createNewLocationApiResponse.getStatusCode(), 200);
 		return createNewLocationApiResponse.jsonPath().getInt("id");
-		
+
 	}
 
 	public int createProviderForPractice(int practiceId) throws IOException {
@@ -122,7 +118,7 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 				practiceId, true);
 		CCUtils.assertEquals(associatePracticesForLocationApiResponse.getStatusCode(), 200);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify can get correct statistics data of org type client")
 	public void testToGetStatisticsDataOfOrgClient() throws IOException {
 		logStep("get statistics data for client");
@@ -194,12 +190,11 @@ public class GetStatisticsDataApiTests_DataLayer extends BaseRest {
 		CCUtils.responseTimeValidation(getStatisticsDataResponse);
 		validation.verifyResponseBodyOfStatisticsData(getStatisticsDataResponse, 0, 0, 0);
 	}
-	
+
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify can statistics data of null data")
 	public void testToGetStatisticsDataOfNullOrg() throws IOException {
 		logStep("get statistics data for practice");
-		getStatisticsDataResponse = sharedInfo
-				.getStatisticsData_NULL_DL();
+		getStatisticsDataResponse = sharedInfo.getStatisticsData_NULL_DL();
 		logStep("Validate response code is 400");
 		CCUtils.assertEquals(getStatisticsDataResponse.getStatusCode(), 400);
 		logStep("Validating response information");

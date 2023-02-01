@@ -13,16 +13,16 @@ import com.pxp.cc.util.CCUtils;
 import io.restassured.response.Response;
 
 public class CreateClientHierarchy_BL extends BaseRest {
-	
+
 	public int createClient_BL() throws IOException {
 		String clientName, clientSapNumber;
 		Response createClientApiResponse;
 		testData = new PropertyFileLoader();
 		clientName = CCUtils.generateAlphaNumericString(11);
 		clientSapNumber = CCUtils.generateAlphaNumericString(11);
-		createClientApiResponse = createNewClient(testData.getProperty("api.client.active"), clientName, clientSapNumber, "false",
-				Integer.parseInt(testData.getProperty("api.client.type")), testData.getProperty("api.client.timezoneid"),
-				Integer.parseInt(testData.getProperty("ehr.identifier")),
+		createClientApiResponse = createNewClient(testData.getProperty("api.client.active"), clientName,
+				clientSapNumber, "false", Integer.parseInt(testData.getProperty("api.client.type")),
+				testData.getProperty("api.client.timezoneid"), Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int clientId = createClientApiResponse.jsonPath().get("clientId");
 		return clientId;
@@ -64,20 +64,19 @@ public class CreateClientHierarchy_BL extends BaseRest {
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 		return practiceId;
 	}
-	
+
 	public int createAgnosticPractice_BL(int systemId) throws IOException {
 		Response createPracticeApiResponse;
 		testData = new PropertyFileLoader();
 		createPracticeApiResponse = createOrgNode_BL(testData.getProperty("api.practice.name"),
 				testData.getProperty("api.practice.orgtype"), testData.getProperty("api.practice.displayname"),
-				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"),
-				systemId, testData.getProperty("api.practice.parenttype"),
+				testData.getProperty("api.practice.active"), testData.getProperty("api.practice.timezoneid"), systemId,
+				testData.getProperty("api.practice.parenttype"),
 				Integer.parseInt(testData.getProperty("ehr.identifier")),
 				Integer.parseInt(testData.getProperty("pm.identifier")));
 		int practiceId = createPracticeApiResponse.jsonPath().get("orgId");
 		return practiceId;
 	}
-
 
 	public Response createNewClient(String active, String clientName, String sapNumber, String testClient, int type,
 			String timezoneId, int ehrIdentifier, int pmIdentifier) throws IOException {
