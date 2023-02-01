@@ -2247,4 +2247,13 @@ public class ApiPath {
 	public static final String SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/resources/null/appointmenttype-resource";
 	}
+	
+	public static final String SEARCH_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
+		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/locations-resource";
+	}
+
+	public static final String SEARCH_LOCATION_FOR_RESOURCE_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/practices/null/resources/null/locations-resource";
+	}
+
 }
