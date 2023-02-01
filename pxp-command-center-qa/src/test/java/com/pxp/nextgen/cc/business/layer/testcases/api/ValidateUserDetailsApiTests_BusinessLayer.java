@@ -48,7 +48,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("existing.internal.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName = CCUtils.generateAlphaNumericStringIncludingSpecialChar(5);
+		String userName = CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5);
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Internal",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
@@ -95,7 +95,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 		providerId = createProvider(practiceId);
 		providerId = createProviderApiResponse.jsonPath().get("providerId");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName =CCUtils.generateAlphaNumericStringIncludingSpecialChar(5);
+		String userName =CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5);
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Client",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
@@ -141,7 +141,7 @@ public class ValidateUserDetailsApiTests_BusinessLayer extends BaseRest {
 		List<Integer> roleIds = new ArrayList<Integer>();
 		roleIds.add(Integer.parseInt(testData.getProperty("existing.varReseller.roleId")));
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
-		String userName =CCUtils.generateAlphaNumericStringIncludingSpecialChar(5);
+		String userName = CCUtils.generateRandomStringWithoutSymbolsOrNumbers(5);
 		Long mobileNumber = CCUtils.generateMobileNumber();
 		createUserApiResponse = userInfo.createNewUser_BusinessLayer("VARReseller",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
