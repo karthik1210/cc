@@ -11,6 +11,9 @@ import com.pxp.cc.objectmaps.LoginPage;
 import com.pxp.cc.util.CCUtils;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	static boolean runOnce = true;
 	public CCUI ccui;
@@ -478,6 +481,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section")
 	public void testAddPurchaseSolutionAtPracticeLevel() throws Exception {
+		logStep("PXPP-28231, PXPP-28232, PXPP-28233, PXPP-28242, PXPP-28243, PXPP-28244 verify activating solutions functionality");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
@@ -527,6 +531,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify activate all the solutions within practice from available to purchase section add ons")
 	public void testandVerifyAddPurchaseSolutionAddOnsAtPracticeLevel() throws Exception {
+		logStep("PXPP-28279, PXPP-28280, PXPP-28281, PXPP-28282, PXPP-28294, PXPP-28295, PXPP-28297, PXPP-28297, PXPP-28297,PXPP-28298, PXPP-28308 verify add on activate and terminate functionality");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
@@ -548,6 +553,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify activate pop up web elements")
 	public void testActivatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		logStep("PXPP-28231, PXPP-28232, PXPP-28233, PXPP-28242, PXPP-28243, PXPP-28244, PXPP-28245 Verify the fnctionality and web elements of activate pop up");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
@@ -567,6 +573,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify terminate pop up web elements")
 	public void testTerminatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		logStep("PXPP-28244, PXPP-28245, PXPP-28246, PXPP-28247, PXPP-28248, PXPP-28297, PXPP-28297, PXPP-28308 verify terminate functionality");
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().clickSearchIcon();
 		logStep("Searching a practice node under client in general settings page");
@@ -588,6 +595,40 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		runOnce = false;
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify edit pop up web elements and edit functionality")
+	public void testEditPopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
+		logStep("PXPP-28231, PXPP-28233, PXPP-28243, PXPP-28244, PXPP-28245, PXPP-28249, PXPP-28275, PXPP-28309, PXPP-28310 verify edit pop up functionality");
+		ngHierarchyClientCreate();
+		logStep("Searching a practice node under client in general settings page");
+		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
+		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
+		CCUtils.pressEnterKey();
+		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
+		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
+		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		ccui.getGeneralSettingsPage().clickToVirtualVisitsMoreOptions();
+		ccui.getGeneralSettingsPage().clickToEditOption();
+		ccui.getGeneralSettingsPage().verifyEditPopupTitleAndStatusLabel();
+		ccui.getGeneralSettingsPage().verifyEditPopupCancelAndCrossButton();
+		ccui.getGeneralSettingsPage().verifySingleSelectDropdwonAndItsOptions(listOfEditStatus());
+		ccui.getGeneralSettingsPage().clickToSingleSelectDropdown();
+		ccui.getGeneralSettingsPage().selectAStatusInEditPopup(testData.getProperty("status.implementation"));
+		ccui.getGeneralSettingsPage().clickToSaveButton();
+		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
+		runOnce = false;
+	}
+
+	public List<String> listOfEditStatus() {
+		List<String> listOfStatusOptions = new ArrayList<String>();
+		listOfStatusOptions.add(testData.getProperty("status.newly.purchased"));
+		listOfStatusOptions.add(testData.getProperty("status.implementation"));
+		listOfStatusOptions.add(testData.getProperty("status.on.hold"));
+		listOfStatusOptions.add(testData.getProperty("status.live"));
+		return listOfStatusOptions;
 	}
 
 	@Test(enabled = false)
