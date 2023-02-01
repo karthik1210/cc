@@ -28,6 +28,7 @@ public class GetOrgSolutionsApiTests_DataLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilderForDataLayer();
 		orgInfo = new OrgInfo();
 		validation = new Validations();
+		clientHierObj = new CreateClientHierarchy_DL();
 	}
 
 	public int createAgnosticInactivePracticeNode(int systemId) throws Exception {
