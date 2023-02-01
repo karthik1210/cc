@@ -14,13 +14,16 @@ import com.pxp.cc.objectmaps.AddNewResourcePage;
 import com.pxp.cc.objectmaps.AddNewVarResellerUserPage;
 import com.pxp.cc.objectmaps.AddOrgNodePage;
 import com.pxp.cc.objectmaps.AppointmentTypePage;
+import com.pxp.cc.objectmaps.AppointmentTypesDetailsPage;
 import com.pxp.cc.objectmaps.BrandingTemplatesPage;
 import com.pxp.cc.objectmaps.ClientDirectoryPage;
 import com.pxp.cc.objectmaps.CommandCenterUsersPage;
+import com.pxp.cc.objectmaps.DeactivateUserConfirmationPage;
 import com.pxp.cc.objectmaps.EditBasicInfoGeneralSettingsPage;
 import com.pxp.cc.objectmaps.EditOrgDetailsGeneralSettingsPage;
 import com.pxp.cc.objectmaps.GeneralSettingsPage;
 import com.pxp.cc.objectmaps.InterfaceSetupPage;
+import com.pxp.cc.objectmaps.InternalUserDetailsPage;
 import com.pxp.cc.objectmaps.InternalUsersPage;
 import com.pxp.cc.objectmaps.LocationDetailsPage;
 import com.pxp.cc.objectmaps.LoginPage;
@@ -90,6 +93,10 @@ public class CCUI extends CommandCenterGenericTest {
 	StaffPage staffTypePage;
 	SearchOptionsPage searchOptionsPage;
 	StaffDetailsPage staffDetailsPage;
+	InternalUserDetailsPage internalUserDetailsPage;
+    DeactivateUserConfirmationPage deactivateUserConfirmationPage;
+	AppointmentTypesDetailsPage appointmentTypesDetailsPage;
+	
 
 	/////////// Variables Test Data
 	public static HashMap<String, String> clientSystementErpriseandPractice;
@@ -278,7 +285,7 @@ public class CCUI extends CommandCenterGenericTest {
 		return searchProviderPage;
 	}
 
-	AppointmentTypePage getAppointmentTypePage() throws Exception {
+	public AppointmentTypePage getAppointmentTypePage() throws Exception {
 		if (appointmentTypePage == null) {
 			appointmentTypePage = new AppointmentTypePage(driver);
 		}
@@ -339,6 +346,27 @@ public class CCUI extends CommandCenterGenericTest {
 			locationDetailsPage = new LocationDetailsPage(driver);
 		}
 		return locationDetailsPage;
+	}
+	
+	public InternalUserDetailsPage getInternalUserDetailsPage() throws Exception {
+		if (internalUserDetailsPage == null) {
+			internalUserDetailsPage = new InternalUserDetailsPage(driver);
+		}
+		return internalUserDetailsPage;
+	}
+	
+	 public DeactivateUserConfirmationPage getDeactivateUserConfirmationPage() throws Exception {  
+	        if (deactivateUserConfirmationPage == null) {
+	        	deactivateUserConfirmationPage = new DeactivateUserConfirmationPage(driver);
+	        }
+	        return deactivateUserConfirmationPage;
+	    }
+
+	public AppointmentTypesDetailsPage getAppointmentTypesDetailsPage() throws Exception {
+		if (appointmentTypesDetailsPage == null) {
+			appointmentTypesDetailsPage = new AppointmentTypesDetailsPage(driver);
+		}
+		return appointmentTypesDetailsPage;
 	}
 
 	public static void getClientSystementErpriseandPractice() throws Exception {

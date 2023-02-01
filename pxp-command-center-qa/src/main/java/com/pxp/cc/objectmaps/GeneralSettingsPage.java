@@ -263,6 +263,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@class='content'])[2]")
 	private WebElement SapIdReadValue;
 
+	@FindBy(id = "appointmentLabel")
+	private WebElement appointmentLabel;
+
 	private String purchaseActivateButton(String solutionImageIcon) {
 		return "//div//div[@id='purchasedSolutionOrg']//following::div[@class='row']//div//span[contains(text(),'"
 				+ solutionImageIcon + "')]";
@@ -1396,19 +1399,32 @@ public class GeneralSettingsPage extends CCMainPage {
 		appointmentTypeTile.click();
 		log("click to appointment type tile");
 	}
+	
+	public void verifyNavigationAppointmentTypeTile() {
+		CCUtils.verifyAndWaitForElement(appointmentTypeTile, driver);
+		appointmentTypeTile.click();
+		log("AppointmentTypeTab Tile is Clickable");
+		verifynAppointmentTypelabel();
+	}
+	
+	public void verifynAppointmentTypelabel() {
+		CCUtils.verifyAndWaitForElement(appointmentLabel, driver);
+		CCUtils.assertEquals(appointmentLabel.getText().trim(), "Appointment Types");
+		log("Appointment Types Label is displayed on Appointment Types page");
+	}
 
 	public void clickSystemOrgArrow() {
 		CCUtils.verifyAndWaitForElement(systemOrgArrow, driver);
 		systemOrgArrow.click();
 		log("Clicked on system org Arrow");
 	}
-
+	
 	public void clickEnterpriseOrgArrow() {
 		CCUtils.verifyAndWaitForElement(enterpriseOrgArrow, driver);
 		enterpriseOrgArrow.click();
 		log("Clicked on enterprise org Arrow");
 	}
-
+	
 	public void clickPracticeOrg() {
 		CCUtils.verifyAndWaitForElement(practiceOrg, driver);
 		practiceOrg.click();
