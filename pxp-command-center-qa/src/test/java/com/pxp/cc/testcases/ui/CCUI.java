@@ -45,7 +45,6 @@ public class CCUI extends CommandCenterGenericTest {
 	TabsNavigationOnGeneralSettingPage tabsNavigationOnGeneralSettingPage;
 	ResourceDetailsPage resourceDetailsPage;
 	AddNewResourcePage addNewResourcePage;
-	UserBulkEnrollmentPage userBulkEnrollmentPage;
 	AddNewInternalUsersPage addNewInternalUsersPage;
 	AddNewVarResellerUserPage addNewVarResellerUserPage;
 	PatientAccessPage PatientAccessPage;
@@ -81,12 +80,6 @@ public class CCUI extends CommandCenterGenericTest {
 		if(internalVarResellerUserBulkEnrollmentPage == null)
 			internalVarResellerUserBulkEnrollmentPage = new InternalVarResellerUserBulkEnrollmentPage(driver);
 		return internalVarResellerUserBulkEnrollmentPage;
-	}
-
-	public UserBulkEnrollmentPage getUserBulkEnrollmentPage() throws InterruptedException {
-		if (userBulkEnrollmentPage == null)
-			userBulkEnrollmentPage = new UserBulkEnrollmentPage((driver));
-		return userBulkEnrollmentPage;
 	}
 
 	public CommonMethods getCommonMethods() throws InterruptedException {

@@ -20,7 +20,7 @@ public class NewUserBulkEnrollmentTests extends CommandCenterGenericTest {
             ccui = new CCUI(testData, driver);
             logStep("Login to command center portal");
             ccui.getClientDirectoryPage();
-            ccui.getUserBulkEnrollmentPage().clickOnElement(ccui.getUserBulkEnrollmentPage().getCommandCenterUsersIcon(), "Command Center User Icon");
+            ccui.getInternalVarResellerUserBulkEnrollmentPage().clickOnElement(ccui.getInternalVarResellerUserBulkEnrollmentPage().getCommandCenterUsersIcon(), "Command Center User Icon");
         }
     }
 
@@ -81,7 +81,7 @@ public class NewUserBulkEnrollmentTests extends CommandCenterGenericTest {
             ccui = new CCUI(testData, driver);
             logStep("Login to command center portal");
             ccui.getClientDirectoryPage();
-            ccui.getUserBulkEnrollmentPage().clickCommandCenterUserIcon();
+            ccui.getInternalVarResellerUserBulkEnrollmentPage().clickOnElement(ccui.getInternalVarResellerUserBulkEnrollmentPage().getCommandCenterUsersIcon(), "Command Center User Icon");
         }
     }
 }
