@@ -3605,6 +3605,12 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("id"), id);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
+	
+	public void verifyErrorResponseBodyForStaffPracticeField(Response response, int practiceId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for practiceId=" + practiceId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 
 	public void verifyResponseBodyOfOrgSol(Response response, int solution) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
@@ -3615,6 +3621,17 @@ public class Validations {
 				Log4jUtil.log("solution Id " + jsonObject.get("solutionId") + " is activated");
 			} else
 				Log4jUtil.log("solution Id " + jsonObject.get("solutionId") + " is not activated");
+		}
+	}
+	
+	public void verifyResponseBodyOfAppTypesResourses(Response response, int resourceId, String name,String type) {
+		JSONArray jsonArray = new JSONArray(response.getBody().asString());
+		JSONObject jsonObject = new JSONObject();
+		for (int i = 0; i < jsonArray.length(); i++) {
+			jsonObject = jsonArray.getJSONObject(i);
+			CCUtils.assertEquals(jsonObject.get("resourceId"), resourceId);
+			CCUtils.assertEquals(jsonObject.get("name"), name);
+			CCUtils.assertEquals(jsonObject.get("type"), type);
 		}
 	}
 }
