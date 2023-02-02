@@ -2283,4 +2283,8 @@ public class ApiPath {
 	public static final String DELETE_PRACTICE_STAFF_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/external/null/staff";
 	}
+	
+	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/staff/null/images";
+	}
 }
