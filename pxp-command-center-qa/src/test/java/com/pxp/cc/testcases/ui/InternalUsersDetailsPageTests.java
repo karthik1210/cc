@@ -139,7 +139,7 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 				{ testData.getProperty("invalid.user.first.name.two"),
 						testData.getProperty("invalid.user.last.name.two"),
 						testData.getProperty("invalid.user.email.two"), testData.getProperty("invalid.username.two"),
-						testData.getProperty("invalid.user.mobile.number.two") }};
+						testData.getProperty("invalid.user.mobile.number.two") } };
 		return obj;
 	}
 
@@ -180,12 +180,12 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
 		ccui.getAddNewInternalUsersPage().addUserRoles();
 		ccui.getAddNewInternalUsersPage().clickOnSaveAndAddButton();
-		logStep("Search another internal user");	
+		logStep("Search another internal user");
 		ccui.getInternalUsersPage().clickOnSearchOptionPage();
 		ccui.getSearchOptionsPage().selectUserStatus(Arrays.asList("No roles assigned"));
 		ccui.getSearchOptionsPage().clickOnSearchButton();
 		ccui.getInternalUsersPage().verifyInternalUsersPageTitle();
-		ccui.getInternalUsersPage().selectUser();	
+		ccui.getInternalUsersPage().selectUser();
 		logStep("Edit searched internal user And Enter already existing data in username, mobile number and email fields and verify error message");
 		ccui.getInternalUserDetailsPage().clickEditInInternalUser();
 		ccui.getCommonMethods().enterFirstName(firstname);
@@ -194,12 +194,11 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForEmailField(), "Email already in use");
 		ccui.getCommonMethods().enterUserName(username);
 		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForUsernameField(), "Username already in use");
-		/*
-		 * ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
-		 * CCUtils.assertEquals(ccui.getCommonMethods().
-		 * getDuplicateErrorForMobileNumberField(), "Mobile number already in use");
-		 */
-		
+
+		ccui.getCommonMethods().enterMobileNumber(String.valueOf(mobilenumber));
+		CCUtils.assertEquals(ccui.getCommonMethods().getDuplicateErrorForMobileNumberField(),
+				"Mobile number already in use");
+
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid data in username field and verify error and tooltip text for username field")
@@ -238,7 +237,7 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		logStep("Verify deactivate button is displayed in kebab menu for active user");
 		ccui.getInternalUserDetailsPage().verifyDeactivateUserButtonIsDisplayed();
 	}
-	
+
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify deactivate user button is displayed in kebab menu for no roles assigned user")
 	public void testDeactivateUserOptionIsPresentForNoRolesAssignedInternalUser() throws Exception {
 		logStep("PXPP-7502 Create a new active internal user with user roles and verify success toaster");
@@ -398,6 +397,33 @@ public class InternalUsersDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getInternalUserDetailsPage().clickOnKebabMenuButton();
 		logStep("Verify lock button is not displayed in kebab menu for inactive user");
 		ccui.getInternalUserDetailsPage().verifyLockUsertButtonIsNotDisplayed();
+	}
+
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify User Roles Section, Edit, Save And Cancel Button Functionality ")
+	public void testUserRolesSectionEditSaveAndCancelButtonFunctionality() throws Exception {
+		createInternalUser();
+		logStep("PXPP-4735 Test to verify when user redirected to Internal User Details Page then 'User Roles' displayed in user role area.");
+		ccui.getInternalUserDetailsPage().verifyInternalUserDetailsPageTitle();
+		ccui.getInternalUserDetailsPage().clickUserRolesEditbutton();
+		ccui.getInternalUserDetailsPage().verifyUserRoleSaveButton();
+		ccui.getInternalUserDetailsPage().verifyUserRoleCancelButton();
+		ccui.getInternalUserDetailsPage().clickOnCancel();
+		logStep("PXPP-4736 Test to verify edit & cancel button functionality ");
+		ccui.getInternalUserDetailsPage().clickUserRolesEditbutton();
+		ccui.getInternalUserDetailsPage().clickToRemoveUserRoles();
+		ccui.getInternalUserDetailsPage().clickToAddUserRoles();
+		ccui.getInternalUserDetailsPage().clickOnCancel();
+		logStep("PXPP-4737 Test to verify admin user have access to 'delete' & 'save' the roles by clicking on edit button in the user role area using red trash i-con.");
+		ccui.getInternalUserDetailsPage().clickUserRolesEditbutton();
+		ccui.getInternalUserDetailsPage().clickToRemoveUserRoles();
+		ccui.getInternalUserDetailsPage().clickOnSaveButton();
+		ccui.getInternalUserDetailsPage().verifyEditToasterMessage();
+		logStep("PXPP-4738 Test to verify admin user have access to 'add' & save the added roles by clicking on edit button in the user role area using  plus sign.");
+		ccui.getInternalUserDetailsPage().clickUserRolesEditbutton();
+		ccui.getInternalUserDetailsPage().clickToAddUserRoles();
+		ccui.getInternalUserDetailsPage().verifyUserRoleSaveButton();
+		ccui.getInternalUserDetailsPage().clickOnSaveButton();
+		ccui.getInternalUserDetailsPage().verifyEditToasterMessage();
 	}
 
 	@Test(enabled = false)
