@@ -1378,7 +1378,7 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("click to save button in edit pop up");
 	}
 
-	public void verifySingleSelectDropdwonAndItsOptions(List<String> status) {
+	public void verifySingleSelectDropdownAndItsOptions(List<String> status) {
 		CCUtils.verifyAndWaitForElement(singleSelectStatusDropdown, driver);
 		log("verify single select status dropdown in edit pop up");
 		singleSelectStatusDropdown.click();

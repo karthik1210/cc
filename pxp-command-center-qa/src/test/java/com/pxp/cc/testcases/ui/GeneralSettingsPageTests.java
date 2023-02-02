@@ -614,7 +614,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().clickToEditOption();
 		ccui.getGeneralSettingsPage().verifyEditPopupTitleAndStatusLabel();
 		ccui.getGeneralSettingsPage().verifyEditPopupCancelAndCrossButton();
-		ccui.getGeneralSettingsPage().verifySingleSelectDropdwonAndItsOptions(listOfEditStatus());
+		ccui.getGeneralSettingsPage().verifySingleSelectDropdownAndItsOptions(listOfEditStatus());
 		ccui.getGeneralSettingsPage().clickToSingleSelectDropdown();
 		ccui.getGeneralSettingsPage().selectAStatusInEditPopup(testData.getProperty("status.implementation"));
 		ccui.getGeneralSettingsPage().clickToSaveButton();
