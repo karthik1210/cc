@@ -20,65 +20,61 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateOrgApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetListOfOrganizationByClientIdApiTests_DataLayer" />
-			<!-- Enable test classes once issue is addressed for Jira # PXPP-21442 
-				-->
-			<!-- <class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetSolutionsByOrgIdApiTest_DataLayer" 
-				/> -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePrivacySettingApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingByPracticeIdAndTouIdApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPrivacySettingsByPracticeIdApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddTouApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateTouApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeWebsitesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddPracticeWebsitesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeWebsitesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdatePracticeWebsitesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer" />
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUpdateOrgWebsiteApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddUpdatePracticeSocialsApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeSocialsApiTests_DataLayer" />
-		    <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer"/>
-            <class
-                    name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateAnInterfaceApiTests_DataLayer"/>
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteAnInterfaceApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPracticeInterfacesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetByInterfaceApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.AddInterfacesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAccessSettingsApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateAnInterfaceApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientGuardianAccessApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeleteAnInterfaceApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAgeoutApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetByInterfaceApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUpdatePracticePatientAccessApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAccessSettingsApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientGuardianAccessApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetPatientAgeoutApiTests_DataLayer" />
+			<class
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateUpdatePracticePatientAccessApiTests_DataLayer" />
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetOrgSolutionsApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.CreateNewEmailTemplateVersionApiTest_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetEmailTemplateVersionsListApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetEmailTemplateVersionsListApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.GetTemplateAttributesApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetTemplateAttributesApiTests_DataLayer" />
 			<class
-					name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateStatusApiTests_DataLayer"/>
+				name="com.pxp.nextgen.cc.data.layer.testcases.api.UpdateEmailTemplateStatusApiTests_DataLayer" />
 
-        </classes>
-    </test>
+		</classes>
+	</test>
 </suite>

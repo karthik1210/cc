@@ -355,11 +355,32 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//button[@id='highlight_off']")
 	private WebElement terminateButton;
 
+	@FindBy(xpath = "//button[@role='menuitem']//mat-icon[text()='edit']")
+	private WebElement editButton;
+
 	@FindBy(xpath = "//span[@id='confirmLabel']")
 	private WebElement popupTitle;
 
+	@FindBy(xpath = "//span[@class='mat-dialog-title']")
+	private WebElement editTitle;
+
+	@FindBy(xpath = "//span[text()='Status']")
+	private WebElement statusLabelEditPopup;
+
+	@FindBy(xpath = "//span[@class='cancel']")
+	private WebElement cancelButtonEditPopup;
+
+	@FindBy(id = "clearDelete")
+	private WebElement crossButtonEditPopup;
+
 	@FindBy(xpath = "//span[@id='clearDelete']")
 	private WebElement crossIconPopup;
+
+	@FindBy(xpath = "//ng-select[@placeholder='Select']")
+	private WebElement singleSelectStatusDropdown;
+
+	@FindBy(id = "savedConfirmBtn")
+	private WebElement saveButtonEditPopup;
 
 	@FindBy(xpath = "//div[@class='backCaution']//p")
 	private WebElement cautionMessage;
@@ -1307,11 +1328,66 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("click to terminate option");
 	}
 
+	public void clickToEditOption() {
+		CCUtils.verifyAndWaitForElement(editButton, driver);
+		editButton.click();
+		log("click to edit option");
+	}
+
 	public void verifyTerminatePopupTitle() {
 		CCUtils.verifyAndWaitForElement(popupTitle, driver);
 		if (popupTitle.getText().contains("Terminate - ")) {
 			CCUtils.assertTrue(true, "verifying popup title");
 		}
+	}
+
+	public void verifyEditPopupTitleAndStatusLabel() {
+		CCUtils.verifyAndWaitForElement(editTitle, driver);
+		log("verifying visibility of edit pop up title");
+		CCUtils.verifyAndWaitForElement(statusLabelEditPopup, driver);
+		log("verifying visibility of status label in edit pop up");
+	}
+
+	public void verifyEditPopupCancelAndCrossButton() {
+		CCUtils.verifyAndWaitForElement(crossButtonEditPopup, driver);
+		log("verifying visibility of edit pop up cross icon");
+		CCUtils.verifyAndWaitForElement(cancelButtonEditPopup, driver);
+		log("verifying visibility of cancel button in edit pop up");
+	}
+
+	public String dynamicEditListOptions(String status) {
+		return "//div[@role='option']//span[text()='" + status + "']";
+	}
+
+	public void clickToSingleSelectDropdown() {
+		CCUtils.verifyAndWaitForElement(singleSelectStatusDropdown, driver);
+		singleSelectStatusDropdown.click();
+		log("click to single select status dropdown in edit pop up");
+	}
+
+	public void selectAStatusInEditPopup(String status) {
+		WebElement listOption = driver.findElement(By.xpath(dynamicEditListOptions(status)));
+		CCUtils.verifyAndWaitForElement(listOption, driver);
+		listOption.click();
+		log(listOption.getText() + " is selected");
+	}
+
+	public void clickToSaveButton() {
+		CCUtils.verifyAndWaitForElement(saveButtonEditPopup, driver);
+		saveButtonEditPopup.click();
+		log("click to save button in edit pop up");
+	}
+
+	public void verifySingleSelectDropdownAndItsOptions(List<String> status) {
+		CCUtils.verifyAndWaitForElement(singleSelectStatusDropdown, driver);
+		log("verify single select status dropdown in edit pop up");
+		singleSelectStatusDropdown.click();
+		for (String eachStatus : status) {
+			WebElement listOption = driver.findElement(By.xpath(dynamicEditListOptions(eachStatus)));
+			CCUtils.verifyAndWaitForElement(listOption, driver);
+			log(listOption.getText() + " : is visible in status options dropdown");
+		}
+		statusLabelEditPopup.click();
 	}
 
 	public void verifyActivatePopupTitle() {
@@ -1399,14 +1475,14 @@ public class GeneralSettingsPage extends CCMainPage {
 		appointmentTypeTile.click();
 		log("click to appointment type tile");
 	}
-	
+
 	public void verifyNavigationAppointmentTypeTile() {
 		CCUtils.verifyAndWaitForElement(appointmentTypeTile, driver);
 		appointmentTypeTile.click();
 		log("AppointmentTypeTab Tile is Clickable");
 		verifynAppointmentTypelabel();
 	}
-	
+
 	public void verifynAppointmentTypelabel() {
 		CCUtils.verifyAndWaitForElement(appointmentLabel, driver);
 		CCUtils.assertEquals(appointmentLabel.getText().trim(), "Appointment Types");
@@ -1418,13 +1494,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		systemOrgArrow.click();
 		log("Clicked on system org Arrow");
 	}
-	
+
 	public void clickEnterpriseOrgArrow() {
 		CCUtils.verifyAndWaitForElement(enterpriseOrgArrow, driver);
 		enterpriseOrgArrow.click();
 		log("Clicked on enterprise org Arrow");
 	}
-	
+
 	public void clickPracticeOrg() {
 		CCUtils.verifyAndWaitForElement(practiceOrg, driver);
 		practiceOrg.click();
