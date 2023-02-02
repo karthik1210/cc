@@ -254,7 +254,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
+	@FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']/../following-sibling::div/button/mat-icon[text()='keyboard_arrow_down'] | (//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
 	private WebElement purchasedSolutionExpandButton;
 
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[2]")

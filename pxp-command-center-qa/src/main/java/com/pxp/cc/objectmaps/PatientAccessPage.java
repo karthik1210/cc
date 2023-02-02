@@ -81,7 +81,7 @@ public class PatientAccessPage extends CCMainPage {
     @FindBy(xpath = "//div[@formarrayname='permissions']//div[normalize-space(text())='FULL ACCESS']")
     private List<WebElement> defaultPermissionList;
 
-    @FindBy(xpath = "//div[normalize-space(text())='Patient Access Rules']/../following-sibling::div//span[normalize-space(text())='Edit']")
+    @FindBy(xpath = "//div[normalize-space(text())='Patient Access Rules']/../following-sibling::div//span[normalize-space(text())='EDIT']")
     private WebElement patientAccessEdit;
 
     @FindBy(xpath = "//mat-slide-toggle[@formcontrolname='linkAccounts']//input[@aria-label='Linked Accounts']")

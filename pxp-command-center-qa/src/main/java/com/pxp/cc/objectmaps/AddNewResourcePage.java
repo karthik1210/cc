@@ -613,7 +613,7 @@ public class AddNewResourcePage extends CCMainPage {
 	public void verifyAddResourcePopupTitle() {
 		CCUtils.verifyAndWaitForElement(labelAddNewResourcePageTitle, driver);
 		log("Verifying create Resource page title");
-		CCUtils.assertEquals(labelAddNewResourcePageTitle.getText().trim(), "Add a Resource");
+		CCUtils.assertEquals(labelAddNewResourcePageTitle.getText().trim(), "Add Resource(s)");
 	}
 
 	public void verifyListOfResourceMatchedSearchResult(List<String> resourceName) throws AWTException {

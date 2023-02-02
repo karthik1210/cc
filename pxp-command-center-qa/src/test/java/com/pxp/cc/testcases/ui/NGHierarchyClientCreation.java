@@ -8,12 +8,15 @@ import com.pxp.cc.util.CommonMethods;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
+import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
+
 public class NGHierarchyClientCreation extends CCMainPage {
 
     public GeneralSettingsPage generalSettingsPage;
     public CommonMethods commonMethods;
     public static String systemName, enterpriseName, clientName, practiceName;
     public NGHierarchyClientCreationPage ngHierarchyClientCreationPage;
+    public PrivacyPolicySettingsPage privacyPolicySettingsPage;
 
     public NGHierarchyClientCreation(WebDriver driver) {
         super(driver);
@@ -21,6 +24,7 @@ public class NGHierarchyClientCreation extends CCMainPage {
         ngHierarchyClientCreationPage = new NGHierarchyClientCreationPage(driver);
         commonMethods = new CommonMethods(driver);
         generalSettingsPage = new GeneralSettingsPage(driver);
+        privacyPolicySettingsPage = new PrivacyPolicySettingsPage(driver);
     }
 
     public String createNewActiveClient(String clientNam, String clientSap, String clientType, String clientTimeZone) throws Exception {
@@ -151,6 +155,9 @@ public class NGHierarchyClientCreation extends CCMainPage {
         logStep("Verify success toaster message");
         ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
         ngHierarchyClientCreationPage.clickOnCloseButton();
+        privacyPolicySettingsPage.clickOnSystemArrow(systemName);
+        privacyPolicySettingsPage.clickOnEnterpriseArrow(enterpriseName);
+        privacyPolicySettingsPage.clickOnPracticeLevel(practiceName);
         return practiceName;
     }
     
@@ -173,6 +180,9 @@ public class NGHierarchyClientCreation extends CCMainPage {
         ngHierarchyClientCreationPage.clickOnSaveAndAddButton();
         logStep("Verify success toaster message");
         ngHierarchyClientCreationPage.verifyToasterMessage("Changes updated successfully");
+        privacyPolicySettingsPage.clickOnSystemArrow(systemName);
+        privacyPolicySettingsPage.clickOnEnterpriseArrow(enterpriseName);
+        privacyPolicySettingsPage.clickOnPracticeLevel(practiceName);
         return practiceName;
     }
 }
