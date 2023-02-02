@@ -371,10 +371,6 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 
 	@Test(enabled = false)
 	public void createProvider() throws Exception {
-		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
-		ccui.getGeneralSettingsPage().clickSystemOrgArrow();
-		ccui.getGeneralSettingsPage().clickEnterpriseOrgArrow();
-		ccui.getGeneralSettingsPage().clickPracticeOrg();
 		logStep("Verify Providers And Resources tab is displayed");
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
 		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
