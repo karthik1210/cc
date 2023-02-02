@@ -916,7 +916,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	}
 
 	public void verifySolutionActiveWithinThisContainer() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(activeSolutionsLabel, driver);
 		if (activeSolutionsLabel.getText()
 				.contains("Solutions Active within this [Client, System, Enterprise, Practice]")) {
@@ -929,7 +929,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void verifyListOfActiveSolutions(List<String> listOfActiveSolutionsAdded) throws AWTException {
 		for (String selectSolution : listOfActiveSolutionsAdded) {
 			for (int i = 0; i < activeSolutionsListWithinSolutionActiveContainer.size(); i++) {
-				CCUtils.scrollPageToEnd();
+				CCUtils.scrollPageToEnd(driver);
 				CCUtils.verifyAndWaitForElement(activeSolutionsListWithinSolutionActiveContainer.get(i), driver);
 				if ((activeSolutionsListWithinSolutionActiveContainer.get(i).getText().trim())
 						.contains(selectSolution)) {
@@ -994,7 +994,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public List<String> getListOfActiveSolutions() throws AWTException {
 		for (int i = 0; i < listActiveSolutions.size(); i++) {
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageToEnd(driver);
 			activeSolutionName.add(listActiveSolutions.get(i).getText().trim());
 		}
 		return activeSolutionName;

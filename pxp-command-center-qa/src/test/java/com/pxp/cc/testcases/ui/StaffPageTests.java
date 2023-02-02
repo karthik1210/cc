@@ -318,7 +318,7 @@ public class StaffPageTests extends CommandCenterGenericTest {
 		createStaff();
 		createStaff();	
 		logStep("Now comparing the default Items per Page. Ideally it should be 10.");
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.assertEquals(ccui.getStaffPage().getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(ccui.getStaffPage().getDefaultPagination(), "1 – 10");
 		String noOfStaff = ccui.getStaffPage().getTotalNoOfStaff();

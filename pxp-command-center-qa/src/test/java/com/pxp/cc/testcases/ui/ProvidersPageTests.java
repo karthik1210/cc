@@ -255,7 +255,7 @@ public class ProvidersPageTests extends CommandCenterGenericTest {
 		providerNavigation();
 		createMultipleProviders();
 		logStep("Now comparing the default Items per Page. Ideally it should be 10.");
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.assertEquals(ccui.getSearchProviderPage().getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(ccui.getSearchProviderPage().getDefaultPagination(), "1 – 10");
 		String noOfProviders = ccui.getSearchProviderPage().getTotalNoOfProviders();

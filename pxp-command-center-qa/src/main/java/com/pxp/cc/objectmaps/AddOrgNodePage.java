@@ -583,7 +583,7 @@ public class AddOrgNodePage extends CCMainPage {
 	}
 
 	public void selectFewSolutions(List<String> providedSolutions) throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		for (String selectSolution : providedSolutions) {
 			for (int i = 0; i < labelSolutionList.size(); i++) {
 				CCUtils.verifyAndWaitForElement(labelSolutionList.get(i), driver);

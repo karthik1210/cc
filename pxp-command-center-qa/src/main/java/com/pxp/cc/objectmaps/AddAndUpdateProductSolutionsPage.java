@@ -63,7 +63,7 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 
 	public String selectTerminateCheckboxForSingleProduct() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(checkboxTerminateSolutions, driver);
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		String currentSolutionsName = LabelSolutionsNameOfActiveImlementation.getText();
 		checkboxTerminateSolutions.click();
 		String[] list = currentSolutionsName.split(" ");
@@ -94,7 +94,7 @@ public class AddAndUpdateProductSolutionsPage extends CCMainPage {
 
 	public String selectActivateCheckboxForSingleProduct() throws InterruptedException, AWTException {
 		CCUtils.verifyAndWaitForElement(checkboxActivateTerminatedSolutions, driver);
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		log("Print the Activate solutions : " + checkboxActivateTerminatedSolutions);
 		String currentSolutionsName = verifyTerminatedSolutionsName.getText();
 		checkboxActivateTerminatedSolutions.click();

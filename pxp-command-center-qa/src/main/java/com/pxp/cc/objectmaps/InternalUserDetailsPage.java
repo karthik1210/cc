@@ -596,7 +596,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void selectAllUsersRolesAddAndSaveFunctionality() throws AWTException {
 		CCUtils.verifyAndWaitForListOfElement(buttonAddAllUserRole, driver);
 		for (int i = 0; i < buttonAddAllUserRole.size(); i++) {
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageToEnd(driver);
 			buttonAddAllUserRole.get(i).click();
 			log("All Internal User roles add buttons are selected" + buttonAddAllUserRole);
 		}
@@ -609,7 +609,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	}
 
 	public void verifySelectedAllUserRoleNamesDisplayed() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		for (int i = 0; i < labelAfterAddAllUserRoles.size(); i++) {
 			actualRolesValues.add(labelAfterAddAllUserRoles.get(i).getText());
 		}
@@ -619,7 +619,7 @@ public class InternalUserDetailsPage extends CCMainPage {
 	}
 
 	public void selectSingleUsersRoleForAddAndSaveFunctionality() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(buttonAddSingleUserRole, driver);
 		buttonAddSingleUserRole.click();
 		log("Single Internal User roles add button is selected");
@@ -634,14 +634,14 @@ public class InternalUserDetailsPage extends CCMainPage {
 	public void selectAllUsersRolesDeleteAndSaveFunctionality() throws AWTException {
 		CCUtils.verifyAndWaitForListOfElement(buttonDeleteAllUserRole, driver);
 		for (int i = 0; i < buttonDeleteAllUserRole.size(); i++) {
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageToEnd(driver);
 			buttonDeleteAllUserRole.get(i).click();
 			log("All Internal User roles add buttons are selected" + buttonDeleteAllUserRole);
 		}
 	}
 
 	public void selectSingleUsersRoleForDeleteAndSaveFunctionality() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(buttonDeleteSingleUserRole, driver);
 		buttonDeleteSingleUserRole.click();
 		log("Single Internal User roles delete button is selected");
