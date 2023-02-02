@@ -47,7 +47,7 @@ public class RemoveStaffImageApiTests_BusinessLayer extends BaseRest {
 	
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Verify delete Staff Image functionality")
 	public void testDeleteImageUrlFunctionality() throws NullPointerException, IOException {
-		log("Enter valid resourceid with valid image format");
+		log("Enter staffId with valid image format");
 		URL url = ClassLoader.getSystemResource("data-driven/images/logo.png");
 		File file = new File(url.getFile());
 		String fileType = "image/png";
