@@ -414,7 +414,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void uploadPatientCommunicationsLogoInvalidImage() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		javascriptClick(browsePatientCommunicationLogo);
 		log("Clicked on Patient Communication BROWSE");
 		String projectpath = System.getProperty("user.dir");
@@ -422,8 +422,8 @@ public class BrandingTemplatesPage extends CCMainPage {
 		log("Verifying Image uploaded");
 	}
 
-	public void uploadPatientCommunicationsLogoValidImage() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+	public void uploadPatientCommunicationsLogoValidImage() throws InterruptedException {
+		CCUtils.scrollPageToEnd(driver);
 		javascriptClick(browsePatientCommunicationLogo);
 		log("Clicked on Patient Communication BROWSE");
 		String projectpath = System.getProperty("user.dir");
@@ -555,7 +555,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void clickToRemoveButtonOfPatientCommunicationsLogo() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(removePatientCommunicationsLogo, driver);
 		removePatientCommunicationsLogo.click();
 		log("clicked to remove button of Patient Communications Logo");
@@ -622,7 +622,7 @@ public class BrandingTemplatesPage extends CCMainPage {
 	}
 
 	public void editPatientCommunicationsLogoValidImage() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		javascriptClick(browsePatientCommunicationLogo);
 		log("Clicked on Patient Communication BROWSE");
 		String projectpath = System.getProperty("user.dir");

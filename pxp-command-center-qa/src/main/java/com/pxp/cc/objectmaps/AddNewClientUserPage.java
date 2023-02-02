@@ -187,7 +187,7 @@ public class AddNewClientUserPage extends CCMainPage {
 	}
 
 	public void verifyClientCancelButtonIsDisplayed() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(buttonCancel, driver);
 		log("Verifying cancel button is displayed on add new client user page");
 		if (buttonCancel.isDisplayed() == true) {
@@ -213,7 +213,7 @@ public class AddNewClientUserPage extends CCMainPage {
 	}
 
 	public void verifyNextButtonIsEnabled() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(buttonNext, driver);
 		log("Verifying next button is enabled");
 		CCUtils.assertTrue(buttonNext.isEnabled(), "Next button is disabled");
@@ -290,7 +290,7 @@ public class AddNewClientUserPage extends CCMainPage {
 	}
 
 	public void verifyEntityCancelButtonIsDisplayed() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(buttonEntityCancel, driver);
 		log("Verifying cancel button is displayed on add new client user page");
 		if (buttonEntityCancel.isDisplayed() == true)
