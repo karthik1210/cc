@@ -42,7 +42,7 @@ public class ResourceDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[text()='Resource Details']")
 	private WebElement resourceDetailsTitle;
 
-	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
+	public String invalidImagePath = "/src/test/resources/data-driven/images/223267.jpg";
 
 	@FindBy(xpath = "//p[contains(text(),'Invalid file type')]")
 	private WebElement invalidFileType;
@@ -143,7 +143,7 @@ public class ResourceDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-icon[normalize-space(text())='check_circle']")
 	private WebElement activeStatus;
 
-	public String validImagePath = "\\src\\test\\resources\\data-driven\\images\\logo.png";
+	public String validImagePath = "/src/test/resources/data-driven/images/logo.png";
 
 	public String removeParticularLocation(String data) {
 		return "//div[text()=' " + data + " ']//following::div//button[@mattooltip='Remove Connection']";
@@ -230,7 +230,7 @@ public class ResourceDetailsPage extends CCMainPage {
 		javascriptClick(uploadResourceImage);
 		log("Clicked on edit image");
 		String projectpath = System.getProperty("user.dir");
-		uploadResourceImage.sendKeys(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		uploadResourceImage.sendKeys(projectpath + "/src/test/resources/data-driven/images/logo.png");
 		Assert.assertFalse(
 				blankImage.getAttribute("src")
 						.equals("https://qa-command-center.dev.pxp-mf-cc.nextgenaws.net/assets/img/Default_pfp.jpg"),

@@ -420,7 +420,7 @@ public class StaffPage extends CCMainPage {
 
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		int noOfStaff = Integer.valueOf(getTotalNoOfStaff());
 		log("Total number of Staff is : " + noOfStaff);
 		if (noOfStaff >= itemsPerPageValue) {
@@ -515,7 +515,7 @@ public class StaffPage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);

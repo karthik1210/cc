@@ -173,7 +173,7 @@ public class SearchLocationPage extends CCMainPage {
 	}
 
 	public void verifyListOfLocationMatchedSearchResult(List<String> locationName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfLocationName, driver);
 		log("print the size of list of locations : " + listOfLocationName.size());
 		for (int i = 0; i < locationName.size(); i++) {
@@ -404,7 +404,7 @@ public class SearchLocationPage extends CCMainPage {
 	}
 	
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
@@ -547,7 +547,7 @@ public class SearchLocationPage extends CCMainPage {
 	
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		int noOfLocations = Integer.valueOf(getTotalNoOfLocations());
 		log("Total number of clients is : " + noOfLocations);
 		if (noOfLocations >= itemsPerPageValue) {
