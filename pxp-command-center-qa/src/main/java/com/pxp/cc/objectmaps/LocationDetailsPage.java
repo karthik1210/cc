@@ -856,7 +856,7 @@ public class LocationDetailsPage extends CCMainPage {
 		for (WebElement element : listOfEntTabs) {
 			log("entered to ent tab");
 			CCUtils.verifyAndWaitForElement(element, driver);
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageToEnd(driver);
 			if (element.getText().toString().contains(enterpriseName)) {
 				log("if ent tab contains desired ent");
 				log("get the text of arrow : " + arrowEntPractice.getText());
@@ -885,7 +885,7 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void clickToPracticeTabAndToggleOn(String practiceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
 		for (WebElement ele : listOfPracTabs) {
 			log(ele.getText().toString());
@@ -907,7 +907,7 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void clickToPracticeTabAndToggleOff(String practiceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
 		for (WebElement ele : listOfPracTabs) {
 			if ((ele.getText().toString().equals(practiceName))
@@ -1405,13 +1405,13 @@ public class LocationDetailsPage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		itemsPerPageDropdown.click();
 	}
 
 	public void clickItemsPerPageDropdownResource() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdownResource, driver);
 		itemsPerPageDropdownResource.click();
 	}

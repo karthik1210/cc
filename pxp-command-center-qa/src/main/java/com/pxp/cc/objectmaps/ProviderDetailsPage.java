@@ -253,7 +253,7 @@ public class ProviderDetailsPage extends CCMainPage {
 				+ "')]//following::td//div//button[@id='removeResourceBtn'])[1]";
 	}
 
-	public String invalidImagePath = "\\src\\test\\resources\\data-driven\\images\\223267.jpg";
+	public String invalidImagePath = "/src/test/resources/data-driven/images/223267.jpg";
 
 	public void verifyImageIsAlreadyUploaded() {
 		CCUtils.verifyAndWaitForElement(removeImage, driver);
@@ -277,7 +277,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		javascriptClick(uploadProviderImage);
 		log("Clicked on edit image");
 		String projectpath = System.getProperty("user.dir");
-		uploadProviderImage.sendKeys(projectpath + "\\src\\test\\resources\\data-driven\\images\\logo.png");
+		uploadProviderImage.sendKeys(projectpath + "/src/test/resources/data-driven/images/logo.png");
 		Assert.assertFalse(
 				blankImage.getAttribute("src")
 						.equals("https://qa-command-center.dev.pxp-mf-cc.nextgenaws.net/assets/img/Default_pfp.jpg"),
@@ -476,7 +476,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	}
 
 	public void clickToPracticeTabAndToggleOn(String practiceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
 		for (WebElement ele : listOfPracTabs) {
 			log(ele.getText().toString());
@@ -498,7 +498,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	}
 
 	public void clickToPracticeTabAndToggleOff(String practiceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForListOfElement(listOfPracTabs, driver);
 		for (WebElement ele : listOfPracTabs) {
 			if ((ele.getText().toString().equals(practiceName))
@@ -597,7 +597,7 @@ public class ProviderDetailsPage extends CCMainPage {
 			throws AWTException {
 		for (WebElement element : listOfEntTabs) {
 			CCUtils.verifyAndWaitForElement(element, driver);
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageToEnd(driver);
 			if (element.getText().toString().trim().equals(enterpriseName.trim())) {
 				if (arrowEntPractice.getText().contains("chevron_right")) {
 					arrowEntPractice.click();
@@ -634,7 +634,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		for (WebElement element : listOfEntTabs) {
 			log("entered to ent tab");
 			CCUtils.verifyAndWaitForElement(element, driver);
-			CCUtils.scrollPageToEnd();
+			CCUtils.scrollPageToEnd(driver);
 			if (element.getText().toString().contains(enterpriseName)) {
 				log("if ent tab contains desired ent");
 				log("get the text of arrow : " + arrowEntPractice.getText());

@@ -276,7 +276,7 @@ public class AddNewResourcePage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
@@ -617,7 +617,7 @@ public class AddNewResourcePage extends CCMainPage {
 	}
 
 	public void verifyListOfResourceMatchedSearchResult(List<String> resourceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfResourceName, driver);
 		log("print the size of list of Resources : " + listOfResourceName.size());
 		for (int i = 0; i < resourceName.size(); i++) {
@@ -833,7 +833,7 @@ public class AddNewResourcePage extends CCMainPage {
 
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		int noOfProviders = Integer.valueOf(getTotalNoOfResources());
 		log("Total number of Providers is : " + noOfProviders);
 		if (noOfProviders >= itemsPerPageValue) {
@@ -979,7 +979,7 @@ public class AddNewResourcePage extends CCMainPage {
 
 	
 	public void verifyListOfResourcesMatchedSearchResult(List<String> ResourceName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfResourceName, driver);
 		log("print the size of list of resources : " + listOfResourceName.size());
 		for (int i = 0; i < ResourceName.size(); i++) {

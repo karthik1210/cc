@@ -21,6 +21,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.*;
+import org.postgresql.Driver;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import com.intuit.ifs.csscat.core.utils.Log4jUtil;
@@ -296,10 +297,15 @@ public class CCUtils {
         return sb.toString();
     }
 
-    public static void scrollPageToEnd() throws AWTException {
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_PAGE_DOWN);
-        robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+    public static void scrollPageToEnd(WebDriver driver)  {
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        //Scroll down till the bottom of the page
+        js.executeScript("window.scrollBy(0,document.body.scrollHeight)");
+
+//        Robot robot = new Robot();
+//        robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+//        robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
     }
 
     public static String verifyCharacterIsNumberOrDigit(String data) {

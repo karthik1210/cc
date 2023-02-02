@@ -208,7 +208,7 @@ public class InternalUsersPage extends CCMainPage {
 	}
 
 	public String getDefaultItemsPerPage() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
 		return defaultItemsPerPage.getText().toString();
 	}
@@ -248,7 +248,7 @@ public class InternalUsersPage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
