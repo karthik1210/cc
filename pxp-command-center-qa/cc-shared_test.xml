@@ -3,175 +3,173 @@
 <suite name="CCSharedTestSuite">
 	<listeners>
 		<listener
-			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+				class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
 		<listener
-			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+				class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		<listener
-			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+				class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
 	</listeners>
 	<test name="CC Shared Test">
 		<classes>
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandDetailsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderDetailsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForAppointmentTypeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesForResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddRemoveAppointmentTypesWithResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForAppointmentTypeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForResourcesApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForResourcesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForProviders_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForProviders_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetAppointmentTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateBrandingTemplateApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateBrandingTemplateApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandingTemplateApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandingTemplateApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DuplicateBrandingApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DuplicateBrandingApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProvidersForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProvidersForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandingDetailsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandingDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationDetailsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleLocationAssociationToPracticeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourcesForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourcesForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleSolutionStatusForLocationAndPracticeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleSolutionStatusForLocationAndPracticeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsAssociatedWithResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsAssociatedWithResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveLocationDisplayInfoForPracticeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveLocationDisplayInfoForPracticeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateProvidersToLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateProvidersToLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteProviderForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteProviderForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourcesForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsByPracticeApiTests_Businesslayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationsByPracticeApiTests_Businesslayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveLocationsForTheProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveLocationsForTheProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForProvidersApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForProvidersApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveResourcesForTheProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleProviderAssociationToPracticeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.ToggleProviderAssociationToPracticeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceDetailsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationByPracticeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationByPracticeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfBrandsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetListOfBrandsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableOrDisableSolutionsForProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticeProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationForProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetLocationForProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderByClientIdApiTest_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderByClientIdApiTest_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationForProvider_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationForProvider_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchResourcesToAssociateWithProviderApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchResourcesToAssociateWithProviderApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociatePracticeForResource_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociatePracticeForResource_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgProvidersForLocationApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetOrgProvidersForLocationApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SavePracticeResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddOrRemoveLocationsForTheResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetDisplayNameOfPracticeResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetDisplayNameOfPracticeResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientResourceApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientResourceApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationsForAssociatingWithResource_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchLocationsForAssociatingWithResource_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToResource_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesAssociatedToResource_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesForStaffApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetPracticesForStaffApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AssociateDeassociateStaffFromPracticeApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateStaffApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateStaffApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffDetailsApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffDetailsApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientStaffApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientStaffApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveAppTypesDisplayInfoApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SaveAppTypesDisplayInfoApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientAppTypesApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchClientAppTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableSolutionsForAppTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForAppTypesApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetSolutionsForAppTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableAppTypesApiTests_BusinessLayer" />
-            <class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AddStaffImageApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.EnableDisableAppTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStatisticsDataApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AddStaffImageApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewAppTypesApiTests_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStatisticsDataApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchAppTypeForAssoWithResource_BusinessLayer" />
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.CreateNewAppTypesApiTests_BusinessLayer" />
 			<class
-				name="com.pxp.nextgen.cc.business.layer.testcases.api.AppointmentTypeSearchResourcesApiTests_BusinessLayer" />
-			<!-- Enable test classes once Path identification for image upload in 
-				AWS issue is addressed Jira PXPP-28190 -->
-			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" 
-				/> -->
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchAppTypeForAssoWithResource_BusinessLayer" />
+			<class
+					name="com.pxp.nextgen.cc.business.layer.testcases.api.AppointmentTypeSearchResourcesApiTests_BusinessLayer" />
+
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer"/>
+			<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer"/>
 		</classes>
 	</test>
 </suite>

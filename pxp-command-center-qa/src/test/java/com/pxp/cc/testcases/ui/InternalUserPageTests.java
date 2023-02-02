@@ -394,7 +394,7 @@ public class InternalUserPageTests extends CommandCenterGenericTest {
 	public void testDefaultItemsPerPageAndPaginationInInternalUsersWebTable()
 			throws InterruptedException, RuntimeException, AWTException {
 		logStep("Now comparing the default Items per Page .Ideally it should be 10.");
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.assertEquals(ccui.getInternalUsersPage().getDefaultItemsPerPage(), "10");
 		CCUtils.assertEquals(ccui.getInternalUsersPage().getDefaultPagination(), "1 – 10");
 		String noOfClients = ccui.getInternalUsersPage().getTotalNoOfInternalUsers();

@@ -3,12 +3,12 @@
 <suite name="cc-ui_smoke_test">
 	<listeners>
 		<listener
-			class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
+				class-name="com.intuit.ifs.csscat.core.TestValidationErrorListener" />
 		<listener class-name="org.uncommons.reportng.HTMLReporter" />
 		<listener
-			class-name="org.uncommons.reportng.JUnitXMLReporter" />
+				class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		<listener
-			class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
+				class-name="com.epam.reportportal.testng.ReportPortalTestNGListener" />
 	</listeners>
 	<test name="UI Smoke Test">
 		<groups>
@@ -26,30 +26,30 @@
 			<class name="com.pxp.cc.testcases.ui.PracticeLinksTests" />
 			<class name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
 			<class
-				name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
+					name="com.pxp.cc.testcases.ui.PrivacyPoliciesSettingsTest" />
 			<class
-				name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
+					name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
 			<class
-				name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
+					name="com.pxp.cc.testcases.ui.ClientUsersSearchOptionsTests" />
 			<class name="com.pxp.cc.testcases.ui.InternalUserPageTests" />
 			<class
-				name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
+					name="com.pxp.cc.testcases.ui.InternalUserMultipleDeactivationTests" />
 			<class name="com.pxp.cc.testcases.ui.InterfaceSetupTests" />
 
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
-			<!-- <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests" 
-				/> <class name="com.pxp.cc.testcases.ui.VarResellerUserLockFromKebabMenuTests" 
+			<!-- <class name="com.pxp.cc.testcases.ui.AddNewVarResellerUserTests"
+				/> <class name="com.pxp.cc.testcases.ui.VarResellerUserLockFromKebabMenuTests"
 				/> -->
 			<!-- Enable test class once below issue is resolved # PXPP-26196 -->
-			<!-- <class name="com.pxp.cc.testcases.ui.EditClientUserTests" /> <class 
+			<!-- <class name="com.pxp.cc.testcases.ui.EditClientUserTests" /> <class
 				name="com.pxp.cc.testcases.ui.ClientUserLockFromKebabMenuTests" /> -->
 			<!-- Enable test class once below issue is resolved # PXPP-22079 -->
 			<!-- <class name="com.pxp.cc.testcases.ui.AddNewClientUserTests" /> -->
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
-			<!-- <class name="com.pxp.cc.testcases.ui.VarResellerUserDeactivationFromKebabMenuTests" 
+			<!-- <class name="com.pxp.cc.testcases.ui.VarResellerUserDeactivationFromKebabMenuTests"
 				/> -->
 			<!-- Enable test class once below issue is resolved # PXPP-26587 -->
-			<!-- <class name="com.pxp.cc.testcases.ui.VarResellerUsersSearchOptionsTests" 
+			<!-- <class name="com.pxp.cc.testcases.ui.VarResellerUsersSearchOptionsTests"
 				/> <class name="com.pxp.cc.testcases.ui.EditVarResellerUserTests" /> -->
 		</classes>
 	</test>

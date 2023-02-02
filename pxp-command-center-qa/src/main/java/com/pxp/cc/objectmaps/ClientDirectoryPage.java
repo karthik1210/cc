@@ -475,7 +475,7 @@ public class ClientDirectoryPage extends CCMainPage {
 	}
 
 	public int getNoOfRowsInClientTable() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		for (int i = 0; i < listOfRowsClientTable.size(); i++) {
 			CCUtils.verifyAndWaitForElement(listOfRowsClientTable.get(i), driver);
 		}

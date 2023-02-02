@@ -473,7 +473,7 @@ public class SearchProviderPage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
@@ -616,7 +616,7 @@ public class SearchProviderPage extends CCMainPage {
 
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		int noOfProviders = Integer.valueOf(getTotalNoOfProviders());
 		log("Total number of Providers is : " + noOfProviders);
 		if (noOfProviders >= itemsPerPageValue) {
@@ -674,7 +674,7 @@ public class SearchProviderPage extends CCMainPage {
 	}
 
 	public void verifyListOfProviderMatchedSearchResult(List<String> ProviderName) throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfProviderName, driver);
 		log("print the size of list of Providers : " + listOfProviderName.size());
 		for (int i = 0; i < ProviderName.size(); i++) {

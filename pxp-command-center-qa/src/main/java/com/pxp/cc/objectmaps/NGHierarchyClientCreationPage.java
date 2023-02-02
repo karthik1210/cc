@@ -1391,7 +1391,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
@@ -1408,7 +1408,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	}
 
 	public int getNoOfRowsInClientTable() throws AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		for (int i = 0; i < listOfRowsClientTable.size(); i++) {
 			CCUtils.verifyAndWaitForElement(listOfRowsClientTable.get(i), driver);
 		}
@@ -1717,7 +1717,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	}
 
 	public void selectFewSolutions(List<String> providedSolutions) throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		for (String selectSolution : providedSolutions) {
 			for (int i = 0; i < labelSolutionList.size(); i++) {
 				CCUtils.verifyAndWaitForElement(labelSolutionList.get(i), driver);

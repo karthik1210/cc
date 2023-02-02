@@ -373,7 +373,7 @@ public class AppointmentTypePage extends CCMainPage {
 	}
 
 	public void clickItemsPerPageDropdown() throws InterruptedException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(itemsPerPageDropdown, driver);
 		highlightElement(itemsPerPageDropdown);
 		javascriptClick(itemsPerPageDropdown);
@@ -516,7 +516,7 @@ public class AppointmentTypePage extends CCMainPage {
 
 	public void checkNextPageButtonFunctionalityTillGetDisabled(int itemsPerPageValue)
 			throws NumberFormatException, AWTException {
-		CCUtils.scrollPageToEnd();
+		CCUtils.scrollPageToEnd(driver);
 		int noOfLocations = Integer.valueOf(getTotalNoOfAppointmentTypes());
 		log("Total number of clients is : " + noOfLocations);
 		if (noOfLocations >= itemsPerPageValue) {
