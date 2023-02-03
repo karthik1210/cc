@@ -2283,4 +2283,11 @@ public class ApiPath {
 	public static final String DELETE_PRACTICE_STAFF_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/external/null/staff";
 	}
+
+	public static final String GET_USER_DETAILS_USERNAME_EMAIL(String uriType, String userNameEmail) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_DL + "/v1/user-login/"+userNameEmail;
+			else
+				return SERVICE_USER_DL + "/v1/user-loginssss/"+userNameEmail;
+		}
 }

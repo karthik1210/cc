@@ -3634,4 +3634,13 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("type"), type);
 		}
 	}
+
+	public void verifyUserDetailsWithUserNameEmailResponse(Response response, String firstName, String lastName,
+											  String userName, String email) throws NullPointerException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
+		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+	}
 }
