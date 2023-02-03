@@ -2212,4 +2212,15 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.GET_EXTERNAL_MAP_DATA_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().head(url).then().extract().response();
 	}
+	
+	
+	public Response getExternalMapData_DL(int orgId, String externalId, String sharedType) {
+		String url = ApiPath.GET_EXTERNAL_MAP_DATA_DL(orgId);
+		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType).when().get(url).then().extract().response();
+	}
+	
+	public Response getExternalMapData_Null_Values_DL() {
+		String url = ApiPath.GET_EXTERNAL_MAP_DATA_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }

@@ -2295,4 +2295,12 @@ public class ApiPath {
 	public static final String GET_EXTERNAL_MAP_DATA_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/orgs/null/external-map";
 	}
+	
+	public static final String GET_EXTERNAL_MAP_DATA_DL(int orgId) {
+		return SHARED_DL + "/v1/orgs/" + orgId + "/external-map";
+	}
+	
+	public static final String GET_EXTERNAL_MAP_DATA_NULL_VALUES_DL() {
+		return SHARED_DL + "/v1/orgs/null/external-map";
+	}
 }

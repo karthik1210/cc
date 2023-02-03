@@ -3634,4 +3634,33 @@ public class Validations {
 			CCUtils.assertEquals(jsonObject.get("type"), type);
 		}
 	}
+	
+	public void verifyResponseBodyForExternalIdValidation(Response response, int id) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("id"), id);
+	}
+	
+	public void verifyErrorResponseBodyForLocationSharedType(Response response, String externalId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Location not found by externalId=" + externalId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorResponseBodyForStaffSharedType(Response response, String externalId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Staff not found by externalId=" + externalId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorResponseBodyForResourceSharedType(Response response, String externalId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "Resource not found by externalId=" + externalId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
+	
+	public void verifyErrorResponseBodyForAppTypeSharedType(Response response, String externalId) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "AppointmentType not found by externalId=" + externalId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}
 }
