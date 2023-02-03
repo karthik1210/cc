@@ -6,7 +6,6 @@ import java.awt.AWTException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -192,13 +191,37 @@ public class InternalUserDetailsPage extends CCMainPage {
 
 	@FindBy(className = "locked-label")
 	private WebElement labelLockedUser;
-	
-	@FindBy(id="editUser")
+
+	@FindBy(id = "editUser")
 	private WebElement edit;
-	
+
 	@FindBy(className = "applyBtn")
 	private WebElement deactivateButton;
 	
+	@FindBy(xpath = "//mat-card-title[contains(text(),'User Roles')]")
+	private WebElement UserRolesTitle;
+
+	@FindBy(xpath = "//button[@id='editUserRole']")
+	private WebElement UserRolesEdit;
+
+	@FindBy(xpath = "//span[contains(text(),'SAVE')]")
+	private WebElement UserRolessave;
+
+	@FindBy(xpath = "//span[contains(text(),'CANCEL')]")
+	private WebElement UserRolescancel;
+
+	@FindBy(xpath = "//div[contains(text(),'Solution Admin')]")
+	private WebElement UserRolessolutionadmin;
+
+	@FindBy(xpath = "(//button[@mattooltip='Remove Role'])[1]")
+	private WebElement UserRolesRemove;
+
+	@FindBy(xpath = "(//button[@mattooltip='Add Role'])[1]")
+	private WebElement UserRolesAdd;
+
+	@FindBy(xpath = "//span[contains(text(),'Role has been edited successfully')]")
+	private WebElement UserRolesedittostermeassage;
+
 	private String xpathHoverTextMessage = "//div[@id='cdk-describedby-message-container']//following-sibling::div[@id='valueToReplace']";
 
 	private WebElement prepareDynamicXpath(String xpathValue, String substitutionValue) {
@@ -486,7 +509,6 @@ public class InternalUserDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(buttonSave, driver);
 		buttonSave.click();
 		log("Clicked on Save");
-		//driver.navigate().refresh();
 	}
 
 	public void clickBackArrowOnInternalUserDetailsPage() {
@@ -756,23 +778,95 @@ public class InternalUserDetailsPage extends CCMainPage {
 		log("Click on unlock user button");
 		javascriptClick(buttonUnlock);
 	}
-	
+
 	public void verifyEditButtonVisible() {
 		CCUtils.verifyAndWaitForElement(buttonEditInternalUser, driver);
 		log("verifying if edit button is present on internal users details page");
 	}
-	
+
 	public AddNewInternalUsersPage clickoneditbutton() {
 		CCUtils.verifyAndWaitForElement(edit, driver);
 		edit.click();
 		log("Clicked on edit in command center users page");
 		return PageFactory.initElements(driver, AddNewInternalUsersPage.class);
 	}
-	
-	public void  clickYesDeactivate() {
+
+	public void clickYesDeactivate() {
 		CCUtils.verifyAndWaitForElement(deactivateButton, driver);
 		deactivateButton.click();
 		log("Clicked on Yes, Deactivate");
+	}
+
+	public void verifyUserRolesTitle() {
+		CCUtils.verifyAndWaitForElement(UserRolesTitle, driver);
+		CCUtils.assertEquals(UserRolesTitle.getText().trim(), "");
+		log("User Roles Title is display");
+	}
+
+	public void verifyUserRolesEditbutton() {
+		CCUtils.verifyAndWaitForElement(UserRolesEdit, driver);
+		CCUtils.assertEquals(UserRolesEdit.getText().trim(), "EDIT");
+		log("User Roles Edit is display");
+	}
+
+	public void clickUserRolesEditbutton() {
+		CCUtils.verifyAndWaitForElement(UserRolesEdit, driver);
+		log("Click on Edit  button");
+		javascriptClick(UserRolesEdit);
+	}
+
+	public void verifyUserRoleSaveButton() {
+		CCUtils.verifyAndWaitForElement(UserRolessave, driver);
+		CCUtils.assertEquals(UserRolessave.getText().trim(), "SAVE");
+		log("User Roles save button is display");
+	}
+
+	public void verifyUserRoleCancelButton() {
+		CCUtils.verifyAndWaitForElement(UserRolescancel, driver);
+		CCUtils.assertEquals(UserRolescancel.getText().trim(), "CANCEL");
+		log("User Roles Cancel is display");
+	}
+
+	public void verifySolutionAdmin() {
+		CCUtils.verifyAndWaitForElement(UserRolessolutionadmin, driver);
+		CCUtils.assertEquals(UserRolessolutionadmin.getText().trim(), "Solution Admin");
+		log("User Roles Cancel is display");
+	}
+
+	public void clickToRemoveUserRoles() {
+		CCUtils.verifyAndWaitForElement(UserRolesRemove, driver);
+		for(int i=0;i<=5; i++) {
+		javascriptClick(UserRolesRemove);
+		CCUtils.verifyAndWaitForElement(UserRolesRemove, driver);
+		}
+		log("User is remove the  role");
+	}
+
+	public void clickToAddUserRoles() {
+		CCUtils.verifyAndWaitForElement(UserRolesAdd, driver);
+		for(int i=0;i<=4; i++) {
+			javascriptClick(UserRolesAdd);
+			CCUtils.verifyAndWaitForElement(UserRolesAdd, driver);
+			}
+		log("User is add the  role");
+	}
+
+	public void clickOnSaveButton() {
+		CCUtils.verifyAndWaitForElement(UserRolessave, driver);
+		log("User is save the solution admin role");
+		javascriptClick(UserRolessave);
+	}
+
+	public void clickOnCancel() {
+		CCUtils.verifyAndWaitForElement(UserRolescancel, driver);
+		log("User is cancel");
+		javascriptClick(UserRolescancel);
+	}
+
+	public void verifyEditToasterMessage() {
+		CCUtils.verifyAndWaitForElement(UserRolesedittostermeassage, driver);
+		CCUtils.assertEquals(UserRolesedittostermeassage.getText().trim(), "Role has been edited successfully");
+		log("Role has been edited successfully meassage is display");
 	}
 
 }

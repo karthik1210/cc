@@ -53,8 +53,7 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getOrgSolutionsResponse.getStatusCode(), 200);
 	}
 
-	// will enable this test case once this JIRA ID issue - PXPP-28907 is resolved
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for ng Practice")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for ng Practice")
 	public void testToGetOrgSolutionTypeAddonForActiveNGPractice() throws Exception {
 		log("Update org details by adding up only one solution as newly purchased");
 		List<OrgSolutions> productList = Arrays.asList(
@@ -90,8 +89,7 @@ public class GetOrgSolutionsApiTests_BusinessLayer extends BaseRest {
 				Integer.parseInt(testData.getProperty("Portal.id")));
 	}
 
-	// will enable this test case once this JIRA ID issue - PXPP-28907 is resolved
-	@Test(enabled = false, retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for active agnostic practice")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Get org solution as type ADD-ON for active agnostic practice")
 	public void testToGetOrgSolutionForTypeAddonForActiveAgnosticPractice() throws Exception {
 		log("Update org details by adding up only one solution as newly purchased for active agnostic practice");
 		List<OrgSolutions> productList = Arrays.asList(
