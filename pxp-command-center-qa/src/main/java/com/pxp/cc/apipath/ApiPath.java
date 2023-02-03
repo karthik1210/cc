@@ -2288,7 +2288,7 @@ public class ApiPath {
 		return SERVICE_SHARED_BL + "/v1/staff/null/images";
 	}
 	
-	public static final String GET_STAFF_DETAILS_IMAGES_BL(Object imageId) {
+	public static final String GET_STAFF_IMAGES_DETAILS_BL(Object imageId) {
 		return SERVICE_SHARED_BL + "/v1/staff/image/"+imageId;
 	}
 	

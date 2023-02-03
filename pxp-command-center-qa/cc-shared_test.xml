@@ -162,20 +162,18 @@
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveStaffImageApiTests_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetStaffImageApiTests_BusinessLayer" />
-			<!-- Enable test classes once Path identification for image upload in 
-				AWS issue is addressed Jira PXPP-28190 -->
-			<!-- <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer" 
-				/> <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" 
-				/> -->
-                <class
-					name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchAppTypeForAssoWithResource_BusinessLayer" />
+
+			 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.AddResourceImageApiTests_BusinessLayer"/> 
+				<class name="com.pxp.nextgen.cc.business.layer.testcases.api.UpdateBrandImageApiTests_BusinessLayer"/>
+				 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetBrandImageUrlApiTests_BusinessLayer"/> 
+				 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetResourceImageApiTests_BusinessLayer"/>
+				 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteResourceImageApiTests_BusinessLayer"/>
+				 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.DeleteBrandImageApiTests_BusinessLayer"/>
+				 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.UploadProviderImageApiTests_BusinessLayer"/>
+				 <class name="com.pxp.nextgen.cc.business.layer.testcases.api.RemoveProviderImageApiTests_BusinessLayer"/> 
+				<class name="com.pxp.nextgen.cc.business.layer.testcases.api.GetProviderImageApiTests_BusinessLayer" /> 
+             <class
+				name="com.pxp.nextgen.cc.business.layer.testcases.api.SearchAppTypeForAssoWithResource_BusinessLayer" />
 			<class
 				name="com.pxp.nextgen.cc.business.layer.testcases.api.GetExternalMapDataApiTests_BusinessLayer" />
 			<class

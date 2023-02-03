@@ -3635,7 +3635,7 @@ public class Validations {
 		}
 	}
 	
-	public void verifyErrorMessageForInvaliStaffUrl(Response response) throws IOException {
+	public void verifyErrorMessageForInvalidStaffUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 		CCUtils.assertEquals(jsonpath.get("message"),"Error while download the file");

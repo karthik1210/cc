@@ -60,7 +60,7 @@ public class GetStaffImageApiTests_BusinessLayer extends BaseRest {
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 200);
         validation.verifyResponseBodyForExistingStaffId_BL(getStaffDetailsApiResponse);
         Object imageId = getStaffDetailsApiResponse.jsonPath().get("imageUrl");
-        getStaffDetailsApiResponse = sharedInfo.getStaffDetailsImage_BL(imageId);
+        getStaffDetailsApiResponse = sharedInfo.getStaffImageDetails_BL(imageId);
 	    logStep("Validating response information");
 	    CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 200);
@@ -69,14 +69,13 @@ public class GetStaffImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter invalid imageId and verify response body")
 	public void testResponseCodeToGetStaffImageUrlWithInvalidImageId() throws NullPointerException, Exception {
 		log("Get Staff Image Url by entering invalid imageId");
-		 getStaffDetailsApiResponse = sharedInfo.getStaffDetailsImage_BL("api.href");
+		 getStaffDetailsApiResponse = sharedInfo.getStaffImageDetails_BL("api.href");
 		 logStep("Validating response information");
 		 CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		 CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 400);
-		 validation.verifyErrorMessageForInvaliStaffUrl(getStaffDetailsApiResponse);		
+		 validation.verifyErrorMessageForInvalidStaffUrl(getStaffDetailsApiResponse);		
 	}
 	
-
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values and verify error message")
 	public void testErrorResponseCodeToGetStaffImageUrlWithNullValue() throws NullPointerException, Exception {
 		log("Get Staff Image Url by entering imageId as null");
