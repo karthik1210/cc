@@ -2203,6 +2203,16 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
 	
+	public Response getStaffImageDetails_BL(Object imageId) {
+		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_BL(imageId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getStaffImageDetails_Null_Values_BL() {
+		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
 	public Response getExternalMapData_BL(int orgId, String externalId, String sharedType) {
 		String url = ApiPath.GET_EXTERNAL_MAP_DATA_BL(orgId);
 		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType).when().head(url).then().extract().response();
