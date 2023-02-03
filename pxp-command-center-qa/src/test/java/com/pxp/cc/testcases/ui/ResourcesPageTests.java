@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved. 
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved. 
 
 package com.pxp.cc.testcases.ui;
 
@@ -156,8 +156,8 @@ public class ResourcesPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 13, description = "Verify search result when apply solution filter in search provider screen")
-	public void testSearchExistingProviderByFilterSolution() throws Exception {
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, priority = 13, description = "Verify search result when apply solution filter in search resource screen")
+	public void testSearchExistingResourceByFilterSolution() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("Verify Purchased Solutions section is displayed");
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
