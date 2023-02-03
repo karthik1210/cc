@@ -79,7 +79,7 @@ public class GetStaffImageApiTests_BusinessLayer extends BaseRest {
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Enter null values and verify error message")
 	public void testErrorResponseCodeToGetStaffImageUrlWithNullValue() throws NullPointerException, Exception {
 		log("Get Staff Image Url by entering imageId as null");
-		 getStaffDetailsApiResponse = sharedInfo.getStaffImageUrl_Null_Value_BL();
+		 getStaffDetailsApiResponse = sharedInfo.getStaffImageDetails_Null_Values_BL();
 		 logStep("Validating response information");
 		 CCUtils.responseTimeValidation(getStaffDetailsApiResponse);
 		 CCUtils.assertEquals(getStaffDetailsApiResponse.getStatusCode(), 400);

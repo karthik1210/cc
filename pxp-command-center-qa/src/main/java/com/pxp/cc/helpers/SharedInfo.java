@@ -2208,8 +2208,8 @@ public class SharedInfo extends BaseRest {
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 	
-	public Response getStaffImageUrl_Null_Value_BL() {
-		String url = ApiPath.GET_STAFF_IMAGE_URL_NULL_VALUE_BL();
+	public Response getStaffImageDetails_Null_Values_BL() {
+		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 	
