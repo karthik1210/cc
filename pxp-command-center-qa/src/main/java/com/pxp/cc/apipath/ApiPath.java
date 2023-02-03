@@ -2247,7 +2247,7 @@ public class ApiPath {
 	public static final String SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/resources/null/appointmenttype-resource";
 	}
-	
+
 	public static final String SEARCH_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/locations-resource";
 	}
@@ -2283,7 +2283,7 @@ public class ApiPath {
 	public static final String DELETE_PRACTICE_STAFF_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/external/null/staff";
 	}
-	
+
 	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/null/images";
 	}
@@ -2294,5 +2294,13 @@ public class ApiPath {
 	
 	public static final String GET_STAFF_IMAGE_URL_NULL_VALUE_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/image/null";
+	}
+
+	public static final String GET_EXTERNAL_MAP_DATA_BL(int orgId) {
+		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/external-map";
+	}
+	
+	public static final String GET_EXTERNAL_MAP_DATA_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/orgs/null/external-map";
 	}
 }
