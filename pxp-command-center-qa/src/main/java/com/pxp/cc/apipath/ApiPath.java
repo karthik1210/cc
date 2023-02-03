@@ -2287,6 +2287,14 @@ public class ApiPath {
 	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/null/images";
 	}
+	
+	public static final String GET_STAFF_IMAGES_DETAILS_BL(Object imageId) {
+		return SERVICE_SHARED_BL + "/v1/staff/image/"+imageId;
+	}
+	
+	public static final String GET_STAFF_IMAGES_DETAILS_NULL_VALUES_BL() {
+		return SERVICE_SHARED_BL + "/v1/staff/image/null";
+	}
 
 	public static final String GET_EXTERNAL_MAP_DATA_BL(int orgId) {
 		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/external-map";

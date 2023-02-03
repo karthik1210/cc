@@ -3663,4 +3663,10 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "AppointmentType not found by externalId=" + externalId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
+	
+	public void verifyErrorMessageForInvalidStaffUrl(Response response) throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+		CCUtils.assertEquals(jsonpath.get("message"),"Error while download the file");
+	}
 }
