@@ -2247,7 +2247,7 @@ public class ApiPath {
 	public static final String SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/practices/null/resources/null/appointmenttype-resource";
 	}
-
+	
 	public static final String SEARCH_LOCATION_FOR_RESOURCE_DL(int resourceId, int practiceId) {
 		return SHARED_DL + "/v1/practices/" + practiceId + "/resources/" + resourceId + "/locations-resource";
 	}
@@ -2284,14 +2284,21 @@ public class ApiPath {
 		return SHARED_DL + "/v1/practices/null/external/null/staff";
 	}
 
+	public static final String GET_USER_DETAILS_USERNAME_EMAIL(String uriType, String userNameEmail) {
+			if (uriType.equalsIgnoreCase("Valid"))
+				return SERVICE_USER_DL + "/v1/user-login/"+userNameEmail;
+			else
+				return SERVICE_USER_DL + "/v1/user-loginssss/"+userNameEmail;
+		}
+
 	public static final String DELETE_STAFF_IMAGE_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/null/images";
 	}
-	
+
 	public static final String GET_STAFF_IMAGES_DETAILS_BL(Object imageId) {
 		return SERVICE_SHARED_BL + "/v1/staff/image/"+imageId;
 	}
-	
+
 	public static final String GET_STAFF_IMAGES_DETAILS_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/staff/image/null";
 	}
@@ -2299,15 +2306,15 @@ public class ApiPath {
 	public static final String GET_EXTERNAL_MAP_DATA_BL(int orgId) {
 		return SERVICE_SHARED_BL + "/v1/orgs/" + orgId + "/external-map";
 	}
-	
+
 	public static final String GET_EXTERNAL_MAP_DATA_NULL_VALUES_BL() {
 		return SERVICE_SHARED_BL + "/v1/orgs/null/external-map";
 	}
-	
+
 	public static final String GET_EXTERNAL_MAP_DATA_DL(int orgId) {
 		return SHARED_DL + "/v1/orgs/" + orgId + "/external-map";
 	}
-	
+
 	public static final String GET_EXTERNAL_MAP_DATA_NULL_VALUES_DL() {
 		return SHARED_DL + "/v1/orgs/null/external-map";
 	}

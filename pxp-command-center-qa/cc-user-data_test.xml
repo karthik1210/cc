@@ -57,6 +57,7 @@
 			<!-- Enable test class Once mentioned issue resolved https://nextgenhealthcare.atlassian.net/browse/PXPP-27222 -->
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchUserWithEnrollmentStatusApiTests_DataLayer" />
+			<class name="com.pxp.nextgen.cc.data.layer.testcases.api.GetUserDetailsEmailUserNameApiTests_DataLayer"/>
 		</classes>
 	</test>
 </suite>
