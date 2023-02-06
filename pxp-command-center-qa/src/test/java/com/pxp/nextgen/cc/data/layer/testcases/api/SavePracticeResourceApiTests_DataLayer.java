@@ -1,9 +1,10 @@
+// Copyright 2023 NXGN Management, LLC. All Rights Reserved.
+
 package com.pxp.nextgen.cc.data.layer.testcases.api;
 
 import java.io.IOException;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
 import com.pxp.cc.helpers.ResourceInfo;
 import com.pxp.cc.helpers.SharedInfo;
@@ -71,7 +72,6 @@ public class SavePracticeResourceApiTests_DataLayer extends BaseRest {
 		CCUtils.assertEquals(updateResourceNameResponse.getStatusCode(), 200);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(updateResourceNameResponse);
-
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify update resource name with non-existing practice id and existing resource id")
