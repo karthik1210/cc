@@ -205,7 +205,7 @@ public class SearchOptionsPage extends CCMainPage {
 		verifyUsernameLabelTextAndTextboxDefaultValue();
 		verifyEmailLabelTextAndTextboxDefaultValue();
 		verifyMobileNumberLabelTextAndTextboxDefaultValue();
-		CCUtils.scrollPageViaElement(driver, buttonSearch);
+		CCUtils.scrollPageViaElement(driver, searchButton); 
 		verifyUserStatusLabelTextAndCheckboxes();
 		verifyEnrollmentStatusLabelTextAndCheckboxes();
 		verifyClearButtonIsDisplayed();
@@ -460,14 +460,14 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void verifySearchButtonIsDisplayed() {
-		CCUtils.scrollPageViaElement(driver, buttonSearch);
-		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
+		CCUtils.scrollPageViaElement(driver, searchButton);
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
 		log("Verifying search button is displayed on search options popup");
-		if (buttonSearch.isDisplayed() == true) {
+		if (searchButton.isDisplayed() == true) {
 			log("Verifying search button is enabled");
-			CCUtils.assertTrue(buttonSearch.isEnabled(), "search button is disabled");
+			CCUtils.assertTrue(searchButton.isEnabled(), "search button is disabled");
 			log("Verifying search button text");
-			CCUtils.assertEquals(buttonSearch.getText().trim(), "SEARCH");
+			CCUtils.assertEquals(searchButton.getText().trim(), "SEARCH");
 		} else {
 			log("Search button is not displayed on search options popup");
 		}
@@ -511,8 +511,8 @@ public class SearchOptionsPage extends CCMainPage {
 	}
 
 	public void clickToSearchButton() {
-		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
-		buttonSearch.click();
+		CCUtils.verifyAndWaitForElement(searchButton, driver);
+		searchButton.click();
 		log("search button clicked");
 
 	}

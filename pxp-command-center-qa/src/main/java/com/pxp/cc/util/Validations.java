@@ -3679,6 +3679,13 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
 	}
+	
+	public void verifyErrorMessageInResponseNonAssociatingProviderId(Response response, String providerId, String clientId)
+			throws IOException {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("message").toString(), "ProviderId="+ providerId +" is not associated with clientId="+clientId);
+		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
+	}	
 
 	public void verifyGetStaffResponseBody(Response response, String firstName, String lastName, String externalId,
 			String gender, Boolean status) {
