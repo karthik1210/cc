@@ -3605,7 +3605,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("id"), id);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
-	
+
 	public void verifyErrorResponseBodyForStaffPracticeField(Response response, int practiceId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for practiceId=" + practiceId);
@@ -3623,8 +3623,8 @@ public class Validations {
 				Log4jUtil.log("solution Id " + jsonObject.get("solutionId") + " is not activated");
 		}
 	}
-	
-	public void verifyResponseBodyOfAppTypesResourses(Response response, int resourceId, String name,String type) {
+
+	public void verifyResponseBodyOfAppTypesResourses(Response response, int resourceId, String name, String type) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {

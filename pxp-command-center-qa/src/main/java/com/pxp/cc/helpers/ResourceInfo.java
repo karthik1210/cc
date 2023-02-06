@@ -1,4 +1,4 @@
-// Copyright 2022 NXGN Management, LLC. All Rights Reserved.
+// Copyright 2022-2023 NXGN Management, LLC. All Rights Reserved.
 
 package com.pxp.cc.helpers;
 
@@ -212,9 +212,35 @@ public class ResourceInfo extends BaseRest {
 		String url = ApiPath.GET_RESOURCE_DISPLAY_DETAILS_DL(resourceId, practiceId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
-    public Response getDisplayNameOfPracticeResource_DL_NULL() {
-        String url = ApiPath.GET_RESOURCE_DISPLAY_DETAILS_DL_NULL();
-        return given().spec(requestSpec).when().get(url).then().extract().response();
-    }
+
+	public Response getDisplayNameOfPracticeResource_DL_NULL() {
+		String url = ApiPath.GET_RESOURCE_DISPLAY_DETAILS_DL_NULL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response putDisplayNameOfPracticeResource_DL(int resourceId, int practiceId, String nameES, String nameEN) {
+		String url = ApiPath.GET_RESOURCE_DISPLAY_DETAILS_DL(resourceId, practiceId);
+		return given().spec(requestSpec).body(updateResourceRequestPayload(nameES, nameEN)).when().put(url).then()
+				.extract().response();
+	}
+
+	public Response putDisplayNameOfPracticeResource__NULL_DL() {
+		String url = ApiPath.GET_RESOURCE_DISPLAY_DETAILS_DL_NULL();
+		return given().spec(requestSpec).body(updateResourceRequestPayload_Null()).when().put(url).then().extract()
+				.response();
+	}
+
+	private Map<String, Object> updateResourceRequestPayload(String nameES, String nameEN) {
+		Map<String, Object> updateResourceNameMap = new HashMap<String, Object>();
+		updateResourceNameMap.put("es", nameES);
+		updateResourceNameMap.put("en", nameEN);
+		return updateResourceNameMap;
+	}
+
+	private Map<String, Object> updateResourceRequestPayload_Null() {
+		Map<String, Object> updateResourceNameMap = new HashMap<String, Object>();
+		updateResourceNameMap.put("es", null);
+		updateResourceNameMap.put("en", null);
+		return updateResourceNameMap;
+	}
 }
