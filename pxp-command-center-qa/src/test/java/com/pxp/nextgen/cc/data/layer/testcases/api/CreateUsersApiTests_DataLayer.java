@@ -30,7 +30,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		userInfo = new UserInfo();
 		validation = new Validations();
 		sharedInfo = new SharedInfo();
-		clientHierObj= new CreateClientHierarchy_DL();
+		clientHierObj = new CreateClientHierarchy_DL();
 	}
 
 	public int createProvider(int practiceId) throws Exception {
@@ -201,9 +201,9 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidClientId(createUserApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid providerId and validate error message ")
-	public void testErrorMessagesFor1() throws IOException {
-		logStep("Create client user using invalid providerId ");
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using non existing providerId and validate error message ")
+	public void testCreateClientUserNonExistingProviderId() throws IOException {
+		logStep("Create client user using null providerId and validate error message");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
@@ -211,11 +211,12 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
 				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
 				testData.getProperty("api.user.userStatus"), "NOT_SENT", testData.getProperty("api.clientId.id"), null,
-				null, null, false);
+				testData.getProperty("non.existing.provider.id"), null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidProviderId(createUserApiResponse);
+		validation.verifyErrorMessageInResponseNonAssociatingProviderId(createUserApiResponse,
+				testData.getProperty("non.existing.provider.id"), testData.getProperty("api.clientId.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user")
@@ -237,8 +238,8 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyCreatedUserId(createUserApiResponse, id);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user  and fetch newly created client user details using user id")
-	public void testCreateNewClientUser() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user with ProviderId and fetch newly created client user details using user id")
+	public void testCreateNewClientUserWithProviderId() throws Exception {
 		logStep("Create client user using valid details ");
 		clientId = clientHierObj.createClient_DL();
 		systemId = clientHierObj.createSystem_DL(clientId);
@@ -253,6 +254,24 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
 				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
 				testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null, false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		validation.verifyCreatedUserId(createUserApiResponse, id);
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user without ProviderId and fetch newly created client user details using user id")
+	public void testCreateNewClientUserWithoutProviderId() throws Exception {
+		logStep("Create client user using valid details ");
+		clientId = clientHierObj.createClient_DL();
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_DataLayer("Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, null, null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
@@ -280,3 +299,4 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyCreatedUserId(createUserApiResponse, id);
 	}
 }
+
