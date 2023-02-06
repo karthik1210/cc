@@ -784,7 +784,6 @@ public class UserInfo extends BaseRest {
         }
     
 
-    
     public Response addRoleLocation_BL(int userId ,int orgId, int roleId, String name,
 			int locationId, String nameone) {
 		String url = ApiPath.ADD_ROLE_LOCATION_BL(userId,orgId);
@@ -853,4 +852,17 @@ public class UserInfo extends BaseRest {
 		userStatusMap.put("username", username);
 		return userStatusMap;
 	}
+
+    public static Response getUserDetailsUserNameEmail_DL(String typeURI, String userNameEmail) {
+        if (typeURI.equalsIgnoreCase("Valid")) {
+            String url = ApiPath.GET_USER_DETAILS_USERNAME_EMAIL(typeURI,userNameEmail);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        } else if (typeURI.equalsIgnoreCase("InValid")) {
+            String url = ApiPath.GET_USER_DETAILS_USERNAME_EMAIL(typeURI,userNameEmail);
+            return given().spec(requestSpec).when().get(url).then().extract().response();
+        } else {
+            String url = ApiPath.GET_USER_DETAILS_USERNAME_EMAIL("Valid",userNameEmail);
+            return given().spec(requestSpec).when().delete(url).then().extract().response();
+        }
+    }
 }

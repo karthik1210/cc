@@ -2192,4 +2192,45 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.DELETE_PRACTICE_STAFF_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
+	
+	public Response deleteStaffImage_BL(int staffId) {
+		String url = ApiPath.STAFF_IMAGE_BL(staffId);
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+	
+	public Response deleteStaffImage_NullValues_BL() {
+		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().delete(url).then().extract().response();
+	}
+	
+	public Response getStaffImageDetails_BL(Object imageId) {
+		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_BL(imageId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getStaffImageDetails_Null_Values_BL() {
+		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+	
+	public Response getExternalMapData_BL(int orgId, String externalId, String sharedType) {
+		String url = ApiPath.GET_EXTERNAL_MAP_DATA_BL(orgId);
+		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType).when().head(url).then().extract().response();
+	}
+	
+	public Response getExternalMapData_Null_Values_BL() {
+		String url = ApiPath.GET_EXTERNAL_MAP_DATA_NULL_VALUES_BL();
+		return given().spec(requestSpec).when().head(url).then().extract().response();
+	}
+	
+	
+	public Response getExternalMapData_DL(int orgId, String externalId, String sharedType) {
+		String url = ApiPath.GET_EXTERNAL_MAP_DATA_DL(orgId);
+		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType).when().get(url).then().extract().response();
+	}
+	
+	public Response getExternalMapData_Null_Values_DL() {
+		String url = ApiPath.GET_EXTERNAL_MAP_DATA_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
 }
