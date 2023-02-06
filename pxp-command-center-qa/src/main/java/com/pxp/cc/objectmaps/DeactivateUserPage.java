@@ -172,12 +172,6 @@ public class DeactivateUserPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'CLEAR ALL')]")
 	private WebElement buttonClearAll;
 
-	public void verifyInternalUsersSelectUsersToDectivatePageTitle() {
-		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
-		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Deactivate");
-		log("Select Users to Deactivate page title is displayed");
-	}
-
 	@FindBy(id = "no-result")
 	private WebElement noResultsFound;
 
@@ -201,6 +195,40 @@ public class DeactivateUserPage extends CCMainPage {
 
 	@FindBy(xpath = "//*[@id=\"headerNavbar\"]/div/button/span[1]/mat-icon")
 	private WebElement arrow_back;
+	
+	@FindBy(xpath = "//mat-select[@role ='combobox']")
+	private WebElement defaultItemsPerPage;
+
+	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
+	private WebElement displayPagination;
+
+	@FindBy(xpath = "//button[@aria-label='Next page']")
+	private WebElement buttonNextPage;
+
+	@FindBy(xpath = "//button[@aria-label='Last page']")
+	private WebElement buttonLastPage;
+
+	@FindBy(xpath = "//button[@aria-label='Previous page']")
+	private WebElement buttonPreviousPage;
+
+	@FindBy(xpath = "//button[@aria-label='First page']")
+	private WebElement buttonFirstPage;
+
+	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
+	private WebElement itemsPerPageDropdown;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'20')]")
+	private WebElement itemsPerPageTwenty;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'50')]")
+	private WebElement itemsPerPageFifty;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'100')]")
+	private WebElement itemsPerPageHundred;
+
+	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
+	private WebElement itemsPerPageTwoHundred;
+
 
 	public void verifyDecativatePopuplableDisplayed() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(popupTitle, driver);
@@ -215,17 +243,14 @@ public class DeactivateUserPage extends CCMainPage {
 	public void verifyCancelButtonDisplayed() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(popupApplyCancel, driver);
 		CCUtils.assertEquals(popupApplyCancel.getText().trim(), "Cancel");
-
 	}
 
 	public void clickOnCancelbuttonConfirmationPopup() throws InterruptedException {
-		// verifyCancelButtonDisplayed();
 		CCUtils.verifyAndWaitForElement(popupApplyCancel, driver);
 		popupApplyCancel.click();
 	}
 
 	public void clickOnBackArrow() throws InterruptedException {
-
 		CCUtils.verifyAndWaitForElement(arrow_back, driver);
 		arrow_back.click();
 	}
@@ -298,25 +323,21 @@ public class DeactivateUserPage extends CCMainPage {
 	}
 
 	public void clickOncheckBox() throws InterruptedException {
-
 		CCUtils.verifyAndWaitForElement(checkBox, driver);
 		checkBox.click();
 	}
 
 	public void clickOndeactivateBtn() throws InterruptedException {
-
 		CCUtils.verifyAndWaitForElement(deactivateBtn, driver);
 		deactivateBtn.click();
 	}
 
 	public void clickOnApplyBtn() throws InterruptedException {
-
 		CCUtils.verifyAndWaitForElement(applyBtn, driver);
 		applyBtn.click();
 	}
 
-	public void clickOnapplyCancel() throws InterruptedException {
-
+	public void clickOnApplyCancel() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(applyCancel, driver);
 		applyCancel.click();
 	}
@@ -417,12 +438,10 @@ public class DeactivateUserPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(userStatusActive, driver);
 		CCUtils.assertEquals(userStatusActive.getText().trim(), "Active");
 		log("Active user status label text is " + userStatusActive.getText().trim());
-
 		log("Verifying userStatus Inactive");
 		CCUtils.verifyAndWaitForElement(userStatusInactive, driver);
 		CCUtils.assertEquals(userStatusInactive.getText().trim(), "Inactive");
 		log("Active user status label text is " + userStatusInactive.getText().trim());
-
 		log("Verifying userStatus No roles assigned");
 		CCUtils.verifyAndWaitForElement(userStatusNoRolesAssigned, driver);
 		CCUtils.assertEquals(userStatusNoRolesAssigned.getText().trim(), "No roles assigned");
@@ -507,17 +526,14 @@ public class DeactivateUserPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(enrollmentStatusConfirmed, driver);
 		CCUtils.assertEquals(enrollmentStatusConfirmed.getText().trim(), "Confirmed");
 		log("Confirmed  enrollment status label text is " + enrollmentStatusConfirmed.getText().trim());
-
 		log("Verifying enrollmentStatus Pending");
 		CCUtils.verifyAndWaitForElement(enrollmentStatusPending, driver);
 		CCUtils.assertEquals(enrollmentStatusPending.getText().trim(), "Pending");
 		log("Pending  enrollment status label text is " + enrollmentStatusPending.getText().trim());
-
 		log("Verifying enrollmentStatus Expired");
 		CCUtils.verifyAndWaitForElement(enrollmentStatusExpired, driver);
 		CCUtils.assertEquals(enrollmentStatusExpired.getText().trim(), "Expired");
 		log("Expired enrollment status label text is " + enrollmentStatusExpired.getText().trim());
-
 		log("Verifying enrollmentStatus Not Sent");
 		CCUtils.verifyAndWaitForElement(enrollmentStatusNotSent, driver);
 		CCUtils.assertEquals(enrollmentStatusNotSent.getText().trim(), "Not Sent");
@@ -596,7 +612,7 @@ public class DeactivateUserPage extends CCMainPage {
 	}
 
 	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
-		// verifySearchButtonIsDisplayed();
+		 verifySearchButtonIsDisplayed();
 		clickToSearchButton();
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
 		log("Error message displayed for empty search field " + errorSearchOptionsPage.getText().trim());
@@ -627,39 +643,12 @@ public class DeactivateUserPage extends CCMainPage {
 		log("number of results found, please refine search further error message is displayed");
 	}
 
-	@FindBy(xpath = "//mat-select[@role ='combobox']")
-	private WebElement defaultItemsPerPage;
-
-	@FindBy(xpath = "//div[@class='mat-paginator-range-label']")
-	private WebElement displayPagination;
-
-	@FindBy(xpath = "//button[@aria-label='Next page']")
-	private WebElement buttonNextPage;
-
-	@FindBy(xpath = "//button[@aria-label='Last page']")
-	private WebElement buttonLastPage;
-
-	@FindBy(xpath = "//button[@aria-label='Previous page']")
-	private WebElement buttonPreviousPage;
-
-	@FindBy(xpath = "//button[@aria-label='First page']")
-	private WebElement buttonFirstPage;
-
-	@FindBy(xpath = "//mat-select[@role='combobox']//following::div[starts-with(@class,'mat-select-arrow')][1]")
-	private WebElement itemsPerPageDropdown;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'20')]")
-	private WebElement itemsPerPageTwenty;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'50')]")
-	private WebElement itemsPerPageFifty;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'100')]")
-	private WebElement itemsPerPageHundred;
-
-	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
-	private WebElement itemsPerPageTwoHundred;
-
+	public void verifyInternalUsersSelectUsersToDectivatePageTitle() {
+		CCUtils.verifyAndWaitForElement(labelPageTitle, driver);
+		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Deactivate");
+		log("Select Users to Deactivate page title is displayed");
+	}
+	
 	public String getDefaultItemsPerPage() throws InterruptedException, AWTException {
 		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);

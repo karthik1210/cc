@@ -202,8 +202,8 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using non existing providerId and validate error message ")
-	public void testCreateClientUserNonExistingProviderId() throws IOException {
-		logStep("Create client user using null providerId and validate error message");
+	public void testCreateClientUserWithNonExistingProviderId() throws IOException {
+		logStep("Create client user using non-existing providerId and validate error message");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
 				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));

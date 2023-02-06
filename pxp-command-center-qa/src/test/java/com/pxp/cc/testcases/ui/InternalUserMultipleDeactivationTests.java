@@ -91,7 +91,7 @@ public class InternalUserMultipleDeactivationTests extends CommandCenterGenericT
 		ccui.getDeactivateUserPage().clickOnSearchButton();
 		ccui.getDeactivateUserPage().verifyClearAllButtonIsDisplayed();
 		ccui.getDeactivateUserPage().clickOncheckBox();
-		ccui.getDeactivateUserPage().clickOnapplyCancel();
+		ccui.getDeactivateUserPage().clickOnApplyCancel();
 	}
 
 	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify confirmation popup")
@@ -210,8 +210,7 @@ public class InternalUserMultipleDeactivationTests extends CommandCenterGenericT
 		ccui.getDeactivateUserPage().verifySearchFilterCrossIcon();
 	}
 
-	@Test(enabled = true, groups = {
-			"smoke" }, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
+	@Test(enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify functionality of search button when all the fields are filled & 'CLEAR All' button clicked after search result")
 	public void testSearchOptionsWithAllTheFieldsAndMultipleCheckboxes() throws Exception {
 		ccui.getInternalUsersPage().clickOnBulkDeactivate();
 		ccui.getDeactivateUserPage().clickOnSearchOption();
