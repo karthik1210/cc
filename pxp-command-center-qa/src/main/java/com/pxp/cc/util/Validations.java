@@ -3685,5 +3685,4 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "ProviderId="+ providerId +" is not associated with clientId="+clientId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
-
 }

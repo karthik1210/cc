@@ -67,6 +67,7 @@ public class DeactivateUserPage extends CCMainPage {
 
 	@FindBy(id = "searchMobileInput")
 	private WebElement textboxMobileNumber;
+
 	@FindBy(xpath = "//div[contains(@class, 'userStatus')]")
 	private WebElement labelUserStatus;
 
@@ -195,7 +196,7 @@ public class DeactivateUserPage extends CCMainPage {
 
 	@FindBy(xpath = "//*[@id=\"headerNavbar\"]/div/button/span[1]/mat-icon")
 	private WebElement arrow_back;
-	
+
 	@FindBy(xpath = "//mat-select[@role ='combobox']")
 	private WebElement defaultItemsPerPage;
 
@@ -228,7 +229,6 @@ public class DeactivateUserPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[@class='mat-option-text'][contains(text(),'200')]")
 	private WebElement itemsPerPageTwoHundred;
-
 
 	public void verifyDecativatePopuplableDisplayed() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(popupTitle, driver);
@@ -268,7 +268,6 @@ public class DeactivateUserPage extends CCMainPage {
 	public void clickOnCrossIcon() throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(crossIcon, driver);
 		crossIcon.click();
-
 	}
 
 	public void verifySelectedMultipleUsersDeactivatePopup() throws InterruptedException {
@@ -305,7 +304,6 @@ public class DeactivateUserPage extends CCMainPage {
 
 	public void clickOnSearchButton() throws InterruptedException {
 		log("Verifying clear button is displayed on search options popup");
-
 		CCUtils.verifyAndWaitForElement(buttonSearch, driver);
 		buttonSearch.click();
 	}
@@ -446,7 +444,6 @@ public class DeactivateUserPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(userStatusNoRolesAssigned, driver);
 		CCUtils.assertEquals(userStatusNoRolesAssigned.getText().trim(), "No roles assigned");
 		log("Active user status label text is " + userStatusNoRolesAssigned.getText().trim());
-
 	}
 
 	public void verifyUserStatusCheckboxesAreNotByDefaultSelected() throws InterruptedException {
@@ -538,7 +535,6 @@ public class DeactivateUserPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(enrollmentStatusNotSent, driver);
 		CCUtils.assertEquals(enrollmentStatusNotSent.getText().trim(), "Not Sent");
 		log("Not Sent  enrollment status label text is " + enrollmentStatusNotSent.getText().trim());
-
 	}
 
 	public void verifyEnrollmentStatusCheckboxesAreNotByDefaultSelected() throws InterruptedException {
@@ -612,7 +608,7 @@ public class DeactivateUserPage extends CCMainPage {
 	}
 
 	public void verifyErrorMessageOnSearchOptionsPage() throws InterruptedException, AWTException {
-		 verifySearchButtonIsDisplayed();
+		verifySearchButtonIsDisplayed();
 		clickToSearchButton();
 		CCUtils.assertEquals(errorSearchOptionsPage.getText().trim(), "Please enter or select to search");
 		log("Error message displayed for empty search field " + errorSearchOptionsPage.getText().trim());
@@ -634,7 +630,6 @@ public class DeactivateUserPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(noResultsFound, driver);
 		CCUtils.assertEquals(noResultsFound.getText().trim(), "No results found");
 		log("No results found error message is displayed");
-
 	}
 
 	public void verifyToasterMessageIsDisplayedIfMoreThanFiftyMatchesReturn() {
@@ -648,7 +643,7 @@ public class DeactivateUserPage extends CCMainPage {
 		CCUtils.assertEquals(labelPageTitle.getText().trim(), "Select Users to Deactivate");
 		log("Select Users to Deactivate page title is displayed");
 	}
-	
+
 	public String getDefaultItemsPerPage() throws InterruptedException, AWTException {
 		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForElement(defaultItemsPerPage, driver);
