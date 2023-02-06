@@ -114,8 +114,8 @@ public class SavePracticeResourceApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageForBlankField(updateResourceNameResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify update resource name with existing practice id and resource id and null response body")
-	public void testToUpdateResourceNameWithExistingPracticeIdAndResourceIdAndNullResponseBody() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "verify update resource name with null practice id and resource id and null response body")
+	public void testToUpdateResourceNameWithNullPracticeIdAndResourceIdAndNullResponseBody() throws IOException {
 		logStep("To update the resource name");
 		updateResourceNameResponse = resourceInfo.putDisplayNameOfPracticeResource__NULL_DL();
 		logStep("Validate response code is 400");
