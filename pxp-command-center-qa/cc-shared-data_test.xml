@@ -168,7 +168,7 @@
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.SearchAppTypeForAssoWithResource_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.DeletePracticeStaffApiTests_DataLayer"></class>
-            <class
+			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.GetStatisticsDataApiTests_DataLayer"></class>
 			<class
 				name="com.pxp.nextgen.cc.data.layer.testcases.api.AppointmentTypeSearchResourcesApiTests_DataLayer"></class>

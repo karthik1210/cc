@@ -3605,7 +3605,7 @@ public class Validations {
 		CCUtils.assertEquals(jsonpath.get("id"), id);
 		CCUtils.assertEquals(jsonpath.get("name").toString(), name);
 	}
-	
+
 	public void verifyErrorResponseBodyForStaffPracticeField(Response response, int practiceId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("message").toString(), "Client not found for practiceId=" + practiceId);
@@ -3623,8 +3623,8 @@ public class Validations {
 				Log4jUtil.log("solution Id " + jsonObject.get("solutionId") + " is not activated");
 		}
 	}
-	
-	public void verifyResponseBodyOfAppTypesResourses(Response response, int resourceId, String name,String type) {
+
+	public void verifyResponseBodyOfAppTypesResourses(Response response, int resourceId, String name, String type) {
 		JSONArray jsonArray = new JSONArray(response.getBody().asString());
 		JSONObject jsonObject = new JSONObject();
 		for (int i = 0; i < jsonArray.length(); i++) {
@@ -3660,22 +3660,42 @@ public class Validations {
 
 	public void verifyErrorResponseBodyForAppTypeSharedType(Response response, String externalId) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
-		CCUtils.assertEquals(jsonpath.get("message").toString(), "AppointmentType not found by externalId=" + externalId);
+		CCUtils.assertEquals(jsonpath.get("message").toString(),
+				"AppointmentType not found by externalId=" + externalId);
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
 	}
 
 	public void verifyErrorMessageForInvalidStaffUrl(Response response) throws IOException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("error").toString(), "Bad Request");
-		CCUtils.assertEquals(jsonpath.get("message"),"Error while download the file");
+		CCUtils.assertEquals(jsonpath.get("message"), "Error while download the file");
 	}
 
-	public void verifyUserDetailsWithUserNameEmailResponse(Response response,  String firstName, String lastName, String userName, String email)
-			throws NullPointerException {
+	public void verifyUserDetailsWithUserNameEmailResponse(Response response, String firstName, String lastName,
+			String userName, String email) throws NullPointerException {
 		JsonPath jsonpath = new JsonPath(response.getBody().asString());
 		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
 		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
 		CCUtils.assertEquals(jsonpath.get("userName").toString(), userName);
 		CCUtils.assertEquals(jsonpath.get("email").toString(), email);
+	}
+
+	public void verifyGetStaffResponseBody(Response response, String firstName, String lastName, String externalId,
+			String gender, Boolean status) {
+		JsonPath jsonpath = new JsonPath(response.getBody().asString());
+		CCUtils.assertEquals(jsonpath.get("firstName").toString(), firstName);
+		Log4jUtil.log("value of firstName is : " + jsonpath.get("firstName") + " matches with added staff firstname : "
+				+ firstName);
+		CCUtils.assertEquals(jsonpath.get("lastName").toString(), lastName);
+		Log4jUtil.log("value of lastName is : " + jsonpath.get("lastName") + " matches with added staff lastName : "
+				+ lastName);
+		CCUtils.assertEquals(jsonpath.get("gender").toString(), gender);
+		Log4jUtil
+				.log("value of gender is : " + jsonpath.get("gender") + " matches with added staff gender : " + gender);
+		CCUtils.assertEquals(jsonpath.get("externalId").toString(), externalId);
+		Log4jUtil.log("value of externalId is : " + jsonpath.get("externalId")
+				+ " matches with added staff externalId : " + externalId);
+		CCUtils.assertEquals(jsonpath.getBoolean("status"), status);
+		Log4jUtil.log("after adding staff to client staff status is " + jsonpath.get("status").toString());
 	}
 }
