@@ -2136,7 +2136,7 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.SEARCH_APPOINTMENT_TYPE_FOR_ASSOCIATING_WITH_RESOURCE_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response searchLocationForResource_DL(int ResourceId, int practiceId, String name) {
 		String url = ApiPath.SEARCH_LOCATION_FOR_RESOURCE_DL(ResourceId, practiceId);
 		return given().spec(requestSpec).queryParam("name", name).when().get(url).then().extract().response();
@@ -2192,45 +2192,56 @@ public class SharedInfo extends BaseRest {
 		String url = ApiPath.DELETE_PRACTICE_STAFF_NULL_VALUES_DL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
-	
+
 	public Response deleteStaffImage_BL(int staffId) {
 		String url = ApiPath.STAFF_IMAGE_BL(staffId);
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
-	
+
 	public Response deleteStaffImage_NullValues_BL() {
 		String url = ApiPath.DELETE_STAFF_IMAGE_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().delete(url).then().extract().response();
 	}
-	
+
 	public Response getStaffImageDetails_BL(Object imageId) {
 		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_BL(imageId);
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getStaffImageDetails_Null_Values_BL() {
 		String url = ApiPath.GET_STAFF_IMAGES_DETAILS_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
-	
+
 	public Response getExternalMapData_BL(int orgId, String externalId, String sharedType) {
 		String url = ApiPath.GET_EXTERNAL_MAP_DATA_BL(orgId);
-		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType).when().head(url).then().extract().response();
+		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType)
+				.when().head(url).then().extract().response();
 	}
-	
+
 	public Response getExternalMapData_Null_Values_BL() {
 		String url = ApiPath.GET_EXTERNAL_MAP_DATA_NULL_VALUES_BL();
 		return given().spec(requestSpec).when().head(url).then().extract().response();
 	}
-	
-	
+
 	public Response getExternalMapData_DL(int orgId, String externalId, String sharedType) {
 		String url = ApiPath.GET_EXTERNAL_MAP_DATA_DL(orgId);
-		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType).when().get(url).then().extract().response();
+		return given().spec(requestSpec).queryParam("externalId", externalId).queryParam("sharedType", sharedType)
+				.when().get(url).then().extract().response();
 	}
-	
+
 	public Response getExternalMapData_Null_Values_DL() {
 		String url = ApiPath.GET_EXTERNAL_MAP_DATA_NULL_VALUES_DL();
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getStaffDetailsOfClient_DL(int clientId, int staffId) {
+		String url = ApiPath.GET_STAFF_DETAILS_DL(clientId, staffId);
+		return given().spec(requestSpec).when().get(url).then().extract().response();
+	}
+
+	public Response getStaffDetailsOfClient_NULL_DL() {
+		String url = ApiPath.GET_STAFF_DETAILS_NULL_DL;
 		return given().spec(requestSpec).when().get(url).then().extract().response();
 	}
 }
