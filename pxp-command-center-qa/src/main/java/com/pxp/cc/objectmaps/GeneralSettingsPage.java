@@ -253,11 +253,14 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='PSS']/../following-sibling::div/span[text()='ACTIVATE']")
 	private WebElement pSSActivateButton;
+	
+	@FindBy(xpath = "//span[normalize-space(text())='Available for Purchase']/../following-sibling::div/span/div/div/span/following-sibling::span[normalize-space(text())='Forms']/../following-sibling::div/span[text()='ACTIVATE']")
+	private WebElement formsActivateButton;
 
 	@FindBy(xpath = "//div[normalize-space(text())='Purchased Solutions']/../following-sibling::div/button/mat-icon[text()='keyboard_arrow_down'] | (//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[1]")
 	private WebElement purchasedSolutionExpandButton;
 
-	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::span//button//mat-icon)[2]")
+	@FindBy(xpath = "//div[@id='purchasedSolutionOrg']//div[normalize-space(text())='Purchased Solutions Add-Ons']//following::mat-icon")
 	private WebElement purchasedSolutionAddOnsExpandButton;
 
 	@FindBy(xpath = "(//div[@class='content'])[2]")
@@ -349,6 +352,9 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Patient Chat ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activePatientChatAddOnsMoreOptions;
 
+	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' Forms ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
+	private WebElement activeFormsAddOnsMoreOptions;
+	
 	@FindBy(xpath = "(//div[@id='purchasedSolutionOrg']//following::div//span[text()=' PSS ']//following::div[@aria-label='More Options']//span[@id='IconContainer'])[1]")
 	private WebElement activePSSMoreOptions;
 
@@ -388,7 +394,7 @@ public class GeneralSettingsPage extends CCMainPage {
 	@FindBy(id = "detailNameValidation")
 	private WebElement clientNameRequiredErrorMessage;
 
-	@FindBy(xpath = "//div[@id='purchasedSolutionOrg'][normalize-space(text())='Purchased Solutions Add-Ons']")
+	@FindBy(xpath = "//div[@id='purchasedSolutionOrg']//div[normalize-space(text())='Purchased Solutions Add-Ons']")
 	private WebElement purchasedSolutionsAddOnsTitle;
 
 	@FindBy(xpath = "//span[@id='locationTile']//following::span[1]")
@@ -586,7 +592,7 @@ public class GeneralSettingsPage extends CCMainPage {
 
 	public void clickCancelButtonOfEditClient() {
 		CCUtils.verifyAndWaitForElement(buttonClientInfoEditCancel, driver);
-		buttonClientInfoEditCancel.click();
+		javascriptClick(buttonClientInfoEditCancel);
 		log("Clicked on cancel button");
 	}
 
@@ -1200,6 +1206,12 @@ public class GeneralSettingsPage extends CCMainPage {
 		log("clicked to activate button of Chat");
 	}
 
+	public void clickToActivateButtonOfFormsSolution() {
+		CCUtils.verifyAndWaitForElement(formsActivateButton, driver);
+		formsActivateButton.click();
+		log("clicked to activate button of forms");
+	}
+	
 	public void clickToActivateButtonOfPortalSolution() {
 		CCUtils.verifyAndWaitForElement(portalActivateButton, driver);
 		portalActivateButton.click();
@@ -1314,6 +1326,13 @@ public class GeneralSettingsPage extends CCMainPage {
 		activePatientChatAddOnsMoreOptions.click();
 		log("click to patient chat add ons more options");
 	}
+	
+	public void clickToFormsAddOnsMoreOptions() {
+		CCUtils.scrollPageViaElement(driver, activeFormsAddOnsMoreOptions);
+		CCUtils.verifyAndWaitForElement(activeFormsAddOnsMoreOptions, driver);
+		activeFormsAddOnsMoreOptions.click();
+		log("click to forms add ons more options");
+	}
 
 	public void clickToPSSMoreOptions() {
 		CCUtils.scrollPageViaElement(driver, activePSSMoreOptions);
@@ -1368,8 +1387,8 @@ public class GeneralSettingsPage extends CCMainPage {
 	public void selectAStatusInEditPopup(String status) {
 		WebElement listOption = driver.findElement(By.xpath(dynamicEditListOptions(status)));
 		CCUtils.verifyAndWaitForElement(listOption, driver);
+		log(listOption.getText() + " is getting selected");
 		listOption.click();
-		log(listOption.getText() + " is selected");
 	}
 
 	public void clickToSaveButton() {
