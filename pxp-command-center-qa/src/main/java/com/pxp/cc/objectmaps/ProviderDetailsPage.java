@@ -218,7 +218,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//span[contains(text(),'Provider Details updated successfully!')]")
 	private WebElement updateToasterMessage;
 
-	@FindBy(xpath = "//div[(normalize-space(text())='Provider info')]")
+	@FindBy(xpath = "//div[(normalize-space(text())='Provider Info')]")
 	private WebElement providerInfoLabel;
 
 	@FindBy(xpath = "//div[normalize-space(text())='Provider ID']")
@@ -233,7 +233,7 @@ public class ProviderDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//p[@class='connected-solution-header']")
 	private WebElement connectedSolutionsTitle;
 	
-	@FindBy(id = "removeAppTypeBtn0")
+	@FindBy(id = "removeLocationBtn0")
 	private WebElement removeConnectionLocation;
 
 	public ProviderDetailsPage(WebDriver driver) {
@@ -819,7 +819,7 @@ public class ProviderDetailsPage extends CCMainPage {
 		CCUtils.scrollPageViaElement(driver, providerInfoLabel);
 		CCUtils.verifyAndWaitForElement(providerInfoLabel, driver);
 		log("Verifying Provider Info Label");
-		CCUtils.assertEquals(providerInfoLabel.getText().trim(), "Provider info");
+		CCUtils.assertEquals(providerInfoLabel.getText().trim(), "Provider Info");
 	}
 
 	public void verifyCommandCenterID() {

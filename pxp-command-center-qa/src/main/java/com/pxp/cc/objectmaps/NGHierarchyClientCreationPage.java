@@ -54,13 +54,13 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 
 	@FindBy(id = "clientActiveInput-input")
 	private WebElement radioBtnActive;
-	
+
 	@FindBy(id = "addNodeActiveRadio-input")
 	private WebElement radioBtnActiveOrg;
 
 	@FindBy(id = "clientInactiveInput")
 	private WebElement radioBtnInactive;
-	
+
 	@FindBy(id = "addNodeInactiveRadio-input")
 	private WebElement radioBtnInctiveOrg;
 
@@ -461,7 +461,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 
 	@FindBy(xpath = "//input[@id='addNodeInactiveRadio-input']")
 	private WebElement radioBtnInactiveAddNode;
-	
+
 	@FindBy(xpath = "//mat-radio-button[@id='addNodeInactiveRadio']")
 	private WebElement inactiveRadioButton;
 
@@ -470,10 +470,10 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 
 	@FindBy(id = "EhrSystemId")
 	private WebElement ehrSystemInputText;
-	
+
 	@FindBy(id = "addClientPMSelect")
 	private WebElement pmSystemInputText;
-	
+
 	private String xpathRequiredNewTimezone = "//div[@role='option']//span[contains(text(),'valueToReplace')]";
 
 	private WebElement prepareDynamicXpathForTimezone(String xpathValue, String substitutionValue) {
@@ -483,7 +483,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 	private WebElement prepareWebElementWithDynamicXpath(String xpathValue, String substitutionValue) {
 		return driver.findElement(By.xpath(xpathValue.replace("valueToReplace", substitutionValue)));
 	}
-	
+
 	public void clickCreateClient() {
 		CCUtils.verifyAndWaitForElement(buttonNew, driver);
 		buttonNew.click();
@@ -572,14 +572,14 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(textboxClientName, driver);
 		textboxClientName.sendKeys(duplicateClientName);
 		log("Entered text in client name field is " + duplicateClientName);
+		CCUtils.verifyAndWaitForElement(textboxSapId, driver);
+		textboxSapId.sendKeys(duplicateSAP);
+		log("Entered text in SAP ID field : " + duplicateSAP);
 		CCUtils.verifyAndWaitForElement(errorUniqueClientName, driver);
 		CCUtils.assertEquals(errorUniqueClientName.getText().trim(), "Client name already in use");
 		log("Error Message displayed for duplicate client name is :" + errorUniqueClientName.getText().trim());
 		textboxClientName.clear();
 		textboxClientName.sendKeys("new " + duplicateClientName);
-		CCUtils.verifyAndWaitForElement(textboxSapId, driver);
-		textboxSapId.sendKeys(duplicateSAP);
-		log("Entered text in SAP ID field : " + duplicateSAP);
 		CCUtils.verifyAndWaitForElement(errorUniqueSap, driver);
 		CCUtils.assertEquals(errorUniqueSap.getText().trim(), "SAP ID already in use");
 		log("Error Message displayed for duplicate client sap id is :" + errorUniqueSap.getText().trim());
@@ -591,7 +591,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		log("Verifying active radio button is by default selected on the create client popup");
 		CCUtils.assertTrue(radioBtnActive.isSelected(), "Active radio button is not by default selected");
 	}
-	
+
 	public void verifyActiveRadioButtonForOrgIsByDefaultSelected() {
 		CCUtils.verifyAndWaitForElement(radioBtnActiveOrg, driver);
 		log("Verifying active radio button is by default selected on the create org");
@@ -687,7 +687,7 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(labelTimezone, driver);
 		log("Verifying timezone label text");
 		CCUtils.assertTrue(labelTimezone.isDisplayed(), "Timezone label is not displayed on create client popup");
-		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone*");
+		CCUtils.assertEquals(labelTimezone.getText().trim(), "Timezone *");
 		log("Timezone label text is " + labelTimezone.getText().trim());
 		CCUtils.verifyAndWaitForElement(dropdownTextboxTimezone, driver);
 		log("Verifying select placeholder is displayed for client timezone dropdown field");
@@ -799,7 +799,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		Assert.assertTrue(pxpCommandCenterLabel.getText().equals("PxP Command Center"), "PXP Home icon is displayed");
 		Assert.assertTrue(ssoLinks.isDisplayed(), "SSO icon is displayed");
 		Assert.assertTrue(userFullName.isDisplayed(), "User icon is displayed");
-
 	}
 
 	public WebDriver verifyUserIconContent() {
@@ -1881,7 +1880,6 @@ public class NGHierarchyClientCreationPage extends CCMainPage {
 		enterNewSystemDetails(systemName);
 	}
 
-	
 	public void addTimezone(String newTimezone) throws InterruptedException {
 		CCUtils.verifyAndWaitForElement(dropdownTimezone, driver);
 		log("click to dropdown of Timezone");
