@@ -131,7 +131,7 @@ public class ResourceDetailsPage extends CCMainPage {
 	@FindBy(id = "save-icon")
 	private WebElement addButtonResource;
 
-	@FindBy(id = "removeResourceBtn")
+	@FindBy(id = "removeLocationBtn0")
 	private WebElement removeConnection;
 
 	@FindBy(xpath = "(//td[@role='gridcell'])[2]")
@@ -142,6 +142,9 @@ public class ResourceDetailsPage extends CCMainPage {
 
 	@FindBy(xpath = "//mat-icon[normalize-space(text())='check_circle']")
 	private WebElement activeStatus;
+	
+	@FindBy(xpath = "//tr[@id='locationList'][1]")
+	private WebElement selectLocation;
 
 	public String validImagePath = "/src/test/resources/data-driven/images/logo.png";
 
@@ -199,6 +202,9 @@ public class ResourceDetailsPage extends CCMainPage {
 	
 	@FindBy(xpath = "(//tbody[@role='rowgroup']//tr[@role='row']//td[1])")
 	private WebElement resourceName;
+	
+	@FindBy(xpath = "//mat-icon[text()='arrow_back']")
+	private WebElement locationBackIcon;
 
 	public void clickToSearchButton() {
 		CCUtils.verifyAndWaitForElement(searchButton, driver);
@@ -732,5 +738,18 @@ public class ResourceDetailsPage extends CCMainPage {
 		else
 			Log4jUtil.log("Success toaster is not displayed");
 	}
-
+	
+	public void selectLocation() throws InterruptedException  {
+		CCUtils.verifyAndWaitForElement(selectLocation, driver);
+		javascriptClick(selectLocation);
+		log("Clicked on first location");
+	}
+	
+	public void clickToLocationBackButton() throws AWTException {
+		CCUtils.scrollPageToStart();
+		CCUtils.verifyElementToBeClickable(locationBackIcon, driver);
+		CCUtils.verifyAndWaitForElement(locationBackIcon, driver);
+		javascriptClick(locationBackIcon);
+		log("clicked to back button in location details page");
+	}
 }

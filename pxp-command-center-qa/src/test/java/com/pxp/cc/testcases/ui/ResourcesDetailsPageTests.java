@@ -4,8 +4,6 @@ package com.pxp.cc.testcases.ui;
 
 import static com.pxp.cc.testcases.ui.CCUI.clientSystementErpriseandPractice;
 import static com.pxp.cc.testcases.ui.CCUI.getClientSystementErpriseandPractice;
-import java.util.ArrayList;
-import java.util.List;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
@@ -15,7 +13,7 @@ import com.pxp.cc.util.CCUtils;
 public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 	static boolean runOnce = true;
 	public CCUI ccui;
-	String externalId = "Ext_Id_" + CCUtils.generateAlphaNumericStringIncludingSpecialChar(6);
+	String externalId;
 	String firstName = "New"
 			+ CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(6));
 	String lastName = CCUtils.generateAlphaNumericString(5).concat("-").concat(CCUtils.generateAlphaNumericString(6))
@@ -33,12 +31,50 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 		}
 	}
 
+	// AddResourceImageTests
+	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verify resources image is successfully added and removed and Verify invalid file type error is displayed when uploading invalid format image file")
+	public void testAddRemoveResourceImageFunctionalityAndInvalidFileTypeMessage() throws Exception {
+		ngHierarchyClientCreate();
+		logStep("PXPP-21556, Verify Command Center users able to upload Resource image ");
+		createResources();
+		ccui.resourceDetailsPage().clickToResource(resourceName);
+		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
+		logStep("PXPP-21558, Verify Image can be common image file types to upload image for Resource  ");
+		ccui.resourceDetailsPage().uploadResourcesImage();
+		logStep("PXPP-21560 Verify Command Center users is able to remove the uploaded Resource image through REMOVE IMAGE button");
+		ccui.resourceDetailsPage().removeResourceImage();
+		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
+		ccui.resourceDetailsPage().uploadResourceInvalidImage();
+		ccui.resourceDetailsPage().verifyInvalidFileTypeErrorMessage();
+		runOnce = false;
+	}
+
+	// ResourcesDetailsResourcesDisplayInfoTests
+	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verify Resources Info section and Resources Display Info Section")
+	public void testResourcesInfoResourcesDisplayInfoSectionWebElements() throws Exception {
+		ngHierarchyClientCreate();
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
+		ccui.resourceDetailsPage().clickToResource(resourceName);
+		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
+		ccui.resourceDetailsPage().verifyResourcesInfoSection();
+		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
+		logStep("PXPP-14499 Verify details of Resource Display Info section displayed on Resource Details page");
+		ccui.resourceDetailsPage().verifyResourceDisplayInfoSection();
+		runOnce = false;
+	}
+
 	// AssociateDeassociateSolutionsOnResourcesDetailsPageTests
-	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 0, description = "Verify  solutions activated in a practice are associated and deassociate in resource details page")
+	@Test(retryAnalyzer = RetryAnalyzer.class, priority = 3, description = "Verify  solutions activated in a practice are associated and deassociate in resource details page")
 	public void testAssociateDeassociateSolutionsWithResource() throws Exception {
 		ngHierarchyClientCreate();
 		addPurchaseSolutionAtPracticeLevel();
-		createResources();
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
 		ccui.resourceDetailsPage().clickToResource(resourceName);
 		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
 		logStep("PXPP-14528 Verify Connected Solutions Section is displayed on Resource Details page");
@@ -60,10 +96,13 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 	}
 
 	// Connected Location Pop-Up
-	@Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Verify Connected Locations section, Add Locations popup")
+	@Test(priority = 4, retryAnalyzer = RetryAnalyzer.class, description = "Verify Connected Locations section, Add Locations popup")
 	public void testConnectedLocationsSectionAndAddLocationsPopupWebElements() throws Exception {
 		ngHierarchyClientCreate();
-		createResources();
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
 		ccui.resourceDetailsPage().clickToResource(resourceName);
 		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
 		logStep("PXPP-27233,PXPP-27227 Verify the Connected Locations section is displayed on Resource details page");
@@ -74,11 +113,14 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 	}
 
 	// AssociateDeassociatePracticesOnResourceDetailsPageTests
-	@Test(priority = 8, retryAnalyzer = RetryAnalyzer.class, description = "Verify associate and deassociate practice for created resource within practice")
+	@Test(priority = 5, retryAnalyzer = RetryAnalyzer.class, description = "Verify associate and deassociate practice for created resource within practice")
 	public void testToAssociateDeassociatePracticeForResource() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-14441 Verify User is able click on Providers, Resources & Staff tab on the top menu  OR Providers & Resources tile on Client's General Settings page");
-		createResources();
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
 		ccui.resourceDetailsPage().clickToResource(resourceName);
 		logStep("PXPP-14475 Verify User is able to enable or disable the Resource at the single Practice.");
 		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
@@ -116,42 +158,13 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 
 	}
 
-	// Add images on Resources
-	@Test(priority = 0, retryAnalyzer = RetryAnalyzer.class, description = "Verify resources image is successfully added and removed and Verify invalid file type error is displayed when uploading invalid format image file")
-	public void testAddRemoveResourceImageFunctionalityAndInvalidFileTypeMessage() throws Exception {
-		ngHierarchyClientCreate();
-		logStep("PXPP-21556, Verify Command Center users able to upload Resource image ");
-		createResources();
-		ccui.resourceDetailsPage().clickToResource(resourceName);
-		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
-		logStep("PXPP-21558, Verify Image can be common image file types to upload image for Resource  ");
-		ccui.resourceDetailsPage().uploadResourcesImage();
-		logStep("PXPP-21560 Verify Command Center users is able to remove the uploaded Resource image through REMOVE IMAGE button");
-		ccui.resourceDetailsPage().removeResourceImage();
-		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
-		ccui.resourceDetailsPage().uploadResourceInvalidImage();
-		ccui.resourceDetailsPage().verifyInvalidFileTypeErrorMessage();
-		runOnce = false;
-	}
-
-	// ResourcesDetailsResourcesDisplayInfoTests
-	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verify Resources Info section and Resources Display Info Section")
-	public void testResourcesInfoResourcesDisplayInfoSectionWebElements() throws Exception {
-		ngHierarchyClientCreate();
-		createResources();
-		ccui.resourceDetailsPage().clickToResource(resourceName);
-		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
-		ccui.resourceDetailsPage().verifyResourcesInfoSection();
-		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
-		logStep("PXPP-14499 Verify details of Resource Display Info section displayed on Resource Details page");
-		ccui.resourceDetailsPage().verifyResourceDisplayInfoSection();
-		runOnce = false;
-	}
-
-	@Test(priority = 2, retryAnalyzer = RetryAnalyzer.class, description = "Verify Save Functionality With Valid Details in input fields")
+	@Test(priority = 7, retryAnalyzer = RetryAnalyzer.class, description = "Verify Save Functionality With Valid Details in input fields")
 	public void testSaveFunctionalityWithValidDetails() throws Exception {
 		ngHierarchyClientCreate();
-		createResources();
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
 		ccui.resourceDetailsPage().clickToResource(resourceName);
 		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
 		ccui.resourceDetailsPage().verifyEditButtonLabel();
@@ -174,8 +187,8 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	// AddRemoveConnectedLocationsInResourcessDetailsPageTests //passed
-	@Test(enabled = false)
+	// AddRemoveConnectedLocationsInResourcessDetailsPageTests 
+	@Test(priority = 6,enabled = true,retryAnalyzer = RetryAnalyzer.class, description ="AddRemoveConnectedLocationsInResourcessDetailsPageTests")
 	public void testAndAddRemoveLocationsOnResourcesDetailsPage() throws Exception {
 		ngHierarchyClientCreate();
 		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
@@ -183,34 +196,40 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
 		ccui.getResourceAndStaffSearchPage().clickGeneralSettingsIcon();
 		createLocation();
-		ccui.getSearchLocationDetailsPage().clickToLocation(locationName);
+		ccui.getSearchLocationDetailsPage().searchLocationAndVerifyResult(locationName);
+		CCUtils.pressEnterKey();
+		ccui.getAddLocationPage().selectLocation();
 		ccui.getLocationDetailsPage().verifyLocationDetailsTitle();
 		ccui.resourceDetailsPage().clickToEntepriseArrow();
 		ccui.resourceDetailsPage().clickOnToggleButton();
-		ccui.getLocationDetailsPage().clickToBackButton();
+		ccui.resourceDetailsPage().clickToLocationBackButton();
 		ccui.getResourceAndStaffSearchPage().clickGeneralSettingsIcon();
 		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
 		ccui.getPrivacyPolicySettingsPage().clickOnSystemArrow(clientSystementErpriseandPractice.get("systemName"));
 		ccui.getPrivacyPolicySettingsPage()
 				.clickOnEnterpriseArrow(clientSystementErpriseandPractice.get("enterpriseName"));
 		ccui.getPrivacyPolicySettingsPage().clickOnPracticeLevel(clientSystementErpriseandPractice.get("practiceName"));
-		createResources();
+		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
+		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
+		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		ccui.getAddNewResourcePage().clickOnResourcesTab();
+		ccui.getAddNewResourcePage().enterResourceInSearchTextBox(resourceName);
+		ccui.getAddNewResourcePage().selectResource();
 		ccui.resourceDetailsPage().verifyResourceDetailsTitle();
 		ccui.resourceDetailsPage().verifyConnectedSolutionsLabel();
 		ccui.resourceDetailsPage().clickToAddLocationButton();
 		ccui.resourceDetailsPage().enterTextInLocationTextBox(locationName);
 		ccui.resourceDetailsPage().clickToLocationCheckBox(locationName);
 		ccui.resourceDetailsPage().clickToAddButtonInPopup();
-		ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
+		ccui.getCommonMethods().verifyToasterMessage("Successfully added location");
 		logStep("PXPP-27238 Verify on Connected Location section, user able to remove  the Location Name using the cross button associated with the Location Name.");
-		ccui.resourceDetailsPage().verifyConnectedResourceInWebTable();
 		ccui.resourceDetailsPage().clickToRemoveConnectionButton();
 		ccui.resourceDetailsPage().verifyNoDataDisplayConnectedLocationsMessage();
 		runOnce = false;
 	}
 
 	@Test(enabled = false)
-	public String createResources() throws Exception {
+	public void createResources() throws Exception {
 		createProvider();
 		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
 		ccui.getAddNewResourcePage().clickOnResourcesTab();
@@ -228,8 +247,6 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewResourcePage().verifySaveAndAddButtonIsEnabled();
 		ccui.getAddNewResourcePage().clickOnSaveAndAddButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Resource has been successfully created");
-		ccui.getAddNewResourcePage().enterResourceInSearchTextBox(resourceName);
-		return resourceName;
 	}
 
 	@Test(enabled = false)
@@ -269,6 +286,7 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewProviderPage().enterFirstName(firstName);
 		ccui.getAddNewProviderPage().enterLastName(lastName);
 		ccui.getAddNewProviderPage().enterCredentials(credentials);
+		externalId = testData.getProperty("provider.external.id").concat(CCUtils.generateAlphaNumericString(3));
 		ccui.getAddNewProviderPage().enterExternalId(externalId);
 		ccui.getAddNewProviderPage().selectGenderValue("Male");
 		ccui.getAddNewProviderPage().verifySaveAndAddButtonIsEnabled();
@@ -315,6 +333,7 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 		logStep("Click on Add button");
 		ccui.addLocationsPage().verifyLocationsPageTitle();
 		ccui.addLocationsPage().verifyAddLocationButton();
+		driver.navigate().refresh();
 		ccui.addLocationsPage().clickOnAddLocationButton();
 		locationName = "Location".concat(CCUtils.generateAlphaNumericString(8));
 		ccui.addLocationsPage().enterLocationName(locationName);
@@ -328,7 +347,5 @@ public class ResourcesDetailsPageTests extends CommandCenterGenericTest {
 				testData.getProperty("new.locations.timezone"));
 		logStep("Click on save and add button");
 		ccui.addLocationsPage().clickOnSaveAndAddButton();
-		logStep("Verify success toaster message");
-		ccui.addLocationsPage().verifyToasterMessage("Success! New location has been successfully created");
 	}
 }

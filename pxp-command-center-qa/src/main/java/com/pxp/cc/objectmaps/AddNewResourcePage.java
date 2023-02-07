@@ -9,6 +9,8 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
 import com.pxp.cc.util.CCUtils;
 
 public class AddNewResourcePage extends CCMainPage {
@@ -145,7 +147,7 @@ public class AddNewResourcePage extends CCMainPage {
 
 	@FindBy(xpath = "(//tr[@role='row'])[2]")
 	private WebElement selectResource;
-
+	
 	@FindBy(xpath = "//span[text()='Resource Details']")
 	private WebElement resourceDetailsTitle;
 
@@ -203,11 +205,13 @@ public class AddNewResourcePage extends CCMainPage {
 	@FindBy(xpath="//input[@id='mat-slide-toggle-15-input']")
 	private WebElement connectedsolutions;
 	
+	@FindBy(xpath = "(//tbody[@role='rowgroup']//tr[@role='row']//td[1])")
+	private WebElement resourceName;
+
 	public void clickToSolutionFilter() {
 		CCUtils.verifyAndWaitForElement(solutionDropdownFilter, driver);
 		solutionDropdownFilter.click();
 	}
-
 
 	public void clickToSystemFilter() {
 		CCUtils.verifyAndWaitForElement(systemDropdownFilter, driver);
@@ -229,6 +233,7 @@ public class AddNewResourcePage extends CCMainPage {
 		log("resource name : " + resourceName + " entered in search textbox");
 		clickToSearchBtn();
 	}
+	
 
 	public void verifyNoDataDisplayErrorMessage() {
 		CCUtils.verifyAndWaitForElement(noDataDisplayMessage, driver);
@@ -245,12 +250,6 @@ public class AddNewResourcePage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(searchBtn, driver);
 		searchBtn.click();
 		log("clicked to search button");
-	}
-
-	public void selectResource() throws InterruptedException {
-		CCUtils.verifyAndWaitForElement(selectResource, driver);
-		selectResource.click();
-		log("Clicked on first Resource");
 	}
 
 	public void clickAscResourceNameSortToDsc() {
@@ -846,7 +845,7 @@ public class AddNewResourcePage extends CCMainPage {
 				CCUtils.assertEquals(Integer.parseInt(getLHSPagination()), LHSPaginationValue);
 			}
 		} else {
-			log("Verifying all the Paginations should be disabled Toal number of Providers is less that Items per page so all Providers displayed in 1st slot.");
+			log("Verifying all the Paginations should be disabled Toal number of Resources is less that Items per page so all Resources displayed in 1st slot.");
 			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
@@ -895,7 +894,7 @@ public class AddNewResourcePage extends CCMainPage {
 			CCUtils.assertTrue((isLastPageButtonDisabled() == false), "Last Page Button should get disabled");
 			CCUtils.assertTrue(isNextPageButtonDisabled() == false, "Next Page Button should get disabled");
 		} else {
-			log("Veriyfing all the Paginations should be disabled Toal number of Providers is less that Items per page so all Providers displayed in 1st slot.");
+			log("Veriyfing all the Paginations should be disabled Toal number of Resources is less that Items per page so all Resources displayed in 1st slot.");
 			CCUtils.assertTrue((isLastPageButtonDisabled() == false), "Last Page Button should get disabled");
 			CCUtils.assertTrue(isNextPageButtonDisabled() == false, "Next Page Button should get disabled");
 			CCUtils.assertTrue(isFirstPageButtonDisabled() == false, "First Page Button should get disabled");
@@ -918,7 +917,7 @@ public class AddNewResourcePage extends CCMainPage {
 				CCUtils.assertEquals(Integer.parseInt(getLHSPagination()), LHSPaginationValue);
 			}
 		} else {
-			log("Verifying all the Paginations should be disabled Toal number of Resources is less that Items per page so all Providers displayed in 1st slot.");
+			log("Verifying all the Paginations should be disabled Toal number of Resources is less that Items per page so all Reources displayed in 1st slot.");
 			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
@@ -937,7 +936,7 @@ public class AddNewResourcePage extends CCMainPage {
 			CCUtils.assertEquals(getDefaultPagination(), expectedPagination);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 		} else {
-			log("Verifying all the Paginations should be disabled Toal number of Resources is less that Items per page so all Providers displayed in 1st slot.");
+			log("Verifying all the Paginations should be disabled Toal number of Resources is less that Items per page so all Resources displayed in 1st slot.");
 			CCUtils.assertEquals(isLastPageButtonDisabled(), false);
 			CCUtils.assertEquals(isFirstPageButtonDisabled(), false);
 			CCUtils.assertEquals(isNextPageButtonDisabled(), false);
@@ -975,9 +974,8 @@ public class AddNewResourcePage extends CCMainPage {
 			CCUtils.verifyAndWaitForElement(connectedsolutions, driver);
 			connectedsolutions.click();
 			log("clicked to enteprise Arrow");
-		}
+	}
 
-	
 	public void verifyListOfResourcesMatchedSearchResult(List<String> ResourceName) throws AWTException {
 		CCUtils.scrollPageToEnd(driver);
 		CCUtils.verifyAndWaitForPresenceOfListOfElement(listOfResourceName, driver);
@@ -993,5 +991,32 @@ public class AddNewResourcePage extends CCMainPage {
 							+ " is NOT EQUAL to expected resources : " + ResourceName.get(0).trim());
 			}
 		}
-	}		
+	}
+	
+	public void searchResourcesAndVerifyResult(String resourceName)throws AWTException, InterruptedException  {
+		enterResourceInSearchTextBox(resourceName);
+		verifySearchResourceFound(resourceName);
+	}
+	
+	public void verifySearchResourceFound(String searchresource) {
+		CCUtils.verifyAndWaitForElement(resourceName, driver);
+		CCUtils.assertEquals(resourceName.isDisplayed(), true);
+	}
+	
+	public void searchNonExistingResourcerAndVerifyResult(String resourceName) throws InterruptedException, AWTException{
+		searchButton.clear();
+		enterResourceInSearchTextBox(resourceName);
+		verifyNoDataDisplayErrorMessage();
+	}
+	
+	public void clickToResource(String resourceName) throws InterruptedException {
+		enterResourceInSearchTextBox(resourceName);
+		selectResource();
+	}
+	
+	public void selectResource() throws InterruptedException {
+		CCUtils.verifyAndWaitForElement(selectResource, driver);
+		javascriptClick(selectResource);
+		log("Clicked on first resource");
+	}
 }
