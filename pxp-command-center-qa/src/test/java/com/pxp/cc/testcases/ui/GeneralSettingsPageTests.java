@@ -35,6 +35,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void testEditClientCancelButtonAndClientRequiredAndMaxCharacterReachedError() throws Exception {
 		ngHierarchyClientCreate();
 		logStep("PXPP-13069, PXPP-13071, PXPP-26024, PXPP-26025 Verify functionality client name edit error and cancel button functionality");
+		ccui.getGeneralSettingsPage().clickToClientNode();
 		ccui.getGeneralSettingsPage().verifyGeneralSettingsPageTitle();
 		ccui.getGeneralSettingsPage().clickEditButtonOfClient();
 		String newClientName = CCUtils.generateAlphaNumericString(101);
@@ -261,12 +262,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void tabCountforProvidersAndResourcesTabAtClientSystemEnterprisePracticeLevel() throws Exception {
 		logStep("PXPP-28746, PXPP-28747, PXPP-28754, PXPP-28756, PXPP-28813, PXPP-28814, PXPP-28827, PXPP-28828 verify providers and resources tab count should match with no of providers and resources in providers/resources search page");
 		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		logStep("Searching an practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
 		logStep("create provider and resource at client level");
 		String providerOne = testAddNewProviderFunctionalityUsingValidData();
 		testAddNewResourcesFunctionalityUsingValidData(providerOne);
@@ -483,11 +478,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void testAddPurchaseSolutionAtPracticeLevel() throws Exception {
 		logStep("PXPP-28231, PXPP-28232, PXPP-28233, PXPP-28242, PXPP-28243, PXPP-28244 verify activating solutions functionality");
 		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
 		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
@@ -533,18 +523,13 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void testandVerifyAddPurchaseSolutionAddOnsAtPracticeLevel() throws Exception {
 		logStep("PXPP-28279, PXPP-28280, PXPP-28281, PXPP-28282, PXPP-28294, PXPP-28295, PXPP-28297, PXPP-28297, PXPP-28297,PXPP-28298, PXPP-28308 verify add on activate and terminate functionality");
 		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsAddOnsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutionsAddOns();
 		ccui.getGeneralSettingsPage().verifyAvailableToPurchaseSection();
-		ccui.getGeneralSettingsPage().clickToActivateButtonOfChatSolution();
+		ccui.getGeneralSettingsPage().clickToActivateButtonOfFormsSolution();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
-		ccui.getGeneralSettingsPage().clickToPatientChatAddOnsMoreOptions();
+		ccui.getGeneralSettingsPage().clickToFormsAddOnsMoreOptions();
 		ccui.getGeneralSettingsPage().clickToTerminateOption();
 		ccui.getGeneralSettingsPage().clickToYesActivateButtonInActivateSolutions();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
@@ -555,11 +540,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void testActivatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
 		logStep("PXPP-28231, PXPP-28232, PXPP-28233, PXPP-28242, PXPP-28243, PXPP-28244, PXPP-28245 Verify the fnctionality and web elements of activate pop up");
 		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
@@ -575,11 +555,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 	public void testTerminatePopupVirtualVisitsPurchaseSolutionAtPracticeLevel() throws Exception {
 		logStep("PXPP-28244, PXPP-28245, PXPP-28246, PXPP-28247, PXPP-28248, PXPP-28297, PXPP-28297, PXPP-28308 verify terminate functionality");
 		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().clickSearchIcon();
-		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
@@ -602,9 +577,6 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		logStep("PXPP-28231, PXPP-28233, PXPP-28243, PXPP-28244, PXPP-28245, PXPP-28249, PXPP-28275, PXPP-28309, PXPP-28310 verify edit pop up functionality");
 		ngHierarchyClientCreate();
 		logStep("Searching a practice node under client in general settings page");
-		ccui.getGeneralSettingsPage().enterSearchText(clientSystementErpriseandPractice.get("practiceName"));
-		ccui.getGeneralSettingsPage().clickFirstInAutoSuggestion();
-		CCUtils.pressEnterKey();
 		ccui.getGeneralSettingsPage().verifyPurchaseSolutionsSection();
 		ccui.getGeneralSettingsPage().clickToExpandPurchaseSolutions();
 		ccui.getGeneralSettingsPage().clickToActivateButtonOfVirtualVisitsSolution();
@@ -616,7 +588,7 @@ public class GeneralSettingsPageTests extends CommandCenterGenericTest {
 		ccui.getGeneralSettingsPage().verifyEditPopupCancelAndCrossButton();
 		ccui.getGeneralSettingsPage().verifySingleSelectDropdownAndItsOptions(listOfEditStatus());
 		ccui.getGeneralSettingsPage().clickToSingleSelectDropdown();
-		ccui.getGeneralSettingsPage().selectAStatusInEditPopup(testData.getProperty("status.implementation"));
+		ccui.getGeneralSettingsPage().selectAStatusInEditPopup(testData.getProperty("status.newly.purchased"));
 		ccui.getGeneralSettingsPage().clickToSaveButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! Solution has been successfully updated");
 		runOnce = false;
