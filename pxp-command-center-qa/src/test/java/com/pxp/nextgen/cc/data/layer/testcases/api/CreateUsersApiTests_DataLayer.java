@@ -185,7 +185,7 @@ public class CreateUsersApiTests_DataLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForSpetialCharacterInFirstName(createUserApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid  clientId and validate error message ")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid clientId and validate error message ")
 	public void testErrorMessagesForInvalidClientId() throws IOException {
 		logStep("Create client user using invalid  clientId");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));

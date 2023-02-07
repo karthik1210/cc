@@ -209,7 +209,7 @@ public class LocationDetailsPage extends CCMainPage {
 	@FindBy(xpath = "//mat-tree-node[@role='treeitem']//button//span//mat-icon[normalize-space(text()='chevron_right')]")
 	private WebElement arrowEntPractice;
 
-	@FindBy(xpath = "//mat-icon[@title='Back']")
+	@FindBy(xpath = "//mat-icon[normalize-space(text())='arrow_back']")
 	private WebElement backIcon;
 
 	public String xpathRequiredClientType(String practiceName) {
@@ -1158,7 +1158,7 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.waitForElementPresence(textboxProvider, driver);
 		CCUtils.assertEquals(textboxProvider.isEnabled(), true);
 		textboxProvider.sendKeys(input);
-		selectFirstOption();
+	//	selectFirstOption();
 		log("Entered input for Provider Name : " + input);
 	}
 
@@ -1420,4 +1420,12 @@ public class LocationDetailsPage extends CCMainPage {
 		CCUtils.verifyAndWaitForElement(itemsPerPageFive, driver);
 		itemsPerPageFive.click();
 	}
+	
+	public void verifyNoItemsFound() {
+		CCUtils.verifyAndWaitForElement(noItemsFound, driver);
+		log("no items found message found");
+	}
+
+	@FindBy(xpath = "//div[text()='No items found']")
+	private WebElement noItemsFound;
 }

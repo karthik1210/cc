@@ -440,10 +440,10 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 	// SearchLocationsTests
 
 	@Test(priority = 14, enabled = true, retryAnalyzer = RetryAnalyzer.class, description = "Verify search result when apply practice, enterprise, system filter in search location screen")
-	public void testSearchExistingLocationByFilterPracticeEnterpriseAndSysten() throws Exception {
+	public void testSearchExistingLocationByFilterPracticeEnterpriseAndSystem() throws Exception {
 		logStep("PXPP-12740 Verify user can apply filter by clicking apply button in Filter container in location search page");
 		ngHierarchyClientCreate();
-		enablepractice();
+		enablePractice();
 		logStep("Apply filter for Practice");
 		ccui.getSearchLocationDetailsPage().clickToPracticeFilter();
 		ccui.getSearchLocationDetailsPage().selectFilter(clientSystementErpriseandPractice.get("practiceName"));
@@ -507,7 +507,7 @@ public class LocationsPageTests extends CommandCenterGenericTest {
 	}
 
 	@Test(enabled = false)
-	public void enablepractice() throws Exception {
+	public void enablePractice() throws Exception {
 		ccui.getGeneralSettingsPage().navigatetoClientNode(clientSystementErpriseandPractice.get("clientNam"));
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();

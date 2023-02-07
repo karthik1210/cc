@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import com.intuit.ifs.csscat.core.RetryAnalyzer;
-import com.pxp.cc.helpers.ClientInfo;
-import com.pxp.cc.helpers.OrgInfo;
 import com.pxp.cc.helpers.SharedInfo;
 import com.pxp.cc.helpers.UserInfo;
 import com.pxp.cc.model.BaseRest;
@@ -21,8 +19,6 @@ import io.restassured.response.Response;
 public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 	private UserInfo userInfo;
 	private Validations validation;
-	private OrgInfo orgInfo;
-	private ClientInfo clientInfo;
 	private SharedInfo sharedInfo;
 	private CreateClientHierarchy_BL clientHierObj;
 	Response createUserApiResponse, fetchUserDetailsApiResponse, createProviderApiResponse;
@@ -33,8 +29,6 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		setupServiceRequestSpecificationBuilder();
 		userInfo = new UserInfo();
 		validation = new Validations();
-		orgInfo = new OrgInfo();
-		clientInfo = new ClientInfo();
 		sharedInfo = new SharedInfo();
 		clientHierObj = new CreateClientHierarchy_BL();
 
@@ -212,7 +206,7 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForSpetialCharacterInFirstName(createUserApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid  clientId and validate error message ")
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid clientId and validate error message ")
 	public void testErrorMessagesForInvalidClientId() throws IOException {
 		logStep("Create client user using invalid  clientId");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
@@ -228,8 +222,8 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		validation.verifyErrorMessageInResponseForInvalidClientId(createUserApiResponse);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using invalid providerId and validate error message ")
-	public void testErrorMessagesFor1() throws IOException {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create client user using non-existing providerId and validate error message ")
+	public void testCreateClientUserWithNonExistingProviderId() throws IOException {
 		logStep("Create client user using invalid providerId ");
 		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
 		String userName = testData.getProperty("api.user.userName")
@@ -238,11 +232,12 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Client",
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
 				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT",
-				testData.getProperty("api.clientId.id"), null, null, null, false);
+				testData.getProperty("api.clientId.id"), null, testData.getProperty("non.existing.provider.id"), null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 400);
-		validation.verifyErrorMessageInResponseForInvalidProviderId(createUserApiResponse);
+		validation.verifyErrorMessageInResponseNonAssociatingProviderId(createUserApiResponse,
+				testData.getProperty("non.existing.provider.id"), testData.getProperty("api.clientId.id"));
 	}
 
 	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new internal user")
@@ -265,8 +260,8 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 		validation.verifyCreatedUserId(createUserApiResponse, id);
 	}
 
-	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user  and fetch newly created client user details using user id")
-	public void testCreateNewClientUser() throws Exception {
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user with ProviderId and fetch newly created client user details using user id")
+	public void testCreateNewClientUserWithProviderId() throws Exception {
 		logStep("Create client user using valid details ");
 		providerId = createProvider(practiceId);
 		providerId = createProviderApiResponse.jsonPath().get("providerId");
@@ -278,6 +273,24 @@ public class CreateUsersApiTests_BusinessLayer extends BaseRest {
 				testData.getProperty("api.user.firstName"), testData.getProperty("api.user.lastName"), userName, email,
 				mobileNumber, testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, providerId, null,
 				false);
+		logStep("Validating response information");
+		CCUtils.responseTimeValidation(createUserApiResponse);
+		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);
+		int id = createUserApiResponse.jsonPath().getInt("id");
+		validation.verifyCreatedUserId(createUserApiResponse, id);
+	}
+	
+	@Test(retryAnalyzer = RetryAnalyzer.class, description = "Create a new client user without ProviderId and fetch newly created client user details using user id")
+	public void testCreateNewClientUserWithoutProviderId() throws Exception {
+		logStep("Create client user using valid details ");
+		clientId = clientHierObj.createClient_BL();
+		String email = testData.getProperty("api.user.email").concat(CCUtils.generateNewEmail(5));
+		String userName = testData.getProperty("api.user.userName")
+				.concat(CCUtils.generateAlphaNumericStringIncludingSpecialChar(5));
+		Long mobileNumber = CCUtils.generateMobileNumber();
+		createUserApiResponse = userInfo.createNewUser_BusinessLayer("Client", testData.getProperty("api.user.firstName"),
+				testData.getProperty("api.user.lastName"), userName, email, mobileNumber,
+				testData.getProperty("api.user.userStatus"), "NOT_SENT", clientId, null, null, null, false);
 		logStep("Validating response information");
 		CCUtils.responseTimeValidation(createUserApiResponse);
 		CCUtils.assertEquals(createUserApiResponse.getStatusCode(), 201);

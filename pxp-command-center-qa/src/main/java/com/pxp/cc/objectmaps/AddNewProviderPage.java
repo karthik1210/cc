@@ -300,7 +300,7 @@ public class AddNewProviderPage extends CCMainPage {
 	public void verifyAddNewProviderPageTitle() {
 		CCUtils.verifyAndWaitForElement(labelAddNewProviderPageTitle, driver);
 		log("Verifying add new provider page title");
-		CCUtils.assertEquals(labelAddNewProviderPageTitle.getText().trim(), "Add a Provider");
+		CCUtils.assertEquals(labelAddNewProviderPageTitle.getText().trim(), "Add Provider(s)");
 	}
 
 	public void verifyFirstNameLabelTextAndTextboxDefaultValue() {
