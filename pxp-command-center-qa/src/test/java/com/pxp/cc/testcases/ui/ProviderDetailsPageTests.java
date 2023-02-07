@@ -52,6 +52,7 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 	}
 
 	// ProvidersDetailsSolutionsDisplayInfoTests
+	
 	@Test(priority = 1, retryAnalyzer = RetryAnalyzer.class, description = "Verify Provider Info section and Solutions Display Info Section")
 	public void testProviderInfoSolutionsDisplayInfoSectionWebElements() throws Exception {
 		ngHierarchyClientCreate();
@@ -181,19 +182,19 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getProviderDetailsPage().verifyLabelConnectedSchedulingResources();
 		ccui.getProviderDetailsPage().verifyConnectedResourceInWebTable();
 		ccui.getProviderDetailsPage().clickToRemoveConnectionButton();
-		ccui.getCommonMethods().verifyToasterMessage("Successfully removed resources");
+		ccui.getCommonMethods().verifyToasterMessage("Successfully removed resource");
 		logStep("PXPP-25953 Verify newly added Connected Scheduling Resource name is reflected when the user has added via +ADD button - Command Center Admin");
 		ccui.getProviderDetailsPage().clickToResourceAddButton();
 		ccui.getProviderDetailsPage().verifyAddResourceTitle();
 		ccui.getProviderDetailsPage().enterResourceNameinInputText(resourceName);
 		ccui.getProviderDetailsPage().clickToResourceCheckBox();
 		ccui.getProviderDetailsPage().clickToAddButtonInPopup();
-		ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
+		ccui.getCommonMethods().verifyToasterMessage("Successfully added resource");
 		ccui.getProviderDetailsPage().verifyLabelConnectedSchedulingResources();
 		logStep("PXPP-25954 PXPP-25955 Verify existing Connected Resource name should not display when user has removed using cross(x) button infront of Connected Resource- Command Center Admin");
 		ccui.getProviderDetailsPage().verifyConnectedResourceInWebTable();
 		ccui.getProviderDetailsPage().clickToRemoveConnectionButton();
-		ccui.getCommonMethods().verifyToasterMessage("Successfully removed resources");
+		ccui.getCommonMethods().verifyToasterMessage("Successfully removed resource");
 		ccui.getProviderDetailsPage().verifyMessageWithNoConnectedResource();
 		logStep("PXPP-25950 Verify all Resource names associated with selected Provider are listed out under Resource Name label in Connected Scheduling Resources container - Command Center Admin");
 		ccui.getProviderDetailsPage().clickToResourceAddButton();
@@ -219,14 +220,13 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		runOnce = false;
 	}
 
-	// AddRemoveConnectedLocationsInProvidersDetailsPageTests //passed
+	// AddRemoveConnectedLocationsInProvidersDetailsPageTests 
 
 	@Test(priority = 6, retryAnalyzer = RetryAnalyzer.class, description = "Verify add and remove locations functionality on provider details page")
-	public void testAndAddRemoveLocationsOnProviderDetailsPage() throws Exception {
+	public void testAddAndRemoveLocationsOnProviderDetailsPage() throws Exception {
 		ngHierarchyClientCreate();
-		ccui.getGeneralSettingsPage().verifyProvidersAndResourcesTab();
-		ccui.getGeneralSettingsPage().clickOnProvidersAndResourcesTab();
-		ccui.getAddNewProviderPage().verifyProvidersAndResourcesTitle();
+		providerNavigation();
+		String providerFirstName = createProvider();
 		ccui.getResourceAndStaffSearchPage().clickGeneralSettingsIcon();
 		createLocation();
 		ccui.getSearchLocationDetailsPage().clickToLocation(locationName);
@@ -250,9 +250,10 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getProviderDetailsPage().enterTextInLocationTextBox(locationName);
 		ccui.getProviderDetailsPage().clickToLocationCheckBox(locationName);
 		ccui.getProviderDetailsPage().clickToAddButtonInPopup();
-		ccui.getCommonMethods().verifyToasterMessage("Changes updated successfully");
+		ccui.getCommonMethods().verifyToasterMessage("Successfully added location");
 		ccui.getProviderDetailsPage().verifyConnectedLocationInWebTable();
 		ccui.getProviderDetailsPage().clickToRemoveConnectionBtn();
+		ccui.getCommonMethods().verifyToasterMessage("Successfully removed location");
 		ccui.getProviderDetailsPage().verifyNoDataDisplayConnectedLocationsMessage();
 		runOnce = false;
 	}
@@ -282,7 +283,6 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getProviderDetailsPage().clickOffPSSToggle();
 		ccui.getProviderDetailsPage().clickOnVirtualVisitToggle();
 		ccui.getProviderDetailsPage().clickOffVirtualVisitToggle();
-
 		runOnce = false;
 	}
 
@@ -315,6 +315,7 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.resourceDetailsPage().verifyConnectedSolutionsLabel();
 		runOnce = false;
 	}
+	
 
 	public String createProvider() throws Exception {
 		providerFirstName = "Prov"
@@ -350,11 +351,11 @@ public class ProviderDetailsPageTests extends CommandCenterGenericTest {
 		ccui.getAddNewResourcePage().clickOnSaveAndAddButton();
 		ccui.getCommonMethods().verifyToasterMessage("Success! New Resource has been successfully created");
 		return resourceName;
-
 	}
 
 	public void createLocation() throws Exception {
 		ccui.getGeneralSettingsPage().clickToClientNode();
+		driver.navigate().refresh();
 		ccui.getGeneralSettingsPage().verifyClientNodeIsSelected();
 		logStep("Verify Locations tab is displayed");
 		ccui.getGeneralSettingsPage().verifyLocationsTab();
